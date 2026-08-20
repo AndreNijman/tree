@@ -37,6 +37,7 @@
     </div>
 
     <div id="bossbars"></div>
+    <div id="net-roster" class="hidden"></div>
 
     <div id="hotbar"></div>
 
@@ -92,10 +93,21 @@
             <button id="btn-cancel-create" class="secondary">Cancel</button>
           </div>
         </div>
+        <div id="multiplayer">
+          <div class="world-heading"><span>Hosted worlds</span><button id="mp-refresh" class="tiny-button">Refresh</button></div>
+          <div class="mp-fields">
+            <input id="mp-name" type="text" maxlength="18" autocomplete="nickname" placeholder="Player name">
+            <input id="mp-password" type="password" maxlength="64" autocomplete="off" placeholder="Password (optional)">
+          </div>
+          <div id="lobby-list" aria-live="polite"><div class="world-empty">Loading hosted worlds...</div></div>
+          <div class="mp-join-code"><input id="mp-code" type="text" maxlength="5" autocomplete="off" placeholder="ROOM CODE"><button id="mp-join">Join code</button></div>
+          <div id="mp-status" role="status"></div>
+        </div>
       </div>
       <div id="pause-actions" class="hidden">
         <button id="btn-continue">Resume</button>
         <button id="btn-save">Save &amp; Quit</button>
+        <button id="btn-leave-hosted" class="hidden">Leave Hosted World</button>
       </div>
       <button id="btn-howto">How To Play</button>
     </div>
@@ -127,6 +139,7 @@
 <script src="js/render.js"></script>
 <script src="js/oldonesarmy.js"></script>
 <script src="js/achievements.js"></script>
+<script src="js/net.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

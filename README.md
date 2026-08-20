@@ -15,6 +15,14 @@ A full-progression procedural sandbox game written in plain JavaScript. Mine, cr
 - Drop selected item: `Q`
 - Pause and save: `Esc`
 
+## Multiplayer
+
+- Click **Host** beside any saved world to publish it in the hosted-world browser.
+- Enter an optional password before hosting to make the world private.
+- Join from the hosted-world list or enter its five-character room code.
+- The host owns world simulation and saving; player characters are retained in each guest's browser.
+- If the host disconnects, the longest-connected guest is promoted and the synchronized world continues.
+
 ## Technology
 
 - Static HTML, CSS, and ES5-style JavaScript
@@ -22,5 +30,6 @@ A full-progression procedural sandbox game written in plain JavaScript. Mine, cr
 - Synthesized Web Audio sound effects
 - Seeded procedural worlds
 - Multiple named local browser saves with automatic account sync when signed in
+- Cloudflare Durable Object relay for password lobbies, ordered world snapshots, and live state synchronization
 
 No build step or runtime dependencies are required. Open `index.html` directly or serve this directory with any static web server.

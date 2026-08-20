@@ -21,12 +21,20 @@ var el = {};
     origSet.call(this, x, y, t);
     this.dirty = true;
     this.graveyardCache = null;
+    if (typeof Net !== 'undefined') Net.worldMutation('tile', x, y, t);
+  };
+  var origSetWall = World.prototype.setWall;
+  World.prototype.setWall = function(x, y, wall) {
+    origSetWall.call(this, x, y, wall);
+    this.dirty = true;
+    if (typeof Net !== 'undefined') Net.worldMutation('wall', x, y, wall);
   };
   var origBreak = World.prototype.breakTile;
   World.prototype.breakTile = function(x, y) {
     var r = origBreak.call(this, x, y);
     this.dirty = true;
     this.graveyardCache = null;
+    if (typeof Net !== 'undefined') Net.worldMutation('tile', x, y, this.get(x, y));
     return r;
   };
 })();
@@ -62,7 +70,7 @@ function buildGame(seed, evil) {
     _wasNight: false,
     spreadAcc: 0,
     mechDone: false,
-    spawnT: 2,
+    spawnT: 8,
     critterT: 4,
     messageTimer: 0,
     flashT: 0,
@@ -123,8 +131,7 @@ function buildGame(seed, evil) {
   // town NPCs
   spawnNpcs();
 
-  // initial ambient enemies
-  initialSpawns();
+  // Give a new player time to orient before ambient enemies arrive.
 }
 
 // ---------- Save system ----------
@@ -244,6 +251,7 @@ function renderWorldList() {
       html += '<div class="world-row" data-world-id="' + escapeText(record.id) + '">' +
         '<button class="world-open" type="button"><span class="world-title">' + escapeText(record.name) + '</span>' +
         '<span class="world-meta">' + phase + ' · ' + evil + ' · ' + escapeText(worldDate(record.updatedAt)) + '</span></button>' +
+        '<button class="world-host" type="button" aria-label="Host ' + escapeText(record.name) + '">Host</button>' +
         '<button class="world-delete" type="button" aria-label="Delete ' + escapeText(record.name) + '">Delete</button></div>';
     }
     root.innerHTML = html;
@@ -765,9 +773,11 @@ function startSavedGame(id) {
 }
 
 function refreshSaveMenu() {
-  if (game && game.started && game.paused) {
+  if (game && game.started && (game.paused || game.netMenu)) {
     $('title-actions').classList.add('hidden');
     $('pause-actions').classList.remove('hidden');
+    $('btn-save').classList.toggle('hidden', typeof Net !== 'undefined' && Net.isOnline());
+    $('btn-leave-hosted').classList.toggle('hidden', typeof Net === 'undefined' || !Net.isOnline());
   } else {
     showTitleActions();
   }
@@ -1183,18 +1193,21 @@ function wireGameMethods() {
 
   game.addPickup = function(x, y, id, count, reforge) {
     if (!count || count <= 0) return;
-    var pickup = { item: id, count: count, x: x, y: y, seed: Math.random() * 100, t: 0 };
+    var pickup = { nid:typeof Net !== 'undefined' ? ++Net.seq : 0, item: id, count: count, x: x, y: y, seed: Math.random() * 100, t: 0 };
     if (reforge) pickup.reforge = { name:reforge.name, dmgMul:reforge.dmgMul };
     game.pickups.push(pickup);
   };
 
   game.hitBoss = function(e, dmg, kbx, kby) {
+    if (typeof Net !== 'undefined' && Net.claimHit(e, dmg, true)) { e.flash = 0.1; return; }
     if (e.armType && e.parent) { armHit(e.parent, e, dmg, game); return; }
     bossHit(e, dmg, kbx, kby, game);
   };
 
   game.damagePlayer = function(dmg, from, kbx) {
-    game.player.damage(dmg, from, kbx);
+    var target = typeof multiplayerTarget === 'function' ? multiplayerTarget(game, from) : game.player;
+    if (typeof Net !== 'undefined' && Net.damageRemote(target, dmg, kbx)) return;
+    target.damage(dmg, from, kbx);
   };
 
   game.flash = function() {
@@ -1243,6 +1256,7 @@ function wireGameMethods() {
   };
 
   game.spawnBoss = function(bossId) {
+    if (typeof Net !== 'undefined' && Net.requestBoss(bossId)) return;
     if (game.lanternNight.active) endLanternNight('The lanterns fade as danger approaches.');
     if (bossId === 'kingslime') spawnKingSlime(game);
     else if (bossId === 'deerclops') spawnDeerclops(game);
@@ -1711,13 +1725,14 @@ function step(dt) {
   Time.seconds += dt;
   Time.frame++;
 
-  game.autosaveT += dt;
-  if (game.autosaveT >= 60) {
+  if (typeof Net === 'undefined' || !Net.isClient()) game.autosaveT += dt;
+  if (game.autosaveT >= 60 && (typeof Net === 'undefined' || !Net.isClient())) {
     game.autosaveT = 0;
     saveGame(true);
   }
 
   handleKeys();
+  if (typeof Net !== 'undefined') Net.update(dt);
 
   // mouse wheel hotbar scroll
   if (MOUSE.wheel !== 0) {
@@ -1733,7 +1748,7 @@ function step(dt) {
   game.player.update(game);
 
   // entities
-  for (var i = 0; i < game.entities.length; i++) {
+  for (var i = 0; i < game.entities.length && (typeof Net === 'undefined' || !Net.isClient()); i++) {
     var e = game.entities[i];
     if (e.dead) continue;
     updateEntityStatuses(e, dt);
@@ -1762,31 +1777,28 @@ function step(dt) {
   // day/night
   game.timeOfDay += dt * 0.002;
   if (game.timeOfDay >= 1) game.timeOfDay -= 1;
-  checkDawn();
-  updateWeather(dt);
-  updateStarfall(dt);
+  if (typeof Net === 'undefined' || !Net.isClient()) { checkDawn(); updateWeather(dt); updateStarfall(dt); }
 
   // crafting stations
   game.world.nearbyStations = game.world.findStations(game.player.x, game.player.y);
 
   // ambient spawning
-  updateSpawning(dt);
-  updateCritterSpawning(dt);
+  if (typeof Net === 'undefined' || !Net.isClient()) { updateSpawning(dt); updateCritterSpawning(dt); }
 
   // plantera bulbs
-  updateBulbs();
+  if (typeof Net === 'undefined' || !Net.isClient()) updateBulbs();
 
   // post-Golem Dungeon ritual
-  updateCultistRitual(dt);
+  if (typeof Net === 'undefined' || !Net.isClient()) updateCultistRitual(dt);
 
   // events
-  updateEvents(dt);
+  if (typeof Net === 'undefined' || !Net.isClient()) updateEvents(dt);
 
   // underground Torch God challenge
-  updateTorchGod(dt);
+  if (typeof Net === 'undefined' || !Net.isClient()) updateTorchGod(dt);
 
   // hardmode biome spread (slow creep of evil/Hallow into stone/dirt)
-  if (game.hardmode) {
+  if (game.hardmode && (typeof Net === 'undefined' || !Net.isClient())) {
     game.spreadAcc += dt;
     if (game.spreadAcc >= SPREAD_INTERVAL) {
       game.spreadAcc = 0;
@@ -1804,11 +1816,11 @@ function step(dt) {
 
   // achievements
   checkAchievements();
-  game.townArrivalT -= dt;
-  if (game.townArrivalT <= 0) { game.townArrivalT = 1; updateTownArrivals(); updateTownRescues(); }
+  if (typeof Net === 'undefined' || !Net.isClient()) game.townArrivalT -= dt;
+  if (game.townArrivalT <= 0 && (typeof Net === 'undefined' || !Net.isClient())) { game.townArrivalT = 1; updateTownArrivals(); updateTownRescues(); }
   game.housingT -= dt;
-  if (game.housingT <= 0) { game.housingT = 2; validateHousingAssignments(); }
-  updateTownTax(dt);
+  if (game.housingT <= 0 && (typeof Net === 'undefined' || !Net.isClient())) { game.housingT = 2; validateHousingAssignments(); }
+  if (typeof Net === 'undefined' || !Net.isClient()) updateTownTax(dt);
 
   // minimap rebuild when world changed
   if (game.world.dirty) game.minimap = null;
@@ -1819,7 +1831,6 @@ function step(dt) {
   updateBossBars();
   updateCrosshair();
   updateInteract();
-  if (game.panelOpen) renderPanel(game.panelTab);
 }
 
 // ---------- Message / flash ----------
@@ -2305,12 +2316,12 @@ function projHitEnemy(o) {
 }
 
 function projHitPlayer(o) {
-  var p = game.player;
+  var p = typeof multiplayerTarget === 'function' ? multiplayerTarget(game, o) : game.player;
   if (p.dying) return false;
   var dx = p.x - o.x, dy = p.y - o.y;
   var r = (p.w + p.h) / 4 + 2;
   if (dx * dx + dy * dy < r * r) {
-    game.damagePlayer(o.dmg, null, o.vx > 0 ? 3 : -3);
+    game.damagePlayer(o.dmg, o, o.vx > 0 ? 3 : -3);
     o.dead = true;
     return true;
   }
@@ -2532,6 +2543,7 @@ function updatePickups() {
     if (d < 20) {
       var added = p.inventory.addStack({ id:pk.item, count:pk.count, reforge:pk.reforge });
       if (added > 0) {
+        if (typeof Net !== 'undefined') Net.pickupTaken(pk.nid, added);
         AudioSys.play('pickup');
         pk.count -= added;
         if (pk.count <= 0) game.pickups.splice(i, 1);
@@ -2636,20 +2648,20 @@ function initialSpawns() {
 function updateSpawning(dt) {
   if (game.event) return;
   var p = game.player;
-  if (game.hardmode && inSpawnSafeZone(p.x, p.y) && game.world.graveyardStrengthAt(p.x, p.y) < 7) {
-    game.spawnT = Math.max(game.spawnT, 2);
+  if (inSpawnSafeZone(p.x, p.y) && game.world.graveyardStrengthAt(p.x, p.y) < 7) {
+    game.spawnT = Math.max(game.spawnT, 5);
     return;
   }
   game.spawnT -= dt;
   if (game.spawnT > 0) return;
-  game.spawnT = 4 + Math.random() * 5;
+  game.spawnT = 7 + Math.random() * 5;
 
   var count = 0;
   for (var i = 0; i < game.entities.length; i++) {
     var e = game.entities[i];
     if (!e.dead && !e.boss && !e.armType && !e.minion && e.dmg > 0) count++;
   }
-  if (count >= 6) return;
+  if (count >= 4) return;
 
   var type = pickEnemy();
   var side = Math.random() < 0.5 ? -1 : 1;
@@ -2664,7 +2676,12 @@ function updateSpawning(dt) {
   } else if (type === E.GHOST && game.player.y > game.world.surfaceY[clamp(Math.floor(game.player.x / TILE), 0, game.world.W - 1)] * TILE + 30 * TILE) {
     sy = clamp(game.player.y - 80 + Math.random() * 160, 16, game.world.H * TILE - 16);
   } else if (type === E.GIANTWORM || type === E.DIGGER || type === E.DUNESPLICER || type === E.ANTLIONSWARMER) {
-    sy = clamp(p.y - 100 + Math.random() * 200, 16, game.world.H * TILE - 16);
+    var wormTx = clamp(Math.floor(sx / TILE), 2, game.world.W - 3);
+    var wormMinY = game.world.surfaceY[wormTx] + 14;
+    var wormTy = Math.max(wormMinY, Math.floor(p.y / TILE) + Math.floor(Math.random() * 13) - 6);
+    while (wormTy < game.world.H - 3 && !game.world.isSolid(wormTx, wormTy)) wormTy++;
+    if (wormTy >= game.world.H - 3) return;
+    sy = wormTy * TILE + 8;
   } else if (def.fly) sy = clamp(game.world.surfaceY[clamp(Math.floor(sx / TILE), 0, game.world.W - 1)] * TILE - 40 - Math.random() * 80, 16, game.world.H * TILE - 16);
   else sy = findGroundY(sx);
   var e2 = spawnEntity(game, type, sx, sy);
@@ -3473,7 +3490,7 @@ function pickEnemy() {
   if (!game.hardmode) {
     if (depth < -12) {
       pool.push(E.HARPY, E.GIANTBAT, E.SLIME);
-    } else if (depth < 0) {
+    } else if (depth < 12) {
       if (biome === BIOME.JUNGLE) {
         pool.push(E.JUNGLEBAT, E.JUNGLESLIME, E.SPIKEDJUNGLESLIME, E.HORNET);
       } else if (biome === BIOME.OCEAN) {
@@ -3491,7 +3508,8 @@ function pickEnemy() {
       } else if (biome === BIOME.MUSHROOM) {
         pool.push(E.SLIME, E.PINKSLIME, E.ZOMBIE);
       } else {
-        pool.push(E.SLIME, E.PINKSLIME);
+        pool.push(E.SLIME, E.SLIME, E.SLIME, E.SLIME);
+        if (Math.random() < 0.06) pool.push(E.PINKSLIME);
         if (night) pool.push(E.ZOMBIE, E.DEMONEYE, E.CAVEBAT, E.GOBLIN);
       }
       if (night && Math.random() < 0.25) pool.push(E.DEMONEYE);
@@ -3569,7 +3587,7 @@ function pickEnemy() {
     pool.push(E.WYVERN, E.PIXIE, E.GASTROPOD, E.HARPY);
     if (lunarActive) pool.push(E.CORITE, E.SELENIAN, E.LUNARFLAME, E.VORTEXIAN, E.STORMDIVER, E.NEBULAFLOATER, E.PREDICTOR, E.STARDJUSTCELL, E.STARGAZER);
     if (!game.event && game.bossesDefeated.golem && Math.random() < 0.12) pool.push(E.MARTIANPROBE);
-  } else if (depth < 0) {
+  } else if (depth < 12) {
     if (biome === BIOME.JUNGLE) {
       pool.push(E.JUNGLEBAT, E.JUNGLESLIME, E.SPIKEDJUNGLESLIME, E.HORNET, E.MOSSHORNET, E.DERPLING);
       if (night) pool.push(E.MOTH);
@@ -4438,11 +4456,62 @@ function renderChest() {
     html += '</div>';
   }
   html += '</div>';
-  html += '<div class="ddesc">Click an item to move it to your inventory. Click your inventory (E) to move items in. Click a slot while holding E-inventory to store.</div>';
-  html += '<button id="chest-close" class="btn">Close</button>';
+  html += '<div class="ddesc">Click a stack to take it. Deposit sends the selected inventory stack into this chest.</div>';
+  html += '<div class="chest-actions"><button data-chest-loot class="btn">Loot all</button><button data-chest-deposit class="btn">Deposit selected</button><button id="chest-close" class="btn secondary">Close</button></div>';
   $('panel-chest').innerHTML = html;
   var bc = document.getElementById('chest-close');
   if (bc) bc.addEventListener('click', function() { closePanel(); });
+}
+
+function chestAddStack(chest, stack) {
+  if (!chest || !stack || !ITEMS[stack.id]) return 0;
+  var remaining = stack.count;
+  var max = ITEMS[stack.id].maxStack;
+  if (!stack.reforge) {
+    for (var i = 0; i < chest.inv.length && remaining > 0; i++) {
+      var current = chest.inv[i];
+      if (current && current.id === stack.id && !current.reforge && current.count < max) {
+        var merged = Math.min(max - current.count, remaining);
+        current.count += merged;
+        remaining -= merged;
+      }
+    }
+  }
+  while (remaining > 0 && chest.inv.length < 20) {
+    var moved = Math.min(max, remaining);
+    chest.inv.push(copyItemStack(stack, moved));
+    remaining -= moved;
+  }
+  return stack.count - remaining;
+}
+
+function lootAllChest() {
+  var chest = game.chest;
+  if (!chest) return;
+  var movedAny = false;
+  for (var i = chest.inv.length - 1; i >= 0; i--) {
+    var stack = chest.inv[i];
+    var moved = game.player.inventory.addStack(stack);
+    if (moved > 0) movedAny = true;
+    stack.count -= moved;
+    if (stack.count <= 0) chest.inv.splice(i, 1);
+  }
+  if (!movedAny && chest.inv.length) game.message('Your inventory is full.');
+  if (movedAny) AudioSys.play('pickup');
+  if (typeof Net !== 'undefined') Net.syncChest(chest);
+  renderChest();
+}
+
+function depositSelectedInChest() {
+  var inv = game.player.inventory;
+  var stack = inv.selectedItem();
+  if (!stack || !game.chest) { game.message('Select an inventory item first.'); return; }
+  var moved = chestAddStack(game.chest, stack);
+  if (moved <= 0) { game.message('The chest is full.'); return; }
+  inv.removeAt(inv.selected, moved);
+  AudioSys.play('place');
+  if (typeof Net !== 'undefined') Net.syncChest(game.chest);
+  renderChest();
 }
 
 function recipeCategory(r) {
@@ -4807,12 +4876,13 @@ function updateInteract() {
 // ---------- Pause / menus ----------
 function togglePause() {
   if (!game || !game.started) return;
-  if (game.paused) resumeGame();
+  if (game.paused || game.netMenu) resumeGame();
   else pauseGame();
 }
 
 function pauseGame() {
-  game.paused = true;
+  if (typeof Net !== 'undefined' && Net.isOnline()) game.netMenu = true;
+  else game.paused = true;
   $('mainmenu').classList.remove('hidden');
   document.querySelector('#mainmenu h1').textContent = 'Paused';
   refreshSaveMenu();
@@ -4821,6 +4891,7 @@ function pauseGame() {
 
 function resumeGame() {
   game.paused = false;
+  game.netMenu = false;
   $('mainmenu').classList.add('hidden');
   $('pause-actions').classList.add('hidden');
   acc = 0;
@@ -4870,7 +4941,9 @@ function initDOM() {
   var tabs = document.querySelectorAll('#panel-tabs .tab');
   for (var i = 0; i < tabs.length; i++) {
     tabs[i].addEventListener('click', function() {
-      switchPanel(this.getAttribute('data-panel'));
+      var name = this.getAttribute('data-panel');
+      switchPanel(name);
+      renderPanel(name);
     });
   }
   $('panel-close').addEventListener('click', function() { closePanel(); });
@@ -4902,14 +4975,16 @@ function initDOM() {
         AudioSys.play('roar');
         return;
       }
-      if (chest2.inv.length >= 20) { game.message('The chest is full.'); return; }
-      chest2.inv.push(copyItemStack(s2));
-      inv2.removeAt(idx2, s2.count);
+      var stored = chestAddStack(chest2, s2);
+      if (stored <= 0) { game.message('The chest is full.'); return; }
+      inv2.removeAt(idx2, stored);
       AudioSys.play('place');
+      if (typeof Net !== 'undefined') Net.syncChest(chest2);
       renderChest();
       return;
     }
     game.player.inventory.selected = parseInt(cell.getAttribute('data-idx'), 10);
+    renderInventory();
   });
   $('inv-armor').addEventListener('click', function(e) {
     var slotEl = e.target.closest('.armor-slot');
@@ -4922,6 +4997,8 @@ function initDOM() {
     if (ammoEl) selectAmmo();
   });
   $('panel-chest').addEventListener('click', function(e) {
+    if (e.target.closest('[data-chest-loot]')) { lootAllChest(); return; }
+    if (e.target.closest('[data-chest-deposit]')) { depositSelectedInChest(); return; }
     var cell = e.target.closest('.inv-cell[data-chest]');
     if (!cell) return;
     var chest = game.chest;
@@ -4933,6 +5010,7 @@ function initDOM() {
     if (moved <= 0) { game.message('Your inventory is full.'); return; }
     s.count -= moved;
     if (s.count <= 0) chest.inv.splice(idx, 1);
+    if (typeof Net !== 'undefined') Net.syncChest(chest);
     AudioSys.play('pickup');
     renderChest();
   });
@@ -4965,7 +5043,7 @@ function initDOM() {
   });
   $('craft-tabs').addEventListener('click', function(e) {
     var tab = e.target.closest('.tab');
-    if (tab) game.craftCat = tab.getAttribute('data-cat');
+    if (tab) { game.craftCat = tab.getAttribute('data-cat'); renderCrafting(); }
   });
   $('craft-list').addEventListener('click', function(e) {
     var row = e.target.closest('.craft-row');
@@ -4978,6 +5056,7 @@ function initDOM() {
       if (r.result === I.MECH_EYE) Achievements.unlock('mecheye', game);
       if (r.result === I.MECH_WORM) Achievements.unlock('mechworm', game);
       if (r.result === I.MECH_SKULL) Achievements.unlock('mechskull', game);
+      renderCrafting();
     }
   });
 
@@ -5003,10 +5082,19 @@ function initDOM() {
     if (!row) return;
     var id = row.getAttribute('data-world-id');
     if (event.target.closest('.world-delete')) deleteWorld(id);
+    else if (event.target.closest('.world-host')) Net.hostWorld(id);
     else if (event.target.closest('.world-open')) startSavedGame(id);
   });
   $('btn-continue').addEventListener('click', function() { resumeGame(); });
   $('btn-save').addEventListener('click', function() { saveAndQuit(); });
+  $('btn-leave-hosted').addEventListener('click', function() { Net.disconnect(true); });
+  $('mp-refresh').addEventListener('click', function() { Net.refreshLobbies(); });
+  $('mp-join').addEventListener('click', function() { Net.joinCode($('mp-code').value); });
+  $('mp-code').addEventListener('keydown', function(e) { if (e.key === 'Enter') Net.joinCode(this.value); });
+  $('lobby-list').addEventListener('click', function(e) {
+    var row = e.target.closest('.lobby-row');
+    if (row && e.target.closest('.lobby-join')) Net.joinCode(row.getAttribute('data-code'));
+  });
   $('btn-howto').addEventListener('click', function() {
     $('howto').classList.toggle('hidden');
   });
@@ -5014,6 +5102,7 @@ function initDOM() {
     if (game) game.respawn();
   });
   refreshSaveMenu();
+  Net.refreshLobbies();
   document.addEventListener('visibilitychange', function() {
     if (document.hidden && game && game.started && !game.paused) saveGame(true);
   });

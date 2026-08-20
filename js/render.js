@@ -773,8 +773,14 @@ function renderGame(game, ctx) {
     tileCtx.restore();
   }
 
-  // player
-  if (!game.player.dying) drawPlayer(tileCtx, game);
+  // players
+  if (typeof Net !== 'undefined' && Net.isOnline()) {
+    for (var remoteId in Net.remotePlayers) {
+      var remotePlayer = Net.remotePlayers[remoteId];
+      if (!remotePlayer.dying) drawPlayer(tileCtx, game, remotePlayer);
+    }
+  }
+  if (!game.player.dying) drawPlayer(tileCtx, game, game.player);
 
   // projectiles
   for (var pr = 0; pr < game.projectiles.list.length; pr++) {
@@ -3624,8 +3630,8 @@ function drawBoss(game, ctx, e, cam, W, H) {
 }
 
 // ---------- Player drawing ----------
-function drawPlayer(ctx, game) {
-  var p = game.player;
+function drawPlayer(ctx, game, p) {
+  p = p || game.player;
   var cam = game.cam;
   var x = p.x - cam.x + canvas.width / 2;
   var y = p.y - cam.y + canvas.height / 2;
@@ -3727,6 +3733,12 @@ function drawPlayer(ctx, game) {
   }
   ctx.restore();
   ctx.globalAlpha = 1;
+
+  if (p.netName) {
+    ctx.font = '11px monospace'; ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(8,11,9,0.75)'; ctx.fillRect(x - 42, y - 48, 84, 16);
+    ctx.fillStyle = '#edf0df'; ctx.fillText(p.netName, x, y - 36);
+  }
 
   // grappling hook line
   if (p.hook) {

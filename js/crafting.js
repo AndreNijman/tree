@@ -622,12 +622,22 @@ function recipeProgressionMet(game, r) {
 
 function craftRecipe(game, r) {
   if (!recipeAvailable(game, r)) return false;
-  if (r.special) {
-    if (!game.placeSpecial(r.special)) return false;
-  }
   var inv = game.player.inventory;
+  var outputCount = r.count === undefined ? 1 : r.count;
+  var before = new Array(inv.slots.length);
+  for (var s = 0; s < inv.slots.length; s++) before[s] = inv.slots[s] ? copyItemStack(inv.slots[s]) : null;
   for (var i = 0; i < r.mat.length; i++) inv.consume(r.mat[i][0], r.mat[i][1]);
-  inv.add(r.result, r.count || 1);
+  if (outputCount > 0 && inv.add(r.result, outputCount) !== outputCount) {
+    inv.slots = before;
+    if (game.message) game.message('Not enough inventory space.');
+    return false;
+  }
+  if (r.special) {
+    if (!game.placeSpecial(r.special)) {
+      inv.slots = before;
+      return false;
+    }
+  }
   AudioSys.play('craft');
   return true;
 }

@@ -329,9 +329,9 @@ World.prototype.generate = function(hardmode, evil) {
   // Surface height
   for (var x = 0; x < W; x++) {
     var h = baseY
-      + n1(x * 0.012) * 26
-      + n2(x * 0.03) * 10
-      + Math.sin(x * 0.05) * 8;
+      + n1(x * 0.012) * 15
+      + n2(x * 0.025) * 5
+      + Math.sin(x * 0.035) * 3;
     this.surfaceY[x] = Math.floor(h);
   }
 
@@ -353,8 +353,8 @@ World.prototype.generate = function(hardmode, evil) {
   // Scatter mushroom patches through the forest
   this.mushroomAt = new Uint8Array(W);
   for (var mx = Math.floor(W * 0.30); mx < Math.floor(W * 0.72); mx++) {
-    if (rng() < 0.05) {
-      var patch = 8 + Math.floor(rng() * 16);
+    if (rng() < 0.018) {
+      var patch = 6 + Math.floor(rng() * 8);
       for (var p = 0; p < patch; p++) {
         if (mx + p < W) this.mushroomAt[mx + p] = 1;
       }
@@ -465,12 +465,12 @@ World.prototype.generate = function(hardmode, evil) {
   }
 
   // Random-walk caves
-  var tunnels = 140;
+  var tunnels = 90;
   for (var t = 0; t < tunnels; t++) {
     var cx = Math.floor(rng() * W);
     var cy = this.surfaceY[cx] + 8 + Math.floor(rng() * (H - this.surfaceY[cx] - 20));
     var dir = rng() * Math.PI * 2;
-    var len = 40 + Math.floor(rng() * 160);
+    var len = 35 + Math.floor(rng() * 105);
     for (var s = 0; s < len; s++) {
       dir += (rng() - 0.5) * 1.1;
       cx += Math.cos(dir) * 1.5;
@@ -484,7 +484,7 @@ World.prototype.generate = function(hardmode, evil) {
           var ii = this.idx(tx, ty);
           if (this.tiles[ii] !== T.AIR) {
             this.tiles[ii] = T.AIR;
-            this.walls[ii] = (Math.random() < 0.4) ? WALL.CAVE : 0;
+            this.walls[ii] = (rng() < 0.4) ? WALL.CAVE : 0;
           }
         }
       }
@@ -1176,19 +1176,21 @@ World.prototype.generate = function(hardmode, evil) {
   for (var cx3 = sp - 25; cx3 <= sp + 25; cx3++) {
     if (cx3 < 0 || cx3 >= W) continue;
     var target = this.surfaceY[cx3];
-    var need = sy2 - target;
+    var edgeBlend = clamp((25 - Math.abs(cx3 - sp)) / 8, 0, 1);
+    var clearingY = Math.round(lerp(target, sy2, edgeBlend));
+    var need = clearingY - target;
     if (need > 0) {
       for (var k = 0; k < need; k++) {
-        var fi = this.idx(cx3, sy2 - k);
+        var fi = this.idx(cx3, clearingY - k);
         this.tiles[fi] = T.AIR; this.hp[fi] = 0;
       }
     } else if (need < 0) {
       for (var k2 = 0; k2 < -need; k2++) {
-        var fi2 = this.idx(cx3, sy2 + k2);
+        var fi2 = this.idx(cx3, clearingY + k2);
         if (this.tiles[fi2] === T.AIR) { this.tiles[fi2] = T.DIRT; this.hp[fi2] = 20; }
       }
     }
-    this.surfaceY[cx3] = sy2;
+    this.surfaceY[cx3] = clearingY;
   }
   // clear trees near spawn
   for (var cx4 = sp - 30; cx4 <= sp + 30; cx4++) {

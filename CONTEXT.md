@@ -5,7 +5,7 @@ If you are an AI (or person) picking this up for the first time, read this entir
 
 > How this works: every session that works on this project should END by updating this file (the "Status" and "Next Steps" sections), so a future session or a different AI can start/restart from here at any time.
 
-> **LATEST VERIFICATION:** The title screen now supports multiple named worlds backed by IndexedDB, one-minute autosaves, deletion tombstones, automatic migration of the legacy `tree.save.v1` slot, and account cloud sync through the games guard. Browser tests passed named creation, save/load state, multi-world listing, deletion, and a 620 KB generated snapshot; the deployed signed-in API passed authentication, PUT/list/GET/delete, and guest rejection checks.
+> **LATEST VERIFICATION:** Full hosted multiplayer is implemented with public/password lobbies, five-character codes, chunked join snapshots, host-authoritative world/enemy/boss simulation, synchronized players, tiles, walls, entities, projectiles, pickups, chests, inventories, crafting, progression and weather, plus guest promotion on host loss. The Cloudflare Durable Object relay is deployed as version `4f18eaed-229a-47f0-9f77-ab7a32858a9a`. Relay helper/dry-run checks, a real three-WebSocket production-relay test, and a two-browser full-world integration test all pass.
 
 ---
 

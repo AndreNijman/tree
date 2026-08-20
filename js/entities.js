@@ -336,6 +336,7 @@ function spawnEntity(game, type, x, y) {
 // Damage + knockback + death
 function hitEntity(e, dmg, kbx, kby, game) {
   if (e.dead) return;
+  if (typeof Net !== 'undefined' && Net.claimHit(e, dmg, false)) { e.flash = 0.1; return; }
   if (e.type === E.WINDYBALLOON && !e.balloonPopped) {
     e.balloonPopped = true;
     e.fly = false;
@@ -723,7 +724,7 @@ function dropTable(type, game) {
 function contactCheck(e, game) {
   if (e.dead || e.dmg <= 0) return;
   if (e.dmgCd > 0) { e.dmgCd -= 1 / 60; return; }
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = Math.abs(p.x - e.x), dy = Math.abs(p.y - e.y);
   if (dx < (p.w + e.w) / 2 - 2 && dy < (p.h + e.h) / 2 - 2) {
     game.damagePlayer(e.dmg, e, e.x < p.x ? 4 : -4);
@@ -733,7 +734,7 @@ function contactCheck(e, game) {
 
 // Generic hop AI for slimes
 function slimeStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x;
   e.dir = dx >= 0 ? 1 : -1;
   e.vx = e.dir * e.speed * 0.35;
@@ -747,7 +748,7 @@ function slimeStep(e, game) {
 
 // Walk AI for zombies
 function zombieStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x;
   e.dir = dx >= 0 ? 1 : -1;
   e.vx = lerp(e.vx, e.dir * e.speed, 0.1);
@@ -756,7 +757,7 @@ function zombieStep(e, game) {
 
 // Ghost flight (wraith) passes through walls
 function ghostStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x, dy = p.y - e.y;
   var d = Math.sqrt(dx * dx + dy * dy) || 1;
   e.vx = (dx / d) * e.speed;
@@ -766,7 +767,7 @@ function ghostStep(e, game) {
 
 // Fly toward player with sine bob
 function flyStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x, dy = p.y - e.y;
   var d = Math.sqrt(dx * dx + dy * dy) || 1;
   e.bob += 0.06;
@@ -776,7 +777,7 @@ function flyStep(e, game) {
 }
 
 function nymphStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x, dy = p.y - e.y;
   var d = Math.sqrt(dx * dx + dy * dy) || 1;
   if (d < 320) {
@@ -790,7 +791,7 @@ function nymphStep(e, game) {
 }
 
 function flyStepNoCol(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x, dy = p.y - e.y;
   var d = Math.sqrt(dx * dx + dy * dy) || 1;
   e.bob += 0.06;
@@ -802,7 +803,7 @@ function rangedWalkerStep(e, game, projectile, shotSpeed, damage, cooldown, colo
   zombieStep(e, game);
   physicsStep(e, game);
   e.attackCd = (e.attackCd || Math.random() * cooldown) - 1 / 60;
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   if (e.attackCd <= 0 && dist(e.x, e.y, p.x, p.y) < 520) {
     e.attackCd = cooldown;
     var ang = Math.atan2(p.y - 8 - e.y, p.x - e.x);
@@ -817,7 +818,7 @@ function rangedWalkerStep(e, game, projectile, shotSpeed, damage, cooldown, colo
 function ghostShooterStep(e, game, projectile, damage, color) {
   ghostStep(e, game);
   e.attackCd = (e.attackCd || 1.5) - 1 / 60;
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   if (e.attackCd <= 0 && dist(e.x, e.y, p.x, p.y) < 480) {
     e.attackCd = 2.4;
     var ang = Math.atan2(p.y - e.y, p.x - e.x);
@@ -883,7 +884,7 @@ function ladybugStep(e, game) {
 
 // Passive critter hop AI (bunny, squirrel, frog, turtle)
 function critterStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x;
   e.critterAge = (e.critterAge || 0) + 1 / 60;
   if (e.critterAge > 75) { e.dead = true; return; }
@@ -911,7 +912,7 @@ function critterStep(e, game) {
 
 // Passive bird flight AI
 function birdStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x, dy = p.y - e.y;
   var d = Math.sqrt(dx * dx + dy * dy) || 1;
   e.critterAge = (e.critterAge || 0) + 1 / 60;
@@ -929,7 +930,7 @@ function birdStep(e, game) {
 
 // Goldfish swim AI
 function goldfishStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x;
   e.critterAge = (e.critterAge || 0) + 1 / 60;
   if (e.critterAge > 75 || Math.abs(dx) > 1200) { e.dead = true; return; }
@@ -945,7 +946,7 @@ function goldfishStep(e, game) {
 
 // Umbrella slime floats on its umbrella
 function umbrellaSlimeStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x;
   e.bob += 0.04;
   e.dir = dx >= 0 ? 1 : -1;
@@ -991,7 +992,7 @@ function enemyStep(e, game) {
       e.attackCd = (e.attackCd || 0) - 1 / 60;
       if (e.attackCd <= 0 && dist(e.x, e.y, game.player.x, game.player.y) < 300) {
         e.attackCd = 2.2;
-        var p = game.player;
+        var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
         var ang = Math.atan2(p.y - e.y, p.x - e.x) + (Math.random() - 0.5) * 0.5;
         game.projectiles.add({
           x: e.x, y: e.y, vx: Math.cos(ang) * 3.5, vy: Math.sin(ang) * 3.5,
@@ -1594,7 +1595,7 @@ function enemyStep(e, game) {
 }
 
 function unicornStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x;
   e.state = (e.state || 0);
   e.timer -= 1 / 60;
@@ -1614,7 +1615,7 @@ function unicornStep(e, game) {
 }
 
 function chaosStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   e.timer -= 1 / 60;
   if (e.timer <= 0) {
     // teleport near player
@@ -1632,7 +1633,7 @@ function chaosStep(e, game) {
 
 // Wyvern worm behavior: sinusoidal flight, chases player
 function wyvernStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x, dy = p.y - e.y;
   var d = Math.sqrt(dx * dx + dy * dy) || 1;
   e.wave = (e.wave || 0) + 0.05;
@@ -1660,7 +1661,7 @@ function wyvernStep(e, game) {
 }
 
 function crawltipedeStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var airborne = !p.onGround && Math.abs(p.vy) > 0.2;
   var tx = airborne ? p.x : p.x + Math.sin(e.age * 1.8) * 180;
   var ty = airborne ? p.y : p.y - 170;
@@ -1728,7 +1729,7 @@ function flowInvaderStep(e, game) {
 
 // Hornet: flies at range and shoots stingers
 function hornetStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x, dy = p.y - e.y;
   var d = Math.sqrt(dx * dx + dy * dy) || 1;
   var want = 160;
@@ -1753,7 +1754,7 @@ function hornetStep(e, game) {
 
 // Vampire: swoops in to bite
 function vampireStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x, dy = p.y - e.y;
   var d = Math.sqrt(dx * dx + dy * dy) || 1;
   e.attackCd = (e.attackCd || 0) - 1 / 60;
@@ -1777,7 +1778,7 @@ function vampireStep(e, game) {
 
 // Corite: fiery charge
 function coriteStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x, dy = p.y - e.y;
   var d = Math.sqrt(dx * dx + dy * dy) || 1;
   e.attackCd = (e.attackCd || 0) - 1 / 60;
@@ -1802,7 +1803,7 @@ function coriteStep(e, game) {
 
 // Nebula Blaze: hovers and fires bolts
 function lunarflameStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x, dy = p.y - e.y;
   var d = Math.sqrt(dx * dx + dy * dy) || 1;
   flyStep(e, game);
@@ -1822,7 +1823,7 @@ function lunarflameStep(e, game) {
 
 // Archer: walks and fires arrows
 function archerStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x;
   e.dir = dx >= 0 ? 1 : -1;
   e.vx = lerp(e.vx, e.dir * e.speed, 0.1);
@@ -1840,7 +1841,7 @@ function archerStep(e, game) {
 
 // Ice Golem: shoots a frost bolt
 function golemStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x;
   e.dir = dx >= 0 ? 1 : -1;
   e.vx = lerp(e.vx, e.dir * e.speed, 0.1);
@@ -1858,7 +1859,7 @@ function golemStep(e, game) {
 
 // Tortoise: ambles, then bursts into a charge
 function tortoiseStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x;
   var d = Math.abs(dx);
   if (e.chargeT > 0) {
@@ -1880,7 +1881,7 @@ function tortoiseStep(e, game) {
 
 // Ichor Sticker: walks and spits ichor
 function ichorStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x;
   e.dir = dx >= 0 ? 1 : -1;
   e.vx = lerp(e.vx, e.dir * e.speed, 0.1);
@@ -1899,7 +1900,7 @@ function ichorStep(e, game) {
 // Clinger: hangs on the wall and sprays cursed flame
 function clingerStep(e, game) {
   e.vx = 0; e.vy = 0;
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   e.attackCd = (e.attackCd || 0) - 1 / 60;
   if (e.attackCd <= 0 && Math.abs(p.y - e.y) < 200) {
     e.attackCd = 1.6;
@@ -1915,7 +1916,7 @@ function clingerStep(e, game) {
 
 // Mimic: inert until the player gets close, then lunges
 function mimicStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x, dy = p.y - e.y;
   var d = Math.sqrt(dx * dx + dy * dy) || 1;
   if (!e.awake && d < 140) {
@@ -1968,7 +1969,7 @@ function initSegments(e, game, count, color) {
 var MINION_CAP = 3;
 
 function spawnMinion(game, staff) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   // cull dead minions
   for (var i = game.entities.length - 1; i >= 0; i--) {
     var en = game.entities[i];
@@ -2045,7 +2046,7 @@ function minionHitTarget(target, dmg, game) {
 
 function minionStep(m, game) {
   m.age += 1 / 60;
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var tgt = minionTarget(game, m);
   var tx, ty, want;
   if (tgt) { tx = tgt.x; ty = tgt.y; want = 60; }

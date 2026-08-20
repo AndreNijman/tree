@@ -1,0 +1,17 @@
+{
+  "name": "tree-game",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node --check worker/relay.js && node tools/mp-relay-smoke.js && wrangler deploy --dry-run",
+    "mp:smoke": "node tools/mp-e2e.js",
+    "mp:browser": "node tools/mp-browser-smoke.js",
+    "relay:dev": "wrangler dev",
+    "relay:deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1",
+    "wrangler": "^4.32.0",
+    "ws": "^8.21.3"
+  }
+}

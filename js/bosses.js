@@ -57,7 +57,7 @@ function bossStep(e, game) {
 
 // Keep boss near player
 function bossLeash(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   if (dist(e.x, e.y, p.x, p.y) > 1100) {
     e.x = p.x + (Math.random() * 400 - 200);
     e.y = p.y - 200;
@@ -74,7 +74,7 @@ function aimProj(game, sx, sy, tx, ty, speed, type, dmg, spread) {
 
 // ---------------- The Twins ----------------
 function spawnTwins(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   var r = makeBoss(game, { boss:'twins', sub:'retinazer', name:'Retinazer', w:46, h:46, hp:8500, dmg:50, def:8, color:'#ff3d4d', barColor:'#ff4d4d', x:p.x + 420, y:p.y - 180 });
   var s = makeBoss(game, { boss:'twins', sub:'spazmatism', name:'Spazmatism', w:46, h:46, hp:8500, dmg:60, def:8, color:'#3dff9d', barColor:'#3dff9d', x:p.x - 420, y:p.y - 180 });
@@ -83,7 +83,7 @@ function spawnTwins(game) {
 }
 
 function twinsStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   var isRet = e.sub === 'retinazer';
   var speed = (e.phase2 ? 7.5 : 5.5);
@@ -140,7 +140,7 @@ function twinsStep(e, game) {
 
 // ---------------- The Destroyer ----------------
 function spawnDestroyer(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   var segCount = 62, segHp = 650, headHp = 6200;
   var e = makeBoss(game, { boss:'destroyer', name:'The Destroyer', w:52, h:36, hp:headHp + segCount * segHp, maxHp:headHp + segCount * segHp, dmg:75, def:12, color:'#8a8f9a', barColor:'#9ad0ff', x:p.x + 600, y:p.y - 220 });
@@ -155,7 +155,7 @@ function spawnDestroyer(game) {
 }
 
 function destroyerStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.wave += 0.02;
   var dir = p.x > e.x ? 1 : -1;
@@ -223,7 +223,7 @@ function destroyerStep(e, game) {
 
 // ---------------- Skeletron Prime ----------------
 function spawnSkeleton(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   var head = makeBoss(game, { boss:'skelprime', name:'Skeletron Prime', w:56, h:56, hp:17000, dmg:60, def:25, color:'#cfd6e0', barColor:'#8a9abf', x:p.x + 200, y:p.y - 260 });
   head.armCount = 4;
@@ -245,7 +245,7 @@ function spawnSkeleton(game) {
 }
 
 function skelStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.wave = (e.wave || 0) + 0.03;
   // head hover: keep ~140px above player, drift left/right
@@ -335,13 +335,13 @@ function skelStep(e, game) {
 
 // ---------------- Queen Slime ----------------
 function spawnQueenSlime(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'queenslime', name:'Queen Slime', w:72, h:52, hp:14000, dmg:45, def:14, color:'#ff8fd0', barColor:'#ff8fd0', x:p.x + 300, y:p.y - 160 });
 }
 
 function queenSlimeStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   // big bounces
   e.timer -= 1 / 60;
@@ -384,13 +384,13 @@ function queenSlimeStep(e, game) {
 
 // ---------------- Plantera ----------------
 function spawnPlantera(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'plantera', name:'Plantera', w:78, h:78, hp:26000, dmg:60, def:18, color:'#6bff8a', barColor:'#6bff8a', x:p.x, y:p.y - 60 });
 }
 
 function planteraStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   var speed = e.phase2 ? 4.5 : 2.6;
   // approach slowly in phase 1, hunt in phase 2
@@ -438,13 +438,13 @@ function planteraStep(e, game) {
 
 // ---------------- Golem ----------------
 function spawnGolem(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'golem', name:'Golem', w:70, h:70, hp:22000, dmg:65, def:22, color:'#c8b090', barColor:'#ffb84d', x:p.x, y:p.y - 120 });
 }
 
 function golemStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   // hover and strafe
   e.wave = (e.wave || 0) + 0.03;
@@ -484,13 +484,13 @@ function golemStep(e, game) {
 
 // ---------------- Duke Fishron ----------------
 function spawnDuke(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'duke', name:'Duke Fishron', w:64, h:46, hp:30000, dmg:70, def:20, color:'#5ac8ff', barColor:'#5ac8ff', x:p.x + 400, y:p.y - 180 });
 }
 
 function dukeStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.wave = (e.wave || 0) + 0.08;
   var speed = e.phase2 ? 13 : 8.5;
@@ -534,13 +534,13 @@ function dukeStep(e, game) {
 
 // ---------------- Empress of Light ----------------
 function spawnEmpress(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'empress', name:'Empress of Light', w:56, h:56, hp:28000, dmg:65, def:20, color:'#ffe9a8', barColor:'#ffe14d', x:p.x, y:p.y - 200 });
 }
 
 function empressStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.wave = (e.wave || 0) + 0.05;
   var speed = e.phase2 ? 9 : 6;
@@ -572,13 +572,13 @@ function empressStep(e, game) {
 
 // ---------------- Lunatic Cultist ----------------
 function spawnCultist(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'cultist', name:'Lunatic Cultist', w:40, h:64, hp:24000, dmg:50, def:24, color:'#e0d8ff', barColor:'#c85cff', x:p.x + 200, y:p.y - 160 });
 }
 
 function cultistStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.attackTimer -= 1 / 60;
   // teleport around the player
@@ -612,13 +612,13 @@ function cultistStep(e, game) {
 
 // ---------------- Moon Lord ----------------
 function spawnMoonLord(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'moonlord', name:'Moon Lord', w:120, h:120, hp:70000, dmg:80, def:30, color:'#8a9ad0', barColor:'#c85cff', x:p.x, y:p.y - 260 });
 }
 
 function moonLordStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.wave = (e.wave || 0) + 0.02;
   var speed = e.phase2 ? 3.5 : 2.4;
@@ -668,7 +668,7 @@ function moonLordStep(e, game) {
 
 // ---------------- Lunar Pillars ----------------
 function spawnLunarPillar(game, type) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var w = game.world;
   var themes = {
     solar: { name:'Solar Pillar', hp:30000, dmg:70, color:'#ff8a3d', barColor:'#ff8a3d', frag:I.FRAG_SOLAR, enemies:[E.CORITE,E.SELENIAN,E.CRAWLTIPEDE] },
@@ -689,7 +689,7 @@ function spawnLunarPillar(game, type) {
 }
 
 function lunarPillarStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   // hover in place with a slow bob
   e.bob = (e.bob || 0) + 0.03;
   e.anchorY = (e.anchorY === undefined) ? e.y : e.anchorY;
@@ -747,7 +747,7 @@ function lunarPillarStep(e, game) {
 
 // ---------- Event bosses (Pumpkin/Frost Moon + Martian Madness) ----------
 function eventBossSpray(e, game, type, dmg, n, spread) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var ang = Math.atan2(p.y - e.y, p.x - e.x);
   for (var i = 0; i < n; i++) {
     var a = ang + (i - (n - 1) / 2) * (spread || 0.18);
@@ -760,13 +760,13 @@ function eventBossSpray(e, game, type, dmg, n, spread) {
 }
 
 function spawnMourningWood(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'mourningwood', name:'Mourning Wood', w:56, h:56, hp:24000, dmg:70, def:22, color:'#7a4d3d', barColor:'#ff9a3d', x:p.x + 300, y:p.y - 160 });
 }
 
 function mourningWoodStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.wave = (e.wave || 0) + 0.05;
   var speed = e.phase2 ? 5 : 3.4;
@@ -787,13 +787,13 @@ function mourningWoodStep(e, game) {
 }
 
 function spawnPumpking(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'pumpking', name:'Pumpking', w:60, h:60, hp:36000, dmg:80, def:24, color:'#ff8a3d', barColor:'#ff8a3d', x:p.x, y:p.y - 220 });
 }
 
 function pumpkingStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.wave = (e.wave || 0) + 0.06;
   var speed = e.phase2 ? 6 : 4.5;
@@ -815,19 +815,19 @@ function pumpkingStep(e, game) {
 }
 
 function spawnEverscream(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'everscream', name:'Everscream', w:56, h:56, hp:24000, dmg:70, def:22, color:'#8ac84a', barColor:'#8ac84a', x:p.x + 300, y:p.y - 160 });
 }
 
 function spawnSantank(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'santank', name:'Santa-NK1', w:52, h:56, hp:32000, dmg:75, def:22, color:'#d04040', barColor:'#d04040', x:p.x + 260, y:p.y - 140 });
 }
 
 function santankStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.wave = (e.wave || 0) + 0.05;
   var speed = e.phase2 ? 5.4 : 3.6;
@@ -848,13 +848,13 @@ function santankStep(e, game) {
 }
 
 function spawnIceQueen(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'icequeen', name:'Ice Queen', w:58, h:58, hp:34000, dmg:78, def:24, color:'#a8d8f0', barColor:'#a8d8f0', x:p.x, y:p.y - 220 });
 }
 
 function iceQueenStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.wave = (e.wave || 0) + 0.06;
   var speed = e.phase2 ? 7 : 5;
@@ -876,13 +876,13 @@ function iceQueenStep(e, game) {
 }
 
 function spawnMartianSaucer(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'martiansaucer', name:'Martian Saucer', w:80, h:48, hp:40000, dmg:70, def:26, color:'#3dff9d', barColor:'#3dff9d', x:p.x, y:p.y - 260 });
 }
 
 function martianSaucerStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.wave = (e.wave || 0) + 0.04;
   var speed = e.phase2 ? 4.5 : 2.8;
@@ -905,13 +905,13 @@ function martianSaucerStep(e, game) {
 
 // Goblin Warlock - Goblin Army mini-boss. Cursed bolt caster, summons goblins.
 function spawnGoblinWarlock(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'goblinwarlock', name:'Goblin Warlock', w:36, h:48, hp:6500, dmg:40, def:14, color:'#7a4d3d', barColor:'#c85cff', x:p.x + 220, y:p.y - 200 });
 }
 
 function goblinWarlockStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.wave = (e.wave || 0) + 0.05;
   var tx = p.x + Math.sin(e.wave * 1.4) * 100;
@@ -945,13 +945,13 @@ function goblinWarlockStep(e, game) {
 
 // Pirate Captain - Pirate Invasion mini-boss. Fireball cannon + flying deckhands.
 function spawnPirateCaptain(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'piratecaptain', name:'Pirate Captain', w:44, h:52, hp:8500, dmg:46, def:16, color:'#3d4d5c', barColor:'#ffb84d', x:p.x + 240, y:p.y - 220 });
 }
 
 function pirateCaptainStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.wave = (e.wave || 0) + 0.06;
   var tx = p.x + Math.sin(e.wave * 1.2) * 120;
@@ -985,13 +985,13 @@ function pirateCaptainStep(e, game) {
 
 // Flying Dutchman - final Pirate Invasion ship. Bombards the player and deploys pirates.
 function spawnFlyingDutchman(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'flyingdutchman', name:'Flying Dutchman', w:104, h:58, hp:18000, dmg:62, def:24, color:'#6a4a32', barColor:'#d8b878', x:p.x + 320, y:p.y - 260 });
 }
 
 function flyingDutchmanStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.wave = (e.wave || 0) + 0.025;
   var tx = p.x + Math.sin(e.wave) * 240;
@@ -1026,13 +1026,13 @@ function flyingDutchmanStep(e, game) {
 
 // Mothron - Solar Eclipse mini-boss. Dives at the player, spawns babies in phase 2.
 function spawnMothron(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'mothron', name:'Mothron', w:40, h:26, hp:8000, dmg:70, def:20, color:'#8a8ab8', barColor:'#c8a8ff', x:p.x + 260, y:p.y - 200 });
 }
 
 function mothronStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.attackTimer -= 1 / 60;
   e.dir = p.x >= e.x ? 1 : -1;
@@ -1057,13 +1057,13 @@ function mothronStep(e, game) {
 
 // Deerclops - an early Snow boss with ice spikes, falling debris, and shadow hands.
 function spawnDeerclops(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'deerclops', name:'Deerclops', w:70, h:78, hp:7000, dmg:44, def:12, color:'#5a4638', barColor:'#9ed8f0', x:p.x + 260, y:p.y - 180 });
 }
 
 function deerclopsStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   e.dir = p.x >= e.x ? 1 : -1;
   e.vx = lerp(e.vx, e.dir * (e.phase2 ? 2.5 : 1.8), 0.05);
@@ -1098,13 +1098,13 @@ function deerclopsStep(e, game) {
 
 // King Slime - hops around, spawns slimes, phase 2 teleport
 function spawnKingSlime(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'kingslime', name:'King Slime', w:52, h:40, hp:2500, dmg:25, def:8, color:'#5cbf6c', barColor:'#3dbf6c', x:p.x + 200, y:p.y - 240 });
 }
 
 function kingSlimeStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   var speed = e.phase2 ? 5.0 : 3.5;
   e.timer -= 1 / 60;
@@ -1135,13 +1135,13 @@ function kingSlimeStep(e, game) {
 
 // Eye of Cthulhu - fly toward player, phase 2 dash, charge at distance
 function spawnEyeOfCthulhu(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'eyeofcthulhu', name:'Eye of Cthulhu', w:40, h:40, hp:3500, dmg:30, def:5, color:'#c04040', barColor:'#d04040', x:p.x + 350, y:p.y - 200 });
 }
 
 function eyeStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   var speed = e.phase2 ? 5.5 : 4.0;
   var ang = Math.atan2(p.y - e.y, p.x - e.x);
@@ -1174,7 +1174,7 @@ function eyeStep(e, game) {
 
 // Eater of Worlds - segmented worm like Destroyer but weaker
 function spawnEaterOfWorlds(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   var segCount = 18, segHp = 300, headHp = 1800;
   var e = makeBoss(game, { boss:'eaterofworlds', name:'Eater of Worlds', w:30, h:24, hp:headHp + segCount * segHp, maxHp:headHp + segCount * segHp, dmg:35, def:10, color:'#5a4d7a', barColor:'#7a5c9a', x:p.x + 300, y:p.y - 220 });
@@ -1189,7 +1189,7 @@ function spawnEaterOfWorlds(game) {
 }
 
 function eaterWorldsStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   var speed = e.phase2 ? 5.5 : 4.2;
   var ang = Math.atan2(p.y - e.y, p.x - e.x);
@@ -1229,13 +1229,13 @@ function moveSegments(e, game) {
 
 // Brain of Cthulhu - bounces, phase 2 spawns creepers
 function spawnBrainOfCthulhu(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'brainofcthulhu', name:'Brain of Cthulhu', w:44, h:44, hp:3800, dmg:32, def:5, color:'#c04848', barColor:'#e04848', x:p.x + 250, y:p.y - 240 });
 }
 
 function brainStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   var speed = e.phase2 ? 5.0 : 3.6;
   e.wave = (e.wave || 0) + 0.05;
@@ -1253,13 +1253,13 @@ function brainStep(e, game) {
 
 // Queen Bee - flies, shoots stingers and bees
 function spawnQueenBee(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   return makeBoss(game, { boss:'queenbee', name:'Queen Bee', w:46, h:42, hp:3000, dmg:28, def:6, color:'#ffd75e', barColor:'#ffc040', x:p.x + 280, y:p.y - 220 });
 }
 
 function queenBeeStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   var speed = e.phase2 ? 5.5 : 4.2;
   e.wave = (e.wave || 0) + 0.06;
@@ -1282,7 +1282,7 @@ function queenBeeStep(e, game) {
 
 // Skeletron - spooky hands, dashes at player
 function spawnSkeletron(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   var e = makeBoss(game, { boss:'skeletron', name:'Skeletron', w:46, h:54, hp:5500, dmg:40, def:12, color:'#d8c8a8', barColor:'#c8b090', x:p.x + 260, y:p.y - 220 });
   e.armCount = 2;
@@ -1295,7 +1295,7 @@ function spawnSkeletron(game) {
 }
 
 function skeletronStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   var speed = e.phase2 ? 5.0 : 3.8;
   var ang = Math.atan2(p.y - e.y, p.x - e.x);
@@ -1339,7 +1339,7 @@ function skeletronStep(e, game) {
 
 // Wall of Flesh - huge wall that chases, fires lasers, spawns hungries
 function spawnWallOfFlesh(game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
   var e = makeBoss(game, { boss:'wallofflesh', name:'Wall of Flesh', w:120, h:90, hp:12000, dmg:55, def:20, color:'#c04848', barColor:'#e04848', x:p.x - 700, y:p.y - 40 });
   e.moveDir = 1;
@@ -1348,7 +1348,7 @@ function spawnWallOfFlesh(game) {
 }
 
 function wallOfFleshStep(e, game) {
-  var p = game.player;
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
   // wall always moves right toward the player
   e.x += e.moveDir * (e.phase2 ? 1.6 : 1.1);
@@ -1404,6 +1404,7 @@ function bossHit(e, dmg, kbx, kby, game) {
 
 function segmentHit(e, s, dmg, game) {
   if (s.dead || e.dead) return;
+  if (typeof Net !== 'undefined' && Net.claimHit(e, dmg, true)) { s.flash = 0.08; return; }
   var reduced = Math.max(1, Math.round(dmg - Math.max(0, e.defV - (e.statusDefensePenalty || 0)) * 0.5));
   s.hp -= reduced;
   s.flash = 0.08;
