@@ -95,7 +95,8 @@ function buildGame(seed, evil) {
     anglerQuestsCompleted: 0,
     cultistRitualReady: false,
     cultistRitualActive: false,
-    cultistRespawnT: 0
+    cultistRespawnT: 0,
+    autosaveT: 0
   };
   game.world.generate(game.hardmode, evil);
   game.world.dirty = false;
@@ -127,8 +128,215 @@ function buildGame(seed, evil) {
 }
 
 // ---------- Save system ----------
-var SAVE_KEY = 'tree.save.v1';
+var LEGACY_SAVE_KEY = 'tree.save.v1';
 var SAVE_FORMAT = 1;
+var WORLD_DB_NAME = 'tree.worlds';
+var WORLD_STORE = 'worlds';
+var worldDbPromise = null;
+var activeWorldId = null;
+var activeWorldName = '';
+var saveInFlight = null;
+var accountSync = { signedIn:false, username:null, syncing:false };
+
+function openWorldDb() {
+  if (worldDbPromise) return worldDbPromise;
+  worldDbPromise = new Promise(function(resolve, reject) {
+    var request = indexedDB.open(WORLD_DB_NAME, 1);
+    request.onupgradeneeded = function() {
+      if (!request.result.objectStoreNames.contains(WORLD_STORE)) {
+        request.result.createObjectStore(WORLD_STORE, { keyPath:'id' });
+      }
+    };
+    request.onsuccess = function() { resolve(request.result); };
+    request.onerror = function() { reject(request.error); };
+  });
+  return worldDbPromise;
+}
+
+function worldStoreRequest(mode, action) {
+  return openWorldDb().then(function(db) {
+    return new Promise(function(resolve, reject) {
+      var tx = db.transaction(WORLD_STORE, mode);
+      var request = action(tx.objectStore(WORLD_STORE));
+      var result;
+      request.onsuccess = function() { result = request.result; };
+      request.onerror = function() { reject(request.error); };
+      tx.oncomplete = function() { resolve(result); };
+      tx.onabort = function() { reject(tx.error || new Error('World storage transaction failed')); };
+    });
+  });
+}
+
+function getWorldRecord(id) {
+  return worldStoreRequest('readonly', function(store) { return store.get(id); });
+}
+
+function getWorldRecords() {
+  return worldStoreRequest('readonly', function(store) { return store.getAll(); });
+}
+
+function putWorldRecord(record) {
+  return worldStoreRequest('readwrite', function(store) { return store.put(record); });
+}
+
+function makeWorldId() {
+  if (window.crypto && window.crypto.randomUUID) return window.crypto.randomUUID();
+  return 'world-' + Date.now().toString(36) + '-' + Math.floor(Math.random() * 1679616).toString(36);
+}
+
+function cleanWorldName(value) {
+  var name = String(value || '').replace(/\s+/g, ' ').trim();
+  return name.slice(0, 32) || 'Unnamed World';
+}
+
+function escapeText(value) {
+  return String(value).replace(/[&<>"']/g, function(ch) {
+    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[ch];
+  });
+}
+
+function worldDate(time) {
+  if (!time) return 'Never saved';
+  try { return new Date(time).toLocaleString([], { dateStyle:'medium', timeStyle:'short' }); }
+  catch (e) { return new Date(time).toLocaleString(); }
+}
+
+function migrateLegacySave() {
+  var raw;
+  try { raw = localStorage.getItem(LEGACY_SAVE_KEY); } catch (e) { raw = null; }
+  if (!raw) return Promise.resolve();
+  try {
+    var data = JSON.parse(raw);
+    if (!data || data.format !== SAVE_FORMAT || !data.tiles) return Promise.resolve();
+    var updatedAt = data.savedAt || Date.now();
+    var record = {
+      id:'legacy-' + updatedAt.toString(36), name:'Legacy World', createdAt:updatedAt,
+      updatedAt:updatedAt, deletedAt:null, evil:data.evil || 'random',
+      hardmode:!!(data.progress && data.progress.hardmode), victory:!!(data.progress && data.progress.victory), data:data
+    };
+    return putWorldRecord(record).then(function() {
+      try { localStorage.removeItem(LEGACY_SAVE_KEY); } catch (e2) {}
+    });
+  } catch (err) {
+    return Promise.resolve();
+  }
+}
+
+function setSaveMode(text) {
+  if ($('save-mode')) $('save-mode').textContent = text;
+}
+
+function renderWorldList() {
+  var root = $('world-list');
+  if (!root) return Promise.resolve();
+  return getWorldRecords().then(function(records) {
+    records = records.filter(function(record) { return !record.deletedAt && record.data; });
+    records.sort(function(a, b) { return b.updatedAt - a.updatedAt; });
+    if (!records.length) {
+      root.innerHTML = '<div class="world-empty">No worlds yet. Create one to begin.</div>';
+      return;
+    }
+    var html = '';
+    for (var i = 0; i < records.length; i++) {
+      var record = records[i];
+      var phase = record.victory ? 'Moon Lord defeated' : record.hardmode ? 'Hardmode' : 'Pre-Hardmode';
+      var evil = record.evil === 'crimson' ? 'Crimson' : record.evil === 'corrupt' ? 'Corruption' : 'Unknown evil';
+      html += '<div class="world-row" data-world-id="' + escapeText(record.id) + '">' +
+        '<button class="world-open" type="button"><span class="world-title">' + escapeText(record.name) + '</span>' +
+        '<span class="world-meta">' + phase + ' · ' + evil + ' · ' + escapeText(worldDate(record.updatedAt)) + '</span></button>' +
+        '<button class="world-delete" type="button" aria-label="Delete ' + escapeText(record.name) + '">Delete</button></div>';
+    }
+    root.innerHTML = html;
+  }).catch(function() {
+    root.innerHTML = '<div class="world-empty">World storage is unavailable in this browser.</div>';
+  });
+}
+
+function cloudJson(path, options) {
+  options = options || {};
+  options.credentials = 'same-origin';
+  options.cache = 'no-store';
+  return fetch(path, options).then(function(response) {
+    return response.json().catch(function() { return {}; }).then(function(body) {
+      if (!response.ok) throw new Error(body.error || 'Cloud request failed');
+      return body;
+    });
+  });
+}
+
+function uploadCloudWorld(record) {
+  if (!accountSync.signedIn || record.deletedAt || !record.data) return Promise.resolve();
+  return cloudJson('/_guard/save?id=' + encodeURIComponent(record.id), {
+    method:'PUT', headers:{ 'Content-Type':'application/json' },
+    body:JSON.stringify({
+      name:record.name, updatedAt:record.updatedAt, evil:record.evil,
+      hardmode:record.hardmode, victory:record.victory, save:record.data
+    })
+  });
+}
+
+function deleteCloudWorld(record) {
+  if (!accountSync.signedIn) return Promise.resolve();
+  return cloudJson('/_guard/save?id=' + encodeURIComponent(record.id), {
+    method:'DELETE', headers:{ 'Content-Type':'application/json' },
+    body:JSON.stringify({ name:record.name, updatedAt:record.updatedAt })
+  });
+}
+
+function pullCloudWorld(meta) {
+  return cloudJson('/_guard/save?id=' + encodeURIComponent(meta.id)).then(function(body) {
+    if (!body.world) throw new Error('Cloud world is missing');
+    return putWorldRecord(body.world);
+  });
+}
+
+function syncCloudWorlds() {
+  if (!accountSync.signedIn || accountSync.syncing) return Promise.resolve();
+  accountSync.syncing = true;
+  setSaveMode('Syncing ' + accountSync.username + '...');
+  return Promise.all([getWorldRecords(), cloudJson('/_guard/saves')]).then(function(results) {
+    var local = results[0], remote = results[1].worlds || [];
+    var localById = {}, remoteById = {}, ids = {}, jobs = [];
+    for (var i = 0; i < local.length; i++) { localById[local[i].id] = local[i]; ids[local[i].id] = true; }
+    for (var j = 0; j < remote.length; j++) { remoteById[remote[j].id] = remote[j]; ids[remote[j].id] = true; }
+    for (var id in ids) {
+      (function(worldId) {
+        var l = localById[worldId], r = remoteById[worldId];
+        if (!l && r) {
+          jobs.push(r.deletedAt ? putWorldRecord(r) : pullCloudWorld(r));
+        } else if (l && !r) {
+          if (!l.deletedAt) jobs.push(uploadCloudWorld(l));
+        } else if (l && r && r.updatedAt > l.updatedAt) {
+          jobs.push(r.deletedAt ? putWorldRecord(r) : pullCloudWorld(r));
+        } else if (l && r && l.updatedAt > r.updatedAt) {
+          jobs.push(l.deletedAt ? deleteCloudWorld(l) : uploadCloudWorld(l));
+        }
+      })(id);
+    }
+    return Promise.all(jobs);
+  }).then(function() {
+    setSaveMode('Synced as ' + accountSync.username);
+    return renderWorldList();
+  }).catch(function() {
+    setSaveMode('Local saves · sync unavailable');
+  }).then(function() {
+    accountSync.syncing = false;
+  });
+}
+
+function initWorldStorage() {
+  setSaveMode('Checking account...');
+  return openWorldDb().then(migrateLegacySave).then(renderWorldList).then(function() {
+    return cloudJson('/_guard/status').then(function(status) {
+      accountSync.signedIn = !!status.signedIn;
+      accountSync.username = status.username || null;
+      if (accountSync.signedIn) return syncCloudWorlds();
+      setSaveMode('Local saves · guest');
+    }).catch(function() {
+      setSaveMode('Local saves');
+    });
+  });
+}
 
 var METAL_DETECTOR_NAMES = {
   '52':'Copper Ore', '58':'Tin Ore', '10':'Iron Ore', '59':'Lead Ore',
@@ -282,37 +490,69 @@ function saveSnapshot() {
   };
 }
 
-function hasSavedGame() {
-  try { return !!localStorage.getItem(SAVE_KEY); }
-  catch (e) { return false; }
-}
-
-function saveGame() {
+function canSaveGame(silent) {
   if (!game || !game.started) return false;
   if (game.torchGod) {
-    game.message('Survive the Torch God before saving.');
+    if (!silent) game.message('Survive the Torch God before saving.');
     return false;
   }
   if (game.event && game.event.type === 'oldonesarmy') {
-    game.message('Finish the Old One\'s Army before saving.');
+    if (!silent) game.message('Finish the Old One\'s Army before saving.');
     return false;
   }
   for (var i = 0; i < game.entities.length; i++) {
     var e = game.entities[i];
     if (e.boss && e.boss !== 'lunar' && !e.dead) {
-      game.message('Defeat or escape the active boss before saving.');
+      if (!silent) game.message('Defeat or escape the active boss before saving.');
       return false;
     }
   }
-  try {
-    localStorage.setItem(SAVE_KEY, JSON.stringify(saveSnapshot()));
-    game.message('World saved.');
-    refreshSaveMenu();
-    return true;
-  } catch (err) {
-    game.message('Save failed: browser storage is unavailable or full.');
-    return false;
+  return true;
+}
+
+function saveGame(silent) {
+  silent = !!silent;
+  if (!canSaveGame(silent)) return Promise.resolve(false);
+  if (saveInFlight) {
+    return silent ? saveInFlight : saveInFlight.then(function() { return saveGame(false); });
   }
+  var snapshot;
+  try { snapshot = saveSnapshot(); }
+  catch (err) {
+    if (!silent && game) game.message('Save failed while preparing the world.');
+    return Promise.resolve(false);
+  }
+  var id = activeWorldId || makeWorldId();
+  var name = cleanWorldName(activeWorldName || 'Unnamed World');
+  var now = Date.now();
+  saveInFlight = getWorldRecord(id).then(function(existing) {
+    var record = {
+      id:id, name:name, createdAt:existing && existing.createdAt ? existing.createdAt : now,
+      updatedAt:now, deletedAt:null, evil:snapshot.evil || 'random',
+      hardmode:!!(snapshot.progress && snapshot.progress.hardmode),
+      victory:!!(snapshot.progress && snapshot.progress.victory), data:snapshot
+    };
+    activeWorldId = id;
+    activeWorldName = name;
+    return putWorldRecord(record).then(function() {
+      if (!silent && game) game.message(accountSync.signedIn ? 'World saved. Syncing to account...' : 'World saved locally.');
+      renderWorldList();
+      uploadCloudWorld(record).then(function() {
+        if (!silent && game && accountSync.signedIn) game.message('World saved locally and to ' + accountSync.username + '.');
+        setSaveMode(accountSync.signedIn ? 'Synced as ' + accountSync.username : 'Local saves · guest');
+      }).catch(function() {
+        setSaveMode('Saved locally · cloud sync failed');
+      });
+      return true;
+    });
+  }).catch(function() {
+    if (!silent && game) game.message('Save failed: browser storage is unavailable or full.');
+    return false;
+  }).then(function(result) {
+    saveInFlight = null;
+    return result;
+  });
+  return saveInFlight;
 }
 
 function restorePetList(ids, light) {
@@ -488,61 +728,88 @@ function applySaveData(data) {
   if (game.victory && game.showVictory) game.showVictory();
 }
 
-function startSavedGame() {
-  var raw;
-  try { raw = localStorage.getItem(SAVE_KEY); }
-  catch (e) { raw = null; }
-  if (!raw) { refreshSaveMenu(); return; }
+function startSavedGame(id) {
   $('loading').classList.remove('hidden');
   $('loadprogress').innerHTML = '<div class="bar" style="width:20%"></div>';
-  requestAnimationFrame(function() {
+  getWorldRecord(id).then(function(record) {
+    if (!record || record.deletedAt || !record.data) throw new Error('World not found');
+    activeWorldId = record.id;
+    activeWorldName = record.name;
+    return new Promise(function(resolve) { requestAnimationFrame(resolve); }).then(function() {
     try {
       $('loadprogress').innerHTML = '<div class="bar" style="width:65%"></div>';
-      applySaveData(JSON.parse(raw));
+      applySaveData(record.data);
       $('loadprogress').innerHTML = '<div class="bar" style="width:100%"></div>';
       $('loading').classList.add('hidden');
       $('mainmenu').classList.add('hidden');
-      $('btn-save').classList.add('hidden');
       MOUSE.down = false; MOUSE.right = false; acc = 0;
       for (var key in KEY) KEY[key] = false;
       for (var just in KEY_JUST) KEY_JUST[just] = false;
       AudioSys.init(); AudioSys.resume();
-      game.message('World loaded.');
+      game.message(record.name + ' loaded.');
     } catch (err) {
-      game = null;
-      $('loading').classList.add('hidden');
-      $('mainmenu').classList.remove('hidden');
-      $('message').textContent = 'The save could not be loaded.';
-      $('message').style.opacity = 1;
-      refreshSaveMenu();
+      throw err;
     }
+    });
+  }).catch(function() {
+    game = null;
+    activeWorldId = null;
+    activeWorldName = '';
+    $('loading').classList.add('hidden');
+    $('mainmenu').classList.remove('hidden');
+    $('message').textContent = 'The world could not be loaded.';
+    $('message').style.opacity = 1;
+    showTitleActions();
+    renderWorldList();
   });
 }
 
 function refreshSaveMenu() {
-  var cont = $('btn-continue'), save = $('btn-save');
-  if (!cont || !save) return;
   if (game && game.started && game.paused) {
-    cont.textContent = 'Resume';
-    cont.classList.remove('hidden');
-    save.classList.remove('hidden');
+    $('title-actions').classList.add('hidden');
+    $('pause-actions').classList.remove('hidden');
   } else {
-    save.classList.add('hidden');
-    cont.textContent = 'Continue';
-    if (hasSavedGame()) cont.classList.remove('hidden');
-    else cont.classList.add('hidden');
+    showTitleActions();
   }
 }
 
+function showTitleActions() {
+  $('title-actions').classList.remove('hidden');
+  $('pause-actions').classList.add('hidden');
+  $('world-create').classList.add('hidden');
+  $('btn-new').classList.remove('hidden');
+}
+
 function saveAndQuit() {
-  if (!saveGame()) return;
-  closePanel();
-  game = null;
-  var victory = document.getElementById('victory');
-  if (victory && victory.parentNode) victory.parentNode.removeChild(victory);
-  $('mainmenu').classList.remove('hidden');
-  document.querySelector('#mainmenu h1').textContent = 'tree';
-  refreshSaveMenu();
+  saveGame(false).then(function(saved) {
+    if (!saved) return;
+    closePanel();
+    game = null;
+    activeWorldId = null;
+    activeWorldName = '';
+    var victory = document.getElementById('victory');
+    if (victory && victory.parentNode) victory.parentNode.removeChild(victory);
+    $('mainmenu').classList.remove('hidden');
+    document.querySelector('#mainmenu h1').textContent = 'tree';
+    showTitleActions();
+    renderWorldList();
+  });
+}
+
+function deleteWorld(id) {
+  return getWorldRecord(id).then(function(record) {
+    if (!record || record.deletedAt) return;
+    if (!window.confirm('Delete "' + record.name + '"? This removes the local and account copy.')) return;
+    record.updatedAt = Date.now();
+    record.deletedAt = record.updatedAt;
+    record.data = null;
+    return putWorldRecord(record).then(function() {
+      renderWorldList();
+      return deleteCloudWorld(record).catch(function() {
+        setSaveMode('Deleted locally · cloud sync pending');
+      });
+    });
+  });
 }
 
 function spawnNpcs() {
@@ -867,10 +1134,12 @@ function renderHousingPanel() {
   root.innerHTML = html + '</div>';
 }
 
-function startNewGame() {
+function startNewGame(name) {
   var seed = Math.floor(Math.random() * 2147483647);
   var evilSel = document.querySelector('input[name="evil"]:checked');
   var evil = evilSel ? evilSel.value : 'random';
+  activeWorldId = makeWorldId();
+  activeWorldName = cleanWorldName(name);
   $('loading').classList.remove('hidden');
   $('loadprogress').innerHTML = '<div class="bar" style="width:15%"></div>';
   requestAnimationFrame(function() {
@@ -882,8 +1151,6 @@ function startNewGame() {
     $('loading').classList.add('hidden');
     $('mainmenu').classList.add('hidden');
     document.querySelector('#mainmenu h1').textContent = 'tree';
-    $('btn-continue').classList.add('hidden');
-    $('btn-save').classList.add('hidden');
     var victory = document.getElementById('victory');
     if (victory && victory.parentNode) victory.parentNode.removeChild(victory);
     MOUSE.down = false;
@@ -891,9 +1158,10 @@ function startNewGame() {
     acc = 0;
     for (var k in KEY) KEY[k] = false;
     for (var j in KEY_JUST) KEY_JUST[j] = false;
-    game.message('Welcome to tree! Press H for the guide.');
+    game.message('Welcome to ' + activeWorldName + '! Press H for the guide.');
     AudioSys.init();
     AudioSys.resume();
+    saveGame(true);
   });
 }
 
@@ -1442,6 +1710,12 @@ function loop(now) {
 function step(dt) {
   Time.seconds += dt;
   Time.frame++;
+
+  game.autosaveT += dt;
+  if (game.autosaveT >= 60) {
+    game.autosaveT = 0;
+    saveGame(true);
+  }
 
   handleKeys();
 
@@ -4548,8 +4822,7 @@ function pauseGame() {
 function resumeGame() {
   game.paused = false;
   $('mainmenu').classList.add('hidden');
-  $('btn-continue').classList.add('hidden');
-  $('btn-save').classList.add('hidden');
+  $('pause-actions').classList.add('hidden');
   acc = 0;
   AudioSys.resume();
 }
@@ -4709,11 +4982,30 @@ function initDOM() {
   });
 
   // menus
-  $('btn-new').addEventListener('click', function() { startNewGame(); });
-  $('btn-continue').addEventListener('click', function() {
-    if (game && game.started && game.paused) resumeGame();
-    else startSavedGame();
+  $('btn-new').addEventListener('click', function() {
+    $('btn-new').classList.add('hidden');
+    $('world-create').classList.remove('hidden');
+    $('world-name').value = '';
+    $('world-name').focus();
   });
+  $('btn-cancel-create').addEventListener('click', function() {
+    $('world-create').classList.add('hidden');
+    $('btn-new').classList.remove('hidden');
+  });
+  $('btn-create').addEventListener('click', function() {
+    startNewGame($('world-name').value);
+  });
+  $('world-name').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') startNewGame($('world-name').value);
+  });
+  $('world-list').addEventListener('click', function(event) {
+    var row = event.target.closest('.world-row');
+    if (!row) return;
+    var id = row.getAttribute('data-world-id');
+    if (event.target.closest('.world-delete')) deleteWorld(id);
+    else if (event.target.closest('.world-open')) startSavedGame(id);
+  });
+  $('btn-continue').addEventListener('click', function() { resumeGame(); });
   $('btn-save').addEventListener('click', function() { saveAndQuit(); });
   $('btn-howto').addEventListener('click', function() {
     $('howto').classList.toggle('hidden');
@@ -4722,9 +5014,13 @@ function initDOM() {
     if (game) game.respawn();
   });
   refreshSaveMenu();
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden && game && game.started && !game.paused) saveGame(true);
+  });
 }
 
 // ---------- Boot ----------
 initDOM();
 initInput();
+initWorldStorage();
 requestAnimationFrame(loop);

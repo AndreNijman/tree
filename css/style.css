@@ -155,11 +155,31 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; font-fam
 .overlay h1 { font-size:72px; color:#7CFC8A; text-shadow:0 0 24px rgba(124,252,138,.6); letter-spacing:6px; font-family:Georgia, serif; }
 .overlay h2 { font-size:48px; color:#ff5c5c; text-shadow:0 0 20px rgba(255,60,60,.7); }
 .overlay .subtitle { color:#8fc5a8; letter-spacing:3px; margin-top:-12px; }
-.menu-buttons { display:flex; flex-direction:column; gap:10px; }
+.menu-buttons { display:flex; flex-direction:column; gap:10px; width:min(620px,calc(100vw - 32px)); }
 .menu-buttons button, #deathscreen button {
   background:#2a3d2f; color:#eaffef; border:2px solid #4d7a5a; padding:12px 40px; font-size:18px; border-radius:8px; cursor:pointer;
 }
 .menu-buttons button:hover, #deathscreen button:hover { background:#3d5a45; }
+.menu-buttons button:focus-visible, #world-name:focus-visible { outline:3px solid #9db8ff; outline-offset:2px; }
+#title-actions, #pause-actions { display:flex; flex-direction:column; gap:10px; }
+.world-heading { display:flex; justify-content:space-between; align-items:center; color:#cfd3e0; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; }
+#save-mode { color:#8fc5a8; letter-spacing:.5px; text-transform:none; }
+#world-list { max-height:min(42vh,340px); overflow-y:auto; background:rgba(5,9,16,.7); border:1px solid #3a4158; border-radius:8px; }
+.world-empty { padding:24px 20px; color:#82909f; text-align:center; font-size:14px; }
+.world-row { display:grid; grid-template-columns:1fr auto; align-items:stretch; min-height:66px; }
+.world-row + .world-row { border-top:1px solid #2d3547; }
+.world-open { min-width:0; border:0 !important; border-radius:0 !important; background:transparent !important; padding:10px 16px !important; text-align:left; display:grid; gap:4px; }
+.world-open:hover { background:#182436 !important; }
+.world-title { color:#eaffef; font:20px Georgia,serif; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.world-meta { color:#8c9caf; font-size:11px; letter-spacing:.35px; }
+.world-delete { align-self:center; margin-right:10px; border:1px solid #6d4141 !important; background:#2b1c20 !important; color:#e8b4b4 !important; padding:8px 12px !important; min-width:44px; min-height:44px; font-size:12px !important; }
+.world-delete:hover { background:#48252a !important; }
+#world-create { display:grid; gap:10px; padding:14px; background:rgba(5,9,16,.78); border:1px solid #3a4158; border-radius:8px; }
+.world-name-label { color:#9db8ff; font-size:12px; letter-spacing:1px; text-transform:uppercase; }
+#world-name { width:100%; min-height:46px; border:1px solid #4d5a72; border-radius:6px; background:#0d1420; color:#eaffef; padding:10px 12px; font:18px Georgia,serif; user-select:text; -webkit-user-select:text; }
+.create-actions { display:grid; grid-template-columns:1fr auto; gap:8px; }
+.create-actions button { padding-left:20px; padding-right:20px; }
+.menu-buttons .secondary { background:#171e29; border-color:#3a4158; color:#b8c1cf; }
 .world-type { display:flex; align-items:center; gap:14px; justify-content:center; padding:6px 12px; background:rgba(0,0,0,.45); border:1px solid #3a4158; border-radius:8px; }
 .world-type .wt-label { font-size:13px; color:#9db8ff; letter-spacing:1px; }
 .world-type label { display:flex; align-items:center; gap:5px; font-size:13px; color:#cfd3e0; cursor:pointer; }
@@ -168,6 +188,15 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; font-fam
 #loading h1 { font-size:34px; color:#9db8ff; }
 #loadprogress { width:300px; height:8px; background:#222; border-radius:4px; overflow:hidden; }
 #loadprogress .bar { height:100%; width:0%; background:#6bc8ff; transition:width .1s; }
+
+@media (max-width:640px) {
+  .overlay { justify-content:flex-start; padding:30px 0 20px; overflow-y:auto; }
+  .overlay h1 { font-size:52px; }
+  .world-type { align-items:flex-start; flex-wrap:wrap; gap:8px 12px; }
+  .world-type .wt-label { width:100%; text-align:center; }
+  #world-list { max-height:34vh; }
+  .world-meta { line-height:1.4; }
+}
 
 ::-webkit-scrollbar { width:10px; }
 ::-webkit-scrollbar-track { background:#10131c; }

@@ -21,6 +21,6 @@ A full-progression procedural sandbox game written in plain JavaScript. Mine, cr
 - Procedural Canvas rendering with no asset packs
 - Synthesized Web Audio sound effects
 - Seeded procedural worlds
-- Local browser saves
+- Multiple named local browser saves with automatic account sync when signed in
 
 No build step or runtime dependencies are required. Open `index.html` directly or serve this directory with any static web server.

@@ -71,15 +71,32 @@
     <h1>tree</h1>
     <p class="subtitle">a full-progression sandbox adventure</p>
     <div class="menu-buttons">
-      <div class="world-type">
-        <span class="wt-label">Evil biome:</span>
-        <label><input type="radio" name="evil" value="random" checked><span>Random</span></label>
-        <label><input type="radio" name="evil" value="corrupt"><span>Corruption</span></label>
-        <label><input type="radio" name="evil" value="crimson"><span>Crimson</span></label>
+      <div id="title-actions">
+        <div class="world-heading">
+          <span>Your worlds</span>
+          <span id="save-mode">Local saves</span>
+        </div>
+        <div id="world-list" aria-live="polite"></div>
+        <button id="btn-new">New World</button>
+        <div id="world-create" class="hidden">
+          <label class="world-name-label" for="world-name">World name</label>
+          <input id="world-name" type="text" maxlength="32" autocomplete="off" placeholder="My World">
+          <div class="world-type">
+            <span class="wt-label">Evil biome:</span>
+            <label><input type="radio" name="evil" value="random" checked><span>Random</span></label>
+            <label><input type="radio" name="evil" value="corrupt"><span>Corruption</span></label>
+            <label><input type="radio" name="evil" value="crimson"><span>Crimson</span></label>
+          </div>
+          <div class="create-actions">
+            <button id="btn-create">Create World</button>
+            <button id="btn-cancel-create" class="secondary">Cancel</button>
+          </div>
+        </div>
       </div>
-      <button id="btn-new">New World</button>
-      <button id="btn-continue" class="hidden">Continue</button>
-      <button id="btn-save" class="hidden">Save &amp; Quit</button>
+      <div id="pause-actions" class="hidden">
+        <button id="btn-continue">Resume</button>
+        <button id="btn-save">Save &amp; Quit</button>
+      </div>
       <button id="btn-howto">How To Play</button>
     </div>
     <div id="howto" class="hidden">
