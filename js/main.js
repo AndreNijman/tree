@@ -1700,7 +1700,7 @@ function loop(now) {
   lastNow = now;
 
   if (!game || !game.started) return;
-  if (game.paused) return;
+  if (game.paused || game.netDisconnected) return;
 
   // real-time fps
   game.fpsAcc += dt;

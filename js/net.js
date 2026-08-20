@@ -21,6 +21,9 @@ var Net = {
   lobbyTimer: null,
   selectedWorldId: null,
   displayName: 'Guest',
+  connectionOptions: null,
+  reconnectTimer: null,
+  reconnectAttempts: 0,
 
   httpRelay: function() { return this.relay.replace(/^wss:/, 'https:').replace(/^ws:/, 'http:'); },
   isOnline: function() { return this.mode !== 'offline' && this.ws && this.ws.readyState === WebSocket.OPEN; },
@@ -41,13 +44,22 @@ var Net = {
 
   connect: function(options) {
     var self = this;
-    this.disconnect(false);
+    var reconnecting = !!options.reconnecting;
+    if (!reconnecting) {
+      this.disconnect(false);
+      this.connectionOptions = {
+        name:options.name, password:options.password || '', worldId:options.worldId || null,
+        worldName:options.worldName || '', create:!!options.create, code:options.code || ''
+      };
+      this.reconnectAttempts = 0;
+    }
+    if (this.reconnectTimer) { clearTimeout(this.reconnectTimer); this.reconnectTimer = null; }
     this.mode = options.create ? 'hosting' : 'joining';
     this.displayName = this.cleanName(options.name);
     this.selectedWorldId = options.worldId || null;
-    this.setStatus(options.create ? 'Creating hosted world...' : 'Joining hosted world...');
+    this.setStatus(reconnecting ? 'Reconnecting...' : (options.create ? 'Creating hosted world...' : 'Joining hosted world...'));
     $('loading').classList.remove('hidden');
-    $('loading').querySelector('h1').textContent = options.create ? 'starting host...' : 'joining world...';
+    $('loading').querySelector('h1').textContent = reconnecting ? 'reconnecting...' : (options.create ? 'starting host...' : 'joining world...');
     var url = options.create ? this.relay + '?create=1' : this.relay + '?code=' + encodeURIComponent(options.code || '');
     var ws;
     try { ws = new WebSocket(url); }
@@ -68,19 +80,45 @@ var Net = {
     };
     ws.onerror = function() { self.setStatus('Connection failed'); };
     ws.onclose = function(event) {
-      if (self.mode === 'offline') return;
+      if (self.ws !== ws || self.mode === 'offline') return;
       var wasPlaying = self.started;
-      self.mode = 'offline'; self.started = false; self.ws = null;
+      self.ws = null;
       self.setStatus('Disconnected'); self.renderRoster();
-      if (wasPlaying && game) game.message(event.reason || 'Disconnected from hosted world.');
+      if (wasPlaying && game && self.connectionOptions) {
+        game.netDisconnected = true;
+        game.message('Connection lost. Rejoining hosted world...');
+        self.scheduleReconnect();
+      }
       else self.fail(event.reason || 'Could not join hosted world.');
     };
+  },
+
+  scheduleReconnect: function() {
+    var self = this;
+    if (!this.connectionOptions || this.reconnectTimer) return;
+    if (this.reconnectAttempts >= 5) {
+      this.setStatus('Could not reconnect');
+      if (game) game.netDisconnected = false;
+      this.disconnect(true);
+      return;
+    }
+    var delay = Math.min(5000, 1000 * Math.pow(2, this.reconnectAttempts++));
+    this.mode = 'reconnecting';
+    this.reconnectTimer = setTimeout(function() {
+      self.reconnectTimer = null;
+      var options = self.connectionOptions;
+      self.connect({
+        create:false, code:self.code || options.code, name:options.name, password:options.password,
+        worldId:options.worldId, worldName:options.worldName, reconnecting:true
+      });
+    }, delay);
   },
 
   onMessage: function(message) {
     if (message.t === 'err' || message.t === 'error') { this.fail(message.m || message.message || 'Multiplayer error'); return; }
     if (message.t === 'welcome') {
       this.id = +message.you; this.hostId = +message.host || this.id; this.code = message.code || '';
+      if (this.connectionOptions) this.connectionOptions.code = this.code;
       this.mode = this.id === this.hostId ? 'host' : 'client';
       this.setStatus((this.isHost() ? 'Hosting ' : 'Joined ') + this.code);
       if (this.isHost()) this.beginHosting();
@@ -92,6 +130,9 @@ var Net = {
       var list = message.players || [];
       this.playerNames = {};
       for (var i = 0; i < list.length; i++) this.playerNames[list[i].id] = list[i].name;
+      for (var remoteId in this.remotePlayers) {
+        if (!this.playerNames[remoteId] || +remoteId === this.id) delete this.remotePlayers[remoteId];
+      }
       this.renderRoster();
       if (this.id && this.id !== this.hostId && this.mode !== 'client') this.mode = 'client';
       return;
@@ -161,7 +202,6 @@ var Net = {
       var playerId = +(message.playerId || message.from);
       if (playerId === this.id || !message.state) return;
       this.remotePlayers[playerId] = this.makeRemotePlayer(playerId, message.state);
-      if (this.isHost()) this.send({ t:'game', k:'player', playerId:playerId, state:message.state });
       return;
     }
     if (message.k === 'frame' && this.isClient()) { this.applyFrame(message.state); return; }
@@ -178,27 +218,31 @@ var Net = {
     var raw = this.snapshotParts.join(''); this.snapshotParts = null;
     try {
       var character = this.loadCharacter();
+      this.applying = true;
       applySaveData(JSON.parse(raw));
+      this.applying = false;
       activeWorldId = 'hosted-' + this.code.toLowerCase();
       activeWorldName = activeWorldName || 'Hosted World';
       if (character) this.applyCharacter(character);
       else { game.player.inventory = new Inventory(); game.player.starterItems(); game.player.x = game.world.spawnX; game.player.y = game.world.spawnY; }
       this.started = true;
+      this.reconnectAttempts = 0;
+      game.netDisconnected = false;
       $('loading').classList.add('hidden'); $('mainmenu').classList.add('hidden');
       this.renderRoster();
       game.message('Joined ' + activeWorldName + '.');
-    } catch (error) { this.fail('World synchronization failed: ' + error.message); }
+    } catch (error) { this.applying = false; this.fail('World synchronization failed: ' + error.message); }
   },
 
-  playerState: function(includeInventory) {
+  playerState: function(includeInventory, source) {
     if (!game || !game.player) return null;
-    var p = game.player;
+    var p = source || game.player;
     var state = {
       x:p.x, y:p.y, vx:p.vx, vy:p.vy, dir:p.dir, onGround:!!p.onGround,
       hp:p.hp, maxHp:p.maxHp, mana:p.mana, maxMana:p.maxMana, dying:!!p.dying,
       invuln:p.invuln, jumps:p.jumps, mounted:p.mounted || null,
       swingT:p.swingT, swingAng:p.swingAng, selected:p.inventory.selected,
-      armor:p.inventory.armor, dyes:p.inventory.dyes, name:this.displayName
+      armor:p.inventory.armor, dyes:p.inventory.dyes, name:p.netName || this.displayName
     };
     if (includeInventory) {
       state.inventory = p.inventory.slots;
@@ -253,11 +297,13 @@ var Net = {
     for (var i = 0; i < game.entities.length; i++) entities.push(this.entityState(game.entities[i]));
     var projectiles = [];
     for (var j = 0; j < game.projectiles.list.length; j++) projectiles.push(this.projectileState(game.projectiles.list[j]));
+    var players = [];
+    for (var id in this.remotePlayers) players.push({ id:+id, state:this.playerState(true, this.remotePlayers[id]) });
     return {
       timeOfDay:game.timeOfDay, weather:game.weather, hardmode:game.hardmode, victory:game.victory,
       bossesDefeated:game.bossesDefeated, mechDone:game.mechDone, event:game.event,
       pillarsSpawned:game.pillarsSpawned, pillarsDestroyed:game.pillarsDestroyed,
-      entities:entities, projectiles:projectiles, pickups:game.pickups, chests:game.world.chests,
+      entities:entities, projectiles:projectiles, pickups:game.pickups, chests:game.world.chests, players:players,
       bossBars:game.bossBars.map(function(b) { return { nid:b.id && b.id.nid, name:b.name, hp:b.hp, maxHp:b.maxHp, color:b.color }; })
     };
   },
@@ -285,6 +331,10 @@ var Net = {
     game.weather = state.weather || game.weather; game.hardmode = !!state.hardmode; game.world.hardmode = game.hardmode;
     game.victory = !!state.victory; game.bossesDefeated = state.bossesDefeated || {}; game.mechDone = !!state.mechDone;
     game.event = state.event || null; game.pillarsSpawned = !!state.pillarsSpawned; game.pillarsDestroyed = +state.pillarsDestroyed || 0;
+    for (var playerIndex = 0; playerIndex < (state.players || []).length; playerIndex++) {
+      var remote = state.players[playerIndex];
+      if (+remote.id !== this.id && remote.state) this.remotePlayers[remote.id] = this.makeRemotePlayer(remote.id, remote.state);
+    }
     this.applyEntities(state.entities || []);
     this.applyProjectiles(state.projectiles || []);
     game.pickups = state.pickups || [];
@@ -446,12 +496,16 @@ var Net = {
   },
   setStatus: function(text) { var el = $('mp-status'); if (el) el.textContent = text; },
   fail: function(message) {
+    if (this.started && this.connectionOptions) { this.scheduleReconnect(); return; }
+    this.mode = 'offline';
     this.setStatus(message); $('loading').classList.add('hidden'); $('mainmenu').classList.remove('hidden');
     var title = $('loading').querySelector('h1'); if (title) title.textContent = 'generating world...';
   },
   disconnect: function(showMenu) {
     this.saveCharacter();
-    var socket = this.ws; this.mode = 'offline'; this.started = false; this.ws = null; this.id = 0; this.hostId = 0; this.code = ''; this.remotePlayers = {}; this.playerNames = {};
+    if (this.reconnectTimer) { clearTimeout(this.reconnectTimer); this.reconnectTimer = null; }
+    var socket = this.ws; this.mode = 'offline'; this.started = false; this.ws = null; this.id = 0; this.hostId = 0; this.code = ''; this.remotePlayers = {}; this.playerNames = {}; this.connectionOptions = null; this.reconnectAttempts = 0;
+    if (game) game.netDisconnected = false;
     if (socket) { try { socket.close(1000, 'left world'); } catch (e) {} }
     this.renderRoster();
     if (showMenu) { $('mainmenu').classList.remove('hidden'); refreshSaveMenu(); this.refreshLobbies(); }

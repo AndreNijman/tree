@@ -99,6 +99,11 @@ await guest.waitForFunction(() => game.entities.some(e => e.boss === 'kingslime'
 await host.evaluate(() => { game.hardmode = true; game.world.hardmode = true; });
 await guest.waitForFunction(() => game.hardmode === true);
 
+await guest.evaluate(() => Net.send({ t:'leave' }));
+await guest.waitForFunction(oldId => Net.started && Net.isClient() && Net.id !== oldId && !game.netDisconnected, guestId, { timeout:30000 });
+const rejoinedGuestId = await guest.evaluate(() => Net.id);
+await host.waitForFunction(([oldId, newId]) => !Net.remotePlayers[oldId] && Net.remotePlayers[newId], [guestId, rejoinedGuestId], { timeout:10000 });
+
 await host.close();
 await guest.waitForFunction(() => Net.isHost(), null, { timeout:10000 });
 assert.equal(await guest.evaluate(() => game.entities.some(e => e.boss === 'kingslime')), true);

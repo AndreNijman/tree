@@ -21,6 +21,7 @@ A full-progression procedural sandbox game written in plain JavaScript. Mine, cr
 - Enter an optional password before hosting to make the world private.
 - Join from the hosted-world list or enter its five-character room code.
 - The host owns world simulation and saving; player characters are retained in each guest's browser.
+- Interrupted connections automatically rejoin and reload the current authoritative world state.
 - If the host disconnects, the longest-connected guest is promoted and the synchronized world continues.
 
 ## Technology
