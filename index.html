@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tree - full-progression browser sandbox</title>
+<meta name="description" content="Explore a procedural sandbox world, build a town, fight bosses and events, and progress from copper tools to the Moon Lord. Free in your browser.">
+<meta name="theme-color" content="#10182b">
+<link rel="canonical" href="https://tree.andrenijman.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Games by Andre Nijman">
+<meta property="og:title" content="tree - full-progression browser sandbox">
+<meta property="og:description" content="Mine, craft, build, fish, rescue townsfolk, and battle through a complete procedural sandbox progression.">
+<meta property="og:url" content="https://tree.andrenijman.com/">
+<meta property="og:image" content="https://tree.andrenijman.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="tree - full-progression browser sandbox">
+<meta name="twitter:description" content="Mine, craft, build, and fight through a complete procedural sandbox progression.">
+<meta name="twitter:image" content="https://tree.andrenijman.com/og-image.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="game">
+  <canvas id="canvas"></canvas>
+
+  <div id="hud">
+    <div id="topbar">
+      <div id="clock">12:00 PM</div>
+      <div id="depth">Depth: 0ft</div>
+      <div id="biome">Forest</div>
+      <div id="fps"></div>
+    </div>
+
+    <div id="bars">
+      <div id="hpbar"><span id="hptext"></span></div>
+      <div id="manabar"><span id="manatext"></span></div>
+    </div>
+
+    <div id="bossbars"></div>
+
+    <div id="hotbar"></div>
+
+    <div id="crosshair"></div>
+    <div id="tilehint"></div>
+    <div id="interact"></div>
+    <div id="message"></div>
+    <div id="screenflash"></div>
+  </div>
+
+  <div id="panel" class="hidden">
+    <div id="panel-tabs">
+      <button data-panel="inventory" class="tab active">Inventory</button>
+      <button data-panel="crafting" class="tab">Crafting</button>
+      <button data-panel="guide" class="tab">Guide</button>
+      <button data-panel="housing" class="tab">Housing</button>
+      <button data-panel="achievements" class="tab">Achievements</button>
+      <span id="panel-close">ESC / E</span>
+    </div>
+    <div id="panel-inventory" class="panel-page active"></div>
+    <div id="panel-crafting" class="panel-page"></div>
+    <div id="panel-guide" class="panel-page"></div>
+    <div id="panel-housing" class="panel-page"></div>
+    <div id="panel-achievements" class="panel-page"></div>
+    <div id="panel-chest" class="panel-page"></div>
+    <div id="panel-pylon" class="panel-page"></div>
+    <div id="panel-tavernkeep" class="panel-page"></div>
+    <div id="panel-town" class="panel-page"></div>
+  </div>
+
+  <div id="mainmenu" class="overlay">
+    <h1>tree</h1>
+    <p class="subtitle">a full-progression sandbox adventure</p>
+    <div class="menu-buttons">
+      <div class="world-type">
+        <span class="wt-label">Evil biome:</span>
+        <label><input type="radio" name="evil" value="random" checked><span>Random</span></label>
+        <label><input type="radio" name="evil" value="corrupt"><span>Corruption</span></label>
+        <label><input type="radio" name="evil" value="crimson"><span>Crimson</span></label>
+      </div>
+      <button id="btn-new">New World</button>
+      <button id="btn-continue" class="hidden">Continue</button>
+      <button id="btn-save" class="hidden">Save &amp; Quit</button>
+      <button id="btn-howto">How To Play</button>
+    </div>
+    <div id="howto" class="hidden">
+      <p><b>Move</b>: A/D or arrows · <b>Jump</b>: Space/W (hold to fly with wings) · <b>Mine/Attack</b>: Left click · <b>Place/Interact</b>: Right click · <b>Hotbar</b>: 1-0 or scroll · <b>Inventory/Craft</b>: E · <b>Guide</b>: H · <b>Drop</b>: Q · <b>Pause</b>: Esc · <b>Save</b>: Esc, then Save &amp; Quit · <b>Summon boss</b>: use Mechanical item then click</p>
+      <p><b>Extras</b>: <b>Guide</b>: select a material and press H or right-click the Guide to inspect its recipes · <b>Grapple</b>: select a Hook, click a wall · <b>Ride</b>: select a Mount, click · <b>Fish</b>: select a Rod (need bait), click water, click again to reel; combine a Fallen Star and Worm for Enchanted Nightcrawler bait · <b>Pets</b>: click a pet item · <b>Town NPCs</b>: explore their native biomes and right-click bound or sleeping residents to rescue them; right-click residents to shop, heal, reforge, or collect taxes · <b>Housing</b>: build an enclosed Wood Wall room with a Torch, Table, and Chair, stand inside, then assign it from the Housing tab. Preferred biomes and neighbors improve prices and unlock Pylon stock; overcrowding raises prices · <b>Graveyards</b>: every death places a Tombstone; seven nearby graves create Ecto Mist for special crafting, while each Sunflower cancels one grave · <b>Celebrations</b>: place and right-click a Party Center to toggle a Party; natural Parties and Lantern Nights also follow world progression · <b>Events</b>: use event summons at the proper time; Starfall nights bring many more Fallen Stars · <b>Old One's Army</b>: right-click the Tavernkeep, build a flat arena, and activate the Eternia Stand · <b>Chests</b>: right-click a placed Chest · <b>Dyes</b>: equip in the Dye slots · <b>Ammo</b>: select ammunition, then click the Ammo box</p>
+    </div>
+  </div>
+
+  <div id="deathscreen" class="overlay hidden">
+    <h2>You died!</h2>
+    <button id="btn-respawn">Respawn</button>
+  </div>
+
+  <div id="loading" class="overlay">
+    <h1>generating world...</h1>
+    <div id="loadprogress"></div>
+  </div>
+</div>
+<script src="js/const.js"></script>
+<script src="js/util.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/items.js"></script>
+<script src="js/world.js"></script>
+<script src="js/crafting.js"></script>
+<script src="js/entities.js"></script>
+<script src="js/bosses.js"></script>
+<script src="js/player.js"></script>
+<script src="js/render.js"></script>
+<script src="js/oldonesarmy.js"></script>
+<script src="js/achievements.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
