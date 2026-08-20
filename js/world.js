@@ -230,6 +230,39 @@ World.prototype.overlapsPlayer = function(x, y, ent) {
   return (px0 + TILE > ent.x - ent.w / 2 && px0 < ent.x + ent.w / 2 && py0 + TILE > ent.y - ent.h && py0 < ent.y);
 };
 
+World.prototype.findSafeSpawn = function(width, height) {
+  var originX = clamp(Math.floor(this.spawnX / TILE), 2, this.W - 3);
+  var halfW = width / 2;
+  for (var radius = 0; radius <= 96; radius++) {
+    var candidates = radius ? [originX - radius, originX + radius] : [originX];
+    for (var c = 0; c < candidates.length; c++) {
+      var tx = candidates[c];
+      if (tx < 2 || tx >= this.W - 2) continue;
+      var px = tx * TILE + 8;
+      var left = Math.floor((px - halfW) / TILE);
+      var right = Math.floor((px + halfW - 0.01) / TILE);
+      for (var ground = 3; ground < this.H - 1; ground++) {
+        var supported = true;
+        for (var sx = left; sx <= right; sx++) {
+          if (!this.isSolid(sx, ground) && !this.isPlatform(sx, ground)) { supported = false; break; }
+        }
+        if (!supported) continue;
+        var py = ground * TILE - height / 2 - 0.01;
+        var top = Math.floor((py - height / 2) / TILE);
+        var bottom = Math.floor((py + height / 2 - 0.01) / TILE);
+        var clear = true;
+        for (var x = left; x <= right && clear; x++) {
+          for (var y = top; y <= bottom; y++) {
+            if (this.get(x, y) !== T.AIR) { clear = false; break; }
+          }
+        }
+        if (clear) return { x:px, y:py };
+      }
+    }
+  }
+  return { x:this.spawnX, y:this.spawnY };
+};
+
 // Nearby crafting stations relative to pixel pos
 World.prototype.findStations = function(px, py) {
   var res = [];

@@ -200,7 +200,7 @@ var Net = {
     if (message.k === 'snapshot-end' && this.snapshotParts && this.isClient()) { this.finishSnapshot(); return; }
     if (message.k === 'player') {
       var playerId = +(message.playerId || message.from);
-      if (playerId === this.id || !message.state) return;
+      if (playerId === this.id || !message.state || !game) return;
       this.remotePlayers[playerId] = this.makeRemotePlayer(playerId, message.state);
       return;
     }
@@ -223,6 +223,8 @@ var Net = {
       this.applying = false;
       activeWorldId = 'hosted-' + this.code.toLowerCase();
       activeWorldName = activeWorldName || 'Hosted World';
+      var joinSpawn = game.world.findSafeSpawn(game.player.w, game.player.h);
+      game.world.spawnX = joinSpawn.x; game.world.spawnY = joinSpawn.y;
       if (character) this.applyCharacter(character);
       else { game.player.inventory = new Inventory(); game.player.starterItems(); game.player.x = game.world.spawnX; game.player.y = game.world.spawnY; }
       this.started = true;
@@ -459,6 +461,7 @@ var Net = {
   loadCharacter: function() { try { return JSON.parse(localStorage.getItem('tree.multiplayer.character.v1') || 'null'); } catch (e) { return null; } },
   applyCharacter: function(state) {
     var p = game.player; p.x = game.world.spawnX; p.y = game.world.spawnY;
+    p.vx = 0; p.vy = 0; p.onGround = false;
     p.maxHp = state.maxHp || 100; p.hp = clamp(state.hp || p.maxHp, 1, p.maxHp); p.maxMana = state.maxMana || 200; p.mana = clamp(state.mana || p.maxMana, 0, p.maxMana);
     p.inventory.slots = state.inventory || p.inventory.slots; p.inventory.armor = state.armor || p.inventory.armor;
     p.inventory.accessories = state.accessories || p.inventory.accessories; p.inventory.dyes = state.dyes || p.inventory.dyes; p.inventory.ammo = state.ammo || null; p.buffs = state.buffs || {};

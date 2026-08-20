@@ -210,6 +210,10 @@ export class Room {
 
   async fetch(request) {
     await this.ready;
+    if (request.method === 'DELETE' && request.headers.get('X-Tree-Admin') === this.env.TREE_ADMIN_TOKEN) {
+      await this.destroy();
+      return new Response(null, { status: 204 });
+    }
     if (request.headers.get('Upgrade')?.toLowerCase() !== 'websocket') {
       return new Response('websocket upgrade required', { status: 426 });
     }
@@ -546,6 +550,22 @@ export class Room {
     this.broadcastLobby();
     await this.syncRegistry();
   }
+
+  async destroy() {
+    if (!this.room) return;
+    const code = this.room.code;
+    const sockets = [...this.players.values()].map(player => player.socket);
+    this.room = null;
+    this.players.clear();
+    this.snapshot = null;
+    this.passwordAttempts.clear();
+    this.messageRates.clear();
+    await this.state.storage.deleteAll();
+    await this.removeRegistry(code);
+    for (const socket of sockets) {
+      try { socket.close(1001, 'lobby removed'); } catch { /* room state is already gone */ }
+    }
+  }
 }
 
 function cleanMetadata(value) {
@@ -573,6 +593,19 @@ export default {
       const registry = env.REGISTRY.getByName('global');
       const response = await registry.fetch(new Request('https://registry.internal/lobbies'));
       return new Response(response.body, { status: response.status, headers: corsHeaders(request) });
+    }
+    if (request.method === 'DELETE' && url.pathname.startsWith('/admin/lobbies/')) {
+      const token = request.headers.get('Authorization')?.replace(/^Bearer\s+/i, '');
+      if (!env.TREE_ADMIN_TOKEN || token !== env.TREE_ADMIN_TOKEN) return new Response('forbidden', { status: 403 });
+      const code = normalizeCode(url.pathname.slice('/admin/lobbies/'.length));
+      if (code.length !== 5) return new Response('invalid lobby code', { status: 400 });
+      const headers = new Headers({ 'X-Tree-Admin': env.TREE_ADMIN_TOKEN });
+      const roomResponse = await env.ROOMS.getByName(code).fetch(new Request('https://room.internal', { method:'DELETE', headers }));
+      const registry = env.REGISTRY.getByName('global');
+      await registry.fetch(new Request('https://registry.internal/lobby', {
+        method:'DELETE', headers:{ 'Content-Type':'application/json' }, body:JSON.stringify({ code })
+      }));
+      return roomResponse;
     }
     if (request.method !== 'GET' || request.headers.get('Upgrade')?.toLowerCase() !== 'websocket') {
       return new Response('tree relay. connect over websocket.\n', {

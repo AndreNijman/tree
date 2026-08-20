@@ -9,7 +9,7 @@ const host = await hostContext.newPage();
 const guest = await guestContext.newPage();
 const errors = [];
 for (const [name, page] of [['host', host], ['guest', guest]]) {
-  page.on('pageerror', error => errors.push(`${name}: ${error.message}`));
+  page.on('pageerror', error => errors.push(`${name}: ${error.stack || error.message}`));
   page.on('console', message => {
     if (message.type() === 'error' && !message.text().includes('/_guard/status') && !message.text().includes('Failed to load resource')) errors.push(`${name} console: ${message.text()}`);
   });
@@ -28,6 +28,14 @@ await host.locator('.world-host').click();
 await host.waitForFunction(() => Net.started && Net.isHost() && game && game.started, null, { timeout:45000 });
 const code = await host.evaluate(() => Net.code);
 assert.match(code, /^[A-Z0-9]{5}$/);
+await host.evaluate(() => {
+  const tx = Math.floor(game.world.spawnX / TILE);
+  const ground = Math.floor((game.world.spawnY + game.player.h / 2) / TILE);
+  for (let x = tx - 2; x <= tx + 2; x++) {
+    for (let y = ground - 8; y < ground; y++) game.world.set(x, y, T.STONE);
+  }
+  game.player.x += 160;
+});
 
 await guest.goto(url);
 await guest.evaluate(codeValue => {
@@ -35,6 +43,13 @@ await guest.evaluate(codeValue => {
   Net.joinCode(codeValue);
 }, code);
 await guest.waitForFunction(() => Net.started && Net.isClient() && game && game.started, null, { timeout:45000 });
+assert.equal(await guest.evaluate(() => {
+  const p = game.player, w = game.world;
+  const left = Math.floor((p.x - p.w / 2) / TILE), right = Math.floor((p.x + p.w / 2 - 0.01) / TILE);
+  const top = Math.floor((p.y - p.h / 2) / TILE), bottom = Math.floor((p.y + p.h / 2 - 0.01) / TILE);
+  for (let x = left; x <= right; x++) for (let y = top; y <= bottom; y++) if (w.isSolid(x, y)) return false;
+  return true;
+}), true);
 await host.waitForFunction(() => Object.keys(Net.remotePlayers).length === 1, null, { timeout:10000 });
 await guest.waitForFunction(() => Object.keys(Net.remotePlayers).length === 1, null, { timeout:10000 });
 
@@ -110,4 +125,4 @@ assert.equal(await guest.evaluate(() => game.entities.some(e => e.boss === 'king
 
 assert.deepEqual(errors, []);
 await browser.close();
-console.log('browser host/join, snapshot, players, tiles, combat, pickups, bosses, progression, and host promotion passed');
+console.log('browser safe spawn, host/join, snapshot, players, tiles, combat, pickups, bosses, progression, reconnect, and host promotion passed');

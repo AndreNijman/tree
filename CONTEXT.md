@@ -5,7 +5,7 @@ If you are an AI (or person) picking this up for the first time, read this entir
 
 > How this works: every session that works on this project should END by updating this file (the "Status" and "Next Steps" sections), so a future session or a different AI can start/restart from here at any time.
 
-> **LATEST VERIFICATION:** Full hosted multiplayer is implemented with public/password lobbies, five-character codes, chunked join/reconnect snapshots, host-authoritative world/enemy/boss simulation, synchronized players, tiles, walls, entities, projectiles, pickups, chests, inventories, crafting, progression and weather, stale-player cleanup, bounded automatic reconnect, and guest promotion on host loss. The Cloudflare Durable Object relay is deployed as version `e8bd7d04-3358-421a-8fde-fdf1656aacec`. Relay helper/dry-run checks, a real three-WebSocket production-relay test, and a two-browser full-world integration test including forced disconnect/rejoin all pass.
+> **LATEST VERIFICATION:** Full hosted multiplayer is implemented with public/password lobbies, five-character codes, chunked join/reconnect snapshots, host-authoritative world/enemy/boss simulation, synchronized players, tiles, walls, entities, projectiles, pickups, chests, inventories, crafting, progression and weather, safe guest spawn selection, stale-player cleanup, bounded automatic reconnect, and guest promotion on host loss. The Cloudflare Durable Object relay is deployed as version `e06de091-a6b3-4e1c-8e45-8e7308b6d980` with protected stuck-lobby removal; the orphaned `Oak` test lobby was deleted and the production listing verified empty. Relay helper/dry-run checks and a two-browser full-world integration test including an obstructed spawn and forced disconnect/rejoin all pass.
 
 ---
 
