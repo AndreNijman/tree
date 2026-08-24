@@ -444,7 +444,7 @@ Player.prototype.tryMine = function(game, def, item) {
     game.message('Your pickaxe is not strong enough!');
     return;
   }
-  var mineMul = (this.buffs[I.SLICEOFCAKE] ? 1.2 : 1) * (this.ambrosia ? 1.05 : 1);
+  var mineMul = 1.5 * (this.buffs[I.SLICEOFCAKE] ? 1.2 : 1) * (this.ambrosia ? 1.05 : 1);
   this.mineCd = Math.max(0, 0.06 - def.speed * mineMul * 0.015);
   var broke = game.world.damageTile(tx, ty, def.power, def.speed * mineMul);
   if (broke) {
