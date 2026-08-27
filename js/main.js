@@ -74,6 +74,8 @@ function buildGame(seed, evil) {
     critterT: 4,
     messageTimer: 0,
     flashT: 0,
+    shakeT: 0,
+    shakeMag: 0,
     fps: 0,
     fpsAcc: 0,
     fpsCount: 0,
@@ -1187,8 +1189,13 @@ function wireGameMethods() {
     game.fxTexts.push({ x: x, y: y, text: text, t: 1.0, color: color || '#ffe14d' });
   };
 
-  game.spawnMinePuff = function(x, y) {
-    game.fx.push({ type: 'break', x: x, y: y, t: 0.2, max: 0.2, seed: Math.random() * 100, color: '#c8c8c8' });
+  game.spawnMinePuff = function(x, y, color) {
+    game.fx.push({ type: 'break', x: x, y: y, t: 0.2, max: 0.2, seed: Math.random() * 100, color: color || '#c8c8c8' });
+  };
+
+  game.shake = function(mag, dur) {
+    game.shakeMag = Math.max(game.shakeMag || 0, mag);
+    game.shakeT = Math.max(game.shakeT || 0, dur || 0.3);
   };
 
   game.addPickup = function(x, y, id, count, reforge) {
@@ -1846,6 +1853,10 @@ function updateFlash(dt) {
     game.flashT -= dt;
     $('screenflash').style.opacity = Math.max(0, (game.flashT / 0.3) * 0.5);
   }
+  if (game.shakeT > 0) {
+    game.shakeT -= dt;
+    if (game.shakeT <= 0) game.shakeMag = 0;
+  }
 }
 
 // ---------- Camera ----------
@@ -2206,6 +2217,7 @@ function explodeProjectile(o, primary) {
   if (!o.explosive || o.exploded) return;
   o.exploded = true;
   game.fx.push({ type:'boom', x:o.x, y:o.y, t:0.3, max:0.3, seed:Math.random() * 100 });
+  if (game.shake) game.shake(3 + Math.min(4, (o.explosive || 40) / 20), 0.28);
   for (var i = 0; i < game.entities.length; i++) {
     var e = game.entities[i];
     if (e === primary || e.dead || e.minion || e.dmg <= 0 || dist(o.x, o.y, e.x, e.y) > o.explosive) continue;
@@ -3494,7 +3506,7 @@ function pickEnemy() {
       if (biome === BIOME.JUNGLE) {
         pool.push(E.JUNGLEBAT, E.JUNGLESLIME, E.SPIKEDJUNGLESLIME, E.HORNET);
       } else if (biome === BIOME.OCEAN) {
-        pool.push(E.ZOMBIE, E.GIANTBAT);
+        pool.push(E.ZOMBIE, E.GIANTBAT, E.SQUID);
       } else if (biome === BIOME.CORRUPT) {
         pool.push(E.EATEROFSOULS, E.DEVOURER, E.CORRUPTSLIME, E.CORRUPTCRIMSONFLYER);
       } else if (biome === BIOME.CRIMSON) {
@@ -3507,6 +3519,7 @@ function pickEnemy() {
         pool.push(E.ANTLION, E.ANTLIONCHARGER, E.GIANTBAT, E.SANDSLIME);
       } else if (biome === BIOME.MUSHROOM) {
         pool.push(E.SLIME, E.PINKSLIME, E.ZOMBIE);
+        if (night) pool.push(E.SPOREZOMBIE);
       } else {
         pool.push(E.SLIME, E.SLIME, E.SLIME, E.SLIME);
         if (Math.random() < 0.06) pool.push(E.PINKSLIME);
@@ -3592,7 +3605,7 @@ function pickEnemy() {
       pool.push(E.JUNGLEBAT, E.JUNGLESLIME, E.SPIKEDJUNGLESLIME, E.HORNET, E.MOSSHORNET, E.DERPLING);
       if (night) pool.push(E.MOTH);
     } else if (biome === BIOME.OCEAN) {
-      pool.push(E.ZOMBIE, E.HARDZOMBIE, E.ANGLERFISH, E.ARAPAIMA);
+      pool.push(E.ZOMBIE, E.HARDZOMBIE, E.ANGLERFISH, E.ARAPAIMA, E.SQUID);
     } else if (biome === BIOME.CORRUPT) {
       pool.push(E.EATEROFSOULS, E.CORRUPTOR, E.CORRUPTSLIME, E.WRATH, E.HARDZOMBIE, E.CURSEDHAMMER);
     } else if (biome === BIOME.CRIMSON) {
@@ -3600,11 +3613,11 @@ function pickEnemy() {
     } else if (biome === BIOME.HALLOW) {
       pool.push(E.PIXIE, E.UNICORN, E.CHAOSELEMENTAL, E.GASTROPOD, E.HALLOWEDMIMIC);
     } else if (biome === BIOME.SNOW) {
-      pool.push(E.ICEBAT, E.SNOWFLINX, E.SPIKEDICESLIME, E.ICETORTOISE, E.ICEGOLEM, E.PIGRON, E.WOLF);
+      pool.push(E.ICEBAT, E.SNOWFLINX, E.SPIKEDICESLIME, E.ICETORTOISE, E.ICEGOLEM, E.PIGRON, E.WOLF, E.ICEELEMENTAL);
     } else if (biome === BIOME.DESERT) {
       pool.push(E.MUMMY, E.DARKMUMMY, E.BLOODMUMMY, E.LIGHTMUMMY, E.SANDSLIME);
     } else if (biome === BIOME.MUSHROOM) {
-      pool.push(E.PIGRON, E.ANGLERFISH, E.DERPLING);
+      pool.push(E.PIGRON, E.ANGLERFISH, E.DERPLING, E.SPOREZOMBIE);
     } else {
       pool.push(E.HOPPINJACK, E.SLIME);
       if (night) pool.push(E.ZOMBIE, E.HARDZOMBIE, E.WRATH, E.WEREWOLF);

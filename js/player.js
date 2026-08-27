@@ -422,7 +422,7 @@ Player.prototype.tryMine = function(game, def, item) {
       this.inventory.add(I.WOODWALL, 1);
       this.mineCd = 0.12;
       AudioSys.play('break');
-      game.spawnMinePuff(tx * TILE + 8, ty * TILE + 8);
+      game.spawnMinePuff(tx * TILE + 8, ty * TILE + 8, '#9a6b3f');
       return;
     }
     this.tryMelee(game, def, true); return;
@@ -447,6 +447,7 @@ Player.prototype.tryMine = function(game, def, item) {
   var mineMul = 1.5 * (this.buffs[I.SLICEOFCAKE] ? 1.2 : 1) * (this.ambrosia ? 1.05 : 1);
   this.mineCd = Math.max(0, 0.06 - def.speed * mineMul * 0.015);
   var broke = game.world.damageTile(tx, ty, def.power, def.speed * mineMul);
+  if (!broke) game.spawnMinePuff(tx * TILE + 8, ty * TILE + 8, tileColor(t));
   if (broke) {
     if (game.onSpecialTileBroken) game.onSpecialTileBroken(t, tx, ty);
     // chest contents spill as pickups
@@ -1197,6 +1198,7 @@ Player.prototype.damage = function(amount, from, kbx) {
   this.vy = -4;
   AudioSys.play('hurt');
   game.flash();
+  if (game.shake) game.shake(3, 0.2);
   game.spawnFloatingText(this.x, this.y - 20, '-' + reduced, '#ff6b6b');
   if (this.hp <= 0) this.die();
 };

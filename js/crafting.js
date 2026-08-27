@@ -133,6 +133,11 @@ recipe({ name:'Deer Thing (Corruption)', result:I.DEERTHING, count:1, mat:[[I.FL
 recipe({ name:'Deer Thing (Crimson)', result:I.DEERTHING, count:1, mat:[[I.FLINXFUR,3],[I.LENS,1],[I.CRIMTANE,5]], station:'workbench', desc:'Calls a frozen terror in the Snow.' });
 recipe({ name:'Snow Globe', result:I.SNOWGLOBE, count:1, mat:[[I.SNOW,20],[I.GLASS,5],[I.SOUL_LIGHT,3]], station:'workbench', hm:true, desc:'Summons the Frost Legion.' });
 
+// Snow and desert extras
+recipe({ name:'Flinx Staff', result:I.FLINXSTAFF, count:1, mat:[[I.FLINXFUR,8],[I.WOOD,10]], station:'workbench', desc:'Summons a loyal flinx.' });
+recipe({ name:'Amber Robe', result:I.AMBERROBE, count:1, mat:[[I.SILK,20],[I.AMBER,3]], station:'workbench', desc:'Humming with old sunlight.' });
+recipe({ name:'Amber Staff', result:I.AMBERSTAFF, count:1, mat:[[I.AMBER,10],[I.GLOWSTONE,5]], station:'anvil', desc:'Casts bolts of fossilized light.' });
+
 // Tools
 recipe({ name:'Iron Pickaxe', result:I.IRONPICK, count:1, mat:[[I.IRONBAR,12],[I.WOOD,4]], station:'workbench' });
 recipe({ name:'Cobalt Pickaxe', result:I.COBALTPICK, count:1, mat:[[I.COBALTBAR,12]], station:'anvil' });

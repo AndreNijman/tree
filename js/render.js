@@ -674,6 +674,15 @@ function renderGame(game, ctx) {
   var cam = game.cam;
   var W = canvas.width, H = canvas.height;
 
+  // screen shake: offset a local camera copy so every layer shakes together
+  if (game.shakeT > 0 && game.shakeMag > 0) {
+    var shDecay = Math.max(0, Math.min(1, game.shakeT / 0.35));
+    cam = {
+      x: cam.x + (Math.random() - 0.5) * 2 * game.shakeMag * shDecay,
+      y: cam.y + (Math.random() - 0.5) * 2 * game.shakeMag * shDecay
+    };
+  }
+
   // determine surface horizon
   var cxTile = clamp(Math.floor(cam.x / TILE), 0, game.world.W - 1);
   var horizon = game.world.surfaceY[cxTile] * TILE;
@@ -737,6 +746,33 @@ function renderGame(game, ctx) {
       if (!arr) continue;
       var variant = hash2(tx2, ty2) % TILE_VARIANTS;
       tileCtx.drawImage(arr[variant], px2, py2);
+      // animated liquid surface: highlight band on the top tile of each liquid column
+      if ((t2 === T.WATER || t2 === T.LAVA || t2 === T.SHIMMER || t2 === T.HONEY) &&
+          world.get(tx2, ty2 - 1) !== t2) {
+        var wave = Math.sin(Time.seconds * 2.4 + tx2 * 0.85) * 1.3;
+        var wave2 = Math.sin(Time.seconds * 3.1 + tx2 * 1.7 + 1.3) * 0.8;
+        if (t2 === T.WATER) {
+          tileCtx.fillStyle = 'rgba(150,200,255,' + (0.28 + 0.1 * Math.sin(Time.seconds * 1.8 + tx2)) + ')';
+          tileCtx.fillRect(px2, Math.floor(py2 + 2 + wave), TILE, 1);
+          tileCtx.fillStyle = 'rgba(220,240,255,0.22)';
+          tileCtx.fillRect(px2 + ((tx2 * 5 + Math.floor(Time.seconds * 12)) % 12), Math.floor(py2 + 4 + wave), 4, 1);
+        } else if (t2 === T.LAVA) {
+          tileCtx.fillStyle = 'rgba(255,210,90,' + (0.45 + 0.15 * Math.sin(Time.seconds * 3 + tx2)) + ')';
+          tileCtx.fillRect(px2, Math.floor(py2 + 2 + wave), TILE, 2);
+          if (Math.sin(Time.seconds * 1.3 + tx2 * 2.6) > 0.86) {
+            tileCtx.fillStyle = 'rgba(255,160,60,0.8)';
+            tileCtx.fillRect(px2 + 6 + Math.floor(wave2), py2 - 2, 2, 2);
+          }
+        } else if (t2 === T.SHIMMER) {
+          tileCtx.fillStyle = 'rgba(230,250,255,' + (0.35 + 0.25 * Math.sin(Time.seconds * 2 + tx2 * 0.7)) + ')';
+          tileCtx.fillRect(px2, Math.floor(py2 + 2 + wave), TILE, 1);
+          tileCtx.fillStyle = 'rgba(180,130,255,' + (0.18 + 0.14 * Math.sin(Time.seconds * 1.4 + tx2 * 1.9)) + ')';
+          tileCtx.fillRect(px2, Math.floor(py2 + 5 + wave2), TILE, 1);
+        } else {
+          tileCtx.fillStyle = 'rgba(255,225,140,' + (0.3 + 0.12 * Math.sin(Time.seconds * 1.6 + tx2)) + ')';
+          tileCtx.fillRect(px2, Math.floor(py2 + 2 + wave * 0.6), TILE, 1);
+        }
+      }
     }
   }
 
@@ -812,13 +848,29 @@ function renderGame(game, ctx) {
 }
 
 // ---------- Background ----------
+// blend two '#rrggbb' colors; amt=0 -> a, amt=1 -> b
+function hexBlend(a, b, amt) {
+  var ca = hexToRgb(a), cb = hexToRgb(b);
+  var r = Math.round(ca[0] + (cb[0] - ca[0]) * amt);
+  var g = Math.round(ca[1] + (cb[1] - ca[1]) * amt);
+  var bl = Math.round(ca[2] + (cb[2] - ca[2]) * amt);
+  return 'rgb(' + r + ',' + g + ',' + bl + ')';
+}
+
+// twilight window: 1.0 right at the transition edges (t=0.25 / 0.75), fading out over ~0.05
+function twilightAmt(t) {
+  var dawn = 1 - Math.min(1, Math.abs(t - 0.25) / 0.05);
+  var dusk = 1 - Math.min(1, Math.abs(t - 0.75) / 0.05);
+  return Math.max(dawn, dusk);
+}
+
 function drawBackground(game, ctx, cam, W, H, horizon) {
   var p = game.player;
   var depth = (p.y - horizon) / TILE;
   var currentBiome = game.world.biomeAt(p.x, p.y);
   var t = game.timeOfDay; // 0..1, 0=midnight 0.5=noon
   var night = t < 0.25 || t > 0.75;
-  var dayAmt = night ? 0 : 1;
+  var twi = twilightAmt(t);
 
   var horizonScreen = horizon - cam.y + H / 2;
   var skyVisible = horizonScreen > 0;
@@ -850,6 +902,11 @@ function drawBackground(game, ctx, cam, W, H, horizon) {
       skyBot = night ? '#252632' : '#9a9da3';
     }
     if (horizonScreen > 0) {
+      // smooth dawn/dusk: blend toward ember tones near the day/night transitions
+      if (twi > 0 && !(game.event && game.event.type === 'bloodmoon')) {
+        skyTop = hexBlend(skyTop, '#2a1e46', twi * 0.7);
+        skyBot = hexBlend(skyBot, '#ff9a50', twi * 0.75);
+      }
       var g = ctx.createLinearGradient(0, 0, 0, horizonScreen);
       g.addColorStop(0, skyTop);
       g.addColorStop(1, skyBot);
@@ -944,6 +1001,12 @@ function drawSunMoon(ctx, W, horizonY, t, night) {
     posX = W * (0.15 + 0.7 * prog);
     cy = horizonY - 40 - 40 * Math.sin(prog * Math.PI);
     if (posX < -60 || posX > W + 60) return;
+    // cool silver halo
+    var halo = ctx.createRadialGradient(posX, cy, 10, posX, cy, 70);
+    halo.addColorStop(0, 'rgba(210,225,255,0.35)');
+    halo.addColorStop(1, 'rgba(210,225,255,0)');
+    ctx.fillStyle = halo;
+    ctx.beginPath(); ctx.arc(posX, cy, 70, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = '#fff8d0';
     ctx.beginPath();
     ctx.arc(posX, cy, 22, 0, Math.PI * 2);
@@ -957,7 +1020,14 @@ function drawSunMoon(ctx, W, horizonY, t, night) {
     posX = W * (0.15 + 0.7 * prog2);
     cy = horizonY - 40 - 50 * Math.sin(prog2 * Math.PI);
     if (posX < -60 || posX > W + 60) return;
-    ctx.fillStyle = '#ffd75e';
+    // warm halo; redder near the horizon (sunrise/sunset)
+    var low = Math.max(0, Math.min(1, 1 - Math.sin(prog2 * Math.PI)));
+    var glow = ctx.createRadialGradient(posX, cy, 12, posX, cy, 90 + low * 30);
+    glow.addColorStop(0, 'rgba(255,' + Math.floor(215 - low * 90) + ',' + Math.floor(94 - low * 60) + ',0.4)');
+    glow.addColorStop(1, 'rgba(255,180,80,0)');
+    ctx.fillStyle = glow;
+    ctx.beginPath(); ctx.arc(posX, cy, 90 + low * 30, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = low > 0.55 ? '#ff9a4d' : '#ffd75e';
     ctx.beginPath();
     ctx.arc(posX, cy, 24, 0, Math.PI * 2);
     ctx.fill();
@@ -970,12 +1040,24 @@ function drawSunMoon(ctx, W, horizonY, t, night) {
 
 function drawStars(ctx, W, horizonY, night, cam) {
   if (!night) return;
-  for (var i = 0; i < 90; i++) {
+  for (var i = 0; i < 110; i++) {
     var sx = (hash2(i, 3) % 1000) / 1000 * W;
     var sy = (hash2(i, 9) % 1000) / 1000 * (horizonY * 0.8);
-    var tw = 0.5 + 0.5 * Math.sin(Time.seconds * 2 + i);
-    ctx.fillStyle = 'rgba(255,255,255,' + (0.4 + tw * 0.4) + ')';
-    ctx.fillRect(sx, sy, 2, 2);
+    // slow parallax drift so the sky feels alive when moving
+    sx = ((sx - cam.x * 0.02) % W + W) % W;
+    var tw = 0.5 + 0.5 * Math.sin(Time.seconds * (1.4 + (i % 5) * 0.5) + i * 2.39996);
+    var big = i % 17 === 0;
+    if (big && tw > 0.82) {
+      // four-point sparkle on the brightest stars
+      ctx.strokeStyle = 'rgba(230,240,255,' + ((tw - 0.82) * 4) + ')';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(sx - 4, sy); ctx.lineTo(sx + 4, sy);
+      ctx.moveTo(sx, sy - 4); ctx.lineTo(sx, sy + 4);
+      ctx.stroke();
+    }
+    ctx.fillStyle = 'rgba(255,255,255,' + (0.35 + tw * 0.45) + ')';
+    ctx.fillRect(sx, sy, big ? 2 : 2, big ? 2 : 1);
   }
 }
 
@@ -1608,6 +1690,60 @@ function drawEnemy(ctx, e, cam, W, H) {
     case E.UMBRELLASLIME:
       drawSlime(ctx, x, y + 5, e.w, e.h - 5, col, e.type);
       drawUmbrella(ctx, x, y - 13, e.w + 10, white ? '#fff' : '#4779ad');
+      break;
+    case E.SPOREZOMBIE:
+      drawHumanoid(ctx, x, y, col, false, e.dir, false);
+      // glowing spore cap
+      ctx.fillStyle = 'rgba(180,240,120,' + (0.5 + 0.2 * Math.sin(Time.seconds * 3 + e.x)) + ')';
+      ctx.beginPath();
+      ctx.arc(x, y - 18, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#d8f0a0';
+      ctx.fillRect(x - 2, y - 20, 1, 1);
+      ctx.fillRect(x + 3, y - 17, 1, 1);
+      break;
+    case E.ICEELEMENTAL:
+      // floating crystalline shard cluster
+      ctx.fillStyle = col;
+      ctx.save();
+      ctx.translate(x, y + Math.sin(Time.seconds * 2 + e.x) * 2);
+      ctx.beginPath();
+      ctx.moveTo(0, -16); ctx.lineTo(7, -4); ctx.lineTo(4, 12); ctx.lineTo(-4, 12); ctx.lineTo(-7, -4);
+      ctx.closePath(); ctx.fill();
+      ctx.fillStyle = white ? '#fff' : '#d8f4ff';
+      ctx.beginPath();
+      ctx.moveTo(0, -10); ctx.lineTo(3, -2); ctx.lineTo(0, 6); ctx.lineTo(-3, -2);
+      ctx.closePath(); ctx.fill();
+      // orbiting shards
+      for (var ie = 0; ie < 3; ie++) {
+        var ia = Time.seconds * 2.2 + ie * 2.094;
+        ctx.fillStyle = white ? '#fff' : '#c8ecff';
+        ctx.fillRect(Math.cos(ia) * 13 - 2, Math.sin(ia) * 9 - 2, 4, 4);
+      }
+      ctx.restore();
+      break;
+    case E.SQUID:
+      ctx.fillStyle = col;
+      ctx.beginPath();
+      ctx.ellipse(x, y - 4, e.w / 2, e.h / 2.4, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = white ? '#fff' : '#e898ac';
+      ctx.beginPath();
+      ctx.ellipse(x, y - 7, e.w / 3, e.h / 4, 0, 0, Math.PI * 2);
+      ctx.fill();
+      // tentacles
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 2;
+      for (var tq = 0; tq < 4; tq++) {
+        var tox = -6 + tq * 4;
+        ctx.beginPath();
+        ctx.moveTo(x + tox, y + 4);
+        ctx.quadraticCurveTo(x + tox + Math.sin(Time.seconds * 5 + tq) * 3, y + 11, x + tox + Math.sin(Time.seconds * 5 + tq * 1.7) * 4, y + 15);
+        ctx.stroke();
+      }
+      ctx.fillStyle = '#111';
+      ctx.fillRect(x - 4, y - 8, 2, 2);
+      ctx.fillRect(x + 2, y - 8, 2, 2);
       break;
     case E.DUNESPLICER:
       drawWorm(ctx, e, cam, W, H, col);
@@ -3708,16 +3844,33 @@ function drawPlayer(ctx, game, p) {
     legCol = mixColor(legCol, dyeTint, 0.6);
   }
 
+  // soft ground shadow
+  if (p.onGround) {
+    ctx.fillStyle = 'rgba(0,0,0,0.28)';
+    ctx.beginPath();
+    ctx.ellipse(0, 15, 9, 2.6, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // walk cycle: alternating leg lift + body bob; gentle breathing when idle
+  var bob = moving ? Math.abs(Math.sin(Time.seconds * 12)) * 1.4 : Math.sin(Time.seconds * 2.2) * 0.6;
+
   // legs
   ctx.fillStyle = legCol;
-  ctx.fillRect(-6 + step * 0.3, 6, 5, 10);
-  ctx.fillRect(1 - step * 0.3, 6, 5, 10);
+  ctx.fillRect(-6 + step * 0.3, 6 - Math.max(0, step) * 0.45, 5, 10 + Math.max(0, step) * 0.45);
+  ctx.fillRect(1 - step * 0.3, 6 - Math.max(0, -step) * 0.45, 5, 10 + Math.max(0, -step) * 0.45);
+
+  ctx.save();
+  ctx.translate(0, -bob);
+
+  // back arm swings opposite to the legs
+  ctx.fillStyle = bodyCol;
+  var armSwing = moving ? step * 0.35 : 0;
+  ctx.fillRect(-9, -10 + armSwing, 5, 12);
+
   // body
-  ctx.fillStyle = bodyCol;
   ctx.fillRect(-7, -12, 14, 19);
-  // arm holding weapon
-  ctx.fillStyle = bodyCol;
-  ctx.fillRect(-9, -10, 5, 12);
+
   // head
   ctx.beginPath();
   ctx.arc(0, -17, 7, 0, Math.PI * 2);
@@ -3827,16 +3980,30 @@ function drawPlayer(ctx, game, p) {
   // weapon swing
   if (p.swingT > 0) {
     var item = p.inventory.selectedItem();
-    var dmg = item && ITEMS[item.id] ? ITEMS[item.id].dmg : 10;
-    var reach = item && ITEMS[item.id] && ITEMS[item.id].range ? ITEMS[item.id].range * TILE + 8 : 30;
+    var itemDef = item && ITEMS[item.id] ? ITEMS[item.id] : null;
+    var dmg = itemDef ? itemDef.dmg : 10;
+    var reach = itemDef && itemDef.range ? itemDef.range * TILE + 8 : 30;
     var prog = 1 - p.swingT / Math.max(0.12, 0.3);
     var a0 = p.swingAng - 1.2 + prog * 2.4;
     ctx.save();
     ctx.translate(x, y - 6);
-    ctx.strokeStyle = '#e0e0e0';
+    // motion trail arc behind the blade
+    ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.arc(0, 0, reach * 0.8, p.swingAng - 1.2, a0, false);
+    ctx.stroke();
+    ctx.strokeStyle = itemDef && itemDef.color ? itemDef.color : '#e0e0e0';
     ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.moveTo(0, 0);
+    ctx.lineTo(Math.cos(a0) * reach, Math.sin(a0) * reach);
+    ctx.stroke();
+    // bright edge highlight on the leading half of the blade
+    ctx.strokeStyle = 'rgba(255,255,255,0.75)';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(Math.cos(a0) * reach * 0.45, Math.sin(a0) * reach * 0.45);
     ctx.lineTo(Math.cos(a0) * reach, Math.sin(a0) * reach);
     ctx.stroke();
     ctx.fillStyle = dmg > 40 ? '#ffe14d' : (dmg > 25 ? '#9ad0ff' : '#d0d0d0');
@@ -4153,6 +4320,22 @@ function drawFX(ctx, game, cam, W, H) {
           var ox = (hash2(f.seed + p, 0) % 20 - 10) * life;
           var oy = (hash2(f.seed + p, 1) % 20 - 10) * life - (1 - life) * 10;
           ctx.fillRect(x + ox, y + oy, 3, 3);
+        }
+        break;
+      case 'spark':
+        ctx.globalAlpha = life;
+        ctx.strokeStyle = f.color || '#ffd890';
+        ctx.lineWidth = 1.5;
+        for (var sp = 0; sp < 4; sp++) {
+          var sang = hash2(f.seed + sp * 7, 3) % 628 / 100;
+          var slen = 3 + (1 - life) * 7;
+          var scx = Math.cos(sang), scy = Math.sin(sang);
+          var sdx = scx * (3 + (1 - life) * 9);
+          var sdy = scy * (3 + (1 - life) * 9);
+          ctx.beginPath();
+          ctx.moveTo(x + sdx, y + sdy);
+          ctx.lineTo(x + sdx + scx * slen, y + sdy + scy * slen);
+          ctx.stroke();
         }
         break;
       case 'slash':

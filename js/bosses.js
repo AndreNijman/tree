@@ -1447,6 +1447,7 @@ function killBoss(e, game) {
     return;
   }
   game.message('You have defeated ' + e.name + '!');
+  if (game.shake) game.shake(7, 0.5);
   var drops = [];
   if (e.boss === 'twins') {
     drops.push({ id: I.HALLOWEDBAR, count: 12 + Math.floor(Math.random() * 8) });

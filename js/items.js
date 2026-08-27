@@ -152,6 +152,7 @@ var I = {
   FALLENSTAR:'fallenstar',
   TOMBSTONE:'tombstone', SUNFLOWER:'sunflower', GRAVEDIGGERSHOVEL:'gravediggersshovel', SHADOWCANDLE:'shadowcandle', TATTEREDSIGN:'tatteredsign',
   VITALCRYSTAL:'vitalcrystal', AEGISFRUIT:'aegisfruit', AMBROSIA:'ambrosia', ADVCOMBAT2:'advancedcombat2',
+  FLINXSTAFF:'flinxstaff', AMBER:'amber', AMBERROBE:'amberrobe', AMBERSTAFF:'amberstaff',
   // ---- Missing subsystems + content batch ----
   GRAPPLINGHOOK:'grapplinghook', IVYWHIP:'ivywhip', WEBSLINGER:'webslinger',
   DUALHOOK:'dualhook', CHRISTMASHOOK:'christmashook', LUNARHOOK:'lunarhook', SPOOKYHOOK:'spookyhook',
@@ -772,6 +773,10 @@ defItem(I.HAEMORRHAXE, { name:'Haemorrhaxe', type:'melee', dmg:74, speed:0.18, k
 defItem(I.BLOODTHORN, { name:'Blood Thorn', type:'magic', dmg:62, speed:0.2, kb:4, mana:10, proj:P.SPIT, terrainMode:'erupt', terrainCount:3, terrainHeight:80, auto:true, range:999, color:'#c83048', icon:'🌹', maxStack:1, desc:'Erupts three bloody thorns upward around the cursor.' });
 defItem(I.DRIPPLERCRIPPLER, { name:'Drippler Crippler', type:'melee', dmg:70, speed:0.2, kb:8, range:4.5, meleeProj:P.RAZOR, meleeMode:'flail', flailDuration:0.9, projectileOnly:true, persistentProj:true, color:'#a82f48', icon:'🔴', maxStack:1, desc:'A vicious flail torn from a Blood Eel.' });
 defItem(I.FLINXFUR, { name:'Flinx Fur', type:'material', color:'#f0f0f8', icon:'🧶', maxStack:999, desc:'Warm fur from a Snow Flinx.' });
+defItem(I.FLINXSTAFF, { name:'Flinx Staff', type:'summonstaff', dmg:14, minion:'flinx', speed:0, color:'#f0f0f8', icon:'🐾', maxStack:1, desc:'Summons a loyal flinx to fight for you.' });
+defItem(I.AMBER, { name:'Amber', type:'material', color:'#e8a83d', icon:'💎', maxStack:999, desc:'Fossilized tree resin, warm as sunset.' });
+defItem(I.AMBERROBE, { name:'Amber Robe', type:'armor', slot:'head', def:3, color:'#e8a83d', icon:'🧙', maxStack:1, desc:'Defense +3. Humming with old sunlight.' });
+defItem(I.AMBERSTAFF, { name:'Amber Staff', type:'magic', dmg:19, speed:0.2, kb:3, mana:8, proj:P.MAGICBOLT, auto:true, range:999, color:'#e8a83d', icon:'🔮', maxStack:1, desc:'Casts bolts of fossilized light.' });
 defItem(I.DEERTHING, { name:'Deer Thing', type:'summon', boss:'deerclops', color:'#b8d8f0', icon:'🦌', maxStack:99, desc:'Summons Deerclops in the Snow biome.' });
 defItem(I.LUCYTHEAXE, { name:'Lucy the Axe', type:'tool', power:65, speed:0.75, dmg:24, range:3.0, color:'#d8b878', icon:'🪓', maxStack:1, desc:'A talkative axe dropped by Deerclops.' });
 defItem(I.PEWMATICHORN, { name:'Pew-matic Horn', type:'ranged', dmg:28, speed:0.16, kb:3, ammo:I.MUSKETBALL, proj:P.GUNBULLET, auto:true, range:999, color:'#a87858', icon:'🔫', maxStack:1, desc:'Rapidly fires bullets with a strange honk.' });

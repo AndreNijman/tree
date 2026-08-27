@@ -304,6 +304,9 @@ var ENT_DEF = {
   [E.UMBRELLASLIME]: { w:22, h:20, hp:260, dmg:38, def:8, color:'#5aa8e0', speed:1.8, fly:true, name:'Umbrella Slime', exp:12 },
   [E.DUNESPLICER]: { w:30, h:20, hp:650, dmg:52, def:14, color:'#d8a878', speed:3.6, fly:true, name:'Dune Splicer', exp:26 },
   [E.ANTLIONSWARMER]: { w:22, h:16, hp:80, dmg:18, def:2, color:'#d0a060', speed:4.0, fly:true, name:'Antlion Swarmer', exp:5 },
+  [E.SPOREZOMBIE]: { w:20, h:34, hp:110, dmg:24, def:4, color:'#7aa84a', speed:1.0, name:'Spore Zombie', exp:6 },
+  [E.ICEELEMENTAL]: { w:22, h:30, hp:420, dmg:48, def:14, color:'#9adcff', speed:1.6, name:'Ice Elemental', exp:16 },
+  [E.SQUID]: { w:22, h:26, hp:70, dmg:22, def:2, color:'#c8708a', speed:2.6, fly:true, name:'Squid', exp:5 },
   [E.BUNNY]: { w:16, h:14, hp:5, dmg:0, def:0, color:'#d8c8b0', speed:2.6, name:'Bunny', exp:0 },
   [E.BIRD]: { w:14, h:12, hp:5, dmg:0, def:0, color:'#7a8fc8', speed:3.2, fly:true, name:'Bird', exp:0 },
   [E.SQUIRREL]: { w:14, h:12, hp:5, dmg:0, def:0, color:'#b8835a', speed:2.8, name:'Squirrel', exp:0 },
@@ -351,6 +354,7 @@ function hitEntity(e, dmg, kbx, kby, game) {
   e.flash = 0.1;
   e.kbVx = (e.kbVx || 0) + kbx;
   e.kbVy = (e.kbVy || 0) + kby;
+  game.fx.push({ type: 'spark', x: e.x, y: e.y, t: 0.18, max: 0.18, seed: Math.random() * 100, color: reduced >= 60 ? '#ffb04d' : '#ffe2a8' });
   AudioSys.play('hit');
   if (e.hp <= 0) killEntity(e, game);
 }
@@ -548,8 +552,9 @@ function dropTable(type, game) {
       if (r < 0.4) return [{ id: I.GEL, count: 1 }, { id: I.DUNGEONBRICK, count: Math.random() < 0.3 ? 1 : 0 }];
       return [{ id: I.GEL, count: 1 }];
     case E.ANTLION: case E.ANTLIONCHARGER:
-      if (r < 0.35) return [{ id: I.SANDSTONE, count: 1 }];
-      if (r < 0.5) return [{ id: I.SAND, count: 2 }];
+      if (r < 0.1) return [{ id: I.AMBER, count: 1 }];
+      if (r < 0.4) return [{ id: I.SANDSTONE, count: 1 }];
+      if (r < 0.55) return [{ id: I.SAND, count: 2 }];
       return [];
     case E.ICESLIME:
       if (hm && r < 0.02) return [{ id:I.AMAROK, count:1 }];
@@ -713,6 +718,12 @@ function dropTable(type, game) {
       return [{ id:I.UMBRELLA, count:1 }, { id:I.GEL, count:1 }];
     case E.DUNESPLICER: case E.ANTLIONSWARMER:
       return [];
+    case E.SPOREZOMBIE:
+      return [{ id:I.MUSHROOM, count:1 + Math.floor(Math.random() * 2) }];
+    case E.ICEELEMENTAL:
+      return [{ id:I.ICE, count:1 + Math.floor(Math.random() * 2) }, { id:I.FLINXFUR, count:Math.random() < 0.25 ? 1 : 0 }];
+    case E.SQUID:
+      return [{ id:I.GLOWSTONE, count:1 }, { id:I.HEALINGPOTION, count:Math.random() < 0.1 ? 1 : 0 }];
     case E.BUNNY: case E.BIRD: case E.SQUIRREL: case E.FROG:
     case E.GOLDFISH: case E.TURTLE:
       return [];
@@ -1029,6 +1040,15 @@ function enemyStep(e, game) {
       wyvernStep(e, game);
       break;
     case E.JUNGLEBAT:
+      flyStep(e, game);
+      break;
+    case E.SPOREZOMBIE:
+      rangedWalkerStep(e, game, P.SPIT, 4.5, 16, 2.6, '#9ad84a');
+      break;
+    case E.ICEELEMENTAL:
+      rangedWalkerStep(e, game, P.FROSTBOLT, 5.5, 26, 2.0, '#bde8ff');
+      break;
+    case E.SQUID:
       flyStep(e, game);
       break;
     case E.JUNGLESLIME:
@@ -2017,6 +2037,7 @@ function spawnMinion(game, staff) {
   if (m.minion === 'sanguine') { m.w = 22; m.h = 18; }
   if (m.minion === 'sphere') { m.w = 22; m.h = 22; }
   if (m.minion === 'pirate') { m.w = 20; m.h = 24; }
+  if (m.minion === 'flinx') { m.w = 20; m.h = 15; }
   game.entities.push(m);
   game.fx.push({ type: 'cast', x: m.x, y: m.y, t: 0.4, max: 0.4 });
   AudioSys.play('magic');
@@ -2120,15 +2141,15 @@ function minionStep(m, game) {
     return;
   }
 
-  if (m.minion === 'tiger' || m.minion === 'pirate') {
+  if (m.minion === 'tiger' || m.minion === 'pirate' || m.minion === 'flinx') {
     var gdx = tx - m.x;
     m.dir = gdx >= 0 ? 1 : -1;
-    m.vx = m.dir * m.speed * (m.minion === 'tiger' ? 0.95 : 0.65);
-    if (m.onGround && Math.abs(gdx) > 45 && Math.random() < 0.08) m.vy = -8;
+    m.vx = m.dir * m.speed * (m.minion === 'tiger' ? 0.95 : m.minion === 'flinx' ? 0.85 : 0.65);
+    if (m.onGround && Math.abs(gdx) > 45 && Math.random() < (m.minion === 'flinx' ? 0.12 : 0.08)) m.vy = -8;
     physicsStep(m, game, { ghostPlatform:false });
     if (tgt && m.attackCd <= 0 && dist(m.x, m.y, tgt.x, tgt.y) < (m.w + tgt.w) / 2 + 5) {
       minionHitTarget(tgt, m.dmg, game);
-      m.attackCd = m.minion === 'tiger' ? 0.5 : 0.7;
+      m.attackCd = m.minion === 'tiger' ? 0.5 : m.minion === 'flinx' ? 0.6 : 0.7;
     }
     return;
   }
