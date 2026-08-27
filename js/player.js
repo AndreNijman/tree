@@ -507,6 +507,16 @@ Player.prototype.tryMelee = function(game, def, force, item) {
   this.swingAng = Math.atan2(MOUSE.wy - this.y, MOUSE.wx - this.x);
   AudioSys.play('shoot');
   var mdmg = Math.round(def.dmg * this.inventory.damageMultiplier('melee') * this.inventory.itemDamageMul(item));
+  if (def.nearbyBonus) {
+    var ncnt = 0, nr = (def.nearbyRadius || 96) * (def.nearbyRadius || 96);
+    for (var ni = 0; ni < game.entities.length; ni++) {
+      var ne = game.entities[ni];
+      if (ne.dead || ne.dmg <= 0) continue;
+      var ndx = ne.x - this.x, ndy = ne.y - this.y;
+      if (ndx * ndx + ndy * ndy < nr) ncnt++;
+    }
+    mdmg = Math.round(mdmg * (1 + def.nearbyBonus * Math.min(ncnt, def.nearbyMax || 6)));
+  }
   var reach = def.range * TILE + 10;
   var cx = this.x + Math.cos(this.swingAng) * 14;
   var cy = this.y + Math.sin(this.swingAng) * 14;
@@ -529,7 +539,7 @@ Player.prototype.tryMelee = function(game, def, force, item) {
       }
     }
   }
-  if (def.meleeProj !== undefined) {
+  if (def.meleeProj !== undefined && (def.projChance === undefined || Math.random() < def.projChance)) {
     var count = def.projCount || 1;
     for (var pi = 0; pi < count; pi++) {
       var pang = this.swingAng + (pi - (count - 1) / 2) * (def.projSpread || 0);
@@ -540,6 +550,7 @@ Player.prototype.tryMelee = function(game, def, force, item) {
         life:def.meleeMode === 'controlled' ? 8 : (def.meleeMode === 'spear' ? def.spearDuration : (def.meleeMode === 'flail' ? def.flailDuration : (def.meleeMode === 'yoyo' ? def.yoyoDuration : (def.projLife || 1.5)))),
         homing:!!def.projHoming, bounces:def.projBounces || 0, returnAt:def.projReturn, returnSpeed:def.returnSpeed || 10,
         persistent:!!def.persistentProj, sourcePlayer:this, hitEnemies:[], lifeSteal:def.lifeSteal || 0, color:def.color, melee:true,
+        explosive:def.explosive || 0, gravity:def.projGravity || 0,
         spear:def.meleeMode === 'spear', spearAng:pang, spearReach:def.range * TILE + 10, spearDuration:def.spearDuration,
         flail:def.meleeMode === 'flail', flailAng:pang, flailReach:def.range * TILE + 12, flailDuration:def.flailDuration,
         yoyo:def.meleeMode === 'yoyo', yoyoReach:def.range * TILE + 18, yoyoDuration:def.yoyoDuration,
@@ -620,10 +631,10 @@ Player.prototype.tryShoot = function(game, def, id, item) {
     game.projectiles.add({
       x: this.x + Math.cos(shotAng) * 18, y: this.y - 6 + Math.sin(shotAng) * 18,
       vx: Math.cos(shotAng) * 9, vy: Math.sin(shotAng) * 9,
-      dmg: shotDmg, type: def.proj, ammo: ammoId, owner: 'player', life: 2,
-      bounces:def.projBounces || ammoDef.bounces || 0, homing:!!(def.projHoming || ammoDef.homing),
+      dmg: shotDmg, type: def.batAmmo ? P.BAT : def.proj, ammo: ammoId, owner: 'player', life: 2,
+      bounces:def.projBounces || ammoDef.bounces || 0, homing:def.batAmmo ? true : !!(def.projHoming || ammoDef.homing),
       explosive:def.explosive || ammoDef.explosive || 0, gravity:def.projGravity || 0,
-      status:def.status || ammoDef.status, mine:!!def.projMine, mineTrigger:def.mineTrigger, mineDuration:def.mineDuration, color:ammoDef.color, dead: false
+      status:def.status || ammoDef.status, mine:!!def.projMine, mineTrigger:def.mineTrigger, mineDuration:def.mineDuration, color:ammoDef.color, spawnSphere:!!def.electro, dead: false
     });
   }
   AudioSys.play('bow');

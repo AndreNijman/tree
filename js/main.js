@@ -2174,6 +2174,12 @@ function finishProjectileEnemyHit(o, target) {
   applyProjectileStatus(o, target);
   explodeProjectile(o, target);
   spawnProjectilePayload(o);
+  if (o.spawnSphere) {
+    game.projectiles.add({
+      x:o.x, y:o.y, deployMode:'sphere', deployProj:P.ELECTRO, deployDamageMul:0.6, deployInterval:0.3,
+      dmg:o.dmg, color:'#70d8f0', owner:'player', life:3, dead:false
+    });
+  }
   if (o.lifeSteal && o.sourcePlayer && !o.sourcePlayer.dying) {
     var heal = Math.max(1, Math.floor(o.dmg * o.lifeSteal));
     o.sourcePlayer.hp = Math.min(o.sourcePlayer.maxHp, o.sourcePlayer.hp + heal);

@@ -4301,6 +4301,50 @@ function drawProjectile(ctx, p, cam, W, H) {
       ctx.arc(0, 0, 3, 0, Math.PI * 2);
       ctx.fill();
       break;
+    case P.KOBOMB:
+      ctx.fillStyle = '#d85050';
+      ctx.beginPath(); ctx.arc(0, 0, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffe14d';
+      ctx.fillRect(-3, -3, 6, 6);
+      break;
+    case P.PUMPKINBLADE:
+      ctx.fillStyle = '#ff8a3d';
+      ctx.beginPath(); ctx.arc(0, 0, 7, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffd060';
+      ctx.fillRect(-1.5, -7, 3, 14);
+      break;
+    case P.WAVERSWORD:
+      ctx.fillStyle = '#3dff9d';
+      ctx.fillRect(-2, -8, 4, 16);
+      ctx.fillStyle = '#e8fff2';
+      ctx.fillRect(-0.8, -8, 1.6, 16);
+      break;
+    case P.WATERSTREAM:
+      ctx.fillStyle = '#4dc8ff';
+      ctx.beginPath(); ctx.arc(0, 0, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#bfeaff';
+      ctx.beginPath(); ctx.arc(0, 0, 2.5, 0, Math.PI * 2); ctx.fill();
+      break;
+    case P.THORN:
+      ctx.fillStyle = '#8f70d8';
+      ctx.fillRect(-2, -9, 4, 18);
+      ctx.fillStyle = '#c8a8ff';
+      ctx.fillRect(-1, -9, 2, 18);
+      break;
+    case P.BAT:
+      ctx.fillStyle = '#5a2a1a';
+      ctx.beginPath(); ctx.arc(0, 0, 4, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ff8a3d';
+      ctx.beginPath(); ctx.arc(-3, 0, 3, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(3, 0, 3, 0, Math.PI * 2); ctx.fill();
+      break;
+    case P.ELECTRO:
+      ctx.strokeStyle = '#70d8f0';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(-6, -4); ctx.lineTo(2, 0); ctx.lineTo(-2, 3); ctx.lineTo(6, -2);
+      ctx.stroke();
+      break;
   }
   ctx.restore();
 }
