@@ -160,6 +160,7 @@ var I = {
   REINDEERMOUNT:'reindeermount', SHRIMPYTRUFFLE:'shrimpy',
   FISHINGROD_WOODEN:'woodenrod', FISHINGROD_IRON:'ironrod',
   FISHINGROD_FIBERGLASS:'fiberglassrod', FISHINGROD_GOLDEN:'goldenrod',
+  HOTLINEFISHINGHOOK:'hotlinefishinghook',
   WORM:'worm', NIGHTCRAWLER:'nightcrawler',
   FISH_BASS:'bass', FISH_TROUT:'trout', FISH_SALMON:'salmon', FISH_NEONTETRA:'neontetra',
   FISH_EBONKOI:'ebonkoi', FISH_CRIMSONTIGER:'crimsontiger', FISH_CAVEFISH:'cavefish',
@@ -865,6 +866,7 @@ defItem(I.FISHINGROD_WOODEN, { name:'Wooden Fishing Pole', type:'fishingrod', fi
 defItem(I.FISHINGROD_IRON, { name:'Iron Fishing Rod', type:'fishingrod', fishingPower:25, color:'#c0c0c8', icon:'🎣', maxStack:1, desc:'A sturdy rod.' });
 defItem(I.FISHINGROD_FIBERGLASS, { name:'Fiberglass Fishing Pole', type:'fishingrod', fishingPower:32, color:'#3dff9d', icon:'🎣', maxStack:1, desc:'A sleek hallowed rod.' });
 defItem(I.FISHINGROD_GOLDEN, { name:'Golden Fishing Rod', type:'fishingrod', fishingPower:45, color:'#ffd75e', icon:'🎣', maxStack:1, desc:'The finest rod of all.' });
+defItem(I.HOTLINEFISHINGHOOK, { name:'Hotline Fishing Hook', type:'accessory', lavaFish:true, color:'#ff5a3c', icon:'🎣', maxStack:1, desc:'Lets you fish in lava. A reward from the Angler after 25 quests.' });
 defItem(I.WORM, { name:'Worm', type:'bait', baitPower:20, color:'#c89068', icon:'🪱', maxStack:99, desc:'Fishing bait.' });
 defItem(I.NIGHTCRAWLER, { name:'Enchanted Nightcrawler', type:'bait', baitPower:35, color:'#8ad8ff', icon:'🪱', maxStack:999, desc:'35% bait power. Appears on clear Starfall nights.' });
 

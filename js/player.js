@@ -7,6 +7,7 @@ function Player(world) {
   this.vx = 0;
   this.vy = 0;
   this.dir = 1;
+  this.hair = 0;
   this.onGround = false;
   this.maxHp = 100;
   this.hp = 100;
@@ -1083,22 +1084,24 @@ Player.prototype.tryFish = function(game, def, id, item) {
   if (this.inventory.countOf(I.NIGHTCRAWLER) > 0) baitId = I.NIGHTCRAWLER;
   else if (this.inventory.countOf(I.WORM) > 0) baitId = I.WORM;
   if (!baitId) { game.message('You need bait!'); return; }
+  var lavaFish = typeof equippedAccessory === 'function' && equippedAccessory(I.HOTLINEFISHINGHOOK);
   // find water along the cast
   var r = def.range || 300;
   var dx = MOUSE.wx - this.x, dy = MOUSE.wy - this.y;
   var d = Math.sqrt(dx * dx + dy * dy) || 1;
   var ux = dx / d, uy = dy / d;
-  var bobX = -1, bobY = -1;
+  var bobX = -1, bobY = -1, lavaMode = false;
   for (var step = 24; step <= r; step += 4) {
     var px = this.x + ux * step, py = this.y + uy * step + 2;
     if (game.world.isWaterAt(px, py)) { bobX = px; bobY = py; break; }
+    if (lavaFish && game.world.isLavaAt(px, py)) { bobX = px; bobY = py; lavaMode = true; break; }
   }
   if (bobX < 0) { game.message('Cast into water!'); return; }
   this.attackCd = 0.3;
   var effF = this.inventory.accEffects();
   var power = (def.fishingPower || 15) + ITEMS[baitId].baitPower + (this.buffs[I.FISHINGPOTION] ? 25 : 0);
   this.fishing = {
-    bobX: bobX, bobY: bobY, t: 0,
+    bobX: bobX, bobY: bobY, t: 0, lava: lavaMode,
     waitT: clamp(2.2 + Math.random() * 3.5 - power * 0.06, 1.0, 5.0),
     power: power, rodId: id, baitId: baitId
   };
@@ -1119,6 +1122,7 @@ function bloodFishingEnemy(game, roll) {
 }
 
 function rollFish(game, f) {
+  if (f.lava) return Math.random() < 0.3 ? I.GOLDENCRATE : I.WOODENCRATE;
   var biome = game.world.biomeAt(f.bobX, f.bobY);
   var r = Math.random();
   var tier = f.power * (0.6 + Math.random() * 0.8);

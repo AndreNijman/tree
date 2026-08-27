@@ -3942,6 +3942,20 @@ function drawPlayer(ctx, game, p) {
     ctx.fillStyle = 'rgba(0,0,0,0.35)';
     ctx.fillRect(-7, -20, 14, 4);
   }
+  // hair (Stylist restyle)
+  if (p.hair) {
+    var hs = p.hair % 9;
+    ctx.fillStyle = '#5a3a1a';
+    if (hs === 1) { ctx.fillRect(-7, -23, 14, 4); ctx.fillRect(-7, -20, 3, 4); ctx.fillRect(4, -20, 3, 4); }
+    else if (hs === 2) { ctx.beginPath(); ctx.arc(0, -18, 8, Math.PI, 0); ctx.fill(); }
+    else if (hs === 3) { ctx.fillRect(-8, -22, 16, 5); ctx.fillRect(-8, -18, 2, 6); ctx.fillRect(6, -18, 2, 6); }
+    else if (hs === 4) { ctx.beginPath(); ctx.moveTo(-7, -17); ctx.lineTo(-9, -24); ctx.lineTo(-2, -19); ctx.lineTo(2, -24); ctx.lineTo(9, -19); ctx.lineTo(7, -17); ctx.fill(); }
+    else if (hs === 5) { ctx.fillRect(-7, -22, 14, 6); ctx.fillRect(-7, -16, 4, 4); ctx.fillRect(3, -16, 4, 4); }
+    else if (hs === 6) { ctx.beginPath(); ctx.arc(0, -18, 9, Math.PI * 1.1, Math.PI * -0.1); ctx.fill(); }
+    else if (hs === 7) { ctx.fillRect(-7, -21, 14, 8); ctx.fillRect(-9, -18, 3, 3); ctx.fillRect(6, -18, 3, 3); }
+    else if (hs === 8) { ctx.fillRect(-6, -23, 12, 4); ctx.fillRect(-6, -19, 2, 7); ctx.fillRect(4, -19, 2, 7); ctx.fillRect(-2, -25, 4, 3); }
+    else { ctx.fillRect(-7, -22, 14, 5); ctx.fillRect(-7, -17, 3, 4); ctx.fillRect(4, -17, 3, 4); }
+  }
   ctx.restore();
   ctx.globalAlpha = 1;
 

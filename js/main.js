@@ -463,7 +463,7 @@ function saveSnapshot() {
       dungeonOpen: w.dungeonOpen
     },
     player: {
-      x: p.x, y: p.y, dir: p.dir,
+      x: p.x, y: p.y, dir: p.dir, hair: p.hair,
       hp: p.hp, maxHp: p.maxHp, mana: p.mana, maxMana: p.maxMana,
       buffs: p.buffs, buffMaxHp: p.buffMaxHp,
       mounted: p.mounted, pets: pets, lightPets: lightPets,
@@ -699,6 +699,7 @@ function applySaveData(data) {
   p.x = clamp(ps.x === undefined ? w.spawnX : ps.x, 16, w.W * TILE - 16);
   p.y = clamp(ps.y === undefined ? w.spawnY : ps.y, 16, w.H * TILE - 16);
   p.dir = ps.dir || 1;
+  p.hair = ps.hair || 0;
   p.maxHp = ps.maxHp || 100; p.hp = clamp(ps.hp || 1, 1, p.maxHp);
   p.maxMana = ps.maxMana || 200; p.mana = clamp(ps.mana === undefined ? p.maxMana : ps.mana, 0, p.maxMana);
   p.buffs = ps.buffs || {}; p.buffMaxHp = ps.buffMaxHp || 0;
@@ -4078,6 +4079,7 @@ function anglerQuestRewards(completion) {
     { id:crate, count:1 }
   ];
   if (completion % 3 === 0) rewards.push({ id:I.FISHINGPOTION, count:1 });
+  if (completion === 25) rewards.push({ id:I.HOTLINEFISHINGHOOK, count:1 });
   return rewards;
 }
 
@@ -4099,8 +4101,20 @@ function anglerQuestHTML() {
     '<div class="ddesc">Quests completed: ' + game.anglerQuestsCompleted + '</div></div>';
 }
 
-function turnInAnglerQuest() {
-  if (!game.townNpcOpen || game.townNpcOpen.type !== E.ANGLER || !townServiceNpcActive(E.ANGLER)) return false;
+function stylistHairHTML() {
+  return '<div class="town-service"><h4>Hairstyling</h4><div class="ddesc">The Stylist can restyle your hair for free.</div>' +
+    '<div class="ddesc">Current style: ' + (game.player.hair + 1) + '</div>' +
+    '<button class="tavern-buy" data-town-hair="1">Change Hairstyle</button></div>';
+}
+
+function stylistHair() {
+  if (!game.townNpcOpen || game.townNpcOpen.type !== E.STYLIST || !townServiceNpcActive(E.STYLIST)) return;
+  game.player.hair = (game.player.hair + 1) % 9;
+  game.message('The Stylist gave you a fresh new look!');
+  AudioSys.play('pickup');
+}
+
+function turnInAnglerQuest() {  if (!game.townNpcOpen || game.townNpcOpen.type !== E.ANGLER || !townServiceNpcActive(E.ANGLER)) return false;
   if (game.anglerQuestCompletedDay === game.dayCount) { game.message('The Angler has no more work today.'); return false; }
   var quest = currentAnglerQuest(), inv = game.player.inventory;
   if (inv.countOf(quest.item) < 1) { game.message('You have not caught the requested fish.'); return false; }
@@ -4141,6 +4155,7 @@ function renderTownPanel() {
     if (open.type === E.DRYAD && open.status) html += '<div class="town-service"><h4>World Status</h4><div class="ddesc">' +
       (game.world.evil === 'crimson' ? 'Crimson' : 'Corruption') + ': ' + open.status.evil + '% &middot; Hallow: ' + open.status.hallow + '% &middot; Purity: ' + open.status.purity + '%</div></div>';
     if (open.type === E.ANGLER) html += anglerQuestHTML();
+    if (open.type === E.STYLIST) html += stylistHairHTML();
     root.innerHTML = html; return;
   }
   if (open.type === E.TAXCOLLECTOR) {
@@ -5101,6 +5116,7 @@ function initDOM() {
     if (e.target.closest('[data-town-heal]')) { nurseHeal(); renderTownPanel(); return; }
     if (e.target.closest('[data-town-tax]')) { collectTownTax(); renderTownPanel(); return; }
     if (e.target.closest('[data-angler-quest]')) { turnInAnglerQuest(); renderTownPanel(); return; }
+    if (e.target.closest('[data-town-hair]')) { stylistHair(); renderTownPanel(); return; }
     if (e.target.closest('[data-town-reforge]')) { reforgeSelectedItem(); renderTownPanel(); }
   });
   $('panel-housing').addEventListener('click', function(e) {
