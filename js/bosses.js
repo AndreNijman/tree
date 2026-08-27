@@ -1603,7 +1603,8 @@ function killBoss(e, game) {
   game.bossesDefeated[e.boss] = true;
   var dm = diffScale();
   if (dm.bag) {
-    game.pickups.push({ nid: typeof Net !== 'undefined' ? ++Net.seq : 0, item: I.BOSSBAG, count: 1, x: e.x, y: e.y, seed: Math.random() * 100, t: 0, bagBoss: e.boss, bagDrops: drops });
+    var bagDrops = drops.concat([{ id: I.GOLD, count: 5 + Math.floor(Math.random() * 5) }]);
+    game.pickups.push({ nid: typeof Net !== 'undefined' ? ++Net.seq : 0, item: I.BOSSBAG, count: 1, x: e.x, y: e.y, seed: Math.random() * 100, t: 0, bagBoss: e.boss, bagDrops: bagDrops });
   } else {
     for (var i = 0; i < drops.length; i++) {
       var d = drops[i];

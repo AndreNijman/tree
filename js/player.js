@@ -1187,14 +1187,17 @@ Player.prototype.damage = function(amount, from, kbx) {
   if (this.dying || this.invuln > 0) return;
   var eff = this.inventory.accEffects();
   var def = this.defense();
-  var reduced = Math.max(1, Math.round(amount * (1 - eff.invuln) - def * 0.5));
+  var dm = DIFFICULTY[game.difficulty] || DIFFICULTY.normal;
+  var defEff = dm.defEff != null ? dm.defEff : 1;
+  var kbMul = dm.kbMul != null ? dm.kbMul : 1;
+  var reduced = Math.max(1, Math.round(amount * (1 - eff.invuln) - def * 0.5 * defEff));
   this.hp -= reduced;
   this.invuln = 0.9 + eff.invuln;
   if (this.thorns > 0 && from && from.hp > 0) {
     if (from.boss) game.hitBoss(from, this.thorns, 0, 0);
     else hitEntity(from, this.thorns, 0, 0, game);
   }
-  this.vx += kbx || 0;
+  this.vx += (kbx || 0) * kbMul;
   this.vy = -4;
   AudioSys.play('hurt');
   game.flash();
@@ -1206,6 +1209,21 @@ Player.prototype.damage = function(amount, from, kbx) {
 Player.prototype.die = function() {
   if (this.dying) return;
   if (game && game.placeDeathTombstone) game.placeDeathTombstone(this.x, this.y);
+  if (game && game.difficulty) {
+    var dm = DIFFICULTY[game.difficulty] || DIFFICULTY.normal;
+    if (dm.coinLoss > 0) {
+      var coins = [I.COIN, I.GOLD, I.PLATINUM];
+      for (var ci = 0; ci < coins.length; ci++) {
+        var id = coins[ci];
+        var have = this.inventory.countOf(id);
+        var drop = Math.floor(have * dm.coinLoss);
+        if (drop > 0) {
+          this.inventory.consume(id, drop);
+          game.addPickup(this.x + (Math.random() * 20 - 10), this.y, id, drop);
+        }
+      }
+    }
+  }
   this.dying = true;
   this.respawnT = 2.5;
   AudioSys.play('death');

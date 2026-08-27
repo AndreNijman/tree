@@ -261,9 +261,9 @@ var VERSION = 'tree v1.2';
 var PATCH = 1;
 
 var DIFFICULTY = {
-  normal: { key:'normal', name:'Normal', hp:1, dmg:1, coin:1, spawn:1, bag:false },
-  expert: { key:'expert', name:'Expert', hp:2, dmg:2, coin:2.5, spawn:1.5, bag:true },
-  master: { key:'master', name:'Master', hp:3, dmg:3, coin:3, spawn:2, bag:true }
+  normal: { key:'normal', name:'Normal', hp:1, dmg:1, coin:1, spawn:1, bag:false, defEff:1, kbMul:1, coinLoss:0 },
+  expert: { key:'expert', name:'Expert', hp:2, dmg:2, coin:2.5, spawn:1.5, bag:true, defEff:0.5, kbMul:1.3, coinLoss:0.5 },
+  master: { key:'master', name:'Master', hp:3, dmg:3, coin:3, spawn:2, bag:true, defEff:0.25, kbMul:1.6, coinLoss:0.75 }
 };
 
 function diffScale() {
