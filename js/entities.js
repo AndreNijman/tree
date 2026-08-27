@@ -312,7 +312,18 @@ var ENT_DEF = {
   [E.SQUIRREL]: { w:14, h:12, hp:5, dmg:0, def:0, color:'#b8835a', speed:2.8, name:'Squirrel', exp:0 },
   [E.FROG]: { w:14, h:10, hp:5, dmg:0, def:0, color:'#4aa84a', speed:2.4, name:'Frog', exp:0 },
   [E.GOLDFISH]: { w:14, h:10, hp:5, dmg:0, def:0, color:'#e89030', speed:2.2, name:'Goldfish', exp:0 },
-  [E.TURTLE]: { w:22, h:14, hp:5, dmg:0, def:0, color:'#5c9a4a', speed:1.2, name:'Turtle', exp:0 }
+  [E.TURTLE]: { w:22, h:14, hp:5, dmg:0, def:0, color:'#5c9a4a', speed:1.2, name:'Turtle', exp:0 },
+  [E.SKELETON]: { w:20, h:34, hp:140, dmg:24, def:4, color:'#e8e8e8', speed:1.3, name:'Skeleton', exp:3 },
+  [E.PINKY]: { w:26, h:20, hp:150, dmg:20, def:2, color:'#ff9ad8', speed:1.9, name:'Pinky', exp:4 },
+  [E.MOTHERSLIME]: { w:40, h:30, hp:300, dmg:30, def:4, color:'#6ac46c', speed:1.2, name:'Mother Slime', exp:6 },
+  [E.BLUESLIME]: { w:22, h:16, hp:80, dmg:14, def:0, color:'#5aa0e6', speed:1.7, name:'Blue Slime', exp:1 },
+  [E.MANEATER]: { w:26, h:28, hp:200, dmg:26, def:6, color:'#3a8a3a', speed:0, name:'Man Eater', exp:5 },
+  [E.MEDUSA]: { w:22, h:32, hp:300, dmg:40, def:8, color:'#9ad0d8', speed:2.2, fly:true, name:'Medusa', exp:8 },
+  [E.UNDEADVIKING]: { w:24, h:34, hp:340, dmg:40, def:10, color:'#c8d0d8', speed:1.4, name:'Undead Viking', exp:8 },
+  [E.WALLWARRIOR]: { w:24, h:34, hp:420, dmg:46, def:14, color:'#b0b0c0', speed:1.2, name:'Wall Warrior', exp:10 },
+  [E.SPIKEBALL]: { w:22, h:22, hp:260, dmg:38, def:8, color:'#9a9aa8', speed:2.4, fly:true, name:'Spike Ball', exp:6 },
+  [E.GRANITEELEMENTAL]: { w:24, h:26, hp:420, dmg:46, def:12, color:'#c8b0d8', speed:2.8, fly:true, name:'Granite Elemental', exp:12 },
+  [E.BASILISK]: { w:34, h:22, hp:480, dmg:52, def:14, color:'#d8c888', speed:4.2, name:'Basilisk', exp:12 }
 };
 
 function makeEntity(type, x, y) {
@@ -379,6 +390,15 @@ function killEntity(e, game) {
       var sp = spawnEntity(game, E.SLIMELING, e.x + (Math.random() * 16 - 8), e.y - 4);
       sp.vx = Math.random() * 4 - 2;
       sp.vy = -4;
+    }
+  }
+  if (e.type === E.MOTHERSLIME && !e.splitDone) {
+    e.splitDone = true;
+    var ms = 2 + Math.floor(Math.random() * 2);
+    for (var mi = 0; mi < ms; mi++) {
+      var mp = spawnEntity(game, E.BLUESLIME, e.x + (Math.random() * 20 - 10), e.y - 6);
+      mp.vx = Math.random() * 4 - 2;
+      mp.vy = -4;
     }
   }
   if (game.bossesDefeated.plantera &&
@@ -731,6 +751,22 @@ function dropTable(type, game) {
     case E.BUNNY: case E.BIRD: case E.SQUIRREL: case E.FROG:
     case E.GOLDFISH: case E.TURTLE:
       return [];
+    case E.SKELETON: case E.UNDEADVIKING: case E.WALLWARRIOR:
+      return [{ id:I.BONE, count:Math.random() < 0.6 ? 1 : 0 }, { id:I.IRON, count:Math.random() < 0.2 ? 1 : 0 }];
+    case E.PINKY:
+      return [{ id:I.GEL, count:3 }];
+    case E.MOTHERSLIME: case E.BLUESLIME:
+      return [{ id:I.GEL, count:2 }];
+    case E.MANEATER:
+      return [{ id:I.VINE, count:1 + Math.floor(Math.random() * 2) }];
+    case E.MEDUSA:
+      return [{ id:I.STONE, count:1 + Math.floor(Math.random() * 2) }, { id:I.GOLD, count:Math.random() < 0.1 ? 1 : 0 }];
+    case E.SPIKEBALL:
+      return [{ id:I.BONE, count:Math.random() < 0.5 ? 1 : 0 }];
+    case E.GRANITEELEMENTAL:
+      return [{ id:I.GRANITE, count:1 + Math.floor(Math.random() * 2) }];
+    case E.BASILISK:
+      return [{ id:I.SAND, count:2 }, { id:I.GOLD, count:Math.random() < 0.05 ? 1 : 0 }];
     default: return [];
   }
 }
@@ -812,6 +848,20 @@ function flyStepNoCol(e, game) {
   e.bob += 0.06;
   e.x += (dx / d) * e.speed;
   e.y += (dy / d) * e.speed + Math.sin(e.bob) * 0.5;
+}
+
+function maneaterStep(e, game) {
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
+  e.attackCd = (e.attackCd || Math.random() * 1.5) - 1 / 60;
+  if (e.attackCd <= 0 && dist(e.x, e.y, p.x, p.y) < 360) {
+    e.attackCd = 1.6;
+    var ang = Math.atan2(p.y - e.y, p.x - e.x);
+    game.projectiles.add({
+      x:e.x, y:e.y, vx:Math.cos(ang) * 4.5, vy:Math.sin(ang) * 4.5,
+      dmg:Math.round(22 * diffScale().dmg), type:P.STINGER, owner:'enemy', life:4, dead:false, color:'#6ad06a'
+    });
+    AudioSys.play('spit');
+  }
 }
 
 function rangedWalkerStep(e, game, projectile, shotSpeed, damage, cooldown, color) {
@@ -1609,6 +1659,20 @@ function enemyStep(e, game) {
     case E.GUIDE:
       e.vx = 0; e.vy = 0;
       physicsStep(e, game);
+      break;
+    case E.SKELETON: case E.UNDEADVIKING: case E.WALLWARRIOR: case E.BASILISK:
+      zombieStep(e, game);
+      physicsStep(e, game);
+      break;
+    case E.PINKY: case E.MOTHERSLIME: case E.BLUESLIME:
+      slimeStep(e, game);
+      physicsStep(e, game);
+      break;
+    case E.MEDUSA: case E.SPIKEBALL: case E.GRANITEELEMENTAL:
+      flyStep(e, game);
+      break;
+    case E.MANEATER:
+      maneaterStep(e, game);
       break;
   }
 

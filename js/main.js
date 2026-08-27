@@ -3557,16 +3557,16 @@ function pickEnemy() {
       } else if (biome === BIOME.HALLOW) {
         pool.push(E.SLIME, E.PINKSLIME, E.ZOMBIE);
       } else if (biome === BIOME.SNOW) {
-        pool.push(E.ZOMBIE, E.DEMONEYE, E.GIANTBAT, E.ICESLIME, E.SPIKEDICESLIME);
+        pool.push(E.ZOMBIE, E.DEMONEYE, E.GIANTBAT, E.ICESLIME, E.SPIKEDICESLIME, E.UNDEADVIKING);
       } else if (biome === BIOME.DESERT) {
         pool.push(E.ANTLION, E.ANTLIONCHARGER, E.GIANTBAT, E.SANDSLIME);
       } else if (biome === BIOME.MUSHROOM) {
         pool.push(E.SLIME, E.PINKSLIME, E.ZOMBIE);
         if (night) pool.push(E.SPOREZOMBIE);
       } else {
-        pool.push(E.SLIME, E.SLIME, E.SLIME, E.SLIME);
-        if (Math.random() < 0.06) pool.push(E.PINKSLIME);
-        if (night) pool.push(E.ZOMBIE, E.DEMONEYE, E.CAVEBAT, E.GOBLIN);
+        pool.push(E.SLIME, E.SLIME, E.SLIME, E.SLIME, E.BLUESLIME, E.MOTHERSLIME);
+        if (Math.random() < 0.04) pool.push(E.PINKY);
+        if (night) pool.push(E.ZOMBIE, E.DEMONEYE, E.CAVEBAT, E.GOBLIN, E.SKELETON);
       }
       if (night && Math.random() < 0.25) pool.push(E.DEMONEYE);
     } else if (depth < 30) {
@@ -3576,10 +3576,11 @@ function pickEnemy() {
         pool.push(E.BLOODCRAWLER);
       } else if (biome === BIOME.GRANITE) {
         pool.push(E.GRANITEGOLEM);
+      if (game.hardmode) pool.push(E.GRANITEELEMENTAL);
       } else if (biome === BIOME.MARBLE) {
-        pool.push(E.MARBLEGOLEM);
+        pool.push(E.MARBLEGOLEM, E.MEDUSA);
       } else if (biome === BIOME.JUNGLE) {
-        pool.push(E.JUNGLEBAT, E.JUNGLESLIME, E.SPIKEDJUNGLESLIME, E.HORNET, E.GIANTBAT);
+        pool.push(E.JUNGLEBAT, E.JUNGLESLIME, E.SPIKEDJUNGLESLIME, E.HORNET, E.GIANTBAT, E.MANEATER);
       } else if (biome === BIOME.CORRUPT) {
         pool.push(E.EATEROFSOULS, E.DEVOURER, E.CORRUPTSLIME, E.CORRUPTCRIMSONFLYER);
       } else if (biome === BIOME.CRIMSON) {
@@ -3589,13 +3590,14 @@ function pickEnemy() {
       } else if (biome === BIOME.TEMPLE) {
         pool.push(E.JUNGLEBAT, E.HORNET, E.JUNGLESLIME);
       } else if (biome === BIOME.DUNGEON) {
-        pool.push(E.CURSEDSKULL, E.ANGRYBONES, E.DARKCASTER, E.DUNGEONSLIME);
+        pool.push(E.CURSEDSKULL, E.ANGRYBONES, E.DARKCASTER, E.DUNGEONSLIME, E.WALLWARRIOR, E.SPIKEBALL);
       } else if (biome === BIOME.UNDERDESERT) {
         pool.push(E.ANTLION, E.ANTLIONCHARGER, E.ANTLIONSWARMER, E.DUNGEONSCORPION, E.DIGGER);
       } else if (biome === BIOME.UNDERSNOW) {
-        pool.push(E.ICESLIME, E.SPIKEDICESLIME, E.ICEBAT, E.SNOWFLINX);
+        pool.push(E.ICESLIME, E.SPIKEDICESLIME, E.ICEBAT, E.SNOWFLINX, E.UNDEADVIKING);
       } else {
-        pool.push(E.ZOMBIE, E.CAVEBAT, E.GIANTBAT, E.SLIME, E.JUNGLESLIME, E.GIANTWORM);
+        pool.push(E.ZOMBIE, E.CAVEBAT, E.GIANTBAT, E.SLIME, E.JUNGLESLIME, E.GIANTWORM, E.SKELETON, E.MOTHERSLIME, E.BLUESLIME);
+        if (Math.random() < 0.03) pool.push(E.PINKY);
       }
       pool.push(E.CAVEBAT, E.GIANTBAT);
     } else {
@@ -3605,18 +3607,20 @@ function pickEnemy() {
         pool.push(E.BLOODCRAWLER);
       } else if (biome === BIOME.GRANITE) {
         pool.push(E.GRANITEGOLEM);
+      if (game.hardmode) pool.push(E.GRANITEELEMENTAL);
       } else if (biome === BIOME.MARBLE) {
-        pool.push(E.MARBLEGOLEM);
+        pool.push(E.MARBLEGOLEM, E.MEDUSA);
       } else if (biome === BIOME.JUNGLE) {
-        pool.push(E.JUNGLEBAT, E.JUNGLESLIME, E.SPIKEDJUNGLESLIME, E.HORNET, E.GIANTBAT);
+        pool.push(E.JUNGLEBAT, E.JUNGLESLIME, E.SPIKEDJUNGLESLIME, E.HORNET, E.GIANTBAT, E.MANEATER);
       } else if (biome === BIOME.DUNGEON) {
-        pool.push(E.CURSEDSKULL, E.ANGRYBONES, E.DARKCASTER, E.DUNGEONSLIME);
+        pool.push(E.CURSEDSKULL, E.ANGRYBONES, E.DARKCASTER, E.DUNGEONSLIME, E.WALLWARRIOR, E.SPIKEBALL);
       } else if (biome === BIOME.UNDERDESERT) {
         pool.push(E.ANTLION, E.ANTLIONCHARGER, E.ANTLIONSWARMER, E.DUNGEONSCORPION, E.DIGGER);
       } else if (biome === BIOME.UNDERSNOW) {
-        pool.push(E.ICESLIME, E.SPIKEDICESLIME, E.ICEBAT, E.SNOWFLINX);
+        pool.push(E.ICESLIME, E.SPIKEDICESLIME, E.ICEBAT, E.SNOWFLINX, E.UNDEADVIKING);
       } else {
-        pool.push(E.ZOMBIE, E.CAVEBAT, E.GIANTBAT, E.SLIME, E.UNDEADMINER, E.GIANTWORM);
+        pool.push(E.ZOMBIE, E.CAVEBAT, E.GIANTBAT, E.SLIME, E.UNDEADMINER, E.GIANTWORM, E.SKELETON, E.BLUESLIME);
+        if (Math.random() < 0.03) pool.push(E.MOTHERSLIME, E.PINKY);
       }
     }
     if (depth < 0 && depth > -12) {
@@ -3656,14 +3660,14 @@ function pickEnemy() {
     } else if (biome === BIOME.HALLOW) {
       pool.push(E.PIXIE, E.UNICORN, E.CHAOSELEMENTAL, E.GASTROPOD, E.HALLOWEDMIMIC);
     } else if (biome === BIOME.SNOW) {
-      pool.push(E.ICEBAT, E.SNOWFLINX, E.SPIKEDICESLIME, E.ICETORTOISE, E.ICEGOLEM, E.PIGRON, E.WOLF, E.ICEELEMENTAL);
+      pool.push(E.ICEBAT, E.SNOWFLINX, E.SPIKEDICESLIME, E.ICETORTOISE, E.ICEGOLEM, E.PIGRON, E.WOLF, E.ICEELEMENTAL, E.UNDEADVIKING);
     } else if (biome === BIOME.DESERT) {
-      pool.push(E.MUMMY, E.DARKMUMMY, E.BLOODMUMMY, E.LIGHTMUMMY, E.SANDSLIME);
+      pool.push(E.MUMMY, E.DARKMUMMY, E.BLOODMUMMY, E.LIGHTMUMMY, E.SANDSLIME, E.BASILISK);
     } else if (biome === BIOME.MUSHROOM) {
       pool.push(E.PIGRON, E.ANGLERFISH, E.DERPLING, E.SPOREZOMBIE);
     } else {
-      pool.push(E.HOPPINJACK, E.SLIME);
-      if (night) pool.push(E.ZOMBIE, E.HARDZOMBIE, E.WRATH, E.WEREWOLF);
+      pool.push(E.HOPPINJACK, E.SLIME, E.BLUESLIME, E.MOTHERSLIME);
+      if (night) pool.push(E.ZOMBIE, E.HARDZOMBIE, E.WRATH, E.WEREWOLF, E.SKELETON);
       else pool.push(E.PINKSLIME, E.UNICORN);
     }
     if (lunarActive && Math.random() < 0.1) pool.push(E.CORITE, E.SELENIAN, E.LUNARFLAME, E.ALIENHORNET, E.STORMDIVER, E.PREDICTOR, E.STARGAZER);
@@ -3674,8 +3678,9 @@ function pickEnemy() {
       pool.push(E.BLOODCRAWLER, E.BLACKRECLUSE);
     } else if (biome === BIOME.GRANITE) {
       pool.push(E.GRANITEGOLEM);
+      if (game.hardmode) pool.push(E.GRANITEELEMENTAL);
     } else if (biome === BIOME.MARBLE) {
-      pool.push(E.MARBLEGOLEM);
+      pool.push(E.MARBLEGOLEM, E.MEDUSA);
     } else if (biome === BIOME.JUNGLE) {
       pool.push(E.JUNGLEBAT, E.JUNGLESLIME, E.SPIKEDJUNGLESLIME, E.HORNET, E.MOSSHORNET, E.GIANTTORTOSE, E.DERPLING);
     } else if (biome === BIOME.CORRUPT) {
@@ -3687,18 +3692,19 @@ function pickEnemy() {
     } else if (biome === BIOME.TEMPLE) {
       pool.push(E.LIHZARD, E.FLYINGSNAKE);
     } else if (biome === BIOME.SNOW) {
-      pool.push(E.ICEBAT, E.ICETORTOISE, E.ICEGOLEM, E.ANGLERFISH, E.WOLF);
+      pool.push(E.ICEBAT, E.ICETORTOISE, E.ICEGOLEM, E.ANGLERFISH, E.WOLF, E.UNDEADVIKING);
     } else if (biome === BIOME.DESERT) {
-      pool.push(E.MUMMY, E.DARKMUMMY, E.LIGHTMUMMY, E.ANGLERFISH);
+      pool.push(E.MUMMY, E.DARKMUMMY, E.LIGHTMUMMY, E.ANGLERFISH, E.BASILISK);
     } else if (biome === BIOME.DUNGEON) {
-      pool.push(E.CURSEDSKULL, E.ANGRYBONES, E.DARKCASTER, E.DUNGEONSLIME, E.ARMOREDBONES);
+      pool.push(E.CURSEDSKULL, E.ANGRYBONES, E.DARKCASTER, E.DUNGEONSLIME, E.ARMOREDBONES, E.WALLWARRIOR, E.SPIKEBALL);
       if (game.bossesDefeated.plantera) pool.push(E.PALADIN, E.TACTICALSKELETON, E.SKELETONSNIPER, E.SKELETONCOMMANDO, E.RAGGEDCASTER, E.NECROMANCER, E.DIABOLIST, E.BONELEE, E.GIANTCURSEDSKULL);
     } else if (biome === BIOME.UNDERDESERT) {
-      pool.push(E.ANTLION, E.ANTLIONCHARGER, E.ANTLIONSWARMER, E.DUNGEONSCORPION, E.MUMMY, E.DUNESPLICER);
+      pool.push(E.ANTLION, E.ANTLIONCHARGER, E.ANTLIONSWARMER, E.DUNGEONSCORPION, E.MUMMY, E.DUNESPLICER, E.BASILISK);
     } else if (biome === BIOME.UNDERSNOW) {
-      pool.push(E.ICESLIME, E.SPIKEDICESLIME, E.ICEBAT, E.SNOWFLINX, E.ICEGOLEM);
+      pool.push(E.ICESLIME, E.SPIKEDICESLIME, E.ICEBAT, E.SNOWFLINX, E.ICEGOLEM, E.UNDEADVIKING);
     } else {
-      pool.push(E.HARDZOMBIE, E.WRATH, E.HOPPINJACK, E.CHAOSELEMENTAL, E.MIMIC, E.SKELETONARCHER, E.TOXICSLUDGE);
+      pool.push(E.HARDZOMBIE, E.WRATH, E.HOPPINJACK, E.CHAOSELEMENTAL, E.MIMIC, E.SKELETONARCHER, E.TOXICSLUDGE, E.SKELETON, E.BLUESLIME);
+      if (Math.random() < 0.04) pool.push(E.MOTHERSLIME, E.PINKY);
     }
     if (lunarActive && Math.random() < 0.1) pool.push(E.CORITE, E.SELENIAN, E.LUNARFLAME, E.ALIENHORNET, E.STORMDIVER, E.PREDICTOR, E.STARGAZER);
   } else {
@@ -3708,8 +3714,9 @@ function pickEnemy() {
       pool.push(E.BLOODCRAWLER, E.BLACKRECLUSE);
     } else if (biome === BIOME.GRANITE) {
       pool.push(E.GRANITEGOLEM);
+      if (game.hardmode) pool.push(E.GRANITEELEMENTAL);
     } else if (biome === BIOME.MARBLE) {
-      pool.push(E.MARBLEGOLEM);
+      pool.push(E.MARBLEGOLEM, E.MEDUSA);
     } else if (biome === BIOME.AETHER) {
       pool.push(E.CHAOSELEMENTAL, E.PIXIE, E.HALLOWEDMIMIC);
     } else if (biome === BIOME.JUNGLE) {
@@ -3723,14 +3730,15 @@ function pickEnemy() {
     } else if (biome === BIOME.TEMPLE) {
       pool.push(E.LIHZARD, E.FLYINGSNAKE);
     } else if (biome === BIOME.DUNGEON) {
-      pool.push(E.CURSEDSKULL, E.ANGRYBONES, E.DARKCASTER, E.DUNGEONSLIME, E.ARMOREDBONES);
+      pool.push(E.CURSEDSKULL, E.ANGRYBONES, E.DARKCASTER, E.DUNGEONSLIME, E.ARMOREDBONES, E.WALLWARRIOR, E.SPIKEBALL);
       if (game.bossesDefeated.plantera) pool.push(E.PALADIN, E.TACTICALSKELETON, E.SKELETONSNIPER, E.SKELETONCOMMANDO, E.RAGGEDCASTER, E.NECROMANCER, E.DIABOLIST, E.BONELEE, E.GIANTCURSEDSKULL);
     } else if (biome === BIOME.UNDERDESERT) {
-      pool.push(E.ANTLION, E.ANTLIONCHARGER, E.ANTLIONSWARMER, E.DUNGEONSCORPION, E.MUMMY, E.DUNESPLICER);
+      pool.push(E.ANTLION, E.ANTLIONCHARGER, E.ANTLIONSWARMER, E.DUNGEONSCORPION, E.MUMMY, E.DUNESPLICER, E.BASILISK);
     } else if (biome === BIOME.UNDERSNOW) {
       pool.push(E.ICESLIME, E.SPIKEDICESLIME, E.ICEBAT, E.SNOWFLINX, E.ICEGOLEM, E.ANGLERFISH);
     } else {
-      pool.push(E.HARDZOMBIE, E.WRATH, E.CHAOSELEMENTAL, E.CORRUPTOR, E.GASTROPOD, E.HOPPINJACK, E.MIMIC, E.SKELETONARCHER, E.TOXICSLUDGE, E.NYMPH);
+      pool.push(E.HARDZOMBIE, E.WRATH, E.CHAOSELEMENTAL, E.CORRUPTOR, E.GASTROPOD, E.HOPPINJACK, E.MIMIC, E.SKELETONARCHER, E.TOXICSLUDGE, E.NYMPH, E.SKELETON, E.BLUESLIME);
+      if (Math.random() < 0.04) pool.push(E.MOTHERSLIME, E.PINKY);
     }
     if (lunarActive && Math.random() < 0.15) pool.push(E.CORITE, E.SELENIAN, E.LUNARFLAME, E.VORTEXIAN, E.STORMDIVER, E.NEBULAFLOATER, E.PREDICTOR, E.STARDJUSTCELL, E.STARGAZER);
   }

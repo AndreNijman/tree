@@ -2259,6 +2259,64 @@ function drawEnemy(ctx, e, cam, W, H) {
       ctx.fillStyle = col;
       ctx.fillRect(x - e.w / 2, y - e.h / 2, e.w, e.h);
       break;
+    case E.SKELETON: case E.UNDEADVIKING: case E.WALLWARRIOR:
+      drawHumanoid(ctx, x, y, col, false, e.dir, false);
+      break;
+    case E.PINKY: case E.MOTHERSLIME: case E.BLUESLIME:
+      drawSlime(ctx, x, y, e.w, e.h, col, e.type);
+      break;
+    case E.MEDUSA:
+      drawHumanoid(ctx, x, y, col, false, e.dir, false);
+      ctx.fillStyle = '#3ad04a';
+      for (var s = 0; s < 6; s++) {
+        var a2 = e.seed + s * 1.05 + Time.seconds * 2;
+        ctx.beginPath();
+        ctx.arc(x + Math.cos(a2) * 9, y - e.h / 2 + Math.sin(a2) * 5, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      break;
+    case E.SPIKEBALL:
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.arc(x, y, e.w / 2, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#5a5a66';
+      for (var spk = 0; spk < 8; spk++) {
+        var a3 = spk * Math.PI / 4 + e.bob;
+        ctx.beginPath();
+        ctx.moveTo(x + Math.cos(a3) * (e.w / 2 - 2), y + Math.sin(a3) * (e.w / 2 - 2));
+        ctx.lineTo(x + Math.cos(a3) * (e.w / 2 + 5), y + Math.sin(a3) * (e.w / 2 + 5));
+        ctx.lineTo(x + Math.cos(a3 + 0.2) * (e.w / 2 - 2), y + Math.sin(a3 + 0.2) * (e.w / 2 - 2));
+        ctx.fill();
+      }
+      break;
+    case E.GRANITEELEMENTAL:
+      ctx.fillStyle = col;
+      ctx.beginPath();
+      ctx.moveTo(x, y - e.h / 2);
+      ctx.lineTo(x + e.w / 2, y);
+      ctx.lineTo(x, y + e.h / 2);
+      ctx.lineTo(x - e.w / 2, y);
+      ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
+      break;
+    case E.MANEATER:
+      ctx.fillStyle = col;
+      ctx.fillRect(x - 3, y, 6, e.h / 2);
+      ctx.beginPath(); ctx.arc(x, y, e.w / 2, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(x + e.dir * 4 - 5, y - 3, 4, 4);
+      ctx.fillRect(x + e.dir * 4 + 1, y - 3, 4, 4);
+      ctx.fillStyle = '#cc3333';
+      ctx.fillRect(x - e.w / 2, y + 4, e.w, 3);
+      break;
+    case E.BASILISK:
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.ellipse(x, y, e.w / 2, e.h / 2, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#7a6a3a';
+      ctx.fillRect(x - e.w / 2 - 6, y - 2, 8, 6);
+      ctx.fillStyle = '#111111';
+      ctx.beginPath(); ctx.arc(x + e.dir * 6, y - 2, 2, 0, Math.PI * 2); ctx.fill();
+      break;
   }
   if (e.ghost) ctx.globalAlpha = 1;
 
