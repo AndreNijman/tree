@@ -226,7 +226,8 @@ var I = {
   PYLON_FOREST:'pylonforest', PYLON_DESERT:'pylondesert', PYLON_SNOW:'pylonsnow',
   PYLON_JUNGLE:'pylonjungle', PYLON_HALLOW:'pylonhallow', PYLON_CORRUPT:'pyloncorrupt',
   PYLON_CRIMSON:'pyloncrimson', PYLON_OCEAN:'pylonocean', PYLON_UNIVERSAL:'pylonuniversal',
-  METALDETECTOR:'metaldetector', BUTTERFLYWINGS:'butterflywings', UMBRELLA:'umbrella'
+  METALDETECTOR:'metaldetector', BUTTERFLYWINGS:'butterflywings', UMBRELLA:'umbrella',
+  BOSSBAG:'bossbag'
 };
 
 var ITEMS = {};
@@ -1074,6 +1075,7 @@ defItem(I.PANICNECKLACE, { name:'Panic Necklace', type:'accessory', runSpeed:1.1
 defItem(I.METALDETECTOR, { name:'Metal Detector', type:'accessory', color:'#c8a84a', icon:'📟', maxStack:1, desc:'Shows the nearest valuable tile while equipped.' });
 defItem(I.BUTTERFLYWINGS, { name:'Butterfly Wings', type:'accessory', jumpMul:1.05, jumps:3, noFall:true, color:'#d0b060', icon:'🦋', maxStack:1, desc:'Delicate wings dropped by jungle moths.' });
 defItem(I.UMBRELLA, { name:'Umbrella', type:'melee', dmg:9, speed:0.33, kb:5, range:1.7, slowFall:2, color:'#5b82b8', icon:'☂️', maxStack:1, desc:'Hold it to drift safely downward. Dropped by Umbrella Slimes.' });
+defItem(I.BOSSBAG, { name:'Treasure Bag', type:'bag', color:'#c8a84a', icon:'🎁', maxStack:1, desc:'Right-click to open and release boss loot. Drops in Expert and Master mode.' });
 
 function setAmmoGroup(group, ids) {
   for (var i = 0; i < ids.length; i++) ITEMS[ids[i]].ammoGroup = group;
@@ -1116,7 +1118,7 @@ function copyItemStack(stack, count) {
 
 Inventory.prototype.hotSlot = function(i) { return this.slots[i]; };
 
-Inventory.prototype.add = function(id, count) {
+Inventory.prototype.add = function(id, count, extra) {
   if (!id) return 0;
   var d = ITEMS[id];
   count = count || 1;
@@ -1132,7 +1134,12 @@ Inventory.prototype.add = function(id, count) {
   for (var j = 0; j < this.slots.length && remaining > 0; j++) {
     if (!this.slots[j]) {
       var take2 = Math.min(max, remaining);
-      this.slots[j] = { id:id, count:take2 };
+      var ns = { id:id, count:take2 };
+      if (extra) {
+        if (extra.bagBoss) ns.bagBoss = extra.bagBoss;
+        if (extra.bagDrops) ns.bagDrops = extra.bagDrops;
+      }
+      this.slots[j] = ns;
       remaining -= take2;
     }
   }
@@ -1153,7 +1160,7 @@ Inventory.prototype.canAdd = function(id, count) {
 
 Inventory.prototype.addStack = function(stack) {
   if (!stack || !stack.id || stack.count <= 0) return 0;
-  if (!stack.reforge) return this.add(stack.id, stack.count);
+  if (!stack.reforge) return this.add(stack.id, stack.count, stack);
   if (stack.count !== 1 || ITEMS[stack.id].maxStack !== 1) return 0;
   for (var i = 0; i < this.slots.length; i++) {
     if (!this.slots[i]) {

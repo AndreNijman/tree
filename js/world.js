@@ -1,8 +1,9 @@
 // ---------- World ----------
-function World(width, height, seed) {
+function World(width, height, seed, difficulty) {
   this.W = width;
   this.H = height;
   this.seed = seed;
+  this.difficulty = difficulty || 'normal';
   this.rng = mulberry32(seed);
   this.tiles = new Uint8Array(width * height);
   this.walls = new Uint8Array(width * height);

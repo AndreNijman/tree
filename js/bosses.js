@@ -1,11 +1,12 @@
 // ---------- Bosses: The Twins, The Destroyer, Skeletron Prime ----------
 
 function makeBoss(game, def) {
+  var dm = diffScale();
   var e = {
     type: -1, boss: def.boss, sub: def.sub || null,
     x: def.x, y: def.y, w: def.w, h: def.h,
     vx: 0, vy: 0, kbVx: 0, kbVy: 0,
-    hp: def.hp, maxHp: def.hp, dmg: def.dmg, def: def.def || 0, defV: def.def || 0,
+    hp: Math.round(def.hp * dm.hp), maxHp: Math.round(def.hp * dm.hp), dmg: Math.round(def.dmg * dm.dmg), def: def.def || 0, defV: def.def || 0,
     fly: true, onGround: false, flash: 0, dead: false, age: 0,
     dir: 1, timer: 0, phase2: false, color: def.color, name: def.name,
     orbitAng: Math.random() * 6.28, targetX: def.x, targetY: def.y,
@@ -1600,9 +1601,17 @@ function killBoss(e, game) {
   }
   // mark boss defeated
   game.bossesDefeated[e.boss] = true;
-  for (var i = 0; i < drops.length; i++) {
-    var d = drops[i];
-    if (d && d.count > 0) game.addPickup(e.x + (Math.random() * 60 - 30), e.y + (Math.random() * 40 - 20), d.id, d.count);
+  var dm = diffScale();
+  if (dm.bag) {
+    game.pickups.push({ nid: typeof Net !== 'undefined' ? ++Net.seq : 0, item: I.BOSSBAG, count: 1, x: e.x, y: e.y, seed: Math.random() * 100, t: 0, bagBoss: e.boss, bagDrops: drops });
+  } else {
+    for (var i = 0; i < drops.length; i++) {
+      var d = drops[i];
+      if (d && d.count > 0) {
+        if (dm.coin !== 1 && (d.id === I.COIN || d.id === I.GOLD || d.id === I.PLATINUM)) d.count = Math.max(1, Math.round(d.count * dm.coin));
+        game.addPickup(e.x + (Math.random() * 60 - 30), e.y + (Math.random() * 40 - 20), d.id, d.count);
+      }
+    }
   }
   if (game.onBossDefeated) game.onBossDefeated(e.boss);
   game.checkBossCompletion();

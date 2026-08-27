@@ -317,10 +317,11 @@ var ENT_DEF = {
 
 function makeEntity(type, x, y) {
   var def = ENT_DEF[type] || entityStats();
+  var dm = diffScale();
   var e = {
     type: type, x: x, y: y, w: def.w, h: def.h,
     vx: 0, vy: 0, kbVx: 0, kbVy: 0,
-    hp: def.hp, maxHp: def.hp, dmg: def.dmg, def: def.def, color: def.color,
+    hp: Math.round(def.hp * dm.hp), maxHp: Math.round(def.hp * dm.hp), dmg: Math.round(def.dmg * dm.dmg), def: def.def, color: def.color,
     speed: def.speed, fly: def.fly, ghost: def.ghost, name: def.name, shoot: !!def.shoot,
     onGround: false, flash: 0, dmgCd: 0, dead: false, age: 0,
     timer: 0, state: 0, dir: 1, seed: Math.random() * 100,
@@ -364,9 +365,12 @@ function killEntity(e, game) {
   e.dead = true;
   // Drops
   var drops = dropTable(e.type, game);
+  var dm = diffScale();
   for (var i = 0; i < drops.length; i++) {
     var d = drops[i];
-    game.addPickup(e.x + (Math.random() * 24 - 12), e.y + (Math.random() * 12 - 6), d.id, d.count);
+    var c = d.count;
+    if (dm.coin !== 1 && (d.id === I.COIN || d.id === I.GOLD || d.id === I.PLATINUM)) c = Math.max(1, Math.round(c * dm.coin));
+    game.addPickup(e.x + (Math.random() * 24 - 12), e.y + (Math.random() * 12 - 6), d.id, c);
   }
   if (e.type === E.CRIMSLIME && !e.splitDone) {
     e.splitDone = true;
@@ -811,6 +815,7 @@ function flyStepNoCol(e, game) {
 }
 
 function rangedWalkerStep(e, game, projectile, shotSpeed, damage, cooldown, color) {
+  damage = Math.round(damage * diffScale().dmg);
   zombieStep(e, game);
   physicsStep(e, game);
   e.attackCd = (e.attackCd || Math.random() * cooldown) - 1 / 60;
@@ -827,6 +832,7 @@ function rangedWalkerStep(e, game, projectile, shotSpeed, damage, cooldown, colo
 }
 
 function ghostShooterStep(e, game, projectile, damage, color) {
+  damage = Math.round(damage * diffScale().dmg);
   ghostStep(e, game);
   e.attackCd = (e.attackCd || 1.5) - 1 / 60;
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);

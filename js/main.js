@@ -40,9 +40,10 @@ var el = {};
 })();
 
 // ---------- Game construction ----------
-function buildGame(seed, evil) {
+function buildGame(seed, evil, difficulty) {
   game = {
-    world: new World(WORLD_W, WORLD_H, seed),
+    world: new World(WORLD_W, WORLD_H, seed, difficulty),
+    difficulty: difficulty || 'normal',
     player: null,
     cam: { x: 0, y: 0 },
     entities: [],
@@ -250,9 +251,10 @@ function renderWorldList() {
       var record = records[i];
       var phase = record.victory ? 'Moon Lord defeated' : record.hardmode ? 'Hardmode' : 'Pre-Hardmode';
       var evil = record.evil === 'crimson' ? 'Crimson' : record.evil === 'corrupt' ? 'Corruption' : 'Unknown evil';
+      var diff = (record.difficulty && DIFFICULTY[record.difficulty]) ? DIFFICULTY[record.difficulty].name : 'Normal';
       html += '<div class="world-row" data-world-id="' + escapeText(record.id) + '">' +
         '<button class="world-open" type="button"><span class="world-title">' + escapeText(record.name) + '</span>' +
-        '<span class="world-meta">' + phase + ' · ' + evil + ' · ' + escapeText(worldDate(record.updatedAt)) + '</span></button>' +
+        '<span class="world-meta">' + phase + ' · ' + evil + ' · ' + diff + ' · ' + escapeText(worldDate(record.updatedAt)) + '</span></button>' +
         '<button class="world-host" type="button" aria-label="Host ' + escapeText(record.name) + '">Host</button>' +
         '<button class="world-delete" type="button" aria-label="Delete ' + escapeText(record.name) + '">Delete</button></div>';
     }
@@ -410,6 +412,17 @@ function migrateLegacyTreeTrunks(tiles, generatedTiles, width) {
   }
 }
 
+function migrateWorldPatch(data, loadedTiles, generatedTiles, width, game) {
+  var patch = data.patch || 0;
+  if (patch < 1) {
+    if (!data.treeTrunks) migrateLegacyTreeTrunks(loadedTiles, generatedTiles, width);
+    patch = 1;
+  }
+  while (patch < PATCH) {
+    patch++;
+  }
+}
+
 function saveSnapshot() {
   var w = game.world, p = game.player, inv = p.inventory;
   var pets = [], lightPets = [], minions = [], pillars = [];
@@ -433,6 +446,8 @@ function saveSnapshot() {
     savedAt: Date.now(),
     seed: w.seed,
     evil: w.evil,
+    difficulty: w.difficulty || 'normal',
+    patch: PATCH,
     treeTrunks: true,
     tiles: packTiles(w.tiles),
     walls: packTiles(w.walls),
@@ -598,12 +613,12 @@ function applySaveData(data) {
     }
   }
 
-  buildGame(data.seed, data.evil);
+  buildGame(data.seed, data.evil, data.difficulty || 'normal');
   var w = game.world, ws = data.world || {}, pr = data.progress || {};
   var generatedTiles = w.tiles;
   var loadedTiles = unpackTiles(data.tiles, w.W * w.H);
-  if (!data.treeTrunks) migrateLegacyTreeTrunks(loadedTiles, generatedTiles, w.W);
   w.tiles = loadedTiles;
+  migrateWorldPatch(data, loadedTiles, generatedTiles, w.W, game);
   if (data.walls) w.walls = unpackTiles(data.walls, w.W * w.H);
   w.graveyardCache = null;
   w.postGenHp();
@@ -1150,6 +1165,8 @@ function startNewGame(name) {
   var seed = Math.floor(Math.random() * 2147483647);
   var evilSel = document.querySelector('input[name="evil"]:checked');
   var evil = evilSel ? evilSel.value : 'random';
+  var diffSel = document.querySelector('input[name="difficulty"]:checked');
+  var difficulty = diffSel ? diffSel.value : 'normal';
   activeWorldId = makeWorldId();
   activeWorldName = cleanWorldName(name);
   $('loading').classList.remove('hidden');
@@ -1158,7 +1175,7 @@ function startNewGame(name) {
     $('loadprogress').innerHTML = '<div class="bar" style="width:70%"></div>';
     Achievements.unlocked = {};
     Achievements.total = 0;
-    buildGame(seed, evil);
+    buildGame(seed, evil, difficulty);
     $('loadprogress').innerHTML = '<div class="bar" style="width:100%"></div>';
     $('loading').classList.add('hidden');
     $('mainmenu').classList.add('hidden');
@@ -1203,6 +1220,25 @@ function wireGameMethods() {
     var pickup = { nid:typeof Net !== 'undefined' ? ++Net.seq : 0, item: id, count: count, x: x, y: y, seed: Math.random() * 100, t: 0 };
     if (reforge) pickup.reforge = { name:reforge.name, dmgMul:reforge.dmgMul };
     game.pickups.push(pickup);
+  };
+
+  game.openBossBag = function(idx, stack) {
+    if (!stack || !stack.bagBoss || !stack.bagDrops) return false;
+    var dm = diffScale();
+    var p = game.player;
+    var drops = stack.bagDrops;
+    for (var i = 0; i < drops.length; i++) {
+      var d = drops[i];
+      if (!d || d.count <= 0) continue;
+      var c = d.count;
+      if (dm.coin !== 1 && (d.id === I.COIN || d.id === I.GOLD || d.id === I.PLATINUM)) c = Math.max(1, Math.round(c * dm.coin));
+      game.addPickup(p.x + (Math.random() * 40 - 20), p.y - 12, d.id, c);
+    }
+    p.inventory.removeAt(idx, 1);
+    game.message('Opened Treasure Bag!');
+    AudioSys.play('pickup');
+    renderInventory();
+    return true;
   };
 
   game.hitBoss = function(e, dmg, kbx, kby) {
@@ -2553,7 +2589,7 @@ function updatePickups() {
       d = Math.sqrt(dx * dx + dy * dy) || 1;
     }
     if (d < 20) {
-      var added = p.inventory.addStack({ id:pk.item, count:pk.count, reforge:pk.reforge });
+      var added = p.inventory.addStack({ id:pk.item, count:pk.count, reforge:pk.reforge, bagBoss:pk.bagBoss, bagDrops:pk.bagDrops });
       if (added > 0) {
         if (typeof Net !== 'undefined') Net.pickupTaken(pk.nid, added);
         AudioSys.play('pickup');
@@ -2666,14 +2702,15 @@ function updateSpawning(dt) {
   }
   game.spawnT -= dt;
   if (game.spawnT > 0) return;
-  game.spawnT = 7 + Math.random() * 5;
+  var dm = diffScale();
+  game.spawnT = (7 + Math.random() * 5) / dm.spawn;
 
   var count = 0;
   for (var i = 0; i < game.entities.length; i++) {
     var e = game.entities[i];
     if (!e.dead && !e.boss && !e.armType && !e.minion && e.dmg > 0) count++;
   }
-  if (count >= 4) return;
+  if (count >= Math.round(4 * dm.spawn)) return;
 
   var type = pickEnemy();
   var side = Math.random() < 0.5 ? -1 : 1;
@@ -4659,6 +4696,7 @@ function updateHud() {
   if (isWindyDayAt(game, p.x, p.y)) el.biome.textContent += ' - Windy Day';
   if (game.starfall && game.starfall.active) el.biome.textContent += ' - Starfall';
   if (equippedAccessory(I.METALDETECTOR)) el.biome.textContent += ' - ' + metalDetectorText();
+  if (game.difficulty && game.difficulty !== 'normal') el.biome.textContent += ' - ' + DIFFICULTY[game.difficulty].name + ' Mode';
   el.fps.textContent = (game.fps || 0) + ' fps';
 
   // event indicator
@@ -4996,7 +5034,10 @@ function initDOM() {
       renderChest();
       return;
     }
-    game.player.inventory.selected = parseInt(cell.getAttribute('data-idx'), 10);
+    var idx = parseInt(cell.getAttribute('data-idx'), 10);
+    var s = game.player.inventory.slots[idx];
+    if (s && s.bagBoss && s.bagDrops) { game.openBossBag(idx, s); return; }
+    game.player.inventory.selected = idx;
     renderInventory();
   });
   $('inv-armor').addEventListener('click', function(e) {

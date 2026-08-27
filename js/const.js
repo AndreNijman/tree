@@ -257,3 +257,15 @@ var FALL_SAFE_TILES = 25;
 var FALL_DMG_PER_TILE = 10;
 
 var VERSION = 'tree v1.2';
+
+var PATCH = 1;
+
+var DIFFICULTY = {
+  normal: { key:'normal', name:'Normal', hp:1, dmg:1, coin:1, spawn:1, bag:false },
+  expert: { key:'expert', name:'Expert', hp:2, dmg:2, coin:2.5, spawn:1.5, bag:true },
+  master: { key:'master', name:'Master', hp:3, dmg:3, coin:3, spawn:2, bag:true }
+};
+
+function diffScale() {
+  return DIFFICULTY[(game && game.difficulty) || 'normal'] || DIFFICULTY.normal;
+}
