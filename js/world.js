@@ -516,7 +516,7 @@ World.prototype.generate = function(hardmode, evil) {
           if (tx < 1 || tx >= W - 1 || ty < 1 || ty >= H - 1) continue;
           if (dx * dx + dy * dy > rw * rw) continue;
           var ii = this.idx(tx, ty);
-          if (this.tiles[ii] !== T.AIR) {
+          if (this.tiles[ii] !== T.AIR && this.tiles[ii] !== T.WATER && this.tiles[ii] !== T.LAVA && this.tiles[ii] !== T.SHIMMER) {
             this.tiles[ii] = T.AIR;
             this.walls[ii] = (rng() < 0.4) ? WALL.CAVE : 0;
           }
@@ -755,14 +755,20 @@ World.prototype.generate = function(hardmode, evil) {
   self.graniteCols = new Uint8Array(W);
   self.marbleCols = new Uint8Array(W);
   function carvePocket(cx, cy, cr, fillTile, web) {
+    var inner = Math.max(2, cr - 2);
     for (var pdy = -cr; pdy <= cr; pdy++) {
       for (var pdx = -cr; pdx <= cr; pdx++) {
         if (!self.inBounds(cx + pdx, cy + pdy)) continue;
-        if (pdx * pdx + pdy * pdy > cr * cr) continue;
+        var pd2 = pdx * pdx + pdy * pdy;
+        if (pd2 > cr * cr) continue;
         var pii = self.idx(cx + pdx, cy + pdy);
-        if (self.tiles[pii] === T.AIR) continue;
-        self.tiles[pii] = (web && rng() < 0.5) ? T.COBWEB : fillTile;
-        self.walls[pii] = WALL.NONE;
+        if (pd2 <= inner * inner) {
+          self.tiles[pii] = (web && rng() < 0.18) ? T.COBWEB : T.AIR;
+          self.walls[pii] = WALL.CAVE;
+        } else {
+          self.tiles[pii] = fillTile;
+          self.walls[pii] = WALL.NONE;
+        }
       }
     }
   }
@@ -1212,31 +1218,40 @@ World.prototype.generate = function(hardmode, evil) {
     var target = this.surfaceY[cx3];
     var edgeBlend = clamp((25 - Math.abs(cx3 - sp)) / 8, 0, 1);
     var clearingY = Math.round(lerp(target, sy2, edgeBlend));
-    var need = clearingY - target;
-    if (need > 0) {
-      for (var k = 0; k < need; k++) {
-        var fi = this.idx(cx3, clearingY - k);
-        this.tiles[fi] = T.AIR; this.hp[fi] = 0;
+    if (clearingY > target) {
+      for (var cutY = target; cutY < clearingY; cutY++) {
+        var fi = this.idx(cx3, cutY);
+        this.tiles[fi] = T.AIR; this.walls[fi] = WALL.NONE; this.hp[fi] = 0;
       }
-    } else if (need < 0) {
-      for (var k2 = 0; k2 < -need; k2++) {
-        var fi2 = this.idx(cx3, clearingY + k2);
-        if (this.tiles[fi2] === T.AIR) { this.tiles[fi2] = T.DIRT; this.hp[fi2] = 20; }
+    } else if (clearingY < target) {
+      for (var fillY = clearingY; fillY <= target; fillY++) {
+        var fi2 = this.idx(cx3, fillY);
+        this.tiles[fi2] = T.DIRT; this.walls[fi2] = WALL.DIRT; this.hp[fi2] = 20;
+      }
+    }
+    var topI = this.idx(cx3, clearingY);
+    this.tiles[topI] = T.GRASS; this.walls[topI] = WALL.DIRT; this.hp[topI] = 20;
+    for (var foundationY = clearingY + 1; foundationY <= Math.min(H - 1, clearingY + 3); foundationY++) {
+      var foundationI = this.idx(cx3, foundationY);
+      if (this.tiles[foundationI] === T.AIR || this.tiles[foundationI] === T.WATER) {
+        this.tiles[foundationI] = T.DIRT; this.walls[foundationI] = WALL.DIRT; this.hp[foundationI] = 20;
       }
     }
     this.surfaceY[cx3] = clearingY;
   }
   // clear trees near spawn
   for (var cx4 = sp - 30; cx4 <= sp + 30; cx4++) {
-    for (var cy4 = sy2 - 12; cy4 <= sy2; cy4++) {
+    if (cx4 < 0 || cx4 >= W) continue;
+    for (var cy4 = Math.max(1, this.surfaceY[cx4] - 48); cy4 < this.surfaceY[cx4]; cy4++) {
       var si = this.idx(cx4, cy4);
       if (this.tiles[si] === T.WOOD || this.tiles[si] === T.TREETRUNK || this.tiles[si] === T.LEAVES) { this.tiles[si] = T.AIR; this.hp[si] = 0; }
     }
   }
 
   this.spawnX = sp * TILE + 8;
-  this.spawnY = sy2 * TILE - 16;
-  this.guidePos = { x:sp * TILE + 40, y:sy2 * TILE };
+  this.spawnY = this.surfaceY[sp] * TILE - 16;
+  var guideTile = clamp(sp + 2, 0, W - 1);
+  this.guidePos = { x:guideTile * TILE + 8, y:this.surfaceY[guideTile] * TILE - 16 };
   // keep spawn in plain forest (no mushroom patches)
   for (var sc = sp - 40; sc <= sp + 40; sc++) {
     if (sc >= 0 && sc < W) this.mushroomAt[sc] = 0;

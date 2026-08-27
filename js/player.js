@@ -1099,13 +1099,13 @@ Player.prototype.tryFish = function(game, def, id, item) {
   if (bobX < 0) { game.message('Cast into water!'); return; }
   this.attackCd = 0.3;
   var effF = this.inventory.accEffects();
-  var power = (def.fishingPower || 15) + ITEMS[baitId].baitPower + (this.buffs[I.FISHINGPOTION] ? 25 : 0);
+  var power = (def.fishingPower || 15) + ITEMS[baitId].baitPower + (this.buffs[I.FISHINGPOTION] ? 25 : 0) + effF.fishingPower;
   this.fishing = {
     bobX: bobX, bobY: bobY, t: 0, lava: lavaMode,
     waitT: clamp(2.2 + Math.random() * 3.5 - power * 0.06, 1.0, 5.0),
     power: power, rodId: id, baitId: baitId
   };
-  this.inventory.consume(baitId, 1);
+  if (Math.random() >= clamp(effF.baitSave, 0, 0.8)) this.inventory.consume(baitId, 1);
   game.fx.push({ type: 'splash', x: bobX, y: bobY, t: 0.3, max: 0.3 });
   AudioSys.play('splash');
 };

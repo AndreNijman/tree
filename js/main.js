@@ -4079,7 +4079,12 @@ function anglerQuestRewards(completion) {
     { id:crate, count:1 }
   ];
   if (completion % 3 === 0) rewards.push({ id:I.FISHINGPOTION, count:1 });
+  if (completion === 5) rewards.push({ id:I.FISHERMANSPOCKETGUIDE, count:1 });
+  if (completion === 10) rewards.push({ id:I.WEATHERRADIO, count:1 });
+  if (completion === 15) rewards.push({ id:I.SEXTANT, count:1 });
+  if (completion === 20) rewards.push({ id:I.ANGLEREARRING, count:1 });
   if (completion === 25) rewards.push({ id:I.HOTLINEFISHINGHOOK, count:1 });
+  if (completion === 30) rewards.push({ id:I.TACKLEBOX, count:1 });
   return rewards;
 }
 
@@ -4376,7 +4381,7 @@ function updateHotbar() {
 
 // ---------- Panel content ----------
 function buildPanelHTML() {
-  $('panel-inventory').innerHTML = '<div id="inv-armor"></div><div id="inv-grid"></div><div id="inv-desc"></div>';
+  $('panel-inventory').innerHTML = '<div id="inv-armor"></div><div class="inventory-hint">Drag items to move or swap them. Click an item, then click an equipment, Dye, or Ammo slot to equip it.</div><div id="inv-grid"></div><div id="inv-desc"></div>';
   $('panel-crafting').innerHTML = '<div id="craft-tabs"></div><div id="craft-list"></div>';
   $('panel-guide').innerHTML = '<div id="guide-content"></div>';
 }
@@ -4430,7 +4435,7 @@ function renderInventory() {
     var s = inv.slots[i];
     var sel = inv.selected === i ? ' selected' : '';
     var loaded = s && inv.ammo === s.id ? ' ammo-selected' : '';
-    html += '<div class="inv-cell' + sel + loaded + '" data-idx="' + i + '">';
+    html += '<div class="inv-cell' + sel + loaded + '" data-idx="' + i + '"' + (s ? ' draggable="true"' : '') + '>';
     if (s) {
       html += '<div class="icon">' + itemIconHTML(ITEMS[s.id]) + '</div>';
       if (s.count > 1) html += '<div class="count">' + s.count + '</div>';
@@ -4486,6 +4491,16 @@ function renderInventory() {
   } else {
     desc.innerHTML = '<div class="ddesc">Select an item to see its details.</div>';
   }
+}
+
+function moveInventorySlot(from, to) {
+  if (!game || !game.player || from === to || from < 0 || from >= 50 || to < 0 || to >= 50) return false;
+  var inv = game.player.inventory;
+  if (!inv.slots[from]) return false;
+  inv.swap(from, to);
+  renderInventory();
+  updateHotbar();
+  return true;
 }
 
 function selectAmmo() {
@@ -4688,6 +4703,33 @@ function equippedAccessory(id) {
   return false;
 }
 
+function equippedAccessoryEffect(field) {
+  var acc = game.player.inventory.accessories;
+  for (var i = 0; i < acc.length; i++) if (acc[i] && ITEMS[acc[i]] && ITEMS[acc[i]][field]) return true;
+  return false;
+}
+
+function fishingPowerText() {
+  var p = game.player, inv = p.inventory;
+  if (p.fishing) return 'Fishing Power ' + p.fishing.power;
+  var selected = inv.selectedItem(), def = selected && ITEMS[selected.id];
+  var rodPower = def && def.type === 'fishingrod' ? (def.fishingPower || 15) : 0;
+  var baitPower = inv.countOf(I.NIGHTCRAWLER) ? ITEMS[I.NIGHTCRAWLER].baitPower : (inv.countOf(I.WORM) ? ITEMS[I.WORM].baitPower : 0);
+  return 'Fishing Power ' + (rodPower + baitPower + (p.buffs[I.FISHINGPOTION] ? 25 : 0) + inv.accEffects().fishingPower);
+}
+
+function weatherRadioText() {
+  var weather = game.weather || {}, kind = weatherKindAt(game, game.player.x, game.player.y);
+  var condition = kind === 'blizzard' ? 'Blizzard' : (kind === 'sandstorm' ? 'Sandstorm' : (kind === 'rain' ? 'Rain' : 'Clear'));
+  var speed = Math.round(Math.abs(weather.windSpeed || 0));
+  return condition + ', Wind ' + speed + ' mph' + (speed ? (weather.windSpeed < 0 ? ' W' : ' E') : '');
+}
+
+function moonPhaseText() {
+  var phases = ['Full Moon', 'Waning Gibbous', 'Third Quarter', 'Waning Crescent', 'New Moon', 'Waxing Crescent', 'First Quarter', 'Waxing Gibbous'];
+  return phases[game.dayCount % phases.length];
+}
+
 function metalDetectorText() {
   var p = game.player;
   var w = game.world;
@@ -4725,6 +4767,9 @@ function updateHud() {
   if (isWindyDayAt(game, p.x, p.y)) el.biome.textContent += ' - Windy Day';
   if (game.starfall && game.starfall.active) el.biome.textContent += ' - Starfall';
   if (equippedAccessory(I.METALDETECTOR)) el.biome.textContent += ' - ' + metalDetectorText();
+  if (equippedAccessoryEffect('fishInfo')) el.biome.textContent += ' - ' + fishingPowerText();
+  if (equippedAccessoryEffect('weatherInfo')) el.biome.textContent += ' - ' + weatherRadioText();
+  if (equippedAccessoryEffect('moonInfo')) el.biome.textContent += ' - ' + moonPhaseText();
   if (game.difficulty && game.difficulty !== 'normal') el.biome.textContent += ' - ' + DIFFICULTY[game.difficulty].name + ' Mode';
   el.fps.textContent = (game.fps || 0) + ' fps';
 
@@ -5029,7 +5074,44 @@ function initDOM() {
   $('panel-close').addEventListener('click', function() { closePanel(); });
 
   // inventory interactions (event delegation)
+  var inventoryDragSlot = -1, inventoryDragFinishedAt = 0;
+  function clearInventoryDragClasses() {
+    var cells = $('inv-grid').querySelectorAll('.dragging, .drag-target');
+    for (var dc = 0; dc < cells.length; dc++) cells[dc].classList.remove('dragging', 'drag-target');
+  }
+  $('inv-grid').addEventListener('dragstart', function(e) {
+    var cell = e.target.closest('.inv-cell[data-idx]');
+    if (!cell) return;
+    var idx = parseInt(cell.getAttribute('data-idx'), 10);
+    if (!game.player.inventory.slots[idx]) { e.preventDefault(); return; }
+    inventoryDragSlot = idx;
+    cell.classList.add('dragging');
+    if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', '' + idx); }
+  });
+  $('inv-grid').addEventListener('dragover', function(e) {
+    var cell = e.target.closest('.inv-cell[data-idx]');
+    if (!cell || inventoryDragSlot < 0) return;
+    e.preventDefault();
+    var old = $('inv-grid').querySelectorAll('.drag-target');
+    for (var i = 0; i < old.length; i++) old[i].classList.remove('drag-target');
+    cell.classList.add('drag-target');
+    if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+  });
+  $('inv-grid').addEventListener('drop', function(e) {
+    var cell = e.target.closest('.inv-cell[data-idx]');
+    if (!cell || inventoryDragSlot < 0) return;
+    e.preventDefault();
+    moveInventorySlot(inventoryDragSlot, parseInt(cell.getAttribute('data-idx'), 10));
+    inventoryDragFinishedAt = Date.now();
+    inventoryDragSlot = -1;
+    clearInventoryDragClasses();
+  });
+  $('inv-grid').addEventListener('dragend', function() {
+    inventoryDragSlot = -1;
+    clearInventoryDragClasses();
+  });
   $('inv-grid').addEventListener('click', function(e) {
+    if (Date.now() - inventoryDragFinishedAt < 250) return;
     var cell = e.target.closest('.inv-cell');
     if (!cell) return;
     if (game.chestOpen) {
@@ -5180,7 +5262,13 @@ function initDOM() {
     if (row && e.target.closest('.lobby-join')) Net.joinCode(row.getAttribute('data-code'));
   });
   $('btn-howto').addEventListener('click', function() {
-    $('howto').classList.toggle('hidden');
+    var open = $('howto').classList.contains('hidden');
+    $('howto').classList.toggle('hidden', !open);
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  $('howto-close').addEventListener('click', function() {
+    $('howto').classList.add('hidden');
+    $('btn-howto').setAttribute('aria-expanded', 'false');
   });
   $('btn-respawn').addEventListener('click', function() {
     if (game) game.respawn();

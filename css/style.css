@@ -101,8 +101,12 @@ html, body { width:100%; height:100%; overflow:hidden; background:#080b09; font-
 .ammo-name { min-height:24px; color:#9cf; font-size:10px; line-height:1.2; }
 .armor-box .def { color:#7dd; font-size:11px; }
 #inv-grid { display:grid; grid-template-columns:repeat(10, 52px); gap:4px; align-self:flex-start; }
+.inventory-hint { color:var(--muted); font:11px var(--font-ui); line-height:1.5; }
 .inv-cell { width:52px; height:52px; background:var(--panel-2); border:1px solid #566252; border-radius:2px; position:relative; cursor:pointer; }
 .inv-cell:hover { border-color:#ffe14d; }
+.inv-cell[draggable="true"] { cursor:grab; }
+.inv-cell.dragging { opacity:.35; border-color:var(--accent); cursor:grabbing; }
+.inv-cell.drag-target { border-color:#8dff95; box-shadow:inset 0 0 0 2px rgba(141,255,149,.35); }
 .inv-cell .icon { position:absolute; inset:3px; display:flex; align-items:center; justify-content:center; font-size:22px; }
 .inv-cell .count { position:absolute; bottom:1px; right:3px; font-size:11px; font-weight:bold; }
 .inv-cell.selected { border-color:#ffe14d; background:rgba(255,225,77,.12); }
@@ -219,7 +223,23 @@ html, body { width:100%; height:100%; overflow:hidden; background:#080b09; font-
 .world-type .wt-label { font-size:13px; color:#9db8ff; letter-spacing:1px; }
 .world-type label { display:flex; align-items:center; gap:5px; font-size:13px; color:#cfd3e0; cursor:pointer; }
 .world-type input[type="radio"] { accent-color:#4d7a5a; cursor:pointer; }
-#howto { max-width:560px; background:rgba(0,0,0,.55); border:1px solid #3a4158; border-radius:8px; padding:16px 20px; font-size:14px; line-height:1.7; color:#cfd3e0; }
+#howto { position:absolute; inset:clamp(12px,4vh,48px) clamp(12px,5vw,72px); z-index:4; width:min(980px,calc(100vw - 24px)); max-height:calc(100vh - 24px); margin:auto; overflow:auto; background:#111712; border:2px solid #667260; box-shadow:0 24px 80px rgba(0,0,0,.8); padding:0 22px 24px; color:#cfd3e0; }
+.howto-header { position:sticky; top:0; z-index:1; display:flex; justify-content:space-between; align-items:center; gap:20px; padding:20px 0 14px; background:linear-gradient(#111712 82%,rgba(17,23,18,0)); border-bottom:1px solid var(--line); }
+.howto-header h2 { margin:2px 0 4px; color:var(--text); font:34px var(--font-display); text-shadow:none; }
+.howto-header p { color:var(--muted); font-size:13px; }
+.howto-kicker { color:var(--accent); font:10px var(--font-ui); letter-spacing:.18em; text-transform:uppercase; }
+#howto-close { flex:0 0 auto; min-height:42px; padding:8px 18px; background:var(--panel-2); color:var(--text); border:1px solid var(--accent-dim); font:11px var(--font-ui); text-transform:uppercase; cursor:pointer; }
+.howto-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; padding-top:18px; }
+.howto-grid section { background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent-dim); padding:14px 16px; }
+.howto-grid h3 { margin:0 0 9px; color:var(--accent); font:19px var(--font-display); }
+.howto-grid p, .howto-grid li, .control-list dd { color:#cfd3e0; font-size:13px; line-height:1.55; }
+.howto-grid p + p { margin-top:8px; }
+.howto-grid ol { padding-left:20px; }
+.control-list { display:grid; gap:4px; }
+.control-list div { display:grid; grid-template-columns:minmax(112px,auto) 1fr; gap:10px; align-items:center; padding:4px 0; border-bottom:1px solid rgba(70,83,68,.45); }
+.control-list dt { color:var(--text); font-size:11px; }
+.control-list dd { margin:0; }
+kbd { display:inline-block; min-width:24px; padding:3px 6px; border:1px solid #6c7767; border-bottom-width:2px; background:#202a21; color:#fff3bf; font:10px var(--font-ui); text-align:center; }
 #loading h1 { font-size:34px; color:#9db8ff; }
 #loadprogress { width:300px; height:8px; background:#222; border-radius:4px; overflow:hidden; }
 #loadprogress .bar { height:100%; width:0%; background:#6bc8ff; transition:width .1s; }
@@ -245,6 +265,11 @@ html, body { width:100%; height:100%; overflow:hidden; background:#080b09; font-
   #net-roster { top:112px; right:6px; max-width:calc(100vw - 12px); overflow-x:auto; }
   .mp-fields { grid-template-columns:1fr; }
   .lobby-row { grid-template-columns:76px 1fr auto; gap:6px; }
+  #howto { inset:8px; width:calc(100vw - 16px); max-height:calc(100vh - 16px); padding:0 12px 18px; }
+  .howto-header { align-items:flex-start; }
+  .howto-header h2 { font-size:28px; }
+  .howto-grid { grid-template-columns:1fr; }
+  .control-list div { grid-template-columns:104px 1fr; }
 }
 
 ::-webkit-scrollbar { width:10px; }

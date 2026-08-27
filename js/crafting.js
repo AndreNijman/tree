@@ -582,6 +582,7 @@ recipe({ name:'Battle Potion', result:I.BATTLEPOTION, count:1, mat:[[I.FISH_CRIM
 recipe({ name:'Cloud in a Bottle', result:I.CLOUDINABOTTLE, count:1, mat:[[I.GLOWSTONE,3],[I.COBWEB,5]], station:'workbench', desc:'An extra mid-air jump.' });
 recipe({ name:'Golden Horseshoe', result:I.GOLDENHORSESHOE, count:1, mat:[[I.IRONBAR,5],[I.GOLDENAPPLE,1]], station:'anvil', desc:'Negates fall damage.' });
 recipe({ name:'Puppy', result:I.PUPPY, count:1, mat:[[I.NAUGHTYPRESENT,1],[I.SOUL_LIGHT,3]], station:'workbench', desc:'A loyal companion.' });
+recipe({ name:'Fish Finder', result:I.FISHFINDER, count:1, mat:[[I.FISHERMANSPOCKETGUIDE,1],[I.WEATHERRADIO,1],[I.SEXTANT,1]], station:'anvil', desc:'Displays fishing power, weather, wind, and moon phase.' });
 
 // Event summons
 recipe({ name:'Pumpkin Moon Medallion', result:I.PUMPKINMEDALLION, count:1, mat:[[I.PUMPKIN,10],[I.ECTOPLASM,5],[I.HALLOWEDBAR,5]], station:'anvil', desc:'Summons the Pumpkin Moon at night.' });

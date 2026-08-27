@@ -160,7 +160,8 @@ var I = {
   REINDEERMOUNT:'reindeermount', SHRIMPYTRUFFLE:'shrimpy',
   FISHINGROD_WOODEN:'woodenrod', FISHINGROD_IRON:'ironrod',
   FISHINGROD_FIBERGLASS:'fiberglassrod', FISHINGROD_GOLDEN:'goldenrod',
-  HOTLINEFISHINGHOOK:'hotlinefishinghook',
+  HOTLINEFISHINGHOOK:'hotlinefishinghook', ANGLEREARRING:'anglerearring', TACKLEBOX:'tacklebox',
+  FISHERMANSPOCKETGUIDE:'fishermanspocketguide', WEATHERRADIO:'weatherradio', SEXTANT:'sextant', FISHFINDER:'fishfinder',
   WORM:'worm', NIGHTCRAWLER:'nightcrawler',
   FISH_BASS:'bass', FISH_TROUT:'trout', FISH_SALMON:'salmon', FISH_NEONTETRA:'neontetra',
   FISH_EBONKOI:'ebonkoi', FISH_CRIMSONTIGER:'crimsontiger', FISH_CAVEFISH:'cavefish',
@@ -867,6 +868,12 @@ defItem(I.FISHINGROD_IRON, { name:'Iron Fishing Rod', type:'fishingrod', fishing
 defItem(I.FISHINGROD_FIBERGLASS, { name:'Fiberglass Fishing Pole', type:'fishingrod', fishingPower:32, color:'#3dff9d', icon:'🎣', maxStack:1, desc:'A sleek hallowed rod.' });
 defItem(I.FISHINGROD_GOLDEN, { name:'Golden Fishing Rod', type:'fishingrod', fishingPower:45, color:'#ffd75e', icon:'🎣', maxStack:1, desc:'The finest rod of all.' });
 defItem(I.HOTLINEFISHINGHOOK, { name:'Hotline Fishing Hook', type:'accessory', lavaFish:true, color:'#ff5a3c', icon:'🎣', maxStack:1, desc:'Lets you fish in lava. A reward from the Angler after 25 quests.' });
+defItem(I.ANGLEREARRING, { name:'Angler Earring', type:'accessory', fishingPower:10, color:'#4ec8ff', icon:'🎣', maxStack:1, desc:'+10 fishing power. A reward from the Angler after 20 quests.' });
+defItem(I.TACKLEBOX, { name:'Tackle Box', type:'accessory', baitSave:0.05, color:'#d89048', icon:'🧰', maxStack:1, desc:'5% chance not to consume bait. A reward from the Angler after 30 quests.' });
+defItem(I.FISHERMANSPOCKETGUIDE, { name:'Fisherman\'s Pocket Guide', type:'accessory', fishInfo:true, color:'#e8d8b8', icon:'📖', maxStack:1, desc:'Displays current fishing power. A reward from the Angler after 5 quests.' });
+defItem(I.WEATHERRADIO, { name:'Weather Radio', type:'accessory', weatherInfo:true, color:'#e8b860', icon:'📻', maxStack:1, desc:'Displays local weather and wind. A reward from the Angler after 10 quests.' });
+defItem(I.SEXTANT, { name:'Sextant', type:'accessory', moonInfo:true, color:'#d8c078', icon:'🧭', maxStack:1, desc:'Displays the moon phase. A reward from the Angler after 15 quests.' });
+defItem(I.FISHFINDER, { name:'Fish Finder', type:'accessory', fishInfo:true, weatherInfo:true, moonInfo:true, color:'#70d8e8', icon:'📟', maxStack:1, desc:'Displays fishing power, weather, wind, and moon phase.' });
 defItem(I.WORM, { name:'Worm', type:'bait', baitPower:20, color:'#c89068', icon:'🪱', maxStack:99, desc:'Fishing bait.' });
 defItem(I.NIGHTCRAWLER, { name:'Enchanted Nightcrawler', type:'bait', baitPower:35, color:'#8ad8ff', icon:'🪱', maxStack:999, desc:'35% bait power. Appears on clear Starfall nights.' });
 
@@ -1232,7 +1239,7 @@ Inventory.prototype.defense = function() {
 
 // Aggregate accessory effects.
 Inventory.prototype.accEffects = function() {
-  var eff = { runSpeed: 1, dmgMul: 1, meleeDmgMul: 1, rangedDmgMul: 1, magicDmgMul: 1, summonDmgMul: 1, manaMul: 1, regen: 0, invuln: 0, minion: 0, jumps: 0, noFall: false, jumpBonus: 0, fallSafe: 0, fly: false, flyTime: 0 };
+  var eff = { runSpeed: 1, dmgMul: 1, meleeDmgMul: 1, rangedDmgMul: 1, magicDmgMul: 1, summonDmgMul: 1, manaMul: 1, regen: 0, invuln: 0, minion: 0, jumps: 0, noFall: false, jumpBonus: 0, fallSafe: 0, fly: false, flyTime: 0, fishingPower: 0, baitSave: 0 };
   for (var i = 0; i < this.accessories.length; i++) {
     var id = this.accessories[i];
     if (!id || !ITEMS[id]) continue;
@@ -1250,6 +1257,8 @@ Inventory.prototype.accEffects = function() {
     if (it.jumps) eff.jumps += it.jumps;
     if (it.noFall) eff.noFall = true;
     if (it.fallSafe) eff.fallSafe += it.fallSafe;
+    if (it.fishingPower) eff.fishingPower += it.fishingPower;
+    if (it.baitSave) eff.baitSave += it.baitSave;
     if (it.jumpMul) {
       if (it.jumpMul >= 0.8) {
         // Wing tier: grants timed flight and a mid-air jump rather than raw jump height.

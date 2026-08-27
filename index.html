@@ -115,11 +115,26 @@
         <button id="btn-save">Save &amp; Quit</button>
         <button id="btn-leave-hosted" class="hidden">Leave Hosted World</button>
       </div>
-      <button id="btn-howto">How To Play</button>
+      <button id="btn-howto" aria-controls="howto" aria-expanded="false">How To Play</button>
     </div>
-    <div id="howto" class="hidden">
-      <p><b>Move</b>: A/D or arrows · <b>Jump</b>: Space/W (hold to fly with wings) · <b>Mine/Attack</b>: Left click · <b>Place/Interact</b>: Right click · <b>Hotbar</b>: 1-0 or scroll · <b>Inventory/Craft</b>: E · <b>Guide</b>: H · <b>Drop</b>: Q · <b>Pause</b>: Esc · <b>Save</b>: Esc, then Save &amp; Quit · <b>Summon boss</b>: use Mechanical item then click</p>
-      <p><b>Extras</b>: <b>Guide</b>: select a material and press H or right-click the Guide to inspect its recipes · <b>Grapple</b>: select a Hook, click a wall · <b>Ride</b>: select a Mount, click · <b>Fish</b>: select a Rod (need bait), click water, click again to reel; combine a Fallen Star and Worm for Enchanted Nightcrawler bait · <b>Pets</b>: click a pet item · <b>Town NPCs</b>: explore their native biomes and right-click bound or sleeping residents to rescue them; right-click residents to shop, heal, reforge, or collect taxes · <b>Housing</b>: build an enclosed Wood Wall room with a Torch, Table, and Chair, stand inside, then assign it from the Housing tab. Preferred biomes and neighbors improve prices and unlock Pylon stock; overcrowding raises prices · <b>Graveyards</b>: every death places a Tombstone; seven nearby graves create Ecto Mist for special crafting, while each Sunflower cancels one grave · <b>Celebrations</b>: place and right-click a Party Center to toggle a Party; natural Parties and Lantern Nights also follow world progression · <b>Events</b>: use event summons at the proper time; Starfall nights bring many more Fallen Stars · <b>Old One's Army</b>: right-click the Tavernkeep, build a flat arena, and activate the Eternia Stand · <b>Chests</b>: right-click a placed Chest · <b>Dyes</b>: equip in the Dye slots · <b>Ammo</b>: select ammunition, then click the Ammo box</p>
+    <div id="howto" class="hidden" role="dialog" aria-modal="true" aria-labelledby="howto-title">
+      <div class="howto-header">
+        <div><span class="howto-kicker">Field guide</span><h2 id="howto-title">How To Play</h2><p>Start simple: explore, gather, build, then fight.</p></div>
+        <button id="howto-close" type="button">Close</button>
+      </div>
+      <div class="howto-grid">
+        <section><h3>Controls</h3><dl class="control-list">
+          <div><dt><kbd>A</kbd> <kbd>D</kbd></dt><dd>Move</dd></div><div><dt><kbd>Space</kbd> / <kbd>W</kbd></dt><dd>Jump; hold with wings to fly</dd></div>
+          <div><dt><kbd>Left click</kbd></dt><dd>Mine, attack, or use selected item</dd></div><div><dt><kbd>Right click</kbd></dt><dd>Place blocks and interact</dd></div>
+          <div><dt><kbd>1</kbd>-<kbd>0</kbd> / wheel</dt><dd>Select hotbar slot</dd></div><div><dt><kbd>E</kbd></dt><dd>Inventory and crafting</dd></div>
+          <div><dt><kbd>H</kbd></dt><dd>Ask the Guide about selected material</dd></div><div><dt><kbd>Q</kbd></dt><dd>Drop selected item</dd></div><div><dt><kbd>Esc</kbd></dt><dd>Close panel, pause, or Save &amp; Quit</dd></div>
+        </dl></section>
+        <section><h3>First Day</h3><ol><li>Chop trees and mine Copper, Iron, Silver, and Gold.</li><li>Craft a Workbench, Furnace, and Anvil.</li><li>Build an enclosed room with Wood Walls, a Torch, Table, and Chair.</li><li>Craft armor, weapons, and a boss summon.</li></ol></section>
+        <section><h3>Inventory &amp; Building</h3><p><b>Drag items</b> between inventory slots to move or swap them. Click a slot to select it, then click an equipment, Dye, or Ammo slot to equip it.</p><p>Right-click Chests to store items. The Crafting tab only shows recipes available for your current progression.</p></section>
+        <section><h3>Progression</h3><p>Defeat the evil boss and Skeletron, explore the Dungeon and Underworld, then defeat the Wall of Flesh to begin Hardmode.</p><p>In Hardmode: defeat the three mechanical bosses, Plantera, Golem, the Dungeon ritual, four Celestial Pillars, and Moon Lord.</p></section>
+        <section><h3>Explore &amp; Travel</h3><p><b>Fishing:</b> carry bait, select a rod, click water, then click again when the bobber splashes. <b>Hooks:</b> select one and click a wall. Mount and pet items toggle when used.</p><p>Rescue sleeping or bound residents in their native biomes. Happy housed NPCs sell Pylons for fast travel.</p></section>
+        <section><h3>World Events</h3><p>Event summons work only at the proper time. Ask the Tavernkeep about Old One's Army and build a long, flat arena around the Eternia Stand.</p><p>Deaths place Tombstones; seven nearby graves create Ecto Mist. Parties, Lantern Nights, Windy Days, weather, and Starfall change the world and available rewards.</p></section>
+      </div>
     </div>
   </div>
 
