@@ -95,6 +95,13 @@ TILE_COLORS[T.PARTYCENTER] = ['#ff70b8', '#6bc8ff'];
 TILE_COLORS[T.TOMBSTONE] = ['#777780', '#42424a'];
 TILE_COLORS[T.SUNFLOWER] = ['#ffe050', '#6a9a38'];
 
+var EMISSIVE_ORE_GLOW = {};
+EMISSIVE_ORE_GLOW[T.DEMONITE] = { r:30, strength:0.58, color:[112,76,220] };
+EMISSIVE_ORE_GLOW[T.CRIMTANE] = { r:30, strength:0.58, color:[220,62,78] };
+EMISSIVE_ORE_GLOW[T.METEORITE] = { r:28, strength:0.52, color:[224,112,70] };
+EMISSIVE_ORE_GLOW[T.HELLSTONE] = { r:36, strength:0.68, color:[255,92,38] };
+EMISSIVE_ORE_GLOW[T.CHLOROPHYTE] = { r:32, strength:0.62, color:[58,230,105] };
+
 function makeTileSprite(t, rng) {
   var c = document.createElement('canvas');
   c.width = TILE; c.height = TILE;
@@ -1169,21 +1176,43 @@ function drawLighting(game, ctx, cam, W, H) {
   var lc = game.lightCanvas.getContext('2d');
   var t = game.timeOfDay;
   var nightAmt = Math.min(1, Math.max(0, Math.abs(t - 0.5) * 4 - 0.4));
-  var underground = game.player.y > game.world.surfaceY[clamp(Math.floor(game.player.x / TILE), 0, game.world.W - 1)] * TILE;
-  var base = 0.30 + 0.45 * nightAmt;
-  if (underground) base = Math.max(base, 0.55);
+  var base = 0.05 + 0.58 * nightAmt;
   if (weatherKindAt(game, game.player.x, game.player.y)) base = Math.min(0.9, base + 0.08 * game.weather.intensity);
   var graveStrength = game.world.graveyardStrengthAt(game.player.x, game.player.y);
   if (graveStrength >= 5) base = Math.min(0.9, base + Math.min(0.18, (graveStrength - 4) * 0.035));
 
+  lc.globalCompositeOperation = 'source-over';
+  lc.globalAlpha = 1;
   lc.clearRect(0, 0, W, H);
   lc.fillStyle = 'rgba(0,0,10,' + base + ')';
   lc.fillRect(0, 0, W, H);
 
-  function cutLight(x, y, r) {
+  var world = game.world;
+  var lightX0 = Math.max(0, Math.floor((cam.x - W / 2) / TILE) - 2);
+  var lightX1 = Math.min(world.W - 1, Math.ceil((cam.x + W / 2) / TILE) + 2);
+  var lightY0 = Math.max(0, Math.floor((cam.y - H / 2) / TILE) - 2);
+  var lightY1 = Math.min(world.H - 1, Math.ceil((cam.y + H / 2) / TILE) + 2);
+  var maxSurfaceScreen = -Infinity;
+  for (var surfaceX = lightX0; surfaceX <= lightX1; surfaceX++) {
+    maxSurfaceScreen = Math.max(maxSurfaceScreen, world.surfaceY[surfaceX] * TILE - cam.y + H / 2);
+  }
+  lc.fillStyle = 'rgba(0,0,6,1)';
+  if (maxSurfaceScreen > 0) {
+    for (surfaceX = lightX0; surfaceX <= lightX1; surfaceX++) {
+      var darkX = Math.floor(surfaceX * TILE - cam.x + W / 2);
+      var darkTop = Math.floor((world.surfaceY[surfaceX] + 1) * TILE - cam.y + H / 2);
+      var clippedTop = Math.max(0, darkTop);
+      if (clippedTop < H) lc.fillRect(darkX, clippedTop, TILE + 1, H - clippedTop);
+    }
+  } else {
+    lc.fillRect(0, 0, W, H);
+  }
+
+  function cutLight(x, y, r, strength) {
+    strength = strength === undefined ? 1 : strength;
     var g = lc.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, 'rgba(0,0,0,1)');
-    g.addColorStop(0.5, 'rgba(0,0,0,0.55)');
+    g.addColorStop(0, 'rgba(0,0,0,' + strength + ')');
+    g.addColorStop(0.5, 'rgba(0,0,0,' + (strength * 0.55) + ')');
     g.addColorStop(1, 'rgba(0,0,0,0)');
     lc.globalCompositeOperation = 'destination-out';
     lc.fillStyle = g;
@@ -1191,19 +1220,35 @@ function drawLighting(game, ctx, cam, W, H) {
     lc.globalCompositeOperation = 'source-over';
   }
 
-  // player light
+  // A held torch or glowstone lights the player; there is no free cave light.
   var px = game.player.x - cam.x + W / 2;
   var py = game.player.y - cam.y + H / 2;
-  cutLight(px, py, 110);
+  var held = game.player.inventory.selectedItem();
+  var heldDef = held && ITEMS[held.id];
+  if (heldDef && heldDef.tile === T.TORCH) cutLight(px, py - 10, 125);
+  else if (heldDef && heldDef.tile === T.GLOWSTONE) cutLight(px, py - 10, 95);
 
   // torches / glowstone
-  var lw = game.world.lights;
+  var lw = world.lights;
   for (var i = 0; i < lw.length; i++) {
     var l = lw[i];
     var lx = l.x - cam.x + W / 2;
     var ly = l.y - cam.y + H / 2;
     if (lx < -200 || ly < -200 || lx > W + 200 || ly > H + 200) continue;
     cutLight(lx, ly, l.r * 28);
+  }
+
+  // Only naturally luminous ores reveal themselves through untouched darkness.
+  var oreGlows = [];
+  for (var oreY = lightY0; oreY <= lightY1; oreY++) {
+    for (var oreX = lightX0; oreX <= lightX1; oreX++) {
+      var oreGlow = EMISSIVE_ORE_GLOW[world.get(oreX, oreY)];
+      if (!oreGlow) continue;
+      var oreScreenX = oreX * TILE + 8 - cam.x + W / 2;
+      var oreScreenY = oreY * TILE + 8 - cam.y + H / 2;
+      cutLight(oreScreenX, oreScreenY, oreGlow.r, oreGlow.strength);
+      oreGlows.push({ x:oreScreenX, y:oreScreenY, def:oreGlow });
+    }
   }
 
   // projectiles light
@@ -1233,6 +1278,18 @@ function drawLighting(game, ctx, cam, W, H) {
   }
 
   ctx.drawImage(game.lightCanvas, 0, 0);
+  ctx.save();
+  ctx.globalCompositeOperation = 'screen';
+  for (var og = 0; og < oreGlows.length; og++) {
+    var glow = oreGlows[og];
+    var color = glow.def.color;
+    var halo = ctx.createRadialGradient(glow.x, glow.y, 0, glow.x, glow.y, glow.def.r);
+    halo.addColorStop(0, 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',0.24)');
+    halo.addColorStop(1, 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',0)');
+    ctx.fillStyle = halo;
+    ctx.fillRect(glow.x - glow.def.r, glow.y - glow.def.r, glow.def.r * 2, glow.def.r * 2);
+  }
+  ctx.restore();
 }
 
 // ---------- Heart crystal ----------
