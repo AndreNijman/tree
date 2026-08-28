@@ -3956,7 +3956,8 @@ function drawPlayer(ctx, game, p) {
     else if (hs === 8) { ctx.fillRect(-6, -23, 12, 4); ctx.fillRect(-6, -19, 2, 7); ctx.fillRect(4, -19, 2, 7); ctx.fillRect(-2, -25, 4, 3); }
     else { ctx.fillRect(-7, -22, 14, 5); ctx.fillRect(-7, -17, 3, 4); ctx.fillRect(4, -17, 3, 4); }
   }
-  ctx.restore();
+  ctx.restore(); // walk-cycle bob
+  ctx.restore(); // player-local transform
   ctx.globalAlpha = 1;
 
   if (p.netName) {
