@@ -363,9 +363,9 @@ World.prototype.generate = function(hardmode, evil) {
   // Surface height
   for (var x = 0; x < W; x++) {
     var h = baseY
-      + n1(x * 0.012) * 15
-      + n2(x * 0.025) * 5
-      + Math.sin(x * 0.035) * 3;
+      + n1(x * 0.012) * 9
+      + n2(x * 0.025) * 3
+      + Math.sin(x * 0.035) * 2;
     this.surfaceY[x] = Math.floor(h);
   }
 
@@ -515,6 +515,7 @@ World.prototype.generate = function(hardmode, evil) {
           var tx = Math.floor(cx) + dx, ty = Math.floor(cy) + dy;
           if (tx < 1 || tx >= W - 1 || ty < 1 || ty >= H - 1) continue;
           if (dx * dx + dy * dy > rw * rw) continue;
+          if (ty < this.surfaceY[tx] + 14) continue;
           var ii = this.idx(tx, ty);
           if (this.tiles[ii] !== T.AIR && this.tiles[ii] !== T.WATER && this.tiles[ii] !== T.LAVA && this.tiles[ii] !== T.SHIMMER) {
             this.tiles[ii] = T.AIR;
@@ -1216,7 +1217,7 @@ World.prototype.generate = function(hardmode, evil) {
   for (var cx3 = sp - 25; cx3 <= sp + 25; cx3++) {
     if (cx3 < 0 || cx3 >= W) continue;
     var target = this.surfaceY[cx3];
-    var edgeBlend = clamp((25 - Math.abs(cx3 - sp)) / 8, 0, 1);
+    var edgeBlend = clamp((25 - Math.abs(cx3 - sp)) / 15, 0, 1);
     var clearingY = Math.round(lerp(target, sy2, edgeBlend));
     if (clearingY > target) {
       for (var cutY = target; cutY < clearingY; cutY++) {
@@ -1231,7 +1232,7 @@ World.prototype.generate = function(hardmode, evil) {
     }
     var topI = this.idx(cx3, clearingY);
     this.tiles[topI] = T.GRASS; this.walls[topI] = WALL.DIRT; this.hp[topI] = 20;
-    for (var foundationY = clearingY + 1; foundationY <= Math.min(H - 1, clearingY + 3); foundationY++) {
+    for (var foundationY = clearingY + 1; foundationY <= Math.min(H - 1, clearingY + 12); foundationY++) {
       var foundationI = this.idx(cx3, foundationY);
       if (this.tiles[foundationI] === T.AIR || this.tiles[foundationI] === T.WATER) {
         this.tiles[foundationI] = T.DIRT; this.walls[foundationI] = WALL.DIRT; this.hp[foundationI] = 20;

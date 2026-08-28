@@ -4819,9 +4819,10 @@ function depthString() {
   var p = game.player, w = game.world;
   var cx = clamp(Math.floor(p.x / TILE), 0, w.W - 1);
   var horizon = w.surfaceY[cx] * TILE;
-  var feet = Math.floor((p.y - horizon) / 2);
-  if (feet < 0) return 'Sky';
-  return feet + ' ft';
+  var depthPx = p.y + p.h / 2 - horizon;
+  if (depthPx < -28 * TILE) return 'Sky';
+  if (depthPx < 12 * TILE) return 'Surface';
+  return Math.floor(depthPx / 2) + ' ft';
 }
 
 function biomeName() {
@@ -4829,7 +4830,7 @@ function biomeName() {
   if (w.graveyardStrengthAt(p.x, p.y) >= 5) return 'Graveyard';
   var cx = clamp(Math.floor(p.x / TILE), 0, w.W - 1);
   var surf = w.surfaceY[cx] * TILE;
-  var depth = (p.y - surf) / TILE;
+  var depth = (p.y + p.h / 2 - surf) / TILE;
   var b = w.biomeAt(p.x, p.y);
   var base;
   if (b === BIOME.CORRUPT) base = 'Corruption';
@@ -4844,14 +4845,14 @@ function biomeName() {
   else if (b === BIOME.MARBLE) base = 'Marble Cave';
   else if (b === BIOME.AETHER) return 'The Aether';
   else if (b === BIOME.MUSHROOM) base = 'Mushroom';
-  else if (b === BIOME.SKY) base = 'Sky';
+  else if (b === BIOME.SKY) return 'Sky';
   else if (b === BIOME.SNOW) base = 'Snow';
   else if (b === BIOME.DESERT) base = 'Desert';
   else if (b === BIOME.DUNGEON) return 'The Dungeon';
   else if (b === BIOME.UNDERDESERT) base = 'Underground Desert';
   else if (b === BIOME.UNDERSNOW) base = 'Underground Snow';
   else base = 'Forest';
-  if (depth < 0) return base + ' (Sky)';
+  if (depth < -28) return base + ' (Sky)';
   if (depth < 40) return base;
   if (depth < 140) return 'Underground ' + base;
   return 'Cavern';
