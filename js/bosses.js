@@ -1439,6 +1439,7 @@ function killBoss(e, game) {
   if (e.dead) return;
   e.dead = true;
   AudioSys.play('bossDeath');
+  if (typeof recordBestiary === 'function') recordBestiary(game, e, true);
   if (e.ooaBoss) {
     oldOnesArmyBossKilled(e, game);
     return;

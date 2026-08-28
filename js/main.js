@@ -62,6 +62,7 @@ function buildGame(seed, evil, difficulty) {
     started: true,
     victory: false,
     kills: 0,
+    bestiary: {},
     hardmode: false,
     evilObjectsBroken: 0,
     lunarPillars: [],
@@ -481,6 +482,7 @@ function saveSnapshot() {
       hardmode: game.hardmode,
       victory: game.victory,
       kills: game.kills,
+      bestiary: game.bestiary,
       bossesDefeated: game.bossesDefeated,
       mechDone: game.mechDone,
       evilObjectsBroken: game.evilObjectsBroken,
@@ -642,6 +644,7 @@ function applySaveData(data) {
   w.hardmode = game.hardmode;
   game.victory = !!pr.victory;
   game.kills = pr.kills || 0;
+  game.bestiary = sanitizeBestiary(pr.bestiary);
   game.bossesDefeated = pr.bossesDefeated || {};
   game.mechDone = !!pr.mechDone;
   game.evilObjectsBroken = pr.evilObjectsBroken || 0;
@@ -1521,6 +1524,7 @@ function wireGameMethods() {
 
   game.onEnemyKilled = function(e) {
     game.kills++;
+    recordBestiary(game, e, true);
     if (e.ooaEnemy) oldOnesArmyEnemyKilled(e);
     if (game.event && game.event.type === 'slimerain' && !game.event.kingSpawned && e.eventEnemy &&
         (e.type === E.SLIME || e.type === E.PINKSLIME)) {
@@ -1795,6 +1799,7 @@ function step(dt) {
   for (var i = 0; i < game.entities.length && (typeof Net === 'undefined' || !Net.isClient()); i++) {
     var e = game.entities[i];
     if (e.dead) continue;
+    discoverBestiaryEntity(game, e);
     updateEntityStatuses(e, dt);
     if (e.dead) continue;
     if (e.armType) {
@@ -3811,6 +3816,161 @@ function handleKeys() {
   for (var k in KEY_JUST) if (KEY_JUST[k]) KEY_JUST[k] = false;
 }
 
+// ---------- Bestiary ----------
+var BESTIARY_BOSSES = [
+  { key:'b:kingslime', name:'King Slime' },
+  { key:'b:eyeofcthulhu', name:'Eye of Cthulhu' },
+  { key:'b:eaterofworlds', name:'Eater of Worlds' },
+  { key:'b:brainofcthulhu', name:'Brain of Cthulhu' },
+  { key:'b:queenbee', name:'Queen Bee' },
+  { key:'b:skeletron', name:'Skeletron' },
+  { key:'b:deerclops', name:'Deerclops' },
+  { key:'b:wallofflesh', name:'Wall of Flesh' },
+  { key:'b:twins:retinazer', name:'Retinazer' },
+  { key:'b:twins:spazmatism', name:'Spazmatism' },
+  { key:'b:destroyer', name:'The Destroyer' },
+  { key:'b:skelprime', name:'Skeletron Prime' },
+  { key:'b:queenslime', name:'Queen Slime' },
+  { key:'b:plantera', name:'Plantera' },
+  { key:'b:golem', name:'Golem' },
+  { key:'b:duke', name:'Duke Fishron' },
+  { key:'b:empress', name:'Empress of Light' },
+  { key:'b:cultist', name:'Lunatic Cultist' },
+  { key:'b:lunar:solar', name:'Solar Pillar' },
+  { key:'b:lunar:vortex', name:'Vortex Pillar' },
+  { key:'b:lunar:nebula', name:'Nebula Pillar' },
+  { key:'b:lunar:stardust', name:'Stardust Pillar' },
+  { key:'b:moonlord', name:'Moon Lord' },
+  { key:'b:mourningwood', name:'Mourning Wood' },
+  { key:'b:pumpking', name:'Pumpking' },
+  { key:'b:everscream', name:'Everscream' },
+  { key:'b:santank', name:'Santa-NK1' },
+  { key:'b:icequeen', name:'Ice Queen' },
+  { key:'b:martiansaucer', name:'Martian Saucer' },
+  { key:'b:piratecaptain', name:'Pirate Captain' },
+  { key:'b:flyingdutchman', name:'Flying Dutchman' },
+  { key:'b:mothron', name:'Mothron' },
+  { key:'b:darkmage', name:'Dark Mage' },
+  { key:'b:ogre', name:'Ogre' },
+  { key:'b:betsy', name:'Betsy' }
+];
+var BESTIARY_ENTITY_EXCLUDE = {};
+var bestiaryCatalogCache = null;
+var bestiaryCatalogMapCache = null;
+
+(function() {
+  var types = [E.LUNARPILLAR, E.MOURNINGWOOD, E.PUMPKING, E.EVERSCREAM, E.SANTANK, E.ICEQUEEN,
+    E.MARTIANSAUCER, E.GOBLINWARLOCK, E.PIRATECAPTAIN, E.FLYINGDUTCHMAN, E.MOTHRON,
+    E.FROSTZOMBIE, E.PIRATESHARK];
+  for (var i = 0; i < types.length; i++) BESTIARY_ENTITY_EXCLUDE[types[i]] = true;
+})();
+
+function bestiaryCatalog() {
+  if (bestiaryCatalogCache) return bestiaryCatalogCache;
+  var entries = [];
+  for (var id in ENT_DEF) {
+    if (!Object.prototype.hasOwnProperty.call(ENT_DEF, id)) continue;
+    var type = +id, def = ENT_DEF[id];
+    if (!def || def.hp >= 9000 || BESTIARY_ENTITY_EXCLUDE[type]) continue;
+    entries.push({ key:'e:' + type, name:def.name, kind:def.dmg > 0 ? 'Creature' : 'Critter', hp:def.hp, dmg:def.dmg, def:def.def });
+  }
+  entries.sort(function(a, b) { return a.name < b.name ? -1 : (a.name > b.name ? 1 : 0); });
+  for (var i = 0; i < BESTIARY_BOSSES.length; i++) {
+    entries.push({ key:BESTIARY_BOSSES[i].key, name:BESTIARY_BOSSES[i].name, kind:'Boss' });
+  }
+  bestiaryCatalogCache = entries;
+  return entries;
+}
+
+function bestiaryCatalogMap() {
+  if (bestiaryCatalogMapCache) return bestiaryCatalogMapCache;
+  bestiaryCatalogMapCache = {};
+  var entries = bestiaryCatalog();
+  for (var i = 0; i < entries.length; i++) bestiaryCatalogMapCache[entries[i].key] = entries[i];
+  return bestiaryCatalogMapCache;
+}
+
+function bestiaryKey(e) {
+  if (!e || e.minion || e.armType || e.rescue) return null;
+  if (e.boss) {
+    var bossKey = 'b:' + e.boss;
+    if ((e.boss === 'twins' || e.boss === 'lunar') && e.sub) bossKey += ':' + e.sub;
+    return bossKey;
+  }
+  if (e.type === undefined || e.type < 0 || !ENT_DEF[e.type]) return null;
+  return 'e:' + e.type;
+}
+
+function recordBestiary(g, e, killed) {
+  if (!g || !g.bestiary) return false;
+  var key = bestiaryKey(e), entry = key && bestiaryCatalogMap()[key];
+  if (!entry) return false;
+  var rec = g.bestiary[key];
+  if (!rec) rec = g.bestiary[key] = { seen:true, kills:0 };
+  rec.seen = true;
+  if (killed) rec.kills = Math.max(0, rec.kills || 0) + 1;
+  if (e.boss) {
+    rec.hp = Math.max(1, Math.round(e.maxHp || e.hp || 1));
+    rec.dmg = Math.max(0, Math.round(e.dmg || 0));
+    rec.def = Math.max(0, Math.round(e.defV === undefined ? (e.def || 0) : e.defV));
+  }
+  return true;
+}
+
+function discoverBestiaryEntity(g, e) {
+  if (e._bestiarySeen) return;
+  var p = g.player;
+  if (Math.abs(e.x - p.x) > canvas.width / 2 + 80 || Math.abs(e.y - p.y) > canvas.height / 2 + 80) return;
+  if (recordBestiary(g, e, false)) e._bestiarySeen = true;
+}
+
+function sanitizeBestiary(saved) {
+  var clean = {}, map = bestiaryCatalogMap();
+  if (!saved || typeof saved !== 'object') return clean;
+  for (var key in saved) {
+    if (!Object.prototype.hasOwnProperty.call(saved, key) || !map[key]) continue;
+    var old = saved[key];
+    if (!old || typeof old !== 'object') continue;
+    var killCount = clamp(Math.floor(old.kills || 0), 0, 999999999);
+    var rec = { seen:!!old.seen || killCount > 0, kills:killCount };
+    if (!rec.seen && !rec.kills) continue;
+    if (map[key].kind === 'Boss') {
+      if (isFinite(old.hp)) rec.hp = Math.max(1, Math.round(old.hp));
+      if (isFinite(old.dmg)) rec.dmg = Math.max(0, Math.round(old.dmg));
+      if (isFinite(old.def)) rec.def = Math.max(0, Math.round(old.def));
+    }
+    clean[key] = rec;
+  }
+  return clean;
+}
+
+function bestiaryHTML() {
+  var entries = bestiaryCatalog(), discovered = 0, kills = 0;
+  for (var i = 0; i < entries.length; i++) {
+    var counted = game.bestiary[entries[i].key];
+    if (counted && counted.seen) discovered++;
+    if (counted) kills += counted.kills || 0;
+  }
+  var percent = entries.length ? Math.floor(discovered / entries.length * 100) : 0;
+  var html = '<div class="town-service bestiary"><h4>Bestiary</h4><div class="ddesc">Species discovered: <b>' + discovered + ' / ' + entries.length +
+    '</b> &middot; Completion: <b>' + percent + '%</b> &middot; Recorded kills: <b>' + kills + '</b></div>' +
+    '<div class="bestiary-progress"><span style="width:' + percent + '%"></span></div><div class="bestiary-list">';
+  for (var bi = 0; bi < entries.length; bi++) {
+    var entry = entries[bi], rec = game.bestiary[entry.key];
+    if (!rec || !rec.seen) {
+      html += '<div class="bestiary-entry locked"><div class="bestiary-name">Undiscovered</div><div class="bestiary-meta">Entry ' + (bi + 1) + '</div></div>';
+      continue;
+    }
+    var hp = entry.hp === undefined ? rec.hp : entry.hp;
+    var dmg = entry.dmg === undefined ? rec.dmg : entry.dmg;
+    var defense = entry.def === undefined ? rec.def : entry.def;
+    html += '<div class="bestiary-entry"><div class="bestiary-name">' + escapeText(entry.name) + '</div><div class="bestiary-meta">' + entry.kind +
+      ' &middot; Kills ' + (rec.kills || 0) + '</div><div class="bestiary-stats">HP ' + (hp === undefined ? '?' : hp) + ' &middot; Damage ' +
+      (dmg === undefined ? '?' : dmg) + ' &middot; Defense ' + (defense === undefined ? '?' : defense) + '</div></div>';
+  }
+  return html + '</div></div>';
+}
+
 var TOWN_SHOPS = {};
 TOWN_SHOPS[E.MERCHANT] = [
   { item:I.TORCH, count:10, cost:1 }, { item:I.PLATFORM, count:20, cost:1 },
@@ -4161,6 +4321,7 @@ function renderTownPanel() {
       (game.world.evil === 'crimson' ? 'Crimson' : 'Corruption') + ': ' + open.status.evil + '% &middot; Hallow: ' + open.status.hallow + '% &middot; Purity: ' + open.status.purity + '%</div></div>';
     if (open.type === E.ANGLER) html += anglerQuestHTML();
     if (open.type === E.STYLIST) html += stylistHairHTML();
+    if (open.type === E.ZOOLOGIST) html += bestiaryHTML();
     root.innerHTML = html; return;
   }
   if (open.type === E.TAXCOLLECTOR) {

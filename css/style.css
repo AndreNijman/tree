@@ -154,6 +154,14 @@ html, body { width:100%; height:100%; overflow:hidden; background:#080b09; font-
 .town-service { max-width:560px; background:#151827; border:1px solid #3a4158; border-radius:6px; padding:14px; }
 .town-service h4 { margin:0 0 6px; color:#ffe0a8; }
 .town-reforge { color:#a8d8ff; font-weight:bold; }
+.town-service.bestiary { max-width:none; }
+.bestiary-progress { height:7px; margin:10px 0 12px; overflow:hidden; background:#0d1019; border:1px solid #3a4158; border-radius:4px; }
+.bestiary-progress span { display:block; height:100%; background:linear-gradient(90deg,#6aa85e,#d6c76d); }
+.bestiary-list { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:7px; }
+.bestiary-entry { min-height:54px; padding:9px 10px; background:#101522; border:1px solid #405044; border-left:3px solid #7ca66e; border-radius:4px; }
+.bestiary-entry.locked { opacity:.45; border-left-color:#4b5262; }
+.bestiary-name { color:#e8f0df; font-weight:bold; font-size:13px; }
+.bestiary-meta, .bestiary-stats { margin-top:3px; color:#9aa69a; font-size:11px; }
 
 #craft-tabs { display:flex; gap:8px; flex-wrap:wrap; }
 #craft-tabs .tab { min-height:40px; background:transparent; color:var(--muted); border:0; border-bottom:2px solid var(--line); padding:6px 12px; cursor:pointer; font:11px var(--font-ui); }
