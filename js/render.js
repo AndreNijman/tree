@@ -866,16 +866,21 @@ function twilightAmt(t) {
 
 function drawBackground(game, ctx, cam, W, H, horizon) {
   var p = game.player;
-  var depth = (p.y - horizon) / TILE;
   var currentBiome = game.world.biomeAt(p.x, p.y);
   var t = game.timeOfDay; // 0..1, 0=midnight 0.5=noon
   var night = t < 0.25 || t > 0.75;
   var twi = twilightAmt(t);
 
   var horizonScreen = horizon - cam.y + H / 2;
-  var skyVisible = horizonScreen > 0;
+  var surfaceX0 = Math.max(0, Math.floor((cam.x - W / 2) / TILE) - 1);
+  var surfaceX1 = Math.min(game.world.W - 1, Math.ceil((cam.x + W / 2) / TILE) + 1);
+  var maxSurfaceScreen = -Infinity;
+  for (var surfaceX = surfaceX0; surfaceX <= surfaceX1; surfaceX++) {
+    maxSurfaceScreen = Math.max(maxSurfaceScreen, game.world.surfaceY[surfaceX] * TILE - cam.y + H / 2);
+  }
+  var skyVisible = maxSurfaceScreen > 0;
 
-  if (depth < 0) {
+  if (skyVisible) {
     // surface sky (biome-tinted)
     var biome = currentBiome;
     var skyTop = '#0a1030', skyBot = '#bfe0ff';
@@ -901,31 +906,36 @@ function drawBackground(game, ctx, cam, W, H, horizon) {
       skyTop = night ? '#12131a' : '#59606a';
       skyBot = night ? '#252632' : '#9a9da3';
     }
-    if (horizonScreen > 0) {
-      // smooth dawn/dusk: blend toward ember tones near the day/night transitions
-      if (twi > 0 && !(game.event && game.event.type === 'bloodmoon')) {
-        skyTop = hexBlend(skyTop, '#2a1e46', twi * 0.7);
-        skyBot = hexBlend(skyBot, '#ff9a50', twi * 0.75);
-      }
-      var g = ctx.createLinearGradient(0, 0, 0, horizonScreen);
-      g.addColorStop(0, skyTop);
-      g.addColorStop(1, skyBot);
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, W, Math.max(0, horizonScreen));
+    // smooth dawn/dusk: blend toward ember tones near the day/night transitions
+    if (twi > 0 && !(game.event && game.event.type === 'bloodmoon')) {
+      skyTop = hexBlend(skyTop, '#2a1e46', twi * 0.7);
+      skyBot = hexBlend(skyBot, '#ff9a50', twi * 0.75);
     }
-    // underground part
-    if (horizonScreen < H) {
-      var ug = ctx.createLinearGradient(0, Math.max(0, horizonScreen), 0, H);
-      ug.addColorStop(0, '#241e18');
-      ug.addColorStop(1, '#14100c');
-      ctx.fillStyle = ug;
-      ctx.fillRect(0, Math.max(0, horizonScreen), W, H - Math.max(0, horizonScreen));
-    }
+    var skyEnd = clamp(Math.max(horizonScreen, maxSurfaceScreen), 1, H);
+    var g = ctx.createLinearGradient(0, 0, 0, skyEnd);
+    g.addColorStop(0, skyTop);
+    g.addColorStop(1, skyBot);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+
     drawSunMoon(ctx, W, horizonScreen, t, night);
     drawClouds(game, ctx, W, H, cam, horizonScreen);
     drawStars(ctx, W, horizonScreen, night, cam);
     drawStarfall(game, ctx, W, Math.max(0, horizonScreen));
     drawCelebrations(game, ctx, W, Math.max(0, horizonScreen));
+
+    // Follow the actual surface profile so valleys retain sky instead of a flat underground band.
+    var undergroundTop = clamp(horizonScreen, 0, H - 1);
+    var ug = ctx.createLinearGradient(0, undergroundTop, 0, H);
+    ug.addColorStop(0, '#241e18');
+    ug.addColorStop(1, '#14100c');
+    ctx.fillStyle = ug;
+    for (surfaceX = surfaceX0; surfaceX <= surfaceX1; surfaceX++) {
+      var surfaceScreenX = Math.floor(surfaceX * TILE - cam.x + W / 2);
+      var localHorizon = Math.floor(game.world.surfaceY[surfaceX] * TILE - cam.y + H / 2);
+      var fillTop = Math.max(0, localHorizon);
+      if (fillTop < H) ctx.fillRect(surfaceScreenX, fillTop, TILE + 1, H - fillTop);
+    }
   } else {
     // fully underground
     var g2 = ctx.createLinearGradient(0, 0, 0, H);
