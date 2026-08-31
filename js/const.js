@@ -261,7 +261,7 @@ var FALL_DMG_PER_TILE = 10;
 
 var VERSION = 'tree v1.2';
 
-var PATCH = 1;
+var PATCH = 2;
 
 var DIFFICULTY = {
   normal: { key:'normal', name:'Normal', hp:1, dmg:1, coin:1, spawn:1, bag:false, defEff:1, kbMul:1, coinLoss:0 },

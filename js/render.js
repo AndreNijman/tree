@@ -712,6 +712,7 @@ function renderGame(game, ctx) {
       var t = world.get(wx, wy);
       var wl = world.wall(wx, wy);
       if (wl === WALL.NONE) continue;
+      if (wy < world.surfaceY[wx] && wl !== WALL.WOOD) continue;
       if (t !== T.AIR) continue;
       var px = wx * TILE - cam.x + W / 2;
       var py = wy * TILE - cam.y + H / 2;

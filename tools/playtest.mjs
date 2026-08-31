@@ -273,6 +273,78 @@ const canvas = await page.evaluate(() => {
 check('Canvas: exists and is canvas element', canvas.exists && canvas.isCanvas, JSON.stringify(canvas));
 check('Canvas: has dimensions', canvas.w > 400 && canvas.h > 300, JSON.stringify(canvas));
 
+// ===== SAVED SURFACE PROFILE =====
+const surfaceSave = await page.evaluate(() => {
+  buildGame('surface-save-seed', 'corrupt');
+  var w = game.world;
+  var spawnTile = Math.floor(w.spawnX / TILE);
+  var expected = [];
+  for (var x = spawnTile - 4; x <= spawnTile + 4; x++) {
+    var y = w.surfaceY[x];
+    var cap = w.get(x, y);
+    w.set(x, y, T.AIR);
+    w.setWall(x, y, WALL.NONE);
+    w.set(x, y + 1, cap);
+    w.setWall(x, y + 1, WALL.DIRT);
+    expected.push({ x:x, y:y + 1 });
+  }
+  var legacy = saveSnapshot();
+  legacy.patch = 1;
+  delete legacy.world.surfaceY;
+  applySaveData(legacy);
+  var migrated = true;
+  for (var i = 0; i < expected.length; i++) {
+    if (game.world.surfaceY[expected[i].x] !== expected[i].y) migrated = false;
+  }
+  var saved = saveSnapshot();
+  var stored = saved.patch === PATCH && saved.world.surfaceY && saved.world.surfaceY.length === game.world.W;
+  var before = game.world.surfaceY[spawnTile];
+  game.world.surfaceY[spawnTile] = before - 7;
+  applySaveData(saved);
+  return {
+    migrated:migrated,
+    stored:stored,
+    roundTrip:game.world.surfaceY[spawnTile] === before,
+    spawnAligned:game.world.spawnY === game.world.surfaceY[spawnTile] * TILE - 16
+  };
+});
+check('Save: legacy surface profile migrates from tiles', surfaceSave.migrated, JSON.stringify(surfaceSave));
+check('Save: surface profile is persisted', surfaceSave.stored, JSON.stringify(surfaceSave));
+check('Save: surface profile round-trips', surfaceSave.roundTrip && surfaceSave.spawnAligned, JSON.stringify(surfaceSave));
+
+// ===== NATURAL WALLS STAY UNDERGROUND =====
+const wallProfile = await page.evaluate(() => {
+  var w = game.world;
+  var tx = Math.floor(w.spawnX / TILE) + 80;
+  var ty = w.surfaceY[tx] - 1;
+  w.set(tx, ty, T.AIR);
+  game.cam.x = tx * TILE + 8;
+  game.cam.y = w.surfaceY[tx] * TILE;
+  game.shakeT = 0;
+  game.timeOfDay = 0.5;
+  var sx = Math.floor(tx * TILE - game.cam.x + canvas.width / 2 + 8);
+  var sy = Math.floor(ty * TILE - game.cam.y + canvas.height / 2 + 8);
+  function pixel() {
+    renderGame(game, ctx2d);
+    return Array.prototype.slice.call(ctx2d.getImageData(sx, sy, 1, 1).data);
+  }
+  w.setWall(tx, ty, WALL.NONE);
+  var sky = pixel();
+  w.setWall(tx, ty, WALL.CAVE);
+  var natural = pixel();
+  w.setWall(tx, ty, WALL.WOOD);
+  var wood = pixel();
+  return {
+    naturalHidden:sky.join(',') === natural.join(','),
+    woodVisible:sky.join(',') !== wood.join(','),
+    sky:sky,
+    natural:natural,
+    wood:wood
+  };
+});
+check('Render: natural cave walls stay below surface', wallProfile.naturalHidden, JSON.stringify(wallProfile));
+check('Render: player Wood Walls remain visible above surface', wallProfile.woodVisible, JSON.stringify(wallProfile));
+
 // ===== WEAPON DURABILITY =====
 const dur = await page.evaluate(() => {
   var s = ITEMS['coppersword'], p = ITEMS['copperpick'], b = ITEMS['copperbow'];
@@ -304,7 +376,10 @@ const loop = await page.evaluate(() => {
 check('Loop: 300 clean frames', loop.clean, JSON.stringify(loop));
 
 // ===== BROWSER ERRORS =====
-var realErrors = errors.filter(e => !e.includes('_guard/status'));
+var relayCors = errors.some(e => e.includes('tree-relay.tung-tung-tung-sahur.workers.dev/lobbies'));
+var realErrors = errors.filter(e => !e.includes('_guard/status') &&
+  !e.includes('tree-relay.tung-tung-tung-sahur.workers.dev/lobbies') &&
+  !(relayCors && e === 'Failed to load resource: net::ERR_FAILED'));
 check('Browser: no real console errors', realErrors.length === 0, JSON.stringify(realErrors.slice(0, 5)));
 
 // Summary

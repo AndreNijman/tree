@@ -413,11 +413,77 @@ function migrateLegacyTreeTrunks(tiles, generatedTiles, width) {
   }
 }
 
+function isSurfaceCapTile(tile) {
+  return tile === T.GRASS || tile === T.HALLOWGRASS || tile === T.CORRUPTGRASS ||
+    tile === T.JUNGLEGRASS || tile === T.CRIMGRASS || tile === T.SAND ||
+    tile === T.SNOW || tile === T.ICE || tile === T.MUSHROOM || tile === T.WATER;
+}
+
+function updateWorldSurfaceAnchors(world) {
+  var spawnTile = clamp(Math.floor(world.spawnX / TILE), 0, world.W - 1);
+  var guideTile = clamp(spawnTile + 2, 0, world.W - 1);
+  world.spawnY = world.surfaceY[spawnTile] * TILE - 16;
+  world.guidePos = { x:guideTile * TILE + 8, y:world.surfaceY[guideTile] * TILE - 16 };
+}
+
+function applySavedSurfaceProfile(profile, world) {
+  if (!profile || profile.length !== world.W) return false;
+  var restored = new Uint16Array(world.W);
+  for (var x = 0; x < world.W; x++) {
+    var y = Math.floor(Number(profile[x]));
+    if (!isFinite(y) || y < 1 || y >= world.hellY) return false;
+    restored[x] = y;
+  }
+  world.surfaceY = restored;
+  updateWorldSurfaceAnchors(world);
+  return true;
+}
+
+function rebuildSavedSurfaceProfile(tiles, world) {
+  var rebuilt = new Uint16Array(world.W);
+  var found = new Uint8Array(world.W);
+  for (var x = 0; x < world.W; x++) {
+    var expected = world.surfaceY[x];
+    var y0 = Math.max(1, expected - 48);
+    var y1 = Math.min(world.hellY - 1, expected + 48);
+    for (var y = y0; y <= y1; y++) {
+      var tile = tiles[y * world.W + x];
+      if (!isSurfaceCapTile(tile)) continue;
+      var above = tiles[(y - 1) * world.W + x];
+      if (isSurfaceCapTile(above)) continue;
+      rebuilt[x] = y;
+      found[x] = 1;
+      break;
+    }
+  }
+  for (x = 0; x < world.W; x++) {
+    if (found[x]) continue;
+    var left = x - 1, right = x + 1;
+    while (left >= 0 && !found[left]) left--;
+    while (right < world.W && !found[right]) right++;
+    if (left >= 0 && right < world.W) {
+      rebuilt[x] = Math.round(lerp(rebuilt[left], rebuilt[right], (x - left) / (right - left)));
+    } else if (left >= 0) {
+      rebuilt[x] = clamp(world.surfaceY[x] + rebuilt[left] - world.surfaceY[left], 1, world.hellY - 1);
+    } else if (right < world.W) {
+      rebuilt[x] = clamp(world.surfaceY[x] + rebuilt[right] - world.surfaceY[right], 1, world.hellY - 1);
+    } else {
+      rebuilt[x] = world.surfaceY[x];
+    }
+  }
+  world.surfaceY = rebuilt;
+  updateWorldSurfaceAnchors(world);
+}
+
 function migrateWorldPatch(data, loadedTiles, generatedTiles, width, game) {
   var patch = data.patch || 0;
   if (patch < 1) {
     if (!data.treeTrunks) migrateLegacyTreeTrunks(loadedTiles, generatedTiles, width);
     patch = 1;
+  }
+  if (patch < 2) {
+    rebuildSavedSurfaceProfile(loadedTiles, game.world);
+    patch = 2;
   }
   while (patch < PATCH) {
     patch++;
@@ -461,7 +527,8 @@ function saveSnapshot() {
       altars: w.altars,
       altarsSmashed: w.altarsSmashed,
       meteorCraters: w.meteorCraters,
-      dungeonOpen: w.dungeonOpen
+      dungeonOpen: w.dungeonOpen,
+      surfaceY: Array.prototype.slice.call(w.surfaceY)
     },
     player: {
       x: p.x, y: p.y, dir: p.dir, hair: p.hair,
@@ -622,6 +689,8 @@ function applySaveData(data) {
   w.tiles = loadedTiles;
   migrateWorldPatch(data, loadedTiles, generatedTiles, w.W, game);
   if (data.walls) w.walls = unpackTiles(data.walls, w.W * w.H);
+  var restoredSurface = ws.surfaceY && applySavedSurfaceProfile(ws.surfaceY, w);
+  if (!restoredSurface && (data.patch || 0) >= 2) rebuildSavedSurfaceProfile(loadedTiles, w);
   w.graveyardCache = null;
   w.postGenHp();
   if (ws.chests) w.chests = ws.chests;
