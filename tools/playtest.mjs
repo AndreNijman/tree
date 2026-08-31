@@ -125,16 +125,18 @@ check('Mining: dirt breaks faster than stone', mineSpeed.dirtHits < mineSpeed.st
 // ===== PICKUP: MINING ADDS TO INVENTORY DIRECTLY =====
 const pickupTest = await page.evaluate(() => {
   var p = game.player, w = game.world;
-  // Place a known dirt tile near player and mine it
+  // Place a known dirt tile and mine it from the side (like mineBreak does)
   var tx = Math.floor(w.spawnX / TILE) + 10;
-  var ty = Math.floor(w.spawnY / TILE) - 1;
+  var ty = Math.floor(w.spawnY / TILE) + 3;
   w.set(tx, ty, T.DIRT);
-  var preDirt = 0; for (var s of p.inventory.slots) if (s && s.id === 'dirt') preDirt += s.count;
-  p.x = tx * TILE + 20; p.y = ty * TILE; p.mineCd = 0;
+  // Place player to the side, same as working mineBreak test
+  p.x = tx * TILE + 32; p.y = ty * TILE; p.vy = 0;
   MOUSE.wx = tx * TILE + 8; MOUSE.wy = ty * TILE + 8;
-  p.tryMine(game, ITEMS['copperpick'], null);
+  var preDirt = 0; for (var s of p.inventory.slots) if (s && s.id === 'dirt') preDirt += s.count;
+  var hits = 0;
+  while (w.get(tx, ty) !== T.AIR && hits < 200) { p.mineCd = 0; p.tryMine(game, ITEMS['copperpick'], null); hits++; }
   var postDirt = 0; for (var s of p.inventory.slots) if (s && s.id === 'dirt') postDirt += s.count;
-  return { preDirt, postDirt, collected: postDirt > preDirt, tileAfter: w.get(tx, ty) === T.AIR };
+  return { preDirt, postDirt, collected: postDirt > preDirt, tileGone: w.get(tx, ty) === T.AIR, hits };
 });
 check('Mining: broken dirt goes to inventory', pickupTest.collected, JSON.stringify(pickupTest));
 

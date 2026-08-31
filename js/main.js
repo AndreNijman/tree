@@ -2638,8 +2638,8 @@ function updateFx(dt) {
 }
 
 // ---------- Enemy spawning ----------
-var SPAWN_SAFE_X = 24 * TILE;
-var SPAWN_SAFE_Y = 14 * TILE;
+var SPAWN_SAFE_X = 18 * TILE;
+var SPAWN_SAFE_Y = 10 * TILE;
 
 function inSpawnSafeZone(px, py) {
   return Math.abs(px - game.world.spawnX) <= SPAWN_SAFE_X &&
