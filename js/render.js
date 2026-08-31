@@ -1195,8 +1195,11 @@ function drawLighting(game, ctx, cam, W, H) {
 
   // Draw a single smooth underground darkness polygon to avoid column seams.
   var maxSurfaceScreen = -Infinity;
+  var minSurfaceScreen = Infinity;
   for (var surfaceX = lightX0; surfaceX <= lightX1; surfaceX++) {
-    maxSurfaceScreen = Math.max(maxSurfaceScreen, world.surfaceY[surfaceX] * TILE - cam.y + H / 2);
+    var surfScreen = world.surfaceY[surfaceX] * TILE - cam.y + H / 2;
+    maxSurfaceScreen = Math.max(maxSurfaceScreen, surfScreen);
+    minSurfaceScreen = Math.min(minSurfaceScreen, surfScreen);
   }
   if (maxSurfaceScreen > 0) {
     lc.beginPath();
@@ -1208,7 +1211,15 @@ function drawLighting(game, ctx, cam, W, H) {
     }
     lc.lineTo(W, H);
     lc.closePath();
-    lc.fillStyle = 'rgba(0,0,6,1)';
+    // Vertical gradient: lighter near surface, full dark below — matches Terraria's shallow depth fade.
+    var gradTop = Math.max(0, minSurfaceScreen - TILE);
+    var gradBot = Math.min(H, minSurfaceScreen + 8 * TILE);
+    var depthGrad = lc.createLinearGradient(0, gradTop, 0, gradBot);
+    depthGrad.addColorStop(0, 'rgba(0,0,6,0.15)');
+    depthGrad.addColorStop(0.35, 'rgba(0,0,6,0.6)');
+    depthGrad.addColorStop(0.7, 'rgba(0,0,6,0.92)');
+    depthGrad.addColorStop(1, 'rgba(0,0,6,1)');
+    lc.fillStyle = depthGrad;
     lc.fill();
   } else {
     lc.fillStyle = 'rgba(0,0,6,1)';

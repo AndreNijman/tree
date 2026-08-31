@@ -50,16 +50,12 @@ Player.prototype.defense = function() { return this.inventory.defense() + this.b
 
 Player.prototype.starterItems = function() {
   var inv = this.inventory;
-  inv.slots[0] = { id: I.IRONPICK, count: 1 };
-  inv.slots[1] = { id: I.WOODSWORD, count: 1 };
-  inv.slots[2] = { id: I.IRONBOW, count: 1 };
-  inv.slots[3] = { id: I.ARROW, count: 120 };
-  inv.slots[4] = { id: I.TORCH, count: 60 };
-  inv.slots[5] = { id: I.WOOD, count: 120 };
-  inv.slots[6] = { id: I.STONE, count: 80 };
-  inv.slots[7] = { id: I.HEALINGPOTION, count: 5 };
-  inv.slots[8] = { id: I.DIRT, count: 60 };
-  inv.slots[9] = { id: I.COBWEB, count: 20 };
+  inv.slots[0] = { id: I.COPPERPICK, count: 1 };
+  inv.slots[1] = { id: I.COPPERSWORD, count: 1 };
+  inv.slots[2] = { id: I.COPPERBOW, count: 1 };
+  inv.slots[3] = { id: I.ARROW, count: 35 };
+  inv.slots[4] = { id: I.TORCH, count: 25 };
+  inv.slots[5] = { id: I.HEALINGPOTION, count: 3 };
   inv.selected = 0;
 };
 

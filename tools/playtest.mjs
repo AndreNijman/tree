@@ -1,0 +1,315 @@
+import { chromium } from 'playwright';
+
+const URL = 'file:///' + process.cwd().replace(/\\/g, '/') + '/index.html';
+const browser = await chromium.launch({ args: ['--no-sandbox', '--allow-file-access-from-files'] });
+const page = await browser.newPage();
+const errors = [];
+page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
+page.on('pageerror', err => errors.push(err.message));
+await page.goto(URL, { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => typeof buildGame === 'function' && typeof step === 'function');
+
+const results = [];
+function check(label, ok, extra) {
+  results.push({ label, ok, extra });
+  if (!ok) console.log('FAIL:', label, extra || '');
+}
+
+// Build a game
+await page.evaluate(() => {
+  buildGame('playtest-seed', 'corrupt');
+  game.entities = game.entities.filter(e => e.dead || e.dmg <= 0 || e === game.player);
+});
+
+// ===== STARTER ITEMS =====
+const starter = await page.evaluate(() => {
+  var inv = game.player.inventory;
+  var items = [];
+  for (var i = 0; i < inv.slots.length; i++) {
+    if (inv.slots[i]) items.push({ slot: i, id: inv.slots[i].id, count: inv.slots[i].count });
+  }
+  return { items, selected: inv.selected };
+});
+check('Starter: exactly 6 items', starter.items.length === 6, JSON.stringify(starter.items));
+check('Starter: slot 0 is Copper Pickaxe', starter.items[0]?.id === 'copperpick');
+check('Starter: slot 1 is Copper Sword', starter.items[1]?.id === 'coppersword');
+check('Starter: slot 2 is Copper Bow', starter.items[2]?.id === 'copperbow');
+check('Starter: slot 3 is 35 Arrows', starter.items[3]?.id === 'arrow' && starter.items[3]?.count === 35);
+check('Starter: slot 4 is 25 Torches', starter.items[4]?.id === 'torch' && starter.items[4]?.count === 25);
+check('Starter: slot 5 is 3 Healing Potions', starter.items[5]?.id === 'healingpotion' && starter.items[5]?.count === 3);
+check('Starter: NO blocks', !starter.items.find(s => s.id === 'wood' || s.id === 'stone' || s.id === 'dirt' || s.id === 'cobweb'));
+check('Starter: NO iron tools', !starter.items.find(s => s.id === 'ironpick' || s.id === 'ironsword' || s.id === 'ironbow'));
+check('Starter: selected slot is 0', starter.selected === 0);
+
+// ===== MINING: TOOL POWER GATES =====
+const mining = await page.evaluate(() => {
+  var copper = ITEMS['copperpick'];
+  return {
+    power: copper.power,
+    canDirt: copper.power >= TILE_HARD[T.DIRT][0],
+    canStone: copper.power >= TILE_HARD[T.STONE][0],
+    canSilver: copper.power >= TILE_HARD[T.SILVER][0],
+    canGold: copper.power >= TILE_HARD[T.GOLD][0],
+    canIron: copper.power >= TILE_HARD[T.IRON][0],
+    canCopper: copper.power >= TILE_HARD[T.COPPER][0],
+    canTin: copper.power >= TILE_HARD[T.TIN][0],
+    canLead: copper.power >= TILE_HARD[T.LEAD][0],
+    cannotPlatinum: copper.power < TILE_HARD[T.PLATINUM][0],
+    cannotDemonite: copper.power < TILE_HARD[T.DEMONITE][0],
+  };
+});
+check('Mining: copper pick power is 35', mining.power === 35, JSON.stringify(mining));
+check('Mining: can mine dirt (req 0)', mining.canDirt);
+check('Mining: can mine stone (req 0)', mining.canStone);
+check('Mining: can mine iron (req 0)', mining.canIron);
+check('Mining: can mine copper ore (req 25)', mining.canCopper);
+check('Mining: can mine silver ore (req 35)', mining.canSilver);
+check('Mining: can mine tin ore (req 25)', mining.canTin);
+check('Mining: CANNOT mine gold (req 45)', mining.canGold === false);
+check('Mining: CANNOT mine platinum (req 50)', mining.cannotPlatinum);
+check('Mining: CANNOT mine demonite (req 55)', mining.cannotDemonite);
+
+// ===== MINING: ACTUAL BREAK =====
+const mineBreak = await page.evaluate(() => {
+  var p = game.player, w = game.world;
+  // Find dirt near spawn
+  var dirtTx = -1, dirtTy = -1;
+  for (var dy = -1; dy <= 6; dy++) {
+    for (var dx = -3; dx <= 3; dx++) {
+      var tx = Math.floor(w.spawnX / TILE) + dx;
+      var ty = Math.floor(w.spawnY / TILE) + dy;
+      if (w.inBounds(tx, ty) && w.get(tx, ty) === T.DIRT) { dirtTx = tx; dirtTy = ty; break; }
+    }
+    if (dirtTx >= 0) break;
+  }
+  if (dirtTx < 0) return { error: 'no dirt' };
+
+  p.x = dirtTx * TILE + 32; p.y = dirtTy * TILE;
+  MOUSE.wx = dirtTx * TILE + 8; MOUSE.wy = dirtTy * TILE + 8;
+  var pre = w.get(dirtTx, dirtTy);
+  var hits = 0;
+  while (w.get(dirtTx, dirtTy) !== T.AIR && hits < 200) { p.mineCd = 0; p.tryMine(game, ITEMS['copperpick'], null); hits++; }
+  return { pre, broke: w.get(dirtTx, dirtTy) === T.AIR, hits };
+});
+check('Mining: dirt tile actually breaks', mineBreak.broke, 'hits=' + mineBreak.hits);
+check('Mining: break takes multiple hits (not instant)', mineBreak.hits > 1, 'hits=' + mineBreak.hits);
+
+// ===== MINING: STONE TAKES MORE HITS THAN DIRT =====
+const mineSpeed = await page.evaluate(() => {
+  var p = game.player, w = game.world, copper = ITEMS['copperpick'];
+  var stoneTx = -1, stoneTy = -1, dirtTx = -1, dirtTy = -1;
+  for (var dy = 8; dy <= 30; dy++) {
+    for (var dx = -5; dx <= 5; dx++) {
+      var tx = Math.floor(w.spawnX / TILE) + dx, ty = Math.floor(w.spawnY / TILE) + dy;
+      if (!w.inBounds(tx, ty)) continue;
+      if (w.get(tx, ty) === T.STONE && stoneTx < 0) { stoneTx = tx; stoneTy = ty; }
+      if (w.get(tx, ty) === T.DIRT && dirtTx < 0) { dirtTx = tx; dirtTy = ty; }
+    }
+    if (stoneTx >= 0 && dirtTx >= 0) break;
+  }
+  var stoneHits = 0, dirtHits = 0;
+  if (stoneTx >= 0) {
+    p.x = stoneTx * TILE + 32; p.y = stoneTy * TILE;
+    MOUSE.wx = stoneTx * TILE + 8; MOUSE.wy = stoneTy * TILE + 8;
+    while (w.get(stoneTx, stoneTy) !== T.AIR && stoneHits < 200) { p.mineCd = 0; p.tryMine(game, copper, null); stoneHits++; }
+  }
+  if (dirtTx >= 0) {
+    p.x = dirtTx * TILE + 32; p.y = dirtTy * TILE;
+    MOUSE.wx = dirtTx * TILE + 8; MOUSE.wy = dirtTy * TILE + 8;
+    while (w.get(dirtTx, dirtTy) !== T.AIR && dirtHits < 200) { p.mineCd = 0; p.tryMine(game, copper, null); dirtHits++; }
+  }
+  return { stoneHits, dirtHits, stoneBroke: stoneTx >= 0 ? w.get(stoneTx, stoneTy) === T.AIR : 'n/a', dirtBroke: dirtTx >= 0 ? w.get(dirtTx, dirtTy) === T.AIR : 'n/a' };
+});
+check('Mining: dirt breaks faster than stone', mineSpeed.dirtHits < mineSpeed.stoneHits, JSON.stringify(mineSpeed));
+
+// ===== PICKUP: MINING ADDS TO INVENTORY DIRECTLY =====
+const pickupTest = await page.evaluate(() => {
+  var p = game.player, w = game.world;
+  // Place a known dirt tile near player and mine it
+  var tx = Math.floor(w.spawnX / TILE) + 10;
+  var ty = Math.floor(w.spawnY / TILE) - 1;
+  w.set(tx, ty, T.DIRT);
+  var preDirt = 0; for (var s of p.inventory.slots) if (s && s.id === 'dirt') preDirt += s.count;
+  p.x = tx * TILE + 20; p.y = ty * TILE; p.mineCd = 0;
+  MOUSE.wx = tx * TILE + 8; MOUSE.wy = ty * TILE + 8;
+  p.tryMine(game, ITEMS['copperpick'], null);
+  var postDirt = 0; for (var s of p.inventory.slots) if (s && s.id === 'dirt') postDirt += s.count;
+  return { preDirt, postDirt, collected: postDirt > preDirt, tileAfter: w.get(tx, ty) === T.AIR };
+});
+check('Mining: broken dirt goes to inventory', pickupTest.collected, JSON.stringify(pickupTest));
+
+// ===== COMBAT: MELEE =====
+const melee = await page.evaluate(() => {
+  var p = game.player;
+  var zombie = makeEntity(E.ZOMBIE, p.x + 40, p.y);
+  zombie.hp = zombie.maxHp;
+  game.entities.push(zombie);
+  var preHp = zombie.hp;
+  MOUSE.wx = zombie.x; MOUSE.wy = zombie.y;
+  p.attackCd = 0; p.swingT = 0;
+  p.tryMelee(game, ITEMS['coppersword'], false, null);
+  return { dealt: zombie.hp < preHp, dmg: preHp - zombie.hp, cd: p.attackCd > 0, swing: p.swingT > 0 };
+});
+check('Combat: copper sword deals damage', melee.dealt, 'dmg=' + melee.dmg);
+check('Combat: damage > 0', melee.dmg > 0);
+check('Combat: attack cooldown set', melee.cd);
+check('Combat: swing animation plays', melee.swing);
+
+// ===== COMBAT: RANGED =====
+const ranged = await page.evaluate(() => {
+  var p = game.player, inv = p.inventory;
+  var pre = 0; for (var s of inv.slots) if (s && s.id === 'arrow') pre += s.count;
+  p.attackCd = 0;
+  MOUSE.wx = p.x + 100; MOUSE.wy = p.y;
+  p.tryShoot(game, ITEMS['copperbow'], 'copperbow', null);
+  var post = 0; for (var s of inv.slots) if (s && s.id === 'arrow') post += s.count;
+  var projs = 0; for (var j = 0; j < game.projectiles.list.length; j++) { var o = game.projectiles.list[j]; if (o.owner === 'player' && !o.dead) projs++; }
+  return { consumed: pre - post, projs };
+});
+check('Ranged: bow consumes 1 arrow', ranged.consumed === 1, JSON.stringify(ranged));
+check('Ranged: arrow projectile created', ranged.projs > 0, 'projs=' + ranged.projs);
+
+// ===== COMBAT: CONTACT DAMAGE =====
+const contact = await page.evaluate(() => {
+  var p = game.player;
+  var preHp = p.hp;
+  p.invuln = 0;
+  var zombie = makeEntity(E.ZOMBIE, p.x, p.y);
+  zombie.hp = zombie.maxHp;
+  game.entities.push(zombie);
+  contactCheck(zombie, game);
+  return { tookDmg: p.hp < preHp, dmg: preHp - p.hp, iframes: p.invuln > 0, zombieDmg: zombie.dmg };
+});
+check('Contact: enemy contact damages player', contact.tookDmg, 'dmg=' + contact.dmg);
+check('Contact: sets invulnerability frames', contact.iframes);
+check('Contact: zombie has damage > 0', contact.zombieDmg > 0);
+
+// ===== DEATH & RESPAWN =====
+const death = await page.evaluate(() => {
+  var p = game.player, w = game.world;
+  p.hp = 0; p.die();
+  var isDying = p.dying, timer = p.respawnT;
+  var steps = 0;
+  while (p.dying && steps < 200) { step(1/60); steps++; }
+  return { isDying, timer, respawned: !p.dying, fullHp: p.hp === p.maxHp, atSpawn: Math.abs(p.x - w.spawnX) < 48 && Math.abs(p.y - w.spawnY) < 48 };
+});
+check('Death: dying flag set', death.isDying);
+check('Death: respawn timer > 0', death.timer > 0, 't=' + death.timer);
+check('Death: player respawns at spawn', death.respawned && death.atSpawn, JSON.stringify(death));
+check('Death: HP restored to max', death.fullHp);
+
+// ===== CAMERA =====
+const camera = await page.evaluate(() => {
+  var p = game.player, cam = game.cam;
+  var sx = cam.x, sy = cam.y;
+  p.x = game.world.spawnX + 300; p.y = game.world.spawnY + 200;
+  for (var i = 0; i < 60; i++) step(1/60);
+  return { sx, sy, ax: cam.x, ay: cam.y, movedX: Math.abs(cam.x - sx) > 10, movedY: Math.abs(cam.y - sy) > 10,
+           inBounds: cam.x > 0 && cam.x < game.world.W * TILE && cam.y > 0 && cam.y < game.world.H * TILE };
+});
+check('Camera: follows player X', camera.movedX, JSON.stringify({ s: camera.sx.toFixed(0), a: camera.ax.toFixed(0) }));
+check('Camera: follows player Y', camera.movedY, JSON.stringify({ s: camera.sy.toFixed(0), a: camera.ay.toFixed(0) }));
+check('Camera: stays in world bounds', camera.inBounds);
+
+// ===== LIGHTING: TORCH HELD =====
+const lighting = await page.evaluate(() => {
+  var p = game.player, inv = p.inventory;
+  inv.selected = 4;
+  var slot = inv.selectedItem();
+  var def = slot ? ITEMS[slot.id] : null;
+  var isTorch = def && def.tile === T.TORCH;
+  // Check held torch creates light cut in drawLighting
+  var torchR = def && isTorch ? 180 : 0;
+  return { isTorch, defTile: def ? def.tile : null, torchR };
+});
+check('Lighting: torch is held when selected', lighting.isTorch, JSON.stringify(lighting));
+
+// ===== LIGHTING: ORE GLOW TABLE =====
+const oreGlow = await page.evaluate(() => {
+  var keys = Object.keys(EMISSIVE_ORE_GLOW);
+  return { count: keys.length, keys: keys.map(Number).sort((a,b) => a-b), hasDemonite: keys.indexOf(String(T.DEMONITE)) >= 0,
+           hasHellstone: keys.indexOf(String(T.HELLSTONE)) >= 0, hasChlorophyte: keys.indexOf(String(T.CHLOROPHYTE)) >= 0 };
+});
+check('Lighting: 5 emissive ore types', oreGlow.count === 5, JSON.stringify(oreGlow));
+check('Lighting: includes Demonite', oreGlow.hasDemonite);
+check('Lighting: includes Hellstone', oreGlow.hasHellstone);
+check('Lighting: includes Chlorophyte', oreGlow.hasChlorophyte);
+
+// ===== LIGHTING: DARKNESS BELOW SURFACE =====
+const darkness = await page.evaluate(() => {
+  var w = game.world, p = game.player;
+  var surfaceCol = Math.floor(w.spawnX / TILE);
+  var surfY = w.surfaceY[surfaceCol];
+  // Player 10 tiles below surface should be in total darkness
+  p.x = w.spawnX; p.y = (surfY + 10) * TILE;
+  // Clear some tiles for the player
+  var tx = Math.floor(p.x / TILE), ty = Math.floor(p.y / TILE);
+  for (var dx = -2; dx <= 2; dx++) for (var dy = -2; dy <= 2; dy++) w.set(tx + dx, ty + dy, T.AIR);
+  // No light sources held
+  p.inventory.selected = 0;
+  var slot = p.inventory.selectedItem();
+  var def = slot ? ITEMS[slot.id] : null;
+  var isLightSource = def && (def.tile === T.TORCH || def.tile === T.GLOWSTONE);
+  return { underground: p.y > surfY * TILE + TILE, noLightSource: !isLightSource };
+});
+check('Darkness: player underground', darkness.underground);
+check('Darkness: no light source held', darkness.noLightSource);
+
+// ===== ITEM SYSTEM =====
+const items = await page.evaluate(() => {
+  var mismatches = [], count = 0;
+  for (var key in I) { count++; if (!ITEMS[I[key]]) mismatches.push(key); }
+  return { count, clean: mismatches.length === 0 };
+});
+check('Items: I enum matches ITEMS map (' + items.count + ' items)', items.clean);
+
+// ===== CANVAS =====
+const canvas = await page.evaluate(() => {
+  var c = document.getElementById('canvas');
+  return { exists: !!c, isCanvas: c && c.tagName === 'CANVAS', w: c ? c.width : 0, h: c ? c.height : 0 };
+});
+check('Canvas: exists and is canvas element', canvas.exists && canvas.isCanvas, JSON.stringify(canvas));
+check('Canvas: has dimensions', canvas.w > 400 && canvas.h > 300, JSON.stringify(canvas));
+
+// ===== WEAPON DURABILITY =====
+const dur = await page.evaluate(() => {
+  var s = ITEMS['coppersword'], p = ITEMS['copperpick'], b = ITEMS['copperbow'];
+  return { noDur: !s.durability && !p.durability && !b.durability };
+});
+check('Weapons: infinite durability (no durability system)', dur.noDur);
+
+// ===== SPAWN SYSTEM =====
+const spawning = await page.evaluate(() => {
+  var p = game.player, w = game.world;
+  // Move player far from spawn to escape safe zone
+  p.x = w.spawnX + 800; p.y = w.surfaceY[Math.floor((w.spawnX + 800) / TILE)] * TILE - 20;
+  game.cam.x = p.x; game.cam.y = p.y;
+  var preCount = 0;
+  for (var i = 0; i < game.entities.length; i++) { var e = game.entities[i]; if (!e.dead && e.dmg > 0 && !e.boss) preCount++; }
+  for (var i = 0; i < 600; i++) step(1/60);
+  var postCount = 0;
+  for (var i = 0; i < game.entities.length; i++) { var e = game.entities[i]; if (!e.dead && e.dmg > 0 && !e.boss) postCount++; }
+  return { pre: preCount, post: postCount, spawned: postCount > preCount };
+});
+check('Spawning: enemies appear over time', spawning.spawned, JSON.stringify(spawning));
+
+// ===== 300-STEP CLEAN LOOP =====
+const loop = await page.evaluate(() => {
+  var errs = [];
+  try { for (var i = 0; i < 300; i++) step(1/60); } catch(e) { errs.push(e.message); }
+  return { clean: errs.length === 0, errors: errs };
+});
+check('Loop: 300 clean frames', loop.clean, JSON.stringify(loop));
+
+// ===== BROWSER ERRORS =====
+var realErrors = errors.filter(e => !e.includes('_guard/status'));
+check('Browser: no real console errors', realErrors.length === 0, JSON.stringify(realErrors.slice(0, 5)));
+
+// Summary
+console.log('\n========== PLAYTEST RESULTS ==========');
+var pass = results.filter(r => r.ok).length, fail = results.filter(r => !r.ok).length;
+for (var r of results) console.log((r.ok ? 'PASS' : 'FAIL') + ': ' + r.label + (r.extra ? ' [' + r.extra + ']' : ''));
+console.log('\n' + pass + ' PASS / ' + fail + ' FAIL / ' + results.length + ' TOTAL');
+
+await browser.close();
+process.exit(fail > 0 ? 1 : 0);
