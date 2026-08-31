@@ -1192,19 +1192,26 @@ function drawLighting(game, ctx, cam, W, H) {
   var lightX1 = Math.min(world.W - 1, Math.ceil((cam.x + W / 2) / TILE) + 2);
   var lightY0 = Math.max(0, Math.floor((cam.y - H / 2) / TILE) - 2);
   var lightY1 = Math.min(world.H - 1, Math.ceil((cam.y + H / 2) / TILE) + 2);
+
+  // Draw a single smooth underground darkness polygon to avoid column seams.
   var maxSurfaceScreen = -Infinity;
   for (var surfaceX = lightX0; surfaceX <= lightX1; surfaceX++) {
     maxSurfaceScreen = Math.max(maxSurfaceScreen, world.surfaceY[surfaceX] * TILE - cam.y + H / 2);
   }
-  lc.fillStyle = 'rgba(0,0,6,1)';
   if (maxSurfaceScreen > 0) {
+    lc.beginPath();
+    lc.moveTo(0, H);
     for (surfaceX = lightX0; surfaceX <= lightX1; surfaceX++) {
-      var darkX = Math.floor(surfaceX * TILE - cam.x + W / 2);
-      var darkTop = Math.floor((world.surfaceY[surfaceX] + 1) * TILE - cam.y + H / 2);
-      var clippedTop = Math.max(0, darkTop);
-      if (clippedTop < H) lc.fillRect(darkX, clippedTop, TILE + 1, H - clippedTop);
+      var polyX = surfaceX * TILE - cam.x + W / 2;
+      var polyTop = (world.surfaceY[surfaceX] + 1) * TILE - cam.y + H / 2;
+      lc.lineTo(polyX, Math.max(0, polyTop));
     }
+    lc.lineTo(W, H);
+    lc.closePath();
+    lc.fillStyle = 'rgba(0,0,6,1)';
+    lc.fill();
   } else {
+    lc.fillStyle = 'rgba(0,0,6,1)';
     lc.fillRect(0, 0, W, H);
   }
 
@@ -1212,7 +1219,9 @@ function drawLighting(game, ctx, cam, W, H) {
     strength = strength === undefined ? 1 : strength;
     var g = lc.createRadialGradient(x, y, 0, x, y, r);
     g.addColorStop(0, 'rgba(0,0,0,' + strength + ')');
-    g.addColorStop(0.5, 'rgba(0,0,0,' + (strength * 0.55) + ')');
+    g.addColorStop(0.25, 'rgba(0,0,0,' + (strength * 0.85) + ')');
+    g.addColorStop(0.5, 'rgba(0,0,0,' + (strength * 0.5) + ')');
+    g.addColorStop(0.75, 'rgba(0,0,0,' + (strength * 0.18) + ')');
     g.addColorStop(1, 'rgba(0,0,0,0)');
     lc.globalCompositeOperation = 'destination-out';
     lc.fillStyle = g;
@@ -1225,8 +1234,8 @@ function drawLighting(game, ctx, cam, W, H) {
   var py = game.player.y - cam.y + H / 2;
   var held = game.player.inventory.selectedItem();
   var heldDef = held && ITEMS[held.id];
-  if (heldDef && heldDef.tile === T.TORCH) cutLight(px, py - 10, 125);
-  else if (heldDef && heldDef.tile === T.GLOWSTONE) cutLight(px, py - 10, 95);
+  if (heldDef && heldDef.tile === T.TORCH) cutLight(px, py - 10, 180);
+  else if (heldDef && heldDef.tile === T.GLOWSTONE) cutLight(px, py - 10, 140);
 
   // torches / glowstone
   var lw = world.lights;
@@ -1235,7 +1244,7 @@ function drawLighting(game, ctx, cam, W, H) {
     var lx = l.x - cam.x + W / 2;
     var ly = l.y - cam.y + H / 2;
     if (lx < -200 || ly < -200 || lx > W + 200 || ly > H + 200) continue;
-    cutLight(lx, ly, l.r * 28);
+    cutLight(lx, ly, l.r * 40);
   }
 
   // Only naturally luminous ores reveal themselves through untouched darkness.
