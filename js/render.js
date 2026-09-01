@@ -116,649 +116,252 @@ EMISSIVE_ORE_GLOW[T.METEORITE] = { r:28, strength:0.52, color:[224,112,70] };
 EMISSIVE_ORE_GLOW[T.HELLSTONE] = { r:36, strength:0.68, color:[255,92,38] };
 EMISSIVE_ORE_GLOW[T.CHLOROPHYTE] = { r:32, strength:0.62, color:[58,230,105] };
 
+
 function makeTileSprite(t, rng) {
   var c = document.createElement('canvas');
   c.width = TILE; c.height = TILE;
   var ctx = c.getContext('2d');
   var cols = TILE_COLORS[t];
-  var base = cols[0], dark = cols[1];
-  ctx.fillStyle = base;
-  ctx.fillRect(0, 0, TILE, TILE);
-  // speckle
-  for (var i = 0; i < 14; i++) {
-    var x = Math.floor(rng() * TILE), y = Math.floor(rng() * TILE);
-    ctx.fillStyle = rng() < 0.5 ? dark : shade(base, 18);
-    ctx.fillRect(x, y, 2, 2);
+  if (!cols) return c;
+  var base = cols[0], dark = cols[1] || shade(base, -20);
+  var lighter = shade(base, 22);
+  var darkest = shade(base, -35);
+
+  // -- base fill with per-pixel noise --
+  var imgData = ctx.createImageData(TILE, TILE);
+  var d = imgData.data;
+  var baseRGB = hexToRgb(base);
+  var darkRGB = hexToRgb(dark);
+  for (var py = 0; py < TILE; py++) {
+    for (var px = 0; px < TILE; px++) {
+      var o = (py * TILE + px) * 4;
+      var noise = rng();
+      var r, g, b;
+      if (noise < 0.15) { r = darkRGB[0]; g = darkRGB[1]; b = darkRGB[2]; }
+      else if (noise > 0.85) { r = Math.min(255, baseRGB[0] + 20); g = Math.min(255, baseRGB[1] + 20); b = Math.min(255, baseRGB[2] + 20); }
+      else { r = baseRGB[0]; g = baseRGB[1]; b = baseRGB[2]; }
+      d[o] = r; d[o + 1] = g; d[o + 2] = b; d[o + 3] = 255;
+    }
   }
-  // outline bottom/right for depth
-  ctx.fillStyle = 'rgba(0,0,0,0.28)';
+  ctx.putImageData(imgData, 0, 0);
+
+  // -- edge shading (lighter top, darker bottom/right) --
+  ctx.fillStyle = 'rgba(255,255,255,0.14)';
+  ctx.fillRect(0, 0, TILE, 2);
+  ctx.fillStyle = 'rgba(0,0,0,0.2)';
   ctx.fillRect(0, TILE - 2, TILE, 2);
   ctx.fillRect(TILE - 2, 0, 2, TILE);
 
-  switch (t) {
-    case T.GRASS:
-    case T.HALLOWGRASS:
-    case T.CORRUPTGRASS:
-      ctx.fillStyle = dark;
-      ctx.fillRect(0, 0, TILE, 4);
-      ctx.fillRect(0, 4, 2, 3);
-      ctx.fillRect(6, 4, 2, 3);
-      ctx.fillRect(12, 4, 2, 3);
-      ctx.fillStyle = 'rgba(255,255,255,0.25)';
-      ctx.fillRect(1, 1, 2, 1);
-      ctx.fillRect(9, 1, 2, 1);
-      break;
-    case T.LEAVES:
-      ctx.fillStyle = base;
-      ctx.fillRect(2, 2, 12, 12);
-      ctx.fillStyle = shade(base, 16);
-      ctx.fillRect(0, 4, 4, 10);
-      ctx.fillRect(10, 2, 6, 12);
-      ctx.fillStyle = shade(base, -16);
-      ctx.fillRect(3, 8, 5, 5);
-      break;
-    case T.WOOD:
-    case T.TREETRUNK:
-      ctx.fillStyle = base;
-      ctx.fillRect(0, 0, TILE, TILE);
-      ctx.strokeStyle = dark;
-      ctx.lineWidth = 1.5;
-      for (var li = 1; li < 4; li++) {
-        ctx.beginPath();
-        ctx.moveTo(0, li * 5);
-        ctx.lineTo(TILE, li * 5 + 2);
-        ctx.stroke();
-      }
-      break;
-    case T.PLATFORM:
-      ctx.fillStyle = base;
-      ctx.fillRect(0, 5, TILE, 6);
-      ctx.fillStyle = dark;
-      ctx.fillRect(0, 10, TILE, 1);
-      ctx.fillStyle = shade(base, 20);
-      ctx.fillRect(0, 5, TILE, 1);
-      break;
-    case T.COBWEB:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.strokeStyle = 'rgba(240,240,240,0.55)';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(0, 0); ctx.lineTo(TILE, TILE);
-      ctx.moveTo(0, TILE); ctx.lineTo(TILE, 0);
-      ctx.moveTo(TILE / 2, 0); ctx.lineTo(TILE / 2, TILE);
-      ctx.moveTo(0, TILE / 2); ctx.lineTo(TILE, TILE / 2);
-      ctx.stroke();
-      break;
-    case T.TORCH:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = '#8a5c34';
-      ctx.fillRect(7, 8, 2, 8);
-      break;
-    case T.WORKBENCH:
-      ctx.fillStyle = '#a0744a';
-      ctx.fillRect(1, 8, 14, 3);
-      ctx.fillRect(2, 11, 12, 5);
-      ctx.fillRect(2, 9, 2, 3);
-      ctx.fillRect(12, 9, 2, 3);
-      ctx.fillStyle = shade('#a0744a', 20);
-      ctx.fillRect(1, 8, 14, 1);
-      break;
-    case T.FURNACE:
-      ctx.fillStyle = '#4a4a4a';
-      ctx.fillRect(1, 3, 14, 12);
-      ctx.fillStyle = '#2a2a2a';
-      ctx.fillRect(3, 9, 10, 6);
-      ctx.fillStyle = '#ff9a3d';
-      ctx.fillRect(5, 10, 6, 4);
-      ctx.fillStyle = '#6a6a6a';
-      ctx.fillRect(5, 3, 2, 2);
-      ctx.fillRect(10, 3, 2, 2);
-      break;
-    case T.HELLFORGE:
-      ctx.fillStyle = '#542820';
-      ctx.fillRect(1, 2, 14, 13);
-      ctx.fillStyle = '#241818';
-      ctx.fillRect(3, 8, 10, 7);
-      ctx.fillStyle = '#ff5a2a';
-      ctx.fillRect(4, 9, 8, 5);
-      ctx.fillStyle = '#ffd05a';
-      ctx.fillRect(6, 10, 4, 4);
-      break;
-    case T.ANVIL:
-      ctx.fillStyle = '#3a3a4a';
-      ctx.fillRect(2, 9, 12, 5);
-      ctx.fillRect(4, 5, 8, 4);
-      ctx.fillRect(6, 3, 4, 2);
-      ctx.fillStyle = '#5a5a6a';
-      ctx.fillRect(2, 9, 12, 1);
-      break;
-    case T.GLOWSTONE:
-      ctx.fillStyle = base;
-      ctx.fillRect(3, 3, 10, 10);
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(6, 6, 4, 4);
-      break;
-    case T.JUNGLEGRASS:
-      ctx.fillStyle = base;
-      ctx.fillRect(0, 0, TILE, TILE);
-      ctx.fillStyle = dark;
-      ctx.fillRect(0, 0, TILE, 3);
-      ctx.fillStyle = '#2d7a3a';
-      ctx.fillRect(1, 8, 2, 6);
-      ctx.fillRect(9, 7, 2, 7);
-      ctx.fillStyle = '#3d8a4a';
-      ctx.fillRect(13, 9, 2, 5);
-      break;
-    case T.MUD:
-      ctx.fillStyle = base;
-      ctx.fillRect(0, 0, TILE, TILE);
-      ctx.fillStyle = dark;
-      ctx.fillRect(3, 4, 4, 3);
-      ctx.fillRect(9, 10, 4, 4);
-      ctx.fillStyle = shade(base, -12);
-      ctx.fillRect(12, 3, 3, 3);
-      break;
-    case T.CHLOROPHYTE:
-      ctx.fillStyle = base;
-      ctx.fillRect(0, 0, TILE, TILE);
-      ctx.fillStyle = dark;
-      ctx.fillRect(2, 2, 4, 4);
-      ctx.fillRect(10, 9, 4, 4);
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(7, 6, 3, 3);
-      break;
-    case T.TITANIUM:
-      ctx.fillStyle = base;
-      ctx.fillRect(0, 0, TILE, TILE);
-      ctx.fillStyle = dark;
-      ctx.fillRect(3, 3, 5, 5);
-      ctx.fillRect(9, 10, 5, 4);
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(5, 5, 2, 2);
-      break;
-    case T.ORICHALCUM:
-      ctx.fillStyle = base;
-      ctx.fillRect(0, 0, TILE, TILE);
-      ctx.fillStyle = dark;
-      ctx.fillRect(4, 2, 4, 4);
-      ctx.fillRect(10, 8, 4, 5);
-      ctx.fillStyle = '#ffb8d8';
-      ctx.fillRect(6, 6, 2, 2);
-      break;
-    case T.TEMPLEBRICK:
-      ctx.fillStyle = base;
-      ctx.fillRect(0, 0, TILE, TILE);
-      ctx.fillStyle = dark;
-      ctx.fillRect(0, 6, TILE, 1);
-      ctx.fillRect(0, 12, TILE, 1);
-      ctx.fillRect(5, 0, 1, 6);
-      ctx.fillRect(11, 6, 1, 6);
-      ctx.fillStyle = shade(base, 16);
-      ctx.fillRect(0, 0, TILE, 1);
-      break;
-    case T.WATER:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = 'rgba(40,90,190,0.55)';
-      ctx.fillRect(0, 0, TILE, TILE);
-      ctx.fillStyle = 'rgba(255,255,255,0.18)';
-      ctx.fillRect(0, 3, TILE, 2);
-      ctx.fillRect(0, 10, TILE, 2);
-      break;
-    case T.LAVA:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = 'rgba(240,90,30,0.6)';
-      ctx.fillRect(0, 0, TILE, TILE);
-      ctx.fillStyle = 'rgba(255,200,90,0.5)';
-      ctx.fillRect(0, 3, TILE, 2);
-      ctx.fillRect(4, 10, 8, 2);
-      break;
-    case T.SHIMMER:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = 'rgba(130,215,255,0.5)';
-      ctx.fillRect(0, 0, TILE, TILE);
-      ctx.fillStyle = 'rgba(255,255,255,0.5)';
-      ctx.fillRect(0, 3, TILE, 2);
-      ctx.fillRect(0, 10, TILE, 2);
-      break;
-    case T.CRIMGRASS:
-      ctx.fillStyle = dark;
-      ctx.fillRect(0, 0, TILE, 4);
-      ctx.fillRect(0, 4, 2, 3);
-      ctx.fillRect(6, 4, 2, 3);
-      ctx.fillRect(12, 4, 2, 3);
-      ctx.fillStyle = 'rgba(255,255,255,0.22)';
-      ctx.fillRect(1, 1, 2, 1);
-      ctx.fillRect(9, 1, 2, 1);
-      break;
-    case T.CRIMSTONE:
-      ctx.fillStyle = dark;
-      ctx.fillRect(2, 3, 3, 3);
-      ctx.fillRect(10, 9, 4, 3);
-      ctx.fillStyle = 'rgba(255,90,90,0.25)';
-      ctx.fillRect(6, 6, 2, 2);
-      break;
-    case T.CRIMTANE:
-      ctx.fillStyle = dark;
-      ctx.fillRect(3, 3, 5, 5);
-      ctx.fillRect(10, 10, 4, 4);
-      ctx.fillStyle = '#ffb0b8';
-      ctx.fillRect(5, 5, 2, 2);
-      break;
-    case T.ASH:
-      ctx.fillStyle = dark;
-      ctx.fillRect(2, 3, 4, 3);
-      ctx.fillRect(9, 9, 4, 3);
-      ctx.fillStyle = 'rgba(255,180,90,0.18)';
-      ctx.fillRect(5, 6, 2, 2);
-      break;
-    case T.HELLSTONE:
-      ctx.fillStyle = dark;
-      ctx.fillRect(3, 3, 5, 5);
-      ctx.fillRect(10, 10, 4, 4);
-      ctx.fillStyle = '#ffb090';
-      ctx.fillRect(5, 5, 2, 2);
-      break;
-    case T.HELLBRICK:
-      ctx.fillStyle = dark;
-      ctx.fillRect(0, 6, TILE, 1);
-      ctx.fillRect(0, 12, TILE, 1);
-      ctx.fillRect(5, 0, 1, 6);
-      ctx.fillRect(11, 6, 1, 6);
-      ctx.fillStyle = shade(base, 16);
-      ctx.fillRect(0, 0, TILE, 1);
-      break;
-    case T.CLOUD:
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(2, 4, 5, 4);
-      ctx.fillRect(7, 2, 6, 5);
-      ctx.fillRect(5, 6, 8, 4);
-      ctx.fillStyle = dark;
-      ctx.fillRect(2, 8, 5, 1);
-      ctx.fillRect(7, 10, 6, 1);
-      break;
-    case T.GRANITE:
-      ctx.fillStyle = dark;
-      ctx.fillRect(3, 3, 4, 4);
-      ctx.fillRect(10, 9, 4, 4);
-      ctx.fillStyle = '#5a5a6a';
-      ctx.fillRect(5, 5, 2, 2);
-      break;
-    case T.MARBLE:
-      ctx.fillStyle = dark;
-      ctx.beginPath();
-      ctx.moveTo(3, 1); ctx.lineTo(6, 6); ctx.lineTo(4, 9); ctx.lineTo(2, 5);
-      ctx.fill();
-      ctx.fillRect(11, 7, 3, 4);
-      break;
-    case T.OBSIDIAN:
-      ctx.fillStyle = '#4a3a4a';
-      ctx.fillRect(2, 2, 4, 4);
-      ctx.fillRect(9, 9, 4, 4);
-      ctx.fillStyle = 'rgba(255,255,255,0.15)';
-      ctx.fillRect(7, 5, 2, 1);
-      break;
-    case T.DUNGEONBRICK:
-      ctx.fillStyle = dark;
-      ctx.fillRect(0, 6, TILE, 1);
-      ctx.fillRect(0, 12, TILE, 1);
-      ctx.fillRect(5, 0, 1, 6);
-      ctx.fillRect(11, 6, 1, 6);
-      ctx.fillStyle = shade(base, 18);
-      ctx.fillRect(0, 0, TILE, 1);
-      break;
-    case T.DUNGEONDOOR:
-      ctx.fillStyle = dark;
-      ctx.fillRect(0, 6, TILE, 1);
-      ctx.fillRect(0, 12, TILE, 1);
-      ctx.fillRect(5, 0, 1, 6);
-      ctx.fillRect(11, 6, 1, 6);
-      ctx.fillStyle = '#ffd75e';
-      ctx.fillRect(3, 3, 2, 2);
-      ctx.fillRect(11, 9, 2, 2);
-      break;
-    case T.METEORITE:
-      ctx.fillStyle = dark;
-      ctx.fillRect(3, 3, 5, 5);
-      ctx.fillRect(10, 10, 4, 4);
-      ctx.fillStyle = '#e8a86b';
-      ctx.fillRect(5, 5, 2, 2);
-      ctx.fillStyle = 'rgba(255,255,255,0.25)';
-      ctx.fillRect(1, 1, 2, 1);
-      break;
-    case T.SANDSTONE:
-      ctx.fillStyle = dark;
-      ctx.fillRect(2, 3, 4, 3);
-      ctx.fillRect(9, 9, 4, 3);
-      ctx.fillStyle = shade(base, 16);
-      ctx.fillRect(4, 6, 2, 2);
-      break;
-    case T.TIN:
-      ctx.fillStyle = dark;
-      ctx.fillRect(3, 3, 5, 5);
-      ctx.fillStyle = '#e8d0b0';
-      ctx.fillRect(5, 5, 2, 2);
-      break;
-    case T.LEAD:
-      ctx.fillStyle = dark;
-      ctx.fillRect(3, 3, 5, 5);
-      ctx.fillRect(10, 10, 4, 4);
-      ctx.fillStyle = '#b0b0c0';
-      ctx.fillRect(5, 5, 2, 2);
-      break;
-    case T.TUNGSTEN:
-      ctx.fillStyle = dark;
-      ctx.fillRect(3, 3, 5, 5);
-      ctx.fillStyle = '#d0d8f0';
-      ctx.fillRect(5, 5, 2, 2);
-      break;
-    case T.PLATINUM:
-      ctx.fillStyle = dark;
-      ctx.fillRect(3, 3, 5, 5);
-      ctx.fillRect(10, 10, 4, 4);
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(5, 5, 2, 2);
-      break;
-    case T.SHADOWORB:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = '#38284f';
-      ctx.beginPath();
-      ctx.arc(8, 8, 7, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = '#8f70d8';
-      ctx.beginPath();
-      ctx.arc(8, 8, 4.5, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = '#d8c8ff';
-      ctx.fillRect(5, 4, 3, 2);
-      break;
-    case T.CRIMSONHEART:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = '#6f202c';
-      ctx.beginPath();
-      ctx.moveTo(8, 15); ctx.lineTo(2, 8); ctx.quadraticCurveTo(1, 2, 6, 2);
-      ctx.quadraticCurveTo(8, 2, 8, 5); ctx.quadraticCurveTo(8, 2, 11, 2);
-      ctx.quadraticCurveTo(16, 2, 14, 8); ctx.closePath(); ctx.fill();
-      ctx.fillStyle = '#e84858';
-      ctx.beginPath(); ctx.arc(6, 6, 3, 0, Math.PI * 2); ctx.arc(11, 6, 3, 0, Math.PI * 2); ctx.fill();
-      ctx.beginPath(); ctx.moveTo(3, 7); ctx.lineTo(14, 7); ctx.lineTo(8, 14); ctx.closePath(); ctx.fill();
-      ctx.fillStyle = '#ffb0b8'; ctx.fillRect(5, 4, 2, 2);
-      break;
-    case T.LARVA:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = '#8a5a20';
-      ctx.beginPath(); ctx.ellipse(8, 8, 6, 7, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#ffd75e';
-      ctx.beginPath(); ctx.ellipse(8, 8, 4, 6, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#fff0a0'; ctx.fillRect(6, 4, 3, 2);
-      break;
-    case T.HIVE:
-      ctx.fillStyle = base;
-      for (var hy = 2; hy < TILE; hy += 6) {
-        for (var hx = (hy % 12) ? 1 : 4; hx < TILE; hx += 7) {
-          ctx.strokeStyle = dark;
-          ctx.strokeRect(hx, hy, 4, 4);
-        }
-      }
-      break;
-    case T.BED:
-      ctx.fillStyle = '#8a2838';
-      ctx.fillRect(0, 8, TILE, 8);
-      ctx.fillStyle = '#c04050';
-      ctx.fillRect(0, 4, TILE, 6);
-      ctx.fillStyle = '#f0f0f0';
-      ctx.fillRect(0, 3, 5, 5);
-      break;
-    case T.PIGGYBANK:
-      ctx.fillStyle = '#f0a0c0';
-      ctx.beginPath(); ctx.ellipse(8, 10, 6, 5, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#c87890';
-      ctx.fillRect(4, 14, 2, 2); ctx.fillRect(10, 14, 2, 2);
-      break;
-    case T.DOOR:
-      ctx.fillStyle = '#7a5030';
-      ctx.fillRect(1, 0, 14, TILE);
-      ctx.fillStyle = '#9a6b3f';
-      ctx.fillRect(2, 1, 12, 14);
-      ctx.fillStyle = '#ffe14d';
-      ctx.fillRect(11, 8, 2, 2);
-      break;
-    case T.CLAY:
-      ctx.fillStyle = '#b06a3a';
-      ctx.fillRect(0, 0, TILE, TILE);
-      ctx.fillStyle = '#a05a2a';
-      ctx.fillRect(2, 3, 5, 4); ctx.fillRect(9, 9, 5, 4);
-      break;
-    case T.GRAYBRICK:
-      ctx.fillStyle = '#8a8a92';
-      ctx.fillRect(0, 0, TILE, TILE);
-      ctx.strokeStyle = '#6a6a72';
-      ctx.strokeRect(0.5, 0.5, 8, 8); ctx.strokeRect(8.5, 8.5, 8, 8);
-      break;
-    case T.REDBRICK:
-      ctx.fillStyle = '#b0503a';
-      ctx.fillRect(0, 0, TILE, TILE);
-      ctx.strokeStyle = '#8a3828';
-      ctx.strokeRect(0.5, 0.5, 8, 8); ctx.strokeRect(8.5, 8.5, 8, 8);
-      break;
-    case T.SPIKE:
-      ctx.fillStyle = '#9a9aa4';
-      ctx.beginPath();
-      ctx.moveTo(2, 16); ctx.lineTo(5, 6); ctx.lineTo(8, 16);
-      ctx.lineTo(8, 16); ctx.lineTo(11, 6); ctx.lineTo(14, 16);
-      ctx.fill();
-      break;
-    case T.BOTTLE:
-      ctx.fillStyle = 'rgba(168,216,240,0.7)';
-      ctx.fillRect(5, 6, 6, 8);
-      ctx.fillRect(7, 2, 2, 4);
-      break;
-    case T.CLAYPOT:
-      ctx.fillStyle = '#b06a3a';
-      ctx.beginPath(); ctx.ellipse(8, 10, 5, 4, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.fillRect(6, 4, 4, 4);
-      break;
-    case T.SIGN:
-      ctx.fillStyle = '#9a6b3f';
-      ctx.fillRect(2, 2, 12, 9);
-      ctx.fillRect(7, 11, 2, 5);
-      break;
-    case T.BOOK:
-      ctx.fillStyle = '#c84a6a';
-      ctx.fillRect(2, 4, 12, 10);
-      ctx.fillStyle = '#f0e0c0';
-      ctx.fillRect(3, 5, 10, 8);
-      break;
-    case T.CHAIN:
-      ctx.strokeStyle = '#b0b0b8';
-      ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(8, 0); ctx.lineTo(8, 16); ctx.stroke();
-      break;
-    case T.FURN_CHAIR: case T.FURN_TABLE: case T.FURN_PIANO: case T.FURN_BATHTUB:
-    case T.FURN_BOOKCASE: case T.FURN_CANDELABRA: case T.FURN_CHANDELIER: case T.FURN_LAMP:
-    case T.FURN_LANTERN: case T.FURN_CLOCK: case T.FURN_SOFA: case T.FURN_SINK: case T.FURN_TOILET:
-    case T.FURN_DRESSER: case T.FURN_BENCH: case T.FURN_ANVIL: case T.FURN_FURNACE:
-    case T.FURN_PLATFORM: case T.FURN_CHEST: case T.FURN_DOOR: case T.FURN_CANDLE: case T.FURN_TORCH: {
-      var fc = tileColor(t) || '#9a6b3f';
-      ctx.fillStyle = fc;
-      ctx.fillRect(1, 4, 14, 12);
-      ctx.fillStyle = 'rgba(0,0,0,0.25)';
-      ctx.fillRect(1, 12, 14, 4);
-      ctx.fillStyle = 'rgba(255,255,255,0.15)';
-      ctx.fillRect(1, 4, 14, 2);
-      break;
+  // -- material-specific details --
+  var ln = '';
+  for (var tk in T) { if (T[tk] === t) { ln = tk; break; } }
+
+  if (ln === 'GRASS' || ln === 'HALLOWGRASS' || ln === 'CORRUPTGRASS' || ln === 'CRIMGRASS' || ln === 'JUNGLEGRASS') {
+    // grass blades on top
+    ctx.fillStyle = shade(base, 30);
+    for (var gb = 0; gb < 5; gb++) {
+      var gx = Math.floor(rng() * TILE);
+      var gh = 2 + Math.floor(rng() * 3);
+      ctx.fillRect(gx, 0, 1, gh);
     }
-    case T.ALTAR:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = '#2a2238';
-      ctx.fillRect(3, 8, 10, 6);
-      ctx.fillStyle = '#5a4d7a';
-      ctx.fillRect(2, 8, 12, 2);
-      ctx.fillStyle = '#3a2f52';
-      ctx.fillRect(6, 3, 4, 5);
-      ctx.fillStyle = '#8f70d8';
-      ctx.beginPath();
-      ctx.arc(8, 4, 2, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillRect(8, 11, 1, 3);
-      ctx.fillStyle = '#c8b8ff';
-      ctx.fillRect(4, 11, 2, 1);
-      ctx.fillRect(9, 12, 2, 1);
-      break;
-    case T.PLANTERABULB:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = '#2d7a3a';
-      ctx.fillRect(5, 10, 6, 3);
-      ctx.fillStyle = '#ff5c8a';
-      ctx.beginPath();
-      ctx.arc(8, 6, 4.5, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = '#ffb8d8';
-      ctx.beginPath();
-      ctx.arc(7, 5, 1.5, 0, Math.PI * 2);
-      ctx.fill();
-      break;
-    case T.SNOW:
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(3, 3, 2, 2);
-      ctx.fillRect(10, 8, 2, 2);
-      break;
-    case T.ICE:
-      ctx.fillStyle = 'rgba(255,255,255,0.5)';
-      ctx.fillRect(2, 2, 3, 1);
-      ctx.fillRect(9, 9, 3, 1);
-      ctx.fillStyle = 'rgba(255,255,255,0.3)';
-      ctx.fillRect(6, 5, 2, 1);
-      break;
-    case T.MUSHROOM:
-      ctx.fillStyle = dark;
-      ctx.fillRect(2, 3, 5, 5);
-      ctx.fillRect(10, 9, 4, 4);
-      ctx.fillStyle = '#b8a8ff';
-      ctx.fillRect(4, 5, 2, 2);
-      break;
-    case T.PALLADIUM:
-      ctx.fillStyle = dark;
-      ctx.fillRect(3, 3, 5, 5);
-      ctx.fillRect(10, 10, 4, 4);
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(5, 5, 2, 2);
-      break;
-    case T.GLASS:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = 'rgba(190,225,240,0.4)';
-      ctx.fillRect(0, 0, TILE, TILE);
-      ctx.fillStyle = 'rgba(255,255,255,0.6)';
-      ctx.fillRect(1, 1, 3, 1);
-      ctx.fillRect(10, 8, 2, 1);
-      ctx.strokeStyle = 'rgba(120,160,180,0.8)';
-      ctx.lineWidth = 1;
-      ctx.strokeRect(0.5, 0.5, TILE - 1, TILE - 1);
-      break;
-    case T.SPOOKYWOOD:
-      ctx.fillStyle = base;
-      ctx.fillRect(0, 0, TILE, TILE);
-      ctx.strokeStyle = dark;
-      ctx.lineWidth = 1.5;
-      for (var sw = 1; sw < 4; sw++) {
-        ctx.beginPath();
-        ctx.moveTo(0, sw * 5);
-        ctx.lineTo(TILE, sw * 5 + 2);
-        ctx.stroke();
-      }
-      ctx.fillStyle = 'rgba(255,200,60,0.25)';
-      ctx.fillRect(4, 4, 3, 3);
-      ctx.fillRect(11, 11, 2, 2);
-      break;
-    case T.HONEY:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = 'rgba(240,170,60,0.65)';
-      ctx.fillRect(0, 3, TILE, 10);
-      ctx.fillStyle = 'rgba(255,220,140,0.7)';
-      ctx.fillRect(2, 3, 4, 3);
-      ctx.fillRect(9, 9, 4, 3);
-      break;
-    case T.CHEST:
-      ctx.fillStyle = base;
-      ctx.fillRect(2, 3, 12, 10);
-      ctx.fillStyle = dark;
-      ctx.fillRect(2, 3, 12, 2);
-      ctx.fillRect(7, 8, 2, 4);
-      ctx.fillStyle = shade(base, 20);
-      ctx.fillRect(2, 3, 12, 1);
-      ctx.fillStyle = '#e8c870';
-      ctx.fillRect(7, 8, 2, 2);
-      break;
-    case T.SHADOWCHEST:
-      ctx.fillStyle = base;
-      ctx.fillRect(2, 3, 12, 10);
-      ctx.fillStyle = dark;
-      ctx.fillRect(2, 3, 12, 3);
-      ctx.fillRect(7, 8, 2, 4);
-      ctx.strokeStyle = '#9d78e8';
-      ctx.strokeRect(2.5, 3.5, 11, 9);
-      ctx.fillStyle = '#d8b8ff';
-      ctx.fillRect(7, 8, 2, 2);
-      break;
-    case T.CHAIR:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = '#7a4f2b';
-      ctx.fillRect(3, 2, 10, 12);
-      ctx.fillRect(1, 2, 2, 3);
-      ctx.fillStyle = shade('#8a5c34', 18);
-      ctx.fillRect(3, 2, 10, 2);
-      break;
-    case T.TABLE:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = '#9a6b3f';
-      ctx.fillRect(1, 5, 14, 3);
-      ctx.fillStyle = shade('#9a6b3f', 20);
-      ctx.fillRect(1, 5, 14, 1);
-      ctx.fillStyle = '#7a4f2b';
-      ctx.fillRect(2, 8, 2, 6);
-      ctx.fillRect(12, 8, 2, 6);
-      break;
-    case T.PYLON:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = 'rgba(111,211,255,0.30)';
-      ctx.fillRect(4, 0, 8, 3);
-      ctx.fillStyle = '#4a5568';
-      ctx.fillRect(2, 9, 12, 5);
-      ctx.fillStyle = '#5d6b7d';
-      ctx.fillRect(2, 9, 12, 2);
-      ctx.fillStyle = '#7fd4ff';
-      ctx.fillRect(5, 3, 6, 7);
-      ctx.fillStyle = '#c8f0ff';
-      ctx.fillRect(7, 3, 2, 3);
-      break;
-    case T.PARTYCENTER:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = '#4a4260';
-      ctx.fillRect(2, 10, 12, 5);
-      ctx.fillStyle = '#ff70b8';
-      ctx.fillRect(4, 3, 8, 8);
-      ctx.fillStyle = '#6bc8ff';
-      ctx.fillRect(6, 1, 4, 4);
-      ctx.fillStyle = '#ffe14d';
-      ctx.fillRect(7, 5, 2, 2);
-      break;
-    case T.TOMBSTONE:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = '#55555d'; ctx.fillRect(3, 7, 10, 8);
-      ctx.beginPath(); ctx.arc(8, 7, 5, Math.PI, 0); ctx.fill();
-      ctx.fillStyle = '#92929a'; ctx.fillRect(5, 8, 6, 1);
-      ctx.fillStyle = '#3a3a42'; ctx.fillRect(7, 10, 2, 4);
-      break;
-    case T.SUNFLOWER:
-      ctx.clearRect(0, 0, TILE, TILE);
-      ctx.fillStyle = '#4d8a3d'; ctx.fillRect(7, 7, 2, 9);
-      ctx.fillRect(3, 10, 5, 2); ctx.fillRect(9, 12, 5, 2);
-      ctx.fillStyle = '#ffe050';
-      for (var sf = 0; sf < 8; sf++) { ctx.beginPath(); ctx.arc(8 + Math.cos(sf * Math.PI / 4) * 4, 5 + Math.sin(sf * Math.PI / 4) * 4, 2.5, 0, Math.PI * 2); ctx.fill(); }
-      ctx.fillStyle = '#7a4a20'; ctx.beginPath(); ctx.arc(8, 5, 3, 0, Math.PI * 2); ctx.fill();
-      break;
+    // dirt showing through at bottom
+    ctx.fillStyle = '#7d5c3a';
+    ctx.fillRect(0, TILE - 4, TILE, 4);
+    ctx.fillStyle = 'rgba(0,0,0,0.15)';
+    ctx.fillRect(0, TILE - 4, TILE, 1);
   }
+  else if (ln === 'STONE' || ln === 'EBONSTONE' || ln === 'PEARLSTONE' || ln === 'CRIMSTONE' || ln === 'GRANITE' || ln === 'MARBLE') {
+    // cracks
+    ctx.strokeStyle = darkest;
+    ctx.lineWidth = 1;
+    for (var cr = 0; cr < 2; cr++) {
+      var cx = 2 + Math.floor(rng() * (TILE - 4));
+      var cy2 = 2 + Math.floor(rng() * (TILE - 4));
+      ctx.beginPath();
+      ctx.moveTo(cx, cy2);
+      ctx.lineTo(cx + 3 + rng() * 3, cy2 + 2 + rng() * 3);
+      ctx.stroke();
+    }
+    // small pits
+    ctx.fillStyle = darkest;
+    for (var pt = 0; pt < 3; pt++) {
+      ctx.fillRect(Math.floor(rng() * (TILE - 2)), Math.floor(rng() * (TILE - 2)), 2, 1);
+    }
+  }
+  else if (ln === 'DIRT' || ln === 'MUD') {
+    // organic clumps
+    ctx.fillStyle = dark;
+    for (var cl = 0; cl < 4; cl++) {
+      ctx.fillRect(Math.floor(rng() * (TILE - 3)), Math.floor(rng() * (TILE - 3)), 3, 2);
+    }
+    ctx.fillStyle = lighter;
+    for (var cl2 = 0; cl2 < 2; cl2++) {
+      ctx.fillRect(Math.floor(rng() * (TILE - 2)), Math.floor(rng() * (TILE - 2)), 2, 1);
+    }
+  }
+  else if (ln === 'WOOD' || ln === 'TREETRUNK' || ln === 'SPOOKYWOOD') {
+    // wood grain
+    ctx.strokeStyle = dark;
+    ctx.lineWidth = 1;
+    for (var li = 2; li < TILE; li += 4) {
+      ctx.beginPath();
+      ctx.moveTo(0, li);
+      ctx.bezierCurveTo(TILE / 3, li + 1, TILE * 2 / 3, li - 1, TILE, li + 1);
+      ctx.stroke();
+    }
+    // bark edges
+    ctx.fillStyle = darkest;
+    ctx.fillRect(0, 0, 1, TILE);
+    ctx.fillRect(TILE - 1, 0, 1, TILE);
+  }
+  else if (ln === 'SAND') {
+    // sand grains
+    ctx.fillStyle = darkest;
+    for (var sg = 0; sg < 6; sg++) {
+      ctx.fillRect(Math.floor(rng() * TILE), Math.floor(rng() * TILE), 1, 1);
+    }
+    ctx.fillStyle = lighter;
+    for (var sg2 = 0; sg2 < 3; sg2++) {
+      ctx.fillRect(Math.floor(rng() * TILE), Math.floor(rng() * TILE), 1, 1);
+    }
+  }
+  else if (ln === 'SNOW' || ln === 'ICE') {
+    // crystalline sparkles
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    for (var sp = 0; sp < 4; sp++) {
+      var sx = Math.floor(rng() * (TILE - 2)), sy = Math.floor(rng() * (TILE - 2));
+      ctx.fillRect(sx, sy, 1, 1);
+      ctx.fillRect(sx - 1, sy + 1, 1, 1);
+      ctx.fillRect(sx + 1, sy + 1, 1, 1);
+    }
+  }
+  else if (ln === 'COPPER' || ln === 'SILVER' || ln === 'GOLD' || ln === 'DEMONITE' || ln === 'CRIMTANE' ||
+           ln === 'TIN' || ln === 'LEAD' || ln === 'TUNGSTEN' || ln === 'PLATINUM' || ln === 'METEORITE') {
+    // ore nuggets embedded in stone
+    ctx.fillStyle = '#6b7080'; // stone background
+    ctx.fillRect(0, 0, TILE, TILE);
+    // ore chunks
+    ctx.fillStyle = base;
+    for (var og = 0; og < 4; og++) {
+      var ox = 1 + Math.floor(rng() * (TILE - 5));
+      var oy = 1 + Math.floor(rng() * (TILE - 5));
+      var ow = 2 + Math.floor(rng() * 3);
+      ctx.fillRect(ox, oy, ow, ow);
+      ctx.fillStyle = lighter;
+      ctx.fillRect(ox, oy, ow, 1);
+      ctx.fillStyle = base;
+    }
+    // stone texture on top
+    ctx.fillStyle = 'rgba(0,0,0,0.1)';
+    for (var st2 = 0; st2 < 4; st2++) {
+      ctx.fillRect(Math.floor(rng() * TILE), Math.floor(rng() * TILE), 2, 1);
+    }
+  }
+  else if (ln === 'HELLSTONE') {
+    // fiery veins
+    ctx.fillStyle = base;
+    ctx.fillRect(0, 0, TILE, TILE);
+    ctx.strokeStyle = '#ffcc00';
+    ctx.lineWidth = 1;
+    for (var fv = 0; fv < 3; fv++) {
+      ctx.beginPath();
+      var fx = rng() * TILE, fy = rng() * TILE;
+      ctx.moveTo(fx, fy);
+      ctx.lineTo(fx + (rng() - 0.5) * 8, fy + (rng() - 0.5) * 8);
+      ctx.stroke();
+    }
+    ctx.fillStyle = '#ff6600';
+    for (var fp = 0; fp < 3; fp++) {
+      ctx.fillRect(Math.floor(rng() * (TILE - 2)), Math.floor(rng() * (TILE - 2)), 2, 2);
+    }
+  }
+  else if (ln === 'COBALT' || ln === 'MYTHRIL' || ln === 'ADAMANTITE' || ln === 'CHLOROPHYTE' ||
+           ln === 'TITANIUM' || ln === 'ORICHALCUM' || ln === 'PALLADIUM') {
+    // hardmode ore: crystal formations in stone
+    ctx.fillStyle = '#5a5a64';
+    ctx.fillRect(0, 0, TILE, TILE);
+    // crystal clusters
+    for (var cr2 = 0; cr2 < 3; cr2++) {
+      var cx3 = 2 + Math.floor(rng() * (TILE - 6));
+      var cy3 = 2 + Math.floor(rng() * (TILE - 6));
+      ctx.fillStyle = base;
+      ctx.beginPath();
+      ctx.moveTo(cx3 + 2, cy3);
+      ctx.lineTo(cx3 + 4, cy3 + 3);
+      ctx.lineTo(cx3 + 2, cy3 + 6);
+      ctx.lineTo(cx3, cy3 + 3);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = lighter;
+      ctx.fillRect(cx3 + 1, cy3 + 1, 1, 2);
+    }
+  }
+  else if (ln === 'LEAVES') {
+    // leaf clusters
+    for (var lf = 0; lf < 5; lf++) {
+      var lx = Math.floor(rng() * (TILE - 4));
+      var ly = Math.floor(rng() * (TILE - 4));
+      ctx.fillStyle = rng() < 0.5 ? shade(base, 15) : shade(base, -15);
+      ctx.beginPath();
+      ctx.arc(lx + 2, ly + 2, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  else if (ln === 'COBWEB') {
+    // web pattern
+    ctx.clearRect(0, 0, TILE, TILE);
+    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+    ctx.lineWidth = 0.5;
+    for (var wa = 0; wa < 6; wa++) {
+      var angle = (wa / 6) * Math.PI * 2;
+      ctx.beginPath();
+      ctx.moveTo(8, 8);
+      ctx.lineTo(8 + Math.cos(angle) * 10, 8 + Math.sin(angle) * 10);
+      ctx.stroke();
+    }
+    for (var wr = 2; wr <= 6; wr += 2) {
+      ctx.beginPath();
+      ctx.arc(8, 8, wr, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  }
+  else if (ln === 'CLOUD') {
+    // fluffy clouds
+    ctx.fillStyle = base;
+    ctx.fillRect(0, 0, TILE, TILE);
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    for (var cf = 0; cf < 3; cf++) {
+      ctx.beginPath();
+      ctx.arc(rng() * TILE, rng() * TILE, 3 + rng() * 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  else if (ln === 'GLASS') {
+    // transparent with highlight
+    ctx.clearRect(0, 0, TILE, TILE);
+    ctx.fillStyle = 'rgba(200,232,240,0.3)';
+    ctx.fillRect(0, 0, TILE, TILE);
+    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(0.5, 0.5, TILE - 1, TILE - 1);
+    ctx.fillStyle = 'rgba(255,255,255,0.2)';
+    ctx.fillRect(2, 2, 4, 1);
+    ctx.fillRect(2, 2, 1, 4);
+  }
+  else if (ln === 'TEMPLEBRICK' || ln === 'DUNGEONBRICK' || ln === 'HELLBRICK') {
+    // brick pattern
+    ctx.fillStyle = base;
+    ctx.fillRect(0, 0, TILE, TILE);
+    ctx.strokeStyle = darkest;
+    ctx.lineWidth = 1;
+    ctx.strokeRect(0.5, 0.5, TILE / 2 - 1, TILE / 2 - 1);
+    ctx.strokeRect(TILE / 2 + 0.5, 0.5, TILE / 2 - 1, TILE / 2 - 1);
+    ctx.strokeRect(0.5, TILE / 2 + 0.5, TILE - 1, TILE / 2 - 1);
+  }
+
   return c;
 }
+
 
 function shade(hex, amt) {
   var r = hexToRgb(hex);
@@ -5022,162 +4625,158 @@ function drawItemIcon(ctx, it, x, y) {
 }
 
 // ---------- Minimap ----------
-var _minimapFrame = 0;
-var _minimapCache = null;
-var _minimapCanvas = null;
-function drawMinimap(game, ctx) {
-  _minimapFrame++;
-  if (!_minimapCanvas) {
-    _minimapCanvas = document.createElement('canvas');
-    _minimapCanvas.width = canvas.width;
-    _minimapCanvas.height = canvas.height;
-  }
-  if (_minimapFrame % 30 === 0 || !_minimapCache) {
-    var mctx = _minimapCanvas.getContext('2d');
-    mctx.clearRect(0, 0, _minimapCanvas.width, _minimapCanvas.height);
-    drawMinimapInner(game, mctx);
-    _minimapCache = true;
-  }
-  ctx.drawImage(_minimapCanvas, 0, 0);
-}
+// ---------- Minimap & Full Map ----------
+// Simple, reliable: render tile colors to ImageData, putImageData, draw markers.
 
-function drawMinimapInner(game, ctx) {
-  var mapC = game.mapCanvas;
-  if (!mapC) return;
-  var vw = 220, vh = 130;
-  var px = game.player.x / TILE, py = game.player.y / TILE;
+
+// (MINIMAP_COLORS entries are defined below the function — hoisted by assignment order)
+
+function drawMinimap(game, ctx) {
+  var world = game.world;
+  var mw = 200, mh = 120; // minimap size in tiles
+  var px = Math.floor(game.player.x / TILE);
+  var py = Math.floor(game.player.y / TILE);
+  var x0 = px - mw / 2, y0 = py - mh / 2;
+
+  if (!drawMinimap._canvas) {
+    drawMinimap._canvas = document.createElement('canvas');
+    drawMinimap._canvas.width = mw;
+    drawMinimap._canvas.height = mh;
+  }
+  var mc = drawMinimap._canvas;
+  var mctx = mc.getContext('2d');
+  var img = mctx.createImageData(mw, mh);
+  var d = img.data;
+
+  for (var y = 0; y < mh; y++) {
+    for (var x = 0; x < mw; x++) {
+      var tx = x0 + x, ty = y0 + y;
+      var o = (y * mw + x) * 4;
+      if (tx < 0 || tx >= world.W || ty < 0 || ty >= world.H) {
+        d[o] = 10; d[o+1] = 10; d[o+2] = 16; d[o+3] = 255; continue;
+      }
+      var t = world.tiles[ty * world.W + tx];
+      var col = MINIMAP_COLORS[t];
+      if (col) {
+        var rgb = hexToRgb(col);
+        d[o] = rgb[0]; d[o+1] = rgb[1]; d[o+2] = rgb[2]; d[o+3] = 255;
+      } else if (t === 0) {
+        var wl = world.walls[ty * world.W + tx];
+        if (wl === 1) { d[o] = 40; d[o+1] = 32; d[o+2] = 24; }
+        else if (wl === 2) { d[o] = 58; d[o+1] = 61; d[o+2] = 69; }
+        else if (wl !== 0) { d[o] = 32; d[o+1] = 32; d[o+2] = 40; }
+        else { d[o] = 12; d[o+1] = 12; d[o+2] = 18; }
+        d[o+3] = 255;
+      } else {
+        d[o] = 136; d[o+1] = 136; d[o+2] = 136; d[o+3] = 255;
+      }
+    }
+  }
+  mctx.putImageData(img, 0, 0);
+
+  // draw to screen
+  var dw = mw * 2, dh = mh * 2;
+  var sx = canvas.width - dw - 8;
   ctx.save();
-  ctx.globalAlpha = 0.82;
+  ctx.globalAlpha = 0.88;
   ctx.imageSmoothingEnabled = false;
-  ctx.drawImage(mapC, clamp(px - vw / 2, 0, mapC.width - vw), clamp(py - vh / 2, 0, mapC.height - vh), vw, vh,
-    canvas.width - vw * 2 - 8, 8, vw * 2, vh * 2);
+  ctx.drawImage(mc, sx, 8, dw, dh);
   ctx.restore();
-  var bx = canvas.width - vw * 2 - 8, by = 8;
-  ctx.strokeStyle = 'rgba(255,255,255,0.45)';
-  ctx.strokeRect(bx, by, vw * 2, vh * 2);
-  var sx = bx + clamp(px, 0, mapC.width) * 2 - clamp(px - vw / 2, 0, mapC.width - vw) * 2;
-  var sy = by + clamp(py, 0, mapC.height) * 2 - clamp(py - vh / 2, 0, mapC.height - vh) * 2;
+  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+  ctx.strokeRect(sx, 8, dw, dh);
+  // player arrow
+  var ppx = sx + (px - x0) * 2;
+  var ppy = 8 + (py - y0) * 2;
   ctx.fillStyle = '#fff';
   ctx.beginPath();
-  ctx.moveTo(sx, sy - 5); ctx.lineTo(sx - 4, sy + 4); ctx.lineTo(sx + 4, sy + 4);
+  ctx.moveTo(ppx, ppy - 4); ctx.lineTo(ppx - 3, ppy + 3); ctx.lineTo(ppx + 3, ppy + 3);
   ctx.closePath(); ctx.fill();
-  var spx = bx + (game.world.spawnX / TILE - clamp(px - vw / 2, 0, mapC.width - vw)) * 2;
-  var spy = by + (game.world.spawnY / TILE - clamp(py - vh / 2, 0, mapC.height - vh)) * 2;
-  if (spx > bx && spx < bx + vw * 2 && spy > by && spy < by + vh * 2) {
-    ctx.fillStyle = '#ffe14d';
-    ctx.fillRect(spx - 2, spy - 2, 4, 4);
-  }
-  ctx.fillStyle = 'rgba(255,255,255,0.75)';
-  ctx.font = '9px monospace';
-  ctx.fillText('M - map', bx + 4, by + vh * 2 + 11);
-}
-
-// ---------- Full map (1px/tile cache, built incrementally) ----------
-function initMapCache(game) {
-  var c = document.createElement('canvas');
-  c.width = game.world.W;
-  c.height = game.world.H;
-  game.mapCanvas = c;
-  game.mapCtx = c.getContext('2d');
-  game.mapCtx.fillStyle = '#0c0c12';
-  game.mapCtx.fillRect(0, 0, c.width, c.height);
-  game.mapCol = 0;
-  game.mapOpen = false;
-  game.mapZoom = 2;
-  game.mapPanX = null;
-  game.mapPanY = null;
-}
-
-var MAP_COLORS_RGB = null;
-function updateMapCache(game) {
-  if (!game.mapCanvas) initMapCache(game);
-  var world = game.world;
-  var ctx = game.mapCtx;
-  var cols = Math.min(120, world.W);
-  var budget = cols;
-  while (budget > 0) {
-    if (game.mapCol >= world.W) {
-      if (!world.dirty) break;
-      game.mapCol = 0;
-    }
-    var x = game.mapCol;
-    var img = ctx.createImageData(1, world.H);
-    var d = img.data;
-    for (var y = 0; y < world.H; y++) {
-      var t = world.get(x, y);
-      var col;
-      if (t === T.AIR) {
-        var wl = world.wall(x, y);
-        if (wl === WALL.NONE) col = [12, 12, 18];
-        else if (wl === WALL.DIRT) col = [40, 32, 24];
-        else col = [32, 32, 38];
-      } else {
-        col = hexToRgb(MINIMAP_COLORS[t] || '#fff');
-      }
-      var o = y * 4;
-      d[o] = col[0]; d[o + 1] = col[1]; d[o + 2] = col[2]; d[o + 3] = 255;
-    }
-    ctx.putImageData(img, x, 0);
-    game.mapCol++;
-    budget--;
-    if (game.mapCol >= world.W && world.dirty) { world.dirty = false; break; }
-  }
 }
 
 function drawFullMap(game, ctx) {
+  var world = game.world;
   var W = canvas.width, H = canvas.height;
   ctx.save();
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.globalAlpha = 1;
-  ctx.globalCompositeOperation = 'source-over';
   ctx.fillStyle = '#0a0a12';
   ctx.fillRect(0, 0, W, H);
+
   var p = game.player;
   if (game.mapPanX === null) { game.mapPanX = p.x / TILE; game.mapPanY = p.y / TILE; }
-  var scale = game.mapZoom;
-  var ts = TILE * scale; // pixel size of each tile on screen
+  var scale = game.mapZoom || 2;
+  var ts = TILE * scale;
   var startTx = Math.floor(game.mapPanX - W / (2 * ts));
   var startTy = Math.floor(game.mapPanY - H / (2 * ts));
-  var endTx = Math.ceil(startTx + W / ts + 1);
-  var endTy = Math.ceil(startTy + H / ts + 1);
-  var world = game.world;
-  for (var ty = Math.max(0, startTy); ty < Math.min(world.H, endTy); ty++) {
-    for (var tx = Math.max(0, startTx); tx < Math.min(world.W, endTx); tx++) {
-      var t = world.get(tx, ty);
-      var col;
-      if (t === T.AIR) {
-        var wl = world.wall(tx, ty);
-        if (wl === WALL.NONE) col = '#0c0c14';
-        else if (wl === WALL.DIRT) col = '#282018';
-        else col = '#202028';
-      } else {
-        col = MINIMAP_COLORS[t] || '#888';
+  var cols = Math.ceil(W / ts) + 1;
+  var rows = Math.ceil(H / ts) + 1;
+
+  // render map tiles to ImageData (fast batch)
+  var imgW = Math.min(cols, Math.ceil(W / ts));
+  var imgH = Math.min(rows, Math.ceil(H / ts));
+  var key = imgW + '_' + imgH;
+  if (!drawFullMap._img || drawFullMap._key !== key) {
+    drawFullMap._img = ctx.createImageData(imgW, imgH);
+    drawFullMap._key = key;
+  }
+  var d = drawFullMap._img.data;
+
+  for (var y = 0; y < imgH; y++) {
+    var ty = startTy + y;
+    for (var x = 0; x < imgW; x++) {
+      var tx = startTx + x;
+      var o = (y * imgW + x) * 4;
+      if (tx < 0 || tx >= world.W || ty < 0 || ty >= world.H) {
+        d[o] = 10; d[o+1] = 10; d[o+2] = 16; d[o+3] = 255; continue;
       }
-      var sx2 = Math.round((tx - game.mapPanX) * ts + W / 2);
-      var sy2 = Math.round((ty - game.mapPanY) * ts + H / 2);
-      ctx.fillStyle = col;
-      ctx.fillRect(sx2, sy2, Math.ceil(ts), Math.ceil(ts));
+      var t = world.tiles[ty * world.W + tx];
+      var col = MINIMAP_COLORS[t];
+      if (col) {
+        var rgb = hexToRgb(col);
+        d[o] = rgb[0]; d[o+1] = rgb[1]; d[o+2] = rgb[2]; d[o+3] = 255;
+      } else if (t === 0) {
+        var wl = world.walls[ty * world.W + tx];
+        if (wl === 1) { d[o] = 40; d[o+1] = 32; d[o+2] = 24; }
+        else if (wl === 2) { d[o] = 58; d[o+1] = 61; d[o+2] = 69; }
+        else if (wl !== 0) { d[o] = 32; d[o+1] = 32; d[o+2] = 40; }
+        else { d[o] = 12; d[o+1] = 12; d[o+2] = 18; }
+        d[o+3] = 255;
+      } else {
+        d[o] = 136; d[o+1] = 136; d[o+2] = 136; d[o+3] = 255;
+      }
     }
   }
+
+  // draw to a temp canvas then blit (putImageData ignores transforms)
+  if (!drawFullMap._tempC) drawFullMap._tempC = document.createElement('canvas');
+  var tc = drawFullMap._tempC;
+  if (tc.width !== imgW || tc.height !== imgH) { tc.width = imgW; tc.height = imgH; }
+  var tctx = tc.getContext('2d');
+  tctx.putImageData(drawFullMap._img, 0, 0);
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(tc, 0, 0, imgW, imgH, 0, 0, imgW * ts, imgH * ts);
+  ctx.imageSmoothingEnabled = true;
+
+  // markers
   function toScreen(wx, wy) {
-    return [(wx / TILE - game.mapPanX) * ts + W / 2, (wy / TILE - game.mapPanY) * ts + H / 2];
+    return [(wx / TILE - startTx) * ts, (wy / TILE - startTy) * ts];
   }
   var sp = toScreen(game.world.spawnX, game.world.spawnY);
   ctx.fillStyle = '#ffe14d';
   ctx.fillRect(sp[0] - 4, sp[1] - 4, 8, 8);
-  ctx.strokeStyle = '#ffe14d';
+  ctx.strokeStyle = '#000';
   ctx.lineWidth = 1;
   ctx.strokeRect(sp[0] - 4, sp[1] - 4, 8, 8);
   for (var i = 0; i < game.entities.length; i++) {
     var e = game.entities[i];
     if (e.dead || e.dmg > 0 || e.boss) continue;
-    if (e.type === E.GUIDE || (ENT_DEF[e.type] && e.type >= E.MERCHANT && e.type <= E.PRINCESS)) {
+    if (e.type >= 92 && e.type <= 116) {
       var s = toScreen(e.x, e.y);
-      ctx.fillStyle = e.type === E.GUIDE ? '#8ad8ff' : '#7dff8a';
+      ctx.fillStyle = e.type === 14 ? '#8ad8ff' : '#7dff8a';
       ctx.beginPath(); ctx.arc(s[0], s[1], 4, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = '#fff';
       ctx.font = '10px monospace';
-      ctx.fillText(ENT_DEF[e.type].name, s[0] + 6, s[1] + 3);
+      ctx.fillText(ENT_DEF[e.type] ? ENT_DEF[e.type].name : '', s[0] + 6, s[1] + 3);
     }
   }
   var pp = toScreen(p.x, p.y);
@@ -5189,10 +4788,10 @@ function drawFullMap(game, ctx) {
   ctx.lineWidth = 1;
   ctx.fillStyle = 'rgba(255,255,255,0.85)';
   ctx.font = '12px monospace';
-  var hoverTx = Math.floor(game.mapPanX + (MOUSE.x - W / 2) / ts);
-  var hoverTy = Math.floor(game.mapPanY + (MOUSE.y - H / 2) / ts);
+  var hoverTx = Math.floor(startTx + MOUSE.x / ts);
+  var hoverTy = Math.floor(startTy + MOUSE.y / ts);
   var ht = world.get(hoverTx, hoverTy);
-  var htName = 'the void';
+  var htName = 'air';
   for (var tk in T) { if (T[tk] === ht) { htName = tk.charAt(0) + tk.slice(1).toLowerCase(); break; } }
   ctx.fillText('World Map  ' + Math.round(hoverTx) + ', ' + Math.round(hoverTy) + '  ' + htName + '   scroll = zoom, drag = pan, M = close', 10, H - 10);
   ctx.restore();

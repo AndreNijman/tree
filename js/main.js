@@ -4013,7 +4013,7 @@ function handleKeys() {
   }
   if (game.mapOpen) {
     var mz = game.mapZoom;
-    if (MOUSE.wheel) { mz = clamp(mz * (MOUSE.wheel > 0 ? 1.25 : 0.8), 0.5, 10); game.mapZoom = mz; }
+    if (MOUSE.wheel) { mz = clamp(mz * (MOUSE.wheel > 0 ? 1.25 : 0.8), 0.0625, 10); game.mapZoom = mz; }
     var panSpd = 480 / mz;
     if (KEY['a'] || KEY['ArrowLeft']) game.mapPanX -= panSpd / 60;
     if (KEY['d'] || KEY['ArrowRight']) game.mapPanX += panSpd / 60;

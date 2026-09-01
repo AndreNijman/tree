@@ -5,19 +5,12 @@ const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
 page.on('pageerror', e => console.log('PAGEERR', e.message));
 await page.goto(URL, { waitUntil: 'domcontentloaded' });
 await page.waitForFunction(() => typeof buildGame === 'function');
-const out = await page.evaluate(() => {
-  buildGame('perf-v8', 'corrupt');
-  var t = {};
-  var N = 300;
-  var t0 = performance.now();
-  for (var i = 0; i < N; i++) { step(1/60); render(); }
-  t.total = Math.round((performance.now() - t0) / N * 100) / 10;
-  t0 = performance.now();
-  for (var i2 = 0; i2 < N; i2++) step(1/60);
-  t.step = Math.round((performance.now() - t0) / N * 100) / 10;
-  t.render = Math.round((t.total - t.step) * 10) / 10;
-  t.fps = Math.round(1000 / t.total);
-  return t;
-});
-console.log(JSON.stringify(out));
+await page.evaluate(() => { buildGame('visual-check', 'corrupt'); document.getElementById('mainmenu').style.display = 'none'; });
+await page.waitForTimeout(500);
+await page.screenshot({ path: '/tmp/opencode/game-visual.png' });
+await page.keyboard.press('m');
+await page.waitForTimeout(500);
+await page.screenshot({ path: '/tmp/opencode/map-visual2.png' });
+await page.keyboard.press('m');
+console.log('done');
 await browser.close();
