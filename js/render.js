@@ -821,7 +821,7 @@ function drawBackground(game, ctx, cam, W, H, horizon) {
 
   // === FAR MOUNTAINS (parallax layer 2) ===
   var mtnOffset = cam.x * 0.15;
-  var mtnBase = horizon + 20;
+  var mtnBase = horizon - 40;
   ctx.fillStyle = night ? '#1a2a3a' : twi > 0 ? '#8a7a9a' : '#7a9ab8';
   ctx.beginPath();
   ctx.moveTo(0, H);
@@ -842,7 +842,7 @@ function drawBackground(game, ctx, cam, W, H, horizon) {
   for (var hi = 0; hi <= 20; hi++) {
     var hx = (hi / 20) * W;
     var hh = 40 + Math.sin(hi * 0.9 + hillOffset * 0.008) * 30 + Math.sin(hi * 0.5) * 25;
-    ctx.lineTo(hx, mtnBase + 10 - hh);
+    ctx.lineTo(hx, mtnBase - hh);
   }
   ctx.lineTo(W, H);
   ctx.closePath();
