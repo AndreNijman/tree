@@ -1123,24 +1123,13 @@ self.underworldHouses = [];
     if (b3 === BIOME.FOREST && this.get(tx2, sy) !== T.GRASS) continue;
     if (b3 === BIOME.JUNGLE && this.get(tx2, sy) !== T.JUNGLEGRASS) continue;
     if (rng() < (b3 === BIOME.JUNGLE ? 0.45 : 0.35)) {
-      var th = 6 + Math.floor(rng() * (b3 === BIOME.JUNGLE ? 10 : 5));
-      var trunkW = 1 + (rng() < 0.4 ? 1 : 0); // some trees are 2 tiles wide
-      for (var j = 1; j <= th; j++) {
-        this.set(tx2, sy - j, T.TREETRUNK);
-        if (trunkW > 1) this.set(tx2 + 1, sy - j, T.TREETRUNK);
-      }
-      // roots at base
-      this.set(tx2 - 1, sy, T.TREETRUNK);
-      if (trunkW > 1) this.set(tx2 + 2, sy, T.TREETRUNK);
+      var th = 5 + Math.floor(rng() * (b3 === BIOME.JUNGLE ? 8 : 4));
+      for (var j = 1; j <= th; j++) this.set(tx2, sy - j, T.TREETRUNK);
       var topY = sy - th - 1;
-      var canopyR = 3 + Math.floor(rng() * 2);
-      for (var lx = -canopyR; lx <= canopyR + (trunkW > 1 ? 1 : 0); lx++) {
-        for (var ly = -canopyR; ly <= 1; ly++) {
+      for (var lx = -2; lx <= 2; lx++) {
+        for (var ly = -2; ly <= 1; ly++) {
           var lxx = tx2 + lx, lyy = topY + ly;
-          // organic canopy shape (roughly circular with noise)
-          var dist = Math.abs(lx) * Math.abs(lx) / (canopyR * canopyR) + Math.abs(ly + 0.5) * Math.abs(ly + 0.5) / ((canopyR + 1) * (canopyR + 1));
-          if (dist <= 1 && this.get(lxx, lyy) === T.AIR) {
-            if (dist > 0.7 && rng() < 0.3) continue; // ragged edges
+          if (this.get(lxx, lyy) === T.AIR && Math.abs(lx) + Math.abs(ly) <= 3) {
             this.set(lxx, lyy, T.LEAVES);
           }
         }
