@@ -640,6 +640,17 @@ This file tracks the staged expansion toward Terraria 1.4.4 parity. Progression 
 - [x] Add a full-screen world map (M) with pan/zoom over an incremental 1px/tile cache.
 - [x] Rebuild the minimap as a Terraria-style local window with player and spawn markers.
 
+## Batch 83: Full Item Catalog (Phase 1)
+
+- [x] Add 307 canonical weapons, tools, and ammunition from the wiki item database: broadswords, phaseblades/sabers, picks, hammers, hamaxes, axes, bows, guns, ammo, magic staves, summon staves, yoyos, spears, and flails.
+- [x] Add 43 canonical armor pieces (Iron, Gladiator, Necro, Shadow, Crimson, Bee, Fossil, Ninja, Jungle, Ancient Cobalt, Obsidian, Hallowed variants, Forbidden, Chlorophyte variants, Shroomite Mask, Turtle Scale Mail, Beetle Scale Mail) with crafting recipes and Sturdy Fossil/Bee Wax/Jungle Spores/Beetle Husk materials.
+- [x] Add 39 canonical accessories (Hermes Boots, Lucky Horseshoe, Rocket Boots, Feral Claws, Titan Glove, Magma Stone, Wings, quivers, cuffs, information accessories, Ankh components, and more).
+- [x] Add 28 canonical potions (buff potions, healing, recall/teleport variants) with brewing recipes.
+- [x] Add blocks and furniture (Bed, Piggy Bank, Wooden Door, Clay, Gray/Red Brick, Bottle, Clay Pot, Sign, Book, Chain, Acorn, seeds) with recipes, plus new tiles and render paths.
+- [x] Add 8 grappling hooks, 3 pets, and 3 vanity pieces.
+- [x] Wire new items into Merchant stock and enemy/boss drop tables.
+- [ ] Phase 2: remaining ~4,000 vanilla items (mostly furniture sets, decorative walls, world blocks, niche materials).
+
 ## Long-Term Catalog Parity
 
 - [x] Audit notable missing vanilla enemies and critters against `E` and `ENT_DEF` (ongoing; Ocean/Cavern/Spider/Underworld gaps continued in Batch 73).
