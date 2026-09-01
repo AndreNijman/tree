@@ -12,7 +12,7 @@ function Player(world) {
   this.maxHp = 100;
   this.hp = 100;
   this.maxMana = 20;
-  this.mana = 200;
+  this.mana = 20;
   this.manaRegen = 0;
   this.inventory = new Inventory();
   this.swingT = 0;

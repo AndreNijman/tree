@@ -4923,27 +4923,141 @@ function drawItemIcon(ctx, it, x, y) {
 
 // ---------- Minimap ----------
 function drawMinimap(game, ctx) {
-  if (!game.minimap) buildMinimap(game);
-  var w = 170, h = Math.round(w * game.world.H / game.world.W);
-  ctx.globalAlpha = 0.85;
-  ctx.drawImage(game.minimap, canvas.width - w - 8, 8, w, h);
-  ctx.globalAlpha = 1;
-  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
-  ctx.strokeRect(canvas.width - w - 8, 8, w, h);
-  // player dot
-  var px = canvas.width - w - 8 + (game.player.x / (game.world.W * TILE)) * w;
-  var py = 8 + (game.player.y / (game.world.H * TILE)) * h;
+  updateMapCache(game);
+  var mapC = game.mapCanvas;
+  if (!mapC) return;
+  var vw = 220, vh = 130;
+  var px = game.player.x / TILE, py = game.player.y / TILE;
+  ctx.save();
+  ctx.globalAlpha = 0.82;
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(mapC, clamp(px - vw / 2, 0, mapC.width - vw), clamp(py - vh / 2, 0, mapC.height - vh), vw, vh,
+    canvas.width - vw * 2 - 8, 8, vw * 2, vh * 2);
+  ctx.restore();
+  var bx = canvas.width - vw * 2 - 8, by = 8;
+  ctx.strokeStyle = 'rgba(255,255,255,0.45)';
+  ctx.strokeRect(bx, by, vw * 2, vh * 2);
+  // player marker
+  var sx = bx + clamp(px, 0, mapC.width) * 2 - clamp(px - vw / 2, 0, mapC.width - vw) * 2;
+  var sy = by + clamp(py, 0, mapC.height) * 2 - clamp(py - vh / 2, 0, mapC.height - vh) * 2;
   ctx.fillStyle = '#fff';
   ctx.beginPath();
-  ctx.arc(px, py, 2.5, 0, Math.PI * 2);
-  ctx.fill();
-  // view rectangle
-  var vw = (canvas.width / (game.world.W * TILE)) * w;
-  var vh = (canvas.height / (game.world.H * TILE)) * h;
-  var vx = canvas.width - w - 8 + (game.cam.x / (game.world.W * TILE)) * w;
-  var vy = 8 + (game.cam.y / (game.world.H * TILE)) * h;
-  ctx.strokeStyle = 'rgba(255,255,255,0.7)';
-  ctx.strokeRect(vx - vw / 2, vy - vh / 2, vw, vh);
+  ctx.moveTo(sx, sy - 5); ctx.lineTo(sx - 4, sy + 4); ctx.lineTo(sx + 4, sy + 4);
+  ctx.closePath(); ctx.fill();
+  // spawn marker
+  var spx = bx + (game.world.spawnX / TILE - clamp(px - vw / 2, 0, mapC.width - vw)) * 2;
+  var spy = by + (game.world.spawnY / TILE - clamp(py - vh / 2, 0, mapC.height - vh)) * 2;
+  if (spx > bx && spx < bx + vw * 2 && spy > by && spy < by + vh * 2) {
+    ctx.fillStyle = '#ffe14d';
+    ctx.fillRect(spx - 2, spy - 2, 4, 4);
+  }
+  ctx.fillStyle = 'rgba(255,255,255,0.75)';
+  ctx.font = '9px monospace';
+  ctx.fillText('M - map', bx + 4, by + vh * 2 + 11);
+}
+
+// ---------- Full map (1px/tile cache, built incrementally) ----------
+function initMapCache(game) {
+  var c = document.createElement('canvas');
+  c.width = game.world.W;
+  c.height = game.world.H;
+  game.mapCanvas = c;
+  game.mapCtx = c.getContext('2d');
+  game.mapCtx.fillStyle = '#0c0c12';
+  game.mapCtx.fillRect(0, 0, c.width, c.height);
+  game.mapCol = 0;
+  game.mapOpen = false;
+  game.mapZoom = 2;
+  game.mapPanX = null;
+  game.mapPanY = null;
+}
+
+var MAP_COLORS_RGB = null;
+function updateMapCache(game) {
+  if (!game.mapCanvas) initMapCache(game);
+  var world = game.world;
+  var ctx = game.mapCtx;
+  var cols = Math.min(260, world.W);
+  var budget = cols;
+  while (budget > 0) {
+    if (game.mapCol >= world.W) {
+      if (!world.dirty) break;
+      game.mapCol = 0;
+    }
+    var x = game.mapCol;
+    var img = ctx.createImageData(1, world.H);
+    var d = img.data;
+    for (var y = 0; y < world.H; y++) {
+      var t = world.get(x, y);
+      var col;
+      if (t === T.AIR) {
+        var wl = world.wall(x, y);
+        if (wl === WALL.NONE) col = [12, 12, 18];
+        else if (wl === WALL.DIRT) col = [40, 32, 24];
+        else col = [32, 32, 38];
+      } else {
+        col = hexToRgb(MINIMAP_COLORS[t] || '#fff');
+      }
+      var o = y * 4;
+      d[o] = col[0]; d[o + 1] = col[1]; d[o + 2] = col[2]; d[o + 3] = 255;
+    }
+    ctx.putImageData(img, x, 0);
+    game.mapCol++;
+    budget--;
+    if (game.mapCol >= world.W && world.dirty) { world.dirty = false; break; }
+  }
+}
+
+function drawFullMap(game, ctx) {
+  updateMapCache(game);
+  var mapC = game.mapCanvas;
+  var W = canvas.width, H = canvas.height;
+  ctx.fillStyle = 'rgba(6,8,14,0.92)';
+  ctx.fillRect(0, 0, W, H);
+  var p = game.player;
+  if (game.mapPanX === null) { game.mapPanX = p.x / TILE; game.mapPanY = p.y / TILE; }
+  var scale = game.mapZoom;
+  var srcW = W / scale, srcH = H / scale;
+  var sx = clamp(game.mapPanX - srcW / 2, 0, Math.max(0, mapC.width - srcW));
+  var sy = clamp(game.mapPanY - srcH / 2, 0, Math.max(0, mapC.height - srcH));
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(mapC, sx, sy, srcW, srcH, 0, 0, W, H);
+  // markers: player, spawn, town NPCs
+  function toScreen(wx, wy) {
+    return [(wx / TILE - sx) * scale, (wy / TILE - sy) * scale];
+  }
+  var sp = toScreen(game.world.spawnX, game.world.spawnY);
+  ctx.fillStyle = '#ffe14d';
+  ctx.fillRect(sp[0] - 4, sp[1] - 4, 8, 8);
+  ctx.fillStyle = '#fff';
+  for (var i = 0; i < game.entities.length; i++) {
+    var e = game.entities[i];
+    if (e.dead || e.dmg > 0 || e.boss) continue;
+    if (e.type === E.GUIDE || ENT_DEF[e.type] && e.type >= E.MERCHANT && e.type <= E.PRINCESS) {
+      var s = toScreen(e.x, e.y);
+      ctx.fillStyle = e.type === E.GUIDE ? '#8ad8ff' : '#7dff8a';
+      ctx.beginPath(); ctx.arc(s[0], s[1], 4, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.font = '10px monospace';
+      ctx.fillText(ENT_DEF[e.type].name, s[0] + 6, s[1] + 3);
+    }
+  }
+  var pp = toScreen(p.x, p.y);
+  ctx.strokeStyle = '#fff';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(pp[0], pp[1], 7, 0, Math.PI * 2); ctx.stroke();
+  ctx.fillStyle = '#fff';
+  ctx.beginPath(); ctx.arc(pp[0], pp[1], 3, 0, Math.PI * 2); ctx.fill();
+  ctx.lineWidth = 1;
+  ctx.fillStyle = 'rgba(255,255,255,0.85)';
+  ctx.font = '12px monospace';
+  var hoverTx = Math.floor(sx + MOUSE.x / scale), hoverTy = Math.floor(sy + MOUSE.y / scale);
+  var ht = game.world.get(hoverTx, hoverTy);
+  var htName = 'the void';
+  for (var tk in T) {
+    if (T[tk] === ht) { htName = tk.charAt(0) + tk.slice(1).toLowerCase(); break; }
+  }
+  ctx.fillText('World Map  ' + Math.round(hoverTx) + ', ' + Math.round(hoverTy) + '  ' + htName + '   scroll = zoom, drag = pan, M = close', 10, H - 10);
 }
 
 var MINIMAP_COLORS = {};

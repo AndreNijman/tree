@@ -1861,6 +1861,7 @@ function step(dt) {
 
   handleKeys();
   if (typeof Net !== 'undefined') Net.update(dt);
+  if (game.mapOpen) { updateMessage(dt); return; }
 
   // mouse wheel hotbar scroll
   if (MOUSE.wheel !== 0) {
@@ -3996,13 +3997,36 @@ function handleKeys() {
   if (!game || !game.started) return;
 
   if (KEY_JUST['Escape'] || KEY_JUST['Esc']) {
-    if (game.panelOpen) closePanel();
+    if (game.mapOpen) { game.mapOpen = false; }
+    else if (game.panelOpen) closePanel();
     else togglePause();
     KEY_JUST['Escape'] = false; KEY_JUST['Esc'] = false;
     return;
   }
   if (game.paused) return;
-
+  if (KEY_JUST['m'] || KEY_JUST['M']) {
+    KEY_JUST['m'] = false; KEY_JUST['M'] = false;
+    if (game.mapOpen) { game.mapOpen = false; game.mapPanX = null; }
+    else if (!game.panelOpen) { game.mapOpen = true; game.mapPanX = null; }
+    AudioSys.play('pickup');
+  }
+  if (game.mapOpen) {
+    var mz = game.mapZoom;
+    if (MOUSE.wheel) { mz = clamp(mz * (MOUSE.wheel > 0 ? 1.25 : 0.8), 0.5, 10); game.mapZoom = mz; }
+    var panSpd = 480 / mz;
+    if (KEY['a'] || KEY['ArrowLeft']) game.mapPanX -= panSpd / 60;
+    if (KEY['d'] || KEY['ArrowRight']) game.mapPanX += panSpd / 60;
+    if (KEY['w'] || KEY['ArrowUp']) game.mapPanY -= panSpd / 60;
+    if (KEY['s'] || KEY['ArrowDown']) game.mapPanY += panSpd / 60;
+    if (MOUSE.down && !MOUSE.mapDrag) { MOUSE.mapDrag = true; MOUSE.dragX = MOUSE.x; MOUSE.dragY = MOUSE.y; }
+    if (MOUSE.mapDrag) {
+      game.mapPanX -= (MOUSE.x - MOUSE.dragX) / game.mapZoom;
+      game.mapPanY -= (MOUSE.y - MOUSE.dragY) / game.mapZoom;
+      MOUSE.dragX = MOUSE.x; MOUSE.dragY = MOUSE.y;
+      if (!MOUSE.down) MOUSE.mapDrag = false;
+    }
+    return;
+  }
   if (KEY_JUST['e'] || KEY_JUST['E']) togglePanel();
   if (KEY_JUST['h'] || KEY_JUST['H']) openGuide();
   if (KEY_JUST['q'] || KEY_JUST['Q']) dropSelected();
@@ -5560,7 +5584,8 @@ function resumeGame() {
 function render() {
   if (!game || !game.started) return;
   renderGame(game, ctx2d);
-  if (!game.panelOpen) drawMinimap(game, ctx2d);
+  if (game.mapOpen) drawFullMap(game, ctx2d);
+  else if (!game.panelOpen) drawMinimap(game, ctx2d);
 }
 
 // ---------- Init ----------
