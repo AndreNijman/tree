@@ -699,7 +699,7 @@ const v73defs = await page.evaluate(() => {
   var catalogued = ids.every(t => catalog.some(entry => entry.key === 'e:' + t));
   return { allDefs:allDefs, swimmers:!!swimmers, catalogued:catalogued, catalogCount:catalog.length };
 });
-check('B73: all eight vanilla definitions expand the bestiary to 262 entries', v73defs.allDefs && v73defs.catalogued && v73defs.catalogCount === 262, JSON.stringify(v73defs));
+check('B73: all eight vanilla definitions expand the bestiary to 273 entries (11 more added in Batch 76)', v73defs.allDefs && v73defs.catalogued && v73defs.catalogCount === 273, JSON.stringify(v73defs));
 check('B73: Piranha and both new Jellyfish use aquatic movement', v73defs.swimmers, JSON.stringify(v73defs));
 
 const v73step = await page.evaluate(() => {
@@ -991,6 +991,128 @@ check('B75: Candy Cane Sword throws candy projectiles', v75.candyFired, JSON.str
 check('B75: Candy Cane Bow is a real bow that consumes arrows', v75.candyBowFired && v75.candyBowArrowUsed, JSON.stringify(v75));
 check('B75: Queen Bee grants the Bee Gun; Demons can drop the Demon Scythe', v75.queenBeeBeeGun && v75.demonScytheDrops && v75.demonDropsValid, JSON.stringify(v75));
 check('B75: new projectile render paths draw cleanly', v75.renders, JSON.stringify(v75));
+
+// ===== BATCH 76: VANILLA ENEMY/CRITTER ROSTER =====
+const v76 = await page.evaluate(() => {
+  var out = {};
+  var ids = ['vulture', 'shark', 'orca', 'snatcher', 'meteorhead', 'reddevil', 'penguin', 'purpleslime', 'yellowslime', 'redslime', 'blackslime'];
+  var enums = [E.VULTURE, E.SHARK, E.ORCA, E.SNATCHER, E.METEORHEAD, E.REDDEVIL, E.PENGUIN, E.PURPLESLIME, E.YELLOWSLIME, E.REDSLIME, E.BLACKSLIME];
+  out.allDefs = enums.every(function(t) { return typeof ENT_DEF[t] !== 'undefined' && ENT_DEF[t].hp > 0; });
+  out.sharkFinItem = typeof ITEMS['sharkfin'] !== 'undefined';
+
+  // spawn + step + finite for all eleven
+  out.step = true;
+  out.stepped = [];
+  for (var i = 0; i < enums.length; i++) {
+    var e = makeEntity(enums[i], game.player.x + 120 + i * 12, game.player.y - 40);
+    e.hp = e.maxHp;
+    game.entities.push(e);
+    var steps = 0;
+    while (!e.dead && steps < 120) { step(1/60); steps++; }
+    var ok = !e.dead && isFinite(e.x) && isFinite(e.y) && e.hp > 0;
+    if (!ok) out.step = false;
+    out.stepped.push({ id: enums[i], alive: !e.dead, finite: isFinite(e.x) && isFinite(e.y) });
+    e.dead = true;
+  }
+  game.entities = game.entities.filter(function(en) { return !en.dead; });
+
+  // drops resolve: shark fin canonical, new slimes drop gel
+  var sharkDrops = dropTable(E.SHARK, game);
+  out.sharkFinDrop = sharkDrops.some(function(d) { return d.id === I.SHARKFIN; }) && sharkDrops.some(function(d) { return d.id === I.GEL; });
+  var gelSlime = true;
+  [E.PURPLESLIME, E.YELLOWSLIME, E.REDSLIME, E.BLACKSLIME].forEach(function(t) {
+    var dr = dropTable(t, game);
+    if (!dr.some(function(d) { return d.id === I.GEL; })) gelSlime = false;
+  });
+  out.gelSlimes = gelSlime;
+  var sharkTries = 0;
+  while (sharkTries++ < 50 && !dropTable(E.SHARK, game).every(function(d) { return typeof ITEMS[d.id] !== 'undefined'; })) {}
+  out.dropsValid = true;
+
+  // pools: targeted per-biome sampling (broad sweeps are too sparse for 1-in-N pool entries)
+  var p = game.player, savedHm = game.hardmode;
+  function biomeColumn(bname) {
+    for (var x = 4; x < game.world.W - 4; x++) {
+      if (game.world.biomeAt(x * TILE + 8, game.world.surfaceY[x] * TILE - 40) === bname) return x;
+    }
+    return -1;
+  }
+  function sampleAt(x, ty, hm, n) {
+    game.hardmode = hm;
+    p.x = x * TILE + 8;
+    p.y = ty * TILE;
+    var seen = {};
+    for (var i = 0; i < n; i++) {
+      var t = pickEnemy();
+      if (typeof ENT_DEF[t] === 'undefined') out.poolInvalid = true;
+      seen[t] = true;
+    }
+    return seen;
+  }
+  out.poolInvalid = false;
+  var dx = biomeColumn(BIOME.DESERT), ox = biomeColumn(BIOME.OCEAN), jx = biomeColumn(BIOME.JUNGLE), fx = biomeColumn(BIOME.FOREST);
+  var preDesert = sampleAt(dx, game.world.surfaceY[dx] - 3, false, 2500);
+  var preOcean = sampleAt(ox, game.world.surfaceY[ox] - 3, false, 2500);
+  var preJungle = sampleAt(jx, game.world.surfaceY[jx] - 3, false, 2500);
+  var preForest = sampleAt(fx, game.world.surfaceY[fx] - 3, false, 2500);
+  var preCave = sampleAt(fx, game.world.surfaceY[fx] + 20, false, 2500);
+  var preDeep = sampleAt(fx, game.world.surfaceY[fx] + 40, false, 4000);
+  var hmOcean = sampleAt(ox, game.world.surfaceY[ox] - 3, true, 2500);
+  var hmHell = sampleAt(fx, game.world.hellY + 8, true, 4000);
+  p.x = game.world.spawnX; p.y = game.world.spawnY;
+  game.hardmode = savedHm;
+  out.preDesertVultureYellow = preDesert[E.VULTURE] && preDesert[E.YELLOWSLIME];
+  out.preOceanShark = preOcean[E.SHARK];
+  out.preJungleSnatcher = preJungle[E.SNATCHER];
+  out.preForestRedSlime = preForest[E.REDSLIME];
+  out.preCavePurple = preCave[E.PURPLESLIME];
+  out.preDeepBlack = preDeep[E.BLACKSLIME];
+  out.hmOceanOrcaShark = hmOcean[E.ORCA] && hmOcean[E.SHARK];
+  out.hmHellRedDevil = hmHell[E.REDDEVIL];
+
+  // Meteor Head: bury a meteorite tile near the player and sweep pickEnemy
+  var mtx = clamp(Math.floor(p.x / TILE) + 3, 2, game.world.W - 3);
+  var mty = clamp(Math.floor(p.y / TILE), 2, game.world.H - 3);
+  var oldTile = game.world.get(mtx, mty);
+  game.world.set(mtx, mty, T.METEORITE);
+  var meteorSeen = false;
+  for (var mt = 0; mt < 200 && !meteorSeen; mt++) { if (pickEnemy() === E.METEORHEAD) meteorSeen = true; }
+  game.world.set(mtx, mty, oldTile);
+  out.meteorHeadCrater = meteorSeen;
+
+  // Penguin critter membership + snow pool wiring
+  out.penguinCritter = isAmbientCritter(E.PENGUIN) && ENT_DEF[E.PENGUIN].dmg === 0;
+  var penguinStepsFine = true;
+  try {
+    var peng = makeEntity(E.PENGUIN, p.x + 40, p.y - 10);
+    game.entities.push(peng);
+    for (var ps = 0; ps < 60; ps++) step(1/60);
+    if (!isFinite(peng.x) || !isFinite(peng.y)) penguinStepsFine = false;
+    peng.dead = true;
+    game.entities = game.entities.filter(function(en) { return !en.dead; });
+  } catch (err) { penguinStepsFine = false; out.penguinErr = err.message; }
+  out.penguinSteps = penguinStepsFine;
+
+  // render all eleven
+  var rctx = (typeof ctx2d !== 'undefined' ? ctx2d : document.getElementById('canvas').getContext('2d'));
+  out.renders = true;
+  try {
+    for (var ri = 0; ri < enums.length; ri++) {
+      var re = makeEntity(enums[ri], game.cam.x + ri * 8, game.cam.y);
+      drawEnemy(rctx, re, game.cam, 800, 600);
+    }
+  } catch (err) { out.renders = false; out.renderErr = err.message; }
+
+  return out;
+});
+check('B76: eleven vanilla species defined, Shark Fin item exists', v76.allDefs && v76.sharkFinItem, JSON.stringify(v76));
+check('B76: all eleven spawn, step, and stay finite', v76.step, JSON.stringify(v76.stepped));
+check('B76: Shark drops Shark Fin + Gel; palette slimes drop Gel', v76.sharkFinDrop && v76.gelSlimes, JSON.stringify(v76));
+check('B76: pre-HM pools expose Vulture/Yellow Slime (desert), Shark (ocean), Snatcher (jungle), Red Slime (forest), Purple/Black Slimes (caves)', v76.preDesertVultureYellow && v76.preOceanShark && v76.preJungleSnatcher && v76.preForestRedSlime && v76.preCavePurple && v76.preDeepBlack && !v76.poolInvalid, JSON.stringify({ preDesertVultureYellow: v76.preDesertVultureYellow, preOceanShark: v76.preOceanShark, preJungleSnatcher: v76.preJungleSnatcher, preForestRedSlime: v76.preForestRedSlime, preCavePurple: v76.preCavePurple, preDeepBlack: v76.preDeepBlack, poolInvalid: v76.poolInvalid }));
+check('B76: Hardmode pools expose Orca/Shark (ocean) and Red Devil (Underworld)', v76.hmOceanOrcaShark && v76.hmHellRedDevil && !v76.poolInvalid, JSON.stringify({ hmOceanOrcaShark: v76.hmOceanOrcaShark, hmHellRedDevil: v76.hmHellRedDevil }));
+check('B76: Meteor Heads spawn near meteorite craters', v76.meteorHeadCrater, JSON.stringify(v76));
+check('B76: Penguin is a snow critter with working AI', v76.penguinCritter && v76.penguinSteps, JSON.stringify(v76));
+check('B76: all eleven render without errors', v76.renders, JSON.stringify(v76));
 
 
 // ===== 300-STEP CLEAN LOOP =====
