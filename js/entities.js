@@ -323,7 +323,11 @@ var ENT_DEF = {
   [E.WALLWARRIOR]: { w:24, h:34, hp:420, dmg:46, def:14, color:'#b0b0c0', speed:1.2, name:'Wall Warrior', exp:10 },
   [E.SPIKEBALL]: { w:22, h:22, hp:260, dmg:38, def:8, color:'#9a9aa8', speed:2.4, fly:true, name:'Spike Ball', exp:6 },
   [E.GRANITEELEMENTAL]: { w:24, h:26, hp:420, dmg:46, def:12, color:'#c8b0d8', speed:2.8, fly:true, name:'Granite Elemental', exp:12 },
-  [E.BASILISK]: { w:34, h:22, hp:480, dmg:52, def:14, color:'#d8c888', speed:4.2, name:'Basilisk', exp:12 }
+  [E.BASILISK]: { w:34, h:22, hp:480, dmg:52, def:14, color:'#d8c888', speed:4.2, name:'Basilisk', exp:12 },
+  [E.PINKJELLYFISH]: { w:26, h:18, hp:120, dmg:18, def:2, color:'#ff9ad8', speed:2.6, swim:true, glow:true, name:'Pink Jellyfish', exp:3 },
+  [E.CRAWDAD]: { w:26, h:16, hp:110, dmg:16, def:3, color:'#d8a878', speed:2.4, name:'Crawdad', exp:3 },
+  [E.JUNGLECREEPER]: { w:30, h:18, hp:180, dmg:26, def:4, color:'#4d8a3d', speed:2.6, name:'Jungle Creeper', exp:5 },
+  [E.DRBONES]: { w:22, h:36, hp:260, dmg:30, def:4, color:'#e8e0d0', speed:2.0, name:'Doctor Bones', exp:10, shoot:true }
 };
 
 function makeEntity(type, x, y) {
@@ -767,6 +771,14 @@ function dropTable(type, game) {
       return [{ id:I.GRANITE, count:1 + Math.floor(Math.random() * 2) }];
     case E.BASILISK:
       return [{ id:I.SAND, count:2 }, { id:I.GOLD, count:Math.random() < 0.05 ? 1 : 0 }];
+    case E.PINKJELLYFISH:
+      return [{ id:I.GLOWSTONE, count:Math.random() < 0.4 ? 1 : 0 }];
+    case E.CRAWDAD:
+      return [];
+    case E.JUNGLECREEPER:
+      return [{ id:I.VINE, count:Math.random() < 0.5 ? 1 : 0 }];
+    case E.DRBONES:
+      return [{ id:I.GRAPPLINGHOOK, count:Math.random() < 0.1 ? 1 : 0 }, { id:I.HEALINGPOTION, count:Math.random() < 0.1 ? 1 : 0 }];
     default: return [];
   }
 }
@@ -814,6 +826,24 @@ function ghostStep(e, game) {
   e.vx = (dx / d) * e.speed;
   e.vy = (dy / d) * e.speed;
   e.x += e.vx; e.y += e.vy;
+}
+
+// Jellyfish swim: gentle floating bobbing toward the player when in water
+function jellyfishStep(e, game) {
+  var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
+  var dx = p.x - e.x, dy = p.y - e.y;
+  var d = Math.sqrt(dx * dx + dy * dy) || 1;
+  e.wave = (e.wave || 0) + 0.06;
+  var depth = Math.floor(e.y / TILE);
+  var belowWater = game.world.get(Math.floor(e.x / TILE), depth) === T.WATER || game.world.get(Math.floor(e.x / TILE), depth + 1) === T.WATER;
+  e.vx = lerp(e.vx, (dx / d) * e.speed * 0.6, 0.03);
+  e.vy = Math.sin(e.wave) * e.speed * 0.5 + (dy / d) * e.speed * 0.25;
+  if (belowWater) {
+    e.x += e.vx; e.y += e.vy;
+  } else {
+    e.vx = 0;
+    physicsStep(e, game);
+  }
 }
 
 // Fly toward player with sine bob
@@ -1670,6 +1700,16 @@ function enemyStep(e, game) {
       break;
     case E.MEDUSA: case E.SPIKEBALL: case E.GRANITEELEMENTAL:
       flyStep(e, game);
+      break;
+    case E.PINKJELLYFISH:
+      jellyfishStep(e, game);
+      break;
+    case E.CRAWDAD: case E.JUNGLECREEPER:
+      zombieStep(e, game);
+      physicsStep(e, game);
+      break;
+    case E.DRBONES:
+      rangedWalkerStep(e, game, P.ARROW, 5.0, 22, 2.2, '#e0d8c8');
       break;
     case E.MANEATER:
       maneaterStep(e, game);

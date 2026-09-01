@@ -2435,6 +2435,55 @@ function drawEnemy(ctx, e, cam, W, H) {
       ctx.fillStyle = '#111111';
       ctx.beginPath(); ctx.arc(x + e.dir * 6, y - 2, 2, 0, Math.PI * 2); ctx.fill();
       break;
+    case E.PINKJELLYFISH:
+      ctx.fillStyle = col;
+      ctx.globalAlpha = 0.75;
+      ctx.beginPath();
+      ctx.arc(x, y, e.w / 2, Math.PI, 0);
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalAlpha = 0.5;
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 2;
+      for (var jt = 0; jt < 4; jt++) {
+        var jx = -e.w / 2 + 6 + jt * 7;
+        ctx.beginPath();
+        ctx.moveTo(x + jx, y + 3);
+        ctx.quadraticCurveTo(x + jx + Math.sin(Time.seconds * 5 + jt) * 2, y + e.h / 2, x + jx + Math.sin(Time.seconds * 6 + jt * 2) * 3, y + e.h / 2 + 6);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(x - 4, y - 2, 2, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(x + 4, y - 2, 2, 0, Math.PI * 2); ctx.fill();
+      break;
+    case E.CRAWDAD:
+      drawCrawdad(ctx, x, y, e.w, col);
+      break;
+    case E.JUNGLECREEPER:
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.ellipse(x, y, e.w / 2, e.h / 2, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#2f6a2f';
+      ctx.fillRect(x - e.w / 2 - 4, y - 2, e.w + 8, 5);
+      ctx.fillStyle = '#111111';
+      ctx.beginPath(); ctx.arc(x + e.dir * 5, y - 3, 2, 0, Math.PI * 2); ctx.fill();
+      for (var lc = 0; lc < 4; lc++) {
+        ctx.strokeStyle = '#2f6a2f';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x - e.w / 2 + 4 + lc * 6, y + 3);
+        ctx.lineTo(x - e.w / 2 + 2 + lc * 6, y + 8);
+        ctx.stroke();
+      }
+      break;
+    case E.DRBONES:
+      drawHumanoid(ctx, x, y, '#e0d8d0', false, e.dir || 1, false);
+      ctx.fillStyle = '#222222';
+      ctx.fillRect(x - 4, y - 7, 3, 3);
+      ctx.fillRect(x + 1, y - 7, 3, 3);
+      ctx.fillStyle = '#b8b8b8';
+      ctx.fillRect(x - e.w / 2 - 8, y - 10, 10, 4);
+      break;
   }
   if (e.ghost) ctx.globalAlpha = 1;
 
@@ -2563,6 +2612,25 @@ function drawHumanoid(ctx, x, y, col, armored, dir, ghost) {
   ctx.fillStyle = '#111';
   ctx.fillRect(x - 4, y - 13, 2, 2);
   ctx.fillRect(x + 2, y - 13, 2, 2);
+}
+
+function drawCrawdad(ctx, x, y, w, col) {
+  ctx.fillStyle = col;
+  ctx.beginPath(); ctx.ellipse(x, y, w / 2, w / 4, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#b8875a';
+  ctx.fillRect(x - w / 2 - 7, y - 3, 6, 4);
+  ctx.fillRect(x + w / 2 + 1, y - 3, 6, 4);
+  ctx.fillStyle = '#111111';
+  ctx.beginPath(); ctx.arc(x - 3, y - 1, 2, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(x + 3, y - 1, 2, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#b8875a';
+  ctx.lineWidth = 2;
+  for (var ll = 0; ll < 4; ll++) {
+    ctx.beginPath();
+    ctx.moveTo(x - w / 2 + 4 + ll * 5, y + 3);
+    ctx.lineTo(x - w / 2 + 2 + ll * 5, y + 8);
+    ctx.stroke();
+  }
 }
 
 function drawFlyingWinged(ctx, x, y, w, col, wingCol) {

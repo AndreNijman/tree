@@ -603,6 +603,94 @@ check('Dye Trader: exchange revalidates NPC proximity', strangeExchange.guarded,
 check('Dye Trader: consuming the plant frees a full-inventory reward slot', strangeExchange.atomic, JSON.stringify(strangeExchange));
 
 
+// ===== BATCH 72: VANILLA ENEMY AUDIT =====
+const v72defs = await page.evaluate(() => {
+  var ids = [E.PINKJELLYFISH, E.CRAWDAD, E.JUNGLECREEPER, E.DRBONES];
+  var allDefs = ids.every(t => ENT_DEF[t] && ENT_DEF[t].name);
+  var allHp = ids.every(t => ENT_DEF[t].hp > 0);
+  var jellySwim = !!ENT_DEF[E.PINKJELLYFISH].swim;
+  return { allDefs:allDefs, allHp:allHp, jellySwim:jellySwim };
+});
+check('B72: all four new ENT_DEFs exist with HP', v72defs.allDefs && v72defs.allHp, JSON.stringify(v72defs));
+check('B72: Pink Jellyfish is a swimmer', v72defs.jellySwim, JSON.stringify(v72defs));
+
+const v72step = await page.evaluate(() => {
+  var results = [];
+  var ids = [E.PINKJELLYFISH, E.CRAWDAD, E.JUNGLECREEPER, E.DRBONES];
+  for (var t = 0; t < ids.length; t++) {
+    var e = spawnEntity(game, ids[t], game.spawnX + 200, game.spawnY + 200);
+    e.hp = 99999; e.typeSave = ids[t];
+    for (var s = 0; s < 30; s++) enemyStep(e, game);
+    var ok = e && !e.dead && e.type === ids[t];
+    results.push({ id:ids[t], dead:!!(e && e.dead), type:e && e.type });
+    if (game.entities.indexOf(e) >= 0) e.dead = true;
+  }
+  game.entities = game.entities.filter(en => !en.typeSave);
+  return { all:results.every(r => !r.dead && r.type), results:results };
+});
+check('B72: all four enemies spawn and step alive', v72step.all, JSON.stringify(v72step.results));
+
+const v72drops = await page.evaluate(() => {
+  var jelly = dropTable(E.PINKJELLYFISH, game).every(d => d.id === I.GLOWSTONE);
+  var creeper = dropTable(E.JUNGLECREEPER, game).every(d => d.id === I.VINE);
+  var bones = dropTable(E.DRBONES, game).some(d => d.id === I.GRAPPLINGHOOK);
+  var ids = [E.PINKJELLYFISH, E.CRAWDAD, E.JUNGLECREEPER, E.DRBONES];
+  var valid = ids.every(t => dropTable(t, game).every(d => typeof ITEMS[d.id] !== 'undefined'));
+  return { jelly:jelly, creeper:creeper, bones:bones, valid:valid };
+});
+check('B72: drops are valid defined items', v72drops.valid, JSON.stringify(v72drops));
+check('B72: Jellyfish/Vine/Rare-Hook drop paths', v72drops.jelly && v72drops.creeper && v72drops.bones, JSON.stringify(v72drops));
+
+const v72pools = await page.evaluate(() => {
+  var last = game.hardmode;
+  var oldBiomeAt = game.world.biomeAt;
+  var oldY = game.player.y;
+  var surfTile = Math.floor(game.player.x / TILE);
+  var surf = game.world.surfaceY[surfTile] * TILE;
+  game.hardmode = false;
+  var hit = {};
+  function sweep(biome, depth) {
+    var counts = {};
+    game.world.biomeAt = function () { return biome; };
+    game.player.y = surf + depth * TILE;
+    for (var i = 0; i < 200; i++) {
+      var id = pickEnemy();
+      counts[id] = (counts[id] || 0) + 1;
+    }
+    return counts;
+  }
+  var ocean = sweep(BIOME.OCEAN, 0);
+  hit.jelly = (ocean[E.PINKJELLYFISH] || 0) > 0;
+  hit.crawdad = (ocean[E.CRAWDAD] || 0) > 0;
+  var jungle = sweep(BIOME.JUNGLE, 20);
+  hit.creeper = (jungle[E.JUNGLECREEPER] || 0) > 0;
+  game.world.biomeAt = oldBiomeAt;
+  game.player.y = oldY;
+  game.hardmode = last;
+  return hit;
+});
+check('B72: ocean pre-HM pool can yield Jellyfish/Crawdad', v72pools.jelly && v72pools.crawdad, JSON.stringify(v72pools));
+check('B72: underground Jungle pool can yield Jungle Creeper', v72pools.creeper, JSON.stringify(v72pools));
+
+const v72render = await page.evaluate(() => {
+  var calls = [];
+  var ids = [E.PINKJELLYFISH, E.CRAWDAD, E.JUNGLECREEPER, E.DRBONES];
+  var rctx = (typeof ctx2d !== 'undefined' ? ctx2d : document.getElementById('canvas').getContext('2d'));
+  try {
+    for (var t = 0; t < ids.length; t++) {
+      var e = spawnEntity(game, ids[t], game.player.x + 100, game.player.y - 100);
+      for (var s = 0; s < 5; s++) enemyStep(e, game);
+      e.hp = 99999;
+      drawEnemy(rctx, e, game.cam, 800, 600);
+      e.dead = true;
+      calls.push(ids[t]);
+    }
+  } catch (err) { return { ok:false, err:err.message }; }
+  return { ok:calls.length === 4, calls:calls };
+});
+check('B72: all four enemies render without errors', v72render.ok, JSON.stringify(v72render));
+
+
 // ===== 300-STEP CLEAN LOOP =====
 const loop = await page.evaluate(() => {
   var errs = [];

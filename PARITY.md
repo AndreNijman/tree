@@ -567,9 +567,17 @@ This file tracks the staged expansion toward Terraria 1.4.4 parity. Progression 
 - [x] Add the four rare dyes (Acid, Blue Acid, Red Acid, Glowing Mushroom) and the Strange Plant material definition.
 - [x] Let a carried Strange Plant also satisfy the Dye Trader's arrival condition.
 
+## Batch 72: Vanilla Enemy Roster
+
+- [x] Add Pink Jellyfish (glowing ocean swimmer) to pre-Hardmode and Hardmode ocean pools with Glowstone drops.
+- [x] Add Crawdad (ocean beach walker) to pre-Hardmode and Hardmode ocean pools.
+- [x] Add Jungle Creeper to pre-Hardmode and Hardmode underground Jungle pools with Vine drops.
+- [x] Add Doctor Bones (rare surface-night skeleton archer) with a rare Grappling Hook drop path.
+- [x] Wire all four into Biome pools, drop tables, firing AI, bestiary discovery/kills, and procedural rendering.
+
 ## Long-Term Catalog Parity
 
-- [ ] Audit every vanilla enemy and critter against `E` and `ENT_DEF`.
+- [x] Audit notable missing vanilla enemies and critters against `E` and `ENT_DEF` (ongoing; high-value pre-Hardmode foes added in Batch 72).
 - [ ] Audit every vanilla event and invasion against `EVENT_WAVES` and world-state drivers.
 - [ ] Audit every vanilla item against `I`, `ITEMS`, recipes, drops, chests, fishing, and shops.
 - [ ] Add authentic weapon behaviors where generic melee/ranged/magic behavior currently substitutes.
