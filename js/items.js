@@ -629,6 +629,34 @@ var I = {
   TSUNAMI_IN_A_BOTTLE:'tsunamiinabottle',
   WATER_WALKING_BOOTS:'waterwalkingboots',
   YOYO_BAG:'yoyobag',
+    BOTTLED_HONEY:'bottledhoney',
+  BOTTLED_WATER:'bottledwater',
+  CALMING_POTION:'calmingpotion',
+  CRATE_POTION:'cratepotion',
+  EGGNOG:'eggnog',
+  FEATHERFALL_POTION:'featherfallpotion',
+  FLIPPER_POTION:'flipperpotion',
+  GILLS_POTION:'gillspotion',
+  GRAVITATION_POTION:'gravitationpotion',
+  HONEYFIN:'honeyfin',
+  HUNTER_POTION:'hunterpotion',
+  JUNGLE_JUICE:'junglejuice',
+  LESSER_HEALING_POTION:'lesserhealingpotion',
+  LESSER_RESTORATION_POTION:'lesserrestorationpotion',
+  LOVE_POTION:'lovepotion',
+  MANA_REGENERATION_POTION:'manaregenerationpotion',
+  NIGHT_OWL_POTION:'nightowlpotion',
+  NIGHT_VISION_POTION:'nightvisionpotion',
+  RECALL_POTION:'recallpotion',
+  RESTORATION_POTION:'restorationpotion',
+  SHINE_POTION:'shinepotion',
+  SONAR_POTION:'sonarpotion',
+  SPELUNKER_POTION:'spelunkerpotion',
+  STINK_POTION:'stinkpotion',
+  STRANGE_BREW:'strangebrew',
+  TELEPORTATION_POTION:'teleportationpotion',
+  TITAN_POTION:'titanpotion',
+  WORMHOLE_POTION:'wormholepotion',
     BOSSBAG:'bossbag'
 };
 
@@ -2212,3 +2240,33 @@ defItem(I.TITAN_GLOVE, { name:'Titan Glove', type:'accessory', color:'#b8b8c8', 
 defItem(I.TSUNAMI_IN_A_BOTTLE, { name:'Tsunami in a Bottle', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, jumps:2, desc:'An accessory.' });
 defItem(I.WATER_WALKING_BOOTS, { name:'Water Walking Boots', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, waterWalk:true, desc:'An accessory.' });
 defItem(I.YOYO_BAG, { name:'Yoyo Bag', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, yoyoBag:true, desc:'An accessory.' });
+
+// ---------- Batch 83 potion expansion ----------
+defItem(I.BOTTLED_HONEY, { name:'Bottled Honey', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, heal:20, potionCd:60, desc:'Restores 20 health.' });
+defItem(I.BOTTLED_WATER, { name:'Bottled Water', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, desc:'Crafting material.' });
+defItem(I.CALMING_POTION, { name:'Calming Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'calming', t:480, desc:'Reduces enemy spawn rate.' });
+defItem(I.CRATE_POTION, { name:'Crate Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'crate', t:480, desc:'Improved fishing crate luck.' });
+defItem(I.EGGNOG, { name:'Eggnog', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, heal:80, potionCd:60, desc:'Restores 80 health.' });
+defItem(I.FEATHERFALL_POTION, { name:'Featherfall Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'featherfall', t:600, desc:'Slow falling.' });
+defItem(I.FLIPPER_POTION, { name:'Flipper Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'flipper', t:480, desc:'Swim freely.' });
+defItem(I.GILLS_POTION, { name:'Gills Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'gills', t:240, desc:'Breathe underwater.' });
+defItem(I.GRAVITATION_POTION, { name:'Gravitation Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'gravitation', t:600, desc:'Control gravity.' });
+defItem(I.HONEYFIN, { name:'Honeyfin', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, heal:120, potionCd:60, desc:'Restores 120 health.' });
+defItem(I.HUNTER_POTION, { name:'Hunter Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'hunter', t:480, desc:'Highlights enemies.' });
+defItem(I.JUNGLE_JUICE, { name:'Jungle Juice', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, heal:80, potionCd:60, desc:'Restores 80 health.' });
+defItem(I.LESSER_HEALING_POTION, { name:'Lesser Healing Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, heal:50, potionCd:60, desc:'Restores 50 health.' });
+defItem(I.LESSER_RESTORATION_POTION, { name:'Lesser Restoration Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, heal:50, potionCd:60, desc:'Restores 50 health and mana.' });
+defItem(I.LOVE_POTION, { name:'Love Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'love', t:120, desc:'Friendliness.' });
+defItem(I.MANA_REGENERATION_POTION, { name:'Mana Regeneration Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'manaRegen', t:420, desc:'Faster mana regeneration.' });
+defItem(I.NIGHT_OWL_POTION, { name:'Night Owl Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'nightOwl', t:240, desc:'Movement speed up for 4 minutes.' });
+defItem(I.NIGHT_VISION_POTION, { name:'Night Vision Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'nightVision', t:600, desc:'See in the dark.' });
+defItem(I.RECALL_POTION, { name:'Recall Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, recall:true, desc:'Teleport to spawn.' });
+defItem(I.RESTORATION_POTION, { name:'Restoration Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, heal:50, potionCd:60, desc:'Restores 50 health and mana.' });
+defItem(I.SHINE_POTION, { name:'Shine Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'shine', t:600, desc:'Emit light.' });
+defItem(I.SONAR_POTION, { name:'Sonar Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'sonar', t:480, desc:'Reveals fishing catches.' });
+defItem(I.SPELUNKER_POTION, { name:'Spelunker Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'spelunker', t:300, desc:'Highlights treasure.' });
+defItem(I.STINK_POTION, { name:'Stink Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'stink', t:120, desc:'Ewww.' });
+defItem(I.STRANGE_BREW, { name:'Strange Brew', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, heal:100, potionCd:60, desc:'A mysterious draught.' });
+defItem(I.TELEPORTATION_POTION, { name:'Teleportation Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, teleport:true, desc:'Random teleport.' });
+defItem(I.TITAN_POTION, { name:'Titan Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'knockbackImmune', t:480, desc:'Increased knockback resistance.' });
+defItem(I.WORMHOLE_POTION, { name:'Wormhole Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, wormhole:true, desc:'Teleport to a teammate.' });

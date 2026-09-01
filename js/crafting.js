@@ -741,3 +741,33 @@ recipe({ name:'Shadow Greaves', result:I.SHADOW_GREAVES, count:1, mat:[[I.DEMONI
 recipe({ name:'Shadow Helmet', result:I.SHADOW_HELMET, count:1, mat:[[I.DEMONITEBAR,8], [I.SHADOWSCALE,6]], station:'anvil' });
 recipe({ name:'Shadow Scalemail', result:I.SHADOW_SCALEMAIL, count:1, mat:[[I.DEMONITEBAR,8], [I.SHADOWSCALE,6]], station:'anvil' });
 recipe({ name:'Shroomite Mask', result:I.SHROOMITE_MASK, count:1, mat:[[I.CHLOROPHYTEBAR,10]], station:'anvil' });
+
+// ---------- Batch 83 potion recipes ----------
+recipe({ name:'Bottled Honey', result:I.BOTTLED_HONEY, count:1, mat:[[I.HONEY,2]], station:'workbench' });
+recipe({ name:'Bottled Water', result:I.BOTTLED_WATER, count:1, mat:[[I.GEL,1]], station:'workbench' });
+recipe({ name:'Calming Potion', result:I.CALMING_POTION, count:1, mat:[[I.DAYBLOOM,1], [I.MUSHROOM,1]], station:'workbench' });
+recipe({ name:'Crate Potion', result:I.CRATE_POTION, count:1, mat:[[I.DAYBLOOM,1], [I.GEL,2]], station:'workbench' });
+recipe({ name:'Eggnog', result:I.EGGNOG, count:1, mat:[[I.MUSHROOM,2]], station:'workbench' });
+recipe({ name:'Featherfall Potion', result:I.FEATHERFALL_POTION, count:1, mat:[[I.DAYBLOOM,1], [I.FEATHER,1]], station:'workbench' });
+recipe({ name:'Flipper Potion', result:I.FLIPPER_POTION, count:1, mat:[[I.DAYBLOOM,1], [I.GEL,3]], station:'workbench' });
+recipe({ name:'Gills Potion', result:I.GILLS_POTION, count:1, mat:[[I.DAYBLOOM,1], [I.GEL,2]], station:'workbench' });
+recipe({ name:'Gravitation Potion', result:I.GRAVITATION_POTION, count:1, mat:[[I.DAYBLOOM,1], [I.FEATHER,2]], station:'workbench' });
+recipe({ name:'Honeyfin', result:I.HONEYFIN, count:1, mat:[[I.HONEY,3]], station:'workbench' });
+recipe({ name:'Hunter Potion', result:I.HUNTER_POTION, count:1, mat:[[I.DAYBLOOM,1], [I.GEL,1]], station:'workbench' });
+recipe({ name:'Jungle Juice', result:I.JUNGLE_JUICE, count:1, mat:[[I.JUNGLE_SPORES,2]], station:'workbench' });
+recipe({ name:'Lesser Healing Potion', result:I.LESSER_HEALING_POTION, count:1, mat:[[I.MUSHROOM,2]], station:'workbench' });
+recipe({ name:'Lesser Restoration Potion', result:I.LESSER_RESTORATION_POTION, count:1, mat:[[I.MUSHROOM,2], [I.GLOWSTONE,1]], station:'workbench' });
+recipe({ name:'Love Potion', result:I.LOVE_POTION, count:1, mat:[[I.DAYBLOOM,2]], station:'workbench' });
+recipe({ name:'Mana Regeneration Potion', result:I.MANA_REGENERATION_POTION, count:1, mat:[[I.DAYBLOOM,1], [I.GLOWSTONE,1]], station:'workbench' });
+recipe({ name:'Night Owl Potion', result:I.NIGHT_OWL_POTION, count:1, mat:[[I.DAYBLOOM,1], [I.MUSHROOM,1]], station:'workbench' });
+recipe({ name:'Night Vision Potion', result:I.NIGHT_VISION_POTION, count:1, mat:[[I.DAYBLOOM,1], [I.CRYSTALSHARD,1]], station:'workbench' });
+recipe({ name:'Recall Potion', result:I.RECALL_POTION, count:1, mat:[[I.MUSHROOM,1], [I.GLOWSTONE,1]], station:'workbench' });
+recipe({ name:'Restoration Potion', result:I.RESTORATION_POTION, count:1, mat:[[I.MUSHROOM,2], [I.GLOWSTONE,1]], station:'workbench' });
+recipe({ name:'Shine Potion', result:I.SHINE_POTION, count:1, mat:[[I.DAYBLOOM,1], [I.GLOWSTONE,2]], station:'workbench' });
+recipe({ name:'Sonar Potion', result:I.SONAR_POTION, count:1, mat:[[I.DAYBLOOM,1], [I.GLOWSTONE,1]], station:'workbench' });
+recipe({ name:'Spelunker Potion', result:I.SPELUNKER_POTION, count:1, mat:[[I.DAYBLOOM,1], [I.GOLD,1]], station:'workbench' });
+recipe({ name:'Stink Potion', result:I.STINK_POTION, count:1, mat:[[I.GEL,5]], station:'workbench' });
+recipe({ name:'Strange Brew', result:I.STRANGE_BREW, count:1, mat:[[I.MUSHROOM,3]], station:'workbench' });
+recipe({ name:'Teleportation Potion', result:I.TELEPORTATION_POTION, count:1, mat:[[I.GLOWSTONE,3]], station:'workbench' });
+recipe({ name:'Titan Potion', result:I.TITAN_POTION, count:1, mat:[[I.DAYBLOOM,1], [I.STONE,3]], station:'workbench' });
+recipe({ name:'Wormhole Potion', result:I.WORMHOLE_POTION, count:1, mat:[[I.GLOWSTONE,2]], station:'workbench' });
