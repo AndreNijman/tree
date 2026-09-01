@@ -631,6 +631,15 @@ This file tracks the staged expansion toward Terraria 1.4.4 parity. Progression 
 - [x] Generate ~30 Heart Crystals on cave floors per world, mineable to consumable hearts.
 - [x] Add 38 remaining vanilla enemies and critter corruption during Blood Moons (Batch 79 merged into this branch).
 
+## Batch 79: Economy, World Scale, Starters, And Maps
+
+- [x] Replace the Gold Ore currency with canonical copper/silver/gold/platinum coins and wiki-priced shops.
+- [x] Convert NPC services, quests, taxes, reforges, and death penalties to coin amounts.
+- [x] Start players with the canonical Copper Shortsword, Pickaxe, and Axe with shortsword thrust and axe gating.
+- [x] Grow worlds to the vanilla small size (4200x2400) with scaled structure density.
+- [x] Add a full-screen world map (M) with pan/zoom over an incremental 1px/tile cache.
+- [x] Rebuild the minimap as a Terraria-style local window with player and spawn markers.
+
 ## Long-Term Catalog Parity
 
 - [x] Audit notable missing vanilla enemies and critters against `E` and `ENT_DEF` (ongoing; Ocean/Cavern/Spider/Underworld gaps continued in Batch 73).

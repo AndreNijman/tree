@@ -6,11 +6,11 @@
 
 ## Checkpoints
 
-- [ ] C1 — Coin economy: copper/silver/gold/platinum coin items (1/100/10k/1M copper), shop prices from
+^- [x] C1 — Coin economy: copper/silver/gold/platinum coin items (1/100/10k/1M copper), shop prices from
       items-db `value` field, purchases/rewards/tax/death-loss/drops re-denominated.
-- [ ] C2 — Vanilla starters: Copper Shortsword/Pickaxe/Axe + shortsword mechanic (rapid narrow thrust).
-- [ ] C3 — World size 4200x2400 (vanilla small), worldgen proportionality audit, save payload check, perf pass.
-- [ ] C4 — Camera/view/lighting/minimap/full-map rebuild: full-screen map (M key, pan+zoom), minimap polish,
+^- [x] C2 — Vanilla starters: Copper Shortsword/Pickaxe/Axe + shortsword mechanic (rapid narrow thrust).
+^- [x] C3 — World size 4200x2400 (vanilla small), worldgen proportionality audit, save payload check, perf pass.
+^- [x] C4 — Camera/view/lighting/minimap/full-map rebuild: full-screen map (M key, pan+zoom), minimap polish,
       lighting perf at 10M tiles, render culling.
 - [ ] C5 — playtest green, docs, merge to main, delete this file.
 
