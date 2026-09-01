@@ -528,7 +528,8 @@ Player.prototype.tryMelee = function(game, def, force, item) {
         var ang = Math.atan2(e.y - this.y, e.x - this.x);
         var da = Math.abs(angDiff(this.swingAng, ang));
         if (da < 1.5) {
-          var kbx = Math.cos(this.swingAng) * 4, kby = Math.sin(this.swingAng) * 2 - 1;
+          var kbForce = (def.kb || 4) * 0.8;
+          var kbx = Math.cos(this.swingAng) * kbForce, kby = Math.sin(this.swingAng) * kbForce * 0.5 - 1;
           if (e.boss) game.hitBoss(e, mdmg, kbx, kby);
           else hitEntity(e, mdmg, kbx, kby, game);
           game.fx.push({ type:'slash', x:e.x, y:e.y, t:0.15 });
@@ -785,7 +786,7 @@ Player.prototype.tryConsume = function(game, def, id, item) {
     this.hp = Math.min(this.maxHp, this.hp + def.heal);
     if (def.buff) this.buffs[id] = def.buff.t;
     this.inventory.removeAt(this.inventory.selected, 1);
-    this.inventory.potionCd = 30;
+    this.inventory.potionCd = 60;
     AudioSys.play('potion');
     game.fx.push({ type:'heal', x:this.x, y:this.y - 24, t:0.6 });
     return;
@@ -1221,7 +1222,7 @@ Player.prototype.damage = function(amount, from, kbx) {
   var kbMul = dm.kbMul != null ? dm.kbMul : 1;
   var reduced = Math.max(1, Math.round(amount * (1 - eff.invuln) - def * 0.5 * defEff));
   this.hp -= reduced;
-  this.invuln = 0.9 + eff.invuln;
+  this.invuln = 0.67 + eff.invuln;
   if (this.thorns > 0 && from && from.hp > 0) {
     if (from.boss) game.hitBoss(from, this.thorns, 0, 0);
     else hitEntity(from, this.thorns, 0, 0, game);

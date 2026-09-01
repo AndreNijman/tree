@@ -257,14 +257,14 @@ var KEY = {};
 var KEY_JUST = {};
 var MOUSE = { x:0, y:0, wx:0, wy:0, down:0, right:0, wheel:0, tpx:-1, tpy:-1 };
 
-// Physics constants (px/frame at 60fps)
-var GRAVITY = 0.45;
-var MAXFALL = 13;
-var WALK_SPEED = 3.1;
-var RUN_SPEED = 4.6;
-var JUMP_V = -9.5;
+// Physics constants (px/frame at 60fps) — canonical Terraria values
+var GRAVITY = 0.4;
+var MAXFALL = 10;
+var WALK_SPEED = 3.0;
+var RUN_SPEED = 4.2;
+var JUMP_V = -8.5;
 var FALL_SAFE_TILES = 25;
-var FALL_DMG_PER_TILE = 10;
+var FALL_DMG_PER_TILE = 5;
 
 var VERSION = 'tree v1.2';
 

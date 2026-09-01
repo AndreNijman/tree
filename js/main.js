@@ -1903,7 +1903,7 @@ function step(dt) {
   updateCamera(dt);
 
   // day/night
-  game.timeOfDay += dt * 0.002;
+  game.timeOfDay += dt * ((game.timeOfDay >= 0.25 && game.timeOfDay < 0.75) ? (0.5 / 900) : (0.5 / 540));
   if (game.timeOfDay >= 1) game.timeOfDay -= 1;
   if (typeof Net === 'undefined' || !Net.isClient()) { checkDawn(); updateWeather(dt); updateStarfall(dt); }
 
@@ -2857,14 +2857,14 @@ function updateSpawning(dt) {
   game.spawnT -= dt;
   if (game.spawnT > 0) return;
   var dm = diffScale();
-  game.spawnT = (7 + Math.random() * 5) / dm.spawn;
+  game.spawnT = (2.5 + Math.random() * 3.5) / dm.spawn;
 
   var count = 0;
   for (var i = 0; i < game.entities.length; i++) {
     var e = game.entities[i];
     if (!e.dead && !e.boss && !e.armType && !e.minion && e.dmg > 0) count++;
   }
-  if (count >= Math.round(4 * dm.spawn)) return;
+  if (count >= Math.round(5 * dm.spawn)) return;
 
   var type = pickEnemy();
   var side = Math.random() < 0.5 ? -1 : 1;
