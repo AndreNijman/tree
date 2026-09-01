@@ -1,0 +1,174 @@
+{
+ "Iron Helmet": {
+  "defense": 2,
+  "value": 3000
+ },
+ "Iron Chainmail": {
+  "defense": 3,
+  "value": 5000
+ },
+ "Iron Greaves": {
+  "defense": 2,
+  "value": 4000
+ },
+ "Gladiator Helmet": {
+  "defense": 5,
+  "value": 17500
+ },
+ "Gladiator Breastplate": {
+  "defense": 6,
+  "value": 14000
+ },
+ "Gladiator Leggings": {
+  "defense": 5,
+  "value": 10500
+ },
+ "Necro Helmet": {
+  "defense": 6,
+  "value": 45000
+ },
+ "Necro Breastplate": {
+  "defense": 7,
+  "value": 30000
+ },
+ "Necro Greaves": {
+  "defense": 6,
+  "value": 30000
+ },
+ "Shadow Helmet": {
+  "defense": 6,
+  "value": 37500
+ },
+ "Shadow Scalemail": {
+  "defense": 7,
+  "value": 30000
+ },
+ "Shadow Greaves": {
+  "defense": 6,
+  "value": 22500
+ },
+ "Crimson Helmet": {
+  "defense": 6,
+  "value": 50000
+ },
+ "Crimson Scalemail": {
+  "defense": 7,
+  "value": 40000
+ },
+ "Crimson Greaves": {
+  "defense": 6,
+  "value": 30000
+ },
+ "Bee Headgear": {
+  "defense": 4,
+  "value": 20000
+ },
+ "Bee Breastplate": {
+  "defense": 5,
+  "value": 30000
+ },
+ "Bee Greaves": {
+  "defense": 4,
+  "value": 25000
+ },
+ "Fossil Helmet": {
+  "defense": 4,
+  "value": 15000
+ },
+ "Fossil Plate": {
+  "defense": 5,
+  "value": 25000
+ },
+ "Fossil Greaves": {
+  "defense": 4,
+  "value": 20000
+ },
+ "Ninja Hood": {
+  "defense": 2,
+  "value": 10000
+ },
+ "Ninja Shirt": {
+  "defense": 4,
+  "value": 5000
+ },
+ "Ninja Pants": {
+  "defense": 3,
+  "value": 5000
+ },
+ "Jungle Hat": {
+  "defense": 5,
+  "value": 45000
+ },
+ "Jungle Shirt": {
+  "defense": 6,
+  "value": 30000
+ },
+ "Jungle Pants": {
+  "defense": 6,
+  "value": 30000
+ },
+ "Ancient Cobalt Helmet": {
+  "defense": 5,
+  "value": 45000
+ },
+ "Ancient Cobalt Breastplate": {
+  "defense": 6,
+  "value": 30000
+ },
+ "Obsidian Outlaw Hat": {
+  "defense": 4,
+  "value": 4500
+ },
+ "Obsidian Longcoat": {
+  "defense": 6,
+  "value": 4500
+ },
+ "Obsidian Pants": {
+  "defense": 5,
+  "value": 4500
+ },
+ "Hallowed Headgear": {
+  "defense": 5,
+  "value": 250000
+ },
+ "Hallowed Mask": {
+  "defense": 24,
+  "value": 250000
+ },
+ "Hallowed Plate Mail": {
+  "defense": 15,
+  "value": 200000
+ },
+ "Forbidden Mask": {
+  "defense": 6,
+  "value": 250000
+ },
+ "Forbidden Treads": {
+  "defense": 8,
+  "value": 150000
+ },
+ "Chlorophyte Headgear": {
+  "defense": 7,
+  "value": 300000
+ },
+ "Chlorophyte Mask": {
+  "defense": 20,
+  "value": 300000
+ },
+ "Chlorophyte Greaves": {
+  "defense": 13,
+  "value": 180000
+ },
+ "Shroomite Mask": {
+  "defense": 11,
+  "value": 375000
+ },
+ "Turtle Scale Mail": {
+  "defense": 27,
+  "value": 240000
+ },
+ "Beetle Scale Mail": {
+  "defense": 20,
+  "value": 240000
+ }
+}

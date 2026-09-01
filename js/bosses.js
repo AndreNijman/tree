@@ -1436,6 +1436,11 @@ function armHit(e, arm, dmg, game) {
 }
 
 function killBoss(e, game) {
+  if (typeof B83_BOSS_DROPS !== 'undefined' && B83_BOSS_DROPS[e.boss]) {
+    for (var bi83 = 0; bi83 < B83_BOSS_DROPS[e.boss].length; bi83++) {
+      game.addPickup(e.x, e.y, B83_BOSS_DROPS[e.boss][bi83], 1);
+    }
+  }
   if (e.dead) return;
   e.dead = true;
   AudioSys.play('bossDeath');

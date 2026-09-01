@@ -95,6 +95,18 @@ TILE_COLORS[T.PYLON] = ['#6fd3ff', '#3f9ad0'];
 TILE_COLORS[T.PARTYCENTER] = ['#ff70b8', '#6bc8ff'];
 TILE_COLORS[T.TOMBSTONE] = ['#777780', '#42424a'];
 TILE_COLORS[T.SUNFLOWER] = ['#ffe050', '#6a9a38'];
+TILE_COLORS[T.BED] = ['#c04050', '#8a3040'];
+TILE_COLORS[T.PIGGYBANK] = ['#f0a0c0', '#c07890'];
+TILE_COLORS[T.DOOR] = ['#9a6b3f', '#7a5030'];
+TILE_COLORS[T.CLAY] = ['#b06a4a', '#8a4a28'];
+TILE_COLORS[T.GRAYBRICK] = ['#8a8a92', '#6a6a72'];
+TILE_COLORS[T.REDBRICK] = ['#b0503a', '#8a3828'];
+TILE_COLORS[T.SPIKE] = ['#9a9aa4', '#6a6a74'];
+TILE_COLORS[T.BOTTLE] = ['#a8d8f0', '#78a8c8'];
+TILE_COLORS[T.CLAYPOT] = ['#b06a3a', '#8a4a28'];
+TILE_COLORS[T.SIGN] = ['#9a6b3f', '#7a5030'];
+TILE_COLORS[T.BOOK] = ['#c84a6a', '#8a2a4a'];
+TILE_COLORS[T.CHAIN] = ['#b0b0b8', '#808088'];
 
 var EMISSIVE_ORE_GLOW = {};
 EMISSIVE_ORE_GLOW[T.DEMONITE] = { r:30, strength:0.58, color:[112,76,220] };
@@ -486,6 +498,79 @@ function makeTileSprite(t, rng) {
           ctx.strokeRect(hx, hy, 4, 4);
         }
       }
+      break;
+    case T.BED:
+      ctx.fillStyle = '#8a2838';
+      ctx.fillRect(0, 8, TILE, 8);
+      ctx.fillStyle = '#c04050';
+      ctx.fillRect(0, 4, TILE, 6);
+      ctx.fillStyle = '#f0f0f0';
+      ctx.fillRect(0, 3, 5, 5);
+      break;
+    case T.PIGGYBANK:
+      ctx.fillStyle = '#f0a0c0';
+      ctx.beginPath(); ctx.ellipse(8, 10, 6, 5, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#c87890';
+      ctx.fillRect(4, 14, 2, 2); ctx.fillRect(10, 14, 2, 2);
+      break;
+    case T.DOOR:
+      ctx.fillStyle = '#7a5030';
+      ctx.fillRect(1, 0, 14, TILE);
+      ctx.fillStyle = '#9a6b3f';
+      ctx.fillRect(2, 1, 12, 14);
+      ctx.fillStyle = '#ffe14d';
+      ctx.fillRect(11, 8, 2, 2);
+      break;
+    case T.CLAY:
+      ctx.fillStyle = '#b06a3a';
+      ctx.fillRect(0, 0, TILE, TILE);
+      ctx.fillStyle = '#a05a2a';
+      ctx.fillRect(2, 3, 5, 4); ctx.fillRect(9, 9, 5, 4);
+      break;
+    case T.GRAYBRICK:
+      ctx.fillStyle = '#8a8a92';
+      ctx.fillRect(0, 0, TILE, TILE);
+      ctx.strokeStyle = '#6a6a72';
+      ctx.strokeRect(0.5, 0.5, 8, 8); ctx.strokeRect(8.5, 8.5, 8, 8);
+      break;
+    case T.REDBRICK:
+      ctx.fillStyle = '#b0503a';
+      ctx.fillRect(0, 0, TILE, TILE);
+      ctx.strokeStyle = '#8a3828';
+      ctx.strokeRect(0.5, 0.5, 8, 8); ctx.strokeRect(8.5, 8.5, 8, 8);
+      break;
+    case T.SPIKE:
+      ctx.fillStyle = '#9a9aa4';
+      ctx.beginPath();
+      ctx.moveTo(2, 16); ctx.lineTo(5, 6); ctx.lineTo(8, 16);
+      ctx.lineTo(8, 16); ctx.lineTo(11, 6); ctx.lineTo(14, 16);
+      ctx.fill();
+      break;
+    case T.BOTTLE:
+      ctx.fillStyle = 'rgba(168,216,240,0.7)';
+      ctx.fillRect(5, 6, 6, 8);
+      ctx.fillRect(7, 2, 2, 4);
+      break;
+    case T.CLAYPOT:
+      ctx.fillStyle = '#b06a3a';
+      ctx.beginPath(); ctx.ellipse(8, 10, 5, 4, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillRect(6, 4, 4, 4);
+      break;
+    case T.SIGN:
+      ctx.fillStyle = '#9a6b3f';
+      ctx.fillRect(2, 2, 12, 9);
+      ctx.fillRect(7, 11, 2, 5);
+      break;
+    case T.BOOK:
+      ctx.fillStyle = '#c84a6a';
+      ctx.fillRect(2, 4, 12, 10);
+      ctx.fillStyle = '#f0e0c0';
+      ctx.fillRect(3, 5, 10, 8);
+      break;
+    case T.CHAIN:
+      ctx.strokeStyle = '#b0b0b8';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(8, 0); ctx.lineTo(8, 16); ctx.stroke();
       break;
     case T.ALTAR:
       ctx.clearRect(0, 0, TILE, TILE);
@@ -5101,6 +5186,17 @@ MINIMAP_COLORS[T.PYLON] = '#6fd3ff';
 MINIMAP_COLORS[T.PARTYCENTER] = '#ff70b8';
 MINIMAP_COLORS[T.TOMBSTONE] = '#888892';
 MINIMAP_COLORS[T.SUNFLOWER] = '#ffe050';
+MINIMAP_COLORS[T.BED] = '#c04050';
+MINIMAP_COLORS[T.PIGGYBANK] = '#f0a0c0';
+MINIMAP_COLORS[T.DOOR] = '#9a6b3f';
+MINIMAP_COLORS[T.CLAY] = '#b06a3a';
+MINIMAP_COLORS[T.GRAYBRICK] = '#8a8a92';
+MINIMAP_COLORS[T.REDBRICK] = '#b0503a';
+MINIMAP_COLORS[T.BOTTLE] = '#a8d8f0';
+MINIMAP_COLORS[T.CLAYPOT] = '#b06a3a';
+MINIMAP_COLORS[T.SIGN] = '#9a6b3f';
+MINIMAP_COLORS[T.BOOK] = '#c84a6a';
+MINIMAP_COLORS[T.CHAIN] = '#b0b0b8';
 
 function buildMinimap(game) {
   var w = 170;
