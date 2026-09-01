@@ -62,16 +62,16 @@ E.ETHERIANWYVERN = 223;
 E.OLDONESSKELETON = 266;
 E.ETHERIANLIGHTNINGBUG = 267;
 
-ENT_DEF[E.ETHERIANGOBLIN] = { w:20, h:30, hp:180, dmg:28, def:4, color:'#6f8d48', speed:2.0, name:'Etherian Goblin', exp:5 };
-ENT_DEF[E.ETHERIANGOBLINBOMBER] = { w:20, h:28, hp:160, dmg:45, def:3, color:'#947044', speed:2.5, name:'Etherian Goblin Bomber', exp:6 };
-ENT_DEF[E.ETHERIANJAVELIN] = { w:20, h:32, hp:230, dmg:34, def:6, color:'#788e55', speed:1.7, name:'Etherian Javelin Thrower', exp:7, shoot:true };
-ENT_DEF[E.KOBOLD] = { w:22, h:24, hp:380, dmg:52, def:10, color:'#9b6043', speed:4.2, name:'Kobold', exp:11 };
-ENT_DEF[E.KOBOLDGLIDER] = { w:26, h:22, hp:340, dmg:48, def:8, color:'#a87952', speed:3.8, fly:true, name:'Kobold Glider', exp:12 };
-ENT_DEF[E.WITHERBEAST] = { w:32, h:34, hp:650, dmg:58, def:16, color:'#64547b', speed:1.4, name:'Wither Beast', exp:16, shoot:true };
-ENT_DEF[E.DRAKIN] = { w:28, h:34, hp:780, dmg:66, def:18, color:'#9b493d', speed:2.0, name:'Drakin', exp:20, shoot:true };
-ENT_DEF[E.ETHERIANWYVERN] = { w:38, h:24, hp:900, dmg:72, def:20, color:'#b24e43', speed:4.4, fly:true, name:'Etherian Wyvern', exp:24 };
-ENT_DEF[E.OLDONESSKELETON] = { w:20, h:32, hp:240, dmg:34, def:7, color:'#d6ccd0', speed:2.1, name:'Old One\'s Skeleton', exp:7 };
-ENT_DEF[E.ETHERIANLIGHTNINGBUG] = { w:28, h:22, hp:850, dmg:68, def:18, color:'#9ce8ff', speed:3.8, fly:true, name:'Etherian Lightning Bug', exp:22, shoot:true };
+ENT_DEF[E.ETHERIANGOBLIN] = { w:20, h:30, hp:170, dmg:46, def:20, color:'#6f8d48', speed:2.0, name:'Etherian Goblin', exp:5 };
+ENT_DEF[E.ETHERIANGOBLINBOMBER] = { w:20, h:28, hp:200, dmg:55, def:26, color:'#947044', speed:2.5, name:'Etherian Goblin Bomber', exp:6 };
+ENT_DEF[E.ETHERIANJAVELIN] = { w:20, h:32, hp:300, dmg:60, def:28, color:'#788e55', speed:1.7, name:'Etherian Javelin Thrower', exp:7, shoot:true };
+ENT_DEF[E.KOBOLD] = { w:22, h:24, hp:260, dmg:60, def:26, color:'#9b6043', speed:4.2, name:'Kobold', exp:11 };
+ENT_DEF[E.KOBOLDGLIDER] = { w:26, h:22, hp:170, dmg:50, def:16, color:'#a87952', speed:3.8, fly:true, name:'Kobold Glider', exp:12 };
+ENT_DEF[E.WITHERBEAST] = { w:32, h:34, hp:500, dmg:50, def:30, color:'#64547b', speed:1.4, name:'Wither Beast', exp:16, shoot:true };
+ENT_DEF[E.DRAKIN] = { w:28, h:34, hp:900, dmg:60, def:30, color:'#9b493d', speed:2.0, name:'Drakin', exp:20, shoot:true };
+ENT_DEF[E.ETHERIANWYVERN] = { w:38, h:24, hp:600, dmg:100, def:30, color:'#b24e43', speed:4.4, fly:true, name:'Etherian Wyvern', exp:24 };
+ENT_DEF[E.OLDONESSKELETON] = { w:20, h:32, hp:170, dmg:44, def:16, color:'#d6ccd0', speed:2.1, name:'Old One\'s Skeleton', exp:7 };
+ENT_DEF[E.ETHERIANLIGHTNINGBUG] = { w:28, h:22, hp:500, dmg:80, def:36, color:'#9ce8ff', speed:3.8, fly:true, name:'Etherian Lightning Bug', exp:22, shoot:true };
 
 var OOA_ARENA_HALF = 30;
 var OOA_PORTAL_OFFSET = 27;
@@ -393,7 +393,7 @@ function spawnOldOnesArmyBoss(id, side) {
   var ev = game.event;
   var x = side < 0 ? ev.leftPortalX : ev.rightPortalX;
   var defs = {
-    darkmage:{ name:'Dark Mage', w:42, h:48, hp:5000, dmg:42, def:12, color:'#704590', barColor:'#bd70e8' },
+    darkmage:{ name:'Dark Mage', w:42, h:48, hp:800, dmg:40, def:18, color:'#704590', barColor:'#bd70e8' },
     ogre:{ name:'Ogre', w:70, h:72, hp:15000, dmg:68, def:20, color:'#776044', barColor:'#c89858' },
     betsy:{ name:'Betsy', w:92, h:58, hp:42000, dmg:82, def:28, color:'#a93c32', barColor:'#ff6048' }
   };

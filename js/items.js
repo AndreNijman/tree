@@ -274,11 +274,11 @@ defItem(I.ADAMANTITEBAR, { name:'Adamantite Bar', type:'bar', color:'#e05555', i
 defItem(I.HALLOWEDBAR, { name:'Hallowed Bar', type:'bar', color:'#e6d13f', icon:'bar', desc:'Smelted from souls dropped by the mechanical bosses.' });
 
 // --- Melee weapons ---
-defItem(I.WOODSWORD, { name:'Wooden Sword', type:'melee', dmg:10, speed:0.32, kb:3, range:1.5, color:'#b5824f', icon:'🗡️', maxStack:1, desc:'Better than nothing.' });
-defItem(I.COBALTSWORD, { name:'Cobalt Sword', type:'melee', dmg:28, speed:0.25, kb:4, range:1.9, color:'#3a7dff', icon:'🗡️', maxStack:1, desc:'Forged from cobalt.' });
-defItem(I.MYTHRILSWORD, { name:'Mythril Sword', type:'melee', dmg:36, speed:0.22, kb:4.5, range:2.0, color:'#3ed6a0', icon:'🗡️', maxStack:1 });
-defItem(I.ADAMANTITESWORD, { name:'Adamantite Sword', type:'melee', dmg:46, speed:0.2, kb:5, range:2.1, color:'#e05555', icon:'⚔️', maxStack:1 });
-defItem(I.EXCALIBUR, { name:'Excalibur', type:'melee', dmg:68, speed:0.16, kb:6, range:2.4, meleeProj:P.LASER, projSpeed:10, projLife:1.1, projDamageMul:0.65, color:'#ffe14d', icon:'⭐', maxStack:1, desc:'The legendary blade of Hallowed metal. Its beam sears enemies.' });
+defItem(I.WOODSWORD, { name:'Wooden Sword', type:'melee', dmg:7, speed:0.333, kb:5, range:4, color:'#b5824f', icon:'🗡️', maxStack:1, desc:'Better than nothing.' });
+defItem(I.COBALTSWORD, { name:'Cobalt Sword', type:'melee', dmg:40, speed:0.317, kb:5, range:4, color:'#3a7dff', icon:'🗡️', maxStack:1, desc:'Forged from cobalt.' });
+defItem(I.MYTHRILSWORD, { name:'Mythril Sword', type:'melee', dmg:50, speed:0.333, kb:6, range:4, color:'#3ed6a0', icon:'🗡️', maxStack:1 });
+defItem(I.ADAMANTITESWORD, { name:'Adamantite Sword', type:'melee', dmg:61, speed:0.35, kb:6, range:4, color:'#e05555', icon:'⚔️', maxStack:1 });
+defItem(I.EXCALIBUR, { name:'Excalibur', type:'melee', dmg:72, speed:0.333, kb:4.5, range:4, meleeProj:P.LASER, projSpeed:10, projLife:1.1, projDamageMul:0.65, color:'#ffe14d', icon:'⭐', maxStack:1, desc:'The legendary blade of Hallowed metal. Its beam sears enemies.' });
 
 // --- Tools ---
 defItem(I.IRONPICK, { name:'Iron Pickaxe', type:'tool', power:55, speed:1.0, dmg:6, range:3.2, color:'#d0d0d6', icon:'⛏️', maxStack:1, desc:'Mines cobalt ore.' });
@@ -288,12 +288,12 @@ defItem(I.ADAMANTITEPICK, { name:'Adamantite Pickaxe', type:'tool', power:110, s
 
 // --- Ranged ---
 defItem(I.ARROW, { name:'Wooden Arrow', type:'ammo', dmg:5, color:'#d8b28a', icon:'➶', maxStack:999 });
-defItem(I.IRONBOW, { name:'Iron Bow', type:'ranged', dmg:12, speed:0.45, kb:2, ammo:I.ARROW, proj:P.ARROW, range:999, color:'#b5824f', icon:'🏹', maxStack:1, desc:'Shoots arrows. Hold to fire.' });
-defItem(I.HALLOWEDREPEATER, { name:'Hallowed Repeater', type:'ranged', dmg:40, speed:0.2, kb:3, ammo:I.HOLYARROW, proj:P.ARROW, auto:true, range:999, color:'#ffe14d', icon:'🏹', maxStack:1, desc:'Rapid-fire crossbow of the Hallow.' });
+defItem(I.IRONBOW, { name:'Iron Bow', type:'ranged', dmg:8, speed:0.467, kb:2, ammo:I.ARROW, proj:P.ARROW, range:999, color:'#b5824f', icon:'🏹', maxStack:1, desc:'Shoots arrows. Hold to fire.', projSpeed:6.6});
+defItem(I.HALLOWEDREPEATER, { name:'Hallowed Repeater', type:'ranged', dmg:53, speed:0.267, kb:2.5, ammo:I.HOLYARROW, proj:P.ARROW, auto:true, range:999, color:'#ffe14d', icon:'🏹', maxStack:1, desc:'Rapid-fire crossbow of the Hallow.', projSpeed:11});
 
 // --- Magic ---
-defItem(I.LASERRIFLE, { name:'Laser Rifle', type:'magic', dmg:38, speed:0.22, kb:1, mana:7, proj:P.LASER, auto:true, range:999, color:'#ff4d6d', icon:'🔫', maxStack:1, desc:'A beam of pure death. Costs mana.' });
-defItem(I.CRYSTALSTORM, { name:'Crystal Storm', type:'magic', dmg:30, speed:0.25, kb:2, mana:6, proj:P.MAGICBOLT, projCount:3, auto:true, range:999, color:'#ff9de0', icon:'🔮', maxStack:1, desc:'Shards of crystal fly everywhere. Costs mana.' });
+defItem(I.LASERRIFLE, { name:'Laser Rifle', type:'magic', dmg:29, speed:0.2, kb:2.5, mana:8, proj:P.LASER, auto:true, range:999, color:'#ff4d6d', icon:'🔫', maxStack:1, desc:'A beam of pure death. Costs mana.', projSpeed:17});
+defItem(I.CRYSTALSTORM, { name:'Crystal Storm', type:'magic', dmg:35, speed:0.117, kb:5, mana:5, proj:P.MAGICBOLT, projCount:3, auto:true, range:999, color:'#ff9de0', icon:'🔮', maxStack:1, desc:'Shards of crystal fly everywhere. Costs mana.', projSpeed:16});
 
 // --- Armor ---
 defItem(I.COBALTHELM, { name:'Cobalt Helmet', type:'armor', slot:'head', def:5, color:'#3a7dff', icon:'🪖', maxStack:1, desc:'Defense +5' });
@@ -343,11 +343,11 @@ defItem(I.ORICHALCUMBAR, { name:'Orichalcum Bar', type:'bar', color:'#e68cff', i
 defItem(I.CHLOROPHYTEBAR, { name:'Chlorophyte Bar', type:'bar', color:'#6bff8a', icon:'bar', desc:'The living metal of the jungle.' });
 
 // --- New melee ---
-defItem(I.ORICHALCUMSWORD, { name:'Orichalcum Sword', type:'melee', dmg:42, speed:0.21, kb:4.5, range:2.0, color:'#e68cff', icon:'🗡️', maxStack:1 });
-defItem(I.TITANIUMSWORD, { name:'Titanium Sword', type:'melee', dmg:50, speed:0.19, kb:5, range:2.1, color:'#c8ccd4', icon:'⚔️', maxStack:1 });
-defItem(I.CHLOROPHYTESABER, { name:'Chlorophyte Saber', type:'melee', dmg:62, speed:0.17, kb:5, range:2.2, meleeProj:P.SPORE, projSpeed:7, projLife:1.2, projDamageMul:0.55, color:'#4dff6b', icon:'⚔️', maxStack:1, desc:'Sends spores at your foes.' });
-defItem(I.TERRABLADE, { name:'Terra Blade', type:'melee', dmg:82, speed:0.14, kb:6, range:2.5, meleeProj:P.PLASMA, projSpeed:10, projLife:1.5, projDamageMul:0.75, color:'#3dff9d', icon:'🌱', maxStack:1, desc:'The ultimate blade. Fires a green wave.' });
-defItem(I.STARFURY, { name:'Starfury', type:'melee', dmg:25, speed:0.2, kb:4, range:2.0, meleeRainProj:P.BLAZE, rainDamageMul:0.7, color:'#ffe9a8', icon:'⭐', maxStack:1, desc:'A blade that calls down stars. Found in sky chests.' });
+defItem(I.ORICHALCUMSWORD, { name:'Orichalcum Sword', type:'melee', dmg:59, speed:0.367, kb:6, range:4, color:'#e68cff', icon:'🗡️', maxStack:1 });
+defItem(I.TITANIUMSWORD, { name:'Titanium Sword', type:'melee', dmg:61, speed:0.333, kb:6, range:4, color:'#c8ccd4', icon:'⚔️', maxStack:1 });
+defItem(I.CHLOROPHYTESABER, { name:'Chlorophyte Saber', type:'melee', dmg:80, speed:0.5, kb:5, range:4, meleeProj:P.SPORE, projSpeed:7, projLife:1.2, projDamageMul:0.55, color:'#4dff6b', icon:'⚔️', maxStack:1, desc:'Sends spores at your foes.' });
+defItem(I.TERRABLADE, { name:'Terra Blade', type:'melee', dmg:85, speed:0.3, kb:6.5, range:4, meleeProj:P.PLASMA, projSpeed:10, projLife:1.5, projDamageMul:0.75, color:'#3dff9d', icon:'🌱', maxStack:1, desc:'The ultimate blade. Fires a green wave.' });
+defItem(I.STARFURY, { name:'Starfury', type:'melee', dmg:25, speed:0.333, kb:5, range:4, meleeRainProj:P.BLAZE, rainDamageMul:0.7, color:'#ffe9a8', icon:'⭐', maxStack:1, desc:'A blade that calls down stars. Found in sky chests.' });
 
 // --- New tools ---
 defItem(I.TITANIUMPICK, { name:'Titanium Pickaxe', type:'tool', power:115, speed:2.8, dmg:16, range:3.8, color:'#c8ccd4', icon:'⛏️', maxStack:1, desc:'Mines chlorophyte ore.' });
@@ -356,14 +356,14 @@ defItem(I.DRAX, { name:'Drax', type:'tool', power:130, speed:3.4, dmg:20, range:
 defItem(I.PICKSHAW, { name:'Picksaw', type:'tool', power:210, speed:4.0, dmg:24, range:4.2, color:'#ffb84d', icon:'⛏️', maxStack:1, desc:'Dropped by Golem. Breaks Lihzahrd brick.' });
 
 // --- New ranged ---
-defItem(I.BULLET, { name:'Crystal Bullet', type:'ammo', dmg:8, color:'#ff9de0', icon:'⚫', maxStack:999 });
-defItem(I.MEGASHARK, { name:'Megashark', type:'ranged', dmg:30, speed:0.08, kb:2, ammo:I.BULLET, proj:P.GUNBULLET, auto:true, range:999, color:'#8a8f9a', icon:'🔫', maxStack:1, desc:'A shark named gun. Devours ammo.' });
+defItem(I.BULLET, { name:'Crystal Bullet', type:'ammo', dmg:9, color:'#ff9de0', icon:'⚫', maxStack:999 });
+defItem(I.MEGASHARK, { name:'Megashark', type:'ranged', dmg:25, speed:0.117, kb:1, ammo:I.BULLET, proj:P.GUNBULLET, auto:true, range:999, color:'#8a8f9a', icon:'🔫', maxStack:1, desc:'A shark named gun. Devours ammo.', projSpeed:10});
 
 // --- New magic ---
-defItem(I.GOLDENSHOWER, { name:'Golden Shower', type:'magic', dmg:36, speed:0.3, kb:1, mana:8, proj:P.CURSEDFLAME, projCount:3, status:{type:'ichor',duration:5,defense:12}, auto:true, range:999, color:'#ffd75e', icon:'🌧️', maxStack:1, desc:'Coats enemies in defense-shredding ichor.' });
-defItem(I.RAINBOWROD, { name:'Rainbow Rod', type:'magic', dmg:45, speed:0.35, kb:2, mana:9, proj:P.RAINBOW, magicMode:'controlled', controlledReach:32, controlledSpeed:9, controlledDuration:4, auto:true, range:999, color:'#ff9de0', icon:'🌈', maxStack:1, desc:'A rainbow guided by the cursor.' });
-defItem(I.RAZORBLADETYPHOON, { name:'Razorblade Typhoon', type:'magic', dmg:52, speed:0.16, kb:3, mana:10, proj:P.RAZOR, projCount:2, projHoming:true, auto:true, range:999, color:'#6bc8ff', icon:'🌪️', maxStack:1, desc:'Dropped by Duke Fishron. A storm of homing blades.' });
-defItem(I.LASTPRISM, { name:'Last Prism', type:'magic', dmg:42, speed:0.1, kb:1, mana:4, proj:P.PRISM, magicMode:'beam', channelRange:42, channelManaInterval:0.12, hitCooldown:0.12, auto:true, range:999, color:'#ffe14d', icon:'💎', maxStack:1, desc:'The Moon Lord\'s continuous rainbow beam.' });
+defItem(I.GOLDENSHOWER, { name:'Golden Shower', type:'magic', dmg:30, speed:0.3, kb:4, mana:7, proj:P.CURSEDFLAME, projCount:3, status:{type:'ichor',duration:5,defense:12}, auto:true, range:999, color:'#ffd75e', icon:'🌧️', maxStack:1, desc:'Coats enemies in defense-shredding ichor.', projSpeed:10});
+defItem(I.RAINBOWROD, { name:'Rainbow Rod', type:'magic', dmg:50, speed:0.417, kb:6, mana:21, proj:P.RAINBOW, magicMode:'controlled', controlledReach:32, controlledSpeed:9, controlledDuration:4, auto:true, range:999, color:'#ff9de0', icon:'🌈', maxStack:1, desc:'A rainbow guided by the cursor.', projSpeed:6});
+defItem(I.RAZORBLADETYPHOON, { name:'Razorblade Typhoon', type:'magic', dmg:85, speed:0.667, kb:5, mana:20, proj:P.RAZOR, projCount:2, projHoming:true, auto:true, range:999, color:'#6bc8ff', icon:'🌪️', maxStack:1, desc:'Dropped by Duke Fishron. A storm of homing blades.', projSpeed:6});
+defItem(I.LASTPRISM, { name:'Last Prism', type:'magic', dmg:100, speed:0.167, kb:0.25, mana:12, proj:P.PRISM, magicMode:'beam', channelRange:42, channelManaInterval:0.12, hitCooldown:0.12, auto:true, range:999, color:'#ffe14d', icon:'💎', maxStack:1, desc:'The Moon Lord\'s continuous rainbow beam.', projSpeed:30});
 
 // --- Summoner whips ---
 defItem(I.LEATHERWHIP, { name:'Leather Whip', type:'whip', dmg:14, speed:0.4, kb:3, range:2.6, tagDamage:4, tagDuration:4, color:'#b5824f', icon:'🔗', maxStack:1, desc:'Marks enemies for +4 minion damage.' });
@@ -428,70 +428,70 @@ defItem(I.SHARKFIN, { name:'Shark Fin', type:'material', color:'#8a8f9a', icon:'
 defItem(I.ILLEGALGUNPARTS, { name:'Illegal Gun Parts', type:'material', color:'#5a5a6a', icon:'🔫', maxStack:999, desc:'Contraband weapons tech.' });
 
 // Phaseblades / Phase sabers
-defItem(I.BLUEPHASEBLADE, { name:'Blue Phaseblade', type:'melee', dmg:16, speed:0.26, kb:3.5, range:1.8, color:'#6b9dff', icon:'🗡️', maxStack:1, desc:'A laser blade. Mine gems for more.' });
-defItem(I.GREENPHASEBLADE, { name:'Green Phaseblade', type:'melee', dmg:16, speed:0.26, kb:3.5, range:1.8, color:'#3dff8a', icon:'🗡️', maxStack:1 });
-defItem(I.PURPLEPHASEBLADE, { name:'Purple Phaseblade', type:'melee', dmg:16, speed:0.26, kb:3.5, range:1.8, color:'#c85cff', icon:'🗡️', maxStack:1 });
-defItem(I.BLUEPHASESABER, { name:'Blue Phasesaber', type:'melee', dmg:28, speed:0.22, kb:4, range:2.0, color:'#6b9dff', icon:'🔦', maxStack:1, desc:'A true lightsaber.' });
-defItem(I.GREENPHASESABER, { name:'Green Phasesaber', type:'melee', dmg:28, speed:0.22, kb:4, range:2.0, color:'#3dff8a', icon:'🔦', maxStack:1 });
-defItem(I.PURPLEPHASESABER, { name:'Purple Phasesaber', type:'melee', dmg:28, speed:0.22, kb:4, range:2.0, color:'#c85cff', icon:'🔦', maxStack:1 });
+defItem(I.BLUEPHASEBLADE, { name:'Blue Phaseblade', type:'melee', dmg:26, speed:0.3, kb:3, range:4, color:'#6b9dff', icon:'🗡️', maxStack:1, desc:'A laser blade. Mine gems for more.' });
+defItem(I.GREENPHASEBLADE, { name:'Green Phaseblade', type:'melee', dmg:26, speed:0.3, kb:3, range:4, color:'#3dff8a', icon:'🗡️', maxStack:1 });
+defItem(I.PURPLEPHASEBLADE, { name:'Purple Phaseblade', type:'melee', dmg:26, speed:0.3, kb:3, range:4, color:'#c85cff', icon:'🗡️', maxStack:1 });
+defItem(I.BLUEPHASESABER, { name:'Blue Phasesaber', type:'melee', dmg:50, speed:0.267, kb:3, range:4, color:'#6b9dff', icon:'🔦', maxStack:1, desc:'A true lightsaber.' });
+defItem(I.GREENPHASESABER, { name:'Green Phasesaber', type:'melee', dmg:50, speed:0.267, kb:3, range:4, color:'#3dff8a', icon:'🔦', maxStack:1 });
+defItem(I.PURPLEPHASESABER, { name:'Purple Phasesaber', type:'melee', dmg:50, speed:0.267, kb:3, range:4, color:'#c85cff', icon:'🔦', maxStack:1 });
 
 // Melee weapons
-defItem(I.CUTLASS, { name:'Cutlass', type:'melee', dmg:54, speed:0.18, kb:5, range:2.2, color:'#e8d8b8', icon:'⚔️', maxStack:1, desc:'Dropped by pirates.' });
-defItem(I.FROSTBRAND, { name:'Frostbrand', type:'melee', dmg:50, speed:0.2, kb:5, range:2.2, meleeProj:P.FROSTBOLT, projSpeed:8, projLife:1.3, projDamageMul:0.7, color:'#9adcff', icon:'⚔️', maxStack:1, desc:'A blade of winter. Fires an ice wave.' });
-defItem(I.BEAMSWORD, { name:'Beam Sword', type:'melee', dmg:48, speed:0.19, kb:5, range:2.2, meleeProj:P.LASER, projSpeed:10, projLife:1.3, projDamageMul:0.7, color:'#e0e8ff', icon:'⚔️', maxStack:1, desc:'Rare. Fires a light beam.' });
-defItem(I.KEYBRAND, { name:'Keybrand', type:'melee', dmg:44, speed:0.19, kb:4, range:2.2, color:'#ffe14d', icon:'🔑', maxStack:1, nearbyBonus:0.15, nearbyMax:6, nearbyRadius:96, desc:'Weak... until you are strong.' });
-defItem(I.DEATHSICKLE, { name:'Death Sickle', type:'melee', dmg:65, speed:0.22, kb:5, range:2.3, meleeProj:P.CRESCENT, projSpeed:5, projLife:1.8, projDamageMul:0.8, color:'#5a5a7a', icon:'☠️', maxStack:1, desc:'Reaper\'s own blade. Throws a shadow scythe.' });
-defItem(I.SEEDLER, { name:'Seedler', type:'melee', dmg:72, speed:0.17, kb:5, range:2.3, meleeProj:P.RAZOR, projSpeed:7, projLife:1.5, projDamageMul:0.7, projBounces:2, splitOnHit:P.SPORE, splitCount:3, splitSpeed:6, splitDamageMul:0.45, splitHoming:true, color:'#6bff8a', icon:'🌱', maxStack:1, desc:'Plantera\'s tooth. Its seed bursts into homing spores.' });
-defItem(I.VAMPIRESKNIVES, { name:'Vampire Knives', type:'melee', dmg:34, speed:0.08, kb:3, range:2.4, meleeProj:P.DART, projSpeed:8, projLife:1.2, projDamageMul:0.65, projCount:5, projSpread:0.12, projectileOnly:true, lifeSteal:0.05, color:'#ff5c4d', icon:'🔪', maxStack:1, desc:'Throws knives that steal life.' });
-defItem(I.PSYCHOKNIFE, { name:'Psycho Knife', type:'melee', dmg:56, speed:0.16, kb:4, range:2.2, color:'#8a8f9a', icon:'🔪', maxStack:1, desc:'A deadly dagger from a Solar Eclipse.' });
-defItem(I.SCOURGE, { name:'Scourge of the Corruptor', type:'melee', dmg:64, speed:0.18, kb:5, range:2.5, meleeProj:P.STINGER, projSpeed:9, projLife:1.5, projectileOnly:true, splitOnHit:P.SPORE, splitCount:3, splitSpeed:7, splitDamageMul:0.4, splitHoming:true, color:'#7a3d5c', icon:'🐍', maxStack:1, desc:'A corrupting javelin that releases homing eaters.' });
-defItem(I.FLAIRON, { name:'Flairon', type:'melee', dmg:72, speed:0.15, kb:5, range:2.4, meleeProj:P.RAZOR, meleeMode:'flail', flailDuration:0.65, projectileOnly:true, persistentProj:true, flailExtraProj:P.MAGICBOLT, extraProjCount:3, extraProjSpeed:6, extraDamageMul:0.4, extraProjHoming:true, color:'#ffd75e', icon:'⚓', maxStack:1, desc:'Duke Fishron\'s anchor. Shoots bubbles.' });
-defItem(I.GUNGNIR, { name:'Gungnir', type:'melee', dmg:68, speed:0.16, kb:6, range:2.5, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.26, projectileOnly:true, persistentProj:true, color:'#e8e8f0', icon:'🔱', maxStack:1, desc:'The godly spear.' });
-defItem(I.MUSHROOMSPEAR, { name:'Mushroom Spear', type:'melee', dmg:44, speed:0.2, kb:5, range:2.3, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.32, projectileOnly:true, persistentProj:true, spearExtraProj:P.SPORE, extraProjSpeed:6, extraDamageMul:0.45, extraBounces:2, color:'#c8a8e8', icon:'🍄', maxStack:1, desc:'Fires bouncing spores.' });
-defItem(I.NORTHPOLE, { name:'North Pole', type:'melee', dmg:70, speed:0.17, kb:6, range:2.5, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.28, projectileOnly:true, persistentProj:true, spearExtraProj:P.FROSTBOLT, extraProjSpeed:8, extraDamageMul:0.5, color:'#a8dcff', icon:'🎄', maxStack:1, desc:'An Ice Queen spear that calls down icicles.' });
-defItem(I.CHLOROPHYTEPARTISAN, { name:'Chlorophyte Partisan', type:'melee', dmg:58, speed:0.17, kb:5, range:2.4, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.28, projectileOnly:true, persistentProj:true, spearExtraProj:P.SPORE, extraProjSpeed:7, extraDamageMul:0.45, color:'#4dff6b', icon:'🔱', maxStack:1, desc:'A living spear of the jungle.' });
+defItem(I.CUTLASS, { name:'Cutlass', type:'melee', dmg:53, speed:0.267, kb:4, range:4, color:'#e8d8b8', icon:'⚔️', maxStack:1, desc:'Dropped by pirates.' });
+defItem(I.FROSTBRAND, { name:'Frostbrand', type:'melee', dmg:49, speed:0.383, kb:4.5, range:4, meleeProj:P.FROSTBOLT, projSpeed:8, projLife:1.3, projDamageMul:0.7, color:'#9adcff', icon:'⚔️', maxStack:1, desc:'A blade of winter. Fires an ice wave.' });
+defItem(I.BEAMSWORD, { name:'Beam Sword', type:'melee', dmg:52, speed:0.333, kb:6.5, range:4, meleeProj:P.LASER, projSpeed:10, projLife:1.3, projDamageMul:0.7, color:'#e0e8ff', icon:'⚔️', maxStack:1, desc:'Rare. Fires a light beam.' });
+defItem(I.KEYBRAND, { name:'Keybrand', type:'melee', dmg:105, speed:0.333, kb:6.5, range:4, color:'#ffe14d', icon:'🔑', maxStack:1, nearbyBonus:0.15, nearbyMax:6, nearbyRadius:96, desc:'Weak... until you are strong.' });
+defItem(I.DEATHSICKLE, { name:'Death Sickle', type:'melee', dmg:57, speed:0.417, kb:5, range:4, meleeProj:P.CRESCENT, projSpeed:5, projLife:1.8, projDamageMul:0.8, color:'#5a5a7a', icon:'☠️', maxStack:1, desc:'Reaper\'s own blade. Throws a shadow scythe.' });
+defItem(I.SEEDLER, { name:'Seedler', type:'melee', dmg:50, speed:0.383, kb:6, range:4, meleeProj:P.RAZOR, projSpeed:7, projLife:1.5, projDamageMul:0.7, projBounces:2, splitOnHit:P.SPORE, splitCount:3, splitSpeed:6, splitDamageMul:0.45, splitHoming:true, color:'#6bff8a', icon:'🌱', maxStack:1, desc:'Plantera\'s tooth. Its seed bursts into homing spores.' });
+defItem(I.VAMPIRESKNIVES, { name:'Vampire Knives', type:'melee', dmg:29, speed:0.267, kb:2.75, range:4, meleeProj:P.DART, projSpeed:8, projLife:1.2, projDamageMul:0.65, projCount:5, projSpread:0.12, projectileOnly:true, lifeSteal:0.05, color:'#ff5c4d', icon:'🔪', maxStack:1, desc:'Throws knives that steal life.' });
+defItem(I.PSYCHOKNIFE, { name:'Psycho Knife', type:'melee', dmg:85, speed:0.133, kb:3.5, range:4, color:'#8a8f9a', icon:'🔪', maxStack:1, desc:'A deadly dagger from a Solar Eclipse.' });
+defItem(I.SCOURGE, { name:'Scourge of the Corruptor', type:'melee', dmg:70, speed:0.333, kb:5, range:4, meleeProj:P.STINGER, projSpeed:9, projLife:1.5, projectileOnly:true, splitOnHit:P.SPORE, splitCount:3, splitSpeed:7, splitDamageMul:0.4, splitHoming:true, color:'#7a3d5c', icon:'🐍', maxStack:1, desc:'A corrupting javelin that releases homing eaters.' });
+defItem(I.FLAIRON, { name:'Flairon', type:'melee', dmg:132, speed:0.333, kb:4.5, range:8, meleeProj:P.RAZOR, meleeMode:'flail', flailDuration:0.65, projectileOnly:true, persistentProj:true, flailExtraProj:P.MAGICBOLT, extraProjCount:3, extraProjSpeed:6, extraDamageMul:0.4, extraProjHoming:true, color:'#ffd75e', icon:'⚓', maxStack:1, desc:'Duke Fishron\'s anchor. Shoots bubbles.' });
+defItem(I.GUNGNIR, { name:'Gungnir', type:'melee', dmg:61, speed:0.367, kb:6.4, range:4.5, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.26, projectileOnly:true, persistentProj:true, color:'#e8e8f0', icon:'🔱', maxStack:1, desc:'The godly spear.' });
+defItem(I.MUSHROOMSPEAR, { name:'Mushroom Spear', type:'melee', dmg:60, speed:0.667, kb:6.2, range:4.5, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.32, projectileOnly:true, persistentProj:true, spearExtraProj:P.SPORE, extraProjSpeed:6, extraDamageMul:0.45, extraBounces:2, color:'#c8a8e8', icon:'🍄', maxStack:1, desc:'Fires bouncing spores.' });
+defItem(I.NORTHPOLE, { name:'North Pole', type:'melee', dmg:80, speed:0.5, kb:6.7, range:4.5, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.28, projectileOnly:true, persistentProj:true, spearExtraProj:P.FROSTBOLT, extraProjSpeed:8, extraDamageMul:0.5, color:'#a8dcff', icon:'🎄', maxStack:1, desc:'An Ice Queen spear that calls down icicles.' });
+defItem(I.CHLOROPHYTEPARTISAN, { name:'Chlorophyte Partisan', type:'melee', dmg:49, speed:0.383, kb:6.2, range:4.5, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.28, projectileOnly:true, persistentProj:true, spearExtraProj:P.SPORE, extraProjSpeed:7, extraDamageMul:0.45, color:'#4dff6b', icon:'🔱', maxStack:1, desc:'A living spear of the jungle.' });
 
 // Yoyos
-defItem(I.THEEYEOFOCTHULU, { name:'The Eye of Cthulhu', type:'melee', dmg:60, speed:0.24, kb:5, range:3.0, meleeProj:P.RAZOR, meleeMode:'yoyo', yoyoDuration:2.4, projectileOnly:true, persistentProj:true, color:'#ff4d4d', icon:'🪀', maxStack:1, desc:'A legendary yoyo dropped by Mothron.' });
-defItem(I.HELLFIRE, { name:'Hel-Fire', type:'melee', dmg:55, speed:0.26, kb:5, range:2.8, meleeProj:P.RAZOR, meleeMode:'yoyo', yoyoDuration:2.1, projectileOnly:true, persistentProj:true, color:'#ff9a3d', icon:'🪀', maxStack:1, desc:'A burning yoyo dropped by Hardmode Underworld enemies.' });
-defItem(I.YELEKS, { name:'Yelets', type:'melee', dmg:70, speed:0.22, kb:5, range:3.0, meleeProj:P.RAZOR, meleeMode:'yoyo', yoyoDuration:2.5, projectileOnly:true, persistentProj:true, yoyoExtraProj:P.SPORE, extraInterval:0.4, extraProjSpeed:7, extraDamageMul:0.4, color:'#6bff8a', icon:'🪀', maxStack:1, desc:'A yoyo dropped by Jungle enemies after a mechanical boss.' });
-defItem(I.KRAKEN, { name:'The Kraken', type:'melee', dmg:85, speed:0.2, kb:6, range:3.2, meleeProj:P.RAZOR, meleeMode:'yoyo', yoyoDuration:2.7, projectileOnly:true, persistentProj:true, color:'#5ac8ff', icon:'🪀', maxStack:1, desc:'A rare post-Plantera Dungeon drop.' });
-defItem(I.TERRARIAN, { name:'Terrarian', type:'melee', dmg:95, speed:0.18, kb:6, range:3.4, meleeProj:P.RAZOR, meleeMode:'yoyo', yoyoDuration:3.2, projectileOnly:true, persistentProj:true, yoyoExtraProj:P.RAINBOW, extraInterval:0.28, extraProjSpeed:9, extraDamageMul:0.5, color:'#3dff9d', icon:'🪀', maxStack:1, desc:'The Moon Lord\'s final yoyo. Fires rainbow blades.' });
+defItem(I.THEEYEOFOCTHULU, { name:'The Eye of Cthulhu', type:'melee', dmg:115, speed:0.417, kb:3.5, range:12, meleeProj:P.RAZOR, meleeMode:'yoyo', yoyoDuration:2.4, projectileOnly:true, persistentProj:true, color:'#ff4d4d', icon:'🪀', maxStack:1, desc:'A legendary yoyo dropped by Mothron.' });
+defItem(I.HELLFIRE, { name:'Hel-Fire', type:'melee', dmg:43, speed:0.417, kb:4.5, range:12, meleeProj:P.RAZOR, meleeMode:'yoyo', yoyoDuration:2.1, projectileOnly:true, persistentProj:true, color:'#ff9a3d', icon:'🪀', maxStack:1, desc:'A burning yoyo dropped by Hardmode Underworld enemies.' });
+defItem(I.YELEKS, { name:'Yelets', type:'melee', dmg:60, speed:0.417, kb:3.1, range:13, meleeProj:P.RAZOR, meleeMode:'yoyo', yoyoDuration:2.5, projectileOnly:true, persistentProj:true, yoyoExtraProj:P.SPORE, extraInterval:0.4, extraProjSpeed:7, extraDamageMul:0.4, color:'#6bff8a', icon:'🪀', maxStack:1, desc:'A yoyo dropped by Jungle enemies after a mechanical boss.' });
+defItem(I.KRAKEN, { name:'The Kraken', type:'melee', dmg:120, speed:0.417, kb:4.3, range:14, meleeProj:P.RAZOR, meleeMode:'yoyo', yoyoDuration:2.7, projectileOnly:true, persistentProj:true, color:'#5ac8ff', icon:'🪀', maxStack:1, desc:'A rare post-Plantera Dungeon drop.' });
+defItem(I.TERRARIAN, { name:'Terrarian', type:'melee', dmg:190, speed:0.417, kb:6.5, range:16, meleeProj:P.RAZOR, meleeMode:'yoyo', yoyoDuration:3.2, projectileOnly:true, persistentProj:true, yoyoExtraProj:P.RAINBOW, extraInterval:0.28, extraProjSpeed:9, extraDamageMul:0.5, color:'#3dff9d', icon:'🪀', maxStack:1, desc:'The Moon Lord\'s final yoyo. Fires rainbow blades.' });
 
 // Ranged
-defItem(I.UZI, { name:'Uzi', type:'ranged', dmg:26, speed:0.09, kb:2, ammo:I.BULLET, proj:P.GUNBULLET, auto:true, range:999, color:'#5a5a6a', icon:'🔫', maxStack:1, desc:'A heavy submachine gun.' });
-defItem(I.VENUSMAGNUM, { name:'Venus Magnum', type:'ranged', dmg:38, speed:0.12, kb:3, ammo:I.VENOMBULLET, proj:P.GUNBULLET, auto:true, range:999, color:'#ffd75e', icon:'🔫', maxStack:1, desc:'The Jungle\'s favored hand cannon.' });
-defItem(I.SNIPERRIFLE, { name:'Sniper Rifle', type:'ranged', dmg:110, speed:0.5, kb:6, ammo:I.ICHORBULLET, proj:P.GUNBULLET, range:999, color:'#8a8f9a', icon:'🎯', maxStack:1, desc:'One shot. One kill.' });
-defItem(I.TACTICALSHOTGUN, { name:'Tactical Shotgun', type:'ranged', dmg:20, speed:0.3, kb:3, ammo:I.BULLET, proj:P.GUNBULLET, spread:5, auto:true, range:999, color:'#6a6a7a', icon:'🔫', maxStack:1, desc:'Sends a wall of lead.' });
-defItem(I.CHAINGUN, { name:'Chain Gun', type:'ranged', dmg:22, speed:0.05, kb:2, ammo:I.BULLET, proj:P.GUNBULLET, spread:3, auto:true, range:999, color:'#c8c8d0', icon:'🔫', maxStack:1, desc:'A rapid-fire weapon dropped by Santa-NK1.' });
-defItem(I.ONYXBLASTER, { name:'Onyx Blaster', type:'ranged', dmg:42, speed:0.3, kb:4, ammo:I.CURSEDBULLET, proj:P.CURSEDFLAME, explosive:44, auto:true, range:999, color:'#3a3a4a', icon:'🔫', maxStack:1, desc:'Fires explosive dark shards.' });
-defItem(I.DARTRIFLE, { name:'Dart Rifle', type:'ranged', dmg:18, speed:0.2, kb:2, ammo:I.DART, proj:P.DART, auto:true, range:999, color:'#8a5a3a', icon:'🔫', maxStack:1, desc:'A blowgun turned lethal.' });
-defItem(I.DARTPISTOL, { name:'Dart Pistol', type:'ranged', dmg:16, speed:0.12, kb:2, ammo:I.DART, proj:P.DART, auto:true, range:999, color:'#b07850', icon:'🔫', maxStack:1, desc:'A compact venom thrower.' });
-defItem(I.FLAMETHROWER, { name:'Flamethrower', type:'ranged', dmg:28, speed:0.08, kb:2, ammo:I.BULLET, proj:P.FIREBALL, spread:2, auto:true, range:999, color:'#ff6b3d', icon:'🔥', maxStack:1, desc:'Cook your enemies alive.' });
-defItem(I.ROCKETLAUNCHER, { name:'Rocket Launcher', type:'ranged', dmg:50, speed:0.45, kb:5, ammo:I.ROCKET1, proj:P.ROCKET, range:999, color:'#7a6b4a', icon:'🚀', maxStack:1, desc:'Booms.' });
-defItem(I.GRENADELAUNCHER, { name:'Grenade Launcher', type:'ranged', dmg:40, speed:0.4, kb:4, ammo:I.GRENADE, proj:P.ROCKET, projGravity:0.22, range:999, color:'#8a8f9a', icon:'💣', maxStack:1, desc:'Lobs explosive shells dropped by Plantera.' });
-defItem(I.PROXIMITYMINELAUNCHER, { name:'Proximity Mine Launcher', type:'ranged', dmg:60, speed:0.5, kb:5, ammo:I.ROCKET1, proj:P.ROCKET, projGravity:0.18, projMine:true, mineTrigger:60, mineDuration:8, range:999, color:'#6a5a3a', icon:'💣', maxStack:1, desc:'Launches mines that arm when they touch terrain.' });
-defItem(I.TSUNAMI, { name:'Tsunami', type:'ranged', dmg:55, speed:0.25, kb:4, ammo:I.ARROW, proj:P.ARROW, spread:5, auto:true, range:999, color:'#5ac8ff', icon:'🏹', maxStack:1, desc:'Duke Fishron\'s bow. Fires a volley of arrows.' });
-defItem(I.PULSEBOW, { name:'Pulse Bow', type:'ranged', dmg:58, speed:0.2, kb:4, ammo:I.ARROW, proj:P.LASER, projBounces:3, auto:true, range:999, color:'#ffd75e', icon:'🏹', maxStack:1, desc:'Energy bolts ricochet three times.' });
-defItem(I.CHLOROPHYTESHOTBOW, { name:'Chlorophyte Shotbow', type:'ranged', dmg:36, speed:0.25, kb:3, ammo:I.ARROW, proj:P.ARROW, spread:3, projHoming:true, auto:true, range:999, color:'#4dff6b', icon:'🏹', maxStack:1, desc:'Fires homing arrows of living wood.' });
-defItem(I.ELFMELTER, { name:'Elf Melter', type:'ranged', dmg:46, speed:0.1, kb:3, ammo:I.BULLET, proj:P.CURSEDFLAME, spread:2, auto:true, range:999, color:'#ff4d6d', icon:'🔥', maxStack:1, desc:'A festive flamethrower dropped by Santa-NK1.' });
+defItem(I.UZI, { name:'Uzi', type:'ranged', dmg:30, speed:0.15, kb:3.5, ammo:I.BULLET, proj:P.GUNBULLET, auto:true, range:999, color:'#5a5a6a', icon:'🔫', maxStack:1, desc:'A heavy submachine gun.', projSpeed:13});
+defItem(I.VENUSMAGNUM, { name:'Venus Magnum', type:'ranged', dmg:50, speed:0.15, kb:5.5, ammo:I.VENOMBULLET, proj:P.GUNBULLET, auto:true, range:999, color:'#ffd75e', icon:'🔫', maxStack:1, desc:'The Jungle\'s favored hand cannon.', projSpeed:13.5});
+defItem(I.SNIPERRIFLE, { name:'Sniper Rifle', type:'ranged', dmg:200, speed:0.6, kb:8, ammo:I.ICHORBULLET, proj:P.GUNBULLET, range:999, color:'#8a8f9a', icon:'🎯', maxStack:1, desc:'One shot. One kill.', projSpeed:16});
+defItem(I.TACTICALSHOTGUN, { name:'Tactical Shotgun', type:'ranged', dmg:36, speed:0.567, kb:7, ammo:I.BULLET, proj:P.GUNBULLET, spread:5, auto:true, range:999, color:'#6a6a7a', icon:'🔫', maxStack:1, desc:'Sends a wall of lead.', projSpeed:6});
+defItem(I.CHAINGUN, { name:'Chain Gun', type:'ranged', dmg:38, speed:0.067, kb:1.75, ammo:I.BULLET, proj:P.GUNBULLET, spread:3, auto:true, range:999, color:'#c8c8d0', icon:'🔫', maxStack:1, desc:'A rapid-fire weapon dropped by Santa-NK1.', projSpeed:14});
+defItem(I.ONYXBLASTER, { name:'Onyx Blaster', type:'ranged', dmg:24, speed:0.8, kb:6.5, ammo:I.CURSEDBULLET, proj:P.CURSEDFLAME, explosive:44, auto:true, range:999, color:'#3a3a4a', icon:'🔫', maxStack:1, desc:'Fires explosive dark shards.', projSpeed:7});
+defItem(I.DARTRIFLE, { name:'Dart Rifle', type:'ranged', dmg:52, speed:0.633, kb:5.5, ammo:I.DART, proj:P.DART, auto:true, range:999, color:'#8a5a3a', icon:'🔫', maxStack:1, desc:'A blowgun turned lethal.', projSpeed:14.5});
+defItem(I.DARTPISTOL, { name:'Dart Pistol', type:'ranged', dmg:28, speed:0.367, kb:3.5, ammo:I.DART, proj:P.DART, auto:true, range:999, color:'#b07850', icon:'🔫', maxStack:1, desc:'A compact venom thrower.', projSpeed:13});
+defItem(I.FLAMETHROWER, { name:'Flamethrower', type:'ranged', dmg:35, speed:0.5, kb:0.3, ammo:I.BULLET, proj:P.FIREBALL, spread:2, auto:true, range:999, color:'#ff6b3d', icon:'🔥', maxStack:1, desc:'Cook your enemies alive.', projSpeed:7});
+defItem(I.ROCKETLAUNCHER, { name:'Rocket Launcher', type:'ranged', dmg:55, speed:0.5, kb:4, ammo:I.ROCKET1, proj:P.ROCKET, range:999, color:'#7a6b4a', icon:'🚀', maxStack:1, desc:'Booms.', projSpeed:5});
+defItem(I.GRENADELAUNCHER, { name:'Grenade Launcher', type:'ranged', dmg:60, speed:0.333, kb:4, ammo:I.GRENADE, proj:P.ROCKET, projGravity:0.22, range:999, color:'#8a8f9a', icon:'💣', maxStack:1, desc:'Lobs explosive shells dropped by Plantera.', projSpeed:10});
+defItem(I.PROXIMITYMINELAUNCHER, { name:'Proximity Mine Launcher', type:'ranged', dmg:80, speed:0.833, kb:4, ammo:I.ROCKET1, proj:P.ROCKET, projGravity:0.18, projMine:true, mineTrigger:60, mineDuration:8, range:999, color:'#6a5a3a', icon:'💣', maxStack:1, desc:'Launches mines that arm when they touch terrain.', projSpeed:12});
+defItem(I.TSUNAMI, { name:'Tsunami', type:'ranged', dmg:53, speed:0.4, kb:2, ammo:I.ARROW, proj:P.ARROW, spread:5, auto:true, range:999, color:'#5ac8ff', icon:'🏹', maxStack:1, desc:'Duke Fishron\'s bow. Fires a volley of arrows.', projSpeed:10});
+defItem(I.PULSEBOW, { name:'Pulse Bow', type:'ranged', dmg:80, speed:0.333, kb:3, ammo:I.ARROW, proj:P.LASER, projBounces:3, auto:true, range:999, color:'#ffd75e', icon:'🏹', maxStack:1, desc:'Energy bolts ricochet three times.', projSpeed:7.75});
+defItem(I.CHLOROPHYTESHOTBOW, { name:'Chlorophyte Shotbow', type:'ranged', dmg:34, speed:0.317, kb:2.75, ammo:I.ARROW, proj:P.ARROW, spread:3, projHoming:true, auto:true, range:999, color:'#4dff6b', icon:'🏹', maxStack:1, desc:'Fires homing arrows of living wood.', projSpeed:11.5});
+defItem(I.ELFMELTER, { name:'Elf Melter', type:'ranged', dmg:57, speed:0.5, kb:0.425, ammo:I.BULLET, proj:P.CURSEDFLAME, spread:2, auto:true, range:999, color:'#ff4d6d', icon:'🔥', maxStack:1, desc:'A festive flamethrower dropped by Santa-NK1.', projSpeed:8.5});
 
 // Magic
-defItem(I.MAGICALHARP, { name:'Magical Harp', type:'magic', dmg:33, speed:0.18, kb:1, mana:5, proj:P.RAINBOW, auto:true, range:999, color:'#ff9de0', icon:'🎵', maxStack:1, desc:'Plays a melody of destruction.' });
-defItem(I.MAGNETSPHERE, { name:'Magnet Sphere', type:'magic', dmg:36, speed:0.25, kb:2, mana:10, proj:P.MAGICBOLT, magicMode:'sphere', deployDuration:5, deployInterval:0.3, deployProj:P.LASER, deployCount:1, auto:true, range:999, color:'#6b8aff', icon:'🧲', maxStack:1, desc:'A drifting orb that fires at nearby enemies.' });
-defItem(I.INFERNOPORK, { name:'Inferno Fork', type:'magic', dmg:56, speed:0.35, kb:4, mana:11, proj:P.FIREBALL, auto:true, range:999, color:'#ff6b3d', icon:'🔱', maxStack:1, desc:'A lava trident from the Underworld.' });
-defItem(I.SHADOWBEAMSTAFF, { name:'Shadowbeam Staff', type:'magic', dmg:54, speed:0.16, kb:3, mana:9, proj:P.PHANTOMBOLT, projBounces:4, auto:true, range:999, color:'#c85cff', icon:'🪄', maxStack:1, desc:'Fires a shadow bolt that ricochets four times.' });
-defItem(I.SPECTRESTAFF, { name:'Spectre Staff', type:'magic', dmg:48, speed:0.2, kb:2, mana:9, proj:P.PHANTOMBOLT, projHoming:true, auto:true, range:999, color:'#e0e8f0', icon:'🪄', maxStack:1, desc:'Fires a lost soul that tracks enemies.' });
-defItem(I.NETTLEBURST, { name:'Nettle Burst', type:'magic', dmg:32, speed:0.22, kb:2, mana:7, proj:P.SPORE, projCount:3, auto:true, range:999, color:'#6bff8a', icon:'🌿', maxStack:1, desc:'A living whip of thorns and magic.' });
-defItem(I.VENOMSTAFF, { name:'Venom Staff', type:'magic', dmg:40, speed:0.2, kb:2, mana:8, proj:P.STINGER, projCount:3, projHoming:true, status:{type:'venom',duration:5,dps:12}, auto:true, range:999, color:'#3dff8a', icon:'🪄', maxStack:1, desc:'Shoots homing venom fangs.' });
-defItem(I.STAFFOFEARTH, { name:'Staff of Earth', type:'magic', dmg:75, speed:0.5, kb:5, mana:12, proj:P.MAGICBOLT, auto:true, range:999, color:'#8a6b4a', icon:'🗿', maxStack:1, desc:'Hurls boulders of raw earth.' });
-defItem(I.BLIZZARDSTAFF, { name:'Blizzard Staff', type:'magic', dmg:48, speed:0.12, kb:2, mana:9, proj:P.FROSTBOLT, terrainMode:'rain', terrainCount:4, terrainHeight:180, auto:true, range:999, color:'#a8dcff', icon:'❄️', maxStack:1, desc:'Calls four frost bolts down around the cursor.' });
-defItem(I.HEATRAY, { name:'Heat Ray', type:'magic', dmg:60, speed:0.1, kb:3, mana:12, proj:P.LASER, auto:true, range:999, color:'#ff9a3d', icon:'☀️', maxStack:1, desc:'The Golem\'s own ray of heat.' });
-defItem(I.LUNARFLARE, { name:'Lunar Flare', type:'magic', dmg:70, speed:0.25, kb:3, mana:14, proj:P.FIREBALL, terrainMode:'rain', terrainCount:2, terrainHeight:210, auto:true, range:999, color:'#c85cff', icon:'🌙', maxStack:1, desc:'Calls two lunar flares down through terrain.' });
-defItem(I.CURSEDFLAMES, { name:'Cursed Flames', type:'magic', dmg:35, speed:0.22, kb:2, mana:7, proj:P.CURSEDFLAME, projCount:3, status:{type:'cursed',duration:4,dps:8}, auto:true, range:999, color:'#5ac85c', icon:'🔥', maxStack:1, desc:'The burning curse of the corruption.' });
-defItem(I.FLOWEROFFIRE, { name:'Flower of Fire', type:'magic', dmg:42, speed:0.4, kb:4, mana:9, proj:P.FIREBALL, projBounces:2, projCount:1, auto:true, range:999, color:'#ff8a3d', icon:'🌺', maxStack:1, desc:'A flower that spits bouncing fireballs.' });
-defItem(I.RAINBOWGUN, { name:'Rainbow Gun', type:'magic', dmg:38, speed:0.32, kb:2, mana:12, proj:P.RAINBOW, magicMode:'trail', deployDuration:5, deployInterval:0.25, deployCount:1, zoneHeight:6, hitCooldown:0.2, auto:true, range:999, color:'#ff9de0', icon:'🌈', maxStack:1, desc:'Leaves a rainbow wall that burns enemies.' });
-defItem(I.PIRANHAGUN, { name:'Piranha Gun', type:'ranged', dmg:38, speed:0.5, kb:4, piranha:true, proj:P.STINGER, piranhaDmgPerPulse:38, piranhaRange:300, auto:false, range:999, color:'#ff7a55', icon:'🔫', maxStack:1, desc:'Fires a hooked piranha that locks onto prey.' });
+defItem(I.MAGICALHARP, { name:'Magical Harp', type:'magic', dmg:42, speed:0.2, kb:1.5, mana:5, proj:P.RAINBOW, auto:true, range:999, color:'#ff9de0', icon:'🎵', maxStack:1, desc:'Plays a melody of destruction.', projSpeed:4.5});
+defItem(I.MAGNETSPHERE, { name:'Magnet Sphere', type:'magic', dmg:48, speed:0.333, kb:6, mana:14, proj:P.MAGICBOLT, magicMode:'sphere', deployDuration:5, deployInterval:0.3, deployProj:P.LASER, deployCount:1, auto:true, range:999, color:'#6b8aff', icon:'🧲', maxStack:1, desc:'A drifting orb that fires at nearby enemies.', projSpeed:1.2});
+defItem(I.INFERNOPORK, { name:'Inferno Fork', type:'magic', dmg:70, speed:0.5, kb:5, mana:18, proj:P.FIREBALL, auto:true, range:999, color:'#ff6b3d', icon:'🔱', maxStack:1, desc:'A lava trident from the Underworld.', projSpeed:8});
+defItem(I.SHADOWBEAMSTAFF, { name:'Shadowbeam Staff', type:'magic', dmg:80, speed:0.25, kb:6, mana:7, proj:P.PHANTOMBOLT, projBounces:4, auto:true, range:999, color:'#c85cff', icon:'🪄', maxStack:1, desc:'Fires a shadow bolt that ricochets four times.', projSpeed:6});
+defItem(I.SPECTRESTAFF, { name:'Spectre Staff', type:'magic', dmg:65, speed:0.4, kb:6, mana:15, proj:P.PHANTOMBOLT, projHoming:true, auto:true, range:999, color:'#e0e8f0', icon:'🪄', maxStack:1, desc:'Fires a lost soul that tracks enemies.', projSpeed:6});
+defItem(I.NETTLEBURST, { name:'Nettle Burst', type:'magic', dmg:35, speed:0.417, kb:1, mana:12, proj:P.SPORE, projCount:3, auto:true, range:999, color:'#6bff8a', icon:'🌿', maxStack:1, desc:'A living whip of thorns and magic.', projSpeed:32});
+defItem(I.VENOMSTAFF, { name:'Venom Staff', type:'magic', dmg:44, speed:0.5, kb:7, mana:25, proj:P.STINGER, projCount:3, projHoming:true, status:{type:'venom',duration:5,dps:12}, auto:true, range:999, color:'#3dff8a', icon:'🪄', maxStack:1, desc:'Shoots homing venom fangs.', projSpeed:14});
+defItem(I.STAFFOFEARTH, { name:'Staff of Earth', type:'magic', dmg:125, speed:0.4, kb:7.5, mana:18, proj:P.MAGICBOLT, auto:true, range:999, color:'#8a6b4a', icon:'🗿', maxStack:1, desc:'Hurls boulders of raw earth.', projSpeed:12});
+defItem(I.BLIZZARDSTAFF, { name:'Blizzard Staff', type:'magic', dmg:58, speed:0.167, kb:4.5, mana:9, proj:P.FROSTBOLT, terrainMode:'rain', terrainCount:4, terrainHeight:180, auto:true, range:999, color:'#a8dcff', icon:'❄️', maxStack:1, desc:'Calls four frost bolts down around the cursor.', projSpeed:10});
+defItem(I.HEATRAY, { name:'Heat Ray', type:'magic', dmg:90, speed:0.167, kb:3, mana:8, proj:P.LASER, auto:true, range:999, color:'#ff9a3d', icon:'☀️', maxStack:1, desc:'The Golem\'s own ray of heat.', projSpeed:15});
+defItem(I.LUNARFLARE, { name:'Lunar Flare', type:'magic', dmg:100, speed:0.167, kb:4.5, mana:9, proj:P.FIREBALL, terrainMode:'rain', terrainCount:2, terrainHeight:210, auto:true, range:999, color:'#c85cff', icon:'🌙', maxStack:1, desc:'Calls two lunar flares down through terrain.', projSpeed:10});
+defItem(I.CURSEDFLAMES, { name:'Cursed Flames', type:'magic', dmg:55, speed:0.25, kb:6.5, mana:9, proj:P.CURSEDFLAME, projCount:3, status:{type:'cursed',duration:4,dps:8}, auto:true, range:999, color:'#5ac85c', icon:'🔥', maxStack:1, desc:'The burning curse of the corruption.', projSpeed:10});
+defItem(I.FLOWEROFFIRE, { name:'Flower of Fire', type:'magic', dmg:48, speed:0.267, kb:5.5, mana:9, proj:P.FIREBALL, projBounces:2, projCount:1, auto:true, range:999, color:'#ff8a3d', icon:'🌺', maxStack:1, desc:'A flower that spits bouncing fireballs.', projSpeed:7.5});
+defItem(I.RAINBOWGUN, { name:'Rainbow Gun', type:'magic', dmg:45, speed:0.667, kb:2.5, mana:20, proj:P.RAINBOW, magicMode:'trail', deployDuration:5, deployInterval:0.25, deployCount:1, zoneHeight:6, hitCooldown:0.2, auto:true, range:999, color:'#ff9de0', icon:'🌈', maxStack:1, desc:'Leaves a rainbow wall that burns enemies.', projSpeed:16});
+defItem(I.PIRANHAGUN, { name:'Piranha Gun', type:'ranged', dmg:40, speed:0.5, kb:1, piranha:true, proj:P.STINGER, piranhaDmgPerPulse:38, piranhaRange:300, auto:false, range:999, color:'#ff7a55', icon:'🔫', maxStack:1, desc:'Fires a hooked piranha that locks onto prey.', projSpeed:14});
 
 // Summoner staves
 defItem(I.SPIDERSTAFF, { name:'Spider Staff', type:'summonstaff', dmg:32, minion:'spider', speed:0, color:'#e8e8f0', icon:'🕷️', maxStack:1, desc:'Summons a spider minion.' });
@@ -605,23 +605,23 @@ defItem(I.ADAMANTITEAXE, { name:'Adamantite Axe', type:'tool', power:110, speed:
 defItem(I.CHLOROPHYTEAXE, { name:'Chlorophyte Axe', type:'tool', power:130, speed:3.2, dmg:20, range:3.4, color:'#4dff6b', icon:'🪓', maxStack:1, desc:'A living axe of the jungle.' });
 
 // True melee weapons
-defItem(I.TRUEEXCALIBUR, { name:'True Excalibur', type:'melee', dmg:88, speed:0.12, kb:7, range:2.7, meleeProj:P.BLAZE, projSpeed:8, projLife:1.1, projDamageMul:0.75, color:'#ffe14d', icon:'✨', maxStack:1, desc:'The perfected Hallowed blade.' });
-defItem(I.TRUENIGHTSEDGE, { name:'True Night\'s Edge', type:'melee', dmg:92, speed:0.12, kb:7, range:2.7, meleeProj:P.CRESCENT, projSpeed:7, projLife:1.5, projDamageMul:0.8, color:'#7a3d5c', icon:'🌑', maxStack:1, desc:'The dark essence of the Corruption.' });
+defItem(I.TRUEEXCALIBUR, { name:'True Excalibur', type:'melee', dmg:72, speed:0.3, kb:4.5, range:4, meleeProj:P.BLAZE, projSpeed:8, projLife:1.1, projDamageMul:0.75, color:'#ffe14d', icon:'✨', maxStack:1, desc:'The perfected Hallowed blade.' });
+defItem(I.TRUENIGHTSEDGE, { name:'True Night\'s Edge', type:'melee', dmg:70, speed:0.533, kb:4.75, range:4, meleeProj:P.CRESCENT, projSpeed:7, projLife:1.5, projDamageMul:0.8, color:'#7a3d5c', icon:'🌑', maxStack:1, desc:'The dark essence of the Corruption.' });
 
 // Ammo
-defItem(I.MUSKETBALL, { name:'Musket Ball', type:'ammo', dmg:5, color:'#b8b8c0', icon:'⚫', maxStack:999, desc:'Simple lead shot.' });
-defItem(I.SILVERBULLET, { name:'Silver Bullet', type:'ammo', dmg:8, color:'#d8d8e8', icon:'⚪', maxStack:999, desc:'Silver-tipped rounds.' });
+defItem(I.MUSKETBALL, { name:'Musket Ball', type:'ammo', dmg:7, color:'#b8b8c0', icon:'⚫', maxStack:999, desc:'Simple lead shot.' });
+defItem(I.SILVERBULLET, { name:'Silver Bullet', type:'ammo', dmg:9, color:'#d8d8e8', icon:'⚪', maxStack:999, desc:'Silver-tipped rounds.' });
 defItem(I.EXPLOSIVEBULLET, { name:'Explosive Bullet', type:'ammo', dmg:10, explosive:42, color:'#ff9a3d', icon:'💥', maxStack:999, desc:'Explodes on impact.' });
-defItem(I.CHLOROPHYTEBULLET, { name:'Chlorophyte Bullet', type:'ammo', dmg:12, homing:true, color:'#4dff6b', icon:'🍀', maxStack:999, desc:'Homing rounds of living metal.' });
-defItem(I.UNHOLYARROW, { name:'Unholy Arrow', type:'ammo', dmg:8, color:'#7a3d5c', icon:'➶', maxStack:999, desc:'Tipped with corruption.' });
-defItem(I.JESTERSARROW, { name:'Jester\'s Arrow', type:'ammo', dmg:7, color:'#ffe9a8', icon:'➶', maxStack:999, desc:'A star-headed arrow.' });
-defItem(I.HOLYARROW, { name:'Holy Arrow', type:'ammo', dmg:9, color:'#ffe14d', icon:'➶', maxStack:999, desc:'Blessed by the Hallow.' });
+defItem(I.CHLOROPHYTEBULLET, { name:'Chlorophyte Bullet', type:'ammo', dmg:9, homing:true, color:'#4dff6b', icon:'🍀', maxStack:999, desc:'Homing rounds of living metal.' });
+defItem(I.UNHOLYARROW, { name:'Unholy Arrow', type:'ammo', dmg:12, color:'#7a3d5c', icon:'➶', maxStack:999, desc:'Tipped with corruption.' });
+defItem(I.JESTERSARROW, { name:'Jester\'s Arrow', type:'ammo', dmg:10, color:'#ffe9a8', icon:'➶', maxStack:999, desc:'A star-headed arrow.' });
+defItem(I.HOLYARROW, { name:'Holy Arrow', type:'ammo', dmg:13, color:'#ffe14d', icon:'➶', maxStack:999, desc:'Blessed by the Hallow.' });
 
 // Ranged
-defItem(I.SHOTGUN, { name:'Shotgun', type:'ranged', dmg:17, speed:0.4, kb:3, ammo:I.MUSKETBALL, proj:P.GUNBULLET, spread:5, range:999, color:'#8a6b4a', icon:'🔫', maxStack:1, desc:'A wall of lead at close range.' });
+defItem(I.SHOTGUN, { name:'Shotgun', type:'ranged', dmg:24, speed:0.75, kb:6.5, ammo:I.MUSKETBALL, proj:P.GUNBULLET, spread:5, range:999, color:'#8a6b4a', icon:'🔫', maxStack:1, desc:'A wall of lead at close range.', projSpeed:7});
 
 // Magic
-defItem(I.SKYFRACTURE, { name:'Sky Fracture', type:'magic', dmg:45, speed:0.18, kb:2, mana:9, proj:P.MAGICBOLT, projCount:2, auto:true, range:999, color:'#8ac8ff', icon:'🌌', maxStack:1, desc:'Fires shards of sky itself.' });
+defItem(I.SKYFRACTURE, { name:'Sky Fracture', type:'magic', dmg:38, speed:0.2, kb:6, mana:17, proj:P.MAGICBOLT, projCount:2, auto:true, range:999, color:'#8ac8ff', icon:'🌌', maxStack:1, desc:'Fires shards of sky itself.', projSpeed:8.75});
 
 // Summon staves
 defItem(I.ABIGAILSFLOWER, { name:'Abigail\'s Flower', type:'summonstaff', dmg:18, minion:'abigail', speed:0, color:'#c8a8e8', icon:'🌸', maxStack:1, desc:'Summons a friendly ghost.' });
@@ -670,41 +670,41 @@ defItem(I.CHLOROPHYTEJACKHAMMER, { name:'Chlorophyte Jackhammer', type:'tool', p
 defItem(I.SPECTREHAMAXE, { name:'Spectre Hamaxe', type:'tool', power:150, speed:3.8, dmg:24, range:3.6, color:'#e6e6f0', icon:'🔨', maxStack:1, hammer:true, desc:'A spectral hammer-axe.' });
 
 // Melee
-defItem(I.NIGHTSEDGE, { name:'Night\'s Edge', type:'melee', dmg:55, speed:0.2, kb:5, range:2.2, color:'#8a4dff', icon:'🌑', maxStack:1, desc:'Four swords fused by dark power.' });
-defItem(I.LIGHTDISC, { name:'Light Disc', type:'melee', dmg:60, speed:0.16, kb:5, range:3.2, meleeProj:P.RAZOR, projSpeed:9, projLife:2, projReturn:0.55, returnSpeed:11, projectileOnly:true, persistentProj:true, color:'#ffe14d', icon:'🛸', maxStack:1, desc:'Boomerangs of Hallowed light.' });
-defItem(I.DAOOFPAW, { name:'Dao of Pow', type:'melee', dmg:65, speed:0.25, kb:6, range:3.0, meleeProj:P.RAZOR, meleeMode:'flail', flailDuration:0.8, projectileOnly:true, persistentProj:true, color:'#c85cff', icon:'⛓️', maxStack:1, desc:'A flail of conflicting energy.' });
-defItem(I.CHAINGUILLOTINES, { name:'Chain Guillotines', type:'melee', dmg:40, speed:0.22, kb:4, range:2.8, meleeProj:P.RAZOR, meleeMode:'flail', flailDuration:0.75, projectileOnly:true, persistentProj:true, color:'#c8ccd4', icon:'⛓️', maxStack:1, desc:'Razor flails of the Hallow.' });
-defItem(I.PALADINSHAMMER, { name:'Paladin\'s Hammer', type:'melee', dmg:90, speed:0.3, kb:7, range:3.4, meleeProj:P.RAZOR, projSpeed:8, projLife:2.1, projReturn:0.6, returnSpeed:10, projectileOnly:true, persistentProj:true, color:'#ffd75e', icon:'🔨', maxStack:1, desc:'Dropped by the Paladin. Hits like a truck.' });
-defItem(I.POSSESSEDHATCHET, { name:'Possessed Hatchet', type:'melee', dmg:65, speed:0.14, kb:5, range:3.0, meleeProj:P.RAZOR, projSpeed:9, projLife:2, projReturn:0.6, returnSpeed:11, projectileOnly:true, persistentProj:true, projHoming:true, color:'#9adcff', icon:'🪓', maxStack:1, desc:'A hatchet of the Golem\'s servants.' });
-defItem(I.FLYINGKNIFE, { name:'Flying Knife', type:'melee', dmg:75, speed:0.12, kb:5, range:3.0, meleeProj:P.RAZOR, meleeMode:'controlled', controlledReach:12, controlledSpeed:9, projectileOnly:true, persistentProj:true, color:'#8a8f9a', icon:'🔪', maxStack:1, desc:'A cursor-controlled dagger dropped by Hallowed Mimics.' });
-defItem(I.AMAROK, { name:'Amarok', type:'melee', dmg:42, speed:0.28, kb:5, range:2.8, meleeProj:P.RAZOR, meleeMode:'yoyo', yoyoDuration:2.0, projectileOnly:true, persistentProj:true, color:'#9adcff', icon:'🪀', maxStack:1, desc:'A frostbite yoyo dropped by Hardmode Snow enemies.' });
-defItem(I.GRADIENT, { name:'Gradient', type:'melee', dmg:30, speed:0.3, kb:4, range:2.6, meleeProj:P.RAZOR, meleeMode:'yoyo', yoyoDuration:1.8, projectileOnly:true, persistentProj:true, color:'#ff9de0', icon:'🪀', maxStack:1, desc:'A crafted substitute for the Skeleton Merchant\'s yoyo.' });
-defItem(I.TITANIUMTRIDENT, { name:'Titanium Trident', type:'melee', dmg:55, speed:0.18, kb:5, range:2.5, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.3, projectileOnly:true, persistentProj:true, color:'#c8ccd4', icon:'🔱', maxStack:1, desc:'A trident of pure titanium.' });
-defItem(I.ADAMANTITEGLAIVE, { name:'Adamantite Glaive', type:'melee', dmg:48, speed:0.2, kb:5, range:2.4, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.32, projectileOnly:true, persistentProj:true, color:'#e05555', icon:'🔱', maxStack:1, desc:'A polearm of adamantite.' });
+defItem(I.NIGHTSEDGE, { name:'Night\'s Edge', type:'melee', dmg:40, speed:0.417, kb:4.5, range:4, color:'#8a4dff', icon:'🌑', maxStack:1, desc:'Four swords fused by dark power.' });
+defItem(I.LIGHTDISC, { name:'Light Disc', type:'melee', dmg:60, speed:0.233, kb:8, range:4, meleeProj:P.RAZOR, projSpeed:9, projLife:2, projReturn:0.55, returnSpeed:11, projectileOnly:true, persistentProj:true, color:'#ffe14d', icon:'🛸', maxStack:1, desc:'Boomerangs of Hallowed light.' });
+defItem(I.DAOOFPAW, { name:'Dao of Pow', type:'melee', dmg:100, speed:0.75, kb:6, range:8, meleeProj:P.RAZOR, meleeMode:'flail', flailDuration:0.8, projectileOnly:true, persistentProj:true, color:'#c85cff', icon:'⛓️', maxStack:1, desc:'A flail of conflicting energy.' });
+defItem(I.CHAINGUILLOTINES, { name:'Chain Guillotines', type:'melee', dmg:59, speed:0.233, kb:3.25, range:7, meleeProj:P.RAZOR, meleeMode:'flail', flailDuration:0.75, projectileOnly:true, persistentProj:true, color:'#c8ccd4', icon:'⛓️', maxStack:1, desc:'Razor flails of the Hallow.' });
+defItem(I.PALADINSHAMMER, { name:'Paladin\'s Hammer', type:'melee', dmg:100, speed:0.25, kb:9, range:4, meleeProj:P.RAZOR, projSpeed:8, projLife:2.1, projReturn:0.6, returnSpeed:10, projectileOnly:true, persistentProj:true, color:'#ffd75e', icon:'🔨', maxStack:1, desc:'Dropped by the Paladin. Hits like a truck.' });
+defItem(I.POSSESSEDHATCHET, { name:'Possessed Hatchet', type:'melee', dmg:80, speed:0.233, kb:5, range:4, meleeProj:P.RAZOR, projSpeed:9, projLife:2, projReturn:0.6, returnSpeed:11, projectileOnly:true, persistentProj:true, projHoming:true, color:'#9adcff', icon:'🪓', maxStack:1, desc:'A hatchet of the Golem\'s servants.' });
+defItem(I.FLYINGKNIFE, { name:'Flying Knife', type:'melee', dmg:40, speed:0.25, kb:4.5, range:3.0, meleeProj:P.RAZOR, meleeMode:'controlled', controlledReach:12, controlledSpeed:9, projectileOnly:true, persistentProj:true, color:'#8a8f9a', icon:'🔪', maxStack:1, desc:'A cursor-controlled dagger dropped by Hallowed Mimics.' });
+defItem(I.AMAROK, { name:'Amarok', type:'melee', dmg:47, speed:0.417, kb:2.8, range:14, meleeProj:P.RAZOR, meleeMode:'yoyo', yoyoDuration:2.0, projectileOnly:true, persistentProj:true, color:'#9adcff', icon:'🪀', maxStack:1, desc:'A frostbite yoyo dropped by Hardmode Snow enemies.' });
+defItem(I.GRADIENT, { name:'Gradient', type:'melee', dmg:53, speed:0.417, kb:3.8, range:15, meleeProj:P.RAZOR, meleeMode:'yoyo', yoyoDuration:1.8, projectileOnly:true, persistentProj:true, color:'#ff9de0', icon:'🪀', maxStack:1, desc:'A crafted substitute for the Skeleton Merchant\'s yoyo.' });
+defItem(I.TITANIUMTRIDENT, { name:'Titanium Trident', type:'melee', dmg:48, speed:0.383, kb:6.2, range:4.5, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.3, projectileOnly:true, persistentProj:true, color:'#c8ccd4', icon:'🔱', maxStack:1, desc:'A trident of pure titanium.' });
+defItem(I.ADAMANTITEGLAIVE, { name:'Adamantite Glaive', type:'melee', dmg:49, speed:0.417, kb:6, range:4.5, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.32, projectileOnly:true, persistentProj:true, color:'#e05555', icon:'🔱', maxStack:1, desc:'A polearm of adamantite.' });
 
 // Ranged
-defItem(I.CLOCKWORKAR, { name:'Clockwork Assault Rifle', type:'ranged', dmg:26, speed:0.09, kb:2, ammo:I.MUSKETBALL, proj:P.GUNBULLET, auto:true, range:999, color:'#8a6b4a', icon:'🔫', maxStack:1, desc:'Dropped by the Wall of Flesh. Rapid fire.' });
-defItem(I.BOOMSTICK, { name:'Boomstick', type:'ranged', dmg:20, speed:0.4, kb:4, ammo:I.MUSKETBALL, proj:P.GUNBULLET, spread:4, range:999, color:'#a87850', icon:'🔫', maxStack:1, desc:'A powerful shotgun of the jungle.' });
-defItem(I.MARROW, { name:'Marrow', type:'ranged', dmg:44, speed:0.22, kb:3, ammo:I.BONEARROW, proj:P.ARROW, auto:true, range:999, color:'#e8e0c8', icon:'🏹', maxStack:1, desc:'A bow of living bone.' });
-defItem(I.ICEBOW, { name:'Ice Bow', type:'ranged', dmg:40, speed:0.25, kb:3, ammo:I.FROSTBURNARROW, proj:P.ARROW, auto:true, range:999, color:'#9adcff', icon:'🏹', maxStack:1, desc:'A bow of frozen sinew.' });
-defItem(I.XENOPOPPER, { name:'Xenopopper', type:'ranged', dmg:40, speed:0.08, kb:2, ammo:I.BULLET, proj:P.GUNBULLET, spread:3, auto:true, range:999, color:'#c85cff', icon:'🔫', maxStack:1, desc:'From the Martian invasion.' });
+defItem(I.CLOCKWORKAR, { name:'Clockwork Assault Rifle', type:'ranged', dmg:17, speed:0.2, kb:2, ammo:I.MUSKETBALL, proj:P.GUNBULLET, auto:true, range:999, color:'#8a6b4a', icon:'🔫', maxStack:1, desc:'Dropped by the Wall of Flesh. Rapid fire.', projSpeed:7.75});
+defItem(I.BOOMSTICK, { name:'Boomstick', type:'ranged', dmg:14, speed:0.667, kb:5.75, ammo:I.MUSKETBALL, proj:P.GUNBULLET, spread:4, range:999, color:'#a87850', icon:'🔫', maxStack:1, desc:'A powerful shotgun of the jungle.', projSpeed:5.35});
+defItem(I.MARROW, { name:'Marrow', type:'ranged', dmg:40, speed:0.317, kb:4.7, ammo:I.BONEARROW, proj:P.ARROW, auto:true, range:999, color:'#e8e0c8', icon:'🏹', maxStack:1, desc:'A bow of living bone.', projSpeed:11});
+defItem(I.ICEBOW, { name:'Ice Bow', type:'ranged', dmg:39, speed:0.233, kb:4.5, ammo:I.FROSTBURNARROW, proj:P.ARROW, auto:true, range:999, color:'#9adcff', icon:'🏹', maxStack:1, desc:'A bow of frozen sinew.', projSpeed:10});
+defItem(I.XENOPOPPER, { name:'Xenopopper', type:'ranged', dmg:45, speed:0.35, kb:3, ammo:I.BULLET, proj:P.GUNBULLET, spread:3, auto:true, range:999, color:'#c85cff', icon:'🔫', maxStack:1, desc:'From the Martian invasion.', projSpeed:12});
 
 // Ammo
-defItem(I.CURSEDBULLET, { name:'Cursed Bullet', type:'ammo', dmg:9, status:{type:'cursed',duration:4,dps:8}, color:'#5ac85c', icon:'☄️', maxStack:999, desc:'Cursed flame rounds.' });
-defItem(I.ICHORBULLET, { name:'Ichor Bullet', type:'ammo', dmg:9, status:{type:'ichor',duration:5,defense:12}, color:'#ffd75e', icon:'🟡', maxStack:999, desc:'Molten ichor rounds that reduce defense.' });
-defItem(I.VENOMBULLET, { name:'Venom Bullet', type:'ammo', dmg:11, status:{type:'venom',duration:5,dps:12}, color:'#3dff8a', icon:'🧪', maxStack:999, desc:'Venomous rounds of the jungle.' });
-defItem(I.FROSTBURNARROW, { name:'Frostburn Arrow', type:'ammo', dmg:8, status:{type:'frostburn',duration:4,dps:6}, color:'#9adcff', icon:'➶', maxStack:999, desc:'Frozen arrows that inflict frostburn.' });
-defItem(I.HELLFIREARROW, { name:'Hellfire Arrow', type:'ammo', dmg:10, explosive:36, color:'#ff9a3d', icon:'➶', maxStack:999, desc:'Arrows that burst into flame on impact.' });
-defItem(I.BONEARROW, { name:'Bone Arrow', type:'ammo', dmg:7, color:'#e8e0c8', icon:'➶', maxStack:999, desc:'Arrows carved from bone.' });
+defItem(I.CURSEDBULLET, { name:'Cursed Bullet', type:'ammo', dmg:15, status:{type:'cursed',duration:4,dps:8}, color:'#5ac85c', icon:'☄️', maxStack:999, desc:'Cursed flame rounds.' });
+defItem(I.ICHORBULLET, { name:'Ichor Bullet', type:'ammo', dmg:13, status:{type:'ichor',duration:5,defense:12}, color:'#ffd75e', icon:'🟡', maxStack:999, desc:'Molten ichor rounds that reduce defense.' });
+defItem(I.VENOMBULLET, { name:'Venom Bullet', type:'ammo', dmg:15, status:{type:'venom',duration:5,dps:12}, color:'#3dff8a', icon:'🧪', maxStack:999, desc:'Venomous rounds of the jungle.' });
+defItem(I.FROSTBURNARROW, { name:'Frostburn Arrow', type:'ammo', dmg:9, status:{type:'frostburn',duration:4,dps:6}, color:'#9adcff', icon:'➶', maxStack:999, desc:'Frozen arrows that inflict frostburn.' });
+defItem(I.HELLFIREARROW, { name:'Hellfire Arrow', type:'ammo', dmg:13, explosive:36, color:'#ff9a3d', icon:'➶', maxStack:999, desc:'Arrows that burst into flame on impact.' });
+defItem(I.BONEARROW, { name:'Bone Arrow', type:'ammo', dmg:8, color:'#e8e0c8', icon:'➶', maxStack:999, desc:'Arrows carved from bone.' });
 
 // Magic
-defItem(I.NIMBUSROD, { name:'Nimbus Rod', type:'magic', dmg:32, speed:0.3, kb:1, mana:8, proj:P.MAGICBOLT, magicMode:'cloud', deployDuration:6, deployInterval:0.35, deployProj:P.LASER, deployCount:2, auto:true, range:999, color:'#8a9ad0', icon:'☁️', maxStack:1, desc:'Places up to two rain clouds of death.' });
-defItem(I.SPIRITFLAME, { name:'Spirit Flame', type:'magic', dmg:40, speed:0.2, kb:2, mana:8, proj:P.PHANTOMBOLT, projCount:3, projHoming:true, auto:true, range:999, color:'#c85cff', icon:'👻', maxStack:1, desc:'Flames that hunt the wicked.' });
-defItem(I.BUBBLEGUN, { name:'Bubble Gun', type:'magic', dmg:28, speed:0.08, kb:1, mana:5, proj:P.MAGICBOLT, projCount:2, auto:true, range:999, color:'#8ac8ff', icon:'🫧', maxStack:1, desc:'Duke Fishron\'s toy of doom.' });
-defItem(I.LASERMACHINEGUN, { name:'Laser Machinegun', type:'magic', dmg:36, speed:0.16, kb:1, mana:5, proj:P.LASER, magicRamp:true, rampMin:0.05, rampStep:0.012, auto:true, range:999, color:'#ff4d6d', icon:'🔫', maxStack:1, desc:'A Martian laser that accelerates and steadies while firing.' });
-defItem(I.NEBULABLAZE, { name:'Nebula Blaze', type:'magic', dmg:66, speed:0.16, kb:3, mana:9, proj:P.PHANTOMBOLT, auto:true, range:999, color:'#c85cff', icon:'🔥', maxStack:1, desc:'A blaze of nebula fire.' });
-defItem(I.NEBULAARCANUM, { name:'Nebula Arcanum', type:'magic', dmg:72, speed:0.35, kb:4, mana:14, proj:P.MAGICBOLT, magicMode:'sphere', deployDuration:6, deployInterval:0.28, deployProj:P.PHANTOMBOLT, deployCount:1, deployDamageMul:0.5, deployHoming:true, auto:true, range:999, color:'#a86bff', icon:'🔮', maxStack:1, desc:'Creates a drifting nebula orb that launches homing bolts.' });
-defItem(I.UNHOLYTRIDENT, { name:'Unholy Trident', type:'magic', dmg:46, speed:0.22, kb:4, mana:9, proj:P.CURSEDFLAME, auto:true, range:999, color:'#8a5a3a', icon:'🔱', maxStack:1, desc:'A trident from the depths of hell.' });
+defItem(I.NIMBUSROD, { name:'Nimbus Rod', type:'magic', dmg:30, speed:0.367, kb:1, mana:30, proj:P.MAGICBOLT, magicMode:'cloud', deployDuration:6, deployInterval:0.35, deployProj:P.LASER, deployCount:2, auto:true, range:999, color:'#8a9ad0', icon:'☁️', maxStack:1, desc:'Places up to two rain clouds of death.', projSpeed:16});
+defItem(I.SPIRITFLAME, { name:'Spirit Flame', type:'magic', dmg:85, speed:0.367, kb:5, mana:14, proj:P.PHANTOMBOLT, projCount:3, projHoming:true, auto:true, range:999, color:'#c85cff', icon:'👻', maxStack:1, desc:'Flames that hunt the wicked.', projSpeed:3});
+defItem(I.BUBBLEGUN, { name:'Bubble Gun', type:'magic', dmg:70, speed:0.15, kb:3, mana:5, proj:P.MAGICBOLT, projCount:2, auto:true, range:999, color:'#8ac8ff', icon:'🫧', maxStack:1, desc:'Duke Fishron\'s toy of doom.', projSpeed:15});
+defItem(I.LASERMACHINEGUN, { name:'Laser Machinegun', type:'magic', dmg:60, speed:0.333, kb:2, mana:6, proj:P.LASER, magicRamp:true, rampMin:0.05, rampStep:0.012, auto:true, range:999, color:'#ff4d6d', icon:'🔫', maxStack:1, desc:'A Martian laser that accelerates and steadies while firing.', projSpeed:20});
+defItem(I.NEBULABLAZE, { name:'Nebula Blaze', type:'magic', dmg:130, speed:0.2, kb:3, mana:12, proj:P.PHANTOMBOLT, auto:true, range:999, color:'#c85cff', icon:'🔥', maxStack:1, desc:'A blaze of nebula fire.', projSpeed:6});
+defItem(I.NEBULAARCANUM, { name:'Nebula Arcanum', type:'magic', dmg:70, speed:0.5, kb:5, mana:30, proj:P.MAGICBOLT, magicMode:'sphere', deployDuration:6, deployInterval:0.28, deployProj:P.PHANTOMBOLT, deployCount:1, deployDamageMul:0.5, deployHoming:true, auto:true, range:999, color:'#a86bff', icon:'🔮', maxStack:1, desc:'Creates a drifting nebula orb that launches homing bolts.', projSpeed:7});
+defItem(I.UNHOLYTRIDENT, { name:'Unholy Trident', type:'magic', dmg:150, speed:0.45, kb:6.66, mana:19, proj:P.CURSEDFLAME, auto:true, range:999, color:'#8a5a3a', icon:'🔱', maxStack:1, desc:'A trident from the depths of hell.', projSpeed:13});
 
 // Summon staves
 defItem(I.HORNETSTAFF, { name:'Hornet Staff', type:'summonstaff', dmg:30, minion:'hornet', speed:0, color:'#ffd75e', icon:'🐝', maxStack:1, desc:'Summons hornets of the jungle.' });
@@ -753,15 +753,15 @@ defItem(I.CELESTIALSIGIL, { name:'Celestial Sigil', type:'summon', boss:'moonlor
 // Hardmode encounter rewards
 defItem(I.KEYOFLIGHT, { name:'Key of Light', type:'mimickey', mimic:'hallow', color:'#ffe9a8', icon:'🗝️', maxStack:99, desc:'Place one in an empty Chest to awaken a Hallowed Mimic.' });
 defItem(I.KEYOFNIGHT, { name:'Key of Night', type:'mimickey', mimic:'evil', color:'#9a6bb8', icon:'🗝️', maxStack:99, desc:'Place one in an empty Chest to awaken this world\'s evil Mimic.' });
-defItem(I.DAEDALUSSTORMBOW, { name:'Daedalus Stormbow', type:'ranged', dmg:38, speed:0.22, kb:3, ammo:I.ARROW, proj:P.ARROW, spread:3, terrainMode:'rain', terrainHeight:180, auto:true, range:999, color:'#ffe9a8', icon:'🏹', maxStack:1, desc:'Rains the selected arrows from above the cursor.' });
-defItem(I.CRYSTALVILESHARD, { name:'Crystal Vile Shard', type:'magic', dmg:42, speed:0.16, kb:2, mana:8, proj:P.PHANTOMBOLT, projPersistent:true, auto:true, range:999, color:'#ff9de0', icon:'💎', maxStack:1, desc:'Fires crystal shards that pierce each target once.' });
-defItem(I.CLINGERSTAFF, { name:'Clinger Staff', type:'magic', dmg:46, speed:0.25, kb:3, mana:10, proj:P.CURSEDFLAME, magicMode:'wall', deployDuration:5, deployCount:1, zoneHeight:7, hitCooldown:0.3, auto:true, range:999, color:'#65d85c', icon:'🔥', maxStack:1, desc:'Summons a persistent wall of cursed flame.' });
-defItem(I.FETIDBAGHNAKHS, { name:'Fetid Baghnakhs', type:'melee', dmg:48, speed:0.08, kb:2, range:1.5, color:'#d85868', icon:'🗡️', maxStack:1, desc:'Savage claws with extreme attack speed.' });
-defItem(I.LIFEDRAIN, { name:'Life Drain', type:'magic', dmg:38, speed:0.12, kb:1, mana:3, proj:P.SPORE, magicMode:'beam', channelRange:18, channelManaInterval:0.18, hitCooldown:0.2, lifeSteal:0.08, beamStyle:'blood', auto:true, range:999, color:'#e05868', icon:'🩸', maxStack:1, desc:'Channels a short crimson beam that restores life on contact.' });
+defItem(I.DAEDALUSSTORMBOW, { name:'Daedalus Stormbow', type:'ranged', dmg:38, speed:0.317, kb:2.25, ammo:I.ARROW, proj:P.ARROW, spread:3, terrainMode:'rain', terrainHeight:180, auto:true, range:999, color:'#ffe9a8', icon:'🏹', maxStack:1, desc:'Rains the selected arrows from above the cursor.', projSpeed:12.5});
+defItem(I.CRYSTALVILESHARD, { name:'Crystal Vile Shard', type:'magic', dmg:25, speed:0.55, kb:3, mana:13, proj:P.PHANTOMBOLT, projPersistent:true, auto:true, range:999, color:'#ff9de0', icon:'💎', maxStack:1, desc:'Fires crystal shards that pierce each target once.', projSpeed:32});
+defItem(I.CLINGERSTAFF, { name:'Clinger Staff', type:'magic', dmg:43, speed:0.4, kb:8, mana:40, proj:P.CURSEDFLAME, magicMode:'wall', deployDuration:5, deployCount:1, zoneHeight:7, hitCooldown:0.3, auto:true, range:999, color:'#65d85c', icon:'🔥', maxStack:1, desc:'Summons a persistent wall of cursed flame.', projSpeed:15});
+defItem(I.FETIDBAGHNAKHS, { name:'Fetid Baghnakhs', type:'melee', dmg:60, speed:0.133, kb:6, range:4, color:'#d85868', icon:'🗡️', maxStack:1, desc:'Savage claws with extreme attack speed.' });
+defItem(I.LIFEDRAIN, { name:'Life Drain', type:'magic', dmg:35, speed:0.2, kb:2.5, mana:10, proj:P.SPORE, magicMode:'beam', channelRange:18, channelManaInterval:0.18, hitCooldown:0.2, lifeSteal:0.08, beamStyle:'blood', auto:true, range:999, color:'#e05868', icon:'🩸', maxStack:1, desc:'Channels a short crimson beam that restores life on contact.', projSpeed:10});
 defItem(I.FLESHKNUCKLES, { name:'Flesh Knuckles', type:'accessory', def:7, color:'#c85058', icon:'✊', maxStack:1, desc:'Defense +7.' });
-defItem(I.SHADOWFLAMEBOW, { name:'Shadowflame Bow', type:'ranged', dmg:47, speed:0.2, kb:3, ammo:I.ARROW, proj:P.CURSEDFLAME, auto:true, range:999, color:'#b45cff', icon:'🏹', maxStack:1, desc:'Converts arrows into shadowflame.' });
-defItem(I.SHADOWFLAMEKNIFE, { name:'Shadowflame Knife', type:'melee', dmg:50, speed:0.16, kb:4, range:2.8, meleeProj:P.PHANTOMBOLT, projSpeed:9, projLife:1.5, projBounces:2, projectileOnly:true, color:'#b45cff', icon:'🔪', maxStack:1, desc:'A bouncing knife wreathed in shadowflame.' });
-defItem(I.SHADOWFLAMEHEXDOLL, { name:'Shadowflame Hex Doll', type:'magic', dmg:44, speed:0.12, kb:2, mana:7, proj:P.PHANTOMBOLT, auto:true, range:999, color:'#c85cff', icon:'🧸', maxStack:1, desc:'Unleashes streams of shadowflame.' });
+defItem(I.SHADOWFLAMEBOW, { name:'Shadowflame Bow', type:'ranged', dmg:47, speed:0.333, kb:4.5, ammo:I.ARROW, proj:P.CURSEDFLAME, auto:true, range:999, color:'#b45cff', icon:'🏹', maxStack:1, desc:'Converts arrows into shadowflame.', projSpeed:11});
+defItem(I.SHADOWFLAMEKNIFE, { name:'Shadowflame Knife', type:'melee', dmg:43, speed:0.2, kb:5.75, range:4, meleeProj:P.PHANTOMBOLT, projSpeed:9, projLife:1.5, projBounces:2, projectileOnly:true, color:'#b45cff', icon:'🔪', maxStack:1, desc:'A bouncing knife wreathed in shadowflame.' });
+defItem(I.SHADOWFLAMEHEXDOLL, { name:'Shadowflame Hex Doll', type:'magic', dmg:32, speed:0.35, kb:3.75, mana:6, proj:P.PHANTOMBOLT, auto:true, range:999, color:'#c85cff', icon:'🧸', maxStack:1, desc:'Unleashes streams of shadowflame.', projSpeed:9});
 defItem(I.PIRATESTAFF, { name:'Pirate Staff', type:'summonstaff', dmg:40, minion:'pirate', speed:0, color:'#d8b878', icon:'🏴‍☠️', maxStack:1, desc:'Summons a pirate minion.' });
 defItem(I.LUCKYCOIN, { name:'Lucky Coin', type:'accessory', dmgMul:1.05, color:'#ffd75e', icon:'🪙', maxStack:1, desc:'Damage +5%. Enemies drop richer loot.' });
 defItem(I.DISCOUNTCARD, { name:'Discount Card', type:'accessory', runSpeed:1.08, color:'#e8d8a0', icon:'💳', maxStack:1, desc:'Speed +8%. A prized Pirate Invasion reward.' });
@@ -769,37 +769,37 @@ defItem(I.GOLDRING, { name:'Gold Ring', type:'accessory', def:3, color:'#ffd75e'
 defItem(I.SOLARTABLETFRAGMENT, { name:'Solar Tablet Fragment', type:'material', color:'#ffb83d', icon:'☀️', maxStack:999, desc:'A fragment carried by Temple enemies.' });
 defItem(I.SOLARTABLET, { name:'Solar Tablet', type:'eventitem', event:'solareclipse', time:'day', after:'plantera', color:'#ff9a3d', icon:'🌑', maxStack:99, desc:'Summons a Solar Eclipse during the day.' });
 defItem(I.BROKENBATWING, { name:'Broken Bat Wing', type:'material', color:'#5a4a6a', icon:'🦇', maxStack:999, desc:'A rare wing fragment from Vampires.' });
-defItem(I.TOXICFLASK, { name:'Toxic Flask', type:'magic', dmg:52, speed:0.22, kb:3, mana:10, proj:P.SPIT, projCount:3, auto:true, range:999, color:'#70d850', icon:'🧪', maxStack:1, desc:'Hurls toxic flasks.' });
-defItem(I.NAILGUN, { name:'Nail Gun', type:'ranged', dmg:54, speed:0.12, kb:3, ammo:I.MUSKETBALL, proj:P.GUNBULLET, auto:true, range:999, color:'#8a8f9a', icon:'🔫', maxStack:1, desc:'Drives high-velocity nails into enemies.' });
+defItem(I.TOXICFLASK, { name:'Toxic Flask', type:'magic', dmg:52, speed:0.75, kb:4, mana:30, proj:P.SPIT, projCount:3, auto:true, range:999, color:'#70d850', icon:'🧪', maxStack:1, desc:'Hurls toxic flasks.', projSpeed:14});
+defItem(I.NAILGUN, { name:'Nail Gun', type:'ranged', dmg:85, speed:0.25, kb:3, ammo:I.MUSKETBALL, proj:P.GUNBULLET, auto:true, range:999, color:'#8a8f9a', icon:'🔫', maxStack:1, desc:'Drives high-velocity nails into enemies.', projSpeed:10});
 defItem(I.EYESPRING, { name:'Eye Spring', type:'pet', pet:'eyespring', color:'#d84848', icon:'👁️', maxStack:1, desc:'Summons a suspicious springing eye. Dropped by Eyezor.' });
-defItem(I.BUTCHERSCHAINSAW, { name:'Butcher\'s Chainsaw', type:'melee', dmg:76, speed:0.1, kb:6, range:2.7, color:'#b84840', icon:'🪚', maxStack:1, desc:'A savage chainsaw dropped by Butchers during a Solar Eclipse.' });
+defItem(I.BUTCHERSCHAINSAW, { name:'Butcher\'s Chainsaw', type:'melee', dmg:120, speed:0.25, kb:8, range:4, color:'#b84840', icon:'🪚', maxStack:1, desc:'A savage chainsaw dropped by Butchers during a Solar Eclipse.' });
 defItem(I.MOTHRONWINGS, { name:'Mothron Wings', type:'accessory', jumpMul:1.16, jumps:3, noFall:true, color:'#9a9ac8', icon:'🪽', maxStack:1, desc:'Powerful wings torn from Mothron.' });
 
 // Early events, Deerclops, and Torch God
 defItem(I.BLOODYTEAR, { name:'Bloody Tear', type:'eventitem', event:'bloodmoon', color:'#c83048', icon:'🩸', maxStack:99, desc:'Summons a Blood Moon. Use at night.' });
 defItem(I.SHARKTOOTHNECKLACE, { name:'Shark Tooth Necklace', type:'accessory', dmgMul:1.06, color:'#e8e0c8', icon:'🦷', maxStack:1, desc:'Damage +6%.' });
 defItem(I.CHUMCASTER, { name:'Chum Caster', type:'fishingrod', fishingPower:25, range:350, color:'#9a4a4a', icon:'🎣', maxStack:1, desc:'Improves catches during a Blood Moon.' });
-defItem(I.BANANARANG, { name:'Bananarang', type:'melee', dmg:58, speed:0.14, kb:7, range:5.0, meleeProj:P.RAZOR, projSpeed:10, projLife:2.2, projReturn:0.65, returnSpeed:12, projectileOnly:true, persistentProj:true, color:'#f0d040', icon:'🍌', maxStack:1, desc:'A returning blade dropped by Clowns during a Blood Moon.' });
-defItem(I.KOCANNON, { name:'KO Cannon', type:'melee', dmg:50, speed:0.18, kb:12, range:4.2, color:'#d85050', icon:'🥊', maxStack:1, projectileOnly:true, meleeProj:P.KOBOMB, projBounces:3, explosive:60, projSpeed:9, projLife:3, desc:'Launches a crushing spring punch. Dropped by Clowns.' });
-defItem(I.HAEMORRHAXE, { name:'Haemorrhaxe', type:'melee', dmg:74, speed:0.18, kb:6, range:2.8, color:'#b83040', icon:'🪓', maxStack:1, desc:'A blood-soaked axe from Blood Moon fishing monsters.' });
-defItem(I.BLOODTHORN, { name:'Blood Thorn', type:'magic', dmg:62, speed:0.2, kb:4, mana:10, proj:P.SPIT, terrainMode:'erupt', terrainCount:3, terrainHeight:80, auto:true, range:999, color:'#c83048', icon:'🌹', maxStack:1, desc:'Erupts three bloody thorns upward around the cursor.' });
-defItem(I.DRIPPLERCRIPPLER, { name:'Drippler Crippler', type:'melee', dmg:70, speed:0.2, kb:8, range:4.5, meleeProj:P.RAZOR, meleeMode:'flail', flailDuration:0.9, projectileOnly:true, persistentProj:true, color:'#a82f48', icon:'🔴', maxStack:1, desc:'A vicious flail torn from a Blood Eel.' });
+defItem(I.BANANARANG, { name:'Bananarang', type:'melee', dmg:45, speed:0.183, kb:6.5, range:4, meleeProj:P.RAZOR, projSpeed:10, projLife:2.2, projReturn:0.65, returnSpeed:12, projectileOnly:true, persistentProj:true, color:'#f0d040', icon:'🍌', maxStack:1, desc:'A returning blade dropped by Clowns during a Blood Moon.' });
+defItem(I.KOCANNON, { name:'KO Cannon', type:'melee', dmg:40, speed:0.467, kb:6.5, range:4, color:'#d85050', icon:'🥊', maxStack:1, projectileOnly:true, meleeProj:P.KOBOMB, projBounces:3, explosive:60, projSpeed:9, projLife:3, desc:'Launches a crushing spring punch. Dropped by Clowns.' });
+defItem(I.HAEMORRHAXE, { name:'Haemorrhaxe', type:'melee', dmg:30, speed:0.45, kb:7, range:4, color:'#b83040', icon:'🪓', maxStack:1, desc:'A blood-soaked axe from Blood Moon fishing monsters.' });
+defItem(I.BLOODTHORN, { name:'Blood Thorn', type:'magic', dmg:40, speed:0.55, kb:1, mana:20, proj:P.SPIT, terrainMode:'erupt', terrainCount:3, terrainHeight:80, auto:true, range:999, color:'#c83048', icon:'🌹', maxStack:1, desc:'Erupts three bloody thorns upward around the cursor.', projSpeed:32});
+defItem(I.DRIPPLERCRIPPLER, { name:'Drippler Crippler', type:'melee', dmg:110, speed:0.667, kb:6.5, range:8, meleeProj:P.RAZOR, meleeMode:'flail', flailDuration:0.9, projectileOnly:true, persistentProj:true, color:'#a82f48', icon:'🔴', maxStack:1, desc:'A vicious flail torn from a Blood Eel.' });
 defItem(I.FLINXFUR, { name:'Flinx Fur', type:'material', color:'#f0f0f8', icon:'🧶', maxStack:999, desc:'Warm fur from a Snow Flinx.' });
 defItem(I.FLINXSTAFF, { name:'Flinx Staff', type:'summonstaff', dmg:14, minion:'flinx', speed:0, color:'#f0f0f8', icon:'🐾', maxStack:1, desc:'Summons a loyal flinx to fight for you.' });
 defItem(I.AMBER, { name:'Amber', type:'material', color:'#e8a83d', icon:'💎', maxStack:999, desc:'Fossilized tree resin, warm as sunset.' });
 defItem(I.AMBERROBE, { name:'Amber Robe', type:'armor', slot:'head', def:3, color:'#e8a83d', icon:'🧙', maxStack:1, desc:'Defense +3. Humming with old sunlight.' });
-defItem(I.AMBERSTAFF, { name:'Amber Staff', type:'magic', dmg:19, speed:0.2, kb:3, mana:8, proj:P.MAGICBOLT, auto:true, range:999, color:'#e8a83d', icon:'🔮', maxStack:1, desc:'Casts bolts of fossilized light.' });
+defItem(I.AMBERSTAFF, { name:'Amber Staff', type:'magic', dmg:21, speed:0.467, kb:4.75, mana:9, proj:P.MAGICBOLT, auto:true, range:999, color:'#e8a83d', icon:'🔮', maxStack:1, desc:'Casts bolts of fossilized light.', projSpeed:9});
 defItem(I.DEERTHING, { name:'Deer Thing', type:'summon', boss:'deerclops', color:'#b8d8f0', icon:'🦌', maxStack:99, desc:'Summons Deerclops in the Snow biome.' });
 defItem(I.LUCYTHEAXE, { name:'Lucy the Axe', type:'tool', power:65, speed:0.75, dmg:24, range:3.0, color:'#d8b878', icon:'🪓', maxStack:1, desc:'A talkative axe dropped by Deerclops.' });
-defItem(I.PEWMATICHORN, { name:'Pew-matic Horn', type:'ranged', dmg:28, speed:0.16, kb:3, ammo:I.MUSKETBALL, proj:P.GUNBULLET, auto:true, range:999, color:'#a87858', icon:'🔫', maxStack:1, desc:'Rapidly fires bullets with a strange honk.' });
-defItem(I.WEATHERPAIN, { name:'Weather Pain', type:'magic', dmg:32, speed:0.22, kb:4, mana:9, proj:P.FROSTBOLT, projCount:3, projHoming:true, auto:true, range:999, color:'#a8d8f0', icon:'❄️', maxStack:1, desc:'Launches twisting shards of winter that track enemies.' });
+defItem(I.PEWMATICHORN, { name:'Pew-matic Horn', type:'ranged', dmg:20, speed:0.25, kb:1, ammo:I.MUSKETBALL, proj:P.GUNBULLET, auto:true, range:999, color:'#a87858', icon:'🔫', maxStack:1, desc:'Rapidly fires bullets with a strange honk.', projSpeed:14});
+defItem(I.WEATHERPAIN, { name:'Weather Pain', type:'magic', dmg:13, speed:0.75, kb:1, mana:30, proj:P.FROSTBOLT, projCount:3, projHoming:true, auto:true, range:999, color:'#a8d8f0', icon:'❄️', maxStack:1, desc:'Launches twisting shards of winter that track enemies.', projSpeed:1});
 defItem(I.EYEBONE, { name:'Eye Bone', type:'pet', pet:'chester', color:'#8a5a3a', icon:'👁️', maxStack:1, desc:'Summons a strange one-eyed companion.' });
 defItem(I.TORCHGODSFAVOR, { name:'Torch God\'s Favor', type:'consumable', permanent:'torchGodFavor', color:'#ffb84d', icon:'🔥', maxStack:1, desc:'Permanently grants biome-colored torch flames.' });
 defItem(I.SNOWGLOBE, { name:'Snow Globe', type:'eventitem', event:'frostlegion', time:'any', hm:true, color:'#b8dcf0', icon:'🔮', maxStack:99, desc:'Summons the Frost Legion in Hardmode.' });
 defItem(I.FORBIDDENFRAGMENT, { name:'Forbidden Fragment', type:'material', color:'#e8c878', icon:'◇', maxStack:999, desc:'A storm-worn fragment carried by Sand Elementals.' });
 defItem(I.LASERDRILL, { name:'Laser Drill', type:'tool', power:210, speed:0.18, dmg:35, range:4.5, color:'#68e8d0', icon:'⛏️', maxStack:1, desc:'A rapid mining tool carried by Martian Engineers.' });
 defItem(I.ANTIGRAVITYHOOK, { name:'Anti-Gravity Hook', type:'hook', hookRange:420, hookSpeed:18, hookPull:15, hookCount:3, color:'#68e8d0', icon:'🪝', maxStack:1, desc:'A multidirectional hook recovered from Martian Engineers.' });
-defItem(I.ELECTROSPHERELAUNCHER, { name:'Electrosphere Launcher', type:'ranged', dmg:72, speed:0.32, kb:7, ammo:I.ROCKET1, proj:P.PLASMA, range:999, color:'#70d8f0', icon:'🔫', maxStack:1, electro:true, desc:'A volatile launcher dropped by the Martian Saucer.' });
+defItem(I.ELECTROSPHERELAUNCHER, { name:'Electrosphere Launcher', type:'ranged', dmg:40, speed:0.2, kb:2, ammo:I.ROCKET1, proj:P.PLASMA, range:999, color:'#70d8f0', icon:'🔫', maxStack:1, electro:true, desc:'A volatile launcher dropped by the Martian Saucer.', projSpeed:12});
 defItem(I.BRAINSCRAMBLERMOUNT, { name:'Brain Scrambler', type:'mount', mount:'scutlix', mountSpeed:7.2, mountJump:-12.5, color:'#68c8bc', icon:'👽', maxStack:1, desc:'Summons a rideable Scutlix. Dropped by Scutlix Gunners.' });
 defItem(I.PURIFICATIONPOWDER, { name:'Purification Powder', type:'purify', color:'#d8ffd0', icon:'✨', maxStack:99, desc:'Cleanses nearby Corruption or Crimson blocks.' });
 defItem(I.SPELLTOME, { name:'Spell Tome', type:'material', color:'#9a68c8', icon:'📘', maxStack:99, desc:'A blank magical volume sold by the Wizard.' });
@@ -925,12 +925,12 @@ defItem(I.GOBLINBATTLESTANDARD, { name:'Goblin Battle Standard', type:'eventitem
 defItem(I.PIRATEMAP, { name:'Pirate Map', type:'eventitem', event:'pirateinvasion', time:'any', hm:true, color:'#d8c8a0', icon:'🗺️', maxStack:99, desc:'Summons the Pirate Invasion in Hardmode.' });
 
 // Event drops
-defItem(I.THEHORSEMANSBLADE, { name:'The Horseman\'s Blade', type:'melee', dmg:70, speed:0.22, kb:6, range:2.3, color:'#ff8a3d', icon:'⚔️', maxStack:1, meleeProj:P.PUMPKINBLADE, projCount:2, projSpeed:7.5, projLife:2, projDamageMul:0.6, persistentProj:true, desc:'Dropped by the Pumpking.' });
-defItem(I.RAZORPINE, { name:'Razorpine', type:'ranged', dmg:48, speed:0.12, kb:3, ammo:I.BONE, proj:P.DART, auto:true, range:999, color:'#4daf3d', icon:'🌲', maxStack:1, desc:'An Everscream weapon that fires pine needles.' });
-defItem(I.SNOWMANCANNON, { name:'Snowman Cannon', type:'ranged', dmg:62, speed:0.5, kb:8, ammo:I.ROCKET4, proj:P.ROCKET, projHoming:true, range:999, color:'#e8f0f8', icon:'⛄', maxStack:1, desc:'An Ice Queen cannon that fires homing explosive rockets.' });
-defItem(I.INFLUXWAVER, { name:'Influx Waver', type:'melee', dmg:86, speed:0.16, kb:6, range:2.5, color:'#3dff9d', icon:'⚔️', maxStack:1, meleeProj:P.WAVERSWORD, projChance:0.34, projSpeed:10, projLife:1.6, projDamageMul:1, desc:'Dropped by the Martian Saucer.' });
-defItem(I.CHARGEDBLASTER, { name:'Charged Blaster Cannon', type:'ranged', dmg:55, speed:0.18, kb:4, ammo:I.BULLET, proj:P.PLASMA, auto:true, range:999, color:'#3dff9d', icon:'🔫', maxStack:1, desc:'A plasma cannon carried by Gigazappers.' });
-defItem(I.CELEBRATION, { name:'Celebration', type:'ranged', dmg:45, speed:0.3, kb:5, ammo:I.ROCKET4, proj:P.ROCKET, auto:true, range:999, color:'#ff9de0', icon:'🎆', maxStack:1, desc:'A party that ends worlds. Uses rockets.' });
+defItem(I.THEHORSEMANSBLADE, { name:'The Horseman\'s Blade', type:'melee', dmg:150, speed:0.433, kb:7.5, range:4, color:'#ff8a3d', icon:'⚔️', maxStack:1, meleeProj:P.PUMPKINBLADE, projCount:2, projSpeed:7.5, projLife:2, projDamageMul:0.6, persistentProj:true, desc:'Dropped by the Pumpking.' });
+defItem(I.RAZORPINE, { name:'Razorpine', type:'ranged', dmg:48, speed:0.133, kb:3.25, ammo:I.BONE, proj:P.DART, auto:true, range:999, color:'#4daf3d', icon:'🌲', maxStack:1, desc:'An Everscream weapon that fires pine needles.', projSpeed:12});
+defItem(I.SNOWMANCANNON, { name:'Snowman Cannon', type:'ranged', dmg:67, speed:0.25, kb:4, ammo:I.ROCKET4, proj:P.ROCKET, projHoming:true, range:999, color:'#e8f0f8', icon:'⛄', maxStack:1, desc:'An Ice Queen cannon that fires homing explosive rockets.', projSpeed:15});
+defItem(I.INFLUXWAVER, { name:'Influx Waver', type:'melee', dmg:100, speed:0.333, kb:4.5, range:4, color:'#3dff9d', icon:'⚔️', maxStack:1, meleeProj:P.WAVERSWORD, projChance:0.34, projSpeed:10, projLife:1.6, projDamageMul:1, desc:'Dropped by the Martian Saucer.' });
+defItem(I.CHARGEDBLASTER, { name:'Charged Blaster Cannon', type:'ranged', dmg:100, speed:0.333, kb:2, ammo:I.BULLET, proj:P.PLASMA, auto:true, range:999, color:'#3dff9d', icon:'🔫', maxStack:1, desc:'A plasma cannon carried by Gigazappers.', projSpeed:14});
+defItem(I.CELEBRATION, { name:'Celebration', type:'ranged', dmg:25, speed:0.5, kb:4, ammo:I.ROCKET4, proj:P.ROCKET, auto:true, range:999, color:'#ff9de0', icon:'🎆', maxStack:1, desc:'A party that ends worlds. Uses rockets.', projSpeed:15});
 defItem(I.COINGUN, { name:'Coin Gun', type:'ranged', dmg:20, speed:0.1, kb:1, ammo:I.COIN, proj:P.GUNBULLET, auto:true, range:999, color:'#ffd75e', icon:'🪙', maxStack:1, desc:'A rare prize from the Pirate Invasion. Fires coins.' });
 defItem(I.COIN, { name:'Coin', type:'ammo', dmg:12, color:'#ffd75e', icon:'🪙', maxStack:999, desc:'Shiny loot. Powers the Coin Gun.' });
 
@@ -940,11 +940,11 @@ defItem(I.CRYSTALDART, { name:'Crystal Dart', type:'ammo', dmg:10, color:'#ff9de
 defItem(I.CURSEDDART, { name:'Cursed Dart', type:'ammo', dmg:12, status:{type:'cursed',duration:4,dps:8}, color:'#3dff9d', icon:'💚', maxStack:999 });
 defItem(I.ICHORDART, { name:'Ichor Dart', type:'ammo', dmg:12, status:{type:'ichor',duration:5,defense:12}, color:'#e8e060', icon:'💛', maxStack:999 });
 defItem(I.VENOMDART, { name:'Venom Dart', type:'ammo', dmg:15, status:{type:'venom',duration:5,dps:12}, color:'#c85cff', icon:'💜', maxStack:999 });
-defItem(I.ROCKET1, { name:'Rocket I', type:'ammo', dmg:30, explosive:48, color:'#c8ccd4', icon:'🚀', maxStack:999, desc:'Explodes on impact.' });
-defItem(I.ROCKET2, { name:'Rocket II', type:'ammo', dmg:38, explosive:56, color:'#8a8f9a', icon:'🚀', maxStack:999, desc:'A bigger boom.' });
-defItem(I.ROCKET3, { name:'Rocket III', type:'ammo', dmg:45, explosive:64, color:'#ff9a3d', icon:'🚀', maxStack:999, desc:'Even bigger.' });
-defItem(I.ROCKET4, { name:'Rocket IV', type:'ammo', dmg:60, explosive:72, color:'#ff4d4d', icon:'🚀', maxStack:999, desc:'The biggest boom.' });
-defItem(I.GRENADE, { name:'Grenade', type:'ammo', dmg:35, explosive:52, color:'#4d9aff', icon:'💣', maxStack:999, desc:'A throwable explosion.' });
+defItem(I.ROCKET1, { name:'Rocket I', type:'ammo', dmg:40, explosive:48, color:'#c8ccd4', icon:'🚀', maxStack:999, desc:'Explodes on impact.' });
+defItem(I.ROCKET2, { name:'Rocket II', type:'ammo', dmg:40, explosive:56, color:'#8a8f9a', icon:'🚀', maxStack:999, desc:'A bigger boom.' });
+defItem(I.ROCKET3, { name:'Rocket III', type:'ammo', dmg:65, explosive:64, color:'#ff9a3d', icon:'🚀', maxStack:999, desc:'Even bigger.' });
+defItem(I.ROCKET4, { name:'Rocket IV', type:'ammo', dmg:65, explosive:72, color:'#ff4d4d', icon:'🚀', maxStack:999, desc:'The biggest boom.' });
+defItem(I.GRENADE, { name:'Grenade', type:'ammo', dmg:60, explosive:52, color:'#4d9aff', icon:'💣', maxStack:999, desc:'A throwable explosion.' });
 
 // Potions
 defItem(I.MININGPOTION, { name:'Mining Potion', type:'consumable', buff:{t:240, mineSpeed:1.5}, color:'#c89068', icon:'🧪', maxStack:30, desc:'Mine much faster for 4 minutes.' });
@@ -1009,14 +1009,14 @@ defItem(I.GOLDPICK, { name:'Gold Pickaxe', type:'tool', power:55, speed:1.3, dmg
 defItem(I.DEMONITEPICK, { name:'Nightmare Pickaxe', type:'tool', power:65, speed:1.8, dmg:11, range:3.4, color:'#6a5cb8', icon:'⛏️', maxStack:1, desc:'Forged from Demonite and Shadow Scales.' });
 defItem(I.DEATHBRINGERPICK, { name:'Deathbringer Pickaxe', type:'tool', power:65, speed:1.8, dmg:11, range:3.4, color:'#c04048', icon:'⛏️', maxStack:1, desc:'Forged from Crimtane and Tissue Samples.' });
 // Melee
-defItem(I.COPPERSWORD, { name:'Copper Sword', type:'melee', dmg:9, speed:0.3, kb:3, range:1.5, color:'#e0834d', icon:'🗡️', maxStack:1 });
-defItem(I.SILVERSWORD, { name:'Silver Sword', type:'melee', dmg:13, speed:0.28, kb:3.5, range:1.6, color:'#cfd6e0', icon:'🗡️', maxStack:1 });
-defItem(I.GOLDSWORD, { name:'Gold Sword', type:'melee', dmg:17, speed:0.26, kb:4, range:1.7, color:'#ffd75e', icon:'🗡️', maxStack:1 });
-defItem(I.DEMONITESWORD, { name:'Demonite Sword', type:'melee', dmg:22, speed:0.24, kb:4.5, range:1.8, color:'#6a5cb8', icon:'🗡️', maxStack:1, desc:'Forged from demonite. Bane of the corruption.' });
+defItem(I.COPPERSWORD, { name:'Copper Sword', type:'melee', dmg:9, speed:0.35, kb:5.5, range:4, color:'#e0834d', icon:'🗡️', maxStack:1 });
+defItem(I.SILVERSWORD, { name:'Silver Sword', type:'melee', dmg:14, speed:0.333, kb:6, range:4, color:'#cfd6e0', icon:'🗡️', maxStack:1 });
+defItem(I.GOLDSWORD, { name:'Gold Sword', type:'melee', dmg:15, speed:0.3, kb:6.5, range:4, color:'#ffd75e', icon:'🗡️', maxStack:1 });
+defItem(I.DEMONITESWORD, { name:'Demonite Sword', type:'melee', dmg:16, speed:0.333, kb:5, range:4, color:'#6a5cb8', icon:'🗡️', maxStack:1, desc:'Forged from demonite. Bane of the corruption.' });
 // Ranged
-defItem(I.COPPERBOW, { name:'Copper Bow', type:'ranged', dmg:8, speed:0.5, kb:2, ammo:I.ARROW, proj:P.ARROW, range:999, color:'#e0834d', icon:'🏹', maxStack:1 });
-defItem(I.SILVERBOW, { name:'Silver Bow', type:'ranged', dmg:11, speed:0.45, kb:2, ammo:I.ARROW, proj:P.ARROW, range:999, color:'#cfd6e0', icon:'🏹', maxStack:1 });
-defItem(I.GOLDBOW, { name:'Gold Bow', type:'ranged', dmg:15, speed:0.4, kb:2.5, ammo:I.ARROW, proj:P.ARROW, range:999, color:'#ffd75e', icon:'🏹', maxStack:1 });
+defItem(I.COPPERBOW, { name:'Copper Bow', type:'ranged', dmg:6, speed:0.483, kb:2, ammo:I.ARROW, proj:P.ARROW, range:999, color:'#e0834d', icon:'🏹', maxStack:1, projSpeed:6.6});
+defItem(I.SILVERBOW, { name:'Silver Bow', type:'ranged', dmg:9, speed:0.45, kb:2, ammo:I.ARROW, proj:P.ARROW, range:999, color:'#cfd6e0', icon:'🏹', maxStack:1, projSpeed:6.6});
+defItem(I.GOLDBOW, { name:'Gold Bow', type:'ranged', dmg:11, speed:0.433, kb:2.5, ammo:I.ARROW, proj:P.ARROW, range:999, color:'#ffd75e', icon:'🏹', maxStack:1, projSpeed:6.6});
 // Armor - Copper
 defItem(I.COPPERHELM, { name:'Copper Helmet', type:'armor', slot:'head', def:2, color:'#e0834d', icon:'🪖', maxStack:1, desc:'Defense +2' });
 defItem(I.COPPERCHEST, { name:'Copper Chainmail', type:'armor', slot:'chest', def:3, color:'#e0834d', icon:'🥋', maxStack:1, desc:'Defense +3' });
@@ -1048,22 +1048,22 @@ defItem(I.CLOTHIERDOLL, { name:'Clothier Voodoo Doll', type:'summon', boss:'skel
 
 // Dungeon loot / meteorite gear
 defItem(I.GOLDENKEY, { name:'Golden Key', type:'material', color:'#ffd75e', icon:'🗝️', maxStack:99, desc:'Opens the Dungeon chests.' });
-defItem(I.MURAMASA, { name:'Muramasa', type:'melee', dmg:21, speed:0.14, kb:3, range:1.8, color:'#4dc8ff', icon:'⚔️', maxStack:1, desc:'A fast blue blade from the Dungeon.' });
-defItem(I.AQUASCEPTER, { name:'Aqua Scepter', type:'magic', dmg:24, speed:0.18, kb:2, mana:4, proj:P.WATERSTREAM, projPersistent:true, hitCooldown:0.25, auto:true, range:999, color:'#4dc8ff', icon:'🔮', maxStack:1, desc:'A torrent of water. Costs mana.' });
+defItem(I.MURAMASA, { name:'Muramasa', type:'melee', dmg:24, speed:0.3, kb:3, range:4, color:'#4dc8ff', icon:'⚔️', maxStack:1, desc:'A fast blue blade from the Dungeon.' });
+defItem(I.AQUASCEPTER, { name:'Aqua Scepter', type:'magic', dmg:27, speed:0.267, kb:7, mana:7, proj:P.WATERSTREAM, projPersistent:true, hitCooldown:0.25, auto:true, range:999, color:'#4dc8ff', icon:'🔮', maxStack:1, desc:'A torrent of water. Costs mana.', projSpeed:12.5});
 defItem(I.PHAROAHMASK, { name:'Pharaoh\'s Mask', type:'armor', slot:'head', def:2, color:'#e8c83d', icon:'🪖', maxStack:1, desc:'Buried treasure. Defense +2' });
 defItem(I.METEORHELM, { name:'Meteor Helmet', type:'armor', slot:'head', def:4, color:'#8a4a3a', icon:'🪖', maxStack:1, desc:'Set bonus: the Space Gun costs no mana.' });
 defItem(I.METEORCHEST, { name:'Meteor Breastplate', type:'armor', slot:'chest', def:6, color:'#8a4a3a', icon:'🥋', maxStack:1, desc:'Defense +6' });
 defItem(I.METEORLEGS, { name:'Meteor Leggings', type:'armor', slot:'legs', def:4, color:'#8a4a3a', icon:'👖', maxStack:1, desc:'Defense +4' });
-defItem(I.SPACEGUN, { name:'Space Gun', type:'magic', dmg:18, speed:0.12, kb:2, mana:4, proj:P.LASER, auto:true, range:999, color:'#3d6ad0', icon:'🔫', maxStack:1, desc:'A rapid energy pistol.' });
+defItem(I.SPACEGUN, { name:'Space Gun', type:'magic', dmg:20, speed:0.283, kb:0.75, mana:6, proj:P.LASER, auto:true, range:999, color:'#3d6ad0', icon:'🔫', maxStack:1, desc:'A rapid energy pistol.', projSpeed:10});
 defItem(I.TINPICK, { name:'Tin Pickaxe', type:'tool', power:35, speed:0.7, dmg:4, range:3.0, color:'#c8b090', icon:'⛏️', maxStack:1, desc:'Mines silver ore.' });
 defItem(I.LEADPICK, { name:'Lead Pickaxe', type:'tool', power:45, speed:0.9, dmg:5, range:3.1, color:'#8a8a96', icon:'⛏️', maxStack:1, desc:'Mines gold ore.' });
 defItem(I.TUNGSTENPICK, { name:'Tungsten Pickaxe', type:'tool', power:50, speed:1.0, dmg:6, range:3.2, color:'#a0a8c0', icon:'⛏️', maxStack:1, desc:'Mines gold ore.' });
 defItem(I.PLATINUMPICK, { name:'Platinum Pickaxe', type:'tool', power:60, speed:1.1, dmg:7, range:3.3, color:'#d8f0ff', icon:'⛏️', maxStack:1, desc:'Mines demonite and dungeon brick.' });
 defItem(I.METEORITEPICK, { name:'Meteorite Pickaxe', type:'tool', power:65, speed:1.2, dmg:8, range:3.3, color:'#a06050', icon:'⛏️', maxStack:1, desc:'A pick from the stars.' });
-defItem(I.TINSWORD, { name:'Tin Sword', type:'melee', dmg:8, speed:0.32, kb:3, range:1.5, color:'#c8b090', icon:'🗡️', maxStack:1 });
-defItem(I.LEANSWORD, { name:'Lead Sword', type:'melee', dmg:10, speed:0.3, kb:3, range:1.6, color:'#8a8a96', icon:'🗡️', maxStack:1 });
-defItem(I.TUNGSTENSWORD, { name:'Tungsten Sword', type:'melee', dmg:13, speed:0.29, kb:3.5, range:1.6, color:'#a0a8c0', icon:'🗡️', maxStack:1 });
-defItem(I.PLATINUMSWORD, { name:'Platinum Sword', type:'melee', dmg:15, speed:0.28, kb:3.5, range:1.7, color:'#d8f0ff', icon:'🗡️', maxStack:1 });
+defItem(I.TINSWORD, { name:'Tin Sword', type:'melee', dmg:10, speed:0.333, kb:5.5, range:4, color:'#c8b090', icon:'🗡️', maxStack:1 });
+defItem(I.LEANSWORD, { name:'Lead Sword', type:'melee', dmg:13, speed:0.333, kb:5.5, range:4, color:'#8a8a96', icon:'🗡️', maxStack:1 });
+defItem(I.TUNGSTENSWORD, { name:'Tungsten Sword', type:'melee', dmg:14, speed:0.317, kb:6, range:4, color:'#a0a8c0', icon:'🗡️', maxStack:1 });
+defItem(I.PLATINUMSWORD, { name:'Platinum Sword', type:'melee', dmg:16, speed:0.283, kb:6.5, range:4, color:'#d8f0ff', icon:'🗡️', maxStack:1 });
 defItem(I.TINHELM, { name:'Tin Helmet', type:'armor', slot:'head', def:2, color:'#c8b090', icon:'🪖', maxStack:1, desc:'Defense +2' });
 defItem(I.TINCHEST, { name:'Tin Chainmail', type:'armor', slot:'chest', def:3, color:'#c8b090', icon:'🥋', maxStack:1, desc:'Defense +3' });
 defItem(I.TINLEGS, { name:'Tin Greaves', type:'armor', slot:'legs', def:2, color:'#c8b090', icon:'👖', maxStack:1, desc:'Defense +2' });
@@ -1082,31 +1082,31 @@ defItem(I.HELLFORGE, { name:'Hellforge', type:'block', tile:T.HELLFORGE, color:'
 defItem(I.HELLSTONEBAR, { name:'Hellstone Bar', type:'bar', color:'#ff6a32', icon:'bar', desc:'Hellstone and obsidian fused in a Hellforge.' });
 defItem(I.SHADOWKEY, { name:'Shadow Key', type:'material', color:'#8a68c0', icon:'🔑', maxStack:1, desc:'A reusable key that opens Shadow Chests.' });
 defItem(I.MOLTENPICK, { name:'Molten Pickaxe', type:'tool', power:70, speed:2.0, dmg:12, range:3.5, color:'#ff6a32', icon:'⛏️', maxStack:1, desc:'Forged from Hellstone. Mines Cobalt ore.' });
-defItem(I.VOLCANO, { name:'Volcano', type:'melee', dmg:40, speed:0.24, kb:6.5, range:2.1, color:'#ff5a2a', icon:'⚔️', maxStack:1, desc:'A blazing greatsword forged from Hellstone.' });
+defItem(I.VOLCANO, { name:'Volcano', type:'melee', dmg:40, speed:0.667, kb:6.5, range:4, color:'#ff5a2a', icon:'⚔️', maxStack:1, desc:'A blazing greatsword forged from Hellstone.' });
 defItem(I.MOLTENHELM, { name:'Molten Helmet', type:'armor', slot:'head', def:8, color:'#e85828', icon:'🪖', maxStack:1, desc:'Defense +8' });
 defItem(I.MOLTENCHEST, { name:'Molten Breastplate', type:'armor', slot:'chest', def:9, color:'#e85828', icon:'🥋', maxStack:1, desc:'Defense +9' });
 defItem(I.MOLTENLEGS, { name:'Molten Greaves', type:'armor', slot:'legs', def:8, color:'#e85828', icon:'👖', maxStack:1, desc:'Defense +8' });
-defItem(I.SUNFURY, { name:'Sunfury', type:'melee', dmg:35, speed:0.28, kb:7, range:2.5, meleeProj:P.RAZOR, meleeMode:'flail', flailDuration:0.85, projectileOnly:true, persistentProj:true, color:'#ff9a3d', icon:'☀️', maxStack:1, desc:'A blazing mace from a Shadow Chest.' });
-defItem(I.FLAMELASH, { name:'Flamelash', type:'magic', dmg:32, speed:0.25, kb:4, mana:8, proj:P.FIREBALL, magicMode:'controlled', controlledReach:24, controlledSpeed:8, controlledDuration:3.5, range:999, color:'#ff6a32', icon:'🔥', maxStack:1, desc:'Casts a fireball guided by the cursor.' });
-defItem(I.HELLWINGBOW, { name:'Hellwing Bow', type:'ranged', dmg:26, speed:0.28, kb:3, ammo:I.ARROW, proj:P.ARROW, range:999, color:'#8a4030', icon:'🏹', maxStack:1, batAmmo:true, desc:'Turns arrows into burning bats.' });
-defItem(I.DARKLANCE, { name:'Dark Lance', type:'melee', dmg:34, speed:0.25, kb:5, range:2.8, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.38, projectileOnly:true, persistentProj:true, color:'#7a5a9a', icon:'🔱', maxStack:1, desc:'A long spear from a Shadow Chest.' });
-defItem(I.MUSKET, { name:'Musket', type:'ranged', dmg:31, speed:0.48, kb:5, ammo:I.MUSKETBALL, proj:P.GUNBULLET, range:999, color:'#6a5a4a', icon:'🔫', maxStack:1, desc:'A heavy firearm found in a Shadow Orb.' });
-defItem(I.VILETHORN, { name:'Vilethorn', type:'magic', dmg:18, speed:0.3, kb:1, mana:10, proj:P.THORN, projPersistent:true, hitCooldown:0.2, range:999, color:'#8f70d8', icon:'🌿', maxStack:1, desc:'Conjures a corrupt thorn.' });
-defItem(I.BALLOHURT, { name:'Ball O\' Hurt', type:'melee', dmg:30, speed:0.3, kb:6, range:2.5, meleeProj:P.RAZOR, meleeMode:'flail', flailDuration:0.9, projectileOnly:true, persistentProj:true, color:'#6a507f', icon:'⚫', maxStack:1, desc:'A cruel flail from a Shadow Orb.' });
+defItem(I.SUNFURY, { name:'Sunfury', type:'melee', dmg:64, speed:0.75, kb:6.75, range:8, meleeProj:P.RAZOR, meleeMode:'flail', flailDuration:0.85, projectileOnly:true, persistentProj:true, color:'#ff9a3d', icon:'☀️', maxStack:1, desc:'A blazing mace from a Shadow Chest.' });
+defItem(I.FLAMELASH, { name:'Flamelash', type:'magic', dmg:32, speed:0.5, kb:6.5, mana:21, proj:P.FIREBALL, magicMode:'controlled', controlledReach:24, controlledSpeed:8, controlledDuration:3.5, range:999, color:'#ff6a32', icon:'🔥', maxStack:1, desc:'Casts a fireball guided by the cursor.', projSpeed:6});
+defItem(I.HELLWINGBOW, { name:'Hellwing Bow', type:'ranged', dmg:22, speed:0.217, kb:5.5, ammo:I.ARROW, proj:P.ARROW, range:999, color:'#8a4030', icon:'🏹', maxStack:1, batAmmo:true, desc:'Turns arrows into burning bats.', projSpeed:6});
+defItem(I.DARKLANCE, { name:'Dark Lance', type:'melee', dmg:34, speed:0.367, kb:5, range:4.5, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.38, projectileOnly:true, persistentProj:true, color:'#7a5a9a', icon:'🔱', maxStack:1, desc:'A long spear from a Shadow Chest.' });
+defItem(I.MUSKET, { name:'Musket', type:'ranged', dmg:31, speed:0.533, kb:5.25, ammo:I.MUSKETBALL, proj:P.GUNBULLET, range:999, color:'#6a5a4a', icon:'🔫', maxStack:1, desc:'A heavy firearm found in a Shadow Orb.', projSpeed:9});
+defItem(I.VILETHORN, { name:'Vilethorn', type:'magic', dmg:10, speed:0.467, kb:1, mana:10, proj:P.THORN, projPersistent:true, hitCooldown:0.2, range:999, color:'#8f70d8', icon:'🌿', maxStack:1, desc:'Conjures a corrupt thorn.', projSpeed:32});
+defItem(I.BALLOHURT, { name:'Ball O\' Hurt', type:'melee', dmg:30, speed:0.75, kb:5.5, range:7, meleeProj:P.RAZOR, meleeMode:'flail', flailDuration:0.9, projectileOnly:true, persistentProj:true, color:'#6a507f', icon:'⚫', maxStack:1, desc:'A cruel flail from a Shadow Orb.' });
 defItem(I.BANDOFSTARPOWER, { name:'Band of Starpower', type:'accessory', manaMul:0.9, color:'#8f70d8', icon:'💍', maxStack:1, desc:'Reduces mana costs by 10%.' });
-defItem(I.UNDERTAKER, { name:'The Undertaker', type:'ranged', dmg:22, speed:0.4, kb:3, ammo:I.MUSKETBALL, proj:P.GUNBULLET, range:999, color:'#b04048', icon:'🔫', maxStack:1, desc:'A living firearm found in a Crimson Heart.' });
-defItem(I.CRIMSONROD, { name:'Crimson Rod', type:'magic', dmg:20, speed:0.35, kb:2, mana:10, proj:P.CURSEDFLAME, magicMode:'cloud', deployDuration:6, deployInterval:0.45, deployProj:P.CURSEDFLAME, deployCount:1, deployDamageMul:0.75, range:999, color:'#e84858', icon:'🌧️', maxStack:1, desc:'Places a crimson cloud that rains damaging blood.' });
-defItem(I.ROTTENFORK, { name:'The Rotted Fork', type:'melee', dmg:28, speed:0.27, kb:5, range:2.6, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.4, projectileOnly:true, persistentProj:true, color:'#b04048', icon:'🔱', maxStack:1, desc:'A vicious spear from a Crimson Heart.' });
+defItem(I.UNDERTAKER, { name:'The Undertaker', type:'ranged', dmg:19, speed:0.333, kb:2, ammo:I.MUSKETBALL, proj:P.GUNBULLET, range:999, color:'#b04048', icon:'🔫', maxStack:1, desc:'A living firearm found in a Crimson Heart.', projSpeed:6});
+defItem(I.CRIMSONROD, { name:'Crimson Rod', type:'magic', dmg:12, speed:0.4, kb:2, mana:30, proj:P.CURSEDFLAME, magicMode:'cloud', deployDuration:6, deployInterval:0.45, deployProj:P.CURSEDFLAME, deployCount:1, deployDamageMul:0.75, range:999, color:'#e84858', icon:'🌧️', maxStack:1, desc:'Places a crimson cloud that rains damaging blood.', projSpeed:12});
+defItem(I.ROTTENFORK, { name:'The Rotted Fork', type:'melee', dmg:17, speed:0.517, kb:5, range:4.5, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.4, projectileOnly:true, persistentProj:true, color:'#b04048', icon:'🔱', maxStack:1, desc:'A vicious spear from a Crimson Heart.' });
 defItem(I.PANICNECKLACE, { name:'Panic Necklace', type:'accessory', runSpeed:1.12, color:'#e84858', icon:'📿', maxStack:1, desc:'Increases movement speed.' });
-defItem(I.WATERBOLT, { name:'Water Bolt', type:'magic', dmg:19, speed:0.24, kb:2, mana:8, proj:P.WATERBOLT, projBounces:5, projLife:3, range:999, color:'#4d8ad0', icon:'📖', maxStack:1, desc:'A bouncing water spell from the Dungeon bookshelves.' });
-defItem(I.DEMONSCYTHE, { name:'Demon Scythe', type:'magic', dmg:26, speed:0.3, kb:3, mana:9, proj:P.DEMONSCYTHE, projSpeed:2.5, projAccel:1.04, projMaxSpeed:11, projLife:2.6, projPersistent:true, hitCooldown:0.25, range:999, color:'#a040c8', icon:'🌀', maxStack:1, desc:'Fires a spinning scythe that accelerates as it flies. Demons carry them.' });
-defItem(I.BEEGUN, { name:'Bee Gun', type:'magic', dmg:9, speed:0.12, kb:1, mana:4, proj:P.STINGER, projHoming:true, range:999, color:'#ffc040', icon:'🐝', maxStack:1, desc:'Fires homing bees. Queen Bee\'s prize.' });
-defItem(I.STARCANNON, { name:'Star Cannon', type:'ranged', dmg:42, speed:0.15, kb:1, ammo:I.FALLENSTAR, proj:P.STAR, projSpeed:14, range:999, color:'#ffe88a', icon:'🌟', maxStack:1, desc:'Fires Fallen Stars at devastating speed.' });
-defItem(I.CANDYCANESWORD, { name:'Candy Cane Sword', type:'melee', dmg:18, speed:0.2, kb:4, range:1.9, meleeProj:P.CANDY, projDamageMul:0.8, projSpeed:8, projLife:1.4, color:'#ff6a8a', icon:'🍬', maxStack:1, desc:'A sweet blade that throws candy cane projectiles. Sold by Santa.' });
+defItem(I.WATERBOLT, { name:'Water Bolt', type:'magic', dmg:19, speed:0.283, kb:5, mana:10, proj:P.WATERBOLT, projBounces:5, projLife:3, range:999, color:'#4d8ad0', icon:'📖', maxStack:1, desc:'A bouncing water spell from the Dungeon bookshelves.', projSpeed:4.5});
+defItem(I.DEMONSCYTHE, { name:'Demon Scythe', type:'magic', dmg:35, speed:0.333, kb:5, mana:14, proj:P.DEMONSCYTHE, projSpeed:0.2, projAccel:1.04, projMaxSpeed:11, projLife:2.6, projPersistent:true, hitCooldown:0.25, range:999, color:'#a040c8', icon:'🌀', maxStack:1, desc:'Fires a spinning scythe that accelerates as it flies. Demons carry them.' });
+defItem(I.BEEGUN, { name:'Bee Gun', type:'magic', dmg:9, speed:0.2, kb:0.25, mana:5, proj:P.STINGER, projHoming:true, range:999, color:'#ffc040', icon:'🐝', maxStack:1, desc:'Fires homing bees. Queen Bee\'s prize.', projSpeed:8});
+defItem(I.STARCANNON, { name:'Star Cannon', type:'ranged', dmg:55, speed:0.2, kb:3, ammo:I.FALLENSTAR, proj:P.STAR, projSpeed:14, range:999, color:'#ffe88a', icon:'🌟', maxStack:1, desc:'Fires Fallen Stars at devastating speed.' });
+defItem(I.CANDYCANESWORD, { name:'Candy Cane Sword', type:'melee', dmg:19, speed:0.45, kb:5.3, range:4, meleeProj:P.CANDY, projDamageMul:0.8, projSpeed:8, projLife:1.4, color:'#ff6a8a', icon:'🍬', maxStack:1, desc:'A sweet blade that throws candy cane projectiles. Sold by Santa.' });
 defItem(I.CANDYCANE_BOW, { name:'Candy Cane Bow', type:'ranged', dmg:14, speed:0.3, kb:2, ammo:I.ARROW, proj:P.ARROW, range:999, color:'#ff6a8a', icon:'🏹', maxStack:1, desc:'A festive bow striped like a candy cane. Sold by Santa.' });
 defItem(I.METALDETECTOR, { name:'Metal Detector', type:'accessory', color:'#c8a84a', icon:'📟', maxStack:1, desc:'Shows the nearest valuable tile while equipped.' });
 defItem(I.BUTTERFLYWINGS, { name:'Butterfly Wings', type:'accessory', jumpMul:1.05, jumps:3, noFall:true, color:'#d0b060', icon:'🦋', maxStack:1, desc:'Delicate wings dropped by jungle moths.' });
-defItem(I.UMBRELLA, { name:'Umbrella', type:'melee', dmg:9, speed:0.33, kb:5, range:1.7, slowFall:2, color:'#5b82b8', icon:'☂️', maxStack:1, desc:'Hold it to drift safely downward. Dropped by Umbrella Slimes.' });
+defItem(I.UMBRELLA, { name:'Umbrella', type:'melee', dmg:10, speed:0.367, kb:5, range:4, slowFall:2, color:'#5b82b8', icon:'☂️', maxStack:1, desc:'Hold it to drift safely downward. Dropped by Umbrella Slimes.' });
 defItem(I.BOSSBAG, { name:'Treasure Bag', type:'bag', color:'#c8a84a', icon:'🎁', maxStack:1, desc:'Right-click to open and release boss loot. Drops in Expert and Master mode.' });
 
 function setAmmoGroup(group, ids) {

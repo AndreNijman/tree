@@ -699,7 +699,7 @@ const v73defs = await page.evaluate(() => {
   var catalogued = ids.every(t => catalog.some(entry => entry.key === 'e:' + t));
   return { allDefs:allDefs, swimmers:!!swimmers, catalogued:catalogued, catalogCount:catalog.length };
 });
-check('B73: all eight vanilla definitions expand the bestiary to 273 entries (11 more added in Batch 76)', v73defs.allDefs && v73defs.catalogued && v73defs.catalogCount === 273, JSON.stringify(v73defs));
+check('B73: all eight vanilla definitions expand the bestiary (canonical-scaled roster, 272 entries after Batch 77 rebalance)', v73defs.allDefs && v73defs.catalogued && v73defs.catalogCount === 272, JSON.stringify(v73defs));
 check('B73: Piranha and both new Jellyfish use aquatic movement', v73defs.swimmers, JSON.stringify(v73defs));
 
 const v73step = await page.evaluate(() => {
@@ -825,6 +825,7 @@ const v74 = await page.evaluate(() => {
   enemy.dead = true;
 
   // Piranha Gun: ammo-free, latches and deals damage
+  game.entities = game.entities.filter(function(en) { return en === p || (!en.dead && en.dmg <= 0); });
   p.x = bx; p.y = by; p.vx = 0; p.vy = 0;
   var invPre = 0; for (var s3 = 0; s3 < 50; s3++) if (p.inventory.slots[s3]) invPre += p.inventory.slots[s3].count;
   var enemy2 = makeEntity(E.ZOMBIE, bx + 34, by);
