@@ -150,7 +150,7 @@ var I = {
   PAPERAIRPLANE:'paperairplane', WHITEPAPERAIRPLANE:'whitepaperairplane', PINWHEEL:'pinwheel',
   PARTYCENTER:'partycenter', PARTYHAT:'partyhat', PARTYPRESENT:'partypresent', PIGRONATA:'pigronata',
   PARTYSTREAMER:'partystreamer', SILLYBALLOON:'sillyballoon', SLICEOFCAKE:'sliceofcake', RELEASELANTERN:'releaselantern',
-  FALLENSTAR:'fallenstar',
+  FALLENSTAR:'fallenstar', MANACRYSTAL:'manacrystal',
   TOMBSTONE:'tombstone', SUNFLOWER:'sunflower', GRAVEDIGGERSHOVEL:'gravediggersshovel', SHADOWCANDLE:'shadowcandle', TATTEREDSIGN:'tatteredsign',
   VITALCRYSTAL:'vitalcrystal', AEGISFRUIT:'aegisfruit', AMBROSIA:'ambrosia', ADVCOMBAT2:'advancedcombat2',
   FLINXSTAFF:'flinxstaff', AMBER:'amber', AMBERROBE:'amberrobe', AMBERSTAFF:'amberstaff',

@@ -676,7 +676,22 @@ World.prototype.generate = function(hardmode, evil) {
     }
   }
   // furnished Underworld houses with Hellforges and locked Shadow Chests
-  self.underworldHouses = [];
+    // heart crystals: ~30 per world on cave floors (vanilla Life Crystal generation)
+  var hcSpots = [];
+  for (var hcx = 20; hcx < self.W - 20; hcx += 3) {
+    var hcTop = self.surfaceY[hcx] + 10;
+    for (var hcy = hcTop; hcy < self.hellY - 5 && hcy < self.H - 3; hcy++) {
+      if (self.get(hcx, hcy) === T.AIR && self.get(hcx, hcy - 1) === T.AIR && self.isSolid(hcx, hcy + 1)) hcSpots.push([hcx, hcy]);
+    }
+  }
+  for (var hcp = hcSpots.length - 1; hcp > 0; hcp--) {
+    var hs = Math.floor(rng() * (hcp + 1));
+    var hs2 = hcSpots[hcp]; hcSpots[hcp] = hcSpots[hs]; hcSpots[hs] = hs2;
+  }
+  for (var hc2 = 0; hc2 < Math.min(30, hcSpots.length); hc2++) {
+    self.set(hcSpots[hc2][0], hcSpots[hc2][1], T.HEARTCRYSTAL);
+  }
+self.underworldHouses = [];
   var shadowLoot = [I.SUNFURY, I.FLAMELASH, I.HELLWINGBOW, I.DARKLANCE];
   for (var ru = 0; ru < 8; ru++) {
     var rw = 11 + Math.floor(rng() * 6);
