@@ -11,7 +11,7 @@ function Player(world) {
   this.onGround = false;
   this.maxHp = 100;
   this.hp = 100;
-  this.maxMana = 200;
+  this.maxMana = 20;
   this.mana = 200;
   this.manaRegen = 0;
   this.inventory = new Inventory();
@@ -500,10 +500,13 @@ Player.prototype.tryMelee = function(game, def, force, item) {
   }
   this.attackCd = def.speed;
   this.swingT = Math.max(0.12, def.speed * 0.7);
+  if (crit) game.spawnFloatingText(this.x, this.y - 30, 'Critical!', '#ffe14d');
   this.dir = (MOUSE.wx >= this.x) ? 1 : -1;
   this.swingAng = Math.atan2(MOUSE.wy - this.y, MOUSE.wx - this.x);
   AudioSys.play('shoot');
+  var crit = Math.random() < 0.04;
   var mdmg = Math.round(def.dmg * this.inventory.damageMultiplier('melee') * this.inventory.itemDamageMul(item));
+  if (crit) mdmg *= 2;
   if (def.nearbyBonus) {
     var ncnt = 0, nr = (def.nearbyRadius || 96) * (def.nearbyRadius || 96);
     for (var ni = 0; ni < game.entities.length; ni++) {
@@ -528,7 +531,8 @@ Player.prototype.tryMelee = function(game, def, force, item) {
         var ang = Math.atan2(e.y - this.y, e.x - this.x);
         var da = Math.abs(angDiff(this.swingAng, ang));
         if (da < 1.5) {
-          var kbx = Math.cos(this.swingAng) * 4, kby = Math.sin(this.swingAng) * 2 - 1;
+          var kbForce = (def.kb || 4) * 0.8;
+          var kbx = Math.cos(this.swingAng) * kbForce, kby = Math.sin(this.swingAng) * kbForce * 0.5 - 1;
           if (e.boss) game.hitBoss(e, mdmg, kbx, kby);
           else hitEntity(e, mdmg, kbx, kby, game);
           game.fx.push({ type:'slash', x:e.x, y:e.y, t:0.15 });
@@ -623,7 +627,9 @@ Player.prototype.tryShoot = function(game, def, id, item) {
   var ammoDef = ITEMS[ammoId];
   var ammoDmg = ammoDef.dmg || 0;
   var shots = Math.max(1, def.spread || 1);
+  var crit = Math.random() < 0.04;
   var shotDmg = Math.round((def.dmg + ammoDmg) * inv.damageMultiplier('ranged') * inv.itemDamageMul(item));
+  if (crit) shotDmg *= 2;
   if (def.terrainMode === 'rain') {
     for (var ri = 0; ri < shots; ri++) {
       var rainOffset = (ri - (shots - 1) / 2) * 22;
@@ -649,6 +655,7 @@ Player.prototype.tryShoot = function(game, def, id, item) {
       status:def.status || ammoDef.status, mine:!!def.projMine, mineTrigger:def.mineTrigger, mineDuration:def.mineDuration, color:ammoDef.color, spawnSphere:!!def.electro, dead: false
     });
   }
+  if (crit) game.spawnFloatingText(this.x, this.y - 30, 'Critical!', '#ffe14d');
   AudioSys.play('bow');
 };
 
@@ -671,7 +678,9 @@ Player.prototype.tryMagic = function(game, def, id, item) {
   this.mana -= cost;
   var ang = Math.atan2(MOUSE.wy - this.y, MOUSE.wx - this.x);
   var n = def.projCount || 1;
+  var crit = Math.random() < 0.04;
   var mdmg = Math.round(def.dmg * this.inventory.damageMultiplier('magic') * this.inventory.itemDamageMul(item));
+  if (crit) mdmg *= 2;
   if (def.magicMode === 'beam') {
     game.projectiles.add({
       x:this.x, y:this.y - 8, vx:Math.cos(ang), vy:Math.sin(ang), dmg:mdmg, type:def.proj,
@@ -729,6 +738,7 @@ Player.prototype.tryMagic = function(game, def, id, item) {
         color:def.color, magic:true, dead:false
       });
     }
+    if (crit) game.spawnFloatingText(this.x, this.y - 30, 'Critical!', '#ffe14d');
     AudioSys.play('magic');
     game.fx.push({ type:'cast', x:this.x, y:this.y - 6, t:0.2 });
     return;
@@ -761,6 +771,17 @@ Player.prototype.tryConsume = function(game, def, id, item) {
     game.message(def.permanentMsg || 'A permanent blessing settles over you.');
     return;
   }
+  if (def.star) {
+    if (this.maxMana >= 200) { game.message('Your mana is already at its peak.'); return; }
+    this.maxMana = Math.min(200, this.maxMana + def.star);
+    this.mana = Math.min(this.maxMana, this.mana + def.star);
+    this.inventory.removeAt(this.inventory.selected, 1);
+    AudioSys.play('magic');
+    game.fx.push({ type:'star', x:this.x, y:this.y - 20, t:0.6 });
+    game.spawnFloatingText(this.x, this.y - 26, 'Mana increased!', '#6bc8ff');
+    if (Achievements && this.maxMana >= 200) Achievements.unlock('starpower', game);
+    return;
+  }
   if (def.heart) {
     var lifeFruit = id === I.LIFEFRUIT;
     if (lifeFruit) {
@@ -785,7 +806,7 @@ Player.prototype.tryConsume = function(game, def, id, item) {
     this.hp = Math.min(this.maxHp, this.hp + def.heal);
     if (def.buff) this.buffs[id] = def.buff.t;
     this.inventory.removeAt(this.inventory.selected, 1);
-    this.inventory.potionCd = 30;
+    this.inventory.potionCd = 60;
     AudioSys.play('potion');
     game.fx.push({ type:'heal', x:this.x, y:this.y - 24, t:0.6 });
     return;
@@ -1221,7 +1242,7 @@ Player.prototype.damage = function(amount, from, kbx) {
   var kbMul = dm.kbMul != null ? dm.kbMul : 1;
   var reduced = Math.max(1, Math.round(amount * (1 - eff.invuln) - def * 0.5 * defEff));
   this.hp -= reduced;
-  this.invuln = 0.9 + eff.invuln;
+  this.invuln = 0.67 + eff.invuln;
   if (this.thorns > 0 && from && from.hp > 0) {
     if (from.boss) game.hitBoss(from, this.thorns, 0, 0);
     else hitEntity(from, this.thorns, 0, 0, game);

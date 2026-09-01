@@ -11,6 +11,7 @@ var ACHIEVEMENTS = {
   buffed: { name: 'Buffed', desc: 'Drink a buff potion.', icon: '\u{1F37A}' },
   lifefruit: { name: 'Get a Life', desc: 'Consume a Life Fruit.', icon: '\u{1F49C}' },
   maxhp: { name: 'Hardened', desc: 'Reach 400 max health.', icon: '\u{1F497}' },
+  starpower: { name: 'Star Power', desc: 'Reach 200 max mana.', icon: '\u{1F4AB}' },
   cobalt: { name: 'Cobalt Miner', desc: 'Mine Cobalt ore.', icon: '\u26CF' },
   mythril: { name: 'Mythril Miner', desc: 'Mine Mythril ore.', icon: '\u26CF' },
   adamantite: { name: 'Adamantite Miner', desc: 'Mine Adamantite ore.', icon: '\u26CF' },
