@@ -1300,6 +1300,36 @@ function tileColor(t) {
   map[T.WOOD] = '#9a6b3f'; map[T.TREETRUNK] = '#9a6b3f'; map[T.LEAVES] = '#3f9a4d'; map[T.COBALT] = '#2a5fd0';
   map[T.MYTHRIL] = '#2fbf8f'; map[T.ADAMANTITE] = '#c43d3d'; map[T.IRON] = '#d0b090';
   map[T.PEARLSTONE] = '#e6d9ff'; map[T.EBONSTONE] = '#6d5a8c';
+  map[T.FURN_ANVIL] = '#9a6b3f';
+  map[T.FURN_BATHTUB] = '#9a6b3f';
+  map[T.FURN_BED] = '#9a6b3f';
+  map[T.FURN_BENCH] = '#9a6b3f';
+  map[T.FURN_BOOKCASE] = '#9a6b3f';
+  map[T.FURN_CANDELABRA] = '#9a6b3f';
+  map[T.FURN_CANDLE] = '#9a6b3f';
+  map[T.FURN_CHAIR] = '#9a6b3f';
+  map[T.FURN_CHANDELIER] = '#9a6b3f';
+  map[T.FURN_CHEST] = '#9a6b3f';
+  map[T.FURN_CLOCK] = '#9a6b3f';
+  map[T.FURN_DOOR] = '#9a6b3f';
+  map[T.FURN_DRESSER] = '#9a6b3f';
+  map[T.FURN_FURNACE] = '#9a6b3f';
+  map[T.FURN_LAMP] = '#9a6b3f';
+  map[T.FURN_LANTERN] = '#9a6b3f';
+  map[T.FURN_PIANO] = '#9a6b3f';
+  map[T.FURN_PLATFORM] = '#9a6b3f';
+  map[T.FURN_SINK] = '#9a6b3f';
+  map[T.FURN_SOFA] = '#9a6b3f';
+  map[T.FURN_TABLE] = '#9a6b3f';
+  map[T.FURN_TOILET] = '#9a6b3f';
+  map[T.FURN_TORCH] = '#9a6b3f';
+
+
+
+
+
+
+
   map[T.SAND] = '#e8d191'; map[T.TORCH] = '#ffb84d'; map[T.COBWEB] = '#e8e8e8';
   map[T.GLOWSTONE] = '#9de0ff'; map[T.CORRUPTGRASS] = '#8a5c9a'; map[T.HALLOWGRASS] = '#d8bfff';
   map[T.WORKBENCH] = '#a0744a'; map[T.FURNACE] = '#5a5a5a'; map[T.ANVIL] = '#4a4a5a';
