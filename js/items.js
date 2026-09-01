@@ -673,6 +673,20 @@ var I = {
   GRASS_SEEDS:'grassseeds',
   JUNGLE_GRASS_SEEDS:'junglegrassseeds',
   MUSHROOM_GRASS_SEEDS:'mushroomgrassseeds',
+    AMBER_HOOK:'amberhook',
+  BAT_HOOK:'bathook',
+  SKELETRON_HAND:'skeletronhand',
+  SLIME_HOOK:'slimehook',
+  SQUIRREL_HOOK:'squirrelhook',
+  STATIC_HOOK:'statichook',
+  TENDON_HOOK:'tendonhook',
+  THORN_HOOK:'thornhook',
+  MAGICAL_PUMPKIN_SEED:'magicalpumpkinseed',
+  PARROT_CRACKER:'parrotcracker',
+  UNLUCKY_YARN:'unluckyyarn',
+  SUMMER_HAT:'summerhat',
+  TUXEDO_PANTS:'tuxedopants',
+  TUXEDO_SHIRT:'tuxedoshirt',
     BOSSBAG:'bossbag'
 };
 
@@ -2304,3 +2318,19 @@ defItem(I.CORRUPT_SEEDS, { name:'Corrupt Seeds', type:'material', color:'#7a5a8a
 defItem(I.GRASS_SEEDS, { name:'Grass Seeds', type:'material', color:'#4fae40', icon:'block', maxStack:999, desc:'Grows grass on dirt.' });
 defItem(I.JUNGLE_GRASS_SEEDS, { name:'Jungle Grass Seeds', type:'material', color:'#3f9d4a', icon:'block', maxStack:999, desc:'Grows the Jungle.' });
 defItem(I.MUSHROOM_GRASS_SEEDS, { name:'Mushroom Grass Seeds', type:'material', color:'#7a5cff', icon:'block', maxStack:999, desc:'Grows a Glowing Mushroom biome.' });
+
+// ---------- Batch 83 hooks/pets/vanity ----------
+defItem(I.AMBER_HOOK, { name:'Amber Hook', type:'hook', hookRange:300, hookSpeed:15, hookPull:12, hookCount:1, color:'#c8b090', icon:'\U0001FA91', maxStack:1, desc:'A grappling hook.' });
+defItem(I.BAT_HOOK, { name:'Bat Hook', type:'hook', hookRange:350, hookSpeed:15.5, hookPull:12.5, hookCount:1, color:'#c8b090', icon:'\U0001FA91', maxStack:1, desc:'A grappling hook.' });
+defItem(I.SKELETRON_HAND, { name:'Skeletron Hand', type:'hook', hookRange:320, hookSpeed:15, hookPull:12, hookCount:2, color:'#c8b090', icon:'\U0001FA91', maxStack:1, desc:'A grappling hook.' });
+defItem(I.SLIME_HOOK, { name:'Slime Hook', type:'hook', hookRange:320, hookSpeed:14, hookPull:12, hookCount:1, color:'#c8b090', icon:'\U0001FA91', maxStack:1, desc:'A grappling hook.' });
+defItem(I.SQUIRREL_HOOK, { name:'Squirrel Hook', type:'hook', hookRange:300, hookSpeed:16, hookPull:13, hookCount:1, color:'#c8b090', icon:'\U0001FA91', maxStack:1, desc:'A grappling hook.' });
+defItem(I.STATIC_HOOK, { name:'Static Hook', type:'hook', hookRange:450, hookSpeed:18, hookPull:15, hookCount:1, color:'#c8b090', icon:'\U0001FA91', maxStack:1, desc:'A grappling hook.' });
+defItem(I.TENDON_HOOK, { name:'Tendon Hook', type:'hook', hookRange:350, hookSpeed:15.5, hookPull:12.5, hookCount:2, color:'#c8b090', icon:'\U0001FA91', maxStack:1, desc:'A grappling hook.' });
+defItem(I.THORN_HOOK, { name:'Thorn Hook', type:'hook', hookRange:350, hookSpeed:15.5, hookPull:12.5, hookCount:2, color:'#c8b090', icon:'\U0001FA91', maxStack:1, desc:'A grappling hook.' });
+defItem(I.MAGICAL_PUMPKIN_SEED, { name:'Magical Pumpkin Seed', type:'pet', pet:'pumpkinpet', color:'#ff8a3d', maxStack:1, desc:'A friendly companion.' });
+defItem(I.PARROT_CRACKER, { name:'Parrot Cracker', type:'pet', pet:'parrot', color:'#e84a3a', maxStack:1, desc:'A friendly companion.' });
+defItem(I.UNLUCKY_YARN, { name:'Unlucky Yarn', type:'pet', pet:'yarn', color:'#3a3a4a', maxStack:1, desc:'A friendly companion.' });
+defItem(I.SUMMER_HAT, { name:'Summer Hat', type:'armor', slot:'head', def:1, color:'#ffe14d', icon:'👕', maxStack:1, desc:'Defense +1' });
+defItem(I.TUXEDO_PANTS, { name:'Tuxedo Pants', type:'armor', slot:'legs', def:2, color:'#ffe14d', icon:'👕', maxStack:1, desc:'Defense +2' });
+defItem(I.TUXEDO_SHIRT, { name:'Tuxedo Shirt', type:'armor', slot:'chest', def:2, color:'#ffe14d', icon:'👕', maxStack:1, desc:'Defense +2' });
