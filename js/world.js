@@ -498,44 +498,134 @@ World.prototype.generate = function(hardmode, evil) {
     }
   }
 
-  // Random-walk caves
-  var tunnels = 90;
+  // ---- Terraria-style cave generation ----
+  var nCaveLo = makeNoise2D(rng, 64, 64);
+  var nCaveMid = makeNoise2D(rng, 128, 128);
+  var nCaveHi = makeNoise2D(rng, 256, 256);
+
+  // Pass 1: multi-octave noise carving
+  for (var cy2 = 0; cy2 < H; cy2++) {
+    for (var cx2 = 0; cx2 < W; cx2++) {
+      var surfY = this.surfaceY[cx2];
+      var depth = cy2 - surfY;
+      if (depth < 8) continue;
+      if (cy2 >= hellY) continue;
+      var nvLo = nCaveLo(cx2 * 0.008, cy2 * 0.012);
+      var nvMid = nCaveMid(cx2 * 0.025, cy2 * 0.035);
+      var nvHi = nCaveHi(cx2 * 0.06, cy2 * 0.08);
+      var caveVal = nvLo * 0.45 + nvMid * 0.35 + nvHi * 0.20;
+      var depthFactor = Math.min(1, depth / 180);
+      var threshold = 0.42 - depthFactor * 0.14;
+      var regional = nCaveLo(cx2 * 0.004, cy2 * 0.006);
+      threshold += regional * 0.08;
+      if (caveVal > threshold) {
+        var i3 = this.idx(cx2, cy2);
+        if (this.tiles[i3] !== T.AIR && this.tiles[i3] !== T.WATER && this.tiles[i3] !== T.LAVA && this.tiles[i3] !== T.SHIMMER) {
+          this.tiles[i3] = T.AIR;
+          this.walls[i3] = WALL.STONE;
+        }
+      }
+    }
+  }
+
+  // Pass 2: worm tunnels with branches
+  var tunnels = 55;
   for (var t = 0; t < tunnels; t++) {
-    var cx = Math.floor(rng() * W);
-    var cy = this.surfaceY[cx] + 8 + Math.floor(rng() * (H - this.surfaceY[cx] - 20));
-    var dir = rng() * Math.PI * 2;
-    var len = 35 + Math.floor(rng() * 105);
-    for (var s = 0; s < len; s++) {
-      dir += (rng() - 0.5) * 1.1;
-      cx += Math.cos(dir) * 1.5;
-      cy += Math.sin(dir) * 1.2 + 0.06;
-      var rw = 2 + Math.floor(rng() * 2.5);
-      for (var dx = -rw; dx <= rw; dx++) {
-        for (var dy = -rw; dy <= rw; dy++) {
-          var tx = Math.floor(cx) + dx, ty = Math.floor(cy) + dy;
-          if (tx < 1 || tx >= W - 1 || ty < 1 || ty >= H - 1) continue;
-          if (dx * dx + dy * dy > rw * rw) continue;
-          if (ty < this.surfaceY[tx] + 14) continue;
-          var ii = this.idx(tx, ty);
-          if (this.tiles[ii] !== T.AIR && this.tiles[ii] !== T.WATER && this.tiles[ii] !== T.LAVA && this.tiles[ii] !== T.SHIMMER) {
-            this.tiles[ii] = T.AIR;
-            this.walls[ii] = (rng() < 0.4) ? WALL.CAVE : 0;
+    var tcx = Math.floor(rng() * W);
+    var depthStart = 20 + Math.floor(rng() * Math.max(4, this.hellY - this.surfaceY[tcx] - 60));
+    var tcy = this.surfaceY[tcx] + depthStart;
+    var tdir = rng() * Math.PI * 2;
+    var tlen = 60 + Math.floor(rng() * 180);
+    var trw = 2 + Math.floor(rng() * 3);
+    for (var ts = 0; ts < tlen; ts++) {
+      tdir += (rng() - 0.5) * 0.7;
+      tcx += Math.cos(tdir) * 1.8;
+      tcy += Math.sin(tdir) * 1.3 + 0.03;
+      if (tcx < 2) { tcx = 2; tdir = rng() * Math.PI; }
+      if (tcx >= W - 2) { tcx = W - 3; tdir = Math.PI + rng() * Math.PI; }
+      var fcx = Math.max(0, Math.min(W - 1, Math.floor(tcx)));
+      if (tcy < this.surfaceY[fcx] + 8) { tcy = this.surfaceY[fcx] + 8; tdir = Math.abs(tdir); }
+      if (tcy >= this.hellY - 4) break;
+      for (var tdx = -trw; tdx <= trw; tdx++) {
+        for (var tdy = -trw; tdy <= trw; tdy++) {
+          var ttx = Math.floor(tcx) + tdx, tty = Math.floor(tcy) + tdy;
+          if (ttx < 1 || ttx >= W - 1 || tty < 1 || tty >= H - 1) continue;
+          if (tdx * tdx + tdy * tdy > trw * trw) continue;
+          if (tty < this.surfaceY[ttx] + 10) continue;
+          var tii = this.idx(ttx, tty);
+          if (this.tiles[tii] !== T.AIR && this.tiles[tii] !== T.WATER && this.tiles[tii] !== T.LAVA && this.tiles[tii] !== T.SHIMMER) {
+            this.tiles[tii] = T.AIR;
+            this.walls[tii] = WALL.CAVE;
+          }
+        }
+      }
+      if (rng() < 0.03 && tlen - ts > 20) {
+        var bDir = tdir + (rng() < 0.5 ? 1.2 : -1.2);
+        var bx = tcx, by = tcy;
+        var bLen = 15 + Math.floor(rng() * 40);
+        for (var bs = 0; bs < bLen; bs++) {
+          bDir += (rng() - 0.5) * 0.8;
+          bx += Math.cos(bDir) * 1.5;
+          by += Math.sin(bDir) * 1.2 + 0.03;
+          var bfx = Math.max(0, Math.min(W - 1, Math.floor(bx)));
+          if (bx < 2 || bx >= W - 2 || by < this.surfaceY[bfx] + 8 || by >= this.hellY - 4) break;
+          for (var bdx = -trw; bdx <= trw; bdx++) {
+            for (var bdy = -trw; bdy <= trw; bdy++) {
+              var btx = Math.floor(bx) + bdx, bty = Math.floor(by) + bdy;
+              if (btx < 1 || btx >= W - 1 || bty < 1 || bty >= H - 1) continue;
+              if (bdx * bdx + bdy * bdy > trw * trw) continue;
+              if (bty < this.surfaceY[btx] + 10) continue;
+              var bii = this.idx(btx, bty);
+              if (this.tiles[bii] !== T.AIR && this.tiles[bii] !== T.WATER && this.tiles[bii] !== T.LAVA) {
+                this.tiles[bii] = T.AIR;
+                this.walls[bii] = WALL.CAVE;
+              }
+            }
           }
         }
       }
     }
   }
 
-  // Cave noise (organic pockets) deeper down
-  for (var cy2 = 0; cy2 < H; cy2++) {
-    for (var cx2 = 0; cx2 < W; cx2++) {
-      var surfY = this.surfaceY[cx2];
-      if (cy2 < surfY + 18) continue;
-      var nv = nCave(cx2 * 0.025, cy2 * 0.03);
-      var threshold = 0.42 + (cy2 / H) * 0.30;
-      if (nv > threshold && cy2 > surfY + 12) {
-        var i3 = this.idx(cx2, cy2);
-        if (this.tiles[i3] !== T.AIR) { this.tiles[i3] = T.AIR; this.walls[i3] = 0; }
+  // Pass 3: large caverns near the Underworld
+  var caverns = Math.floor(W / 280);
+  for (var cv = 0; cv < caverns; cv++) {
+    var ccx = 40 + Math.floor(rng() * (W - 80));
+    var ccy = this.hellY - 60 - Math.floor(rng() * 120);
+    var crx = 12 + Math.floor(rng() * 20);
+    var cry = 8 + Math.floor(rng() * 14);
+    for (var cdy2 = -cry; cdy2 <= cry; cdy2++) {
+      for (var cdx2 = -crx; cdx2 <= crx; cdx2++) {
+        var ctx3 = ccx + cdx2, cty3 = ccy + cdy2;
+        if (ctx3 < 2 || ctx3 >= W - 2 || cty3 < 2 || cty3 >= H - 2) continue;
+        if (cty3 < this.surfaceY[ctx3] + 30) continue;
+        if (cty3 >= this.hellY - 2) continue;
+        var nrm = (cdx2 * cdx2) / (crx * crx) + (cdy2 * cdy2) / (cry * cry);
+        if (nrm > 1) continue;
+        var ii4 = this.idx(ctx3, cty3);
+        if (this.tiles[ii4] !== T.AIR && this.tiles[ii4] !== T.WATER && this.tiles[ii4] !== T.LAVA) {
+          this.tiles[ii4] = T.AIR;
+          this.walls[ii4] = WALL.CAVE;
+        }
+      }
+    }
+  }
+
+  // Pass 4: water and lava pools at cave bottoms
+  var poolCount = Math.floor(W / 120);
+  for (var wp = 0; wp < poolCount; wp++) {
+    var wpx = 20 + Math.floor(rng() * (W - 40));
+    var wpy = this.surfaceY[wpx] + 30 + Math.floor(rng() * Math.max(4, this.hellY - this.surfaceY[wpx] - 70));
+    var fy = wpy;
+    while (fy < this.hellY - 4 && fy < H - 1 && !this.isSolid(wpx, fy + 1)) fy++;
+    if (fy >= this.hellY - 4) continue;
+    var poolH = 2 + Math.floor(rng() * 3);
+    var poolW = 4 + Math.floor(rng() * 8);
+    var liquid = (wpy > this.hellY - 200) ? T.LAVA : T.WATER;
+    for (var pwx = wpx - poolW; pwx <= wpx + poolW; pwx++) {
+      for (var pwy = fy - poolH; pwy <= fy; pwy++) {
+        if (pwx < 1 || pwx >= W - 1 || pwy < 1 || pwy >= H - 1) continue;
+        if (this.get(pwx, pwy) === T.AIR) this.tiles[this.idx(pwx, pwy)] = liquid;
       }
     }
   }
