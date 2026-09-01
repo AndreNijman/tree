@@ -642,8 +642,8 @@ Player.prototype.tryShoot = function(game, def, id, item) {
     var shotAng = ang + (i - (shots - 1) / 2) * (def.spreadAngle || 0.08);
     game.projectiles.add({
       x: this.x + Math.cos(shotAng) * 18, y: this.y - 6 + Math.sin(shotAng) * 18,
-      vx: Math.cos(shotAng) * 9, vy: Math.sin(shotAng) * 9,
       dmg: shotDmg, type: def.batAmmo ? P.BAT : def.proj, ammo: ammoId, owner: 'player', life: 2,
+      vx: Math.cos(shotAng) * (def.projSpeed || 9), vy: Math.sin(shotAng) * (def.projSpeed || 9),
       bounces:def.projBounces || ammoDef.bounces || 0, homing:def.batAmmo ? true : !!(def.projHoming || ammoDef.homing),
       explosive:def.explosive || ammoDef.explosive || 0, gravity:def.projGravity || 0,
       status:def.status || ammoDef.status, mine:!!def.projMine, mineTrigger:def.mineTrigger, mineDuration:def.mineDuration, color:ammoDef.color, spawnSphere:!!def.electro, dead: false
@@ -738,9 +738,10 @@ Player.prototype.tryMagic = function(game, def, id, item) {
     if (def.magicRamp) spread += (Math.random() - 0.5) * Math.max(0.02, 0.16 - this.magicRamp * 0.012);
     game.projectiles.add({
       x: this.x + Math.cos(ang) * 16, y: this.y - 4 + Math.sin(ang) * 16,
-      vx: Math.cos(ang + spread) * 8, vy: Math.sin(ang + spread) * 8,
-      dmg: mdmg, type: def.proj, owner: 'player', life: 1.6, bounces:def.projBounces || 0,
-      persistent:!!def.projPersistent, hitEnemies:[], color:def.color,
+      vx: Math.cos(ang + spread) * (def.projSpeed || 8), vy: Math.sin(ang + spread) * (def.projSpeed || 8),
+      dmg: mdmg, type: def.proj, owner: 'player', life: def.projLife || 1.6, bounces:def.projBounces || 0,
+      accel:def.projAccel || 0, maxSpeed:def.projMaxSpeed || 0,
+      persistent:!!def.projPersistent, hitCooldown:def.hitCooldown || 0, hitEnemies:[], color:def.color,
       status:def.status, dead: false, homing:!!def.projHoming
     });
   }

@@ -4643,6 +4643,30 @@ function drawProjectile(ctx, p, cam, W, H) {
       ctx.moveTo(-6, -4); ctx.lineTo(2, 0); ctx.lineTo(-2, 3); ctx.lineTo(6, -2);
       ctx.stroke();
       break;
+    case P.WATERBOLT:
+      ctx.fillStyle = '#4d8ad0';
+      ctx.beginPath(); ctx.arc(0, 0, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#9dc8ff';
+      ctx.beginPath(); ctx.arc(-1.5, -1.5, 2.5, 0, Math.PI * 2); ctx.fill();
+      break;
+    case P.DEMONSCYTHE:
+      ctx.rotate(p.age ? (p.age * 14) % (Math.PI * 2) : 0);
+      ctx.fillStyle = '#a040c8';
+      ctx.beginPath();
+      ctx.arc(0, 0, 8, Math.PI * 0.25, Math.PI * 1.4);
+      ctx.arc(0, 0, 3, Math.PI * 1.4, Math.PI * 0.25, true);
+      ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#d888ff';
+      ctx.beginPath(); ctx.arc(0, 0, 2.5, 0, Math.PI * 2); ctx.fill();
+      break;
+    case P.CANDY:
+      ctx.strokeStyle = '#ff6a8a';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(-7, -4); ctx.lineTo(7, 4); ctx.stroke();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(-7, -5.2); ctx.lineTo(7, 2.8); ctx.stroke();
+      break;
   }
   ctx.restore();
 }

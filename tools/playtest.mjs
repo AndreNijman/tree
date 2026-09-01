@@ -855,6 +855,143 @@ check('B74: Flower of Fire fires a bouncing fireball', v74.fofProj && v74.fofBou
 check('B74: Rainbow Gun places a damaging rainbow wall', v74.wallCreated && v74.wallDamaged, JSON.stringify(v74));
 check('B74: Piranha Gun latches onto prey, damages it, consumes no ammo', v74.pgCreated && v74.pgLatched && v74.pgDamaged && v74.pgAmmoConsumed === 0, JSON.stringify(v74));
 
+// ===== BATCH 75: VANILLA WEAPON ARCHETYPES =====
+const v75 = await page.evaluate(() => {
+  var out = {};
+  var ids = ['waterbolt', 'demonscythe', 'beegun', 'starcannon', 'candycanesword', 'candycanebow'];
+  out.allDefs = ids.every(function(s) { return typeof ITEMS[s] !== 'undefined'; });
+  function recipeFor(id) { for (var r = 0; r < RECIPES.length; r++) if (RECIPES[r].result === id) return true; return false; }
+  out.starcannonRecipe = recipeFor(I.STARCANNON);
+  out.santaStock = (function() {
+    var stock = TOWN_SHOPS[E.SANTA] || [];
+    return stock.some(function(s) { return s.item === I.CANDYCANESWORD; }) && stock.some(function(s) { return s.item === I.CANDYCANE_BOW; });
+  })();
+
+  var p = game.player;
+  p.mana = p.maxMana; p.invuln = 99999; p.hp = p.maxHp;
+  var bx = p.x, by = p.y;
+
+  // Water Bolt: bouncing water spell with a long life
+  MOUSE.wx = bx + 60; MOUSE.wy = by;
+  p.attackCd = 0;
+  p.tryMagic(game, ITEMS['waterbolt'], 'waterbolt', null);
+  var wb = null;
+  for (var i = 0; i < game.projectiles.list.length; i++) { var o = game.projectiles.list[i]; if (!o.dead && o.type === P.WATERBOLT) wb = o; }
+  out.waterboltFired = !!wb;
+  out.waterboltBounces = wb ? wb.bounces : 0;
+  out.waterboltLife = wb ? Math.round(wb.life * 10) / 10 : 0;
+  if (wb) wb.dead = true;
+
+  // Demon Scythe: slow start, accelerates, clamped
+  p.mana = p.maxMana; p.attackCd = 0;
+  p.tryMagic(game, ITEMS['demonscythe'], 'demonscythe', null);
+  var ds = null;
+  for (var i2 = 0; i2 < game.projectiles.list.length; i2++) { var o2 = game.projectiles.list[i2]; if (!o2.dead && o2.type === P.DEMONSCYTHE) ds = o2; }
+  out.scytheFired = !!ds;
+  if (ds) {
+    var sp0 = Math.sqrt(ds.vx * ds.vx + ds.vy * ds.vy);
+    ds.ignoreTiles = true;
+    for (var s = 0; s < 120; s++) { ds.x = bx + 60; ds.y = by; step(1/60); }
+    var sp1 = Math.sqrt(ds.vx * ds.vx + ds.vy * ds.vy);
+    out.scytheAccel = sp1 > sp0 * 2;
+    out.scytheClamped = sp1 <= 11.6;
+    out.scythePersistent = !!ds.persistent;
+    ds.dead = true;
+  }
+
+  // Bee Gun: single homing bee, mana-cost only
+  p.mana = p.maxMana; p.attackCd = 0;
+  var bee = makeEntity(E.ZOMBIE, bx + 80, by);
+  bee.hp = 600;
+  game.entities.push(bee);
+  MOUSE.wx = bee.x; MOUSE.wy = bee.y;
+  var manaPre = p.mana;
+  p.tryMagic(game, ITEMS['beegun'], 'beegun', null);
+  var bg = null;
+  for (var i3 = 0; i3 < game.projectiles.list.length; i3++) { var o3 = game.projectiles.list[i3]; if (!o3.dead && o3.type === P.STINGER && o3.owner === 'player') bg = o3; }
+  out.beeFired = !!bg;
+  out.beeHoming = bg ? !!bg.homing : false;
+  out.beeManaUsed = p.mana < manaPre;
+  if (bg) bg.dead = true;
+  bee.dead = true;
+
+  // Star Cannon: consumes Fallen Stars, fires a fast star projectile
+  p.inventory.add(I.FALLENSTAR, 5);
+  var starsPre = p.inventory.countOf(I.FALLENSTAR);
+  p.attackCd = 0;
+  p.tryShoot(game, ITEMS['starcannon'], 'starcannon', null);
+  var sc = null;
+  for (var i4 = 0; i4 < game.projectiles.list.length; i4++) { var o4 = game.projectiles.list[i4]; if (!o4.dead && o4.type === P.STAR && o4.owner === 'player') sc = o4; }
+  out.starFired = !!sc;
+  out.starSpeed = sc ? Math.round(Math.sqrt(sc.vx * sc.vx + sc.vy * sc.vy) * 10) / 10 : 0;
+  out.starsConsumed = starsPre - p.inventory.countOf(I.FALLENSTAR);
+  if (sc) sc.dead = true;
+  p.inventory.consume(I.FALLENSTAR, 999);
+
+  // Candy Cane Sword: throws a candy cane projectile on swing
+  p.attackCd = 0;
+  MOUSE.wx = bx + 40; MOUSE.wy = by - 10;
+  p.tryMelee(game, ITEMS['candycanesword'], 'candycanesword', null);
+  var cd = null;
+  for (var i5 = 0; i5 < game.projectiles.list.length; i5++) { var o5 = game.projectiles.list[i5]; if (!o5.dead && o5.type === P.CANDY) cd = o5; }
+  out.candyFired = !!cd;
+  if (cd) cd.dead = true;
+
+  // Candy Cane Bow: a real bow, consumes one arrow
+  var arrowsPre = p.inventory.countOf(I.ARROW);
+  p.attackCd = 0;
+  p.tryShoot(game, ITEMS['candycanebow'], 'candycanebow', null);
+  var cb = null;
+  for (var i6 = 0; i6 < game.projectiles.list.length; i6++) { var o6 = game.projectiles.list[i6]; if (!o6.dead && o6.type === P.ARROW && o6.owner === 'player') cb = o6; }
+  out.candyBowFired = !!cb;
+  out.candyBowArrowUsed = arrowsPre - p.inventory.countOf(I.ARROW) === 1;
+  if (cb) cb.dead = true;
+  for (var clr = 0; clr < game.projectiles.list.length; clr++) game.projectiles.list[clr].dead = true;
+
+  // Queen Bee grants the Bee Gun
+  var pickupsPre = game.pickups.length;
+  makeBoss(game, { boss:'queenbee', name:'Queen Bee', w:46, h:42, hp:1, dmg:28, def:6, color:'#ffd75e', barColor:'#ffc040', x:bx + 240, y:by - 100 });
+  var qb = null;
+  for (var i7 = 0; i7 < game.entities.length; i7++) { if (game.entities[i7].boss === 'queenbee') qb = game.entities[i7]; }
+  killBoss(qb, game);
+  out.queenBeeBeeGun = false;
+  for (var pi = pickupsPre; pi < game.pickups.length; pi++) { if (game.pickups[pi].item === I.BEEGUN) out.queenBeeBeeGun = true; }
+  for (var pi2 = game.pickups.length - 1; pi2 >= pickupsPre; pi2--) game.pickups.splice(pi2, 1);
+
+  // Demons can drop the Demon Scythe, and every drop resolves
+  var seen = {}, valid = true;
+  for (var t = 0; t < 2000; t++) {
+    var dr = dropTable(E.DEMON, game);
+    for (var di = 0; di < dr.length; di++) {
+      if (typeof ITEMS[dr[di].id] === 'undefined') valid = false;
+      seen[dr[di].id] = true;
+    }
+  }
+  out.demonScytheDrops = !!seen['demonscythe'];
+  out.demonDropsValid = valid;
+
+  // New projectile render paths
+  var rctx = (typeof ctx2d !== 'undefined' ? ctx2d : document.getElementById('canvas').getContext('2d'));
+  out.renders = true;
+  try {
+    var mk = function(t) { return { x:game.cam.x, y:game.cam.y, vx:2, vy:0, type:t, age:0.3, life:1, dead:false }; };
+    drawProjectile(rctx, mk(P.WATERBOLT), game.cam, 800, 600);
+    drawProjectile(rctx, mk(P.DEMONSCYTHE), game.cam, 800, 600);
+    drawProjectile(rctx, mk(P.CANDY), game.cam, 800, 600);
+  } catch (err) { out.renders = false; out.renderErr = err.message; }
+
+  return out;
+});
+check('B75: six archetype weapons exist, Star Cannon crafts, Santa sells candy weapons', v75.allDefs && v75.starcannonRecipe && v75.santaStock, JSON.stringify(v75));
+check('B75: Water Bolt fires a 5-bounce long-lived water spell', v75.waterboltFired && v75.waterboltBounces === 5 && v75.waterboltLife === 3, JSON.stringify(v75));
+check('B75: Demon Scythe accelerates, stays piercing, and clamps speed', v75.scytheFired && v75.scytheAccel && v75.scytheClamped && v75.scythePersistent, JSON.stringify(v75));
+check('B75: Bee Gun fires a homing bee for mana only', v75.beeFired && v75.beeHoming && v75.beeManaUsed, JSON.stringify(v75));
+check('B75: Star Cannon consumes Fallen Stars at cannon speed', v75.starFired && v75.starSpeed === 14 && v75.starsConsumed === 1, JSON.stringify(v75));
+check('B75: Candy Cane Sword throws candy projectiles', v75.candyFired, JSON.stringify(v75));
+check('B75: Candy Cane Bow is a real bow that consumes arrows', v75.candyBowFired && v75.candyBowArrowUsed, JSON.stringify(v75));
+check('B75: Queen Bee grants the Bee Gun; Demons can drop the Demon Scythe', v75.queenBeeBeeGun && v75.demonScytheDrops && v75.demonDropsValid, JSON.stringify(v75));
+check('B75: new projectile render paths draw cleanly', v75.renders, JSON.stringify(v75));
+
 
 // ===== 300-STEP CLEAN LOOP =====
 const loop = await page.evaluate(() => {

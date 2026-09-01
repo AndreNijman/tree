@@ -2265,6 +2265,10 @@ function updateProjectiles() {
       o.vy += Math.sin((o.age || 0) * 5 + o.x * 0.01) * 0.008;
     }
     if (o.gravity && !o.returning) o.vy += o.gravity;
+    if (o.accel && !o.returning) {
+      var asp = Math.sqrt(o.vx * o.vx + o.vy * o.vy);
+      if (!o.maxSpeed || asp < o.maxSpeed) { o.vx *= o.accel; o.vy *= o.accel; }
+    }
 
     // move + collide tiles
     var nx = o.x + o.vx, ny = o.y + o.vy;
@@ -4254,6 +4258,7 @@ TOWN_SHOPS[E.TRUFFLE] = [
 ];
 TOWN_SHOPS[E.SANTA] = [
   { item:I.SNOW, count:25, cost:1 }, { item:I.ICE, count:25, cost:1 }, { item:I.SNOWGLOBE, count:1, cost:6 },
+  { item:I.CANDYCANESWORD, count:1, cost:12 }, { item:I.CANDYCANE_BOW, count:1, cost:10 },
   { item:I.NAUGHTYPRESENT, count:1, cost:10, gate:'plantera' }
 ];
 TOWN_SHOPS[E.PRINCESS] = [

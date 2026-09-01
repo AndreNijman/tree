@@ -543,7 +543,12 @@ function dropTable(type, game) {
       return [];
     case E.VOODOODEMON:
       return [{ id: I.GUIDEVOODOODOLL, count: 1 }];
-    case E.DEMON: case E.FIREIMP:
+    case E.DEMON:
+      if (r < 0.05) return [{ id: I.DEMONSCYTHE, count: 1 }];
+      if (r < 0.3) return [{ id: I.HELLSTONE, count: 1 }];
+      if (r < 0.45) return [{ id: I.ASH, count: 2 }];
+      return [];
+    case E.FIREIMP:
       if (r < 0.3) return [{ id: I.HELLSTONE, count: 1 }];
       if (r < 0.45) return [{ id: I.ASH, count: 2 }];
       return [];

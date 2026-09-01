@@ -114,6 +114,7 @@ recipe({ name:'Meteor Helmet', result:I.METEORHELM, count:1, mat:[[I.METEORITEBA
 recipe({ name:'Meteor Breastplate', result:I.METEORCHEST, count:1, mat:[[I.METEORITEBAR,12]], station:'anvil' });
 recipe({ name:'Meteor Leggings', result:I.METEORLEGS, count:1, mat:[[I.METEORITEBAR,8]], station:'anvil' });
 recipe({ name:'Space Gun', result:I.SPACEGUN, count:1, mat:[[I.METEORITEBAR,20],[I.IRONBAR,4]], station:'anvil', desc:'Meteorite\'s charge made into a gun.' });
+recipe({ name:'Star Cannon', result:I.STARCANNON, count:1, mat:[[I.METEORITEBAR,10],[I.FALLENSTAR,3]], station:'anvil', desc:'Meteorite metal harnessed to fire Fallen Stars.' });
 
 // Molten gear
 recipe({ name:'Molten Pickaxe', result:I.MOLTENPICK, count:1, mat:[[I.HELLSTONEBAR,20]], station:'anvil' });

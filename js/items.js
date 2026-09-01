@@ -225,6 +225,8 @@ var I = {
   SUNFURY:'sunfury', FLAMELASH:'flamelash', HELLWINGBOW:'hellwingbow', DARKLANCE:'darklance',
   MUSKET:'musket', VILETHORN:'vilethorn', BALLOHURT:'ballohurt', BANDOFSTARPOWER:'bandofstarpower',
   UNDERTAKER:'undertaker', CRIMSONROD:'crimsonrod', ROTTENFORK:'rottenfork', PANICNECKLACE:'panicnecklace',
+  WATERBOLT:'waterbolt', DEMONSCYTHE:'demonscythe', BEEGUN:'beegun',
+  STARCANNON:'starcannon', CANDYCANESWORD:'candycanesword', CANDYCANE_BOW:'candycanebow',
   // ---- Invasions / eclipse / lunar ----
   TATTEREDCLOTH:'tatteredcloth', GOBLINBATTLESTANDARD:'goblinbattlestandard',
   PIRATEMAP:'piratemap',
@@ -1096,6 +1098,12 @@ defItem(I.UNDERTAKER, { name:'The Undertaker', type:'ranged', dmg:22, speed:0.4,
 defItem(I.CRIMSONROD, { name:'Crimson Rod', type:'magic', dmg:20, speed:0.35, kb:2, mana:10, proj:P.CURSEDFLAME, magicMode:'cloud', deployDuration:6, deployInterval:0.45, deployProj:P.CURSEDFLAME, deployCount:1, deployDamageMul:0.75, range:999, color:'#e84858', icon:'🌧️', maxStack:1, desc:'Places a crimson cloud that rains damaging blood.' });
 defItem(I.ROTTENFORK, { name:'The Rotted Fork', type:'melee', dmg:28, speed:0.27, kb:5, range:2.6, meleeProj:P.STINGER, meleeMode:'spear', spearDuration:0.4, projectileOnly:true, persistentProj:true, color:'#b04048', icon:'🔱', maxStack:1, desc:'A vicious spear from a Crimson Heart.' });
 defItem(I.PANICNECKLACE, { name:'Panic Necklace', type:'accessory', runSpeed:1.12, color:'#e84858', icon:'📿', maxStack:1, desc:'Increases movement speed.' });
+defItem(I.WATERBOLT, { name:'Water Bolt', type:'magic', dmg:19, speed:0.24, kb:2, mana:8, proj:P.WATERBOLT, projBounces:5, projLife:3, range:999, color:'#4d8ad0', icon:'📖', maxStack:1, desc:'A bouncing water spell from the Dungeon bookshelves.' });
+defItem(I.DEMONSCYTHE, { name:'Demon Scythe', type:'magic', dmg:26, speed:0.3, kb:3, mana:9, proj:P.DEMONSCYTHE, projSpeed:2.5, projAccel:1.04, projMaxSpeed:11, projLife:2.6, projPersistent:true, hitCooldown:0.25, range:999, color:'#a040c8', icon:'🌀', maxStack:1, desc:'Fires a spinning scythe that accelerates as it flies. Demons carry them.' });
+defItem(I.BEEGUN, { name:'Bee Gun', type:'magic', dmg:9, speed:0.12, kb:1, mana:4, proj:P.STINGER, projHoming:true, range:999, color:'#ffc040', icon:'🐝', maxStack:1, desc:'Fires homing bees. Queen Bee\'s prize.' });
+defItem(I.STARCANNON, { name:'Star Cannon', type:'ranged', dmg:42, speed:0.15, kb:1, ammo:I.FALLENSTAR, proj:P.STAR, projSpeed:14, range:999, color:'#ffe88a', icon:'🌟', maxStack:1, desc:'Fires Fallen Stars at devastating speed.' });
+defItem(I.CANDYCANESWORD, { name:'Candy Cane Sword', type:'melee', dmg:18, speed:0.2, kb:4, range:1.9, meleeProj:P.CANDY, projDamageMul:0.8, projSpeed:8, projLife:1.4, color:'#ff6a8a', icon:'🍬', maxStack:1, desc:'A sweet blade that throws candy cane projectiles. Sold by Santa.' });
+defItem(I.CANDYCANE_BOW, { name:'Candy Cane Bow', type:'ranged', dmg:14, speed:0.3, kb:2, ammo:I.ARROW, proj:P.ARROW, range:999, color:'#ff6a8a', icon:'🏹', maxStack:1, desc:'A festive bow striped like a candy cane. Sold by Santa.' });
 defItem(I.METALDETECTOR, { name:'Metal Detector', type:'accessory', color:'#c8a84a', icon:'📟', maxStack:1, desc:'Shows the nearest valuable tile while equipped.' });
 defItem(I.BUTTERFLYWINGS, { name:'Butterfly Wings', type:'accessory', jumpMul:1.05, jumps:3, noFall:true, color:'#d0b060', icon:'🦋', maxStack:1, desc:'Delicate wings dropped by jungle moths.' });
 defItem(I.UMBRELLA, { name:'Umbrella', type:'melee', dmg:9, speed:0.33, kb:5, range:1.7, slowFall:2, color:'#5b82b8', icon:'☂️', maxStack:1, desc:'Hold it to drift safely downward. Dropped by Umbrella Slimes.' });

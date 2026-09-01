@@ -1481,6 +1481,7 @@ function killBoss(e, game) {
     drops.push({ id: I.GLOWSTONE, count: 10 + Math.floor(Math.random() * 8) });
     drops.push({ id: I.HEALINGPOTION, count: 2 });
   } else if (e.boss === 'queenbee') {
+    drops.push({ id: I.BEEGUN, count: 1 });
     drops.push({ id: I.HONEY, count: 20 + Math.floor(Math.random() * 15) });
     drops.push({ id: I.GLOWSTONE, count: 8 + Math.floor(Math.random() * 5) });
     drops.push({ id: I.HEALINGPOTION, count: 2 });

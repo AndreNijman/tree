@@ -590,11 +590,20 @@ This file tracks the staged expansion toward Terraria 1.4.4 parity. Progression 
 - [x] Add Rainbow Gun as an anvil-crafted magic weapon that lays a persistent rainbow trail wall (reusing the deployed-`wall` zone collision) that periodically damages enemies standing in it.
 - [x] Preserve mana cost/reforge/class damage metadata, one-ammo-free piranha semantics, and distinct procedural rendering for the fireball, wall, and fish.
 
+## Batch 75: Vanilla Weapon Archetypes
+
+- [x] Add Water Bolt as a Dungeon-chest spell that fires a five-bounce, long-lived water bolt through the generic bounce path.
+- [x] Add Demon Scythe as a Demon drop whose spinning scythe starts slow, accelerates in flight, clamps to a maximum speed, and pierces with timed hit immunity.
+- [x] Add Bee Gun as a mana-only Queen Bee reward that fires a homing bee.
+- [x] Add Star Cannon as an anvil-crafted ranged weapon that consumes Fallen Stars and fires them at cannon speed.
+- [x] Add the Candy Cane Sword (swings throw candy-cane projectiles) and Candy Cane Bow (a real arrow-consuming bow) to Santa's stock.
+- [x] Extend projectile metadata with projSpeed, projLife, and accel/maxSpeed support plus render paths for the water bolt, spinning scythe, and candy cane.
+
 ## Long-Term Catalog Parity
 
 - [x] Audit notable missing vanilla enemies and critters against `E` and `ENT_DEF` (ongoing; Ocean/Cavern/Spider/Underworld gaps continued in Batch 73).
 - [ ] Audit every vanilla event and invasion against `EVENT_WAVES` and world-state drivers.
 - [ ] Audit every vanilla item against `I`, `ITEMS`, recipes, drops, chests, fishing, and shops.
-- [ ] Add authentic weapon behaviors where generic melee/ranged/magic behavior currently substitutes (Flower of Fire, Piranha Gun, and Rainbow Gun completed in Batch 74; Candy Cane weapons and other generic archetypes remain).
+- [ ] Add authentic weapon behaviors where generic melee/ranged/magic behavior currently substitutes (Flower of Fire, Piranha Gun, and Rainbow Gun completed in Batch 74; Candy Cane weapons and other generic archetypes completed in Batch 75; Water Bolt, Demon Scythe, Bee Gun, and Star Cannon added there too).
 - [ ] Add remaining NPC-specific services and quest systems where they add distinct gameplay.
 - [ ] Add difficulty modes and Expert/Master drops after normal-mode progression is complete.

@@ -866,6 +866,7 @@ World.prototype.generate = function(hardmode, evil) {
         if (rng() < 0.5) inv.push({ id: I.MURAMASA, count: 1 });
         if (rng() < 0.5) inv.push({ id: I.COBALTSHIELD, count: 1 });
         if (rng() < 0.5) inv.push({ id: I.AQUASCEPTER, count: 1 });
+        if (rng() < 0.4) inv.push({ id: I.WATERBOLT, count: 1 });
         if (rng() < 0.4) inv.push({ id: I.GEM_DIAMOND, count: 1 });
         if (rng() < 0.4) inv.push({ id: I.GEM_RUBY, count: 1 });
         self.chests.push({ x: cxx, y: cyy, inv: inv });
