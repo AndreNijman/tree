@@ -367,6 +367,242 @@ const spawning = await page.evaluate(() => {
 });
 check('Spawning: enemies appear over time', spawning.spawned, JSON.stringify(spawning));
 
+// ===== BATCH 69: ZOOLOGIST BESTIARY-GATED STOCK =====
+const zoo = await page.evaluate(() => {
+  var result = { shop: TOWN_SHOPS[E.ZOOLOGIST].map(r => ({ item: r.item, gate: r.gate })),
+    defs: { cat: !!ITEMS[I.CATLICENSE], rabbit: !!ITEMS[I.RABBITPERCH], carrot: !!ITEMS[I.LIGHTNINGCARROT] } };
+  // Base shop availability (no bestiary progress)
+  result.baseAvailable = [];
+  result.gated = [];
+  for (var i = 0; i < TOWN_SHOPS[E.ZOOLOGIST].length; i++) {
+    var row = TOWN_SHOPS[E.ZOOLOGIST][i];
+    if (row.gate && row.gate.indexOf('bestiary:') === 0) result.gated.push({ item: row.item, gate: row.gate, avail: townStockAvailable(row, E.ZOOLOGIST) });
+    else result.baseAvailable.push({ item: row.item, avail: townStockAvailable(row, E.ZOOLOGIST) });
+  }
+  // Simulate bestiary completion
+  var entries = bestiaryCatalog(), count = Math.ceil(entries.length * 0.9);
+  for (var k = 0; k < count; k++) {
+    var key = entries[k].key;
+    if (!game.bestiary[key]) game.bestiary[key] = { seen: true, kills: 0 };
+    else game.bestiary[key].seen = true;
+  }
+  result.percent90 = bestiaryCompletionPercent();
+  result.gatedAfter = [];
+  for (var j = 0; j < TOWN_SHOPS[E.ZOOLOGIST].length; j++) {
+    var row2 = TOWN_SHOPS[E.ZOOLOGIST][j];
+    if (row2.gate && row2.gate.indexOf('bestiary:') === 0) result.gatedAfter.push({ item: row2.item, avail: townStockAvailable(row2, E.ZOOLOGIST) });
+  }
+  return result;
+});
+check('Zoo: 4 bestiary-gated entries present', zoo.gated.length === 4, JSON.stringify(zoo.gated));
+check('Zoo: CATLICENSE/RABBITPERCH/LIGHTNINGCARROT defs exist', zoo.defs.cat && zoo.defs.rabbit && zoo.defs.carrot);
+check('Zoo: base items (LeatherWhip/Puppy/BabyDino/Unicorn) available without bestiary', zoo.baseAvailable.filter(r => r.avail).length >= 2, JSON.stringify(zoo.baseAvailable));
+check('Zoo: gated items hidden at 0% bestiary', zoo.gated.every(r => !r.avail), JSON.stringify(zoo.gated));
+check('Zoo: 90% completion reached', zoo.percent90 >= 90, JSON.stringify(zoo.percent90));
+check('Zoo: gated items unlocked at 90%', zoo.gatedAfter.filter(r => r.avail).length === zoo.gatedAfter.length, JSON.stringify(zoo.gatedAfter));
+
+// ===== BATCH 69: ACHIEVEMENTS + PET/MT RENDERING =====
+const zoo2 = await page.evaluate(() => {
+  var ach30 = !!ACHIEVEMENTS['bestiary30'], ach90 = !!ACHIEVEMENTS['bestiary90'];
+  // Try to mount the lightning carrot
+  var def = ITEMS[I.LIGHTNINGCARROT];
+  game.player.tryMount(game, def, I.LIGHTNINGCARROT);
+  return { ach30: ach30, ach90: ach90, defType: def.type, mounted: game.player.mounted === I.LIGHTNINGCARROT };
+});
+check('Zoo: bestiary30 + bestiary90 achievements defined', zoo2.ach30 && zoo2.ach90);
+check('Zoo: lightning carrot is a mount', zoo2.defType === 'mount', JSON.stringify(zoo2));
+check('Zoo: mount attempt succeeds', zoo2.mounted);
+
+// ===== BATCH 70: GOLFER GOLF CHALLENGE =====
+const golf1 = await page.evaluate(() => {
+  var g = game.golf, p = game.player;
+  // Ensure a real Golfer entity is nearby for the proximity gate
+  var golfer = spawnEntity(game, E.GOLFER, p.x, p.y);
+  game.townNpcOpen = { type: E.GOLFER, name: 'Golfer' };
+  var startBefore = g.active;
+  golferStartGolf();
+  var started = g.active && g.time > 0 && g.whacks === 0;
+  // Force-spawn a ball on clear ground near the player
+  var spawned = false;
+  for (var k = 0; k < 40; k++) {
+    game.golf.spawnT = 0;
+    updateGolf(1/60);
+    if (g.balls.length > 0) { spawned = true; break; }
+  }
+  return { startBefore: startBefore, started: started, spawned: spawned, ballCount: g.balls.length };
+});
+check('Golf: start sets active/time/score', golf1.started, JSON.stringify(golf1));
+check('Golf: a ball spawns on clear ground', golf1.spawned, JSON.stringify(golf1));
+
+const golf2 = await page.evaluate(() => {
+  var g = game.golf;
+  if (g.balls.length === 0) { for (var k = 0; k < 60 && g.balls.length === 0; k++) { g.spawnT = 0; updateGolf(1/60); } }
+  var b = g.balls[0];
+  var before = g.whacks;
+  if (!b) return { hit: false, before: before, after: before, ballCount: g.balls.length };
+  MOUSE.down = true;
+  MOUSE.wx = b.x; MOUSE.wy = b.y;
+  updateGolf(1/60);
+  MOUSE.down = false;
+  return { hit: true, before: before, after: g.whacks, ballCount: g.balls.length };
+});
+check('Golf: clicking a ball holes it (+1 score)', golf2.hit && golf2.after === golf2.before + 1, JSON.stringify(golf2));
+check('Golf: holed ball is removed', golf2.ballCount === 0, JSON.stringify(golf2));
+
+const golf3 = await page.evaluate(() => {
+  var g = game.golf, p = game.player;
+  // Simulate a par run: 15 whacks, then expire time
+  g.whacks = 15;
+  g.time = 0.01;
+  var goldBefore = p.inventory.countOf(I.GOLD);
+  updateGolf(1/60);
+  var ended = !g.active;
+  var achPar = !!Achievements.unlocked['golfpar'];
+  var achFirst = !!Achievements.unlocked['golfchallenge'];
+  var completed = g.completed;
+  var best = g.best;
+  var goldAfter = p.inventory.countOf(I.GOLD);
+  return { ended: ended, achPar: achPar, achFirst: achFirst, completed: completed, best: best,
+    goldGain: goldAfter - goldBefore, hudActive: false };
+});
+check('Golf: par run ends and awards par achievement', golf3.ended && golf3.achPar && golf3.achFirst, JSON.stringify(golf3));
+check('Golf: completed/best tracked', golf3.completed >= 1 && golf3.best >= 15, JSON.stringify(golf3));
+
+const golf4 = await page.evaluate(() => {
+  // Save/restore round trip for best/completed
+  var snap = saveSnapshot();
+  var pr = snap.progress || snap.pr || {};
+  var bestField = pr.golfBest, completedField = pr.golfCompleted;
+  return { bestField: bestField, completedField: completedField, storedBest: game.golf.best, storedCompleted: game.golf.completed };
+});
+check('Golf: best/completed persisted in save snapshot', golf4.bestField === golf4.storedBest && golf4.completedField === golf4.storedCompleted, JSON.stringify(golf4));
+
+const golfHud = await page.evaluate(() => {
+  // Reactivate golf to check the HUD line renders without error
+  var p = game.player;
+  spawnEntity(game, E.GOLFER, p.x, p.y);
+  game.townNpcOpen = { type: E.GOLFER, name: 'Golfer' };
+  golferStartGolf();
+  updateGolf(1/60);
+  updateHud();
+  var hudEl = document.getElementById('eventhud');
+  var hud = hudEl ? hudEl.textContent : '';
+  // end it for the loop
+  game.golf.time = 0.01; updateGolf(1/60);
+  return { hud: hud.indexOf('Golf Challenge') >= 0, hadEl: !!hudEl };
+});
+check('Golf: HUD shows Golf Challenge line', golfHud.hud, JSON.stringify(golfHud));
+
+// ===== BATCH 71: DYE TRADER STRANGE PLANTS =====
+const strangeDefs = await page.evaluate(() => {
+  var rewards = [I.DYE_ACID, I.DYE_BLUEACID, I.DYE_REDACID, I.DYE_GLOWINGMUSHROOM];
+  var inv = game.player.inventory, oldSlots = inv.slots;
+  inv.slots = new Array(50);
+  var emptyArrival = dyeTraderArrivalEligible();
+  inv.add(I.STRANGEPLANT, 1);
+  var plantArrival = dyeTraderArrivalEligible();
+  inv.slots = oldSlots;
+  return {
+    plant: !!ITEMS[I.STRANGEPLANT] && ITEMS[I.STRANGEPLANT].type === 'material',
+    rewardCount: rewards.length,
+    rewardsAreDyes: rewards.every(id => ITEMS[id] && ITEMS[id].type === 'dye'),
+    emptyArrival: emptyArrival,
+    plantArrival: plantArrival
+  };
+});
+check('Dye Trader: Strange Plant and four rare dyes exist', strangeDefs.plant && strangeDefs.rewardCount === 4 && strangeDefs.rewardsAreDyes, JSON.stringify(strangeDefs));
+check('Dye Trader: carrying a Strange Plant satisfies arrival', !strangeDefs.emptyArrival && strangeDefs.plantArrival, JSON.stringify(strangeDefs));
+
+const strangeSpawn = await page.evaluate(() => {
+  var oldHardmode = game.hardmode, oldTimer = game.strangePlantT;
+  var oldX = game.player.x, oldY = game.player.y;
+  game.pickups = game.pickups.filter(pk => pk.item !== I.STRANGEPLANT);
+  game.hardmode = false;
+  game.strangePlantT = 0;
+  updateStrangePlants(1);
+  var preHardmode = game.pickups.filter(pk => pk.item === I.STRANGEPLANT).length;
+  game.hardmode = true;
+  game.strangePlantT = 0;
+  var wxCount = 0;
+  for (var sweep = 0; sweep < 60 && wxCount === 0; sweep++) {
+    game.strangePlantT = 0;
+    updateStrangePlants(1);
+    wxCount = game.pickups.filter(pk => pk.item === I.STRANGEPLANT).length;
+  }
+  var plants = game.pickups.filter(pk => pk.item === I.STRANGEPLANT);
+  var persisted = saveSnapshot().pickups.some(pk => pk.item === I.STRANGEPLANT);
+  var detected = false;
+  if (plants.length) {
+    game.player.x = plants[0].x; game.player.y = plants[0].y;
+    detected = metalDetectorText().indexOf('Strange Plant') >= 0;
+  }
+  game.player.x = oldX; game.player.y = oldY;
+  game.pickups = game.pickups.filter(pk => pk.item !== I.STRANGEPLANT);
+  for (var i = 0; i < 4; i++) game.addPickup(500 + i * 2000, 500, I.STRANGEPLANT, 1);
+  var beforeCap = game.pickups.filter(pk => pk.item === I.STRANGEPLANT).length;
+  game.strangePlantT = 0;
+  updateStrangePlants(1);
+  var afterCap = game.pickups.filter(pk => pk.item === I.STRANGEPLANT).length;
+  game.pickups = game.pickups.filter(pk => pk.item !== I.STRANGEPLANT);
+  game.hardmode = oldHardmode;
+  game.strangePlantT = oldTimer;
+  return { preHardmode:preHardmode, hardmode:plants.length, persisted:persisted, detected:detected, beforeCap:beforeCap, afterCap:afterCap };
+});
+check('Dye Trader: Strange Plants do not spawn before Hardmode', strangeSpawn.preHardmode === 0, JSON.stringify(strangeSpawn));
+check('Dye Trader: Hardmode plant spawns and persists as a pickup', strangeSpawn.hardmode === 1 && strangeSpawn.persisted, JSON.stringify(strangeSpawn));
+check('Dye Trader: Metal Detector locates nearby Strange Plants', strangeSpawn.detected, JSON.stringify(strangeSpawn));
+check('Dye Trader: natural Strange Plant count is capped at four', strangeSpawn.beforeCap === 4 && strangeSpawn.afterCap === 4, JSON.stringify(strangeSpawn));
+
+const strangeExchange = await page.evaluate(() => {
+  var p = game.player, inv = p.inventory;
+  var oldHardmode = game.hardmode, oldSlots = inv.slots, oldEntities = game.entities, oldOpen = game.townNpcOpen;
+  var oldRandom = Math.random;
+  game.hardmode = true;
+  game.entities = game.entities.filter(e => e.type !== E.DYETRADER);
+  var trader = spawnEntity(game, E.DYETRADER, p.x, p.y);
+  game.townNpcOpen = { type:E.DYETRADER, name:'Dye Trader' };
+  inv.slots = new Array(50);
+  inv.add(I.STRANGEPLANT, 1);
+  var serviceHTML = dyeTraderStrangePlantHTML();
+  renderTownPanel();
+  var panelHTML = document.getElementById('panel-town').innerHTML;
+  var exchanged = exchangeStrangePlant();
+  var rewardTotal = 0, rewardId = null;
+  for (var i = 0; i < STRANGE_DYE_REWARDS.length; i++) {
+    var count = inv.countOf(STRANGE_DYE_REWARDS[i]);
+    if (count) { rewardTotal += count; rewardId = STRANGE_DYE_REWARDS[i]; }
+  }
+  var plantAfter = inv.countOf(I.STRANGEPLANT);
+  inv.add(I.STRANGEPLANT, 1);
+  trader.x = p.x + 500;
+  var guardedBefore = inv.countOf(I.STRANGEPLANT);
+  var guardedResult = exchangeStrangePlant();
+  var guardedAfter = inv.countOf(I.STRANGEPLANT);
+  trader.x = p.x;
+  inv.slots = new Array(50);
+  for (var s = 0; s < 50; s++) inv.slots[s] = { id:I.COPPERSWORD, count:1 };
+  inv.slots[0] = { id:I.STRANGEPLANT, count:1 };
+  Math.random = function() { return 0; };
+  var atomicResult = exchangeStrangePlant();
+  Math.random = oldRandom;
+  var atomicPlant = inv.countOf(I.STRANGEPLANT), atomicDye = inv.countOf(I.DYE_ACID);
+  inv.slots = oldSlots;
+  game.entities = oldEntities;
+  game.townNpcOpen = oldOpen;
+  game.hardmode = oldHardmode;
+  return {
+    service:serviceHTML.indexOf('Exchange Plant') >= 0 && panelHTML.indexOf('Strange Plant Exchange') >= 0,
+    exchanged:exchanged, rewardTotal:rewardTotal, rewardId:rewardId, plantAfter:plantAfter,
+    guarded:guardedResult === false && guardedBefore === guardedAfter,
+    atomic:atomicResult && atomicPlant === 0 && atomicDye === 6
+  };
+});
+check('Dye Trader: Town panel exposes the Strange Plant exchange', strangeExchange.service, JSON.stringify(strangeExchange));
+check('Dye Trader: one plant grants exactly six of one rare dye', strangeExchange.exchanged && strangeExchange.plantAfter === 0 && strangeExchange.rewardTotal === 6 && !!strangeExchange.rewardId, JSON.stringify(strangeExchange));
+check('Dye Trader: exchange revalidates NPC proximity', strangeExchange.guarded, JSON.stringify(strangeExchange));
+check('Dye Trader: consuming the plant frees a full-inventory reward slot', strangeExchange.atomic, JSON.stringify(strangeExchange));
+
+
 // ===== 300-STEP CLEAN LOOP =====
 const loop = await page.evaluate(() => {
   var errs = [];

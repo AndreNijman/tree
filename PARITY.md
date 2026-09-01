@@ -508,6 +508,65 @@ This file tracks the staged expansion toward Terraria 1.4.4 parity. Progression 
 - [x] Restore the missing Umbrella item definition and add held slow-fall behavior with fall-damage protection.
 - [x] Preserve passive critter lifetimes, hostile pool phase gates, and one-evil isolation.
 
+## Batch 61: New Enemies, Items, Visual Polish
+
+- [x] Add Spore Zombie, Ice Elemental, and Squid with shared ranged-walker AI.
+- [x] Add Flinx Staff, Amber, Amber Robe, and Amber Staff with recipes.
+- [x] Add screen shake, animated liquid surfaces, twilight blending, walk bob, swing trails, hit-spark FX, and colored mine puffs.
+
+## Batch 62: Expert/Master Difficulty + Patch Migration
+
+- [x] Add Normal/Expert/Master difficulty modes with HP, damage, coin, spawn, and bag multipliers.
+- [x] Add Expert/Master Treasure Bags with `bagBoss`/`bagDrops` through inventory and saves.
+- [x] Add the Minecraft-style `PATCH` world-patch migration chain.
+
+## Batch 63: Difficulty Fidelity
+
+- [x] Reduce defense effectiveness and scale knockback by difficulty.
+- [x] Add Expert/Master death coin loss.
+- [x] Add guaranteed Gold bonus to Expert/Master boss bags.
+
+## Batch 64: Specialized Combat Behaviors
+
+- [x] Add Keybrand crowd scaling, KO Cannon bouncing bombs, Horseman's Blade piecing blades, Influx Waver flying swords.
+- [x] Convert Aqua Scepter, Vilethorn to piercing persistent streams; Hellwing Bow to homing bats; Electrosphere Launcher to homing spheres.
+
+## Batch 65: Vanilla Enemy Roster
+
+- [x] Add Skeleton, Pinky, Mother Slime/Blue Slime split, Man Eater, Medusa, Undead Viking, Wall Warrior, Spike Ball, Granite Elemental, and Basilisk.
+
+## Batch 66: NPC Services And Quests
+
+- [x] Add the Stylist hairstyle service and the Angler's 25-quest Hotline Fishing Hook milestone with lava fishing.
+
+## Batch 67: Angler Reward Parity
+
+- [x] Add milestone rewards (Fisherman's Pocket Guide, Weather Radio, Sextant, Angler Earring, Tackle Box) and the craftable Fish Finder with functional fishing accessories.
+
+## Batch 68: Persistent Zoologist Bestiary
+
+- [x] Add a persistent 250-entry bestiary with viewport discovery, kill tracking, sanitized save round-trip, and a Zoologist field guide.
+
+## Batch 69: Bestiary-Gated Zoologist Stock
+
+- [x] Add `bestiary:NN` shop gates with Cat License (30%), Bunny Perch (40%), Zephyr Fish (50%), and Lightning Carrot (90%).
+- [x] Add Naturalist/Bestiary Master milestone achievements and remove the dead SQUIRRELHOOK enum entry.
+
+## Batch 70: Golfer Golf Challenge
+
+- [x] Add a timed Golf mini-game hosted by the Golfer: hole golf balls near the player before time runs out.
+- [x] Add par (15 whacks) where scoring drives Gold Ore rewards, best-score/rounds tracking, and achievement unlocks (First Round / Under Par).
+- [x] Add golf ball rendering and a Golf Challenge HUD line.
+- [x] Persist best score and rounds played through the existing save payload.
+
+## Batch 71: Dye Trader Strange Plant Loop
+
+- [x] Spawn Strange Plants naturally on exposed Hardmode surface grass (timer-driven, spaced apart, capped at four live pickups).
+- [x] Let the Metal Detector locate nearby Strange Plant pickups.
+- [x] Add a Dye Trader Strange Plant exchange: one plant yields six of one random rare dye with atomic full-inventory handling.
+- [x] Add the four rare dyes (Acid, Blue Acid, Red Acid, Glowing Mushroom) and the Strange Plant material definition.
+- [x] Let a carried Strange Plant also satisfy the Dye Trader's arrival condition.
+
 ## Long-Term Catalog Parity
 
 - [ ] Audit every vanilla enemy and critter against `E` and `ENT_DEF`.

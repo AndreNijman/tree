@@ -168,6 +168,7 @@ var I = {
   FISH_FLOUNDER:'flounder', FISH_ROCKFISH:'rockfish', FISH_PUFFER:'pufferfish',
   WOODENCRATE:'woodencrate', IRONCRATE:'ironcrate', GOLDENCRATE:'goldencrate',
   ZEPHYRFISH:'zephyrfish', PUPPY:'puppy', BABYDINO:'babydino', BABYEATER:'babyeater',
+  CATLICENSE:'catlicense', RABBITPERCH:'rabbitperch', LIGHTNINGCARROT:'lightningcarrot',
   WISP:'wisp', SHADOWORB:'shadoworb', MAGICLANTERN:'magiclantern',
   PUMPKIN:'pumpkin', ECTOPLASM:'ectoplasm',
   PUMPKINMEDALLION:'pumpkinmedallion', NAUGHTYPRESENT:'naughtypresent',
@@ -178,6 +179,8 @@ var I = {
   DYE_RED:'dyered', DYE_ORANGE:'dyeorange', DYE_YELLOW:'dyeyellow', DYE_GREEN:'dyegreen',
   DYE_CYAN:'dyecyan', DYE_BLUE:'dyeblue', DYE_PURPLE:'dyepurple', DYE_PINK:'dyepink',
   DYE_WHITE:'dyewhite', DYE_BLACK:'dyeblack', DYE_BROWN:'dyebrown', DYE_RAINBOW:'dyerainbow',
+  STRANGEPLANT:'strangeplant', DYE_ACID:'dyeacid', DYE_BLUEACID:'dyeblueacid',
+  DYE_REDACID:'dyeredacid', DYE_GLOWINGMUSHROOM:'dyeglowingmushroom',
   DART:'dart', CRYSTALDART:'crystaldart', CURSEDDART:'curseddart', ICHORDART:'ichordart', VENOMDART:'venomdart',
   ROCKET1:'rocket1', ROCKET2:'rocket2', ROCKET3:'rocket3', ROCKET4:'rocket4', GRENADE:'grenade',
   COIN:'coin', CELEBRATION:'celebration', COINGUN:'coingun',
@@ -902,6 +905,9 @@ defItem(I.BABYEATER, { name:'Baby Eater', type:'pet', pet:'eater', color:'#7a4d8
 defItem(I.WISP, { name:'Wisp in a Bottle', type:'lightpet', light:'wisp', lightR:5, color:'#6bc8ff', icon:'🕯️', maxStack:1, desc:'A friendly wisp of light.' });
 defItem(I.SHADOWORB, { name:'Shadow Orb', type:'lightpet', light:'shadow', lightR:4, color:'#a9b0ff', icon:'🟣', maxStack:1, desc:'A dark orb that lights your way. Found by smashing a Shadow Orb.' });
 defItem(I.MAGICLANTERN, { name:'Magic Lantern', type:'lightpet', light:'lantern', lightR:4.5, color:'#ffe14d', icon:'🏮', maxStack:1, desc:'Reveals ores in the dark.' });
+defItem(I.CATLICENSE, { name:'Cat License', type:'pet', pet:'cat', color:'#e8a860', icon:'🐱', maxStack:1, desc:'A license to adopt a feline companion. Sold by the Zoologist.' });
+defItem(I.RABBITPERCH, { name:'Bunny Perch', type:'pet', pet:'bunny', color:'#f0e8dc', icon:'🐰', maxStack:1, desc:'A tiny hopper joins your adventure. Sold by the Zoologist.' });
+defItem(I.LIGHTNINGCARROT, { name:'Lightning Carrot', type:'mount', mount:'lightbunny', mountSpeed:8.0, mountJump:-13.0, color:'#ffe14d', icon:'🥕', maxStack:1, desc:'A rabbit that runs like lightning. Sold by the Zoologist.' });
 
 // Events
 defItem(I.PUMPKIN, { name:'Pumpkin', type:'material', color:'#ff9a3d', icon:'🎃', maxStack:99, desc:'Dropped by autumn enemies.' });
@@ -956,6 +962,11 @@ defItem(I.DYE_WHITE, { name:'White Dye', type:'dye', color:'#f0f0f0', icon:'🧴
 defItem(I.DYE_BLACK, { name:'Black Dye', type:'dye', color:'#3a3a3a', icon:'🧴', maxStack:99, desc:'Tints your armor black.' });
 defItem(I.DYE_BROWN, { name:'Brown Dye', type:'dye', color:'#8a5c34', icon:'🧴', maxStack:99, desc:'Tints your armor brown.' });
 defItem(I.DYE_RAINBOW, { name:'Rainbow Dye', type:'dye', color:'#ff9de0', icon:'🧴', maxStack:99, desc:'Tints your armor with shifting colors.' });
+defItem(I.STRANGEPLANT, { name:'Strange Plant', type:'material', color:'#d85cff', icon:'✿', maxStack:99, desc:'A rare Hardmode plant sought by the Dye Trader.' });
+defItem(I.DYE_ACID, { name:'Acid Dye', type:'dye', color:'#8cff40', icon:'🧴', maxStack:99, desc:'A rare luminous dye from the Dye Trader.' });
+defItem(I.DYE_BLUEACID, { name:'Blue Acid Dye', type:'dye', color:'#48a8ff', icon:'🧴', maxStack:99, desc:'A rare luminous dye from the Dye Trader.' });
+defItem(I.DYE_REDACID, { name:'Red Acid Dye', type:'dye', color:'#ff5070', icon:'🧴', maxStack:99, desc:'A rare luminous dye from the Dye Trader.' });
+defItem(I.DYE_GLOWINGMUSHROOM, { name:'Glowing Mushroom Dye', type:'dye', color:'#56d8ff', icon:'🧴', maxStack:99, desc:'A rare fungal dye from the Dye Trader.' });
 
 // ---------- Pre-hardmode phase ----------
 // Ores

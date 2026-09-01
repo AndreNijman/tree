@@ -803,6 +803,9 @@ function renderGame(game, ctx) {
     else drawEnemy(tileCtx, e, cam, W, H);
   }
 
+  // golf balls
+  if (game.golf && game.golf.active) drawGolf(game, tileCtx, cam, W, H);
+
   // pickups
   for (var p = 0; p < game.pickups.length; p++) {
     var pk = game.pickups[p];
@@ -853,6 +856,34 @@ function renderGame(game, ctx) {
 
   // lighting
   drawLighting(game, tileCtx, cam, W, H);
+}
+
+function drawGolf(game, ctx, cam, W, H) {
+  var balls = game.golf.balls;
+  for (var i = 0; i < balls.length; i++) {
+    var b = balls[i];
+    var px = b.x - cam.x + W / 2;
+    var py = b.y - cam.y + H / 2 + Math.sin(Time.seconds * 2 + b.seed) * 1.5;
+    if (px < -20 || py < -20 || px > W + 20 || py > H + 20) continue;
+    ctx.fillStyle = '#f2f2f2';
+    ctx.beginPath();
+    ctx.arc(px, py, 6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#c8c8c8';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = '#c8c8c8';
+    ctx.beginPath();
+    ctx.arc(px - 2, py - 2, 2, 0, Math.PI);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(px + 2, py + 1, 2, Math.PI, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+    ctx.beginPath();
+    ctx.arc(px, py, 10 + 3 * Math.sin(Time.seconds * 4 + b.seed), 0, Math.PI * 2);
+    ctx.stroke();
+  }
 }
 
 // ---------- Background ----------

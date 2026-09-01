@@ -74,6 +74,7 @@ function buildGame(seed, evil, difficulty) {
     mechDone: false,
     spawnT: 8,
     critterT: 4,
+    strangePlantT: 30,
     messageTimer: 0,
     flashT: 0,
     shakeT: 0,
@@ -108,7 +109,8 @@ function buildGame(seed, evil, difficulty) {
     cultistRitualReady: false,
     cultistRitualActive: false,
     cultistRespawnT: 0,
-    autosaveT: 0
+    autosaveT: 0,
+    golf: { active:false, time:0, whacks:0, balls:[], spawnT:0, best:0, completed:0 }
   };
   game.world.generate(game.hardmode, evil);
   game.world.dirty = false;
@@ -575,7 +577,9 @@ function saveSnapshot() {
       starfall: game.starfall,
       anglerQuestCompletedDay: game.anglerQuestCompletedDay,
       anglerQuestsCompleted: game.anglerQuestsCompleted,
-      cultistRitualReady: game.cultistRitualReady
+      cultistRitualReady: game.cultistRitualReady,
+      golfBest: game.golf.best,
+      golfCompleted: game.golf.completed
     },
     achievements: Achievements.unlocked,
     pickups: game.pickups,
@@ -750,6 +754,8 @@ function applySaveData(data) {
   game.starfall.crawlerT = Math.max(0, game.starfall.crawlerT || 0);
   game.anglerQuestCompletedDay = pr.anglerQuestCompletedDay === undefined ? -1 : pr.anglerQuestCompletedDay;
   game.anglerQuestsCompleted = Math.max(0, pr.anglerQuestsCompleted || 0);
+  game.golf.best = Math.max(0, pr.golfBest || 0);
+  game.golf.completed = Math.max(0, pr.golfCompleted || 0);
   var legacyTown = { merchant:E.MERCHANT, nurse:E.NURSE, armsdealer:E.ARMSDEALER, demolitionist:E.DEMOLITIONIST,
     dryad:E.DRYAD, goblintinkerer:E.GOBLINTINKERER, mechanic:E.MECHANIC, wizard:E.WIZARD,
     clothier:E.CLOTHIER, taxcollector:E.TAXCOLLECTOR, painter:E.PAINTER, golfer:E.GOLFER, zoologist:E.ZOOLOGIST,
@@ -1070,6 +1076,10 @@ function playerHasItemType(type) {
   return false;
 }
 
+function dyeTraderArrivalEligible() {
+  return playerHasItemType('dye') || game.player.inventory.countOf(I.STRANGEPLANT) > 0;
+}
+
 function townArrivalCount(excludeSanta) {
   var count = 0;
   for (var type in game.townArrivals) {
@@ -1097,7 +1107,7 @@ function updateTownArrivals() {
   conditions[E.TAXCOLLECTOR] = !!game.hardmode;
   conditions[E.PAINTER] = townArrivalCount(false) >= 7;
   conditions[E.ZOOLOGIST] = game.kills >= 25;
-  conditions[E.DYETRADER] = playerHasItemType('dye');
+  conditions[E.DYETRADER] = dyeTraderArrivalEligible();
   conditions[E.PIRATE] = !!game.eventCompletions.pirateinvasion;
   conditions[E.WITCHDOCTOR] = !!b.queenbee;
   conditions[E.PARTYGIRL] = townArrivalCount(false) >= 13;
@@ -1901,7 +1911,7 @@ function step(dt) {
   game.world.nearbyStations = game.world.findStations(game.player.x, game.player.y);
 
   // ambient spawning
-  if (typeof Net === 'undefined' || !Net.isClient()) { updateSpawning(dt); updateCritterSpawning(dt); }
+  if (typeof Net === 'undefined' || !Net.isClient()) { updateSpawning(dt); updateCritterSpawning(dt); updateStrangePlants(dt); }
 
   // plantera bulbs
   if (typeof Net === 'undefined' || !Net.isClient()) updateBulbs();
@@ -1914,6 +1924,9 @@ function step(dt) {
 
   // underground Torch God challenge
   if (typeof Net === 'undefined' || !Net.isClient()) updateTorchGod(dt);
+
+  // Golfer golf challenge
+  if (typeof Net === 'undefined' || !Net.isClient()) updateGolf(dt);
 
   // hardmode biome spread (slow creep of evil/Hallow into stone/dirt)
   if (game.hardmode && (typeof Net === 'undefined' || !Net.isClient())) {
@@ -3596,6 +3609,30 @@ function findDandelionSpot(wx) {
   return null;
 }
 
+function updateStrangePlants(dt) {
+  if (!game.hardmode) return;
+  game.strangePlantT -= dt;
+  if (game.strangePlantT > 0) return;
+  game.strangePlantT = 45 + Math.random() * 45;
+  var plants = [];
+  for (var i = 0; i < game.pickups.length; i++) {
+    if (game.pickups[i].item === I.STRANGEPLANT) plants.push(game.pickups[i]);
+  }
+  if (plants.length >= 4) return;
+  for (var attempt = 0; attempt < 12; attempt++) {
+    var wx = 32 + Math.random() * (game.world.W * TILE - 64);
+    var spot = findDandelionSpot(wx);
+    if (!spot) continue;
+    var separated = true;
+    for (var j = 0; j < plants.length; j++) {
+      if (dist(spot.x, spot.y, plants[j].x, plants[j].y) < 80 * TILE) { separated = false; break; }
+    }
+    if (!separated) continue;
+    game.addPickup(spot.x, spot.y, I.STRANGEPLANT, 1);
+    return;
+  }
+}
+
 function pickEnemy() {
   var p = game.player, w = game.world;
   var cx = clamp(Math.floor(p.x / TILE), 0, w.W - 1);
@@ -3983,7 +4020,14 @@ function recordBestiary(g, e, killed) {
     rec.dmg = Math.max(0, Math.round(e.dmg || 0));
     rec.def = Math.max(0, Math.round(e.defV === undefined ? (e.def || 0) : e.defV));
   }
+  checkBestiaryMilestones();
   return true;
+}
+
+function checkBestiaryMilestones() {
+  var pct = bestiaryCompletionPercent();
+  if (pct >= 30) Achievements.unlock('bestiary30', game);
+  if (pct >= 90) Achievements.unlock('bestiary90', game);
 }
 
 function discoverBestiaryEntity(g, e) {
@@ -3991,6 +4035,16 @@ function discoverBestiaryEntity(g, e) {
   var p = g.player;
   if (Math.abs(e.x - p.x) > canvas.width / 2 + 80 || Math.abs(e.y - p.y) > canvas.height / 2 + 80) return;
   if (recordBestiary(g, e, false)) e._bestiarySeen = true;
+}
+
+function bestiaryCompletionPercent() {
+  if (!game || !game.bestiary) return 0;
+  var entries = bestiaryCatalog(), discovered = 0;
+  for (var i = 0; i < entries.length; i++) {
+    var rec = game.bestiary[entries[i].key];
+    if (rec && rec.seen) discovered++;
+  }
+  return entries.length ? Math.floor(discovered / entries.length * 100) : 0;
 }
 
 function sanitizeBestiary(saved) {
@@ -4084,8 +4138,13 @@ TOWN_SHOPS[E.ANGLER] = [
   { item:I.FISHINGROD_FIBERGLASS, count:1, cost:7, gate:'hardmode' }, { item:I.FISHINGROD_GOLDEN, count:1, cost:12, gate:'plantera' }
 ];
 TOWN_SHOPS[E.ZOOLOGIST] = [
-  { item:I.LEATHERWHIP, count:1, cost:4 }, { item:I.PUPPY, count:1, cost:5 }, { item:I.BABYDINO, count:1, cost:7, gate:'evil' },
-  { item:I.UNICORNMOUNT, count:1, cost:12, gate:'hardmode' }
+  { item:I.LEATHERWHIP, count:1, cost:4 }, { item:I.PUPPY, count:1, cost:5 },
+  { item:I.CATLICENSE, count:1, cost:6, gate:'bestiary:30' },
+  { item:I.RABBITPERCH, count:1, cost:6, gate:'bestiary:40' },
+  { item:I.BABYDINO, count:1, cost:7, gate:'evil' },
+  { item:I.ZEPHYRFISH, count:1, cost:8, gate:'bestiary:50' },
+  { item:I.UNICORNMOUNT, count:1, cost:12, gate:'hardmode' },
+  { item:I.LIGHTNINGCARROT, count:1, cost:15, gate:'bestiary:90' }
 ];
 TOWN_SHOPS[E.PAINTER] = [
   { item:I.WOODWALL, count:25, cost:1 }, { item:I.GLASS, count:20, cost:2 }, { item:I.CHAIR, count:1, cost:2 },
@@ -4254,6 +4313,10 @@ function townGateAvailable(gate) {
   if (gate === 'windy') return isWindyDayAt(game, game.player.x, game.player.y);
   if (gate === 'party') return !!game.party.active;
   if (gate === 'lanternnight') return !!game.lanternNight.active;
+  if (typeof gate === 'string' && gate.indexOf('bestiary:') === 0) {
+    var req = parseInt(gate.substring(9), 10);
+    if (!isNaN(req)) return bestiaryCompletionPercent() >= req;
+  }
   return false;
 }
 
@@ -4348,6 +4411,139 @@ function stylistHair() {
   AudioSys.play('pickup');
 }
 
+var STRANGE_DYE_REWARDS = [I.DYE_ACID, I.DYE_BLUEACID, I.DYE_REDACID, I.DYE_GLOWINGMUSHROOM];
+
+function dyeTraderStrangePlantHTML() {
+  var have = game.player.inventory.countOf(I.STRANGEPLANT);
+  var html = '<div class="town-service"><h4>Strange Plant Exchange</h4>';
+  if (!game.hardmode) {
+    html += '<div class="ddesc">Strange Plants begin blooming across the surface in Hardmode.</div>';
+  } else {
+    html += '<div class="ddesc">Trade one Strange Plant for six rare dyes of one kind.</div><div class="shop-cost">Strange Plants: ' + have + '</div>' +
+      '<button class="tavern-buy" data-town-strange="1"' + (have ? '' : ' disabled') + '>Exchange Plant</button>';
+  }
+  return html + '</div>';
+}
+
+function exchangeStrangePlant() {
+  if (!game.townNpcOpen || game.townNpcOpen.type !== E.DYETRADER || !townServiceNpcActive(E.DYETRADER)) return false;
+  if (!game.hardmode) { game.message('Strange Plants begin blooming in Hardmode.'); return false; }
+  var inv = game.player.inventory;
+  if (inv.countOf(I.STRANGEPLANT) < 1) { game.message('Bring the Dye Trader a Strange Plant.'); return false; }
+  var reward = STRANGE_DYE_REWARDS[Math.floor(Math.random() * STRANGE_DYE_REWARDS.length)];
+  var test = new Inventory();
+  test.slots = new Array(50);
+  for (var i = 0; i < 50; i++) test.slots[i] = inv.slots[i] ? copyItemStack(inv.slots[i]) : null;
+  test.consume(I.STRANGEPLANT, 1);
+  if (test.add(reward, 6) !== 6) { game.message('Make room for the rare dyes.'); return false; }
+  inv.consume(I.STRANGEPLANT, 1);
+  inv.add(reward, 6);
+  game.message('The Dye Trader mixed six ' + ITEMS[reward].name + '!');
+  AudioSys.play('craft');
+  return true;
+}
+
+function golferGolfHTML() {
+  var g = game.golf;
+  var html = '<div class="town-service"><h4>Golf Challenge</h4><div class="ddesc">Play a round on the driving range. Click each golf ball to hole it before time runs out.</div>';
+  if (g.active) {
+    html += '<div class="ddesc"><b>Round in progress</b> &mdash; finish it before starting another.</div>';
+  } else {
+    html += '<div class="shop-cost">Best score: ' + g.best + ' &middot; Rounds played: ' + g.completed + '</div>';
+    html += '<button class="tavern-buy" data-town-golf="1">Start Golf Challenge</button>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function golferStartGolf() {
+  if (!game.townNpcOpen || game.townNpcOpen.type !== E.GOLFER || !townServiceNpcActive(E.GOLFER)) return;
+  var g = game.golf;
+  if (g.active) { game.message('You are already mid-round!'); return; }
+  g.active = true;
+  g.time = 30;
+  g.whacks = 0;
+  g.balls = [];
+  g.spawnT = 0.4;
+  if (game.panelOpen) closePanel();
+  game.message('Golf challenge started! Click the golf balls to hole them. Hole 15 for par.');
+  AudioSys.play('pickup');
+}
+
+function updateGolf(dt) {
+  var g = game.golf;
+  if (!g || !g.active) return;
+  if (game.panelOpen) { g.spawnT = 0; return; }
+  g.time -= dt;
+
+  // spawn balls at a clear flat yard near the player
+  g.spawnT -= dt;
+  if (g.spawnT <= 0 && g.balls.length < 6) {
+    g.spawnT = 1.1;
+    var baseX = Math.floor(game.player.x / TILE), idx = 0;
+    for (var k = 0; k < 5; k++) {
+      var tx = baseX + (idx % 2 === 0 ? -(idx / 2 + 1) : (idx / 2 + 2));
+      idx++;
+      var ty = Math.floor((game.player.y + game.player.h) / TILE);
+      var found = -1;
+      for (var yy = ty; yy < ty + 8; yy++) {
+        var under = game.world.get(tx, yy);
+        if (game.world.isSolidTile(under) && under !== T.PLATFORM) { found = yy; break; }
+      }
+      if (found > 0) {
+        g.balls.push({
+          x: tx * TILE + 8, y: (found - 1) * TILE + 8, seed: Math.random() * 100,
+          driftX: (Math.random() - 0.5) * 6, vx: (Math.random() - 0.5) * 20,
+          t: 0
+        });
+        break;
+      }
+    }
+  }
+
+  // click-to-hole detection
+  if (MOUSE.down) {
+    for (var i = g.balls.length - 1; i >= 0; i--) {
+      var b = g.balls[i];
+      var dx = MOUSE.wx - b.x, dy = MOUSE.wy - b.y;
+      if (dx * dx + dy * dy < 24 * 24) {
+        g.balls.splice(i, 1);
+        g.whacks++;
+        game.spawnMinePuff(b.x, b.y - 4, '#ffffff');
+        game.fx.push({ type:'slash', x:b.x, y:b.y, t:0.2 });
+        game.spawnFloatingText(b.x, b.y - 14, '+1', '#e8e8e8');
+        AudioSys.play('shoot');
+      }
+    }
+  }
+
+  if (g.time <= 0) { endGolfRound(); }
+}
+
+function endGolfRound() {
+  var g = game.golf;
+  g.active = false;
+  g.balls = [];
+  var score = g.whacks;
+  g.completed++;
+  if (score > g.best) g.best = score;
+  Achievements.unlock('golfchallenge', game);
+  var gold = 3 + Math.floor(score / 3);
+  var inv = game.player.inventory;
+  var granted = 0;
+  if (inv.canAdd(I.GOLD, gold)) { inv.add(I.GOLD, gold); granted = gold; }
+  var msg = 'Golf round over! You holed ' + score + ' ball' + (score === 1 ? '' : 's') + '.';
+  if (score >= 15) {
+    Achievements.unlock('golfpar', game);
+    game.message(msg + ' Under par! ' + (granted ? 'Reward: ' + granted + ' Gold Ore.' : 'Your inventory is full.') );
+  } else if (granted) {
+    game.message(msg + ' Reward: ' + granted + ' Gold Ore.');
+  } else {
+    game.message(msg);
+  }
+  AudioSys.play('craft');
+}
+
 function turnInAnglerQuest() {  if (!game.townNpcOpen || game.townNpcOpen.type !== E.ANGLER || !townServiceNpcActive(E.ANGLER)) return false;
   if (game.anglerQuestCompletedDay === game.dayCount) { game.message('The Angler has no more work today.'); return false; }
   var quest = currentAnglerQuest(), inv = game.player.inventory;
@@ -4390,7 +4586,9 @@ function renderTownPanel() {
       (game.world.evil === 'crimson' ? 'Crimson' : 'Corruption') + ': ' + open.status.evil + '% &middot; Hallow: ' + open.status.hallow + '% &middot; Purity: ' + open.status.purity + '%</div></div>';
     if (open.type === E.ANGLER) html += anglerQuestHTML();
     if (open.type === E.STYLIST) html += stylistHairHTML();
+    if (open.type === E.DYETRADER) html += dyeTraderStrangePlantHTML();
     if (open.type === E.ZOOLOGIST) html += bestiaryHTML();
+    if (open.type === E.GOLFER) html += golferGolfHTML();
     root.innerHTML = html; return;
   }
   if (open.type === E.TAXCOLLECTOR) {
@@ -4978,6 +5176,13 @@ function metalDetectorText() {
       if (!best || d < best.d) best = { d: d, name: nn };
     }
   }
+  for (var i = 0; i < game.pickups.length; i++) {
+    var pickup = game.pickups[i];
+    if (pickup.item !== I.STRANGEPLANT) continue;
+    var pdx = (pickup.x - p.x) / TILE, pdy = (pickup.y - p.y) / TILE;
+    var pd = pdx * pdx + pdy * pdy;
+    if (pd <= r * r && (!best || pd < best.d)) best = { d:pd, name:'Strange Plant' };
+  }
   if (!best) return 'Nothing Found';
   return best.name + ' Detected';
 }
@@ -5004,13 +5209,15 @@ function updateHud() {
   el.fps.textContent = (game.fps || 0) + ' fps';
 
   // event indicator
-  if (game.event || game.torchGod || game.party.active || game.lanternNight.active) {
+  if (game.event || game.torchGod || game.party.active || game.lanternNight.active || (game.golf && game.golf.active)) {
     if (!el.event) {
       el.event = document.createElement('div');
       el.event.id = 'eventhud';
       document.body.appendChild(el.event);
     }
-    if (game.torchGod) {
+    if (game.golf && game.golf.active) {
+      el.event.textContent = 'Golf Challenge - Score ' + game.golf.whacks + ' - ' + Math.ceil(game.golf.time) + 's left';
+    } else if (game.torchGod) {
       el.event.textContent = 'Torch God - ' + game.torchGod.next + ' of ' + game.torchGod.torches.length + ' flames';
     } else if (game.event) {
       var names = {
@@ -5430,7 +5637,9 @@ function initDOM() {
     if (e.target.closest('[data-town-tax]')) { collectTownTax(); renderTownPanel(); return; }
     if (e.target.closest('[data-angler-quest]')) { turnInAnglerQuest(); renderTownPanel(); return; }
     if (e.target.closest('[data-town-hair]')) { stylistHair(); renderTownPanel(); return; }
+    if (e.target.closest('[data-town-strange]')) { exchangeStrangePlant(); renderTownPanel(); return; }
     if (e.target.closest('[data-town-reforge]')) { reforgeSelectedItem(); renderTownPanel(); }
+    if (e.target.closest('[data-town-golf]')) { golferStartGolf(); renderTownPanel(); }
   });
   $('panel-housing').addEventListener('click', function(e) {
     var assign = e.target.closest('[data-house-type]');
