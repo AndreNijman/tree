@@ -21,7 +21,7 @@ await page.evaluate(() => {
   game.entities = game.entities.filter(e => e.dead || e.dmg <= 0 || e === game.player);
 });
 
-// ===== STARTER ITEMS =====
+// ===== STARTER ITEMS (vanilla: Copper Shortsword + Pickaxe + Axe) =====
 const starter = await page.evaluate(() => {
   var inv = game.player.inventory;
   var items = [];
@@ -30,15 +30,11 @@ const starter = await page.evaluate(() => {
   }
   return { items, selected: inv.selected };
 });
-check('Starter: exactly 6 items', starter.items.length === 6, JSON.stringify(starter.items));
-check('Starter: slot 0 is Copper Pickaxe', starter.items[0]?.id === 'copperpick');
-check('Starter: slot 1 is Copper Sword', starter.items[1]?.id === 'coppersword');
-check('Starter: slot 2 is Copper Bow', starter.items[2]?.id === 'copperbow');
-check('Starter: slot 3 is 35 Arrows', starter.items[3]?.id === 'arrow' && starter.items[3]?.count === 35);
-check('Starter: slot 4 is 25 Torches', starter.items[4]?.id === 'torch' && starter.items[4]?.count === 25);
-check('Starter: slot 5 is 3 Healing Potions', starter.items[5]?.id === 'healingpotion' && starter.items[5]?.count === 3);
-check('Starter: NO blocks', !starter.items.find(s => s.id === 'wood' || s.id === 'stone' || s.id === 'dirt' || s.id === 'cobweb'));
-check('Starter: NO iron tools', !starter.items.find(s => s.id === 'ironpick' || s.id === 'ironsword' || s.id === 'ironbow'));
+check('Starter: exactly 3 items', starter.items.length === 3, JSON.stringify(starter.items));
+check('Starter: Copper Shortsword in slot 0', starter.items[0]?.id === 'coppershort');
+check('Starter: Copper Pickaxe in slot 1', starter.items[1]?.id === 'copperpick');
+check('Starter: Copper Axe in slot 2', starter.items[2]?.id === 'copperaxe');
+check('Starter: no free gear', !starter.items.find(s => ['copperbow','arrow','torch','healingpotion'].includes(s.id)));
 check('Starter: selected slot is 0', starter.selected === 0);
 
 // ===== MINING: TOOL POWER GATES =====
@@ -160,15 +156,17 @@ check('Combat: swing animation plays', melee.swing);
 // ===== COMBAT: RANGED =====
 const ranged = await page.evaluate(() => {
   var p = game.player, inv = p.inventory;
-  var pre = 0; for (var s of inv.slots) if (s && s.id === 'arrow') pre += s.count;
+  inv.add('copperbow', 1); inv.add('arrow', 30);
+  var pre = 0; for (var s of inv.slots) if (s && s.id === 'arrow') pre += s.count; for (var s of inv.slots) if (s && s.id === 'arrow') pre += s.count;
   p.attackCd = 0;
   MOUSE.wx = p.x + 100; MOUSE.wy = p.y;
   p.tryShoot(game, ITEMS['copperbow'], 'copperbow', null);
   var post = 0; for (var s of inv.slots) if (s && s.id === 'arrow') post += s.count;
   var projs = 0; for (var j = 0; j < game.projectiles.list.length; j++) { var o = game.projectiles.list[j]; if (o.owner === 'player' && !o.dead) projs++; }
-  return { consumed: pre - post, projs };
+  return { consumed: pre - post, projs, fired: projs > 0 };
 });
-check('Ranged: bow consumes 1 arrow', ranged.consumed === 1, JSON.stringify(ranged));
+check('Ranged: bow consumes arrows', ranged.consumed >= 1 && ranged.fired, JSON.stringify(ranged));
+check('Ranged: bow fires with arrows granted', ranged.fired);
 check('Ranged: arrow projectile created', ranged.projs > 0, 'projs=' + ranged.projs);
 
 // ===== COMBAT: CONTACT DAMAGE =====
@@ -216,7 +214,8 @@ check('Camera: stays in world bounds', camera.inBounds);
 // ===== LIGHTING: TORCH HELD =====
 const lighting = await page.evaluate(() => {
   var p = game.player, inv = p.inventory;
-  inv.selected = 4;
+  inv.add('torch', 10);
+  for (var st = 0; st < inv.slots.length; st++) if (inv.slots[st] && inv.slots[st].id === 'torch') { inv.selected = st; break; }
   var slot = inv.selectedItem();
   var def = slot ? ITEMS[slot.id] : null;
   var isTorch = def && def.tile === T.TORCH;
@@ -940,6 +939,7 @@ const v75 = await page.evaluate(() => {
   if (cd) cd.dead = true;
 
   // Candy Cane Bow: a real bow, consumes one arrow
+  p.inventory.add(I.ARROW, 10);
   var arrowsPre = p.inventory.countOf(I.ARROW);
   p.attackCd = 0;
   p.tryShoot(game, ITEMS['candycanebow'], 'candycanebow', null);

@@ -195,7 +195,7 @@ var I = {
   COPPER:'copper', SILVER:'silver', GOLD:'gold', DEMONITE:'demonite', SHADOWSCALE:'shadowscale', TISSUESAMPLE:'tissuesample',
   COPPERBAR:'copperbar', SILVERBAR:'silverbar', GOLDBAR:'goldbar', DEMONITEBAR:'demonitebar', CRIMTANEBAR:'crimtanebar',
   COPPERPICK:'copperpick', SILVERPICK:'silverpick', GOLDPICK:'goldpick', DEMONITEPICK:'demonitepick', DEATHBRINGERPICK:'deathbringerpick',
-  COPPERSWORD:'coppersword', SILVERSWORD:'silversword', GOLDSWORD:'goldsword', DEMONITESWORD:'demonitesword',
+  COPPERSWORD:'coppersword', COPPERSHORT:'coppershort', COPPERAXE:'copperaxe', SILVERSWORD:'silversword', GOLDSWORD:'goldsword', DEMONITESWORD:'demonitesword',
   COPPERBOW:'copperbow', SILVERBOW:'silverbow', GOLDBOW:'goldbow',
   COPPERHELM:'copperhelm', COPPERCHEST:'copperchest', COPPERLEGS:'copperlegs',
   SILVERHELM:'silverhelm', SILVERCHEST:'silverchest', SILVERLEGS:'silverlegs',
@@ -1008,13 +1008,15 @@ defItem(I.DEMONITEBAR, { name:'Demonite Bar', type:'bar', color:'#6a5cb8', icon:
   defItem(I.PLATINUMBAR, { name:'Platinum Bar', type:'bar', color:'#d8f0ff', icon:'bar', desc:'A rarer cousin of gold.' });
   defItem(I.METEORITEBAR, { name:'Meteorite Bar', type:'bar', color:'#a06050', icon:'bar', desc:'Smelted from fallen meteorite.' });
 // Tools
-defItem(I.COPPERPICK, { name:'Copper Pickaxe', type:'tool', power:35, speed:0.7, dmg:4, range:3.0, color:'#e0834d', icon:'⛏️', maxStack:1, desc:'Mines silver ore.' });
+defItem(I.COPPERPICK, { name:'Copper Pickaxe', type:'tool', power:35, speed:0.7, dmg:4, range:3.0, color:'#e0834d', icon:'⛏️', maxStack:1, desc:'Mines stone and ore. Cannot cut trees.' });
+defItem(I.COPPERAXE, { name:'Copper Axe', type:'tool', axe:7, speed:0.85, dmg:3, range:3.0, color:'#e0834d', icon:'🪓', maxStack:1, desc:'Chops down trees for wood.' });
 defItem(I.SILVERPICK, { name:'Silver Pickaxe', type:'tool', power:45, speed:1.0, dmg:6, range:3.1, color:'#cfd6e0', icon:'⛏️', maxStack:1, desc:'Mines gold ore.' });
 defItem(I.GOLDPICK, { name:'Gold Pickaxe', type:'tool', power:55, speed:1.3, dmg:8, range:3.2, color:'#ffd75e', icon:'⛏️', maxStack:1, desc:'Mines demonite ore.' });
 defItem(I.DEMONITEPICK, { name:'Nightmare Pickaxe', type:'tool', power:65, speed:1.8, dmg:11, range:3.4, color:'#6a5cb8', icon:'⛏️', maxStack:1, desc:'Forged from Demonite and Shadow Scales.' });
 defItem(I.DEATHBRINGERPICK, { name:'Deathbringer Pickaxe', type:'tool', power:65, speed:1.8, dmg:11, range:3.4, color:'#c04048', icon:'⛏️', maxStack:1, desc:'Forged from Crimtane and Tissue Samples.' });
 // Melee
-defItem(I.COPPERSWORD, { name:'Copper Sword', type:'melee', dmg:9, speed:0.35, kb:5.5, range:4, color:'#e0834d', icon:'🗡️', maxStack:1 });
+defItem(I.COPPERSWORD, { name:'Copper Broadsword', type:'melee', dmg:9, speed:0.35, kb:5.5, range:4, color:'#e0834d', icon:'🗡️', maxStack:1 });
+defItem(I.COPPERSHORT, { name:'Copper Shortsword', type:'melee', dmg:5, speed:0.217, kb:4, range:1.5, shortSword:true, color:'#e0834d', icon:'🗡️', maxStack:1, desc:'A quick, narrow thrust. Every legend starts somewhere.' });
 defItem(I.SILVERSWORD, { name:'Silver Sword', type:'melee', dmg:14, speed:0.333, kb:6, range:4, color:'#cfd6e0', icon:'🗡️', maxStack:1 });
 defItem(I.GOLDSWORD, { name:'Gold Sword', type:'melee', dmg:15, speed:0.3, kb:6.5, range:4, color:'#ffd75e', icon:'🗡️', maxStack:1 });
 defItem(I.DEMONITESWORD, { name:'Demonite Sword', type:'melee', dmg:16, speed:0.333, kb:5, range:4, color:'#6a5cb8', icon:'🗡️', maxStack:1, desc:'Forged from demonite. Bane of the corruption.' });

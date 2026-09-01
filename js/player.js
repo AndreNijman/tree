@@ -50,12 +50,9 @@ Player.prototype.defense = function() { return this.inventory.defense() + this.b
 
 Player.prototype.starterItems = function() {
   var inv = this.inventory;
-  inv.slots[0] = { id: I.COPPERPICK, count: 1 };
-  inv.slots[1] = { id: I.COPPERSWORD, count: 1 };
-  inv.slots[2] = { id: I.COPPERBOW, count: 1 };
-  inv.slots[3] = { id: I.ARROW, count: 35 };
-  inv.slots[4] = { id: I.TORCH, count: 25 };
-  inv.slots[5] = { id: I.HEALINGPOTION, count: 3 };
+  inv.slots[0] = { id: I.COPPERSHORT, count: 1 };
+  inv.slots[1] = { id: I.COPPERPICK, count: 1 };
+  inv.slots[2] = { id: I.COPPERAXE, count: 1 };
   inv.selected = 0;
 };
 
@@ -437,13 +434,17 @@ Player.prototype.tryMine = function(game, def, item) {
     game.message('Only a Pwnhammer can break an Altar!');
     return;
   }
-  if (def.power < hard[0]) {
+  if ((t === T.TREETRUNK || t === T.LEAVES || t === T.WOOD) && def.axe === undefined && def.power) {
+    if (t === T.TREETRUNK || t === T.LEAVES) { game.message('An axe is required to cut trees.'); return; }
+  }
+  if (def.power < hard[0] && def.axe === undefined) {
     game.message('Your pickaxe is not strong enough!');
     return;
   }
   var mineMul = 1.5 * (this.buffs[I.SLICEOFCAKE] ? 1.2 : 1) * (this.ambrosia ? 1.05 : 1);
+  var effPower = def.axe !== undefined && (t === T.TREETRUNK || t === T.LEAVES) ? def.axe : def.power;
   this.mineCd = Math.max(0, 0.06 - def.speed * mineMul * 0.015);
-  var broke = game.world.damageTile(tx, ty, def.power, def.speed * mineMul);
+  var broke = game.world.damageTile(tx, ty, effPower, def.speed * mineMul);
   if (!broke) game.spawnMinePuff(tx * TILE + 8, ty * TILE + 8, tileColor(t));
   if (broke) {
     if (game.onSpecialTileBroken) game.onSpecialTileBroken(t, tx, ty);
@@ -530,7 +531,7 @@ Player.prototype.tryMelee = function(game, def, force, item) {
       if (dx * dx + dy * dy < reach * reach) {
         var ang = Math.atan2(e.y - this.y, e.x - this.x);
         var da = Math.abs(angDiff(this.swingAng, ang));
-        if (da < 1.5) {
+        if (da < (def.shortSword ? 0.45 : 1.5)) {
           var kbForce = (def.kb || 4) * 0.8;
           var kbx = Math.cos(this.swingAng) * kbForce, kby = Math.sin(this.swingAng) * kbForce * 0.5 - 1;
           if (e.boss) game.hitBoss(e, mdmg, kbx, kby);
