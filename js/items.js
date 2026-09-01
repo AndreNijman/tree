@@ -590,6 +590,45 @@ var I = {
   SHADOW_SCALEMAIL:'shadowscalemail',
   SHROOMITE_MASK:'shroomitemask',
   TURTLE_SCALE_MAIL:'turtlescalemail',
+    AGLET:'aglet',
+  AMPHIBIAN_BOOTS:'amphibianboots',
+  ANKH_CHARM:'ankhcharm',
+  BAND_OF_REGENERATION:'bandofregeneration',
+  BLIZZARD_IN_A_BOTTLE:'blizzardinabottle',
+  CELESTIAL_EMBLEM:'celestialemblem',
+  CELL_PHONE:'cellphone',
+  CLIMBING_CLAWS:'climbingclaws',
+  COMPASS:'compass',
+  D_P_S_METER:'dpsmeter',
+  DEMON_WINGS:'demonwings',
+  DEPTH_METER:'depthmeter',
+  FART_IN_A_JAR:'fartinajar',
+  FERAL_CLAWS:'feralclaws',
+  FLYING_CARPET:'flyingcarpet',
+  FROG_WEBBING:'frogwebbing',
+  G_P_S:'gps',
+  HERMES_BOOTS:'hermesboots',
+  LAVA_WADERS:'lavawaders',
+  LIFEFORM_ANALYZER:'lifeformanalyzer',
+  LUCKY_HORSESHOE:'luckyhorseshoe',
+  MAGIC_CUFFS:'magiccuffs',
+  MAGIC_MIRROR:'magicmirror',
+  MAGMA_STONE:'magmastone',
+  MOLTEN_CHARM:'moltencharm',
+  MOLTEN_QUIVER:'moltenquiver',
+  OBSIDIAN_SKULL:'obsidianskull',
+  P_D_A:'pda',
+  PHILOSOPHERS_STONE:'philosophersstone',
+  R_E_K_3000:'rek3000',
+  RADAR:'radar',
+  ROCKET_BOOTS:'rocketboots',
+  SANDSTORM_IN_A_BOTTLE:'sandstorminabottle',
+  SHACKLE:'shackle',
+  STOPWATCH:'stopwatch',
+  TITAN_GLOVE:'titanglove',
+  TSUNAMI_IN_A_BOTTLE:'tsunamiinabottle',
+  WATER_WALKING_BOOTS:'waterwalkingboots',
+  YOYO_BAG:'yoyobag',
     BOSSBAG:'bossbag'
 };
 
@@ -2132,3 +2171,44 @@ defItem(I.SHADOW_HELMET, { name:'Shadow Helmet', type:'armor', slot:'head', def:
 defItem(I.SHADOW_SCALEMAIL, { name:'Shadow Scalemail', type:'armor', slot:'chest', def:7, color:'#5a4d8a', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +7' });
 defItem(I.SHROOMITE_MASK, { name:'Shroomite Mask', type:'armor', slot:'head', def:11, color:'#c84ad8', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +11' });
 defItem(I.TURTLE_SCALE_MAIL, { name:'Turtle Scale Mail', type:'armor', slot:'legs', def:27, color:'#4a8a4a', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +27' });
+
+// ---------- Batch 83 accessory expansion ----------
+defItem(I.AGLET, { name:'Aglet', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, runSpeed:1.05, desc:'An accessory.' });
+defItem(I.AMPHIBIAN_BOOTS, { name:'Amphibian Boots', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, runSpeed:1.3, jumpBoost:1.1, desc:'An accessory.' });
+defItem(I.ANKH_CHARM, { name:'Ankh Charm', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, desc:'An accessory.' });
+defItem(I.BAND_OF_REGENERATION, { name:'Band of Regeneration', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, regen:1, desc:'An accessory.' });
+defItem(I.BLIZZARD_IN_A_BOTTLE, { name:'Blizzard in a Bottle', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, jumps:1, desc:'An accessory.' });
+defItem(I.CELESTIAL_EMBLEM, { name:'Celestial Emblem', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, magicDmg:1.15, manaRegenBoost:true, desc:'An accessory.' });
+defItem(I.CELL_PHONE, { name:'Cell Phone', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, mirror:true, infoText:'all', desc:'An accessory.' });
+defItem(I.CLIMBING_CLAWS, { name:'Climbing Claws', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, grip:true, desc:'An accessory.' });
+defItem(I.COMPASS, { name:'Compass', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, infoText:'position', desc:'An accessory.' });
+defItem(I.D_P_S_METER, { name:'DPS Meter', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, infoText:'dps', desc:'An accessory.' });
+defItem(I.DEMON_WINGS, { name:'Demon Wings', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, jumpMul:1.08, jumps:3, noFall:true, desc:'An accessory.' });
+defItem(I.DEPTH_METER, { name:'Depth Meter', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, infoText:'depth', desc:'An accessory.' });
+defItem(I.FART_IN_A_JAR, { name:'Fart in a Jar', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, jumps:1, desc:'An accessory.' });
+defItem(I.FERAL_CLAWS, { name:'Feral Claws', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, meleeSpeed:1.12, desc:'An accessory.' });
+defItem(I.FLYING_CARPET, { name:'Flying Carpet', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, carpet:true, desc:'An accessory.' });
+defItem(I.FROG_WEBBING, { name:'Frog Webbing', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, jumpBoost:1.1, desc:'An accessory.' });
+defItem(I.G_P_S, { name:'GPS', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, infoText:'position', desc:'An accessory.' });
+defItem(I.HERMES_BOOTS, { name:'Hermes Boots', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, runSpeed:1.35, desc:'Run much faster.' });
+defItem(I.LAVA_WADERS, { name:'Lava Waders', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, lavaWalk:true, waterWalk:true, desc:'An accessory.' });
+defItem(I.LIFEFORM_ANALYZER, { name:'Lifeform Analyzer', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, infoText:'lifeform', desc:'An accessory.' });
+defItem(I.LUCKY_HORSESHOE, { name:'Lucky Horseshoe', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, noFall:true, desc:'Negates fall damage.' });
+defItem(I.MAGIC_CUFFS, { name:'Magic Cuffs', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, manaRegenBoost:true, desc:'An accessory.' });
+defItem(I.MAGIC_MIRROR, { name:'Magic Mirror', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, desc:'Return home instantly. Use from the inventory.' });
+defItem(I.MAGMA_STONE, { name:'Magma Stone', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, fireAttack:true, desc:'An accessory.' });
+defItem(I.MOLTEN_CHARM, { name:'Molten Charm', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, lavaWalk:true, desc:'An accessory.' });
+defItem(I.MOLTEN_QUIVER, { name:'Molten Quiver', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, rangedDmg:1.1, fireArrow:true, desc:'An accessory.' });
+defItem(I.OBSIDIAN_SKULL, { name:'Obsidian Skull', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, lavaTouch:true, desc:'An accessory.' });
+defItem(I.P_D_A, { name:'PDA', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, infoText:'all', desc:'An accessory.' });
+defItem(I.PHILOSOPHERS_STONE, { name:'Philosopher\'s Stone', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, potionSicknessReduce:true, desc:'An accessory.' });
+defItem(I.R_E_K_3000, { name:'R.E.K. 3000', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, infoText:'lifeform', desc:'An accessory.' });
+defItem(I.RADAR, { name:'Radar', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, infoText:'enemies', desc:'An accessory.' });
+defItem(I.ROCKET_BOOTS, { name:'Rocket Boots', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, rocket:true, desc:'An accessory.' });
+defItem(I.SANDSTORM_IN_A_BOTTLE, { name:'Sandstorm in a Bottle', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, jumps:1, jumpBoost:1.2, desc:'An accessory.' });
+defItem(I.SHACKLE, { name:'Shackle', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, defense:1, desc:'An accessory.' });
+defItem(I.STOPWATCH, { name:'Stopwatch', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, infoText:'speed', desc:'An accessory.' });
+defItem(I.TITAN_GLOVE, { name:'Titan Glove', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, kbBoost:1, meleeSpeed:1.05, desc:'An accessory.' });
+defItem(I.TSUNAMI_IN_A_BOTTLE, { name:'Tsunami in a Bottle', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, jumps:2, desc:'An accessory.' });
+defItem(I.WATER_WALKING_BOOTS, { name:'Water Walking Boots', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, waterWalk:true, desc:'An accessory.' });
+defItem(I.YOYO_BAG, { name:'Yoyo Bag', type:'accessory', color:'#b8b8c8', icon:'', maxStack:1, yoyoBag:true, desc:'An accessory.' });
