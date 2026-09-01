@@ -15,6 +15,7 @@ var I = {
   IRONBOW:'ironbow', HALLOWEDREPEATER:'hallowedrepeater', ARROW:'arrow', BULLET:'bullet', MEGASHARK:'megashark',
   LASERRIFLE:'laserrifle', CRYSTALSTORM:'crystalstorm', GOLDENSHOWER:'goldenshower',
   RAINBOWROD:'rainbowrod', RAZORBLADETYPHOON:'razorbladetyphoon', LASTPRISM:'lastprism',
+  FLOWEROFFIRE:'floweroffire', PIRANHAGUN:'piranhagun', RAINBOWGUN:'rainbowgun',
   LEATHERWHIP:'leatherwhip', FIRECRACKER:'firecracker', KALEIDOSCOPE:'kaleidoscope',
   IMPSTAFF:'impstaff', OPTICSTAFF:'opticstaff', STARDUSTDRAGONSTAFF:'stardustdragonstaff',
   COBALTHELM:'cobalthelm', COBALTCHEST:'cobaltchest', COBALTLEGS:'cobaltlegs',
@@ -486,6 +487,9 @@ defItem(I.BLIZZARDSTAFF, { name:'Blizzard Staff', type:'magic', dmg:48, speed:0.
 defItem(I.HEATRAY, { name:'Heat Ray', type:'magic', dmg:60, speed:0.1, kb:3, mana:12, proj:P.LASER, auto:true, range:999, color:'#ff9a3d', icon:'☀️', maxStack:1, desc:'The Golem\'s own ray of heat.' });
 defItem(I.LUNARFLARE, { name:'Lunar Flare', type:'magic', dmg:70, speed:0.25, kb:3, mana:14, proj:P.FIREBALL, terrainMode:'rain', terrainCount:2, terrainHeight:210, auto:true, range:999, color:'#c85cff', icon:'🌙', maxStack:1, desc:'Calls two lunar flares down through terrain.' });
 defItem(I.CURSEDFLAMES, { name:'Cursed Flames', type:'magic', dmg:35, speed:0.22, kb:2, mana:7, proj:P.CURSEDFLAME, projCount:3, status:{type:'cursed',duration:4,dps:8}, auto:true, range:999, color:'#5ac85c', icon:'🔥', maxStack:1, desc:'The burning curse of the corruption.' });
+defItem(I.FLOWEROFFIRE, { name:'Flower of Fire', type:'magic', dmg:42, speed:0.4, kb:4, mana:9, proj:P.FIREBALL, projBounces:2, projCount:1, auto:true, range:999, color:'#ff8a3d', icon:'🌺', maxStack:1, desc:'A flower that spits bouncing fireballs.' });
+defItem(I.RAINBOWGUN, { name:'Rainbow Gun', type:'magic', dmg:38, speed:0.32, kb:2, mana:12, proj:P.RAINBOW, magicMode:'trail', deployDuration:5, deployInterval:0.25, deployCount:1, zoneHeight:6, hitCooldown:0.2, auto:true, range:999, color:'#ff9de0', icon:'🌈', maxStack:1, desc:'Leaves a rainbow wall that burns enemies.' });
+defItem(I.PIRANHAGUN, { name:'Piranha Gun', type:'ranged', dmg:38, speed:0.5, kb:4, piranha:true, proj:P.STINGER, piranhaDmgPerPulse:38, piranhaRange:300, auto:false, range:999, color:'#ff7a55', icon:'🔫', maxStack:1, desc:'Fires a hooked piranha that locks onto prey.' });
 
 // Summoner staves
 defItem(I.SPIDERSTAFF, { name:'Spider Staff', type:'summonstaff', dmg:32, minion:'spider', speed:0, color:'#e8e8f0', icon:'🕷️', maxStack:1, desc:'Summons a spider minion.' });

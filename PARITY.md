@@ -575,11 +575,18 @@ This file tracks the staged expansion toward Terraria 1.4.4 parity. Progression 
 - [x] Add Doctor Bones (rare surface-night skeleton archer) with a rare Grappling Hook drop path.
 - [x] Wire all four into Biome pools, drop tables, firing AI, bestiary discovery/kills, and procedural rendering.
 
+## Batch 74: Remaining Weapon Behavior Specialization
+
+- [x] Add Flower of Fire as a Hellforge-crafted magic weapon that fires a twice-bouncing enchanted fireball through the generic bouncing-projectile path.
+- [x] Add Piranha Gun as an ammo-free Hardmode ranged weapon whose projectile latches onto the nearest foe, pulses repeating damage on an interval, and returns to the player when prey dies or escapes range.
+- [x] Add Rainbow Gun as an anvil-crafted magic weapon that lays a persistent rainbow trail wall (reusing the deployed-`wall` zone collision) that periodically damages enemies standing in it.
+- [x] Preserve mana cost/reforge/class damage metadata, one-ammo-free piranha semantics, and distinct procedural rendering for the fireball, wall, and fish.
+
 ## Long-Term Catalog Parity
 
 - [x] Audit notable missing vanilla enemies and critters against `E` and `ENT_DEF` (ongoing; high-value pre-Hardmode foes added in Batch 72).
 - [ ] Audit every vanilla event and invasion against `EVENT_WAVES` and world-state drivers.
 - [ ] Audit every vanilla item against `I`, `ITEMS`, recipes, drops, chests, fishing, and shops.
-- [ ] Add authentic weapon behaviors where generic melee/ranged/magic behavior currently substitutes.
+- [ ] Add authentic weapon behaviors where generic melee/ranged/magic behavior currently substitutes (Flower of Fire, Piranha Gun, and Rainbow Gun completed in Batch 74; Candy Cane weapons and other generic archetypes remain).
 - [ ] Add remaining NPC-specific services and quest systems where they add distinct gameplay.
 - [ ] Add difficulty modes and Expert/Master drops after normal-mode progression is complete.

@@ -690,6 +690,83 @@ const v72render = await page.evaluate(() => {
 });
 check('B72: all four enemies render without errors', v72render.ok, JSON.stringify(v72render));
 
+// ===== BATCH 74: SIGNATURE WEAPONS =====
+const v74 = await page.evaluate(() => {
+  var out = {};
+  out.fofDef = typeof ITEMS['floweroffire'] !== 'undefined';
+  out.pgDef = typeof ITEMS['piranhagun'] !== 'undefined';
+  out.rgDef = typeof ITEMS['rainbowgun'] !== 'undefined';
+  function recipeFor(id) { for (var r = 0; r < RECIPES.length; r++) if (RECIPES[r].result === id) return true; return false; }
+  out.fofRecipe = recipeFor(I.FLOWEROFFIRE);
+  out.pgRecipe = recipeFor(I.PIRANHAGUN);
+  out.rgRecipe = recipeFor(I.RAINBOWGUN);
+
+  var p = game.player;
+  p.mana = p.maxMana;
+  p.invuln = 99999;
+  p.hp = p.maxHp;
+  var bx = p.x, by = p.y;
+  p.x = bx; p.y = by; p.vx = 0; p.vy = 0; p.attackCd = 0; p.swingT = 0;
+
+  // Flower of Fire: bouncing fireball
+  MOUSE.wx = p.x + 60; MOUSE.wy = p.y + 40;
+  p.tryMagic(game, ITEMS['floweroffire'], 'floweroffire', null);
+  var fofProj = null;
+  for (var j = 0; j < game.projectiles.list.length; j++) { var o = game.projectiles.list[j]; if (o.owner === 'player' && !o.dead && o.type === P.FIREBALL && o.bounces >= 1) fofProj = o; }
+  out.fofProj = !!fofProj;
+  out.fofBounces = fofProj ? fofProj.bounces : 0;
+  if (fofProj) fofProj.dead = true;
+
+  // Rainbow Gun: trail wall zone damages enemies
+  var enemy = makeEntity(E.ZOMBIE, bx + 40, by);
+  enemy.hp = enemy.maxHp; enemy.hp = 600;
+  game.entities.push(enemy);
+  MOUSE.wx = enemy.x; MOUSE.wy = enemy.y;
+  p.attackCd = 0;
+  p.tryMagic(game, ITEMS['rainbowgun'], 'rainbowgun', null);
+  var wallProj = null;
+  for (var j2 = 0; j2 < game.projectiles.list.length; j2++) { var o2 = game.projectiles.list[j2]; if (!o2.dead && o2.deployMode === 'wall' && o2.trailWall) wallProj = o2; }
+  out.wallCreated = !!wallProj;
+  var enemyPre = enemy.hp;
+  if (wallProj) {
+    wallProj.x = enemy.x; wallProj.y = enemy.y;
+    for (var s2 = 0; s2 < 50; s2++) step(1/60);
+  }
+  out.wallDamaged = enemy.hp < enemyPre;
+  if (wallProj) wallProj.dead = true;
+  enemy.dead = true;
+
+  // Piranha Gun: ammo-free, latches and deals damage
+  p.x = bx; p.y = by; p.vx = 0; p.vy = 0;
+  var invPre = 0; for (var s3 = 0; s3 < 50; s3++) if (p.inventory.slots[s3]) invPre += p.inventory.slots[s3].count;
+  var enemy2 = makeEntity(E.ZOMBIE, bx + 34, by);
+  enemy2.hp = enemy2.maxHp; enemy2.hp = 600;
+  game.entities.push(enemy2);
+  MOUSE.wx = enemy2.x; MOUSE.wy = enemy2.y;
+  p.attackCd = 0;
+  p.tryShoot(game, ITEMS['piranhagun'], 'piranhagun', null);
+  var pgProj = null;
+  for (var j3 = 0; j3 < game.projectiles.list.length; j3++) { var o3 = game.projectiles.list[j3]; if (!o3.dead && o3.piranha) pgProj = o3; }
+  out.pgCreated = !!pgProj;
+  var e2Pre = enemy2.hp;
+  var latched = false;
+  if (pgProj) {
+    for (var s4 = 0; s4 < 100; s4++) { step(1/60); if (pgProj.latched) { latched = true; if (e2Pre - enemy2.hp > 40) break; } }
+  }
+  out.pgLatched = latched;
+  out.pgDamaged = enemy2.hp < e2Pre;
+  if (pgProj) pgProj.dead = true;
+  enemy2.dead = true;
+  var invPost = 0; for (var s5 = 0; s5 < 50; s5++) if (p.inventory.slots[s5]) invPost += p.inventory.slots[s5].count;
+  out.pgAmmoConsumed = invPost - invPre;
+  for (var s6 = 0; s6 < game.projectiles.list.length; s6++) game.projectiles.list[s6].dead = true;
+  return out;
+});
+check('B74: three signature weapons and recipes exist', v74.fofDef && v74.pgDef && v74.rgDef && v74.fofRecipe && v74.pgRecipe && v74.rgRecipe, JSON.stringify(v74));
+check('B74: Flower of Fire fires a bouncing fireball', v74.fofProj && v74.fofBounces >= 1, JSON.stringify(v74));
+check('B74: Rainbow Gun places a damaging rainbow wall', v74.wallCreated && v74.wallDamaged, JSON.stringify(v74));
+check('B74: Piranha Gun latches onto prey, damages it, consumes no ammo', v74.pgCreated && v74.pgLatched && v74.pgDamaged && v74.pgAmmoConsumed === 0, JSON.stringify(v74));
+
 
 // ===== 300-STEP CLEAN LOOP =====
 const loop = await page.evaluate(() => {

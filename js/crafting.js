@@ -287,12 +287,15 @@ recipe({ name:'Onyx Blaster', result:I.ONYXBLASTER, count:1, mat:[[I.ILLEGALGUNP
 recipe({ name:'Flamethrower', result:I.FLAMETHROWER, count:1, mat:[[I.IRONBAR,20],[I.SOUL_FRIGHT,2]], station:'anvil' });
 recipe({ name:'Pulse Bow', result:I.PULSEBOW, count:1, mat:[[I.FRAG_VORTEX,8],[I.ILLEGALGUNPARTS,1]], station:'anvil' });
 recipe({ name:'Chlorophyte Shotbow', result:I.CHLOROPHYTESHOTBOW, count:1, mat:[[I.CHLOROPHYTEBAR,12]], station:'anvil' });
+recipe({ name:'Piranha Gun', result:I.PIRANHAGUN, count:1, mat:[[I.CHLOROPHYTEBAR,10],[I.SOUL_MIGHT,2],[I.SHARKFIN,1]], station:'anvil', desc:'A living gun that locks a piranha onto prey.' });
 
 // Magic
 recipe({ name:'Magical Harp', result:I.MAGICALHARP, count:1, mat:[[I.HARP,1],[I.PEARLSTONE,15],[I.SOUL_LIGHT,5],[I.SOUL_NIGHT,5]], station:'anvil' });
 recipe({ name:'Nettle Burst', result:I.NETTLEBURST, count:1, mat:[[I.VINE,2],[I.CHLOROPHYTEBAR,10],[I.SOUL_LIGHT,2]], station:'anvil' });
 recipe({ name:'Venom Staff', result:I.VENOMSTAFF, count:1, mat:[[I.CHLOROPHYTEBAR,12],[I.VINE,2]], station:'anvil' });
 recipe({ name:'Cursed Flames', result:I.CURSEDFLAMES, count:1, mat:[[I.SPELLTOME,1],[I.PEARLSTONE,10],[I.EBONSTONE,10],[I.SOUL_NIGHT,5],[I.SOUL_LIGHT,5]], station:'anvil' });
+recipe({ name:'Flower of Fire', result:I.FLOWEROFFIRE, count:1, mat:[[I.HELLSTONEBAR,10],[I.SOUL_LIGHT,2]], station:'hellforge', hm:true, desc:'A flower of the Underworld that spits fire.' });
+recipe({ name:'Rainbow Gun', result:I.RAINBOWGUN, count:1, mat:[[I.HALLOWEDBAR,10],[I.SOUL_LIGHT,2],[I.SPELLTOME,1]], station:'anvil', desc:'Leaves a rainbow wall of flame.' });
 
 // Summoner staves
 recipe({ name:'Spider Staff', result:I.SPIDERSTAFF, count:1, mat:[[I.SPIDERSILK,10],[I.SOUL_NIGHT,2]], station:'anvil' });

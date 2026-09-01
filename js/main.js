@@ -2051,6 +2051,62 @@ function updateProjectiles() {
       return;
     }
 
+    if (o.piranha && o.sourcePlayer) {
+      if (o.sourcePlayer.dying) { o.dead = true; return; }
+      var pTarget = o.piranhaTarget;
+      if (o.returning) {
+        var prdx = o.sourcePlayer.x - o.x, prdy = o.sourcePlayer.y - 6 - o.y;
+        var prd = Math.sqrt(prdx * prdx + prdy * prdy) || 1;
+        if (prd < 16) { o.dead = true; return; }
+        o.vx = prdx / prd * 14;
+        o.vy = prdy / prd * 14;
+        o.x += o.vx;
+        o.y += o.vy;
+        var prWall = game.world.solidAt(o.x, o.y);
+        if (!prWall) prWall = game.world.solidAt(o.x - o.vx * 0.2, o.y - o.vy * 0.2);
+        return;
+      }
+      if (o.latched) {
+        if (pTarget && pTarget.dead) { o.latched = false; o.returning = true; return; }
+        if (pTarget) {
+          var lax = pTarget.x - o.x, lay = pTarget.y - o.y;
+          var lad = Math.sqrt(lax * lax + lay * lay) || 1;
+          if (lad > o.piranhaRange) { o.latched = false; o.returning = true; return; }
+          o.x += lax / lad * 4.5;
+          o.y += lay / lad * 4.5;
+          o.piranhaT = (o.piranhaT || 0) - 1 / 60;
+          if (o.piranhaT <= 0) {
+            o.piranhaT = o.piranhaInterval || 0.25;
+            if (pTarget.boss) game.hitBoss(pTarget, o.dmg, 0, 0);
+            else { hitEntity(pTarget, o.dmg, 0, 0, game); }
+            game.fx.push({ type:'cast', x:pTarget.x, y:pTarget.y - 4, t:0.15, max:0.15, color:o.color });
+          }
+          return;
+        }
+        o.latched = false;
+        o.returning = true;
+        return;
+      }
+      o.x += o.vx;
+      o.y += o.vy;
+      var lwall = game.world.solidAt(o.x, o.y);
+      if (lwall) { o.returning = true; }
+      else {
+        for (var pi = 0; pi < game.entities.length; pi++) {
+          var pe = game.entities[pi];
+          if (pe.dead || pe.minion || pe.dmg <= 0) continue;
+          if (Math.abs(pe.x - o.x) <= pe.w / 2 + 8 && Math.abs(pe.y - o.y) <= pe.h / 2 + 8) {
+            o.latched = true;
+            o.piranhaTarget = pe;
+            o.piranhaT = 0;
+            break;
+          }
+        }
+        if (o.age > (o.piranhaRange / 10) + 1) o.returning = true;
+      }
+      return;
+    }
+
     if (o.deployMode) {
       if (o.deployMode === 'sphere') {
         var snx = o.x + o.vx, sny = o.y + o.vy;

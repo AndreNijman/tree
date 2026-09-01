@@ -600,6 +600,21 @@ Player.prototype.tryMelee = function(game, def, force, item) {
 Player.prototype.tryShoot = function(game, def, id, item) {
   if (this.attackCd > 0) return;
   var inv = this.inventory;
+  if (def.piranha) {
+    this.attackCd = def.speed;
+    var pang = Math.atan2(MOUSE.wy - this.y, MOUSE.wx - this.x);
+    var pdmg = Math.round(def.dmg * inv.damageMultiplier('ranged') * inv.itemDamageMul(item));
+    game.projectiles.add({
+      x: this.x + Math.cos(pang) * 18, y: this.y - 6 + Math.sin(pang) * 18,
+      vx: Math.cos(pang) * 9, vy: Math.sin(pang) * 9,
+      dmg: pdmg, type: def.proj, owner: 'player', life: def.piranhaRange / 10,
+      piranha: true, piranhaDmgPerPulse: pdmg, piranhaRange: def.piranhaRange || 300,
+      piranhaInterval: def.piranhaInterval || 0.25, sourcePlayer: this,
+      color: def.color, dead: false
+    });
+    AudioSys.play('bow');
+    return;
+  }
   var ammoId = inv.ammoFor(def.ammo);
   if (!ammoId) { game.message('Out of compatible ammo!'); return; }
   this.attackCd = def.speed;
@@ -679,23 +694,25 @@ Player.prototype.tryMagic = function(game, def, id, item) {
     AudioSys.play('magic');
     return;
   }
-  if (def.magicMode === 'cloud' || def.magicMode === 'sphere' || def.magicMode === 'wall') {
+  if (def.magicMode === 'cloud' || def.magicMode === 'sphere' || def.magicMode === 'wall' || def.magicMode === 'trail') {
     var deployed = [];
     for (var di = 0; di < game.projectiles.list.length; di++) {
       var dp = game.projectiles.list[di];
-      if (!dp.dead && dp.deployMode === def.magicMode && dp.deployKey === id && dp.sourcePlayer === this) deployed.push(dp);
+      if (!dp.dead && dp.deployMode === (def.magicMode === 'trail' ? 'wall' : def.magicMode) && dp.deployKey === id && dp.sourcePlayer === this) deployed.push(dp);
     }
     if (deployed.length >= (def.deployCount || 1)) deployed[0].dead = true;
     var deployAng = Math.atan2(MOUSE.wy - (this.y - 8), MOUSE.wx - this.x);
     var deployX = def.magicMode === 'sphere' ? this.x + Math.cos(deployAng) * 18 : MOUSE.wx;
     var deployY = def.magicMode === 'sphere' ? this.y - 8 + Math.sin(deployAng) * 18 : MOUSE.wy;
+    var deployMode = def.magicMode === 'trail' ? 'wall' : def.magicMode;
     game.projectiles.add({
       x:deployX, y:deployY, vx:def.magicMode === 'sphere' ? Math.cos(deployAng) * 2.5 : 0,
       vy:def.magicMode === 'sphere' ? Math.sin(deployAng) * 2.5 : 0, dmg:mdmg, type:def.proj,
-      owner:'player', life:def.deployDuration, deployMode:def.magicMode, deployInterval:def.deployInterval,
+      owner:'player', life:def.deployDuration, deployMode:deployMode, deployInterval:def.deployInterval,
       deployProj:def.deployProj, zoneHeight:(def.zoneHeight || 0) * TILE, sourcePlayer:this,
       deployKey:id, deployDamageMul:def.deployDamageMul || 1, deployHoming:!!def.deployHoming,
-      persistent:def.magicMode === 'wall', hitCooldown:def.hitCooldown || 0, color:def.color, dead:false
+      persistent:def.magicMode === 'wall' || def.magicMode === 'trail', hitCooldown:def.hitCooldown || 0, color:def.color, dead:false,
+      trailWall:def.magicMode === 'trail', magic:true
     });
     AudioSys.play('magic');
     return;

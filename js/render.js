@@ -4290,10 +4290,23 @@ function drawProjectile(ctx, p, cam, W, H) {
   }
   if (p.deployMode === 'wall') {
     ctx.save();
+    var rainbows = ['#ff5c5c','#ff9a3d','#ffe14d','#5cff8a','#5cc8ff','#c85cff'];
     for (var wf = -p.zoneHeight / 2; wf <= p.zoneHeight / 2; wf += 12) {
-      ctx.fillStyle = Math.floor(wf / 12 + Time.frame) % 2 ? '#65d85c' : '#b8ff68';
-      ctx.beginPath(); ctx.arc(x + Math.sin(Time.seconds * 9 + wf) * 4, y + wf, 8, 0, Math.PI * 2); ctx.fill();
+      var wallCol = p.trailWall ? rainbows[Math.abs(Math.floor(wf / 12)) % rainbows.length] : (Math.floor(wf / 12 + Time.frame) % 2 ? '#65d85c' : '#b8ff68');
+      ctx.fillStyle = wallCol;
+      ctx.beginPath(); ctx.arc(x + Math.sin(Time.seconds * 9 + wf + (p.trailWall ? x * 0.01 : 0)) * 4, y + wf, 8, 0, Math.PI * 2); ctx.fill();
     }
+    ctx.restore();
+    return;
+  }
+  if (p.piranha) {
+    ctx.save();
+    ctx.fillStyle = p.color || '#ff7a55';
+    ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.arc(x - 2, y - 2, 1.6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#c83820';
+    ctx.fillRect(x - 6, y - 1, 6, 2);
     ctx.restore();
     return;
   }
