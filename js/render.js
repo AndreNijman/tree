@@ -123,241 +123,372 @@ function makeTileSprite(t, rng) {
   var ctx = c.getContext('2d');
   var cols = TILE_COLORS[t];
   if (!cols) return c;
-  var base = cols[0], dark = cols[1] || shade(base, -20);
-  var lighter = shade(base, 22);
-  var darkest = shade(base, -35);
+  var base = cols[0], dark = cols[1] || shade(base, -25);
+  var lighter = shade(base, 25);
+  var lightest = shade(base, 45);
+  var darkest = shade(base, -40);
 
-  // -- base fill with per-pixel noise --
-  var imgData = ctx.createImageData(TILE, TILE);
-  var d = imgData.data;
-  var baseRGB = hexToRgb(base);
-  var darkRGB = hexToRgb(dark);
-  for (var py = 0; py < TILE; py++) {
-    for (var px = 0; px < TILE; px++) {
-      var o = (py * TILE + px) * 4;
-      var noise = rng();
-      var r, g, b;
-      if (noise < 0.15) { r = darkRGB[0]; g = darkRGB[1]; b = darkRGB[2]; }
-      else if (noise > 0.85) { r = Math.min(255, baseRGB[0] + 20); g = Math.min(255, baseRGB[1] + 20); b = Math.min(255, baseRGB[2] + 20); }
-      else { r = baseRGB[0]; g = baseRGB[1]; b = baseRGB[2]; }
-      d[o] = r; d[o + 1] = g; d[o + 2] = b; d[o + 3] = 255;
-    }
+  // -- base fill --
+  ctx.fillStyle = base;
+  ctx.fillRect(0, 0, TILE, TILE);
+
+  // -- texture noise --
+  for (var i = 0; i < 20; i++) {
+    var nx = Math.floor(rng() * TILE), ny = Math.floor(rng() * TILE);
+    ctx.fillStyle = rng() < 0.5 ? dark : lighter;
+    ctx.fillRect(nx, ny, 1 + Math.floor(rng() * 2), 1 + Math.floor(rng() * 2));
   }
-  ctx.putImageData(imgData, 0, 0);
 
-  // -- edge shading (lighter top, darker bottom/right) --
-  ctx.fillStyle = 'rgba(255,255,255,0.14)';
-  ctx.fillRect(0, 0, TILE, 2);
-  ctx.fillStyle = 'rgba(0,0,0,0.2)';
-  ctx.fillRect(0, TILE - 2, TILE, 2);
-  ctx.fillRect(TILE - 2, 0, 2, TILE);
-
-  // -- material-specific details --
+  // -- material-specific rendering --
   var ln = '';
   for (var tk in T) { if (T[tk] === t) { ln = tk; break; } }
 
   if (ln === 'GRASS' || ln === 'HALLOWGRASS' || ln === 'CORRUPTGRASS' || ln === 'CRIMGRASS' || ln === 'JUNGLEGRASS') {
-    // grass blades on top
-    ctx.fillStyle = shade(base, 30);
-    for (var gb = 0; gb < 5; gb++) {
-      var gx = Math.floor(rng() * TILE);
-      var gh = 2 + Math.floor(rng() * 3);
-      ctx.fillRect(gx, 0, 1, gh);
+    // Terraria-style grass: bright green top 60%, dirt below
+    var grassH = Math.floor(TILE * 0.55);
+    // grass body
+    ctx.fillStyle = base;
+    ctx.fillRect(0, 0, TILE, grassH);
+    // bright top edge
+    ctx.fillStyle = lighter;
+    ctx.fillRect(0, 0, TILE, 2);
+    // grass blades poking up
+    ctx.fillStyle = lighter;
+    for (var gb = 0; gb < 4; gb++) {
+      var gx = Math.floor(rng() * (TILE - 2));
+      ctx.fillRect(gx, 0, 1, 2 + Math.floor(rng() * 2));
     }
-    // dirt showing through at bottom
+    // transition to dirt
+    ctx.fillStyle = '#8a6642';
+    ctx.fillRect(0, grassH, TILE, TILE - grassH);
+    // dirt texture in lower part
     ctx.fillStyle = '#7d5c3a';
-    ctx.fillRect(0, TILE - 4, TILE, 4);
-    ctx.fillStyle = 'rgba(0,0,0,0.15)';
-    ctx.fillRect(0, TILE - 4, TILE, 1);
-  }
-  else if (ln === 'STONE' || ln === 'EBONSTONE' || ln === 'PEARLSTONE' || ln === 'CRIMSTONE' || ln === 'GRANITE' || ln === 'MARBLE') {
-    // cracks
-    ctx.strokeStyle = darkest;
-    ctx.lineWidth = 1;
-    for (var cr = 0; cr < 2; cr++) {
-      var cx = 2 + Math.floor(rng() * (TILE - 4));
-      var cy2 = 2 + Math.floor(rng() * (TILE - 4));
-      ctx.beginPath();
-      ctx.moveTo(cx, cy2);
-      ctx.lineTo(cx + 3 + rng() * 3, cy2 + 2 + rng() * 3);
-      ctx.stroke();
+    for (var dt = 0; dt < 4; dt++) {
+      ctx.fillRect(Math.floor(rng() * (TILE - 2)), grassH + Math.floor(rng() * (TILE - grassH - 1)), 2, 1);
     }
-    // small pits
-    ctx.fillStyle = darkest;
-    for (var pt = 0; pt < 3; pt++) {
-      ctx.fillRect(Math.floor(rng() * (TILE - 2)), Math.floor(rng() * (TILE - 2)), 2, 1);
+    // small roots
+    ctx.strokeStyle = '#6a4a2d';
+    ctx.lineWidth = 1;
+    for (var rt = 0; rt < 2; rt++) {
+      var rx2 = 3 + Math.floor(rng() * (TILE - 6));
+      ctx.beginPath();
+      ctx.moveTo(rx2, grassH);
+      ctx.lineTo(rx2 + 1, grassH + 3);
+      ctx.stroke();
     }
   }
   else if (ln === 'DIRT' || ln === 'MUD') {
-    // organic clumps
+    // Terraria dirt: rich brown with darker clumps and tiny stones
     ctx.fillStyle = dark;
-    for (var cl = 0; cl < 4; cl++) {
-      ctx.fillRect(Math.floor(rng() * (TILE - 3)), Math.floor(rng() * (TILE - 3)), 3, 2);
+    for (var dc = 0; dc < 5; dc++) {
+      var dcx = Math.floor(rng() * (TILE - 3));
+      var dcy = Math.floor(rng() * (TILE - 2));
+      ctx.fillRect(dcx, dcy, 2 + Math.floor(rng() * 2), 2);
     }
-    ctx.fillStyle = lighter;
-    for (var cl2 = 0; cl2 < 2; cl2++) {
+    // tiny stones
+    ctx.fillStyle = '#8a8a92';
+    for (var ds = 0; ds < 2; ds++) {
       ctx.fillRect(Math.floor(rng() * (TILE - 2)), Math.floor(rng() * (TILE - 2)), 2, 1);
     }
+    // highlights
+    ctx.fillStyle = lighter;
+    ctx.fillRect(Math.floor(rng() * (TILE - 2)), Math.floor(rng() * (TILE - 2)), 2, 1);
+    // bottom shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.15)';
+    ctx.fillRect(0, TILE - 2, TILE, 2);
   }
-  else if (ln === 'WOOD' || ln === 'TREETRUNK' || ln === 'SPOOKYWOOD') {
-    // wood grain
-    ctx.strokeStyle = dark;
+  else if (ln === 'STONE' || ln === 'EBONSTONE' || ln === 'PEARLSTONE' || ln === 'CRIMSTONE') {
+    // Terraria stone: gray with cracks, pits, and mineral flecks
+    // base
+    ctx.fillStyle = base;
+    ctx.fillRect(0, 0, TILE, TILE);
+    // large dark patches (stone texture)
+    ctx.fillStyle = dark;
+    for (var sp2 = 0; sp2 < 3; sp2++) {
+      var spx = Math.floor(rng() * (TILE - 4));
+      var spy = Math.floor(rng() * (TILE - 3));
+      ctx.fillRect(spx, spy, 3 + Math.floor(rng() * 3), 2 + Math.floor(rng() * 2));
+    }
+    // cracks
+    ctx.strokeStyle = darkest;
     ctx.lineWidth = 1;
-    for (var li = 2; li < TILE; li += 4) {
+    for (var ck = 0; ck < 2; ck++) {
+      var ckx = 3 + Math.floor(rng() * (TILE - 6));
+      var cky = 2 + Math.floor(rng() * (TILE - 4));
       ctx.beginPath();
-      ctx.moveTo(0, li);
-      ctx.bezierCurveTo(TILE / 3, li + 1, TILE * 2 / 3, li - 1, TILE, li + 1);
+      ctx.moveTo(ckx, cky);
+      ctx.lineTo(ckx + 2 + rng() * 3, cky + 1 + rng() * 4);
+      ctx.lineTo(ckx + 4 + rng() * 3, cky + 3 + rng() * 3);
       ctx.stroke();
     }
-    // bark edges
+    // mineral flecks
+    ctx.fillStyle = lighter;
+    for (var mf = 0; mf < 3; mf++) {
+      ctx.fillRect(Math.floor(rng() * (TILE - 1)), Math.floor(rng() * (TILE - 1)), 1, 1);
+    }
+    // edge shading
+    ctx.fillStyle = 'rgba(255,255,255,0.08)';
+    ctx.fillRect(0, 0, TILE, 1);
+    ctx.fillStyle = 'rgba(0,0,0,0.18)';
+    ctx.fillRect(0, TILE - 1, TILE, 1);
+  }
+  else if (ln === 'WOOD' || ln === 'TREETRUNK') {
+    // Terraria wood: vertical grain, bark edges, knot detail
+    ctx.fillStyle = base;
+    ctx.fillRect(0, 0, TILE, TILE);
+    // vertical grain lines
+    ctx.strokeStyle = dark;
+    ctx.lineWidth = 1;
+    for (var wg = 1; wg < TILE; wg += 3) {
+      ctx.beginPath();
+      ctx.moveTo(wg + (rng() - 0.5), 0);
+      ctx.bezierCurveTo(wg + 1, TILE / 3, wg - 1, TILE * 2 / 3, wg + (rng() - 0.5), TILE);
+      ctx.stroke();
+    }
+    // bark texture on edges
     ctx.fillStyle = darkest;
-    ctx.fillRect(0, 0, 1, TILE);
-    ctx.fillRect(TILE - 1, 0, 1, TILE);
+    ctx.fillRect(0, 0, 2, TILE);
+    ctx.fillRect(TILE - 2, 0, 2, TILE);
+    // horizontal growth rings
+    ctx.fillStyle = dark;
+    ctx.fillRect(2, 4 + Math.floor(rng() * 3), TILE - 4, 1);
+    ctx.fillRect(2, 10 + Math.floor(rng() * 3), TILE - 4, 1);
+    // highlight strip
+    ctx.fillStyle = lighter;
+    ctx.fillRect(3, 0, 2, TILE);
+  }
+  else if (ln === 'LEAVES') {
+    // Terraria leaves: layered circles with highlights and shadows
+    ctx.fillStyle = base;
+    ctx.fillRect(0, 0, TILE, TILE);
+    // lighter clusters (top-left)
+    ctx.fillStyle = lighter;
+    for (var lcl = 0; lcl < 3; lcl++) {
+      ctx.beginPath();
+      ctx.arc(2 + rng() * (TILE - 6), 2 + rng() * (TILE - 6), 2.5 + rng() * 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    // darker clusters (bottom-right)
+    ctx.fillStyle = dark;
+    for (var lcd = 0; lcd < 3; lcd++) {
+      ctx.beginPath();
+      ctx.arc(TILE - 3 - rng() * (TILE - 6), TILE - 3 - rng() * (TILE - 6), 2 + rng() * 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    // bright highlights
+    ctx.fillStyle = lightest;
+    for (var lch = 0; lch < 2; lch++) {
+      ctx.fillRect(Math.floor(rng() * (TILE - 1)), Math.floor(rng() * (TILE - 1)), 1, 1);
+    }
   }
   else if (ln === 'SAND') {
-    // sand grains
-    ctx.fillStyle = darkest;
-    for (var sg = 0; sg < 6; sg++) {
-      ctx.fillRect(Math.floor(rng() * TILE), Math.floor(rng() * TILE), 1, 1);
+    // Terraria sand: fine grain with wind ripple patterns
+    ctx.fillStyle = base;
+    ctx.fillRect(0, 0, TILE, TILE);
+    // ripples
+    ctx.strokeStyle = dark;
+    ctx.lineWidth = 1;
+    for (var sr = 2; sr < TILE; sr += 4) {
+      ctx.beginPath();
+      ctx.moveTo(0, sr);
+      ctx.quadraticCurveTo(TILE / 2, sr + 1, TILE, sr);
+      ctx.stroke();
     }
+    // grain sparkles
     ctx.fillStyle = lighter;
-    for (var sg2 = 0; sg2 < 3; sg2++) {
+    for (var sg3 = 0; sg3 < 4; sg3++) {
       ctx.fillRect(Math.floor(rng() * TILE), Math.floor(rng() * TILE), 1, 1);
     }
   }
   else if (ln === 'SNOW' || ln === 'ICE') {
-    // crystalline sparkles
-    ctx.fillStyle = 'rgba(255,255,255,0.5)';
-    for (var sp = 0; sp < 4; sp++) {
-      var sx = Math.floor(rng() * (TILE - 2)), sy = Math.floor(rng() * (TILE - 2));
-      ctx.fillRect(sx, sy, 1, 1);
-      ctx.fillRect(sx - 1, sy + 1, 1, 1);
-      ctx.fillRect(sx + 1, sy + 1, 1, 1);
-    }
-  }
-  else if (ln === 'COPPER' || ln === 'SILVER' || ln === 'GOLD' || ln === 'DEMONITE' || ln === 'CRIMTANE' ||
-           ln === 'TIN' || ln === 'LEAD' || ln === 'TUNGSTEN' || ln === 'PLATINUM' || ln === 'METEORITE') {
-    // ore nuggets embedded in stone
-    ctx.fillStyle = '#6b7080'; // stone background
-    ctx.fillRect(0, 0, TILE, TILE);
-    // ore chunks
+    // Terraria snow/ice: white-blue with crystalline texture
     ctx.fillStyle = base;
-    for (var og = 0; og < 4; og++) {
-      var ox = 1 + Math.floor(rng() * (TILE - 5));
-      var oy = 1 + Math.floor(rng() * (TILE - 5));
-      var ow = 2 + Math.floor(rng() * 3);
-      ctx.fillRect(ox, oy, ow, ow);
-      ctx.fillStyle = lighter;
-      ctx.fillRect(ox, oy, ow, 1);
+    ctx.fillRect(0, 0, TILE, TILE);
+    // crystalline shards
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    for (var cs = 0; cs < 3; cs++) {
+      var csx = Math.floor(rng() * (TILE - 2));
+      var csy = Math.floor(rng() * (TILE - 2));
+      ctx.fillRect(csx, csy, 1, 2);
+      ctx.fillRect(csx - 1, csy + 1, 3, 1);
+    }
+    // blue shadows
+    ctx.fillStyle = 'rgba(100,150,220,0.15)';
+    ctx.fillRect(0, TILE - 3, TILE, 3);
+  }
+  else if (ln === 'COPPER' || ln === 'SILVER' || ln === 'GOLD' || ln === 'DEMONITE' ||
+           ln === 'CRIMTANE' || ln === 'TIN' || ln === 'LEAD' || ln === 'TUNGSTEN' || ln === 'PLATINUM') {
+    // ore: stone background with large embedded nuggets
+    ctx.fillStyle = '#6b7080';
+    ctx.fillRect(0, 0, TILE, TILE);
+    // stone texture
+    ctx.fillStyle = '#5a5a64';
+    for (var stx = 0; stx < 3; stx++) {
+      ctx.fillRect(Math.floor(rng() * (TILE - 3)), Math.floor(rng() * (TILE - 3)), 3, 2);
+    }
+    // large ore nuggets (2x2 to 3x3)
+    for (var on = 0; on < 3; on++) {
+      var onx = 1 + Math.floor(rng() * (TILE - 5));
+      var ony = 1 + Math.floor(rng() * (TILE - 5));
+      var onw = 2 + Math.floor(rng() * 2);
       ctx.fillStyle = base;
+      ctx.fillRect(onx, ony, onw, onw);
+      // shine on top-left of nugget
+      ctx.fillStyle = lighter;
+      ctx.fillRect(onx, ony, onw, 1);
+      // shadow on bottom-right
+      ctx.fillStyle = darkest;
+      ctx.fillRect(onx + onw - 1, ony + onw - 1, 1, 1);
     }
-    // stone texture on top
-    ctx.fillStyle = 'rgba(0,0,0,0.1)';
-    for (var st2 = 0; st2 < 4; st2++) {
-      ctx.fillRect(Math.floor(rng() * TILE), Math.floor(rng() * TILE), 2, 1);
-    }
-  }
-  else if (ln === 'HELLSTONE') {
-    // fiery veins
-    ctx.fillStyle = base;
-    ctx.fillRect(0, 0, TILE, TILE);
-    ctx.strokeStyle = '#ffcc00';
-    ctx.lineWidth = 1;
-    for (var fv = 0; fv < 3; fv++) {
-      ctx.beginPath();
-      var fx = rng() * TILE, fy = rng() * TILE;
-      ctx.moveTo(fx, fy);
-      ctx.lineTo(fx + (rng() - 0.5) * 8, fy + (rng() - 0.5) * 8);
-      ctx.stroke();
-    }
-    ctx.fillStyle = '#ff6600';
-    for (var fp = 0; fp < 3; fp++) {
-      ctx.fillRect(Math.floor(rng() * (TILE - 2)), Math.floor(rng() * (TILE - 2)), 2, 2);
+    // tiny sparkles
+    ctx.fillStyle = lightest;
+    for (var os = 0; os < 2; os++) {
+      ctx.fillRect(Math.floor(rng() * TILE), Math.floor(rng() * TILE), 1, 1);
     }
   }
   else if (ln === 'COBALT' || ln === 'MYTHRIL' || ln === 'ADAMANTITE' || ln === 'CHLOROPHYTE' ||
            ln === 'TITANIUM' || ln === 'ORICHALCUM' || ln === 'PALLADIUM') {
-    // hardmode ore: crystal formations in stone
-    ctx.fillStyle = '#5a5a64';
+    // hardmode ore: dark stone with glowing crystal formations
+    ctx.fillStyle = '#4a4a54';
     ctx.fillRect(0, 0, TILE, TILE);
-    // crystal clusters
-    for (var cr2 = 0; cr2 < 3; cr2++) {
-      var cx3 = 2 + Math.floor(rng() * (TILE - 6));
-      var cy3 = 2 + Math.floor(rng() * (TILE - 6));
+    // dark stone texture
+    ctx.fillStyle = '#3a3a44';
+    for (var dss = 0; dss < 3; dss++) {
+      ctx.fillRect(Math.floor(rng() * (TILE - 3)), Math.floor(rng() * (TILE - 3)), 3, 2);
+    }
+    // crystal formations
+    for (var cf2 = 0; cf2 < 3; cf2++) {
+      var cfx = 2 + Math.floor(rng() * (TILE - 6));
+      var cfy = 2 + Math.floor(rng() * (TILE - 6));
+      // crystal body
       ctx.fillStyle = base;
       ctx.beginPath();
-      ctx.moveTo(cx3 + 2, cy3);
-      ctx.lineTo(cx3 + 4, cy3 + 3);
-      ctx.lineTo(cx3 + 2, cy3 + 6);
-      ctx.lineTo(cx3, cy3 + 3);
+      ctx.moveTo(cfx + 2, cfy);
+      ctx.lineTo(cfx + 4, cfy + 3);
+      ctx.lineTo(cfx + 2, cfy + 6);
+      ctx.lineTo(cfx, cfy + 3);
       ctx.closePath();
       ctx.fill();
+      // inner glow
       ctx.fillStyle = lighter;
-      ctx.fillRect(cx3 + 1, cy3 + 1, 1, 2);
+      ctx.fillRect(cfx + 1, cfy + 2, 2, 2);
+      // bright tip
+      ctx.fillStyle = lightest;
+      ctx.fillRect(cfx + 2, cfy, 1, 1);
     }
   }
-  else if (ln === 'LEAVES') {
-    // leaf clusters
-    for (var lf = 0; lf < 5; lf++) {
-      var lx = Math.floor(rng() * (TILE - 4));
-      var ly = Math.floor(rng() * (TILE - 4));
-      ctx.fillStyle = rng() < 0.5 ? shade(base, 15) : shade(base, -15);
+  else if (ln === 'HELLSTONE') {
+    // hellstone: dark base with glowing orange/red veins
+    ctx.fillStyle = '#6a2010';
+    ctx.fillRect(0, 0, TILE, TILE);
+    // dark texture
+    ctx.fillStyle = '#4a1508';
+    for (var ht2 = 0; ht2 < 4; ht2++) {
+      ctx.fillRect(Math.floor(rng() * (TILE - 3)), Math.floor(rng() * (TILE - 3)), 3, 2);
+    }
+    // glowing veins
+    ctx.strokeStyle = '#ff4400';
+    ctx.lineWidth = 1.5;
+    for (var hv = 0; hv < 3; hv++) {
+      var hvx = rng() * TILE, hvy = rng() * TILE;
       ctx.beginPath();
-      ctx.arc(lx + 2, ly + 2, 2.5, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.moveTo(hvx, hvy);
+      ctx.quadraticCurveTo(hvx + (rng() - 0.5) * 8, hvy + (rng() - 0.5) * 8, hvx + (rng() - 0.5) * 12, hvy + (rng() - 0.5) * 12);
+      ctx.stroke();
+    }
+    // bright spots
+    ctx.fillStyle = '#ffaa00';
+    for (var hb = 0; hb < 3; hb++) {
+      ctx.fillRect(Math.floor(rng() * (TILE - 2)), Math.floor(rng() * (TILE - 2)), 2, 2);
     }
   }
   else if (ln === 'COBWEB') {
-    // web pattern
+    // cobweb: radial pattern
     ctx.clearRect(0, 0, TILE, TILE);
-    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+    ctx.strokeStyle = 'rgba(220,220,230,0.5)';
     ctx.lineWidth = 0.5;
-    for (var wa = 0; wa < 6; wa++) {
-      var angle = (wa / 6) * Math.PI * 2;
+    // radial threads
+    for (var wa2 = 0; wa2 < 8; wa2++) {
+      var wa3 = (wa2 / 8) * Math.PI * 2;
       ctx.beginPath();
       ctx.moveTo(8, 8);
-      ctx.lineTo(8 + Math.cos(angle) * 10, 8 + Math.sin(angle) * 10);
+      ctx.lineTo(8 + Math.cos(wa3) * 11, 8 + Math.sin(wa3) * 11);
       ctx.stroke();
     }
-    for (var wr = 2; wr <= 6; wr += 2) {
+    // spiral threads
+    for (var wr2 = 2; wr2 <= 8; wr2 += 2) {
       ctx.beginPath();
-      ctx.arc(8, 8, wr, 0, Math.PI * 2);
+      ctx.arc(8, 8, wr2, 0, Math.PI * 2);
       ctx.stroke();
-    }
-  }
-  else if (ln === 'CLOUD') {
-    // fluffy clouds
-    ctx.fillStyle = base;
-    ctx.fillRect(0, 0, TILE, TILE);
-    ctx.fillStyle = 'rgba(255,255,255,0.4)';
-    for (var cf = 0; cf < 3; cf++) {
-      ctx.beginPath();
-      ctx.arc(rng() * TILE, rng() * TILE, 3 + rng() * 3, 0, Math.PI * 2);
-      ctx.fill();
     }
   }
   else if (ln === 'GLASS') {
-    // transparent with highlight
+    // glass: transparent with edge highlights
     ctx.clearRect(0, 0, TILE, TILE);
-    ctx.fillStyle = 'rgba(200,232,240,0.3)';
+    ctx.fillStyle = 'rgba(180,216,232,0.25)';
     ctx.fillRect(0, 0, TILE, TILE);
-    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+    ctx.strokeStyle = 'rgba(255,255,255,0.35)';
     ctx.lineWidth = 1;
     ctx.strokeRect(0.5, 0.5, TILE - 1, TILE - 1);
+    // reflection streak
     ctx.fillStyle = 'rgba(255,255,255,0.2)';
-    ctx.fillRect(2, 2, 4, 1);
-    ctx.fillRect(2, 2, 1, 4);
+    ctx.fillRect(2, 2, 5, 1);
+    ctx.fillRect(2, 2, 1, 5);
+    ctx.fillRect(9, 10, 4, 1);
   }
   else if (ln === 'TEMPLEBRICK' || ln === 'DUNGEONBRICK' || ln === 'HELLBRICK') {
-    // brick pattern
+    // brick: mortar lines + individual brick shading
     ctx.fillStyle = base;
     ctx.fillRect(0, 0, TILE, TILE);
+    // mortar lines
     ctx.strokeStyle = darkest;
     ctx.lineWidth = 1;
-    ctx.strokeRect(0.5, 0.5, TILE / 2 - 1, TILE / 2 - 1);
-    ctx.strokeRect(TILE / 2 + 0.5, 0.5, TILE / 2 - 1, TILE / 2 - 1);
-    ctx.strokeRect(0.5, TILE / 2 + 0.5, TILE - 1, TILE / 2 - 1);
+    ctx.beginPath();
+    ctx.moveTo(0, 8); ctx.lineTo(TILE, 8);
+    ctx.moveTo(8, 0); ctx.lineTo(8, 8);
+    ctx.moveTo(4, 8); ctx.lineTo(4, TILE);
+    ctx.moveTo(12, 8); ctx.lineTo(12, TILE);
+    ctx.stroke();
+    // brick highlights
+    ctx.fillStyle = 'rgba(255,255,255,0.08)';
+    ctx.fillRect(1, 1, 6, 1);
+    ctx.fillRect(9, 1, 6, 1);
+    ctx.fillRect(1, 9, 10, 1);
   }
+  else if (ln === 'PLATFORM') {
+    // platform: wooden planks with supports
+    ctx.clearRect(0, 0, TILE, TILE);
+    ctx.fillStyle = base;
+    ctx.fillRect(0, 5, TILE, 5);
+    ctx.fillStyle = lighter;
+    ctx.fillRect(0, 5, TILE, 1);
+    ctx.fillStyle = dark;
+    ctx.fillRect(0, 9, TILE, 1);
+    ctx.fillStyle = darkest;
+    ctx.fillRect(3, 10, 2, 3);
+    ctx.fillRect(11, 10, 2, 3);
+  }
+  else if (ln === 'ASH') {
+    // ash: dark gray with ember flecks
+    ctx.fillStyle = base;
+    ctx.fillRect(0, 0, TILE, TILE);
+    ctx.fillStyle = dark;
+    for (var at = 0; at < 4; at++) {
+      ctx.fillRect(Math.floor(rng() * (TILE - 2)), Math.floor(rng() * (TILE - 2)), 2, 1);
+    }
+    // glowing embers
+    ctx.fillStyle = 'rgba(255,100,30,0.4)';
+    for (var em = 0; em < 2; em++) {
+      ctx.fillRect(Math.floor(rng() * (TILE - 1)), Math.floor(rng() * (TILE - 1)), 1, 1);
+    }
+  }
+
+  // -- universal edge shading --
+  ctx.fillStyle = 'rgba(255,255,255,0.1)';
+  ctx.fillRect(0, 0, TILE, 1);
+  ctx.fillStyle = 'rgba(0,0,0,0.12)';
+  ctx.fillRect(0, TILE - 1, TILE, 1);
+  ctx.fillRect(TILE - 1, 0, 1, TILE);
 
   return c;
 }
@@ -380,10 +511,17 @@ function mixColor(baseHex, tintHex, amt) {
 }
 
 // ---------- Main render ----------
+var CAMERA_ZOOM = 2;
 function renderGame(game, ctx) {
   if (!SPRITES) buildSprites();
   var cam = game.cam;
-  var W = canvas.width, H = canvas.height;
+  var W = canvas.width / CAMERA_ZOOM;
+  var H = canvas.height / CAMERA_ZOOM;
+
+  // render to a full-res offscreen context, then upscale
+  ctx.save();
+  ctx.scale(CAMERA_ZOOM, CAMERA_ZOOM);
+  ctx.imageSmoothingEnabled = false;
 
   // screen shake: offset a local camera copy so every layer shakes together
   if (game.shakeT > 0 && game.shakeMag > 0) {
@@ -604,96 +742,155 @@ function twilightAmt(t) {
 function drawBackground(game, ctx, cam, W, H, horizon) {
   var p = game.player;
   var currentBiome = game.world.biomeAt(p.x, p.y);
-  var t = game.timeOfDay; // 0..1, 0=midnight 0.5=noon
+  var t = game.timeOfDay;
   var night = t < 0.25 || t > 0.75;
   var twi = twilightAmt(t);
 
-  var horizonScreen = horizon - cam.y + H / 2;
-  var surfaceX0 = Math.max(0, Math.floor((cam.x - W / 2) / TILE) - 1);
-  var surfaceX1 = Math.min(game.world.W - 1, Math.ceil((cam.x + W / 2) / TILE) + 1);
-  var maxSurfaceScreen = -Infinity;
-  for (var surfaceX = surfaceX0; surfaceX <= surfaceX1; surfaceX++) {
-    maxSurfaceScreen = Math.max(maxSurfaceScreen, game.world.surfaceY[surfaceX] * TILE - cam.y + H / 2);
-  }
-  var skyVisible = maxSurfaceScreen > 0;
-
-  if (skyVisible) {
-    // surface sky (biome-tinted)
-    var biome = currentBiome;
-    var skyTop = '#0a1030', skyBot = '#bfe0ff';
-    if (night) skyBot = '#101840';
-    if (biome === BIOME.CORRUPT || biome === BIOME.CRIMSON) {
-      skyTop = night ? '#140a1e' : '#5a8a7a'; skyBot = night ? '#1e1230' : '#a8c4a8';
-    } else if (biome === BIOME.HALLOW) {
-      skyTop = night ? '#14103a' : '#7ac0ff'; skyBot = night ? '#1c1448' : '#e8c0ff';
-    } else if (biome === BIOME.SNOW) {
-      skyTop = night ? '#0c1030' : '#8ab8e8'; skyBot = night ? '#141c3c' : '#dceef8';
-    } else if (biome === BIOME.JUNGLE) {
-      skyTop = night ? '#0c1418' : '#6fb8a0'; skyBot = night ? '#121c24' : '#b8e0cc';
-    }
-    if (game.weather && game.weather.active) {
-      skyTop = night ? '#101726' : '#657584';
-      skyBot = night ? '#1b2635' : '#a9b5bc';
-    }
-    if (game.event && game.event.type === 'bloodmoon') {
-      skyTop = '#21050c';
-      skyBot = '#641725';
-    }
-    if (game.world.graveyardStrengthAt(p.x, p.y) >= 5 && !(game.event && game.event.type === 'bloodmoon')) {
-      skyTop = night ? '#12131a' : '#59606a';
-      skyBot = night ? '#252632' : '#9a9da3';
-    }
-    // smooth dawn/dusk: blend toward ember tones near the day/night transitions
-    if (twi > 0 && !(game.event && game.event.type === 'bloodmoon')) {
-      skyTop = hexBlend(skyTop, '#2a1e46', twi * 0.7);
-      skyBot = hexBlend(skyBot, '#ff9a50', twi * 0.75);
-    }
-    var skyEnd = clamp(Math.max(horizonScreen, maxSurfaceScreen), 1, H);
-    var g = ctx.createLinearGradient(0, 0, 0, skyEnd);
-    g.addColorStop(0, skyTop);
-    g.addColorStop(1, skyBot);
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, W, H);
-
-    drawSunMoon(ctx, W, horizonScreen, t, night);
-    drawClouds(game, ctx, W, H, cam, horizonScreen);
-    drawStars(ctx, W, horizonScreen, night, cam);
-    drawStarfall(game, ctx, W, Math.max(0, horizonScreen));
-    drawCelebrations(game, ctx, W, Math.max(0, horizonScreen));
-
-    // Follow the actual surface profile so valleys retain sky instead of a flat underground band.
-    var undergroundTop = clamp(horizonScreen, 0, H - 1);
-    var ug = ctx.createLinearGradient(0, undergroundTop, 0, H);
-    ug.addColorStop(0, '#241e18');
-    ug.addColorStop(1, '#14100c');
-    ctx.fillStyle = ug;
-    for (surfaceX = surfaceX0; surfaceX <= surfaceX1; surfaceX++) {
-      var surfaceScreenX = Math.floor(surfaceX * TILE - cam.x + W / 2);
-      var localHorizon = Math.floor(game.world.surfaceY[surfaceX] * TILE - cam.y + H / 2);
-      var fillTop = Math.max(0, localHorizon);
-      if (fillTop < H) ctx.fillRect(surfaceScreenX, fillTop, TILE + 1, H - fillTop);
-    }
+  // === SKY GRADIENT ===
+  var skyTop, skyBot;
+  if (night) {
+    skyTop = '#0a0a1e'; skyBot = '#1a1a3e';
+  } else if (twi > 0) {
+    // sunset/sunrise blend
+    var isDawn = t < 0.5;
+    skyTop = isDawn ? '#2a1a4a' : '#4a2a1a';
+    skyBot = isDawn ? '#e8a060' : '#e87040';
   } else {
-    // fully underground
-    var g2 = ctx.createLinearGradient(0, 0, 0, H);
-    g2.addColorStop(0, currentBiome === BIOME.UNDERWORLD ? '#38140f' : '#1c1815');
-    g2.addColorStop(1, currentBiome === BIOME.UNDERWORLD ? '#120706' : '#0e0c0a');
-    ctx.fillStyle = g2;
-    ctx.fillRect(0, 0, W, H);
-    // deep glow tint
-    ctx.fillStyle = currentBiome === BIOME.UNDERWORLD ? 'rgba(255,80,20,0.08)' : 'rgba(120,60,255,0.03)';
-    ctx.fillRect(0, 0, W, H);
+    skyTop = '#4a90d9'; skyBot = '#a8d4f0';
+  }
+  if (currentBiome === BIOME.SNOW) { skyBot = night ? '#1a2a4a' : '#c0d8f0'; }
+  else if (currentBiome === BIOME.JUNGLE) { skyBot = night ? '#122820' : '#88ccaa'; }
+  else if (currentBiome === BIOME.DESERT) { skyBot = night ? '#2a2a1a' : '#e8d8a0'; }
+
+  var skyGrad = ctx.createLinearGradient(0, 0, 0, H);
+  skyGrad.addColorStop(0, skyTop);
+  skyGrad.addColorStop(1, skyBot);
+  ctx.fillStyle = skyGrad;
+  ctx.fillRect(0, 0, W, H);
+
+  // === STARS (night only) ===
+  if (night) {
+    ctx.fillStyle = 'rgba(255,255,255,0.8)';
+    for (var si = 0; si < 80; si++) {
+      var sx = (si * 137.5 + Math.floor(cam.x * 0.01)) % W;
+      var sy = (si * 61.8) % (H * 0.5);
+      var twinkle = 0.5 + 0.5 * Math.sin(Time.seconds * 2 + si);
+      ctx.globalAlpha = twinkle;
+      ctx.fillRect(sx, sy, 2, 2);
+    }
+    ctx.globalAlpha = 1;
   }
 
-  // out-of-world void at map edges
-  var edge = (cam.x - W / 2) < 0;
-  if (edge) {
-    ctx.fillStyle = '#0a0a0f';
-    ctx.fillRect(0, 0, Math.max(0, -cam.x + W / 2), H);
+  // === SUN / MOON ===
+  var sunX = W * 0.5 + Math.cos((t - 0.25) * Math.PI * 2) * W * 0.4;
+  var sunY = H * 0.3 + Math.sin((t - 0.25) * Math.PI * 2) * H * 0.2;
+  if (!night) {
+    // sun with glow
+    var sunGrad = ctx.createRadialGradient(sunX, sunY, 5, sunX, sunY, 40);
+    sunGrad.addColorStop(0, 'rgba(255,255,200,1)');
+    sunGrad.addColorStop(0.3, 'rgba(255,220,100,0.8)');
+    sunGrad.addColorStop(1, 'rgba(255,200,50,0)');
+    ctx.fillStyle = sunGrad;
+    ctx.fillRect(sunX - 40, sunY - 40, 80, 80);
+    ctx.fillStyle = '#ffefba';
+    ctx.beginPath(); ctx.arc(sunX, sunY, 18, 0, Math.PI * 2); ctx.fill();
+  } else {
+    var moonX = W * 0.5 + Math.cos((t - 0.75) * Math.PI * 2) * W * 0.4;
+    var moonY = H * 0.3 + Math.sin((t - 0.75) * Math.PI * 2) * H * 0.2;
+    ctx.fillStyle = '#e8e8f0';
+    ctx.beginPath(); ctx.arc(moonX, moonY, 14, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = skyTop;
+    ctx.beginPath(); ctx.arc(moonX + 5, moonY - 3, 12, 0, Math.PI * 2); ctx.fill();
   }
-  edge = (cam.x + W / 2) > game.world.W * TILE;
-  if (edge) {
-    ctx.fillRect(cam.x + W / 2 - game.world.W * TILE, 0, W, H);
+
+  // === CLOUDS (parallax layer 1 — slowest) ===
+  var cloudOffset = cam.x * 0.05;
+  ctx.fillStyle = night ? 'rgba(80,80,120,0.5)' : 'rgba(255,255,255,0.7)';
+  for (var ci = 0; ci < 12; ci++) {
+    var cx2 = ((ci * 350 + cloudOffset * -1) % (W + 400)) - 200;
+    var cy2 = 30 + (ci % 4) * 55 + Math.sin(ci * 3.7) * 20;
+    var cs = 30 + (ci % 3) * 20;
+    // cloud puffs
+    ctx.beginPath();
+    ctx.arc(cx2, cy2, cs * 0.5, 0, Math.PI * 2);
+    ctx.arc(cx2 + cs * 0.4, cy2 - cs * 0.15, cs * 0.4, 0, Math.PI * 2);
+    ctx.arc(cx2 + cs * 0.8, cy2, cs * 0.45, 0, Math.PI * 2);
+    ctx.arc(cx2 + cs * 0.4, cy2 + cs * 0.1, cs * 0.35, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // === FAR MOUNTAINS (parallax layer 2) ===
+  var mtnOffset = cam.x * 0.15;
+  var mtnBase = horizon + 20;
+  ctx.fillStyle = night ? '#1a2a3a' : twi > 0 ? '#8a7a9a' : '#7a9ab8';
+  ctx.beginPath();
+  ctx.moveTo(0, H);
+  for (var mi = 0; mi <= 20; mi++) {
+    var mx = (mi / 20) * W;
+    var mh = 80 + Math.sin(mi * 0.7 + mtnOffset * 0.005) * 60 + Math.sin(mi * 0.3) * 40;
+    ctx.lineTo(mx, mtnBase - mh);
+  }
+  ctx.lineTo(W, H);
+  ctx.closePath();
+  ctx.fill();
+
+  // === NEAR MOUNTAINS / HILLS (parallax layer 3) ===
+  var hillOffset = cam.x * 0.3;
+  ctx.fillStyle = night ? '#1a3a2a' : twi > 0 ? '#5a8a6a' : '#4a8a5a';
+  ctx.beginPath();
+  ctx.moveTo(0, H);
+  for (var hi = 0; hi <= 20; hi++) {
+    var hx = (hi / 20) * W;
+    var hh = 40 + Math.sin(hi * 0.9 + hillOffset * 0.008) * 30 + Math.sin(hi * 0.5) * 25;
+    ctx.lineTo(hx, mtnBase + 10 - hh);
+  }
+  ctx.lineTo(W, H);
+  ctx.closePath();
+  ctx.fill();
+
+  // === BACKGROUND TREES (parallax layer 4 — silhouette trees) ===
+  var treeOffset = cam.x * 0.5;
+  ctx.fillStyle = night ? '#0a1a12' : '#3a6a3a';
+  for (var ti = 0; ti < 15; ti++) {
+    var tx2 = ((ti * 180 + treeOffset * -1) % (W + 200)) - 100;
+    var treeH = 50 + (ti % 4) * 20;
+    var treeY = horizon + 5;
+    // trunk
+    ctx.fillRect(tx2 - 2, treeY - treeH, 4, treeH);
+    // canopy
+    ctx.beginPath();
+    ctx.arc(tx2, treeY - treeH, 15 + (ti % 3) * 5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // === UNDERGROUND BACKGROUND ===
+  // Below the horizon, fill with dark cave background
+  var undergroundTop = horizon + 16;
+  if (undergroundTop < H) {
+    var ugGrad = ctx.createLinearGradient(0, undergroundTop, 0, H);
+    if (currentBiome === BIOME.JUNGLE) {
+      ugGrad.addColorStop(0, '#3a2818'); ugGrad.addColorStop(1, '#1a1008');
+    } else if (currentBiome === BIOME.SNOW) {
+      ugGrad.addColorStop(0, '#2a3a4a'); ugGrad.addColorStop(1, '#0a1218');
+    } else {
+      ugGrad.addColorStop(0, '#3a2a1a'); ugGrad.addColorStop(1, '#0a0a10');
+    }
+    ctx.fillStyle = ugGrad;
+    ctx.fillRect(0, undergroundTop, W, H - undergroundTop);
+  }
+
+  // === WEATHER OVERLAY ===
+  if (game.weather && game.weather.active) {
+    var wk = game.weather.type;
+    if (wk === 'rain') {
+      ctx.strokeStyle = 'rgba(150,180,220,0.3)';
+      ctx.lineWidth = 1;
+      for (var ri = 0; ri < 60; ri++) {
+        var rx2 = (ri * 97 + Time.seconds * 300) % W;
+        var ry2 = (ri * 61 + Time.seconds * 500) % H;
+        ctx.beginPath(); ctx.moveTo(rx2, ry2); ctx.lineTo(rx2 - 2, ry2 + 12); ctx.stroke();
+      }
+    }
   }
 }
 
@@ -909,7 +1106,7 @@ function drawLighting(game, ctx, cam, W, H) {
   var W = lw, H = lh;
   var t = game.timeOfDay;
   var nightAmt = Math.min(1, Math.max(0, Math.abs(t - 0.5) * 4 - 0.4));
-  var base = 0.05 + 0.58 * nightAmt;
+  var base = 0.04 + 0.35 * nightAmt;
   if (weatherKindAt(game, game.player.x, game.player.y)) base = Math.min(0.9, base + 0.08 * game.weather.intensity);
   var graveStrength = game.world.graveyardStrengthAt(game.player.x, game.player.y);
   if (graveStrength >= 5) base = Math.min(0.9, base + Math.min(0.18, (graveStrength - 4) * 0.035));
@@ -948,14 +1145,14 @@ function drawLighting(game, ctx, cam, W, H) {
     var gradBot = Math.min(H, maxSurfaceScreen + 14 * TILE);
     var depthGrad = lc.createLinearGradient(0, gradTop, 0, gradBot);
     depthGrad.addColorStop(0, 'rgba(0,0,6,0.05)');
-    depthGrad.addColorStop(0.15, 'rgba(0,0,6,0.25)');
-    depthGrad.addColorStop(0.4, 'rgba(0,0,6,0.65)');
-    depthGrad.addColorStop(0.7, 'rgba(0,0,6,0.92)');
-    depthGrad.addColorStop(1, 'rgba(0,0,6,1)');
+    depthGrad.addColorStop(0.15, 'rgba(0,0,6,0.15)');
+    depthGrad.addColorStop(0.4, 'rgba(0,0,6,0.38)');
+    depthGrad.addColorStop(0.7, 'rgba(0,0,6,0.48)');
+    depthGrad.addColorStop(1, 'rgba(0,0,6,0.52)');
     lc.fillStyle = depthGrad;
     lc.fill();
   } else {
-    lc.fillStyle = 'rgba(0,0,6,1)';
+    lc.fillStyle = 'rgba(0,0,6,0.52)';
     lc.fillRect(0, 0, W, H);
   }
 
@@ -978,8 +1175,9 @@ function drawLighting(game, ctx, cam, W, H) {
   var py = (game.player.y - cam.y) * LIGHT_SCALE + lh / 2;
   var held = game.player.inventory.selectedItem();
   var heldDef = held && ITEMS[held.id];
-  if (heldDef && heldDef.tile === T.TORCH) cutLight(px, py - 10 * LIGHT_SCALE, 180 * LIGHT_SCALE);
-  else if (heldDef && heldDef.tile === T.GLOWSTONE) cutLight(px, py - 10 * LIGHT_SCALE, 140 * LIGHT_SCALE);
+  cutLight(px, py - 10 * LIGHT_SCALE, 200 * LIGHT_SCALE, 0.85);
+  if (heldDef && heldDef.tile === T.TORCH) cutLight(px, py - 10 * LIGHT_SCALE, 180 * LIGHT_SCALE, 1);
+  else if (heldDef && heldDef.tile === T.GLOWSTONE) cutLight(px, py - 10 * LIGHT_SCALE, 140 * LIGHT_SCALE, 1);
 
   // torches / glowstone
   var lw = world.lights;
