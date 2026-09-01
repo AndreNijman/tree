@@ -511,17 +511,11 @@ function mixColor(baseHex, tintHex, amt) {
 }
 
 // ---------- Main render ----------
-var CAMERA_ZOOM = 2;
 function renderGame(game, ctx) {
   if (!SPRITES) buildSprites();
   var cam = game.cam;
-  var W = canvas.width / CAMERA_ZOOM;
-  var H = canvas.height / CAMERA_ZOOM;
-
-  // render to a full-res offscreen context, then upscale
-  ctx.save();
-  ctx.scale(CAMERA_ZOOM, CAMERA_ZOOM);
-  ctx.imageSmoothingEnabled = false;
+  var W = canvas.width;
+  var H = canvas.height;
 
   // screen shake: offset a local camera copy so every layer shakes together
   if (game.shakeT > 0 && game.shakeMag > 0) {
