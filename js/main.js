@@ -4214,6 +4214,11 @@ function bestiaryHTML() {
 var TOWN_SHOPS = {};
 TOWN_SHOPS[E.MERCHANT] = [
   { item:I.TORCH, count:10, cost:500 }, { item:I.PLATFORM, count:20, cost:10000 },
+  { item:I.BOTTLE, count:5, cost:100 }, { item:I.CHAIN, count:10, cost:500 },
+  { item:I.ACORN, count:10, cost:100 }, { item:I.CLAY, count:25, cost:250 },
+  { item:I.SIGN, count:1, cost:100 }, { item:I.CLAY_POT, count:1, cost:100 },
+  { item:I.WOODEN_DOOR, count:1, cost:400 }, { item:I.GRASS_SEEDS, count:5, cost:2000 },
+  { item:I.SUMMER_HAT, count:1, cost:1000 },
   { item:I.ARROW, count:25, cost:125 }, { item:I.HEALINGPOTION, count:1, cost:1000 },
   { item:I.MANAPOTION, count:1, cost:250 }, { item:I.FISHINGROD_WOODEN, count:1, cost:300 },
   { item:I.WORM, count:5, cost:12500 }, { item:I.MININGPOTION, count:1, cost:1000, gate:'evil' },
