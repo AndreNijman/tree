@@ -599,6 +599,15 @@ This file tracks the staged expansion toward Terraria 1.4.4 parity. Progression 
 - [x] Add the Candy Cane Sword (swings throw candy-cane projectiles) and Candy Cane Bow (a real arrow-consuming bow) to Santa's stock.
 - [x] Extend projectile metadata with projSpeed, projLife, and accel/maxSpeed support plus render paths for the water bolt, spinning scythe, and candy cane.
 
+## Batch 76: Vanilla Enemy And Critter Roster
+
+- [x] Add Vulture to desert surface pools in both phases and Meteor Head spawning near exposed meteorite craters in pre-Hardmode.
+- [x] Add Shark to both ocean phases with canonical Shark Fin drops and Orca as a Hardmode-only ocean hunter.
+- [x] Add Snatcher to pre-Hardmode jungle surfaces and Red Devil to Hardmode Underworld pools.
+- [x] Add Penguin as a passive snow critter wired into the independent critter scheduler.
+- [x] Add the Purple, Yellow, Red, and Black slime palette with phase-correct biome pools and Gel drops.
+- [x] Integrate all eleven with AI dispatch, procedural rendering, drops, bestiary discovery, and pool assertions in the playtest suite.
+
 ## Long-Term Catalog Parity
 
 - [x] Audit notable missing vanilla enemies and critters against `E` and `ENT_DEF` (ongoing; Ocean/Cavern/Spider/Underworld gaps continued in Batch 73).
