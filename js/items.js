@@ -687,6 +687,4430 @@ var I = {
   SUMMER_HAT:'summerhat',
   TUXEDO_PANTS:'tuxedopants',
   TUXEDO_SHIRT:'tuxedoshirt',
+  ANVIL_STATUE:'anvilstatue',
+  IRON_ANVIL:'ironanvil',
+  LEAD_ANVIL:'leadanvil',
+  MYTHRIL_ANVIL:'mythrilanvil',
+  ORICHALCUM_ANVIL:'orichalcumanvil',
+  AETHERIUM_BATHTUB:'aetheriumbathtub',
+  AQUARIUM_BATHTUB:'aquariumbathtub',
+  ASH_WOOD_BATHTUB:'ashwoodbathtub',
+  BALLOON_BATHTUB:'balloonbathtub',
+  BAMBOO_BATHTUB:'bamboobathtub',
+  BATHTUB:'bathtub',
+  BLUE_DUNGEON_BATHTUB:'bluedungeonbathtub',
+  BONE_BATHTUB:'bonebathtub',
+  BOREAL_WOOD_BATHTUB:'borealwoodbathtub',
+  BOULDER_BATHTUB:'boulderbathtub',
+  CACTUS_BATHTUB:'cactusbathtub',
+  CLOUD_BATHTUB:'cloudbathtub',
+  CRIMTANE_BATHTUB:'crimtanebathtub',
+  CRYSTAL_BATHTUB:'crystalbathtub',
+  DEMONITE_BATHTUB:'demonitebathtub',
+  DUSKWARE_BATHTUB:'duskwarebathtub',
+  DYNASTY_BATHTUB:'dynastybathtub',
+  EASTER_BATHTUB:'easterbathtub',
+  EBONWOOD_BATHTUB:'ebonwoodbathtub',
+  FALLEN_STAR_BATHTUB:'fallenstarbathtub',
+  FEYWOOD_BATHTUB:'feywoodbathtub',
+  FLESH_BATHTUB:'fleshbathtub',
+  FLINX_FUR_BATHTUB:'flinxfurbathtub',
+  FORBIDDEN_BATHTUB:'forbiddenbathtub',
+  FROZEN_BATHTUB:'frozenbathtub',
+  GLASS_BATHTUB:'glassbathtub',
+  GOLDEN_BATHTUB:'goldenbathtub',
+  GOTHIC_BATHTUB:'gothicbathtub',
+  GRANITE_BATHTUB:'granitebathtub',
+  GREEN_DUNGEON_BATHTUB:'greendungeonbathtub',
+  HALLOWED_BATHTUB:'hallowedbathtub',
+  HARPY_BATHTUB:'harpybathtub',
+  HONEY_BATHTUB:'honeybathtub',
+  JELLYFISH_BATHTUB:'jellyfishbathtub',
+  LESION_BATHTUB:'lesionbathtub',
+  LIBRARIAN_BATHTUB:'librarianbathtub',
+  LIHZAHRD_BATHTUB:'lihzahrdbathtub',
+  LIVING_WOOD_BATHTUB:'livingwoodbathtub',
+  MARBLE_BATHTUB:'marblebathtub',
+  MARTIAN_BATHTUB:'martianbathtub',
+  METEORITE_BATHTUB:'meteoritebathtub',
+  MUSHROOM_BATHTUB:'mushroombathtub',
+  NEBULA_BATHTUB:'nebulabathtub',
+  OBSIDIAN_BATHTUB:'obsidianbathtub',
+  OFFICE_BATHTUB:'officebathtub',
+  PALM_WOOD_BATHTUB:'palmwoodbathtub',
+  PEARLWOOD_BATHTUB:'pearlwoodbathtub',
+  PINE_BATHTUB:'pinebathtub',
+  PINK_DUNGEON_BATHTUB:'pinkdungeonbathtub',
+  PUMPKIN_BATHTUB:'pumpkinbathtub',
+  REEF_BATHTUB:'reefbathtub',
+  RICH_MAHOGANY_BATHTUB:'richmahoganybathtub',
+  SANDSTONE_BATHTUB:'sandstonebathtub',
+  SHADEWOOD_BATHTUB:'shadewoodbathtub',
+  SKYWARE_BATHTUB:'skywarebathtub',
+  SLIME_BATHTUB:'slimebathtub',
+  SNOW_BATHTUB:'snowbathtub',
+  SOLAR_BATHTUB:'solarbathtub',
+  SPIDER_BATHTUB:'spiderbathtub',
+  SPIKE_BATHTUB:'spikebathtub',
+  SPOOKY_BATHTUB:'spookybathtub',
+  STARDUST_BATHTUB:'stardustbathtub',
+  STEAMPUNK_BATHTUB:'steampunkbathtub',
+  STONE_BATHTUB:'stonebathtub',
+  VORTEX_BATHTUB:'vortexbathtub',
+  AETHERIUM_BED:'aetheriumbed',
+  AQUARIUM_BED:'aquariumbed',
+  ASH_WOOD_BED:'ashwoodbed',
+  BALLOON_BED:'balloonbed',
+  BAMBOO_BED:'bamboobed',
+  BLUE_DUNGEON_BED:'bluedungeonbed',
+  BONE_BED:'bonebed',
+  BOREAL_WOOD_BED:'borealwoodbed',
+  BOULDER_BED:'boulderbed',
+  CACTUS_BED:'cactusbed',
+  CLOUD_BED:'cloudbed',
+  CRIMTANE_BED:'crimtanebed',
+  CRYSTAL_BED:'crystalbed',
+  DEMONITE_BED:'demonitebed',
+  DUSKWARE_BED:'duskwarebed',
+  DYNASTY_BED:'dynastybed',
+  EASTER_BED:'easterbed',
+  EBONWOOD_BED:'ebonwoodbed',
+  FALLEN_STAR_BED:'fallenstarbed',
+  FEYWOOD_BED:'feywoodbed',
+  FLESH_BED:'fleshbed',
+  FLINX_FUR_BED:'flinxfurbed',
+  FORBIDDEN_BED:'forbiddenbed',
+  FROZEN_BED:'frozenbed',
+  GLASS_BED:'glassbed',
+  GOLDEN_BED:'goldenbed',
+  GOTHIC_BED:'gothicbed',
+  GRANITE_BED:'granitebed',
+  GREEN_DUNGEON_BED:'greendungeonbed',
+  HALLOWED_BED:'hallowedbed',
+  HARPY_BED:'harpybed',
+  HONEY_BED:'honeybed',
+  JELLYFISH_BED:'jellyfishbed',
+  LESION_BED:'lesionbed',
+  LIBRARIAN_BED:'librarianbed',
+  LIHZAHRD_BED:'lihzahrdbed',
+  LIVING_WOOD_BED:'livingwoodbed',
+  MARBLE_BED:'marblebed',
+  MARTIAN_BED:'martianbed',
+  METEORITE_BED:'meteoritebed',
+  MUSHROOM_BED:'mushroombed',
+  NEBULA_BED:'nebulabed',
+  OBSIDIAN_BED:'obsidianbed',
+  OFFICE_BED:'officebed',
+  PALM_WOOD_BED:'palmwoodbed',
+  PEARLWOOD_BED:'pearlwoodbed',
+  PINE_BED:'pinebed',
+  PINK_DUNGEON_BED:'pinkdungeonbed',
+  PUMPKIN_BED:'pumpkinbed',
+  REEF_BED:'reefbed',
+  RICH_MAHOGANY_BED:'richmahoganybed',
+  SANDSTONE_BED:'sandstonebed',
+  SHADEWOOD_BED:'shadewoodbed',
+  SKYWARE_BED:'skywarebed',
+  SLIME_BED:'slimebed',
+  SNOW_BED:'snowbed',
+  SOLAR_BED:'solarbed',
+  SPIDER_BED:'spiderbed',
+  SPIKE_BED:'spikebed',
+  SPOOKY_BED:'spookybed',
+  STARDUST_BED:'stardustbed',
+  STEAMPUNK_BED:'steampunkbed',
+  STONE_BED:'stonebed',
+  VORTEX_BED:'vortexbed',
+  AETHERIUM_WORK_BENCH:'aetheriumworkbench',
+  AQUARIUM_WORK_BENCH:'aquariumworkbench',
+  ASH_WOOD_WORK_BENCH:'ashwoodworkbench',
+  BALLOON_WORK_BENCH:'balloonworkbench',
+  BAMBOO_WORK_BENCH:'bambooworkbench',
+  BENCH:'bench',
+  BLUE_DUNGEON_WORK_BENCH:'bluedungeonworkbench',
+  BONE_WORK_BENCH:'boneworkbench',
+  BOREAL_WOOD_WORK_BENCH:'borealwoodworkbench',
+  BOULDER_WORK_BENCH:'boulderworkbench',
+  CACTUS_WORK_BENCH:'cactusworkbench',
+  CLOUD_WORK_BENCH:'cloudworkbench',
+  CRIMTANE_WORK_BENCH:'crimtaneworkbench',
+  CRYSTAL_WORK_BENCH:'crystalworkbench',
+  DEMONITE_WORK_BENCH:'demoniteworkbench',
+  DUSKWARE_WORK_BENCH:'duskwareworkbench',
+  DYNASTY_WORK_BENCH:'dynastyworkbench',
+  EASTER_WORK_BENCH:'easterworkbench',
+  EBONWOOD_WORK_BENCH:'ebonwoodworkbench',
+  FALLEN_STAR_WORK_BENCH:'fallenstarworkbench',
+  FEYWOOD_WORK_BENCH:'feywoodworkbench',
+  FLESH_WORK_BENCH:'fleshworkbench',
+  FLINX_FUR_WORK_BENCH:'flinxfurworkbench',
+  FORBIDDEN_WORK_BENCH:'forbiddenworkbench',
+  FROZEN_WORK_BENCH:'frozenworkbench',
+  GLASS_WORK_BENCH:'glassworkbench',
+  GOLDEN_WORK_BENCH:'goldenworkbench',
+  GOTHIC_WORK_BENCH:'gothicworkbench',
+  GRANITE_WORK_BENCH:'graniteworkbench',
+  GREEN_DUNGEON_WORK_BENCH:'greendungeonworkbench',
+  HALLOWED_WORK_BENCH:'hallowedworkbench',
+  HARPY_WORK_BENCH:'harpyworkbench',
+  HONEY_WORK_BENCH:'honeyworkbench',
+  JELLYFISH_WORK_BENCH:'jellyfishworkbench',
+  LESION_WORK_BENCH:'lesionworkbench',
+  LIBRARIAN_WORK_BENCH:'librarianworkbench',
+  LIHZAHRD_WORK_BENCH:'lihzahrdworkbench',
+  LIVING_WOOD_WORK_BENCH:'livingwoodworkbench',
+  MARBLE_WORK_BENCH:'marbleworkbench',
+  MARTIAN_WORK_BENCH:'martianworkbench',
+  METEORITE_WORK_BENCH:'meteoriteworkbench',
+  MUSHROOM_BENCH:'mushroombench',
+  MUSHROOM_WORK_BENCH:'mushroomworkbench',
+  NEBULA_WORK_BENCH:'nebulaworkbench',
+  OBSIDIAN_WORK_BENCH:'obsidianworkbench',
+  OFFICE_WORK_BENCH:'officeworkbench',
+  PALM_WOOD_BENCH:'palmwoodbench',
+  PALM_WOOD_WORK_BENCH:'palmwoodworkbench',
+  PEARLWOOD_WORK_BENCH:'pearlwoodworkbench',
+  PINE_WORK_BENCH:'pineworkbench',
+  PINK_DUNGEON_WORK_BENCH:'pinkdungeonworkbench',
+  PUMPKIN_WORK_BENCH:'pumpkinworkbench',
+  REEF_WORK_BENCH:'reefworkbench',
+  RICH_MAHOGANY_WORK_BENCH:'richmahoganyworkbench',
+  SANDSTONE_WORK_BENCH:'sandstoneworkbench',
+  SHADEWOOD_WORK_BENCH:'shadewoodworkbench',
+  SKYWARE_WORK_BENCH:'skywareworkbench',
+  SLIME_WORK_BENCH:'slimeworkbench',
+  SNOW_WORK_BENCH:'snowworkbench',
+  SOLAR_WORK_BENCH:'solarworkbench',
+  SPIDER_WORK_BENCH:'spiderworkbench',
+  SPIKE_WORK_BENCH:'spikeworkbench',
+  SPOOKY_WORK_BENCH:'spookyworkbench',
+  STARDUST_WORK_BENCH:'stardustworkbench',
+  STEAMPUNK_WORK_BENCH:'steampunkworkbench',
+  STONE_WORK_BENCH:'stoneworkbench',
+  VORTEX_WORK_BENCH:'vortexworkbench',
+  WORK_BENCH:'workbench',
+  AETHERIUM_BOOKCASE:'aetheriumbookcase',
+  AQUARIUM_BOOKCASE:'aquariumbookcase',
+  ASH_WOOD_BOOKCASE:'ashwoodbookcase',
+  BALLOON_BOOKCASE:'balloonbookcase',
+  BAMBOO_BOOKCASE:'bamboobookcase',
+  BLUE_DUNGEON_BOOKCASE:'bluedungeonbookcase',
+  BONE_BOOKCASE:'bonebookcase',
+  BOOKCASE:'bookcase',
+  BOREAL_WOOD_BOOKCASE:'borealwoodbookcase',
+  BOULDER_BOOKCASE:'boulderbookcase',
+  CACTUS_BOOKCASE:'cactusbookcase',
+  CLOUD_BOOKCASE:'cloudbookcase',
+  CRIMTANE_BOOKCASE:'crimtanebookcase',
+  CRYSTAL_BOOKCASE:'crystalbookcase',
+  DEMONITE_BOOKCASE:'demonitebookcase',
+  DUSKWARE_BOOKCASE:'duskwarebookcase',
+  DYNASTY_BOOKCASE:'dynastybookcase',
+  EASTER_BOOKCASE:'easterbookcase',
+  EBONWOOD_BOOKCASE:'ebonwoodbookcase',
+  FALLEN_STAR_BOOKCASE:'fallenstarbookcase',
+  FEYWOOD_BOOKCASE:'feywoodbookcase',
+  FLESH_BOOKCASE:'fleshbookcase',
+  FLINX_FUR_BOOKCASE:'flinxfurbookcase',
+  FORBIDDEN_BOOKCASE:'forbiddenbookcase',
+  FROZEN_BOOKCASE:'frozenbookcase',
+  GLASS_BOOKCASE:'glassbookcase',
+  GOLDEN_BOOKCASE:'goldenbookcase',
+  GOTHIC_BOOKCASE:'gothicbookcase',
+  GRANITE_BOOKCASE:'granitebookcase',
+  GREEN_DUNGEON_BOOKCASE:'greendungeonbookcase',
+  HALLOWED_BOOKCASE:'hallowedbookcase',
+  HARPY_BOOKCASE:'harpybookcase',
+  HONEY_BOOKCASE:'honeybookcase',
+  JELLYFISH_BOOKCASE:'jellyfishbookcase',
+  LESION_BOOKCASE:'lesionbookcase',
+  LIBRARIAN_BOOKCASE:'librarianbookcase',
+  LIHZAHRD_BOOKCASE:'lihzahrdbookcase',
+  LIVING_WOOD_BOOKCASE:'livingwoodbookcase',
+  MARBLE_BOOKCASE:'marblebookcase',
+  MARTIAN_HOLOBOOKCASE:'martianholobookcase',
+  METEORITE_BOOKCASE:'meteoritebookcase',
+  MUSHROOM_BOOKCASE:'mushroombookcase',
+  NEBULA_BOOKCASE:'nebulabookcase',
+  OBSIDIAN_BOOKCASE:'obsidianbookcase',
+  OFFICE_BOOKCASE:'officebookcase',
+  PALM_WOOD_BOOKCASE:'palmwoodbookcase',
+  PEARLWOOD_BOOKCASE:'pearlwoodbookcase',
+  PINE_BOOKCASE:'pinebookcase',
+  PINK_DUNGEON_BOOKCASE:'pinkdungeonbookcase',
+  PUMPKIN_BOOKCASE:'pumpkinbookcase',
+  REEF_BOOKCASE:'reefbookcase',
+  RICH_MAHOGANY_BOOKCASE:'richmahoganybookcase',
+  SANDSTONE_BOOKCASE:'sandstonebookcase',
+  SHADEWOOD_BOOKCASE:'shadewoodbookcase',
+  SKYWARE_BOOKCASE:'skywarebookcase',
+  SLIME_BOOKCASE:'slimebookcase',
+  SNOW_BOOKCASE:'snowbookcase',
+  SOLAR_BOOKCASE:'solarbookcase',
+  SPIDER_BOOKCASE:'spiderbookcase',
+  SPIKE_BOOKCASE:'spikebookcase',
+  SPOOKY_BOOKCASE:'spookybookcase',
+  STARDUST_BOOKCASE:'stardustbookcase',
+  STEAMPUNK_BOOKCASE:'steampunkbookcase',
+  STONE_BOOKCASE:'stonebookcase',
+  VORTEX_BOOKCASE:'vortexbookcase',
+  AETHERIUM_CANDELABRA:'aetheriumcandelabra',
+  AQUARIUM_CANDELABRA:'aquariumcandelabra',
+  ASH_WOOD_CANDELABRA:'ashwoodcandelabra',
+  BALLOON_CANDELABRA:'ballooncandelabra',
+  BAMBOO_CANDELABRA:'bamboocandelabra',
+  BLUE_DUNGEON_CANDELABRA:'bluedungeoncandelabra',
+  BONE_CANDELABRA:'bonecandelabra',
+  BOREAL_WOOD_CANDELABRA:'borealwoodcandelabra',
+  BOULDER_CANDELABRA:'bouldercandelabra',
+  CACTUS_CANDELABRA:'cactuscandelabra',
+  CANDELABRA:'candelabra',
+  CLOUD_CANDELABRA:'cloudcandelabra',
+  CRIMTANE_CANDELABRA:'crimtanecandelabra',
+  CRYSTAL_CANDELABRA:'crystalcandelabra',
+  DEMONITE_CANDELABRA:'demonitecandelabra',
+  DUSKWARE_CANDELABRA:'duskwarecandelabra',
+  EASTER_CANDELABRA:'eastercandelabra',
+  EBONWOOD_CANDELABRA:'ebonwoodcandelabra',
+  FALLEN_STAR_CANDELABRA:'fallenstarcandelabra',
+  FEYWOOD_CANDELABRA:'feywoodcandelabra',
+  FLESH_CANDELABRA:'fleshcandelabra',
+  FLINX_FUR_CANDELABRA:'flinxfurcandelabra',
+  FORBIDDEN_CANDELABRA:'forbiddencandelabra',
+  FROZEN_CANDELABRA:'frozencandelabra',
+  GLASS_CANDELABRA:'glasscandelabra',
+  GOLDEN_CANDELABRA:'goldencandelabra',
+  GOTHIC_CANDELABRA:'gothiccandelabra',
+  GRANITE_CANDELABRA:'granitecandelabra',
+  GREEN_DUNGEON_CANDELABRA:'greendungeoncandelabra',
+  HALLOWED_CANDELABRA:'hallowedcandelabra',
+  HARPY_CANDELABRA:'harpycandelabra',
+  HONEY_CANDELABRA:'honeycandelabra',
+  JELLYFISH_CANDELABRA:'jellyfishcandelabra',
+  LESION_CANDELABRA:'lesioncandelabra',
+  LIBRARIAN_CANDELABRA:'librariancandelabra',
+  LIHZAHRD_CANDELABRA:'lihzahrdcandelabra',
+  LIVING_WOOD_CANDELABRA:'livingwoodcandelabra',
+  MARBLE_CANDELABRA:'marblecandelabra',
+  METEORITE_CANDELABRA:'meteoritecandelabra',
+  MUSHROOM_CANDELABRA:'mushroomcandelabra',
+  NEBULA_CANDELABRA:'nebulacandelabra',
+  OBSIDIAN_CANDELABRA:'obsidiancandelabra',
+  OFFICE_CANDELABRA:'officecandelabra',
+  PALM_WOOD_CANDELABRA:'palmwoodcandelabra',
+  PEARLWOOD_CANDELABRA:'pearlwoodcandelabra',
+  PINE_CANDELABRA:'pinecandelabra',
+  PINK_DUNGEON_CANDELABRA:'pinkdungeoncandelabra',
+  PLATINUM_CANDELABRA:'platinumcandelabra',
+  PUMPKIN_CANDELABRA:'pumpkincandelabra',
+  REEF_CANDELABRA:'reefcandelabra',
+  RICH_MAHOGANY_CANDELABRA:'richmahoganycandelabra',
+  SANDSTONE_CANDELABRA:'sandstonecandelabra',
+  SHADEWOOD_CANDELABRA:'shadewoodcandelabra',
+  SKYWARE_CANDELABRA:'skywarecandelabra',
+  SLIME_CANDELABRA:'slimecandelabra',
+  SNOW_CANDELABRA:'snowcandelabra',
+  SOLAR_CANDELABRA:'solarcandelabra',
+  SPIDER_CANDELABRA:'spidercandelabra',
+  SPIKE_CANDELABRA:'spikecandelabra',
+  SPOOKY_CANDELABRA:'spookycandelabra',
+  STARDUST_CANDELABRA:'stardustcandelabra',
+  STEAMPUNK_CANDELABRA:'steampunkcandelabra',
+  STONE_CANDELABRA:'stonecandelabra',
+  VORTEX_CANDELABRA:'vortexcandelabra',
+  AETHERIUM_CANDLE:'aetheriumcandle',
+  AQUARIUM_CANDLE:'aquariumcandle',
+  ASH_WOOD_CANDLE:'ashwoodcandle',
+  BALLOON_CANDLE:'ballooncandle',
+  BAMBOO_CANDLE:'bamboocandle',
+  BLUE_DUNGEON_CANDLE:'bluedungeoncandle',
+  BOREAL_WOOD_CANDLE:'borealwoodcandle',
+  BOULDER_CANDLE:'bouldercandle',
+  CACTUS_CANDLE:'cactuscandle',
+  CANDLE:'candle',
+  CLOUD_CANDLE:'cloudcandle',
+  CRIMTANE_CANDLE:'crimtanecandle',
+  CRYSTAL_CANDLE:'crystalcandle',
+  DEMONITE_CANDLE:'demonitecandle',
+  DUSKWARE_CANDLE:'duskwarecandle',
+  DYNASTY_CANDLE:'dynastycandle',
+  EASTER_CANDLE:'eastercandle',
+  EBONWOOD_CANDLE:'ebonwoodcandle',
+  FALLEN_STAR_CANDLE:'fallenstarcandle',
+  FEYWOOD_CANDLE:'feywoodcandle',
+  FLESH_CANDLE:'fleshcandle',
+  FLINX_FUR_CANDLE:'flinxfurcandle',
+  FORBIDDEN_CANDLE:'forbiddencandle',
+  FROZEN_CANDLE:'frozencandle',
+  GLASS_CANDLE:'glasscandle',
+  GOLDEN_CANDLE:'goldencandle',
+  GOTHIC_CANDLE:'gothiccandle',
+  GRANITE_CANDLE:'granitecandle',
+  GREEN_DUNGEON_CANDLE:'greendungeoncandle',
+  HALLOWED_CANDLE:'hallowedcandle',
+  HARPY_CANDLE:'harpycandle',
+  HONEY_CANDLE:'honeycandle',
+  JELLYFISH_CANDLE:'jellyfishcandle',
+  LARGE_DYNASTY_CANDLE:'largedynastycandle',
+  LESION_CANDLE:'lesioncandle',
+  LIBRARIAN_CANDLE:'librariancandle',
+  LIHZAHRD_CANDLE:'lihzahrdcandle',
+  LIVING_WOOD_CANDLE:'livingwoodcandle',
+  MARBLE_CANDLE:'marblecandle',
+  MARTIAN_HOVER_CANDLE:'martianhovercandle',
+  METEORITE_CANDLE:'meteoritecandle',
+  MUSHROOM_CANDLE:'mushroomcandle',
+  NEBULA_CANDLE:'nebulacandle',
+  OBSIDIAN_CANDLE:'obsidiancandle',
+  OFFICE_CANDLE:'officecandle',
+  PALM_WOOD_CANDLE:'palmwoodcandle',
+  PEACE_CANDLE:'peacecandle',
+  PEARLWOOD_CANDLE:'pearlwoodcandle',
+  PINE_CANDLE:'pinecandle',
+  PINK_DUNGEON_CANDLE:'pinkdungeoncandle',
+  PLATINUM_CANDLE:'platinumcandle',
+  PUMPKIN_CANDLE:'pumpkincandle',
+  REEF_CANDLE:'reefcandle',
+  RICH_MAHOGANY_CANDLE:'richmahoganycandle',
+  SANDSTONE_CANDLE:'sandstonecandle',
+  SHADEWOOD_CANDLE:'shadewoodcandle',
+  SKYWARE_CANDLE:'skywarecandle',
+  SLIME_CANDLE:'slimecandle',
+  SNOW_CANDLE:'snowcandle',
+  SOLAR_CANDLE:'solarcandle',
+  SPIDER_CANDLE:'spidercandle',
+  SPIKE_CANDLE:'spikecandle',
+  SPOOKY_CANDLE:'spookycandle',
+  STARDUST_CANDLE:'stardustcandle',
+  STEAMPUNK_CANDLE:'steampunkcandle',
+  STONE_CANDLE:'stonecandle',
+  VORTEX_CANDLE:'vortexcandle',
+  WATER_CANDLE:'watercandle',
+  AETHERIUM_CHAIR:'aetheriumchair',
+  AQUARIUM_CHAIR:'aquariumchair',
+  ASH_WOOD_CHAIR:'ashwoodchair',
+  BALLOON_CHAIR:'balloonchair',
+  BAMBOO_CHAIR:'bamboochair',
+  BLUE_DUNGEON_CHAIR:'bluedungeonchair',
+  BONE_CHAIR:'bonechair',
+  BOREAL_WOOD_CHAIR:'borealwoodchair',
+  BOULDER_CHAIR:'boulderchair',
+  CACTUS_CHAIR:'cactuschair',
+  CLOUD_CHAIR:'cloudchair',
+  CRIMTANE_CHAIR:'crimtanechair',
+  CRYSTAL_CHAIR:'crystalchair',
+  DEMONITE_CHAIR:'demonitechair',
+  DUSKWARE_CHAIR:'duskwarechair',
+  DYNASTY_CHAIR:'dynastychair',
+  EASTER_CHAIR:'easterchair',
+  EBONWOOD_CHAIR:'ebonwoodchair',
+  FALLEN_STAR_CHAIR:'fallenstarchair',
+  FEYWOOD_CHAIR:'feywoodchair',
+  FLESH_CHAIR:'fleshchair',
+  FLINX_FUR_CHAIR:'flinxfurchair',
+  FORBIDDEN_CHAIR:'forbiddenchair',
+  FROZEN_CHAIR:'frozenchair',
+  GLASS_CHAIR:'glasschair',
+  GOLDEN_CHAIR:'goldenchair',
+  GOTHIC_CHAIR:'gothicchair',
+  GRANITE_CHAIR:'granitechair',
+  GREEN_DUNGEON_CHAIR:'greendungeonchair',
+  HALLOWED_CHAIR:'hallowedchair',
+  HARPY_CHAIR:'harpychair',
+  HONEY_CHAIR:'honeychair',
+  JELLYFISH_CHAIR:'jellyfishchair',
+  LESION_CHAIR:'lesionchair',
+  LIBRARIAN_CHAIR:'librarianchair',
+  LIHZAHRD_CHAIR:'lihzahrdchair',
+  LIVING_WOOD_CHAIR:'livingwoodchair',
+  MARBLE_CHAIR:'marblechair',
+  MARTIAN_HOVER_CHAIR:'martianhoverchair',
+  METEORITE_CHAIR:'meteoritechair',
+  MUSHROOM_CHAIR:'mushroomchair',
+  NEBULA_CHAIR:'nebulachair',
+  OBSIDIAN_CHAIR:'obsidianchair',
+  OFFICE_CHAIR:'officechair',
+  PALM_WOOD_CHAIR:'palmwoodchair',
+  PEARLWOOD_CHAIR:'pearlwoodchair',
+  PINE_CHAIR:'pinechair',
+  PINK_DUNGEON_CHAIR:'pinkdungeonchair',
+  PUMPKIN_CHAIR:'pumpkinchair',
+  REEF_CHAIR:'reefchair',
+  RICH_MAHOGANY_CHAIR:'richmahoganychair',
+  SANDSTONE_CHAIR:'sandstonechair',
+  SHADEWOOD_CHAIR:'shadewoodchair',
+  SKYWARE_CHAIR:'skywarechair',
+  SLIME_CHAIR:'slimechair',
+  SNOW_CHAIR:'snowchair',
+  SOLAR_CHAIR:'solarchair',
+  SPIDER_CHAIR:'spiderchair',
+  SPIKE_CHAIR:'spikechair',
+  SPOOKY_CHAIR:'spookychair',
+  STARDUST_CHAIR:'stardustchair',
+  STEAMPUNK_CHAIR:'steampunkchair',
+  STONE_CHAIR:'stonechair',
+  VORTEX_CHAIR:'vortexchair',
+  AETHERIUM_CHANDELIER:'aetheriumchandelier',
+  AQUARIUM_CHANDELIER:'aquariumchandelier',
+  ASH_WOOD_CHANDELIER:'ashwoodchandelier',
+  BALLOON_CHANDELIER:'balloonchandelier',
+  BAMBOO_CHANDELIER:'bamboochandelier',
+  BLUE_DUNGEON_CHANDELIER:'bluedungeonchandelier',
+  BONE_CHANDELIER:'bonechandelier',
+  BOREAL_WOOD_CHANDELIER:'borealwoodchandelier',
+  BOULDER_CHANDELIER:'boulderchandelier',
+  CACTUS_CHANDELIER:'cactuschandelier',
+  CLOUD_CHANDELIER:'cloudchandelier',
+  COPPER_CHANDELIER:'copperchandelier',
+  CRIMTANE_CHANDELIER:'crimtanechandelier',
+  CRYSTAL_CHANDELIER:'crystalchandelier',
+  DEMONITE_CHANDELIER:'demonitechandelier',
+  DUSKWARE_CHANDELIER:'duskwarechandelier',
+  EASTER_CHANDELIER:'easterchandelier',
+  EBONWOOD_CHANDELIER:'ebonwoodchandelier',
+  FALLEN_STAR_CHANDELIER:'fallenstarchandelier',
+  FEYWOOD_CHANDELIER:'feywoodchandelier',
+  FLESH_CHANDELIER:'fleshchandelier',
+  FLINX_FUR_CHANDELIER:'flinxfurchandelier',
+  FORBIDDEN_CHANDELIER:'forbiddenchandelier',
+  FROZEN_CHANDELIER:'frozenchandelier',
+  GLASS_CHANDELIER:'glasschandelier',
+  GOLD_CHANDELIER:'goldchandelier',
+  GOLDEN_CHANDELIER:'goldenchandelier',
+  GOTHIC_CHANDELIER:'gothicchandelier',
+  GRANITE_CHANDELIER:'granitechandelier',
+  GREEN_DUNGEON_CHANDELIER:'greendungeonchandelier',
+  HALLOWED_CHANDELIER:'hallowedchandelier',
+  HARPY_CHANDELIER:'harpychandelier',
+  HONEY_CHANDELIER:'honeychandelier',
+  JELLYFISH_CHANDELIER:'jellyfishchandelier',
+  LESION_CHANDELIER:'lesionchandelier',
+  LIBRARIAN_CHANDELIER:'librarianchandelier',
+  LIHZAHRD_CHANDELIER:'lihzahrdchandelier',
+  LIVING_WOOD_CHANDELIER:'livingwoodchandelier',
+  MARBLE_CHANDELIER:'marblechandelier',
+  MARTIAN_CHANDELIER:'martianchandelier',
+  METEORITE_CHANDELIER:'meteoritechandelier',
+  MUSHROOM_CHANDELIER:'mushroomchandelier',
+  NEBULA_CHANDELIER:'nebulachandelier',
+  OBSIDIAN_CHANDELIER:'obsidianchandelier',
+  OFFICE_CHANDELIER:'officechandelier',
+  PALM_WOOD_CHANDELIER:'palmwoodchandelier',
+  PEARLWOOD_CHANDELIER:'pearlwoodchandelier',
+  PINE_CHANDELIER:'pinechandelier',
+  PINK_DUNGEON_CHANDELIER:'pinkdungeonchandelier',
+  PLATINUM_CHANDELIER:'platinumchandelier',
+  PUMPKIN_CHANDELIER:'pumpkinchandelier',
+  REEF_CHANDELIER:'reefchandelier',
+  RICH_MAHOGANY_CHANDELIER:'richmahoganychandelier',
+  SANDSTONE_CHANDELIER:'sandstonechandelier',
+  SHADEWOOD_CHANDELIER:'shadewoodchandelier',
+  SILVER_CHANDELIER:'silverchandelier',
+  SKYWARE_CHANDELIER:'skywarechandelier',
+  SLIME_CHANDELIER:'slimechandelier',
+  SNOW_CHANDELIER:'snowchandelier',
+  SOLAR_CHANDELIER:'solarchandelier',
+  SPIDER_CHANDELIER:'spiderchandelier',
+  SPIKE_CHANDELIER:'spikechandelier',
+  SPOOKY_CHANDELIER:'spookychandelier',
+  STARDUST_CHANDELIER:'stardustchandelier',
+  STEAMPUNK_CHANDELIER:'steampunkchandelier',
+  STONE_CHANDELIER:'stonechandelier',
+  TIN_CHANDELIER:'tinchandelier',
+  TUNGSTEN_CHANDELIER:'tungstenchandelier',
+  VORTEX_CHANDELIER:'vortexchandelier',
+  AETHERIUM_CHEST:'aetheriumchest',
+  ASH_WOOD_CHEST:'ashwoodchest',
+  BALLOON_CHEST:'balloonchest',
+  BAMBOO_CHEST:'bamboochest',
+  BLUE_DUNGEON_CHEST:'bluedungeonchest',
+  BONE_CHEST:'bonechest',
+  BOREAL_WOOD_CHEST:'borealwoodchest',
+  BOULDER_CHEST:'boulderchest',
+  CACTUS_CHEST:'cactuschest',
+  CHEST_STATUE:'cheststatue',
+  CLOUD_CHEST:'cloudchest',
+  CORRUPTION_CHEST:'corruptionchest',
+  CRIMSON_CHEST:'crimsonchest',
+  CRIMTANE_CHEST:'crimtanechest',
+  CRYSTAL_CHEST:'crystalchest',
+  DEAD_MANS_CHEST:'deadmanschest',
+  DEMONITE_CHEST:'demonitechest',
+  DESERT_CHEST:'desertchest',
+  DUSKWARE_CHEST:'duskwarechest',
+  DYNASTY_CHEST:'dynastychest',
+  EASTER_CHEST:'easterchest',
+  EBONWOOD_CHEST:'ebonwoodchest',
+  FALLEN_STAR_CHEST:'fallenstarchest',
+  FANCY_HALLOWED_CHEST:'fancyhallowedchest',
+  FEYWOOD_CHEST:'feywoodchest',
+  FLESH_CHEST:'fleshchest',
+  FLINX_FUR_CHEST:'flinxfurchest',
+  FORBIDDEN_CHEST:'forbiddenchest',
+  FROZEN_CHEST:'frozenchest',
+  GLASS_CHEST:'glasschest',
+  GOLD_CHEST:'goldchest',
+  GOLDEN_CHEST:'goldenchest',
+  GOLF_CHEST:'golfchest',
+  GOTHIC_CHEST:'gothicchest',
+  GRANITE_CHEST:'granitechest',
+  GREEN_DUNGEON_CHEST:'greendungeonchest',
+  HALLOWED_CHEST:'hallowedchest',
+  HARPY_CHEST:'harpychest',
+  HONEY_CHEST:'honeychest',
+  ICE_CHEST:'icechest',
+  IVY_CHEST:'ivychest',
+  JELLYFISH_CHEST:'jellyfishchest',
+  JUNGLE_CHEST:'junglechest',
+  LESION_CHEST:'lesionchest',
+  LIBRARIAN_CHEST:'librarianchest',
+  LIHZAHRD_CHEST:'lihzahrdchest',
+  LIVING_WOOD_CHEST:'livingwoodchest',
+  MARBLE_CHEST:'marblechest',
+  MARTIAN_CHEST:'martianchest',
+  METEORITE_CHEST:'meteoritechest',
+  MUSHROOM_CHEST:'mushroomchest',
+  NEBULA_CHEST:'nebulachest',
+  OBSIDIAN_CHEST:'obsidianchest',
+  OFFICE_CHEST:'officechest',
+  PALM_WOOD_CHEST:'palmwoodchest',
+  PEARLWOOD_CHEST:'pearlwoodchest',
+  PINE_CHEST:'pinechest',
+  PINK_DUNGEON_CHEST:'pinkdungeonchest',
+  PUMPKIN_CHEST:'pumpkinchest',
+  REEF_CHEST:'reefchest',
+  RICH_MAHOGANY_CHEST:'richmahoganychest',
+  SANDSTONE_CHEST:'sandstonechest',
+  SHADEWOOD_CHEST:'shadewoodchest',
+  SHADOW_CHEST:'shadowchest',
+  SKYWARE_CHEST:'skywarechest',
+  SLIME_CHEST:'slimechest',
+  SNOW_CHEST:'snowchest',
+  SOLAR_CHEST:'solarchest',
+  SPIDER_CHEST:'spiderchest',
+  SPIKE_CHEST:'spikechest',
+  SPOOKY_CHEST:'spookychest',
+  STARDUST_CHEST:'stardustchest',
+  STEAMPUNK_CHEST:'steampunkchest',
+  STONE_CHEST:'stonechest',
+  TRAPPED_AETHERIUM_CHEST:'trappedaetheriumchest',
+  TRAPPED_ASH_WOOD_CHEST:'trappedashwoodchest',
+  TRAPPED_BALLOON_CHEST:'trappedballoonchest',
+  TRAPPED_BAMBOO_CHEST:'trappedbamboochest',
+  TRAPPED_BLUE_DUNGEON_CHEST:'trappedbluedungeonchest',
+  TRAPPED_BONE_CHEST:'trappedbonechest',
+  TRAPPED_BOREAL_WOOD_CHEST:'trappedborealwoodchest',
+  TRAPPED_BOULDER_CHEST:'trappedboulderchest',
+  TRAPPED_CACTUS_CHEST:'trappedcactuschest',
+  TRAPPED_CHEST:'trappedchest',
+  TRAPPED_CLOUD_CHEST:'trappedcloudchest',
+  TRAPPED_CORRUPTION_CHEST:'trappedcorruptionchest',
+  TRAPPED_CRIMSON_CHEST:'trappedcrimsonchest',
+  TRAPPED_CRIMTANE_CHEST:'trappedcrimtanechest',
+  TRAPPED_CRYSTAL_CHEST:'trappedcrystalchest',
+  TRAPPED_DEMONITE_CHEST:'trappeddemonitechest',
+  TRAPPED_DESERT_CHEST:'trappeddesertchest',
+  TRAPPED_DUSKWARE_CHEST:'trappedduskwarechest',
+  TRAPPED_DYNASTY_CHEST:'trappeddynastychest',
+  TRAPPED_EASTER_CHEST:'trappedeasterchest',
+  TRAPPED_EBONWOOD_CHEST:'trappedebonwoodchest',
+  TRAPPED_FALLEN_STAR_CHEST:'trappedfallenstarchest',
+  TRAPPED_FANCY_HALLOWED_CHEST:'trappedfancyhallowedchest',
+  TRAPPED_FEYWOOD_CHEST:'trappedfeywoodchest',
+  TRAPPED_FLESH_CHEST:'trappedfleshchest',
+  TRAPPED_FLINX_FUR_CHEST:'trappedflinxfurchest',
+  TRAPPED_FORBIDDEN_CHEST:'trappedforbiddenchest',
+  TRAPPED_FROZEN_CHEST:'trappedfrozenchest',
+  TRAPPED_GLASS_CHEST:'trappedglasschest',
+  TRAPPED_GOLD_CHEST:'trappedgoldchest',
+  TRAPPED_GOLDEN_CHEST:'trappedgoldenchest',
+  TRAPPED_GOLF_CHEST:'trappedgolfchest',
+  TRAPPED_GOTHIC_CHEST:'trappedgothicchest',
+  TRAPPED_GRANITE_CHEST:'trappedgranitechest',
+  TRAPPED_GREEN_DUNGEON_CHEST:'trappedgreendungeonchest',
+  TRAPPED_HALLOWED_CHEST:'trappedhallowedchest',
+  TRAPPED_HARPY_CHEST:'trappedharpychest',
+  TRAPPED_HONEY_CHEST:'trappedhoneychest',
+  TRAPPED_ICE_CHEST:'trappedicechest',
+  TRAPPED_IVY_CHEST:'trappedivychest',
+  TRAPPED_JELLYFISH_CHEST:'trappedjellyfishchest',
+  TRAPPED_JUNGLE_CHEST:'trappedjunglechest',
+  TRAPPED_LESION_CHEST:'trappedlesionchest',
+  TRAPPED_LIBRARIAN_CHEST:'trappedlibrarianchest',
+  TRAPPED_LIHZAHRD_CHEST:'trappedlihzahrdchest',
+  TRAPPED_LIVING_WOOD_CHEST:'trappedlivingwoodchest',
+  TRAPPED_MARBLE_CHEST:'trappedmarblechest',
+  TRAPPED_MARTIAN_CHEST:'trappedmartianchest',
+  TRAPPED_METEORITE_CHEST:'trappedmeteoritechest',
+  TRAPPED_MUSHROOM_CHEST:'trappedmushroomchest',
+  TRAPPED_NEBULA_CHEST:'trappednebulachest',
+  TRAPPED_OBSIDIAN_CHEST:'trappedobsidianchest',
+  TRAPPED_OFFICE_CHEST:'trappedofficechest',
+  TRAPPED_PALM_WOOD_CHEST:'trappedpalmwoodchest',
+  TRAPPED_PEARLWOOD_CHEST:'trappedpearlwoodchest',
+  TRAPPED_PINE_CHEST:'trappedpinechest',
+  TRAPPED_PINK_DUNGEON_CHEST:'trappedpinkdungeonchest',
+  TRAPPED_PUMPKIN_CHEST:'trappedpumpkinchest',
+  TRAPPED_REEF_CHEST:'trappedreefchest',
+  TRAPPED_RICH_MAHOGANY_CHEST:'trappedrichmahoganychest',
+  TRAPPED_SANDSTONE_CHEST:'trappedsandstonechest',
+  TRAPPED_SHADEWOOD_CHEST:'trappedshadewoodchest',
+  TRAPPED_SHADOW_CHEST:'trappedshadowchest',
+  TRAPPED_SKYWARE_CHEST:'trappedskywarechest',
+  TRAPPED_SLIME_CHEST:'trappedslimechest',
+  TRAPPED_SNOW_CHEST:'trappedsnowchest',
+  TRAPPED_SOLAR_CHEST:'trappedsolarchest',
+  TRAPPED_SPIDER_CHEST:'trappedspiderchest',
+  TRAPPED_SPIKE_CHEST:'trappedspikechest',
+  TRAPPED_SPOOKY_CHEST:'trappedspookychest',
+  TRAPPED_STARDUST_CHEST:'trappedstardustchest',
+  TRAPPED_STEAMPUNK_CHEST:'trappedsteampunkchest',
+  TRAPPED_STONE_CHEST:'trappedstonechest',
+  TRAPPED_VORTEX_CHEST:'trappedvortexchest',
+  TRAPPED_WATER_CHEST:'trappedwaterchest',
+  TRAPPED_WEB_COVERED_CHEST:'trappedwebcoveredchest',
+  VORTEX_CHEST:'vortexchest',
+  WATER_CHEST:'waterchest',
+  WEB_COVERED_CHEST:'webcoveredchest',
+  AETHERIUM_CLOCK:'aetheriumclock',
+  AQUARIUM_CLOCK:'aquariumclock',
+  ASH_WOOD_CLOCK:'ashwoodclock',
+  BALLOON_CLOCK:'balloonclock',
+  BAMBOO_CLOCK:'bambooclock',
+  BLUE_DUNGEON_CLOCK:'bluedungeonclock',
+  BONE_CLOCK:'boneclock',
+  BOREAL_WOOD_CLOCK:'borealwoodclock',
+  BOULDER_CLOCK:'boulderclock',
+  CACTUS_CLOCK:'cactusclock',
+  CLOUD_CLOCK:'cloudclock',
+  CONVEYOR_BELT_CLOCKWISE:'conveyorbeltclockwise',
+  CONVEYOR_BELT_COUNTER_CLOCKWISE:'conveyorbeltcounterclockwise',
+  CRIMTANE_CLOCK:'crimtaneclock',
+  CRYSTAL_CLOCK:'crystalclock',
+  DEMONITE_CLOCK:'demoniteclock',
+  DUSKWARE_CLOCK:'duskwareclock',
+  DYNASTY_CLOCK:'dynastyclock',
+  EASTER_CLOCK:'easterclock',
+  EBONWOOD_CLOCK:'ebonwoodclock',
+  FALLEN_STAR_CLOCK:'fallenstarclock',
+  FEYWOOD_CLOCK:'feywoodclock',
+  FLESH_CLOCK:'fleshclock',
+  FLINX_FUR_CLOCK:'flinxfurclock',
+  FORBIDDEN_CLOCK:'forbiddenclock',
+  FROZEN_CLOCK:'frozenclock',
+  GLASS_CLOCK:'glassclock',
+  GOLDEN_CLOCK:'goldenclock',
+  GOTHIC_CLOCK:'gothicclock',
+  GRANDFATHER_CLOCK:'grandfatherclock',
+  GRANITE_CLOCK:'graniteclock',
+  GREEN_DUNGEON_CLOCK:'greendungeonclock',
+  HALLOWED_CLOCK:'hallowedclock',
+  HARPY_CLOCK:'harpyclock',
+  HONEY_CLOCK:'honeyclock',
+  JELLYFISH_CLOCK:'jellyfishclock',
+  LESION_CLOCK:'lesionclock',
+  LIBRARIAN_CLOCK:'librarianclock',
+  LIHZAHRD_CLOCK:'lihzahrdclock',
+  LIVING_WOOD_CLOCK:'livingwoodclock',
+  MARBLE_CLOCK:'marbleclock',
+  MARTIAN_ASTRO_CLOCK:'martianastroclock',
+  METEORITE_CLOCK:'meteoriteclock',
+  MUSHROOM_CLOCK:'mushroomclock',
+  NEBULA_CLOCK:'nebulaclock',
+  OBSIDIAN_CLOCK:'obsidianclock',
+  OFFICE_CLOCK:'officeclock',
+  PALM_WOOD_CLOCK:'palmwoodclock',
+  PEARLWOOD_CLOCK:'pearlwoodclock',
+  PINE_CLOCK:'pineclock',
+  PINK_DUNGEON_CLOCK:'pinkdungeonclock',
+  PUMPKIN_CLOCK:'pumpkinclock',
+  REEF_CLOCK:'reefclock',
+  RICH_MAHOGANY_CLOCK:'richmahoganyclock',
+  SANDSTONE_CLOCK:'sandstoneclock',
+  SHADEWOOD_CLOCK:'shadewoodclock',
+  SKYWARE_CLOCK:'skywareclock',
+  SLIME_CLOCK:'slimeclock',
+  SNOW_CLOCK:'snowclock',
+  SOLAR_CLOCK:'solarclock',
+  SPIDER_CLOCK:'spiderclock',
+  SPIKE_CLOCK:'spikeclock',
+  SPOOKY_CLOCK:'spookyclock',
+  STARDUST_CLOCK:'stardustclock',
+  STEAMPUNK_CLOCK:'steampunkclock',
+  STONE_CLOCK:'stoneclock',
+  SUNPLATE_CLOCK:'sunplateclock',
+  VORTEX_CLOCK:'vortexclock',
+  AETHERIUM_DOOR:'aetheriumdoor',
+  AQUARIUM_DOOR:'aquariumdoor',
+  ASH_WOOD_DOOR:'ashwooddoor',
+  BALLOON_DOOR:'balloondoor',
+  BAMBOO_DOOR:'bamboodoor',
+  BLUE_DUNGEON_DOOR:'bluedungeondoor',
+  BONE_DOOR:'bonedoor',
+  BOREAL_WOOD_DOOR:'borealwooddoor',
+  BOULDER_DOOR:'boulderdoor',
+  CACTUS_DOOR:'cactusdoor',
+  CLOUD_DOOR:'clouddoor',
+  CRIMTANE_DOOR:'crimtanedoor',
+  CRYSTAL_DOOR:'crystaldoor',
+  DEMONITE_DOOR:'demonitedoor',
+  DUNGEON_DOOR:'dungeondoor',
+  DUSKWARE_DOOR:'duskwaredoor',
+  DYNASTY_DOOR:'dynastydoor',
+  EASTER_DOOR:'easterdoor',
+  EBONWOOD_DOOR:'ebonwooddoor',
+  FALLEN_STAR_DOOR:'fallenstardoor',
+  FEYWOOD_DOOR:'feywooddoor',
+  FLESH_DOOR:'fleshdoor',
+  FLINX_FUR_DOOR:'flinxfurdoor',
+  FORBIDDEN_DOOR:'forbiddendoor',
+  FROZEN_DOOR:'frozendoor',
+  GLASS_DOOR:'glassdoor',
+  GOLDEN_DOOR:'goldendoor',
+  GOTHIC_DOOR:'gothicdoor',
+  GRANITE_DOOR:'granitedoor',
+  GREEN_DUNGEON_DOOR:'greendungeondoor',
+  HALLOWED_DOOR:'halloweddoor',
+  HARPY_DOOR:'harpydoor',
+  HONEY_DOOR:'honeydoor',
+  IRON_DOOR:'irondoor',
+  JELLYFISH_DOOR:'jellyfishdoor',
+  LEAD_DOOR:'leaddoor',
+  LESION_DOOR:'lesiondoor',
+  LIBRARIAN_DOOR:'librariandoor',
+  LIHZAHRD_DOOR:'lihzahrddoor',
+  LIVING_WOOD_DOOR:'livingwooddoor',
+  MARBLE_DOOR:'marbledoor',
+  MARTIAN_DOOR:'martiandoor',
+  METEORITE_DOOR:'meteoritedoor',
+  MUSHROOM_DOOR:'mushroomdoor',
+  NEBULA_DOOR:'nebuladoor',
+  OBSIDIAN_DOOR:'obsidiandoor',
+  OFFICE_DOOR:'officedoor',
+  PALM_WOOD_DOOR:'palmwooddoor',
+  PEARLWOOD_DOOR:'pearlwooddoor',
+  PINE_DOOR:'pinedoor',
+  PINK_DUNGEON_DOOR:'pinkdungeondoor',
+  PUMPKIN_DOOR:'pumpkindoor',
+  REEF_DOOR:'reefdoor',
+  RICH_MAHOGANY_DOOR:'richmahoganydoor',
+  SANDSTONE_DOOR:'sandstonedoor',
+  SHADEWOOD_DOOR:'shadewooddoor',
+  SKYWARE_DOOR:'skywaredoor',
+  SLIME_DOOR:'slimedoor',
+  SNOW_DOOR:'snowdoor',
+  SOLAR_DOOR:'solardoor',
+  SPIDER_DOOR:'spiderdoor',
+  SPIKE_DOOR:'spikedoor',
+  SPOOKY_DOOR:'spookydoor',
+  STARDUST_DOOR:'stardustdoor',
+  STEAMPUNK_DOOR:'steampunkdoor',
+  STONE_DOOR:'stonedoor',
+  TRAP_DOOR:'trapdoor',
+  VORTEX_DOOR:'vortexdoor',
+  AETHERIUM_DRESSER:'aetheriumdresser',
+  AQUARIUM_DRESSER:'aquariumdresser',
+  ASH_WOOD_DRESSER:'ashwooddresser',
+  BALLOON_DRESSER:'balloondresser',
+  BAMBOO_DRESSER:'bamboodresser',
+  BLUE_DUNGEON_DRESSER:'bluedungeondresser',
+  BONE_DRESSER:'bonedresser',
+  BOREAL_WOOD_DRESSER:'borealwooddresser',
+  BOULDER_DRESSER:'boulderdresser',
+  CACTUS_DRESSER:'cactusdresser',
+  CLOUD_DRESSER:'clouddresser',
+  CRIMTANE_DRESSER:'crimtanedresser',
+  CRYSTAL_DRESSER:'crystaldresser',
+  DEMONITE_DRESSER:'demonitedresser',
+  DRESSER:'dresser',
+  DUSKWARE_DRESSER:'duskwaredresser',
+  DYNASTY_DRESSER:'dynastydresser',
+  EASTER_DRESSER:'easterdresser',
+  EBONWOOD_DRESSER:'ebonwooddresser',
+  FALLEN_STAR_DRESSER:'fallenstardresser',
+  FEYWOOD_DRESSER:'feywooddresser',
+  FLESH_DRESSER:'fleshdresser',
+  FLINX_FUR_DRESSER:'flinxfurdresser',
+  FORBIDDEN_DRESSER:'forbiddendresser',
+  FROZEN_DRESSER:'frozendresser',
+  GLASS_DRESSER:'glassdresser',
+  GOLDEN_DRESSER:'goldendresser',
+  GOTHIC_DRESSER:'gothicdresser',
+  GRANITE_DRESSER:'granitedresser',
+  GREEN_DUNGEON_DRESSER:'greendungeondresser',
+  HALLOWED_DRESSER:'halloweddresser',
+  HARPY_DRESSER:'harpydresser',
+  HONEY_DRESSER:'honeydresser',
+  JELLYFISH_DRESSER:'jellyfishdresser',
+  LESION_DRESSER:'lesiondresser',
+  LIBRARIAN_DRESSER:'librariandresser',
+  LIHZAHRD_DRESSER:'lihzahrddresser',
+  LIVING_WOOD_DRESSER:'livingwooddresser',
+  MARBLE_DRESSER:'marbledresser',
+  MARTIAN_DRESSER:'martiandresser',
+  METEORITE_DRESSER:'meteoritedresser',
+  MUSHROOM_DRESSER:'mushroomdresser',
+  NEBULA_DRESSER:'nebuladresser',
+  OBSIDIAN_DRESSER:'obsidiandresser',
+  OFFICE_DRESSER:'officedresser',
+  PALM_WOOD_DRESSER:'palmwooddresser',
+  PEARLWOOD_DRESSER:'pearlwooddresser',
+  PINE_DRESSER:'pinedresser',
+  PINK_DUNGEON_DRESSER:'pinkdungeondresser',
+  PUMPKIN_DRESSER:'pumpkindresser',
+  REEF_DRESSER:'reefdresser',
+  RICH_MAHOGANY_DRESSER:'richmahoganydresser',
+  SANDSTONE_DRESSER:'sandstonedresser',
+  SHADEWOOD_DRESSER:'shadewooddresser',
+  SKYWARE_DRESSER:'skywaredresser',
+  SLIME_DRESSER:'slimedresser',
+  SNOW_DRESSER:'snowdresser',
+  SOLAR_DRESSER:'solardresser',
+  SPIDER_DRESSER:'spiderdresser',
+  SPIKE_DRESSER:'spikedresser',
+  SPOOKY_DRESSER:'spookydresser',
+  STARDUST_DRESSER:'stardustdresser',
+  STEAMPUNK_DRESSER:'steampunkdresser',
+  STONE_DRESSER:'stonedresser',
+  VORTEX_DRESSER:'vortexdresser',
+  FURNACE:'furnace',
+  LIHZAHRD_FURNACE:'lihzahrdfurnace',
+  AETHERIUM_LAMP:'aetheriumlamp',
+  AQUARIUM_LAMP:'aquariumlamp',
+  ASH_WOOD_LAMP:'ashwoodlamp',
+  BALLOON_LAMP:'balloonlamp',
+  BAMBOO_LAMP:'bamboolamp',
+  BLUE_DUNGEON_LAMP:'bluedungeonlamp',
+  BONE_LAMP:'bonelamp',
+  BOREAL_WOOD_LAMP:'borealwoodlamp',
+  BOULDER_LAMP:'boulderlamp',
+  CACTUS_LAMP:'cactuslamp',
+  CLOUD_LAMP:'cloudlamp',
+  CRIMTANE_LAMP:'crimtanelamp',
+  CRYSTAL_LAMP:'crystallamp',
+  DEMONITE_LAMP:'demonitelamp',
+  DESERT_SPIRIT_LAMP:'desertspiritlamp',
+  DIABOLIST_LAMP:'diabolistlamp',
+  DUSKWARE_LAMP:'duskwarelamp',
+  DYNASTY_LAMP:'dynastylamp',
+  EASTER_LAMP:'easterlamp',
+  EBONWOOD_LAMP:'ebonwoodlamp',
+  FALLEN_STAR_LAMP:'fallenstarlamp',
+  FEYWOOD_LAMP:'feywoodlamp',
+  FLESH_LAMP:'fleshlamp',
+  FLINX_FUR_LAMP:'flinxfurlamp',
+  FORBIDDEN_LAMP:'forbiddenlamp',
+  FROZEN_LAMP:'frozenlamp',
+  GLASS_LAMP:'glasslamp',
+  GOLDEN_LAMP:'goldenlamp',
+  GOTHIC_LAMP:'gothiclamp',
+  GRANITE_LAMP:'granitelamp',
+  GREEN_DUNGEON_LAMP:'greendungeonlamp',
+  HALLOWED_LAMP:'hallowedlamp',
+  HARPY_LAMP:'harpylamp',
+  HONEY_LAMP:'honeylamp',
+  JELLYFISH_LAMP:'jellyfishlamp',
+  LAMP_POST:'lamppost',
+  LAVA_LAMP:'lavalamp',
+  LESION_LAMP:'lesionlamp',
+  LIBRARIAN_LAMP:'librarianlamp',
+  LIHZAHRD_LAMP:'lihzahrdlamp',
+  LIVING_WOOD_LAMP:'livingwoodlamp',
+  LOGIC_GATE_LAMP_FAULTY:'logicgatelampfaulty',
+  LOGIC_GATE_LAMP_OFF:'logicgatelampoff',
+  LOGIC_GATE_LAMP_ON:'logicgatelampon',
+  MARBLE_LAMP:'marblelamp',
+  MARTIAN_LAMPPOST:'martianlamppost',
+  METEORITE_LAMP:'meteoritelamp',
+  MUSHROOM_LAMP:'mushroomlamp',
+  NEBULA_LAMP:'nebulalamp',
+  OBSIDIAN_LAMP:'obsidianlamp',
+  OFFICE_LAMP:'officelamp',
+  PALM_WOOD_LAMP:'palmwoodlamp',
+  PEARLWOOD_LAMP:'pearlwoodlamp',
+  PINE_LAMP:'pinelamp',
+  PINK_DUNGEON_LAMP:'pinkdungeonlamp',
+  PLASMA_LAMP:'plasmalamp',
+  PUMPKIN_LAMP:'pumpkinlamp',
+  REEF_LAMP:'reeflamp',
+  RICH_MAHOGANY_LAMP:'richmahoganylamp',
+  SANDSTONE_LAMP:'sandstonelamp',
+  SHADEWOOD_LAMP:'shadewoodlamp',
+  SKYWARE_LAMP:'skywarelamp',
+  SLIME_LAMP:'slimelamp',
+  SNOW_LAMP:'snowlamp',
+  SOLAR_LAMP:'solarlamp',
+  SPIDER_LAMP:'spiderlamp',
+  SPIKE_LAMP:'spikelamp',
+  SPOOKY_LAMP:'spookylamp',
+  STARDUST_LAMP:'stardustlamp',
+  STEAMPUNK_LAMP:'steampunklamp',
+  STONE_LAMP:'stonelamp',
+  VORTEX_LAMP:'vortexlamp',
+  AETHERIUM_LANTERN:'aetheriumlantern',
+  ALCHEMY_LANTERN:'alchemylantern',
+  AQUARIUM_LANTERN:'aquariumlantern',
+  ASH_WOOD_LANTERN:'ashwoodlantern',
+  BALLOON_LANTERN:'balloonlantern',
+  BAMBOO_LANTERN:'bamboolantern',
+  BONE_LANTERN:'bonelantern',
+  BOREAL_WOOD_LANTERN:'borealwoodlantern',
+  BOULDER_LANTERN:'boulderlantern',
+  BRASS_LANTERN:'brasslantern',
+  CACTUS_LANTERN:'cactuslantern',
+  CAGED_LANTERN:'cagedlantern',
+  CARRIAGE_LANTERN:'carriagelantern',
+  CHAIN_LANTERN:'chainlantern',
+  CHINESE_LANTERN:'chineselantern',
+  CLOUD_LANTERN:'cloudlantern',
+  CRIMTANE_LANTERN:'crimtanelantern',
+  CRYSTAL_LANTERN:'crystallantern',
+  DEMONITE_LANTERN:'demonitelantern',
+  DUSKWARE_LANTERN:'duskwarelantern',
+  DYNASTY_LANTERN:'dynastylantern',
+  EASTER_LANTERN:'easterlantern',
+  EBONWOOD_LANTERN:'ebonwoodlantern',
+  FALLEN_STAR_LANTERN:'fallenstarlantern',
+  FEYWOOD_LANTERN:'feywoodlantern',
+  FLESH_LANTERN:'fleshlantern',
+  FLINX_FUR_LANTERN:'flinxfurlantern',
+  FORBIDDEN_LANTERN:'forbiddenlantern',
+  FROZEN_LANTERN:'frozenlantern',
+  GLASS_LANTERN:'glasslantern',
+  GOLDEN_LANTERN:'goldenlantern',
+  GOTHIC_LANTERN:'gothiclantern',
+  GRANITE_LANTERN:'granitelantern',
+  HALLOWED_LANTERN:'hallowedlantern',
+  HANGING_JACK_O_LANTERN:'hangingjackolantern',
+  HARPY_LANTERN:'harpylantern',
+  HEART_LANTERN:'heartlantern',
+  HONEY_LANTERN:'honeylantern',
+  JACK_O_LANTERN:'jackolantern',
+  JELLYFISH_LANTERN:'jellyfishlantern',
+  LARGE_DYNASTY_LANTERN:'largedynastylantern',
+  LESION_LANTERN:'lesionlantern',
+  LIBRARIAN_LANTERN:'librarianlantern',
+  LIHZAHRD_LANTERN:'lihzahrdlantern',
+  LIVING_WOOD_LANTERN:'livingwoodlantern',
+  MARBLE_LANTERN:'marblelantern',
+  MARTIAN_LANTERN:'martianlantern',
+  METEORITE_LANTERN:'meteoritelantern',
+  MUSHROOM_LANTERN:'mushroomlantern',
+  NEBULA_LANTERN:'nebulalantern',
+  OBSIDIAN_LANTERN:'obsidianlantern',
+  OFFICE_LANTERN:'officelantern',
+  PALM_WOOD_LANTERN:'palmwoodlantern',
+  PEARLWOOD_LANTERN:'pearlwoodlantern',
+  PINE_LANTERN:'pinelantern',
+  PUMPKIN_LANTERN:'pumpkinlantern',
+  REEF_LANTERN:'reeflantern',
+  RICH_MAHOGANY_LANTERN:'richmahoganylantern',
+  SANDSTONE_LANTERN:'sandstonelantern',
+  SHADEWOOD_LANTERN:'shadewoodlantern',
+  SKULL_LANTERN:'skulllantern',
+  SKYWARE_LANTERN:'skywarelantern',
+  SLIME_LANTERN:'slimelantern',
+  SNOW_LANTERN:'snowlantern',
+  SOLAR_LANTERN:'solarlantern',
+  SPIDER_LANTERN:'spiderlantern',
+  SPIKE_LANTERN:'spikelantern',
+  SPOOKY_LANTERN:'spookylantern',
+  STARDUST_LANTERN:'stardustlantern',
+  STEAMPUNK_LANTERN:'steampunklantern',
+  STONE_LANTERN:'stonelantern',
+  VORTEX_LANTERN:'vortexlantern',
+  AETHERIUM_PIANO:'aetheriumpiano',
+  AQUARIUM_PIANO:'aquariumpiano',
+  ASH_WOOD_PIANO:'ashwoodpiano',
+  BALLOON_PIANO:'balloonpiano',
+  BAMBOO_PIANO:'bamboopiano',
+  BLUE_DUNGEON_PIANO:'bluedungeonpiano',
+  BONE_PIANO:'bonepiano',
+  BOREAL_WOOD_PIANO:'borealwoodpiano',
+  BOULDER_PIANO:'boulderpiano',
+  CACTUS_PIANO:'cactuspiano',
+  CLOUD_PIANO:'cloudpiano',
+  CRIMTANE_PIANO:'crimtanepiano',
+  CRYSTAL_PIANO:'crystalpiano',
+  DEMONITE_PIANO:'demonitepiano',
+  DUSKWARE_PIANO:'duskwarepiano',
+  DYNASTY_PIANO:'dynastypiano',
+  EASTER_PIANO:'easterpiano',
+  EBONWOOD_PIANO:'ebonwoodpiano',
+  FALLEN_STAR_PIANO:'fallenstarpiano',
+  FEYWOOD_PIANO:'feywoodpiano',
+  FLESH_PIANO:'fleshpiano',
+  FLINX_FUR_PIANO:'flinxfurpiano',
+  FORBIDDEN_PIANO:'forbiddenpiano',
+  FROZEN_PIANO:'frozenpiano',
+  GLASS_PIANO:'glasspiano',
+  GOLDEN_PIANO:'goldenpiano',
+  GOTHIC_PIANO:'gothicpiano',
+  GRANITE_PIANO:'granitepiano',
+  GREEN_DUNGEON_PIANO:'greendungeonpiano',
+  HALLOWED_PIANO:'hallowedpiano',
+  HARPY_PIANO:'harpypiano',
+  HONEY_PIANO:'honeypiano',
+  JELLYFISH_PIANO:'jellyfishpiano',
+  LESION_PIANO:'lesionpiano',
+  LIBRARIAN_PIANO:'librarianpiano',
+  LIHZAHRD_PIANO:'lihzahrdpiano',
+  LIVING_WOOD_PIANO:'livingwoodpiano',
+  MARBLE_PIANO:'marblepiano',
+  MARTIAN_PIANO:'martianpiano',
+  METEORITE_PIANO:'meteoritepiano',
+  MUSHROOM_PIANO:'mushroompiano',
+  NEBULA_PIANO:'nebulapiano',
+  OBSIDIAN_PIANO:'obsidianpiano',
+  OFFICE_PIANO:'officepiano',
+  PALM_WOOD_PIANO:'palmwoodpiano',
+  PEARLWOOD_PIANO:'pearlwoodpiano',
+  PIANO:'piano',
+  PINE_PIANO:'pinepiano',
+  PINK_DUNGEON_PIANO:'pinkdungeonpiano',
+  PUMPKIN_PIANO:'pumpkinpiano',
+  REEF_PIANO:'reefpiano',
+  RICH_MAHOGANY_PIANO:'richmahoganypiano',
+  SANDSTONE_PIANO:'sandstonepiano',
+  SHADEWOOD_PIANO:'shadewoodpiano',
+  SKYWARE_PIANO:'skywarepiano',
+  SLIME_PIANO:'slimepiano',
+  SNOW_PIANO:'snowpiano',
+  SOLAR_PIANO:'solarpiano',
+  SPIDER_PIANO:'spiderpiano',
+  SPIKE_PIANO:'spikepiano',
+  SPOOKY_PIANO:'spookypiano',
+  STARDUST_PIANO:'stardustpiano',
+  STEAMPUNK_PIANO:'steampunkpiano',
+  STONE_PIANO:'stonepiano',
+  VORTEX_PIANO:'vortexpiano',
+  AETHERIUM_PLATFORM:'aetheriumplatform',
+  AQUARIUM_PLATFORM:'aquariumplatform',
+  ASH_WOOD_PLATFORM:'ashwoodplatform',
+  BALLOON_PLATFORM:'balloonplatform',
+  BAMBOO_PLATFORM:'bambooplatform',
+  BLUE_BRICK_PLATFORM:'bluebrickplatform',
+  BLUE_TEAM_PLATFORM:'blueteamplatform',
+  BONE_PLATFORM:'boneplatform',
+  BOREAL_WOOD_PLATFORM:'borealwoodplatform',
+  BOULDER_PLATFORM:'boulderplatform',
+  CACTUS_PLATFORM:'cactusplatform',
+  CLOUD_PLATFORM:'cloudplatform',
+  CRIMTANE_PLATFORM:'crimtaneplatform',
+  CRYSTAL_PLATFORM:'crystalplatform',
+  DEMONITE_PLATFORM:'demoniteplatform',
+  DUSKWARE_PLATFORM:'duskwareplatform',
+  DYNASTY_WOOD_PLATFORM:'dynastywoodplatform',
+  EASTER_PLATFORM:'easterplatform',
+  EBONWOOD_PLATFORM:'ebonwoodplatform',
+  ECHO_PLATFORM:'echoplatform',
+  FALLEN_STAR_PLATFORM:'fallenstarplatform',
+  FEYWOOD_PLATFORM:'feywoodplatform',
+  FLESH_PLATFORM:'fleshplatform',
+  FLINX_FUR_PLATFORM:'flinxfurplatform',
+  FORBIDDEN_PLATFORM:'forbiddenplatform',
+  FROZEN_PLATFORM:'frozenplatform',
+  GLASS_PLATFORM:'glassplatform',
+  GOLDEN_PLATFORM:'goldenplatform',
+  GOTHIC_PLATFORM:'gothicplatform',
+  GRANITE_PLATFORM:'graniteplatform',
+  GREEN_BRICK_PLATFORM:'greenbrickplatform',
+  GREEN_TEAM_PLATFORM:'greenteamplatform',
+  HALLOWED_PLATFORM:'hallowedplatform',
+  HARPY_PLATFORM:'harpyplatform',
+  HONEY_PLATFORM:'honeyplatform',
+  JELLYFISH_PLATFORM:'jellyfishplatform',
+  LESION_PLATFORM:'lesionplatform',
+  LIBRARIAN_PLATFORM:'librarianplatform',
+  LIHZAHRD_PLATFORM:'lihzahrdplatform',
+  LIVING_WOOD_PLATFORM:'livingwoodplatform',
+  MARBLE_PLATFORM:'marbleplatform',
+  MARTIAN_PLATFORM:'martianplatform',
+  METEORITE_PLATFORM:'meteoriteplatform',
+  MUSHROOM_PLATFORM:'mushroomplatform',
+  NEBULA_PLATFORM:'nebulaplatform',
+  OBSIDIAN_PLATFORM:'obsidianplatform',
+  OFFICE_PLATFORM:'officeplatform',
+  PALM_WOOD_PLATFORM:'palmwoodplatform',
+  PEARLWOOD_PLATFORM:'pearlwoodplatform',
+  PINE_PLATFORM:'pineplatform',
+  PINK_BRICK_PLATFORM:'pinkbrickplatform',
+  PINK_TEAM_PLATFORM:'pinkteamplatform',
+  PUMPKIN_PLATFORM:'pumpkinplatform',
+  RED_TEAM_PLATFORM:'redteamplatform',
+  REEF_PLATFORM:'reefplatform',
+  RICH_MAHOGANY_PLATFORM:'richmahoganyplatform',
+  SANDSTONE_PLATFORM:'sandstoneplatform',
+  SHADEWOOD_PLATFORM:'shadewoodplatform',
+  SKYWARE_PLATFORM:'skywareplatform',
+  SLIME_PLATFORM:'slimeplatform',
+  SNOW_PLATFORM:'snowplatform',
+  SOLAR_PLATFORM:'solarplatform',
+  SPIDER_PLATFORM:'spiderplatform',
+  SPIKE_PLATFORM:'spikeplatform',
+  SPOOKY_WOOD_PLATFORM:'spookywoodplatform',
+  STARDUST_PLATFORM:'stardustplatform',
+  STEAMPUNK_PLATFORM:'steampunkplatform',
+  STONE_PLATFORM:'stoneplatform',
+  VORTEX_PLATFORM:'vortexplatform',
+  WHITE_TEAM_PLATFORM:'whiteteamplatform',
+  YELLOW_TEAM_PLATFORM:'yellowteamplatform',
+  AETHERIUM_SINK:'aetheriumsink',
+  AQUARIUM_SINK:'aquariumsink',
+  ASH_WOOD_SINK:'ashwoodsink',
+  BALLOON_SINK:'balloonsink',
+  BAMBOO_SINK:'bamboosink',
+  BLUE_DUNGEON_SINK:'bluedungeonsink',
+  BONE_SINK:'bonesink',
+  BOREAL_WOOD_SINK:'borealwoodsink',
+  BOULDER_SINK:'bouldersink',
+  CACTUS_SINK:'cactussink',
+  CLOUD_SINK:'cloudsink',
+  CRIMTANE_SINK:'crimtanesink',
+  CRYSTAL_SINK:'crystalsink',
+  DEMONITE_SINK:'demonitesink',
+  DUSKWARE_SINK:'duskwaresink',
+  DYNASTY_SINK:'dynastysink',
+  EASTER_SINK:'eastersink',
+  EBONWOOD_SINK:'ebonwoodsink',
+  FALLEN_STAR_SINK:'fallenstarsink',
+  FEYWOOD_SINK:'feywoodsink',
+  FLESH_SINK:'fleshsink',
+  FLINX_FUR_SINK:'flinxfursink',
+  FORBIDDEN_SINK:'forbiddensink',
+  FROZEN_SINK:'frozensink',
+  GLASS_SINK:'glasssink',
+  GOLDEN_SINK:'goldensink',
+  GOTHIC_SINK:'gothicsink',
+  GRANITE_SINK:'granitesink',
+  GREEN_DUNGEON_SINK:'greendungeonsink',
+  HALLOWED_SINK:'hallowedsink',
+  HARPY_SINK:'harpysink',
+  HONEY_SINK:'honeysink',
+  JELLYFISH_SINK:'jellyfishsink',
+  LESION_SINK:'lesionsink',
+  LIBRARIAN_SINK:'librariansink',
+  LIHZAHRD_SINK:'lihzahrdsink',
+  LIVING_WOOD_SINK:'livingwoodsink',
+  MARBLE_SINK:'marblesink',
+  MARTIAN_SINK:'martiansink',
+  METAL_SINK:'metalsink',
+  METEORITE_SINK:'meteoritesink',
+  MUSHROOM_SINK:'mushroomsink',
+  NEBULA_SINK:'nebulasink',
+  OBSIDIAN_SINK:'obsidiansink',
+  OFFICE_SINK:'officesink',
+  PALM_WOOD_SINK:'palmwoodsink',
+  PEARLWOOD_SINK:'pearlwoodsink',
+  PINE_SINK:'pinesink',
+  PINK_DUNGEON_SINK:'pinkdungeonsink',
+  PUMPKIN_SINK:'pumpkinsink',
+  REEF_SINK:'reefsink',
+  RICH_MAHOGANY_SINK:'richmahoganysink',
+  SANDSTONE_SINK:'sandstonesink',
+  SHADEWOOD_SINK:'shadewoodsink',
+  SKYWARE_SINK:'skywaresink',
+  SLIME_SINK:'slimesink',
+  SNOW_SINK:'snowsink',
+  SOLAR_SINK:'solarsink',
+  SPIDER_SINK:'spidersink',
+  SPIKE_SINK:'spikesink',
+  SPOOKY_SINK:'spookysink',
+  STARDUST_SINK:'stardustsink',
+  STEAMPUNK_SINK:'steampunksink',
+  STONE_SINK:'stonesink',
+  VORTEX_SINK:'vortexsink',
+  WOODEN_SINK:'woodensink',
+  AETHERIUM_SOFA:'aetheriumsofa',
+  AQUARIUM_SOFA:'aquariumsofa',
+  ASH_WOOD_SOFA:'ashwoodsofa',
+  BALLOON_SOFA:'balloonsofa',
+  BAMBOO_SOFA:'bamboosofa',
+  BLUE_DUNGEON_SOFA:'bluedungeonsofa',
+  BONE_SOFA:'bonesofa',
+  BOREAL_WOOD_SOFA:'borealwoodsofa',
+  BOULDER_SOFA:'bouldersofa',
+  CACTUS_SOFA:'cactussofa',
+  CLOUD_SOFA:'cloudsofa',
+  CRIMTANE_SOFA:'crimtanesofa',
+  CRYSTAL_SOFA:'crystalsofa',
+  DEMONITE_SOFA:'demonitesofa',
+  DUSKWARE_SOFA:'duskwaresofa',
+  DYNASTY_SOFA:'dynastysofa',
+  EASTER_SOFA:'eastersofa',
+  EBONWOOD_SOFA:'ebonwoodsofa',
+  FALLEN_STAR_SOFA:'fallenstarsofa',
+  FEYWOOD_SOFA:'feywoodsofa',
+  FLESH_SOFA:'fleshsofa',
+  FLINX_FUR_SOFA:'flinxfursofa',
+  FORBIDDEN_SOFA:'forbiddensofa',
+  FROZEN_SOFA:'frozensofa',
+  GLASS_SOFA:'glasssofa',
+  GOLDEN_SOFA:'goldensofa',
+  GOTHIC_SOFA:'gothicsofa',
+  GRANITE_SOFA:'granitesofa',
+  GREEN_DUNGEON_SOFA:'greendungeonsofa',
+  HALLOWED_SOFA:'hallowedsofa',
+  HARPY_SOFA:'harpysofa',
+  HONEY_SOFA:'honeysofa',
+  JELLYFISH_SOFA:'jellyfishsofa',
+  LESION_SOFA:'lesionsofa',
+  LIBRARIAN_SOFA:'librariansofa',
+  LIHZAHRD_SOFA:'lihzahrdsofa',
+  LIVING_WOOD_SOFA:'livingwoodsofa',
+  MARBLE_SOFA:'marblesofa',
+  MARTIAN_SOFA:'martiansofa',
+  METEORITE_SOFA:'meteoritesofa',
+  MUSHROOM_SOFA:'mushroomsofa',
+  NEBULA_SOFA:'nebulasofa',
+  OBSIDIAN_SOFA:'obsidiansofa',
+  OFFICE_SOFA:'officesofa',
+  PALM_WOOD_SOFA:'palmwoodsofa',
+  PEARLWOOD_SOFA:'pearlwoodsofa',
+  PINE_SOFA:'pinesofa',
+  PINK_DUNGEON_SOFA:'pinkdungeonsofa',
+  PUMPKIN_SOFA:'pumpkinsofa',
+  REEF_SOFA:'reefsofa',
+  RICH_MAHOGANY_SOFA:'richmahoganysofa',
+  SANDSTONE_SOFA:'sandstonesofa',
+  SHADEWOOD_SOFA:'shadewoodsofa',
+  SKYWARE_SOFA:'skywaresofa',
+  SLIME_SOFA:'slimesofa',
+  SNOW_SOFA:'snowsofa',
+  SOFA:'sofa',
+  SOLAR_SOFA:'solarsofa',
+  SPIDER_SOFA:'spidersofa',
+  SPIKE_SOFA:'spikesofa',
+  SPOOKY_SOFA:'spookysofa',
+  STARDUST_SOFA:'stardustsofa',
+  STEAMPUNK_SOFA:'steampunksofa',
+  STONE_SOFA:'stonesofa',
+  VORTEX_SOFA:'vortexsofa',
+  AETHERIUM_TABLE:'aetheriumtable',
+  ALCHEMY_TABLE:'alchemytable',
+  ANCIENT_TABLET:'ancienttablet',
+  AQUARIUM_TABLE:'aquariumtable',
+  ASH_WOOD_TABLE:'ashwoodtable',
+  BALLOON_TABLE:'balloontable',
+  BAMBOO_TABLE:'bambootable',
+  BANQUET_TABLE:'banquettable',
+  BEWITCHING_TABLE:'bewitchingtable',
+  BLUE_DUNGEON_TABLE:'bluedungeontable',
+  BONE_TABLE:'bonetable',
+  BOREAL_WOOD_TABLE:'borealwoodtable',
+  BOULDER_TABLE:'bouldertable',
+  CACTUS_TABLE:'cactustable',
+  CLOUD_TABLE:'cloudtable',
+  CRIMTANE_TABLE:'crimtanetable',
+  CRYSTAL_TABLE:'crystaltable',
+  DEMONITE_TABLE:'demonitetable',
+  DUSKWARE_TABLE:'duskwaretable',
+  DYNASTY_TABLE:'dynastytable',
+  EASTER_TABLE:'eastertable',
+  EBONWOOD_TABLE:'ebonwoodtable',
+  FALLEN_STAR_TABLE:'fallenstartable',
+  FANCY_PICNIC_TABLE:'fancypicnictable',
+  FEYWOOD_TABLE:'feywoodtable',
+  FLESH_TABLE:'fleshtable',
+  FLINX_FUR_TABLE:'flinxfurtable',
+  FORBIDDEN_TABLE:'forbiddentable',
+  FROZEN_TABLE:'frozentable',
+  GLASS_TABLE:'glasstable',
+  GOLDEN_TABLE:'goldentable',
+  GOTHIC_TABLE:'gothictable',
+  GRANITE_TABLE:'granitetable',
+  GREEN_DUNGEON_TABLE:'greendungeontable',
+  HALLOWED_TABLE:'hallowedtable',
+  HARPY_TABLE:'harpytable',
+  HONEY_TABLE:'honeytable',
+  JELLYFISH_TABLE:'jellyfishtable',
+  LESION_TABLE:'lesiontable',
+  LIBRARIAN_TABLE:'librariantable',
+  LIHZAHRD_TABLE:'lihzahrdtable',
+  LIVING_WOOD_TABLE:'livingwoodtable',
+  MARBLE_TABLE:'marbletable',
+  MARTIAN_TABLE:'martiantable',
+  MARTIAN_TABLE_LAMP:'martiantablelamp',
+  METEORITE_TABLE:'meteoritetable',
+  MUSHROOM_TABLE:'mushroomtable',
+  NEBULA_TABLE:'nebulatable',
+  OBSIDIAN_TABLE:'obsidiantable',
+  OFFICE_TABLE:'officetable',
+  PALM_WOOD_TABLE:'palmwoodtable',
+  PEARLWOOD_TABLE:'pearlwoodtable',
+  PICNIC_TABLE:'picnictable',
+  PINE_TABLE:'pinetable',
+  PINK_DUNGEON_TABLE:'pinkdungeontable',
+  PORTABLE_KILN:'portablekiln',
+  PUMPKIN_TABLE:'pumpkintable',
+  REEF_TABLE:'reeftable',
+  RICH_MAHOGANY_TABLE:'richmahoganytable',
+  SANDSTONE_TABLE:'sandstonetable',
+  SHADEWOOD_TABLE:'shadewoodtable',
+  SKYWARE_TABLE:'skywaretable',
+  SLIME_TABLE:'slimetable',
+  SNOW_TABLE:'snowtable',
+  SOLAR_TABLE:'solartable',
+  SPIDER_TABLE:'spidertable',
+  SPIKE_TABLE:'spiketable',
+  SPOOKY_TABLE:'spookytable',
+  STARDUST_TABLE:'stardusttable',
+  STEAMPUNK_TABLE:'steampunktable',
+  STONE_TABLE:'stonetable',
+  VORTEX_TABLE:'vortextable',
+  WAR_TABLE:'wartable',
+  WAR_TABLE_BANNER:'wartablebanner',
+  AETHERIUM_TOILET:'aetheriumtoilet',
+  AQUARIUM_TOILET:'aquariumtoilet',
+  ASH_WOOD_TOILET:'ashwoodtoilet',
+  BALLOON_TOILET:'balloontoilet',
+  BAMBOO_TOILET:'bambootoilet',
+  BLUE_DUNGEON_TOILET:'bluedungeontoilet',
+  BONE_TOILET:'bonetoilet',
+  BOREAL_WOOD_TOILET:'borealwoodtoilet',
+  BOULDER_TOILET:'bouldertoilet',
+  CACTUS_TOILET:'cactustoilet',
+  CLOUD_TOILET:'cloudtoilet',
+  CRIMTANE_TOILET:'crimtanetoilet',
+  CRYSTAL_TOILET:'crystaltoilet',
+  DEMONITE_TOILET:'demonitetoilet',
+  DIAMOND_TOILET:'diamondtoilet',
+  DUSKWARE_TOILET:'duskwaretoilet',
+  DYNASTY_TOILET:'dynastytoilet',
+  EASTER_TOILET:'eastertoilet',
+  EBONWOOD_TOILET:'ebonwoodtoilet',
+  FALLEN_STAR_TOILET:'fallenstartoilet',
+  FEYWOOD_TOILET:'feywoodtoilet',
+  FLESH_TOILET:'fleshtoilet',
+  FLINX_FUR_TOILET:'flinxfurtoilet',
+  FORBIDDEN_TOILET:'forbiddentoilet',
+  FROZEN_TOILET:'frozentoilet',
+  GLASS_TOILET:'glasstoilet',
+  GOLDEN_TOILET:'goldentoilet',
+  GOTHIC_TOILET:'gothictoilet',
+  GRANITE_TOILET:'granitetoilet',
+  GREEN_DUNGEON_TOILET:'greendungeontoilet',
+  HALLOWED_TOILET:'hallowedtoilet',
+  HARPY_TOILET:'harpytoilet',
+  HONEY_TOILET:'honeytoilet',
+  JELLYFISH_TOILET:'jellyfishtoilet',
+  LESION_TOILET:'lesiontoilet',
+  LIBRARIAN_TOILET:'librariantoilet',
+  LIHZAHRD_TOILET:'lihzahrdtoilet',
+  LIVING_WOOD_TOILET:'livingwoodtoilet',
+  MARBLE_TOILET:'marbletoilet',
+  MARTIAN_TOILET:'martiantoilet',
+  METEORITE_TOILET:'meteoritetoilet',
+  MUSHROOM_TOILET:'mushroomtoilet',
+  NEBULA_TOILET:'nebulatoilet',
+  OBSIDIAN_TOILET:'obsidiantoilet',
+  OFFICE_TOILET:'officetoilet',
+  PALM_WOOD_TOILET:'palmwoodtoilet',
+  PEARLWOOD_TOILET:'pearlwoodtoilet',
+  PINE_TOILET:'pinetoilet',
+  PINK_DUNGEON_TOILET:'pinkdungeontoilet',
+  PUMPKIN_TOILET:'pumpkintoilet',
+  REEF_TOILET:'reeftoilet',
+  RICH_MAHOGANY_TOILET:'richmahoganytoilet',
+  SANDSTONE_TOILET:'sandstonetoilet',
+  SHADEWOOD_TOILET:'shadewoodtoilet',
+  SKYWARE_TOILET:'skywaretoilet',
+  SLIME_TOILET:'slimetoilet',
+  SNOW_TOILET:'snowtoilet',
+  SOLAR_TOILET:'solartoilet',
+  SPIDER_TOILET:'spidertoilet',
+  SPIKE_TOILET:'spiketoilet',
+  SPOOKY_TOILET:'spookytoilet',
+  STARDUST_TOILET:'stardusttoilet',
+  STEAMPUNK_TOILET:'steampunktoilet',
+  STONE_TOILET:'stonetoilet',
+  TERRA_TOILET:'terratoilet',
+  TOILET:'toilet',
+  VORTEX_TOILET:'vortextoilet',
+  AETHER_TORCH:'aethertorch',
+  BLUE_TORCH:'bluetorch',
+  BONE_TORCH:'bonetorch',
+  CORAL_TORCH:'coraltorch',
+  CORRUPT_TORCH:'corrupttorch',
+  CRIMSON_TORCH:'crimsontorch',
+  CURSED_TORCH:'cursedtorch',
+  DEMON_TORCH:'demontorch',
+  DESERT_TORCH:'deserttorch',
+  GREEN_TORCH:'greentorch',
+  HALLOWED_TORCH:'hallowedtorch',
+  ICE_TORCH:'icetorch',
+  ICHOR_TORCH:'ichortorch',
+  JUNGLE_TORCH:'jungletorch',
+  MUSHROOM_TORCH:'mushroomtorch',
+  MUSIC_BOX_ALT_TORCH_GOD:'musicboxalttorchgod',
+  MUSIC_BOX_TORCH_GOD:'musicboxtorchgod',
+  ORANGE_TORCH:'orangetorch',
+  PINK_TORCH:'pinktorch',
+  PURPLE_TORCH:'purpletorch',
+  RAINBOW_TORCH:'rainbowtorch',
+  RED_TORCH:'redtorch',
+  TIKI_TORCH:'tikitorch',
+  ULTRABRIGHT_TORCH:'ultrabrighttorch',
+  WHITE_TORCH:'whitetorch',
+  YELLOW_TORCH:'yellowtorch',
+    ASH_WOOD_WALL:'ashwoodwall',
+  BLUE_BRICK_WALL:'bluebrickwall',
+  BOREAL_WOOD_WALL:'borealwoodwall',
+  CACTUS_WALL:'cactuswall',
+  CLOUD_WALL:'cloudwall',
+  COPPER_BRICK_WALL:'copperbrickwall',
+  COPPER_PLATING:'copperplating',
+  DISC_WALL:'discwall',
+  EBONWOOD_WALL:'ebonwoodwall',
+  GLASS_WALL:'glasswall',
+  GOLD_BRICK_WALL:'goldbrickwall',
+  GRANITE_WALL:'granitewall',
+  GRAY_BRICK_WALL:'graybrickwall',
+  GREEN_BRICK_WALL:'greenbrickwall',
+  HELLSTONE_BRICK_WALL:'hellstonebrickwall',
+  ICE_WALL:'icewall',
+  JUNGLE_WALL:'junglewall',
+  LAVAFALL_WALL:'lavafallwall',
+  LIVING_WOOD_WALL:'livingwoodwall',
+  MARBLE_WALL:'marblewall',
+  MUSHROOM_WALL:'mushroomwall',
+  OBSIDIAN_BRICK_WALL:'obsidianbrickwall',
+  OBSIDIAN_WALL:'obsidianwall',
+  PALM_WOOD_WALL:'palmwoodwall',
+  PEARLWOOD_WALL:'pearlwoodwall',
+  PINK_BRICK_WALL:'pinkbrickwall',
+  RED_BRICK_WALL:'redbrickwall',
+  RICH_MAHOGANY_WALL:'richmahoganywall',
+  SANDSTONE_WALL:'sandstonewall',
+  SHADEWOOD_WALL:'shadewoodwall',
+  SILVER_BRICK_WALL:'silverbrickwall',
+  SNOW_WALL:'snowwall',
+  SPIDER_WALL:'spiderwall',
+  STONE_WALL:'stonewall',
+  WATERFALL_WALL:'waterfallwall',
+  ASH_WOOD:'ashwood',
+  BOREAL_WOOD:'borealwood',
+  CRIMSTONE_BLOCK:'crimstoneblock',
+  DESERT_FOSSIL:'desertfossil',
+  EBONSTONE_BLOCK:'ebonstoneblock',
+  FLESH_BLOCK:'fleshblock',
+  HIVE:'hive',
+  LESION_BLOCK:'lesionblock',
+  PALM_WOOD:'palmwood',
+  PEARLSTONE_BLOCK:'pearlstoneblock',
+  SANDSTONE_BLOCK:'sandstoneblock',
+  SANDSTONE_BRICK:'sandstonebrick',
+  SNOW_BRICK:'snowbrick',
+  ADHESIVE_BANDAGE:'adhesivebandage',
+  ANTLION_MANDIBLE:'antlionmandible',
+  ARMOR_POLISH:'armorpolish',
+  BEZOAR:'bezoar',
+  BLACK_LENS:'blacklens',
+  CYAN_HUSK:'cyanhusk',
+  FIRE_FEATHER:'firefeather',
+  FROST_CORE:'frostcore',
+  LIME_KELP:'limekelp',
+  ORANGE_BLOODROOT:'orangebloodroot',
+  PINK_PRICKLY_PEAR:'pinkpricklypear',
+  PURPLE_MUCUS:'purplemucus',
+  RED_HUSK:'redhusk',
+  ROTTEN_CHUNK:'rottenchunk',
+  UNHOLY_WATER:'unholywater',
+  VERTEBRA:'vertebra',
+  VIOLET_HUSK:'violethusk',
+    I_0X33S_AVIATORS:'0x33saviators',
+  I_1_SECOND_TIMER:'1secondtimer',
+  I_12_SECOND_TIMER:'12secondtimer',
+  I_14_SECOND_TIMER:'14secondtimer',
+  I_3_SECOND_TIMER:'3secondtimer',
+  I_5_SECOND_TIMER:'5secondtimer',
+  A_HORRIBLE_NIGHTFOR_ALCHEMY:'ahorriblenightforalchemy',
+  A_MACHINEFOR_TERRARIANS:'amachineforterrarians',
+  AARONS_BREASTPLATE:'aaronsbreastplate',
+  AARONS_HELMET:'aaronshelmet',
+  AARONS_LEGGINGS:'aaronsleggings',
+  ABIGAILS_FLOWER:'abigailsflower',
+  ACORN_SLINGSHOT:'acornslingshot',
+  ACORNS:'acorns',
+  ACTIVE_STONE_BLOCK:'activestoneblock',
+  ACTUATION_ROD:'actuationrod',
+  ACTUATOR:'actuator',
+  ADAMANTITE_BEAM:'adamantitebeam',
+  ADAMANTITE_BEAM_WALL:'adamantitebeamwall',
+  ADAMANTITE_CHAINSAW:'adamantitechainsaw',
+  ADAMANTITE_DRILL:'adamantitedrill',
+  ADAMANTITE_FORGE:'adamantiteforge',
+  ADAMANTITE_HEADGEAR:'adamantiteheadgear',
+  ADVANCED_COMBAT_TECHNIQUES:'advancedcombattechniques',
+  AETHER_CAMPFIRE:'aethercampfire',
+  AETHER_MONOLITH:'aethermonolith',
+  AETHER_PYLON:'aetherpylon',
+  AETHERIUM_BLOCK:'aetheriumblock',
+  AETHERIUM_BRICK:'aetheriumbrick',
+  AETHERIUM_BRICK_WALL:'aetheriumbrickwall',
+  AETHERIUM_WALL:'aetheriumwall',
+  ALCHEMY_FLASK:'alchemyflask',
+  ALE:'ale',
+  AMANITA_FUNGIFIN:'amanitafungifin',
+  AMAZON:'amazon',
+  AMBER_BUNNY:'amberbunny',
+  AMBER_BUNNY_CAGE:'amberbunnycage',
+  AMBER_GEM_LOCK:'ambergemlock',
+  AMBER_GEMCORN:'ambergemcorn',
+  AMBER_GEMSPARK_BLOCK:'ambergemsparkblock',
+  AMBER_GEMSPARK_WALL:'ambergemsparkwall',
+  AMBER_HORSESHOE_BALLOON:'amberhorseshoeballoon',
+  AMBER_MINECART:'amberminecart',
+  AMBER_MOSQUITO:'ambermosquito',
+  AMBER_SQUIRREL:'ambersquirrel',
+  AMBER_SQUIRREL_CAGE:'ambersquirrelcage',
+  AMBER_STONE_BLOCK:'amberstoneblock',
+  AMBER_STONE_WALL:'amberstonewall',
+  AMERICAN_EXPLOSIVE:'americanexplosive',
+  AMETHYST_BUNNY:'amethystbunny',
+  AMETHYST_BUNNY_CAGE:'amethystbunnycage',
+  AMETHYST_GEM_LOCK:'amethystgemlock',
+  AMETHYST_GEMCORN:'amethystgemcorn',
+  AMETHYST_GEMSPARK_BLOCK:'amethystgemsparkblock',
+  AMETHYST_GEMSPARK_WALL:'amethystgemsparkwall',
+  AMETHYST_HOOK:'amethysthook',
+  AMETHYST_MINECART:'amethystminecart',
+  AMETHYST_ROBE:'amethystrobe',
+  AMETHYST_SQUIRREL:'amethystsquirrel',
+  AMETHYST_SQUIRREL_CAGE:'amethystsquirrelcage',
+  AMETHYST_STONE_BLOCK:'amethyststoneblock',
+  AMETHYST_STONE_WALL:'amethyststonewall',
+  AMMO_BOX:'ammobox',
+  AMULETOFTHE_NIGHT:'amuletofthenight',
+  ANCHOR:'anchor',
+  ANCIENT_BLUE_BRICK:'ancientbluebrick',
+  ANCIENT_BLUE_BRICK_WALL:'ancientbluebrickwall',
+  ANCIENT_CHISEL:'ancientchisel',
+  ANCIENT_CLOTH:'ancientcloth',
+  ANCIENT_COBALT_BRICK:'ancientcobaltbrick',
+  ANCIENT_COBALT_BRICK_WALL:'ancientcobaltbrickwall',
+  ANCIENT_COBALT_LEGGINGS:'ancientcobaltleggings',
+  ANCIENT_COPPER_BRICK:'ancientcopperbrick',
+  ANCIENT_COPPER_BRICK_WALL:'ancientcopperbrickwall',
+  ANCIENT_GARMENTS:'ancientgarments',
+  ANCIENT_GOLD_BRICK:'ancientgoldbrick',
+  ANCIENT_GOLD_BRICK_WALL:'ancientgoldbrickwall',
+  ANCIENT_GOLD_HELMET:'ancientgoldhelmet',
+  ANCIENT_GREEN_BRICK:'ancientgreenbrick',
+  ANCIENT_GREEN_BRICK_WALL:'ancientgreenbrickwall',
+  ANCIENT_HALLOWED_GREAVES:'ancienthallowedgreaves',
+  ANCIENT_HALLOWED_HEADGEAR:'ancienthallowedheadgear',
+  ANCIENT_HALLOWED_HELMET:'ancienthallowedhelmet',
+  ANCIENT_HALLOWED_HOOD:'ancienthallowedhood',
+  ANCIENT_HALLOWED_PLATE_MAIL:'ancienthallowedplatemail',
+  ANCIENT_HEADDRESS:'ancientheaddress',
+  ANCIENT_HELLSTONE_BRICK:'ancienthellstonebrick',
+  ANCIENT_HELLSTONE_BRICK_WALL:'ancienthellstonebrickwall',
+  ANCIENT_HORN:'ancienthorn',
+  ANCIENT_IRON_HELMET:'ancientironhelmet',
+  ANCIENT_MANIPULATOR:'ancientmanipulator',
+  ANCIENT_MYTHRIL_BRICK:'ancientmythrilbrick',
+  ANCIENT_MYTHRIL_BRICK_WALL:'ancientmythrilbrickwall',
+  ANCIENT_NECRO_HELMET:'ancientnecrohelmet',
+  ANCIENT_OBSIDIAN_BRICK:'ancientobsidianbrick',
+  ANCIENT_OBSIDIAN_BRICK_WALL:'ancientobsidianbrickwall',
+  ANCIENT_PINK_BRICK:'ancientpinkbrick',
+  ANCIENT_PINK_BRICK_WALL:'ancientpinkbrickwall',
+  ANCIENT_SHADOW_GREAVES:'ancientshadowgreaves',
+  ANCIENT_SHADOW_HELMET:'ancientshadowhelmet',
+  ANCIENT_SHADOW_SCALEMAIL:'ancientshadowscalemail',
+  ANCIENT_SILVER_BRICK:'ancientsilverbrick',
+  ANCIENT_SILVER_BRICK_WALL:'ancientsilverbrickwall',
+  ANCIENT_SLACKS:'ancientslacks',
+  ANDREW_SPHINX:'andrewsphinx',
+  ANGEL_HALO:'angelhalo',
+  ANGELFISH:'angelfish',
+  ANGLER_HAT:'anglerhat',
+  ANGLER_PANTS:'anglerpants',
+  ANGLER_TACKLE_BAG:'anglertacklebag',
+  ANGLER_VEST:'anglervest',
+  ANKLETOFTHE_WIND:'ankletofthewind',
+  ANNOUNCEMENT_BOX:'announcementbox',
+  ANTI_PORTAL_BLOCK:'antiportalblock',
+  ANTLION_EGGS:'antlioneggs',
+  APPLE:'apple',
+  APPLE_JUICE:'applejuice',
+  APPLE_PIE_SLICE:'applepieslice',
+  APPRENTICE_BAIT:'apprenticebait',
+  APPRENTICES_HAT:'apprenticeshat',
+  APPRENTICES_ROBE:'apprenticesrobe',
+  APPRENTICES_SCARF:'apprenticesscarf',
+  APPRENTICES_TROUSERS:'apprenticestrousers',
+  APRICOT:'apricot',
+  AQUARIUM_BLOCK:'aquariumblock',
+  AQUARIUM_WALL:'aquariumwall',
+  ARCANE_CRYSTAL:'arcanecrystal',
+  ARCANE_FLOWER:'arcaneflower',
+  ARCANE_RUNE_WALL:'arcanerunewall',
+  ARCHAEOLOGISTS_HAT:'archaeologistshat',
+  ARCHAEOLOGISTS_JACKET:'archaeologistsjacket',
+  ARCHAEOLOGISTS_PANTS:'archaeologistspants',
+  ARCHITECT_GIZMO_PACK:'architectgizmopack',
+  ARGON_MOSS:'argonmoss',
+  ARGON_MOSS_BRICK:'argonmossbrick',
+  ARGON_MOSS_BRICK_WALL:'argonmossbrickwall',
+  ARGON_MOSS_FISHING_BOBBER:'argonmossfishingbobber',
+  ARKHALIS:'arkhalis',
+  ARKHALIS_BODICE:'arkhalisbodice',
+  ARKHALIS_HOOD:'arkhalishood',
+  ARKHALIS_LIGHTWINGS:'arkhalislightwings',
+  ARKHALIS_TIGHTS:'arkhalistights',
+  ARMLET_OF_RUIN:'armletofruin',
+  ARMOR_BRACING:'armorbracing',
+  ARROW_SIGN:'arrowsign',
+  ARTERY:'artery',
+  ARTISAN_LOAF:'artisanloaf',
+  ASH_GRASS_SEEDS:'ashgrassseeds',
+  ASH_WOOD_BREASTPLATE:'ashwoodbreastplate',
+  ASH_WOOD_FENCE:'ashwoodfence',
+  ASH_WOOD_GREAVES:'ashwoodgreaves',
+  ASH_WOOD_HELMET:'ashwoodhelmet',
+  ASPHALT_BLOCK:'asphaltblock',
+  ASTRA_BRICK:'astrabrick',
+  ASTRA_BRICK_WALL:'astrabrickwall',
+  ATLANTIC_COD:'atlanticcod',
+  AURORA_BOREALIS:'auroraborealis',
+  AUTOHAMMER:'autohammer',
+  AXEARANG:'axearang',
+  AZURE_CRATE:'azurecrate',
+  B_B_Q_RIBS:'bbqribs',
+  BABY_GRINCHS_MISCHIEF_WHISTLE:'babygrinchsmischiefwhistle',
+  BACON:'bacon',
+  BADGERS_HAT:'badgershat',
+  BALL_O_FUSE_WIRE:'ballofusewire',
+  BALL_O_HURT:'ballohurt',
+  BALLA_HAT:'ballahat',
+  BALLOON_ANIMAL:'balloonanimal',
+  BALLOON_PUFFERFISH:'balloonpufferfish',
+  BALLOONY_BEADS:'balloonybeads',
+  BAMBOO:'bamboo',
+  BAMBOO_FENCE:'bamboofence',
+  BAMBOO_LEAF:'bambooleaf',
+  BAMBOO_WALL:'bamboowall',
+  BANANA:'banana',
+  BANANA_SPLIT:'bananasplit',
+  BANDAGE_BOY:'bandageboy',
+  BAR:'bar',
+  BAR_STOOL:'barstool',
+  BARREL:'barrel',
+  BATFISH:'batfish',
+  BEACH_BALL:'beachball',
+  BEANIE:'beanie',
+  BEDAZZLED_NECTAR:'bedazzlednectar',
+  BEE_CLOAK:'beecloak',
+  BEE_HAT:'beehat',
+  BEE_HIVE:'beehive',
+  BEE_MINECART:'beeminecart',
+  BEE_PANTS:'beepants',
+  BEE_SHIRT:'beeshirt',
+  BEE_WINGS:'beewings',
+  BEETLE_MINECART:'beetleminecart',
+  BEETLE_WINGS:'beetlewings',
+  BEGUILING_LYRE:'beguilinglyre',
+  BELL:'bell',
+  BENNY_WARHOL:'bennywarhol',
+  BERNIES_BUTTON:'berniesbutton',
+  BERSERKERS_GLOVE:'berserkersglove',
+  BETSYS_EGG:'betsysegg',
+  BETSYS_WINGS:'betsyswings',
+  BIFROST:'bifrost',
+  BINOCULARS:'binoculars',
+  BIOLUMINESCENCE:'bioluminescence',
+  BIOME_HAIR_DYE:'biomehairdye',
+  BIOME_SIGHT_POTION:'biomesightpotion',
+  BIRD:'bird',
+  BIRD_CAGE:'birdcage',
+  BIRDIE_RATTLE:'birdierattle',
+  BITTER_HARVEST:'bitterharvest',
+  BLACK_COUNTERWEIGHT:'blackcounterweight',
+  BLACK_DRAGONFLY:'blackdragonfly',
+  BLACK_DRAGONFLY_JAR:'blackdragonflyjar',
+  BLACK_FAIRY_DUST:'blackfairydust',
+  BLACK_GOLF_BALL:'blackgolfball',
+  BLACK_GRADUATION_CAP:'blackgraduationcap',
+  BLACK_GRADUATION_GOWN:'blackgraduationgown',
+  BLACK_INK:'blackink',
+  BLACK_PAINT:'blackpaint',
+  BLACK_PEARL:'blackpearl',
+  BLACK_SCORPION:'blackscorpion',
+  BLACK_SCORPION_CAGE:'blackscorpioncage',
+  BLACK_STRING:'blackstring',
+  BLACK_STUDDED_SADDLE:'blackstuddedsaddle',
+  BLACK_THREAD:'blackthread',
+  BLACKAND_WHITE_DYE:'blackandwhitedye',
+  BLACKCURRANT:'blackcurrant',
+  BLACKENED_FISH:'blackenedfish',
+  BLACKSMITH_RACK:'blacksmithrack',
+  BLEND_O_MATIC:'blendomatic',
+  BLESSINGFROMTHE_HEAVENS:'blessingfromtheheavens',
+  BLINDFOLD:'blindfold',
+  BLINKROOT:'blinkroot',
+  BLINKROOT_PLANTER_BOX:'blinkrootplanterbox',
+  BLINKROOT_SEEDS:'blinkrootseeds',
+  BLIZZARDINA_BALLOON:'blizzardinaballoon',
+  BLOOD_MOON_COUNTESS:'bloodmooncountess',
+  BLOOD_MOON_MONOLITH:'bloodmoonmonolith',
+  BLOOD_MOON_RISING:'bloodmoonrising',
+  BLOOD_ORANGE:'bloodorange',
+  BLOOD_WATER:'bloodwater',
+  BLOOD_WATER_FOUNTAIN:'bloodwaterfountain',
+  BLOODBATH_DYE:'bloodbathdye',
+  BLOODY_GOBLET:'bloodygoblet',
+  BLOODY_MACHETE:'bloodymachete',
+  BLOODY_MANOWAR:'bloodymanowar',
+  BLOODY_MOSCATO:'bloodymoscato',
+  BLUE_BERRIES:'blueberries',
+  BLUE_BIKINI_BOTTOM:'bluebikinibottom',
+  BLUE_BIKINI_TOP:'bluebikinitop',
+  BLUE_BRICK:'bluebrick',
+  BLUE_CHICKEN_EGG:'bluechickenegg',
+  BLUE_COUNTERWEIGHT:'bluecounterweight',
+  BLUE_DRAGONFLY:'bluedragonfly',
+  BLUE_DRAGONFLY_JAR:'bluedragonflyjar',
+  BLUE_DUNGEON_VASE:'bluedungeonvase',
+  BLUE_DYNASTY_SHINGLES:'bluedynastyshingles',
+  BLUE_DYNASTY_WALL:'bluedynastywall',
+  BLUE_FAIRY:'bluefairy',
+  BLUE_FAIRY_JAR:'bluefairyjar',
+  BLUE_FLAME_DYE:'blueflamedye',
+  BLUE_FLAMEAND_BLACK_DYE:'blueflameandblackdye',
+  BLUE_FLAMEAND_SILVER_DYE:'blueflameandsilverdye',
+  BLUE_FLOWER_SEEDS:'blueflowerseeds',
+  BLUE_GOLF_BALL:'bluegolfball',
+  BLUE_GRADUATION_CAP:'bluegraduationcap',
+  BLUE_GRADUATION_GOWN:'bluegraduationgown',
+  BLUE_HORSESHOE_BALLOON:'bluehorseshoeballoon',
+  BLUE_JAY:'bluejay',
+  BLUE_JAY_CAGE:'bluejaycage',
+  BLUE_JELLYFISH:'bluejellyfish',
+  BLUE_JELLYFISH_JAR:'bluejellyfishjar',
+  BLUE_LIGHT:'bluelight',
+  BLUE_LIGHTS:'bluelights',
+  BLUE_MACAW:'bluemacaw',
+  BLUE_MACAW_CAGE:'bluemacawcage',
+  BLUE_MOON:'bluemoon',
+  BLUE_MOSS:'bluemoss',
+  BLUE_MOSSY_WALL:'bluemossywall',
+  BLUE_PAINT:'bluepaint',
+  BLUE_PIN_FLAG:'bluepinflag',
+  BLUE_PRESENT:'bluepresent',
+  BLUE_PRESSURE_PLATE:'bluepressureplate',
+  BLUE_ROCKET:'bluerocket',
+  BLUE_ROLLER_SKATES:'bluerollerskates',
+  BLUE_SLAB_WALL:'blueslabwall',
+  BLUE_SOLUTION:'bluesolution',
+  BLUE_STAINED_GLASS:'bluestainedglass',
+  BLUE_STARRY_BLOCK:'bluestarryblock',
+  BLUE_STARRY_WALL:'bluestarrywall',
+  BLUE_STREAMER:'bluestreamer',
+  BLUE_STRING:'bluestring',
+  BLUE_TEAM_BLOCK:'blueteamblock',
+  BLUE_TILED_WALL:'bluetiledwall',
+  BLUE_WRENCH:'bluewrench',
+  BLUEAND_BLACK_DYE:'blueandblackdye',
+  BLUEAND_GREEN_LIGHTS:'blueandgreenlights',
+  BLUEAND_SILVER_DYE:'blueandsilverdye',
+  BLUEAND_YELLOW_LIGHTS:'blueandyellowlights',
+  BOMB:'bomb',
+  BOMB_FISH:'bombfish',
+  BONE_BLOCK:'boneblock',
+  BONE_BLOCK_WALL:'boneblockwall',
+  BONE_CAMPFIRE:'bonecampfire',
+  BONE_FEATHER:'bonefeather',
+  BONE_GLOVE:'boneglove',
+  BONE_HELM:'bonehelm',
+  BONE_KEY:'bonekey',
+  BONE_RATTLE:'bonerattle',
+  BONE_WAND:'bonewand',
+  BONE_WARP:'bonewarp',
+  BONE_WELDER:'bonewelder',
+  BONEFISH:'bonefish',
+  BOOSTER_TRACK:'boostertrack',
+  BOREAL_BEAM:'borealbeam',
+  BOREAL_CRATE:'borealcrate',
+  BOREAL_WOOD_BREASTPLATE:'borealwoodbreastplate',
+  BOREAL_WOOD_FENCE:'borealwoodfence',
+  BOREAL_WOOD_GREAVES:'borealwoodgreaves',
+  BOREAL_WOOD_HELMET:'borealwoodhelmet',
+  BOTTOMLESS_HONEY_BUCKET:'bottomlesshoneybucket',
+  BOTTOMLESS_LAVA_BUCKET:'bottomlesslavabucket',
+  BOTTOMLESS_SHIMMER_BUCKET:'bottomlessshimmerbucket',
+  BOTTOMLESS_WATER_BUCKET:'bottomlesswaterbucket',
+  BOULDAND_BASH:'bouldandbash',
+  BOULDER:'boulder',
+  BOULDER_BLOCK:'boulderblock',
+  BOULDER_WALL:'boulderwall',
+  BOUNCY_BOMB:'bouncybomb',
+  BOUNCY_BOULDER:'bouncyboulder',
+  BOUNCY_DYNAMITE:'bouncydynamite',
+  BOUNCY_GLOWSTICK:'bouncyglowstick',
+  BOW_TOPPER:'bowtopper',
+  BOWL:'bowl',
+  BOWLOF_SOUP:'bowlofsoup',
+  BRAININA_JAR:'braininajar',
+  BRAINOF_CONFUSION:'brainofconfusion',
+  BRAMBLE_CRATE:'bramblecrate',
+  BRASILIAN_SKIES:'brasilianskies',
+  BRASS_SHELF:'brassshelf',
+  BRICK_LAYER:'bricklayer',
+  BRIDEOF_FRANKENSTEIN_DRESS:'brideoffrankensteindress',
+  BRIGHT_BLUE_DYE:'brightbluedye',
+  BRIGHT_BROWN_DYE:'brightbrowndye',
+  BRIGHT_CYAN_DYE:'brightcyandye',
+  BRIGHT_GREEN_DYE:'brightgreendye',
+  BRIGHT_LIME_DYE:'brightlimedye',
+  BRIGHT_ORANGE_DYE:'brightorangedye',
+  BRIGHT_PINK_DYE:'brightpinkdye',
+  BRIGHT_PURPLE_DYE:'brightpurpledye',
+  BRIGHT_RED_DYE:'brightreddye',
+  BRIGHT_SILVER_DYE:'brightsilverdye',
+  BRIGHT_SKY_BLUE_DYE:'brightskybluedye',
+  BRIGHT_TEAL_DYE:'brighttealdye',
+  BRIGHT_VIOLET_DYE:'brightvioletdye',
+  BRIGHT_YELLOW_DYE:'brightyellowdye',
+  BROWN_GOLF_BALL:'browngolfball',
+  BROWN_MOSS:'brownmoss',
+  BROWN_MOSSY_WALL:'brownmossywall',
+  BROWN_PAINT:'brownpaint',
+  BROWN_PRESSURE_PLATE:'brownpressureplate',
+  BROWN_SOLUTION:'brownsolution',
+  BROWN_STRING:'brownstring',
+  BROWNAND_BLACK_DYE:'brownandblackdye',
+  BROWNAND_SILVER_DYE:'brownandsilverdye',
+  BUBBLE:'bubble',
+  BUBBLE_MACHINE:'bubblemachine',
+  BUBBLE_WAND:'bubblewand',
+  BUBBLEGUM_BLOCK:'bubblegumblock',
+  BUBBLEGUM_BLOCK_WALL:'bubblegumblockwall',
+  BUCCANEER_BANDANA:'buccaneerbandana',
+  BUCCANEER_PANTALOONS:'buccaneerpantaloons',
+  BUCCANEER_TUNIC:'buccaneertunic',
+  BUDDIES:'buddies',
+  BUG_NET:'bugnet',
+  BUGGY:'buggy',
+  BUGGY_CAGE:'buggycage',
+  BUILDER_POTION:'builderpotion',
+  BUMBLEBEE_TUNA:'bumblebeetuna',
+  BUNDLEOF_BALLOONS:'bundleofballoons',
+  BUNDLEOF_HORSESHOE_BALLOONS:'bundleofhorseshoeballoons',
+  BUNDLED_PARTY_BALLOONS:'bundledpartyballoons',
+  BUNNY:'bunny',
+  BUNNY_CAGE:'bunnycage',
+  BUNNY_CANNON:'bunnycannon',
+  BUNNY_EARS:'bunnyears',
+  BUNNY_HOOD:'bunnyhood',
+  BUNNY_LICENSE:'bunnylicense',
+  BUNNY_STEW:'bunnystew',
+  BUNNY_TAIL:'bunnytail',
+  BUNNYFISH:'bunnyfish',
+  BURNING_HADES_DYE:'burninghadesdye',
+  BURNING_SPIRIT:'burningspirit',
+  BUTCHERS_BLOODSTAINED_APRON:'butchersbloodstainedapron',
+  BUTCHERS_BLOODSTAINED_PANTS:'butchersbloodstainedpants',
+  BUTCHERS_CHAINSAW:'butcherschainsaw',
+  BUTTERFLY_DUST:'butterflydust',
+  C_R_T_MONOLITH:'crtmonolith',
+  CACTUS:'cactus',
+  CACTUS_BREASTPLATE:'cactusbreastplate',
+  CACTUS_HELMET:'cactushelmet',
+  CACTUS_LEGGINGS:'cactusleggings',
+  CAMPFIRE:'campfire',
+  CAN_OF_WORMS:'canofworms',
+  CANDY_APPLE:'candyapple',
+  CANDY_CANE:'candycane',
+  CANDY_CANE_BLOCK:'candycaneblock',
+  CANDY_CANE_HOOK:'candycanehook',
+  CANDY_CANE_WALL:'candycanewall',
+  CANNON:'cannon',
+  CANNONBALL:'cannonball',
+  CAPN_TUNABEARD:'capntunabeard',
+  CAPRICORN_CHESTPLATE:'capricornchestplate',
+  CAPRICORN_HELMET:'capricornhelmet',
+  CAPRICORN_HOOVES:'capricornhooves',
+  CAPRICORN_TAIL:'capricorntail',
+  CAPTAIN_HAT:'captainhat',
+  CAPTAIN_PANTS:'captainpants',
+  CAPTAIN_VEST:'captainvest',
+  CARDINAL:'cardinal',
+  CARDINAL_CAGE:'cardinalcage',
+  CARPENTRY_RACK:'carpentryrack',
+  CARROT:'carrot',
+  CARTONOF_MILK:'cartonofmilk',
+  CASCADE:'cascade',
+  CASTLE_MARSBERG:'castlemarsberg',
+  CAT_CHIME:'catchime',
+  CAT_EARS:'catears',
+  CAT_PANTS:'catpants',
+  CAT_SHIRT:'catshirt',
+  CAT_SWORD:'catsword',
+  CATACOMB:'catacomb',
+  CATALYST_BAND:'catalystband',
+  CATFISH:'catfish',
+  CAULDRON:'cauldron',
+  CAVE_DIRT_WALL:'cavedirtwall',
+  CAVERN_PYLON:'cavernpylon',
+  CAVERN_WATER_FOUNTAIN:'cavernwaterfountain',
+  CELESTIAL_MAGNET:'celestialmagnet',
+  CELESTIAL_STARBOARD:'celestialstarboard',
+  CELESTIAL_WAND:'celestialwand',
+  CENXS_BREASTPLATE:'cenxsbreastplate',
+  CENXS_DRESS:'cenxsdress',
+  CENXS_DRESS_PANTS:'cenxsdresspants',
+  CENXS_LEGGINGS:'cenxsleggings',
+  CENXS_TIARA:'cenxstiara',
+  CENXS_WINGS:'cenxswings',
+  CHAIN_KNIFE:'chainknife',
+  CHALICE:'chalice',
+  CHAOS_CYLINDER:'chaoscylinder',
+  CHAOS_CYLINDER_FULL:'chaoscylinderfull',
+  CHAOS_CYLINDER_RANDOM:'chaoscylinderrandom',
+  CHAOS_CYLINDER_SIMPLE:'chaoscylindersimple',
+  CHAOS_FISH:'chaosfish',
+  CHEESY_PIZZA_POSTER:'cheesypizzaposter',
+  CHEF_HAT:'chefhat',
+  CHEF_PANTS:'chefpants',
+  CHEF_UNIFORM:'chefuniform',
+  CHERRY:'cherry',
+  CHEST_LOCK:'chestlock',
+  CHICKEN_BONES_PANTS:'chickenbonespants',
+  CHICKEN_BONES_ROBE:'chickenbonesrobe',
+  CHICKEN_BONES_VEST:'chickenbonesvest',
+  CHICKEN_BONES_VISOR:'chickenbonesvisor',
+  CHICKEN_BONES_WINGS:'chickenboneswings',
+  CHICKEN_CHARM:'chickencharm',
+  CHICKEN_NUGGET:'chickennugget',
+  CHIK:'chik',
+  CHILLET:'chillet',
+  CHILLET_IGNIS:'chilletignis',
+  CHIMNEY:'chimney',
+  CHIPPYS_CHESTPLATE:'chippyschestplate',
+  CHIPPYS_CLOAK:'chippyscloak',
+  CHIPPYS_CLOAK_INACTIVE:'chippyscloakinactive',
+  CHIPPYS_COUCH:'chippyscouch',
+  CHIPPYS_GREAVES:'chippysgreaves',
+  CHIPPYS_HEADBAND:'chippysheadband',
+  CHIPPYS_HELMET:'chippyshelmet',
+  CHLOROPHYTE_BRICK:'chlorophytebrick',
+  CHLOROPHYTE_BRICK_WALL:'chlorophytebrickwall',
+  CHLOROPHYTE_CHAINSAW:'chlorophytechainsaw',
+  CHLOROPHYTE_CLAYMORE:'chlorophyteclaymore',
+  CHLOROPHYTE_DRILL:'chlorophytedrill',
+  CHLOROPHYTE_DYE:'chlorophytedye',
+  CHLOROPHYTE_EXTRACTINATOR:'chlorophyteextractinator',
+  CHLOROPHYTE_PLATE_MAIL:'chlorophyteplatemail',
+  CHLOROPHYTE_VISOR:'chlorophytevisor',
+  CHOCOLATE_CHIP_COOKIE:'chocolatechipcookie',
+  CHRISTMAS_PUDDING:'christmaspudding',
+  CHRISTMAS_TREE:'christmastree',
+  CHROMATIC_CLOAK:'chromaticcloak',
+  CHUM_BUCKET:'chumbucket',
+  CINDER_WALL:'cinderwall',
+  CLASSIC_ROLLER_SKATES:'classicrollerskates',
+  CLAY_BLOCK:'clayblock',
+  CLENTAMINATOR:'clentaminator',
+  CLOSED_VOID_BAG:'closedvoidbag',
+  CLOTHIERS_JACKET:'clothiersjacket',
+  CLOTHIERS_PANTS:'clothierspants',
+  CLOUDINA_BALLOON:'cloudinaballoon',
+  CLOUDFISH:'cloudfish',
+  CLOWN_HAT:'clownhat',
+  CLOWN_PANTS:'clownpants',
+  CLOWN_SHIRT:'clownshirt',
+  CLOWNFISH:'clownfish',
+  COAL:'coal',
+  COBALT_BRICK:'cobaltbrick',
+  COBALT_BRICK_WALL:'cobaltbrickwall',
+  COBALT_CHAINSAW:'cobaltchainsaw',
+  COBALT_DRILL:'cobaltdrill',
+  COBALT_HAT:'cobalthat',
+  COBALT_NAGINATA:'cobaltnaginata',
+  COCONUT:'coconut',
+  CODE1:'code1',
+  CODE2:'code2',
+  COFFEE:'coffee',
+  COFFIN_MINECART:'coffinminecart',
+  COG:'cog',
+  COG_WALL:'cogwall',
+  COIN_RING:'coinring',
+  COLD_SNAP:'coldsnap',
+  COLD_WATERSINTHE_WHITE_LAND:'coldwatersinthewhiteland',
+  COMBAT_WRENCH:'combatwrench',
+  COMPANION_CUBE:'companioncube',
+  COMPASS_ROSE:'compassrose',
+  CONFETTI:'confetti',
+  CONFETTI_BLOCK:'confettiblock',
+  CONFETTI_CANNON:'confetticannon',
+  CONFETTI_GUN:'confettigun',
+  CONFETTI_WALL:'confettiwall',
+  CONSTELLATION:'constellation',
+  COOKED_MARSHMALLOW:'cookedmarshmallow',
+  COOKED_SHRIMP:'cookedshrimp',
+  COOKING_POT:'cookingpot',
+  COPPER_BRICK:'copperbrick',
+  COPPER_PLATING_WALL:'copperplatingwall',
+  COPPER_WATCH:'copperwatch',
+  CORAL:'coral',
+  CORAL_CAMPFIRE:'coralcampfire',
+  CORALSTONE_BLOCK:'coralstoneblock',
+  CORRUPT_CAMPFIRE:'corruptcampfire',
+  CORRUPT_CRATE:'corruptcrate',
+  CORRUPT_GRASS_WALL:'corruptgrasswall',
+  CORRUPT_GROWTH_WALL:'corruptgrowthwall',
+  CORRUPT_MASS_WALL:'corruptmasswall',
+  CORRUPT_PUSTULE_WALL:'corruptpustulewall',
+  CORRUPT_TENDRIL_WALL:'corrupttendrilwall',
+  CORRUPT_WATER_FOUNTAIN:'corruptwaterfountain',
+  CORRUPTION_KEY:'corruptionkey',
+  CORRUPTION_KEY_MOLD:'corruptionkeymold',
+  COSMIC_EMBER_BRICK:'cosmicemberbrick',
+  COSMIC_EMBER_BRICK_WALL:'cosmicemberbrickwall',
+  COSMIC_SKATEBOARD:'cosmicskateboard',
+  COUCH_GAG:'couchgag',
+  COUNTERCURSE_MANTRA:'countercursemantra',
+  COUNTRY_CLUB_CAP:'countryclubcap',
+  COUNTRY_CLUB_TROUSERS:'countryclubtrousers',
+  COUNTRY_CLUB_VEST:'countryclubvest',
+  COUNTRY_CLUB_VISOR:'countryclubvisor',
+  COW_BELL:'cowbell',
+  COWBOY_HAT:'cowboyhat',
+  COWBOY_JACKET:'cowboyjacket',
+  COWBOY_PANTS:'cowboypants',
+  COZY_WINDOW:'cozywindow',
+  CRACKED_BLUE_BRICK:'crackedbluebrick',
+  CRACKED_DIRT_WALL:'crackeddirtwall',
+  CRACKED_GREEN_BRICK:'crackedgreenbrick',
+  CRACKED_PINK_BRICK:'crackedpinkbrick',
+  CRAGGY_STONE_WALL:'craggystonewall',
+  CREAM_SODA:'creamsoda',
+  CREEPER_EGG:'creeperegg',
+  CREEPER_PANTS:'creeperpants',
+  CREEPER_SHIRT:'creepershirt',
+  CRESCENT_WALL:'crescentwall',
+  CRIMSAND_BLOCK:'crimsandblock',
+  CRIMSANDSTONE_BLOCK:'crimsandstoneblock',
+  CRIMSANDSTONE_WALL:'crimsandstonewall',
+  CRIMSON_ALTAR:'crimsonaltar',
+  CRIMSON_BLISTER_WALL:'crimsonblisterwall',
+  CRIMSON_CAMPFIRE:'crimsoncampfire',
+  CRIMSON_CLOAK:'crimsoncloak',
+  CRIMSON_CRATE:'crimsoncrate',
+  CRIMSON_CRUST_WALL:'crimsoncrustwall',
+  CRIMSON_GRASS_WALL:'crimsongrasswall',
+  CRIMSON_HEART:'crimsonheart',
+  CRIMSON_KEY:'crimsonkey',
+  CRIMSON_KEY_MOLD:'crimsonkeymold',
+  CRIMSON_SCAB_WALL:'crimsonscabwall',
+  CRIMSON_SEEDS:'crimsonseeds',
+  CRIMSON_TEETH_WALL:'crimsonteethwall',
+  CRIMSON_WATER_FOUNTAIN:'crimsonwaterfountain',
+  CRIMSTONE_BRICK:'crimstonebrick',
+  CRIMSTONE_BRICK_WALL:'crimstonebrickwall',
+  CRIMSTONE_WALL:'crimstonewall',
+  CRIMTANE_BRICK:'crimtanebrick',
+  CRIMTANE_BRICK_WALL:'crimtanebrickwall',
+  CRISPY_HONEY_BLOCK:'crispyhoneyblock',
+  CRITTER_SHAMPOO:'crittershampoo',
+  CROSS_GRAVE_MARKER:'crossgravemarker',
+  CROSSED_HEART_NECKLACE:'crossedheartnecklace',
+  CROWS_BEAK:'crowsbeak',
+  CROWNO_DEVOURS_HIS_LUNCH:'crownodevourshislunch',
+  CROWNOS_BREASTPLATE:'crownosbreastplate',
+  CROWNOS_LEGGINGS:'crownosleggings',
+  CROWNOS_WINGS:'crownoswings',
+  CRUMBLING_DIRT_WALL:'crumblingdirtwall',
+  CRUSTOGRAPHY:'crustography',
+  CRYOCORE_BRICK:'cryocorebrick',
+  CRYOCORE_BRICK_WALL:'cryocorebrickwall',
+  CRYSTAL_ASSASSIN_HOOD:'crystalassassinhood',
+  CRYSTAL_ASSASSIN_PANTS:'crystalassassinpants',
+  CRYSTAL_ASSASSIN_SHIRT:'crystalassassinshirt',
+  CRYSTAL_BALL:'crystalball',
+  CRYSTAL_BLOCK:'crystalblock',
+  CRYSTAL_BLOCK_WALL:'crystalblockwall',
+  CRYSTALLIZE:'crystallize',
+  CURSED_BLUE_BRICK_WALL:'cursedbluebrickwall',
+  CURSED_BLUE_SLAB_WALL:'cursedblueslabwall',
+  CURSED_BLUE_TILED_WALL:'cursedbluetiledwall',
+  CURSED_CAMPFIRE:'cursedcampfire',
+  CURSED_FLAME:'cursedflame',
+  CURSED_GREEN_BRICK_WALL:'cursedgreenbrickwall',
+  CURSED_GREEN_SLAB_WALL:'cursedgreenslabwall',
+  CURSED_GREEN_TILED_WALL:'cursedgreentiledwall',
+  CURSED_PINK_BRICK_WALL:'cursedpinkbrickwall',
+  CURSED_PINK_SLAB_WALL:'cursedpinkslabwall',
+  CURSED_PINK_TILED_WALL:'cursedpinktiledwall',
+  CURSED_PIPER_FLUTE:'cursedpiperflute',
+  CURSED_SAINT:'cursedsaint',
+  CURSED_SAPLING:'cursedsapling',
+  CURSEDFISH:'cursedfish',
+  CYAN_GOLF_BALL:'cyangolfball',
+  CYAN_GRADIENT_DYE:'cyangradientdye',
+  CYAN_PAINT:'cyanpaint',
+  CYAN_STRING:'cyanstring',
+  CYAN_WEIGHTED_PRESSURE_PLATE:'cyanweightedpressureplate',
+  CYANAND_BLACK_DYE:'cyanandblackdye',
+  CYANAND_SILVER_DYE:'cyanandsilverdye',
+  CYBORG_HELMET:'cyborghelmet',
+  CYBORG_PANTS:'cyborgpants',
+  CYBORG_SHIRT:'cyborgshirt',
+  D_TOWNS_BREASTPLATE:'dtownsbreastplate',
+  D_TOWNS_HELMET:'dtownshelmet',
+  D_TOWNS_LEGGINGS:'dtownsleggings',
+  D_TOWNS_WINGS:'dtownswings',
+  DAMAGE_BOOSTER:'damagebooster',
+  DAMSELFISH:'damselfish',
+  DANGERSENSE_POTION:'dangersensepotion',
+  DARK_ARTISTS_HAT:'darkartistshat',
+  DARK_ARTISTS_LEGGINGS:'darkartistsleggings',
+  DARK_ARTISTS_ROBES:'darkartistsrobes',
+  DARK_BLUE_SOLUTION:'darkbluesolution',
+  DARK_CELESTIAL_BRICK:'darkcelestialbrick',
+  DARK_CELESTIAL_BRICK_WALL:'darkcelestialbrickwall',
+  DARK_FOREBODINGS:'darkforebodings',
+  DARK_MAGES_TOME:'darkmagestome',
+  DARK_SHARD:'darkshard',
+  DARK_SIDEOFTHE_HALLOW:'darksideofthehallow',
+  DARK_SOUL_REAPER:'darksoulreaper',
+  DARKNESS:'darkness',
+  DART_TRAP:'darttrap',
+  DAYBLOOM_PLANTER_BOX:'daybloomplanterbox',
+  DAYBLOOM_SEEDS:'daybloomseeds',
+  DAYBREAK:'daybreak',
+  DAYLIGHT:'daylight',
+  DEACTIVATED_PROBE:'deactivatedprobe',
+  DEAD_MANS_SWEATER:'deadmanssweater',
+  DEADLAND_COMES_ALIVE:'deadlandcomesalive',
+  DEATHWEED:'deathweed',
+  DEATHWEED_PLANTER_BOX:'deathweedplanterbox',
+  DEATHWEED_SEEDS:'deathweedseeds',
+  DECAY_CHAMBER:'decaychamber',
+  DECORATIVE_COBWEB:'decorativecobweb',
+  DECORATIVE_HEALING_POTION:'decorativehealingpotion',
+  DECORATIVE_MANA_POTION:'decorativemanapotion',
+  DEEP_BLUE_PAINT:'deepbluepaint',
+  DEEP_CYAN_PAINT:'deepcyanpaint',
+  DEEP_GREEN_PAINT:'deepgreenpaint',
+  DEEP_LIME_PAINT:'deeplimepaint',
+  DEEP_ORANGE_PAINT:'deeporangepaint',
+  DEEP_PINK_PAINT:'deeppinkpaint',
+  DEEP_PURPLE_PAINT:'deeppurplepaint',
+  DEEP_RED_PAINT:'deepredpaint',
+  DEEP_SKY_BLUE_PAINT:'deepskybluepaint',
+  DEEP_TEAL_PAINT:'deeptealpaint',
+  DEEP_VIOLET_PAINT:'deepvioletpaint',
+  DEEP_YELLOW_PAINT:'deepyellowpaint',
+  DEERCLOPS_EYEBALL:'deerclopseyeball',
+  DEFENDER_MEDAL:'defendermedal',
+  DEFENDERS_FORGE:'defendersforge',
+  DEFILED_CRATE:'defiledcrate',
+  DEMON_ALTAR:'demonaltar',
+  DEMON_CAMPFIRE:'demoncampfire',
+  DEMON_CONCH:'demonconch',
+  DEMON_HEART:'demonheart',
+  DEMON_HORNS:'demonhorns',
+  DEMONS_EYE:'demonseye',
+  DEMONIC_HELLCART:'demonichellcart',
+  DEMONIC_HELLFISH:'demonichellfish',
+  DEMONITE_BRICK:'demonitebrick',
+  DEMONITE_BRICK_WALL:'demonitebrickwall',
+  DEPTH_HAIR_DYE:'depthhairdye',
+  DERPFISH:'derpfish',
+  DESERT_CAMPFIRE:'desertcampfire',
+  DESERT_FOSSIL_WALL:'desertfossilwall',
+  DESERT_KEY:'desertkey',
+  DESERT_MINECART:'desertminecart',
+  DESERT_WATER_FOUNTAIN:'desertwaterfountain',
+  DETONATOR:'detonator',
+  DEVIL_HORNS:'devilhorns',
+  DIABOLIC_SIGIL:'diabolicsigil',
+  DIAMOND_BUNNY:'diamondbunny',
+  DIAMOND_BUNNY_CAGE:'diamondbunnycage',
+  DIAMOND_GEM_LOCK:'diamondgemlock',
+  DIAMOND_GEMCORN:'diamondgemcorn',
+  DIAMOND_GEMSPARK_BLOCK:'diamondgemsparkblock',
+  DIAMOND_GEMSPARK_WALL:'diamondgemsparkwall',
+  DIAMOND_HOOK:'diamondhook',
+  DIAMOND_MINECART:'diamondminecart',
+  DIAMOND_RING:'diamondring',
+  DIAMOND_ROBE:'diamondrobe',
+  DIAMOND_SQUIRREL:'diamondsquirrel',
+  DIAMOND_SQUIRREL_CAGE:'diamondsquirrelcage',
+  DIAMOND_STONE_BLOCK:'diamondstoneblock',
+  DIAMOND_STONE_WALL:'diamondstonewall',
+  DIGGING_MOLECART:'diggingmolecart',
+  DIGTOISE:'digtoise',
+  DIRT_BLOCK:'dirtblock',
+  DIRT_BOMB:'dirtbomb',
+  DIRT_ROD:'dirtrod',
+  DIRT_WALL:'dirtwall',
+  DIRTFISH:'dirtfish',
+  DISCO_BALL:'discoball',
+  DISCOVER:'discover',
+  DIVINE_CRATE:'divinecrate',
+  DIVINE_EYE:'divineeye',
+  DIVING_GEAR:'divinggear',
+  DIVING_HELMET:'divinghelmet',
+  DIZZYS_RARE_GECKO_CHESTER:'dizzysraregeckochester',
+  DJINNS_CURSE:'djinnscurse',
+  DO_NOT_EATTHE_VILE_MUSHROOM:'donoteatthevilemushroom',
+  DO_NOT_STEPONTHE_GRASS:'donotsteponthegrass',
+  DOG_COLLAR:'dogcollar',
+  DOG_EARS:'dogears',
+  DOG_LICENSE:'doglicense',
+  DOG_TAIL:'dogtail',
+  DOG_WHISTLE:'dogwhistle',
+  DOUBLE_COD:'doublecod',
+  DR_MAN_FLYS_LAB_COAT:'drmanflyslabcoat',
+  DRAGON_EGG:'dragonegg',
+  DRAGON_FRUIT:'dragonfruit',
+  DREADOFTHE_RED_SEA:'dreadoftheredsea',
+  DRILL_CONTAINMENT_UNIT:'drillcontainmentunit',
+  DRUIDIC_SERPENT_CLOAK:'druidicserpentcloak',
+  DRUM_SET:'drumset',
+  DRUMSTICK:'drumstick',
+  DRY_BOMB:'drybomb',
+  DRYAD_COVERINGS:'dryadcoverings',
+  DRYAD_LOINCLOTH:'dryadloincloth',
+  DRYADISQUE:'dryadisque',
+  DUALITY:'duality',
+  DUCK:'duck',
+  DUCK_CAGE:'duckcage',
+  DULL_BLUE_TEAM_BLOCK:'dullblueteamblock',
+  DULL_GREEN_TEAM_BLOCK:'dullgreenteamblock',
+  DULL_PINK_TEAM_BLOCK:'dullpinkteamblock',
+  DULL_RED_TEAM_BLOCK:'dullredteamblock',
+  DULL_WHITE_TEAM_BLOCK:'dullwhiteteamblock',
+  DULL_YELLOW_TEAM_BLOCK:'dullyellowteamblock',
+  DUNERIDER_BOOTS:'duneriderboots',
+  DUNGEON_CRATE:'dungeoncrate',
+  DUNGEON_SHELF:'dungeonshelf',
+  DUSTY_RAWHIDE_SADDLE:'dustyrawhidesaddle',
+  DYE_TRADER_ROBE:'dyetraderrobe',
+  DYE_TRADERS_TURBAN:'dyetradersturban',
+  DYE_VAT:'dyevat',
+  DYNAMITE:'dynamite',
+  DYNAMITE_FISH:'dynamitefish',
+  DYNASTY_BOWL:'dynastybowl',
+  DYNASTY_CUP:'dynastycup',
+  DYNASTY_WOOD:'dynastywood',
+  EASTER_BLOCK:'easterblock',
+  EASTER_WALL:'easterwall',
+  EATER_OF_LIFE:'eateroflife',
+  EATEROF_PLANKTON:'eaterofplankton',
+  EATERS_BONE:'eatersbone',
+  EBONSAND_BLOCK:'ebonsandblock',
+  EBONSANDSTONE_BLOCK:'ebonsandstoneblock',
+  EBONSANDSTONE_WALL:'ebonsandstonewall',
+  EBONSTONE_BRICK:'ebonstonebrick',
+  EBONSTONE_BRICK_WALL:'ebonstonebrickwall',
+  EBONSTONE_WALL:'ebonstonewall',
+  EBONWOOD:'ebonwood',
+  EBONWOOD_BREASTPLATE:'ebonwoodbreastplate',
+  EBONWOOD_FENCE:'ebonwoodfence',
+  EBONWOOD_GREAVES:'ebonwoodgreaves',
+  EBONWOOD_HELMET:'ebonwoodhelmet',
+  ECHO_BLOCK:'echoblock',
+  ECHO_CHAMBER:'echochamber',
+  ECHO_COATING:'echocoating',
+  ECHO_WALL:'echowall',
+  ELDERBERRY:'elderberry',
+  ELF_HAT:'elfhat',
+  ELF_PANTS:'elfpants',
+  ELF_SHIRT:'elfshirt',
+  EMBER_WALL:'emberwall',
+  EMERALD_BUNNY:'emeraldbunny',
+  EMERALD_BUNNY_CAGE:'emeraldbunnycage',
+  EMERALD_GEM_LOCK:'emeraldgemlock',
+  EMERALD_GEMCORN:'emeraldgemcorn',
+  EMERALD_GEMSPARK_BLOCK:'emeraldgemsparkblock',
+  EMERALD_GEMSPARK_WALL:'emeraldgemsparkwall',
+  EMERALD_HOOK:'emeraldhook',
+  EMERALD_MINECART:'emeraldminecart',
+  EMERALD_ROBE:'emeraldrobe',
+  EMERALD_SQUIRREL:'emeraldsquirrel',
+  EMERALD_SQUIRREL_CAGE:'emeraldsquirrelcage',
+  EMERALD_STONE_BLOCK:'emeraldstoneblock',
+  EMERALD_STONE_WALL:'emeraldstonewall',
+  EMPRESS_WINGS:'empresswings',
+  EMPTY_BUCKET:'emptybucket',
+  EMPTY_BULLET:'emptybullet',
+  EMPTY_DROPPER:'emptydropper',
+  ENCHANTED_BOOMERANG:'enchantedboomerang',
+  ENCHANTED_MOONDIAL:'enchantedmoondial',
+  ENCHANTED_NIGHTCRAWLER_CAGE:'enchantednightcrawlercage',
+  ENCHANTED_PIXIE_DUST:'enchantedpixiedust',
+  ENCHANTED_SUNDIAL:'enchantedsundial',
+  ENCHANTED_TIMER:'enchantedtimer',
+  ENCUMBERING_STONE:'encumberingstone',
+  ENGINEERING_HELMET:'engineeringhelmet',
+  ESCARGOT:'escargot',
+  ETERNIA_CRYSTAL:'eterniacrystal',
+  ETERNIA_CRYSTAL_STAND:'eterniacrystalstand',
+  ETHERIAN_MANA:'etherianmana',
+  EUCALYPTUS_SAP:'eucalyptussap',
+  EVIL_PRESENCE:'evilpresence',
+  EXOTIC_CHEW_TOY:'exoticchewtoy',
+  EXPLOSIVE_BUNNY:'explosivebunny',
+  EXPLOSIVE_POWDER:'explosivepowder',
+  EXPLOSIVES:'explosives',
+  EXTENDO_GRIP:'extendogrip',
+  EXTRACTINATOR:'extractinator',
+  EYE_PATCH:'eyepatch',
+  EYEOFTHE_GOLEM:'eyeofthegolem',
+  EYEOFTHE_SUN:'eyeofthesun',
+  EYEBRELLA:'eyebrella',
+  EYEZORHEAD:'eyezorhead',
+  F_P_V_GOGGLES:'fpvgoggles',
+  FACINGTHE_CEREBRAL_MASTERMIND:'facingthecerebralmastermind',
+  FAECORN:'faecorn',
+  FAELING:'faeling',
+  FAELINGINA_BOTTLE:'faelinginabottle',
+  FAIRY_BELL:'fairybell',
+  FAIRY_BOOTS:'fairyboots',
+  FAIRY_CHOKER:'fairychoker',
+  FAIRY_GLOWSTICK:'fairyglowstick',
+  FAIRY_GUIDES:'fairyguides',
+  FAIRY_WINGS:'fairywings',
+  FAKE_UNICORN_HORN:'fakeunicornhorn',
+  FALLEN_STAR_BLOCK:'fallenstarblock',
+  FALLEN_STAR_WALL:'fallenstarwall',
+  FALLEN_STARFISH:'fallenstarfish',
+  FALLEN_TUXEDO_PANTS:'fallentuxedopants',
+  FALLEN_TUXEDO_SHIRT:'fallentuxedoshirt',
+  FAMILIAR_PANTS:'familiarpants',
+  FAMILIAR_SHIRT:'familiarshirt',
+  FAMILIAR_WIG:'familiarwig',
+  FANCY_DISHES:'fancydishes',
+  FANCY_GOLF_CLUB_DRIVER:'fancygolfclubdriver',
+  FANCY_GOLF_CLUB_IRON:'fancygolfclubiron',
+  FANCY_GOLF_CLUB_PUTTER:'fancygolfclubputter',
+  FANCY_GOLF_CLUB_WEDGE:'fancygolfclubwedge',
+  FANGS:'fangs',
+  FART_KART:'fartkart',
+  FARTINA_BALLOON:'fartinaballoon',
+  FAST_CLOCK:'fastclock',
+  FATHEROF_SOMEONE:'fatherofsomeone',
+  FEDORA:'fedora',
+  FERTILIZER:'fertilizer',
+  FESTIVE_WINGS:'festivewings',
+  FEYWOOD:'feywood',
+  FEYWOOD_WALL:'feywoodwall',
+  FEZ:'fez',
+  FILM_PROJECTOR:'filmprojector',
+  FIN_WINGS:'finwings',
+  FINDING_GOLD:'findinggold',
+  FIREBLOSSOM:'fireblossom',
+  FIREBLOSSOM_PLANTER_BOX:'fireblossomplanterbox',
+  FIREBLOSSOM_SEEDS:'fireblossomseeds',
+  FIREFLY:'firefly',
+  FIREFLYINA_BOTTLE:'fireflyinabottle',
+  FIREPLACE:'fireplace',
+  FIRESTARTERS_SKIRT:'firestartersskirt',
+  FIRESTARTERS_SWEATER:'firestarterssweater',
+  FIREWORK_FOUNTAIN:'fireworkfountain',
+  FIREWORKS_BOX:'fireworksbox',
+  FIRST_ENCOUNTER:'firstencounter',
+  FISH:'fish',
+  FISH_BOWL:'fishbowl',
+  FISH_COSTUME_FINSKIRT:'fishcostumefinskirt',
+  FISH_COSTUME_SHIRT:'fishcostumeshirt',
+  FISH_HOOK:'fishhook',
+  FISHEROF_SOULS:'fisherofsouls',
+  FISHERMANS_POCKET_GUIDE:'fishermanspocketguide',
+  FISHING_BOBBER:'fishingbobber',
+  FISHOTRON:'fishotron',
+  FISHRON:'fishron',
+  FLAIROON:'flairoon',
+  FLAMARANG:'flamarang',
+  FLAME_DYE:'flamedye',
+  FLAME_TRAP:'flametrap',
+  FLAME_WAKER_BOOTS:'flamewakerboots',
+  FLAMEAND_BLACK_DYE:'flameandblackdye',
+  FLAMEAND_SILVER_DYE:'flameandsilverdye',
+  FLAMING_MACE:'flamingmace',
+  FLARE_GUN:'flaregun',
+  FLAREFIN_KOI:'flarefinkoi',
+  FLASKOF_CURSED_FLAMES:'flaskofcursedflames',
+  FLASKOF_FIRE:'flaskoffire',
+  FLASKOF_GOLD:'flaskofgold',
+  FLASKOF_ICHOR:'flaskofichor',
+  FLASKOF_NANITES:'flaskofnanites',
+  FLASKOF_PARTY:'flaskofparty',
+  FLASKOF_POISON:'flaskofpoison',
+  FLASKOF_VENOM:'flaskofvenom',
+  FLEDGLING_WINGS:'fledglingwings',
+  FLESH_BLOCK_WALL:'fleshblockwall',
+  FLESH_CLONING_VAT:'fleshcloningvat',
+  FLESHCATCHER:'fleshcatcher',
+  FLINT:'flint',
+  FLINX_FUR_BLOCK:'flinxfurblock',
+  FLINX_FUR_COAT:'flinxfurcoat',
+  FLINX_FUR_WALL:'flinxfurwall',
+  FLIPPER:'flipper',
+  FLORET_PROTECTOR_HELMET:'floretprotectorhelmet',
+  FLORET_PROTECTOR_PANTS:'floretprotectorpants',
+  FLORET_PROTECTOR_SHIRT:'floretprotectorshirt',
+  FLOWER_BOOTS:'flowerboots',
+  FLOWER_POW:'flowerpow',
+  FLOWER_WALL:'flowerwall',
+  FLOWING_MAGMA:'flowingmagma',
+  FLURRY_BOOTS:'flurryboots',
+  FOG_MACHINE:'fogmachine',
+  FOGBOUND_DYE:'fogbounddye',
+  FOOD_BARBARIANS_HORNED_HELM:'foodbarbarianshornedhelm',
+  FOOD_BARBARIANS_SAVAGE_GREAVES:'foodbarbarianssavagegreaves',
+  FOOD_BARBARIANS_TATTERED_DRAGON_WINGS:'foodbarbarianstattereddragonwings',
+  FOOD_BARBARIANS_WILD_WOLF_SPAULDERS:'foodbarbarianswildwolfspaulders',
+  FOOTBALL:'football',
+  FORBIDDEN_BLOCK:'forbiddenblock',
+  FORBIDDEN_LIHZAHRD_BRICK_WALL:'forbiddenlihzahrdbrickwall',
+  FORBIDDEN_ROBES:'forbiddenrobes',
+  FORBIDDEN_WALL:'forbiddenwall',
+  FORE:'fore',
+  FOREST_TROLL:'foresttroll',
+  FORMAT_C:'formatc',
+  FOX_EARS:'foxears',
+  FOX_PANTS:'foxpants',
+  FOX_SHIRT:'foxshirt',
+  FOX_TAIL:'foxtail',
+  FRACTURED_STONE_WALL:'fracturedstonewall',
+  FREEZE_BOMB:'freezebomb',
+  FRIED_EGG:'friedegg',
+  FRIENDLY_BOULDER:'friendlyboulder',
+  FRIENDLY_RAINBOW_BOULDER:'friendlyrainbowboulder',
+  FRIES:'fries',
+  FROG:'frog',
+  FROG_CAGE:'frogcage',
+  FROG_FLIPPER:'frogflipper',
+  FROG_GEAR:'froggear',
+  FROGGLE_BUNWICH:'frogglebunwich',
+  FROGGY_NECKBAND:'froggyneckband',
+  FROST_MINNOW:'frostminnow',
+  FROZEN_BANANA_DAIQUIRI:'frozenbananadaiquiri',
+  FROZEN_CAMPFIRE:'frozencampfire',
+  FROZEN_CRATE:'frozencrate',
+  FROZEN_CROWN:'frozencrown',
+  FROZEN_KEY:'frozenkey',
+  FROZEN_KEY_MOLD:'frozenkeymold',
+  FROZEN_SHIELD:'frozenshield',
+  FROZEN_SLIME_BLOCK:'frozenslimeblock',
+  FROZEN_WINGS:'frozenwings',
+  FRUIT_JUICE:'fruitjuice',
+  FRUIT_SALAD:'fruitsalad',
+  FRUITCAKE_CHAKRAM:'fruitcakechakram',
+  FULL_MOON_SQUEAKY_TOY:'fullmoonsqueakytoy',
+  FUNERAL_COAT:'funeralcoat',
+  FUNERAL_HAT:'funeralhat',
+  FUNERAL_PANTS:'funeralpants',
+  FUZZY_CARROT:'fuzzycarrot',
+  GALAXY_PEARL:'galaxypearl',
+  GANGSTA_HAT:'gangstahat',
+  GARDEN_GNOME:'gardengnome',
+  GARLAND:'garland',
+  GAS_TRAP:'gastrap',
+  GATO_EGG:'gatoegg',
+  GEL_DYE:'geldye',
+  GELATIN_CRYSTAL:'gelatincrystal',
+  GELATINOUS_PILLION:'gelatinouspillion',
+  GENDER_CHANGE_POTION:'genderchangepotion',
+  GENTLEMANS_BEARD:'gentlemansbeard',
+  GENTLEMANS_LONG_BEARD:'gentlemanslongbeard',
+  GENTLEMANS_MAGNIFICENT_BEARD:'gentlemansmagnificentbeard',
+  GENTLEMANS_TROUSERS:'gentlemanstrousers',
+  GENTLEMANS_VEST:'gentlemansvest',
+  GEODE:'geode',
+  GEYSER:'geyser',
+  GHASTLY_GLAIVE:'ghastlyglaive',
+  GHOST_MANIFESTATION:'ghostmanifestation',
+  GHOST_SHIRT:'ghostshirt',
+  GHOSTARS_GARB:'ghostarsgarb',
+  GHOSTARS_INFINITY_EIGHT:'ghostarsinfinityeight',
+  GHOSTARS_SOUL_JAR:'ghostarssouljar',
+  GHOSTARS_TIGHTS:'ghostarstights',
+  GHOSTLY_STINKBUG_BLOCKER:'ghostlystinkbugblocker',
+  GHOULDER:'ghoulder',
+  GI:'gi',
+  GIANT_BOW:'giantbow',
+  GIANT_HARPY_FEATHER:'giantharpyfeather',
+  GIANT_TIKI:'gianttiki',
+  GINGER_BEARD:'gingerbeard',
+  GINGERBREAD_COOKIE:'gingerbreadcookie',
+  GLADIUS:'gladius',
+  GLASS_BOWL:'glassbowl',
+  GLASS_KILN:'glasskiln',
+  GLASS_SLIPPER:'glassslipper',
+  GLOMMERS_FLOWER:'glommersflower',
+  GLORIOUS_NIGHT:'gloriousnight',
+  GLORYOFTHE_FIRE:'gloryofthefire',
+  GLOW_TULIP:'glowtulip',
+  GLOWING_FISHING_BOBBER:'glowingfishingbobber',
+  GLOWING_MUSHROOM:'glowingmushroom',
+  GLOWING_SNAIL:'glowingsnail',
+  GLOWING_SNAIL_CAGE:'glowingsnailcage',
+  GLOWSTICK:'glowstick',
+  GOAT_SKULL:'goatskull',
+  GOATS_TUFT:'goatstuft',
+  GOBLIN_TECH:'goblintech',
+  GOBLINS_PLAYING_POKER:'goblinsplayingpoker',
+  GOBLORC_EARS:'goblorcears',
+  GOGGLES:'goggles',
+  GOLD_BIRD:'goldbird',
+  GOLD_BIRD_CAGE:'goldbirdcage',
+  GOLD_BRICK:'goldbrick',
+  GOLD_BUNNY:'goldbunny',
+  GOLD_BUNNY_CAGE:'goldbunnycage',
+  GOLD_BUTTERFLY:'goldbutterfly',
+  GOLD_BUTTERFLY_JAR:'goldbutterflyjar',
+  GOLD_CROWN:'goldcrown',
+  GOLD_DRAGONFLY:'golddragonfly',
+  GOLD_DRAGONFLY_JAR:'golddragonflyjar',
+  GOLD_DUST:'golddust',
+  GOLD_FISH_BOWL:'goldfishbowl',
+  GOLD_FROG:'goldfrog',
+  GOLD_FROG_CAGE:'goldfrogcage',
+  GOLD_GOLDFISH:'goldgoldfish',
+  GOLD_GRASSHOPPER:'goldgrasshopper',
+  GOLD_GRASSHOPPER_CAGE:'goldgrasshoppercage',
+  GOLD_LADYBUG:'goldladybug',
+  GOLD_LADYBUG_CAGE:'goldladybugcage',
+  GOLD_MOUSE:'goldmouse',
+  GOLD_MOUSE_CAGE:'goldmousecage',
+  GOLD_SEAHORSE:'goldseahorse',
+  GOLD_SEAHORSE_CAGE:'goldseahorsecage',
+  GOLD_SHORTSWORD:'goldshortsword',
+  GOLD_SQUIRREL:'goldsquirrel',
+  GOLD_SQUIRREL_CAGE:'goldsquirrelcage',
+  GOLD_STARRY_BLOCK:'goldstarryblock',
+  GOLD_STARRY_WALL:'goldstarrywall',
+  GOLD_WATCH:'goldwatch',
+  GOLD_WATER_STRIDER:'goldwaterstrider',
+  GOLD_WATER_STRIDER_CAGE:'goldwaterstridercage',
+  GOLD_WORM:'goldworm',
+  GOLD_WORM_CAGE:'goldwormcage',
+  GOLDEN_BUG_NET:'goldenbugnet',
+  GOLDEN_CARP:'goldencarp',
+  GOLDEN_CROSS_GRAVE_MARKER:'goldencrossgravemarker',
+  GOLDEN_DELIGHT:'goldendelight',
+  GOLDEN_GRAVE_MARKER:'goldengravemarker',
+  GOLDEN_GRAVESTONE:'goldengravestone',
+  GOLDEN_HEADSTONE:'goldenheadstone',
+  GOLDEN_LOCK_BOX:'goldenlockbox',
+  GOLDEN_TOMBSTONE:'goldentombstone',
+  GOLDFISH:'goldfish',
+  GOLEM_FIST:'golemfist',
+  GOLF_BALL:'golfball',
+  GOLF_CART_KEYS:'golfcartkeys',
+  GOLF_CLUB_DRIVER:'golfclubdriver',
+  GOLF_CLUB_IRON:'golfclubiron',
+  GOLF_CLUB_PUTTER:'golfclubputter',
+  GOLF_CLUB_WEDGE:'golfclubwedge',
+  GOLF_CUP:'golfcup',
+  GOLF_TEE:'golftee',
+  GOLF_WHISTLE:'golfwhistle',
+  GOOD_MORNING:'goodmorning',
+  GOODIE_BAG:'goodiebag',
+  GOTHIC_BRICK:'gothicbrick',
+  GOTHIC_BRICK_WALL:'gothicbrickwall',
+  GRANITE_COLUMN:'granitecolumn',
+  GRAPE_JUICE:'grapejuice',
+  GRAPEFRUIT:'grapefruit',
+  GRAPES:'grapes',
+  GRASS_WALL:'grasswall',
+  GRASSHOPPER:'grasshopper',
+  GRASSHOPPER_CAGE:'grasshoppercage',
+  GRATE:'grate',
+  GRAVE_MARKER:'gravemarker',
+  GRAVEDIGGER_COAT:'gravediggercoat',
+  GRAVEDIGGER_HAT:'gravediggerhat',
+  GRAVEDIGGERS_SHOVEL:'gravediggersshovel',
+  GRAVESTONE:'gravestone',
+  GRAVEYARD:'graveyard',
+  GRAVITY_GLOBE:'gravityglobe',
+  GRAY_COCKATIEL:'graycockatiel',
+  GRAY_COCKATIEL_CAGE:'graycockatielcage',
+  GRAY_PAINT:'graypaint',
+  GRAY_PRESSURE_PLATE:'graypressureplate',
+  GRAY_STUCCO:'graystucco',
+  GRAY_STUCCO_WALL:'graystuccowall',
+  GRAY_SWIMSHORTS:'grayswimshorts',
+  GREAT_WAVE:'greatwave',
+  GREATER_LUCK_POTION:'greaterluckpotion',
+  GREBE:'grebe',
+  GREBE_CAGE:'grebecage',
+  GREEDY_RING:'greedyring',
+  GREEN_BRICK:'greenbrick',
+  GREEN_BULB:'greenbulb',
+  GREEN_CANDY_CANE_BLOCK:'greencandycaneblock',
+  GREEN_CANDY_CANE_WALL:'greencandycanewall',
+  GREEN_CAP:'greencap',
+  GREEN_COUNTERWEIGHT:'greencounterweight',
+  GREEN_DRAGONFLY:'greendragonfly',
+  GREEN_DRAGONFLY_JAR:'greendragonflyjar',
+  GREEN_DUNGEON_VASE:'greendungeonvase',
+  GREEN_FAIRY:'greenfairy',
+  GREEN_FAIRY_JAR:'greenfairyjar',
+  GREEN_FLAME_DYE:'greenflamedye',
+  GREEN_FLAMEAND_BLACK_DYE:'greenflameandblackdye',
+  GREEN_FLAMEAND_SILVER_DYE:'greenflameandsilverdye',
+  GREEN_GARLAND:'greengarland',
+  GREEN_GOLF_BALL:'greengolfball',
+  GREEN_HORSESHOE_BALLOON:'greenhorseshoeballoon',
+  GREEN_JELLYFISH:'greenjellyfish',
+  GREEN_JELLYFISH_JAR:'greenjellyfishjar',
+  GREEN_LIGHT:'greenlight',
+  GREEN_LIGHTS:'greenlights',
+  GREEN_MOSS:'greenmoss',
+  GREEN_MOSSY_WALL:'greenmossywall',
+  GREEN_MUSHROOM:'greenmushroom',
+  GREEN_PAINT:'greenpaint',
+  GREEN_PIN_FLAG:'greenpinflag',
+  GREEN_PRESENT:'greenpresent',
+  GREEN_PRESSURE_PLATE:'greenpressureplate',
+  GREEN_ROCKET:'greenrocket',
+  GREEN_ROLLER_SKATES:'greenrollerskates',
+  GREEN_SLAB_WALL:'greenslabwall',
+  GREEN_SOLUTION:'greensolution',
+  GREEN_STAINED_GLASS:'greenstainedglass',
+  GREEN_STREAMER:'greenstreamer',
+  GREEN_STRING:'greenstring',
+  GREEN_STUCCO:'greenstucco',
+  GREEN_STUCCO_WALL:'greenstuccowall',
+  GREEN_SWIMSHORTS:'greenswimshorts',
+  GREEN_TEAM_BLOCK:'greenteamblock',
+  GREEN_THREAD:'greenthread',
+  GREEN_TILED_WALL:'greentiledwall',
+  GREEN_WRENCH:'greenwrench',
+  GREENAND_BLACK_DYE:'greenandblackdye',
+  GREENAND_SILVER_DYE:'greenandsilverdye',
+  GREENAND_WHITE_GARLAND:'greenandwhitegarland',
+  GRILLED_SQUIRREL:'grilledsquirrel',
+  GRIM_DYE:'grimdye',
+  GRIM_OLD_BARB:'grimoldbarb',
+  GROX_THE_GREATS_CHESTPLATE:'groxthegreatschestplate',
+  GROX_THE_GREATS_GREAVES:'groxthegreatsgreaves',
+  GROX_THE_GREATS_HORNED_COWL:'groxthegreatshornedcowl',
+  GROX_THE_GREATS_WINGS:'groxthegreatswings',
+  GRUB_SOUP:'grubsoup',
+  GRUBBY:'grubby',
+  GRUBBY_CAGE:'grubbycage',
+  GUARDIAN_GOLEM:'guardiangolem',
+  GUIDE_PICASSO:'guidepicasso',
+  GUIDE_VOODOO_FISH:'guidevoodoofish',
+  GUIDETO_CRITTER_COMPANIONSHIP:'guidetocrittercompanionship',
+  GUIDETO_CRITTER_COMPANIONSHIP_INACTIVE:'guidetocrittercompanionshipinactive',
+  GUIDETO_ENVIRONMENTAL_PRESERVATION:'guidetoenvironmentalpreservation',
+  GUIDETO_ENVIRONMENTAL_PRESERVATION_INACTIVE:'guidetoenvironmentalpreservationinactive',
+  GUIDETO_OLD_WORLD_PARKOUR:'guidetooldworldparkour',
+  GUIDETO_OLD_WORLD_PARKOUR_INACTIVE:'guidetooldworldparkourinactive',
+  GUIDETO_PEACEFUL_COEXISTENCE:'guidetopeacefulcoexistence',
+  GUIDETO_PEACEFUL_COEXISTENCE_INACTIVE:'guidetopeacefulcoexistenceinactive',
+  GUIDETO_PLANT_FIBER_CORDAGE:'guidetoplantfibercordage',
+  GUMMY_WORM:'gummyworm',
+  HADES_DYE:'hadesdye',
+  HAILTOTHE_KING:'hailtotheking',
+  HAIR_DYE_REMOVER:'hairdyeremover',
+  HALLOWS_EVE:'hallowseve',
+  HALLOWED_BRICK:'hallowedbrick',
+  HALLOWED_BRICK_WALL:'hallowedbrickwall',
+  HALLOWED_CAMPFIRE:'hallowedcampfire',
+  HALLOWED_CAVERN_WALL:'hallowedcavernwall',
+  HALLOWED_CRATE:'hallowedcrate',
+  HALLOWED_CROWN:'hallowedcrown',
+  HALLOWED_CRYSTALLINE_WALL:'hallowedcrystallinewall',
+  HALLOWED_GRASS_WALL:'hallowedgrasswall',
+  HALLOWED_GREAVES:'hallowedgreaves',
+  HALLOWED_HOOD:'hallowedhood',
+  HALLOWED_JOUSTING_LANCE:'hallowedjoustinglance',
+  HALLOWED_KEY:'hallowedkey',
+  HALLOWED_KEY_MOLD:'hallowedkeymold',
+  HALLOWED_PRISM_WALL:'hallowedprismwall',
+  HALLOWED_SEEDS:'hallowedseeds',
+  HALLOWED_SHARD_WALL:'hallowedshardwall',
+  HALLOWED_WATER_FOUNTAIN:'hallowedwaterfountain',
+  HAND_EARTH:'handearth',
+  HAND_OF_CREATION:'handofcreation',
+  HAND_WARMER:'handwarmer',
+  HANGING_BLINKROOT:'hangingblinkroot',
+  HANGING_BRAZIER:'hangingbrazier',
+  HANGING_CORRUPT_DEATHWEED:'hangingcorruptdeathweed',
+  HANGING_CRIMSON_DEATHWEED:'hangingcrimsondeathweed',
+  HANGING_DAYBLOOM:'hangingdaybloom',
+  HANGING_FIREBLOSSOM:'hangingfireblossom',
+  HANGING_MOONGLOW:'hangingmoonglow',
+  HANGING_POT:'hangingpot',
+  HANGING_SHIVERTHORN:'hangingshiverthorn',
+  HANGING_SKELETON:'hangingskeleton',
+  HANGING_WATERLEAF:'hangingwaterleaf',
+  HAPPY_LITTLE_TREE:'happylittletree',
+  HARDENED_CRIMSAND_BLOCK:'hardenedcrimsandblock',
+  HARDENED_CRIMSAND_WALL:'hardenedcrimsandwall',
+  HARDENED_EBONSAND_BLOCK:'hardenedebonsandblock',
+  HARDENED_EBONSAND_WALL:'hardenedebonsandwall',
+  HARDENED_PEARLSAND_BLOCK:'hardenedpearlsandblock',
+  HARDENED_PEARLSAND_WALL:'hardenedpearlsandwall',
+  HARDENED_SAND_BLOCK:'hardenedsandblock',
+  HARDENED_SAND_WALL:'hardenedsandwall',
+  HARDY_SADDLE:'hardysaddle',
+  HARPY_BLOCK:'harpyblock',
+  HARPY_CHARM:'harpycharm',
+  HARPY_WALL:'harpywall',
+  HARPYFISH:'harpyfish',
+  HAT_RACK:'hatrack',
+  HAY:'hay',
+  HAY_WALL:'haywall',
+  HEADSTONE:'headstone',
+  HEART_HAIRPIN:'hearthairpin',
+  HEARTLANDS:'heartlands',
+  HEARTREACH_POTION:'heartreachpotion',
+  HEAVENFORGE_BRICK:'heavenforgebrick',
+  HEAVENFORGE_BRICK_WALL:'heavenforgebrickwall',
+  HEAVY_ASSEMBLER:'heavyassembler',
+  HEAVY_SLING:'heavysling',
+  HELIUM_MOSS:'heliummoss',
+  HELIUM_MOSS_BRICK:'heliummossbrick',
+  HELIUM_MOSS_BRICK_WALL:'heliummossbrickwall',
+  HELIUM_MOSS_FISHING_BOBBER:'heliummossfishingbobber',
+  HELL_BUTTERFLY:'hellbutterfly',
+  HELL_BUTTERFLY_JAR:'hellbutterflyjar',
+  HELLFIRE_TREADS:'hellfiretreads',
+  HELLSTONE_CRATE:'hellstonecrate',
+  HELMET_RACK:'helmetrack',
+  HEMATIC_CRATE:'hematiccrate',
+  HEMOPIRANHA:'hemopiranha',
+  HERB_BAG:'herbbag',
+  HERO_SHIELD:'heroshield',
+  HEROS_HAT:'heroshat',
+  HEROS_PANTS:'herospants',
+  HEROS_SHIRT:'herosshirt',
+  HEROES_FROM_ANOTHER_WORLD:'heroesfromanotherworld',
+  HEROICIS_COAT:'heroiciscoat',
+  HEROICIS_HAT:'heroicishat',
+  HEROICIS_PANTS:'heroicispants',
+  HEROICIS_WINGS:'heroiciswings',
+  HEROICIS_WINGS_INACTIVE:'heroiciswingsinactive',
+  HEXXED_BRANCH:'hexxedbranch',
+  HI_TEK_SUNGLASSES:'hiteksunglasses',
+  HIGH_PITCH:'highpitch',
+  HIGH_TEST_FISHING_LINE:'hightestfishingline',
+  HIVE_PACK:'hivepack',
+  HIVE_WALL:'hivewall',
+  HIVE_WAND:'hivewand',
+  HIVE_FIVE:'hivefive',
+  HOLLY:'holly',
+  HOLY_WATER:'holywater',
+  HONEY_ABSORBANT_SPONGE:'honeyabsorbantsponge',
+  HONEY_BALLOON:'honeyballoon',
+  HONEY_BOMB:'honeybomb',
+  HONEY_BUCKET:'honeybucket',
+  HONEY_COMB:'honeycomb',
+  HONEY_CUP:'honeycup',
+  HONEY_DISPENSER:'honeydispenser',
+  HONEYED_GOGGLES:'honeyedgoggles',
+  HONEYFALL_BLOCK:'honeyfallblock',
+  HONEYFALL_WALL:'honeyfallwall',
+  HOOK:'hook',
+  HOOKOF_DISSONANCE:'hookofdissonance',
+  HOTDOG:'hotdog',
+  HUGE_DRAGON_EGG:'hugedragonegg',
+  HUNGERFISH:'hungerfish',
+  HUNTER_CLOAK:'huntercloak',
+  HUNTRESSS_BUCKLER:'huntresssbuckler',
+  HUNTRESSS_JERKIN:'huntresssjerkin',
+  HUNTRESSS_PANTS:'huntressspants',
+  HUNTRESSS_WIG:'huntressswig',
+  ICE_BOOMERANG:'iceboomerang',
+  ICE_BRICK:'icebrick',
+  ICE_BRICK_WALL:'icebrickwall',
+  ICE_CREAM:'icecream',
+  ICE_FEATHER:'icefeather',
+  ICE_MACHINE:'icemachine',
+  ICE_MIRROR:'icemirror',
+  ICE_SKATES:'iceskates',
+  ICHOR_CAMPFIRE:'ichorcampfire',
+  ICHORFISH:'ichorfish',
+  ICY_WATER_FOUNTAIN:'icywaterfountain',
+  ILLUMINANT_COATING:'illuminantcoating',
+  ILLUMINANT_HOOK:'illuminanthook',
+  IMBUING_STATION:'imbuingstation',
+  IMP_FACE:'impface',
+  IMPACT:'impact',
+  INACTIVE_STONE_BLOCK:'inactivestoneblock',
+  INFECTED_SCABBARDFISH:'infectedscabbardfish',
+  INFERNAL_WISP_DYE:'infernalwispdye',
+  INFESTED_SPIDER_WALL:'infestedspiderwall',
+  INFUSED_FERTILIZER:'infusedfertilizer',
+  INLET_PUMP:'inletpump',
+  INNER_TUBE:'innertube',
+  INTENSE_BLUE_FLAME_DYE:'intenseblueflamedye',
+  INTENSE_FLAME_DYE:'intenseflamedye',
+  INTENSE_GREEN_FLAME_DYE:'intensegreenflamedye',
+  INTENSE_RAINBOW_DYE:'intenserainbowdye',
+  INVISIBILITY_POTION:'invisibilitypotion',
+  IRIDESCENT_BRICK:'iridescentbrick',
+  IRIDESCENT_BRICK_WALL:'iridescentbrickwall',
+  IRON_BRICK:'ironbrick',
+  IRON_BRICK_WALL:'ironbrickwall',
+  IRON_FENCE:'ironfence',
+  IRON_SHORTSWORD:'ironshortsword',
+  ITS_SCRAGGLIN_TIME:'itsscragglintime',
+  ITEM_FLASK:'itemflask',
+  ITEM_FRAME:'itemframe',
+  IVY:'ivy',
+  IVY_STONE_WALL:'ivystonewall',
+  JACKELIER:'jackelier',
+  JACKING_SKELETRON:'jackingskeletron',
+  JAWSOF_DEATH:'jawsofdeath',
+  JELLYFISH_BLOCK:'jellyfishblock',
+  JELLYFISH_DIVING_GEAR:'jellyfishdivinggear',
+  JELLYFISH_NECKLACE:'jellyfishnecklace',
+  JELLYFISH_WALL:'jellyfishwall',
+  JESTERS_ARROW:'jestersarrow',
+  JETPACK:'jetpack',
+  JEWELOF_LIGHT:'jeweloflight',
+  JEWELFISH:'jewelfish',
+  JIMS_BREASTPLATE:'jimsbreastplate',
+  JIMS_CAP:'jimscap',
+  JIMS_HELMET:'jimshelmet',
+  JIMS_LEGGINGS:'jimsleggings',
+  JIMS_WINGS:'jimswings',
+  JOJA_COLA:'jojacola',
+  JOURNEYMAN_BAIT:'journeymanbait',
+  JOUSTING_LANCE:'joustinglance',
+  JULIA_BUTTERFLY:'juliabutterfly',
+  JULIA_BUTTERFLY_JAR:'juliabutterflyjar',
+  JUNCTION_BOX:'junctionbox',
+  JUNGLE_CAMPFIRE:'junglecampfire',
+  JUNGLE_CRATE:'junglecrate',
+  JUNGLE_KEY:'junglekey',
+  JUNGLE_KEY_MOLD:'junglekeymold',
+  JUNGLE_ROSE:'junglerose',
+  JUNGLE_TURTLE:'jungleturtle',
+  JUNGLE_TURTLE_CAGE:'jungleturtlecage',
+  JUNGLE_VINE_WALL:'junglevinewall',
+  JUNGLE_WATER_FOUNTAIN:'junglewaterfountain',
+  JUNONIA_SHELL:'junoniashell',
+  KAGUYA:'kaguya',
+  KARATE_TORTOISE_PANTS:'karatetortoisepants',
+  KARATE_TORTOISE_SHIRT:'karatetortoiseshirt',
+  KARGOHS_SUMMON:'kargohssummon',
+  KAZZYMODUS_CHESTPIECE:'kazzymoduschestpiece',
+  KAZZYMODUS_HOOD:'kazzymodushood',
+  KAZZYMODUS_LEGGINGS:'kazzymodusleggings',
+  KAZZYMODUS_WINGS:'kazzymoduswings',
+  KEG:'keg',
+  KIMONO:'kimono',
+  KINSHIP_PEACH:'kinshippeach',
+  KRYPTON_MOSS:'kryptonmoss',
+  KRYPTON_MOSS_BRICK:'kryptonmossbrick',
+  KRYPTON_MOSS_BRICK_WALL:'kryptonmossbrickwall',
+  KRYPTON_MOSS_FISHING_BOBBER:'kryptonmossfishingbobber',
+  KWAD_RACER_DRONE:'kwadracerdrone',
+  LADY_OF_THE_LAKE:'ladyofthelake',
+  LADYBUG:'ladybug',
+  LADYBUG_CAGE:'ladybugcage',
+  LADYBUG_MINECART:'ladybugminecart',
+  LAKEOF_FIRE:'lakeoffire',
+  LAMIA_TAIL:'lamiatail',
+  LAMIA_WRAPS:'lamiawraps',
+  LAND:'land',
+  LAND_MINE:'landmine',
+  LARGE_AMBER:'largeamber',
+  LARGE_AMETHYST:'largeamethyst',
+  LARGE_BAMBOO:'largebamboo',
+  LARGE_BAMBOO_WALL:'largebamboowall',
+  LARGE_DIAMOND:'largediamond',
+  LARGE_EMERALD:'largeemerald',
+  LARGE_RUBY:'largeruby',
+  LARGE_SAPPHIRE:'largesapphire',
+  LARGE_TOPAZ:'largetopaz',
+  LARGE_VOLCANO:'largevolcano',
+  LAVA_ABSORBANT_SPONGE:'lavaabsorbantsponge',
+  LAVA_BOMB:'lavabomb',
+  LAVA_BOULDER:'lavaboulder',
+  LAVA_BUCKET:'lavabucket',
+  LAVA_CHARM:'lavacharm',
+  LAVA_CLOUD:'lavacloud',
+  LAVA_MOSS:'lavamoss',
+  LAVA_MOSS_BRICK:'lavamossbrick',
+  LAVA_MOSS_BRICK_WALL:'lavamossbrickwall',
+  LAVA_MOSS_FISHING_BOBBER:'lavamossfishingbobber',
+  LAVA_SERPENT_BOWL:'lavaserpentbowl',
+  LAVAFALL_BLOCK:'lavafallblock',
+  LAVAFLY:'lavafly',
+  LAVAFLYINA_BOTTLE:'lavaflyinabottle',
+  LAVAPROOF_BUG_NET:'lavaproofbugnet',
+  LAVAPROOF_FISHING_HOOK:'lavaprooffishinghook',
+  LAVAPROOF_TACKLE_BAG:'lavaprooftacklebag',
+  LAWN_FLAMINGO:'lawnflamingo',
+  LAWN_MOWER:'lawnmower',
+  LAYERED_DIRT_WALL:'layereddirtwall',
+  LAZER_BLAZER:'lazerblazer',
+  LAZURES_BARRIER_PLATFORM:'lazuresbarrierplatform',
+  LAZURES_VALKYRIE_CIRCLET:'lazuresvalkyriecirclet',
+  LAZURES_VALKYRIE_CLOAK:'lazuresvalkyriecloak',
+  LEAD_BRICK:'leadbrick',
+  LEAD_BRICK_WALL:'leadbrickwall',
+  LEAD_FENCE:'leadfence',
+  LEAD_SHORTSWORD:'leadshortsword',
+  LEAF_WAND:'leafwand',
+  LEAFY_JUNGLE_WALL:'leafyjunglewall',
+  LEINFORS_EXCESSIVE_STYLE:'leinforsexcessivestyle',
+  LEINFORS_FANCYPANTS:'leinforsfancypants',
+  LEINFORS_HAIR_PROTECTOR:'leinforshairprotector',
+  LEINFORS_LUXURY_SHAMPOO:'leinforsluxuryshampoo',
+  LEINFORS_PREHENSILE_CLOAK:'leinforsprehensilecloak',
+  LEMON:'lemon',
+  LEMONADE:'lemonade',
+  LEOPARD_SKIN:'leopardskin',
+  LEPRECHAUN_HAT:'leprechaunhat',
+  LEPRECHAUN_PANTS:'leprechaunpants',
+  LEPRECHAUN_SHIRT:'leprechaunshirt',
+  LESION_BLOCK_WALL:'lesionblockwall',
+  LESSER_LUCK_POTION:'lesserluckpotion',
+  LESSER_MANA_POTION:'lessermanapotion',
+  LEVER:'lever',
+  LIBRARIAN_BLOCK:'librarianblock',
+  LIBRARIAN_WALL:'librarianwall',
+  LICHEN_STONE_WALL:'lichenstonewall',
+  LIFE_ABOVETHE_SAND:'lifeabovethesand',
+  LIFE_BOOSTER:'lifebooster',
+  LIFE_CRYSTAL:'lifecrystal',
+  LIFE_CRYSTAL_BOULDER:'lifecrystalboulder',
+  LIFE_HAIR_DYE:'lifehairdye',
+  LIFE_PRESERVER:'lifepreserver',
+  LIGHT_SHARD:'lightshard',
+  LIGHTLESS_CHASMS:'lightlesschasms',
+  LIGHTNING_BUG:'lightningbug',
+  LIGHTNING_BUGINA_BOTTLE:'lightningbuginabottle',
+  LIGHTNING_WHELK_SHELL:'lightningwhelkshell',
+  LIHZAHRD_ALTAR:'lihzahrdaltar',
+  LIHZAHRD_BRICK_WALL:'lihzahrdbrickwall',
+  LIHZAHRD_PRESSURE_PLATE:'lihzahrdpressureplate',
+  LILAC_DUSK_DRESS:'lilacduskdress',
+  LILAC_DUSK_HAIRCLIP:'lilacduskhairclip',
+  LILAC_DUSK_SKIRT:'lilacduskskirt',
+  LILITHS_NECKLACE:'lilithsnecklace',
+  LIME_DYE:'limedye',
+  LIME_GOLF_BALL:'limegolfball',
+  LIME_PAINT:'limepaint',
+  LIME_STRING:'limestring',
+  LIMEAND_BLACK_DYE:'limeandblackdye',
+  LIMEAND_SILVER_DYE:'limeandsilverdye',
+  LIQUID_SENSOR_ANY:'liquidsensorany',
+  LIQUID_SENSOR_HONEY:'liquidsensorhoney',
+  LIQUID_SENSOR_LAVA:'liquidsensorlava',
+  LIQUID_SENSOR_WATER:'liquidsensorwater',
+  LITTLE_KINSHIP_PEACH:'littlekinshippeach',
+  LIVING_CURSED_FIRE_BLOCK:'livingcursedfireblock',
+  LIVING_DEMON_FIRE_BLOCK:'livingdemonfireblock',
+  LIVING_FIRE_BLOCK:'livingfireblock',
+  LIVING_FLAME_DYE:'livingflamedye',
+  LIVING_FROST_FIRE_BLOCK:'livingfrostfireblock',
+  LIVING_GORE:'livinggore',
+  LIVING_ICHOR_BLOCK:'livingichorblock',
+  LIVING_LEAF_WALL:'livingleafwall',
+  LIVING_LOOM:'livingloom',
+  LIVING_MAHOGANY_WAND:'livingmahoganywand',
+  LIVING_OCEAN_DYE:'livingoceandye',
+  LIVING_RAINBOW_DYE:'livingrainbowdye',
+  LIVING_ULTRABRIGHT_FIRE_BLOCK:'livingultrabrightfireblock',
+  LIVING_WOOD_WAND:'livingwoodwand',
+  LIZARD_EARS:'lizardears',
+  LIZARD_EGG:'lizardegg',
+  LIZARD_KING:'lizardking',
+  LIZARD_TAIL:'lizardtail',
+  LOBSTER_TAIL:'lobstertail',
+  LOGIC_GATE_A_N_D:'logicgateand',
+  LOGIC_GATE_N_A_N_D:'logicgatenand',
+  LOGIC_GATE_N_O_R:'logicgatenor',
+  LOGIC_GATE_O_R:'logicgateor',
+  LOGIC_GATE_X_N_O_R:'logicgatexnor',
+  LOGIC_GATE_X_O_R:'logicgatexor',
+  LOGIC_SENSOR_DAY:'logicsensorday',
+  LOGIC_SENSOR_NIGHT:'logicsensornight',
+  LOGIC_SENSOR_PLAYER_ABOVE:'logicsensorplayerabove',
+  LOKIS_BREASTPLATE:'lokisbreastplate',
+  LOKIS_DYE:'lokisdye',
+  LOKIS_GREAVES:'lokisgreaves',
+  LOKIS_HELMET:'lokishelmet',
+  LOKIS_WINGS:'lokiswings',
+  LOOM:'loom',
+  LOVEISINTHE_TRASH_SLOT:'loveisinthetrashslot',
+  LUCK_POTION:'luckpotion',
+  LUCKY_CLOVER:'luckyclover',
+  LUMINITE_BRICK:'luminitebrick',
+  LUMINITE_BRICK_WALL:'luminitebrickwall',
+  LUNAS_RUNIC_PIXIE_CLOAK:'lunasrunicpixiecloak',
+  LUNAS_RUNIC_PIXIE_HOOD:'lunasrunicpixiehood',
+  LUNAS_RUNIC_PIXIE_PANTS:'lunasrunicpixiepants',
+  LUNAS_RUNIC_PIXIE_SHIRT:'lunasrunicpixieshirt',
+  LUNAS_RUNIC_PIXIE_WINGS:'lunasrunicpixiewings',
+  LUNAR_CULTIST_HOOD:'lunarcultisthood',
+  LUNAR_CULTIST_ROBE:'lunarcultistrobe',
+  LUNAR_RUST_BRICK:'lunarrustbrick',
+  LUNAR_RUST_BRICK_WALL:'lunarrustbrickwall',
+  MACE:'mace',
+  MAGENTA_FLOWER_SEEDS:'magentaflowerseeds',
+  MAGGOT:'maggot',
+  MAGGOT_CAGE:'maggotcage',
+  MAGIC_CONCH:'magicconch',
+  MAGIC_HAT:'magichat',
+  MAGIC_HONEY_DROPPER:'magichoneydropper',
+  MAGIC_LAVA_DROPPER:'magiclavadropper',
+  MAGIC_SAND_DROPPER:'magicsanddropper',
+  MAGIC_SHIMMER_DROPPER:'magicshimmerdropper',
+  MAGIC_STRING:'magicstring',
+  MAGIC_WATER_DROPPER:'magicwaterdropper',
+  MAGIC_YOYO_BAG:'magicyoyobag',
+  MAGILUMINESCENCE:'magiluminescence',
+  MAGMA_SKULL:'magmaskull',
+  MAGMA_SNAIL:'magmasnail',
+  MAGMA_SNAIL_CAGE:'magmasnailcage',
+  MAGMA_WALL:'magmawall',
+  MAGNET_FLOWER:'magnetflower',
+  MAID_BONNET:'maidbonnet',
+  MAID_DRESS:'maiddress',
+  MAID_SHOES:'maidshoes',
+  MALAISE:'malaise',
+  MALLARD_DUCK:'mallardduck',
+  MALLARD_DUCK_CAGE:'mallardduckcage',
+  MANA_BOOSTER:'manabooster',
+  MANA_CLOAK:'manacloak',
+  MANA_HAIR_DYE:'manahairdye',
+  MANA_REGENERATION_BAND:'manaregenerationband',
+  MANGO:'mango',
+  MANNEQUIN:'mannequin',
+  MARBLE_COLUMN:'marblecolumn',
+  MAROON_GRADUATION_CAP:'maroongraduationcap',
+  MAROON_GRADUATION_GOWN:'maroongraduationgown',
+  MARSHMALLOW:'marshmallow',
+  MARSHMALLOWONA_STICK:'marshmallowonastick',
+  MARTIA_LISA:'martialisa',
+  MARTIAN_CONDUIT_PLATING:'martianconduitplating',
+  MARTIAN_CONDUIT_WALL:'martianconduitwall',
+  MARTIAN_COSTUME_PANTS:'martiancostumepants',
+  MARTIAN_COSTUME_SHIRT:'martiancostumeshirt',
+  MARTIAN_DYE:'martiandye',
+  MARTIAN_HAIR_DYE:'martianhairdye',
+  MARTIAN_UNIFORM_HELMET:'martianuniformhelmet',
+  MARTIAN_UNIFORM_PANTS:'martianuniformpants',
+  MARTIAN_UNIFORM_TORSO:'martianuniformtorso',
+  MASTER_BAIT:'masterbait',
+  MASTER_GAMERS_JACKET:'mastergamersjacket',
+  MASTER_GAMERS_PANTS:'mastergamerspants',
+  MEAN_GOBLINS_SPIKES:'meangoblinsspikes',
+  MEAT_GRINDER:'meatgrinder',
+  MECHANICS_ROD:'mechanicsrod',
+  MECHANICAL_BATTERY_PIECE:'mechanicalbatterypiece',
+  MECHANICAL_CART:'mechanicalcart',
+  MECHANICAL_LENS:'mechanicallens',
+  MECHANICAL_RULER:'mechanicalruler',
+  MECHANICAL_WAGON_PIECE:'mechanicalwagonpiece',
+  MECHANICAL_WHEEL_PIECE:'mechanicalwheelpiece',
+  MEDICATED_BANDAGE:'medicatedbandage',
+  MEGAPHONE:'megaphone',
+  MEOWMERE_MINECART:'meowmereminecart',
+  MERCURY_BRICK:'mercurybrick',
+  MERCURY_BRICK_WALL:'mercurybrickwall',
+  MERMAID_ADORNMENT:'mermaidadornment',
+  MERMAID_TAIL:'mermaidtail',
+  METAL_SHELF:'metalshelf',
+  METEOR_SUIT:'meteorsuit',
+  METEORITE_BRICK:'meteoritebrick',
+  METEORITE_BRICK_WALL:'meteoritebrickwall',
+  MIDNIGHT_CONFETTI_BLOCK:'midnightconfettiblock',
+  MIDNIGHT_CONFETTI_WALL:'midnightconfettiwall',
+  MIDNIGHT_RAINBOW_DYE:'midnightrainbowdye',
+  MIDNIGHT_SUN:'midnightsun',
+  MILKSHAKE:'milkshake',
+  MINECARP:'minecarp',
+  MINECART:'minecart',
+  MINECART_TRACK:'minecarttrack',
+  MINECART_UPGRADE_KIT:'minecartupgradekit',
+  MINI_VOLCANO:'minivolcano',
+  MINING_HELMET:'mininghelmet',
+  MINING_PANTS:'miningpants',
+  MINING_SHIRT:'miningshirt',
+  MIRAGE_CRATE:'miragecrate',
+  MIRAGE_DYE:'miragedye',
+  MIRAGE_FISH:'miragefish',
+  MITEY_TITEY:'miteytitey',
+  MOBIUS_STRIP:'mobiusstrip',
+  MOLLUSK_WHISTLE:'molluskwhistle',
+  MOLTEN_LEGION_FLAG:'moltenlegionflag',
+  MOLTEN_SKULL_ROSE:'moltenskullrose',
+  MONARCH_BUTTERFLY:'monarchbutterfly',
+  MONARCH_BUTTERFLY_JAR:'monarchbutterflyjar',
+  MONEY_HAIR_DYE:'moneyhairdye',
+  MONEY_TROUGH:'moneytrough',
+  MONKS_BELT:'monksbelt',
+  MONKS_BUSHY_BROW_BALD_CAP:'monksbushybrowbaldcap',
+  MONKS_PANTS:'monkspants',
+  MONKS_SHIRT:'monksshirt',
+  MONSTER_LASAGNA:'monsterlasagna',
+  MONSTER_MEAT:'monstermeat',
+  MOON_GLOBE:'moonglobe',
+  MOON_LORD_LEGS:'moonlordlegs',
+  MOON_LORD_TORSO:'moonlordtorso',
+  MOON_SHELL:'moonshell',
+  MOONGLOW:'moonglow',
+  MOONGLOW_PLANTER_BOX:'moonglowplanterbox',
+  MOONGLOW_SEEDS:'moonglowseeds',
+  MOONMAN_COMPANY:'moonmancompany',
+  MOONPLATE_BLOCK:'moonplateblock',
+  MORBID_CURIOSITY:'morbidcuriosity',
+  MORNING_HUNT:'morninghunt',
+  MOTTLED_STONE_WALL:'mottledstonewall',
+  MOUSE:'mouse',
+  MOUSE_CAGE:'mousecage',
+  MRS_CLAUS_HAT:'mrsclaushat',
+  MRS_CLAUS_HEELS:'mrsclausheels',
+  MRS_CLAUS_SHIRT:'mrsclausshirt',
+  MUD_BALL:'mudball',
+  MUD_BLOCK:'mudblock',
+  MUD_BUD:'mudbud',
+  MUD_WALL:'mudwall',
+  MUDFISH:'mudfish',
+  MUDSTONE_BRICK:'mudstonebrick',
+  MUDSTONE_BRICK_WALL:'mudstonebrickwall',
+  MUG:'mug',
+  MULTICOLOR_WRENCH:'multicolorwrench',
+  MULTICOLORED_BULB:'multicoloredbulb',
+  MULTICOLORED_LIGHTS:'multicoloredlights',
+  MULTICOLORED_STAINED_GLASS:'multicoloredstainedglass',
+  MUMMY_PANTS:'mummypants',
+  MUMMY_SHIRT:'mummyshirt',
+  MUSHROOM_BEAM:'mushroombeam',
+  MUSHROOM_CAMPFIRE:'mushroomcampfire',
+  MUSHROOM_CAP:'mushroomcap',
+  MUSHROOM_HAT:'mushroomhat',
+  MUSHROOM_PANTS:'mushroompants',
+  MUSHROOM_PYLON:'mushroompylon',
+  MUSHROOM_VEST:'mushroomvest',
+  MUTANT_FLINXFIN:'mutantflinxfin',
+  MY_SON:'myson',
+  MYSTERIOUS_CAPE:'mysteriouscape',
+  MYSTIC_ARTS_SASH:'mysticartssash',
+  MYSTIC_ROBE:'mysticrobe',
+  MYTHRIL_BRICK:'mythrilbrick',
+  MYTHRIL_BRICK_WALL:'mythrilbrickwall',
+  MYTHRIL_CHAINMAIL:'mythrilchainmail',
+  MYTHRIL_CHAINSAW:'mythrilchainsaw',
+  MYTHRIL_CRATE:'mythrilcrate',
+  MYTHRIL_DRILL:'mythrildrill',
+  MYTHRIL_GREAVES:'mythrilgreaves',
+  MYTHRIL_HALBERD:'mythrilhalberd',
+  MYTHRIL_HAT:'mythrilhat',
+  MYTHRIL_HOOD:'mythrilhood',
+  NACHOS:'nachos',
+  NANITES:'nanites',
+  NATURAL_DIRT_WALL:'naturaldirtwall',
+  NATURES_GIFT:'naturesgift',
+  NAZAR:'nazar',
+  NEBULA_BRICK:'nebulabrick',
+  NEBULA_BRICK_WALL:'nebulabrickwall',
+  NEBULA_CHAINSAW:'nebulachainsaw',
+  NEBULA_DRILL:'nebuladrill',
+  NEBULA_DYE:'nebuladye',
+  NEBULA_FRAGMENT_BLOCK:'nebulafragmentblock',
+  NEBULA_MANTLE:'nebulamantle',
+  NEBULA_MONOLITH:'nebulamonolith',
+  NECROMANTIC_SIGN:'necromanticsign',
+  NECTAR:'nectar',
+  NEGATIVE_DYE:'negativedye',
+  NEGATIVE_PAINT:'negativepaint',
+  NEON_MOSS:'neonmoss',
+  NEON_MOSS_BRICK:'neonmossbrick',
+  NEON_MOSS_BRICK_WALL:'neonmossbrickwall',
+  NEON_MOSS_FISHING_BOBBER:'neonmossfishingbobber',
+  NEPTUNES_SHELL:'neptunesshell',
+  NEVERMORE:'nevermore',
+  NIGHT_VISION_HELMET:'nightvisionhelmet',
+  NIGHTS_EDGE:'nightsedge',
+  NOT_SO_LOST_IN_PARADISE:'notsolostinparadise',
+  NOTA_KIDNORA_SQUID:'notakidnorasquid',
+  NURSE_HAT:'nursehat',
+  NURSE_LISA:'nurselisa',
+  NURSE_PANTS:'nursepants',
+  NURSE_SHIRT:'nurseshirt',
+  OASIS:'oasis',
+  OASIS_CRATE:'oasiscrate',
+  OASIS_WATER_FOUNTAIN:'oasiswaterfountain',
+  OBELISK:'obelisk',
+  OBSIDIAN_BRICK:'obsidianbrick',
+  OBSIDIAN_CRATE:'obsidiancrate',
+  OBSIDIAN_HORSESHOE:'obsidianhorseshoe',
+  OBSIDIAN_LOCK_BOX:'obsidianlockbox',
+  OBSIDIAN_SKULL_ROSE:'obsidianskullrose',
+  OBSIDIAN_SWORDFISH:'obsidianswordfish',
+  OBSIDIAN_VASE:'obsidianvase',
+  OBSIDIAN_WATER_WALKING_BOOTS:'obsidianwaterwalkingboots',
+  OBSIDIFISH:'obsidifish',
+  OCEAN_CRATE:'oceancrate',
+  OCRAMS_RAZOR:'ocramsrazor',
+  OCULAR_RESONANCE:'ocularresonance',
+  OF_SEAAND_DREAMS:'ofseaanddreams',
+  OFFICE_BLOCK:'officeblock',
+  OFFICE_WALL:'officewall',
+  OFFLINE_AMBER_GEMSPARK_WALL:'offlineambergemsparkwall',
+  OFFLINE_AMETHYST_GEMSPARK_WALL:'offlineamethystgemsparkwall',
+  OFFLINE_DIAMOND_GEMSPARK_WALL:'offlinediamondgemsparkwall',
+  OFFLINE_EMERALD_GEMSPARK_WALL:'offlineemeraldgemsparkwall',
+  OFFLINE_RUBY_GEMSPARK_WALL:'offlinerubygemsparkwall',
+  OFFLINE_SAPPHIRE_GEMSPARK_WALL:'offlinesapphiregemsparkwall',
+  OFFLINE_TOPAZ_GEMSPARK_WALL:'offlinetopazgemsparkwall',
+  OGRES_CLUB:'ogresclub',
+  OIL_RAG_SCONCE:'oilragsconce',
+  OKTOBER:'oktober',
+  OLD_COMPANION_LOCKET:'oldcompanionlocket',
+  OLD_MINER:'oldminer',
+  OLD_SHOE:'oldshoe',
+  OLD_STONE_WALL:'oldstonewall',
+  OMINOUS_PRESENCE:'ominouspresence',
+  ORANGE_DRAGONFLY:'orangedragonfly',
+  ORANGE_DRAGONFLY_JAR:'orangedragonflyjar',
+  ORANGE_GOLF_BALL:'orangegolfball',
+  ORANGE_PAINT:'orangepaint',
+  ORANGE_PRESSURE_PLATE:'orangepressureplate',
+  ORANGE_STAINED_GLASS:'orangestainedglass',
+  ORANGE_STRING:'orangestring',
+  ORANGE_WEIGHTED_PRESSURE_PLATE:'orangeweightedpressureplate',
+  ORANGEAND_BLACK_DYE:'orangeandblackdye',
+  ORANGEAND_SILVER_DYE:'orangeandsilverdye',
+  ORICHALCUM_CHAINSAW:'orichalcumchainsaw',
+  ORICHALCUM_DRILL:'orichalcumdrill',
+  ORICHALCUM_HALBERD:'orichalcumhalberd',
+  ORICHALCUM_HEADGEAR:'orichalcumheadgear',
+  ORNATE_SHADOW_KEY:'ornateshadowkey',
+  OUROBOROS_RING:'ouroborosring',
+  OUTCAST:'outcast',
+  OUTLET_PUMP:'outletpump',
+  OVERGROWN_LIVING_WOOD_WALL:'overgrownlivingwoodwall',
+  OWL:'owl',
+  OWL_CAGE:'owlcage',
+  OYSTER:'oyster',
+  PAD_THAI:'padthai',
+  PAINT_ROLLER:'paintroller',
+  PAINT_SCRAPER:'paintscraper',
+  PAINT_SPRAYER:'paintsprayer',
+  PAINTBRUSH:'paintbrush',
+  PAINTED_ARROW_SIGN:'paintedarrowsign',
+  PAIROF_EYEBALLS:'pairofeyeballs',
+  PAL_METAL_CHESTPLATE:'palmetalchestplate',
+  PAL_METAL_LEGGINGS:'palmetalleggings',
+  PALADINS_HAMMER:'paladinshammer',
+  PALADINS_SHIELD:'paladinsshield',
+  PALLADIUM_CHAINSAW:'palladiumchainsaw',
+  PALLADIUM_COLUMN:'palladiumcolumn',
+  PALLADIUM_COLUMN_WALL:'palladiumcolumnwall',
+  PALLADIUM_DRILL:'palladiumdrill',
+  PALLADIUM_HEADGEAR:'palladiumheadgear',
+  PALLADIUM_PIKE:'palladiumpike',
+  PALM_WOOD_BREASTPLATE:'palmwoodbreastplate',
+  PALM_WOOD_FENCE:'palmwoodfence',
+  PALM_WOOD_GREAVES:'palmwoodgreaves',
+  PALM_WOOD_HELMET:'palmwoodhelmet',
+  PANDA_EARS:'pandaears',
+  PARKA_COAT:'parkacoat',
+  PARKA_HOOD:'parkahood',
+  PARKA_PANTS:'parkapants',
+  PARSEC_PALS:'parsecpals',
+  PARTY_HAIR_DYE:'partyhairdye',
+  PARTY_ROLLER_SKATES:'partyrollerskates',
+  PARTY_WAGON:'partywagon',
+  PEACH:'peach',
+  PEACH_SANGRIA:'peachsangria',
+  PEARLSAND_BLOCK:'pearlsandblock',
+  PEARLSANDSTONE_BLOCK:'pearlsandstoneblock',
+  PEARLSANDSTONE_WALL:'pearlsandstonewall',
+  PEARLSTONE_BRICK:'pearlstonebrick',
+  PEARLSTONE_BRICK_WALL:'pearlstonebrickwall',
+  PEARLSTONE_WALL:'pearlstonewall',
+  PEARLWOOD:'pearlwood',
+  PEARLWOOD_BREASTPLATE:'pearlwoodbreastplate',
+  PEARLWOOD_CRATE:'pearlwoodcrate',
+  PEARLWOOD_FENCE:'pearlwoodfence',
+  PEARLWOOD_GREAVES:'pearlwoodgreaves',
+  PEARLWOOD_HELMET:'pearlwoodhelmet',
+  PEDDLERS_HAT:'peddlershat',
+  PEDDLERS_SATCHEL:'peddlerssatchel',
+  PEDGUINS_HOOD:'pedguinshood',
+  PEDGUINS_JACKET:'pedguinsjacket',
+  PEDGUINS_TROUSERS:'pedguinstrousers',
+  PENGFISH:'pengfish',
+  PENGUIN:'penguin',
+  PENGUIN_CAGE:'penguincage',
+  PHARAOHS_ROBE:'pharaohsrobe',
+  PHASE_DYE:'phasedye',
+  PHASIC_WARP_EJECTOR:'phasicwarpejector',
+  PHO:'pho',
+  PHOENIX_QUIVER:'phoenixquiver',
+  PIECEOF_MOON_SQUID:'pieceofmoonsquid',
+  PIGRON_MINECART:'pigronminecart',
+  PILLAGIN_ME_PIXELS:'pillaginmepixels',
+  PINE_TREE_BLOCK:'pinetreeblock',
+  PINE_TREE_WALL:'pinetreewall',
+  PINE_WOOD:'pinewood',
+  PINE_WOOD_WALL:'pinewoodwall',
+  PINEAPPLE:'pineapple',
+  PINK_BRICK:'pinkbrick',
+  PINK_DUNGEON_VASE:'pinkdungeonvase',
+  PINK_FAIRY:'pinkfairy',
+  PINK_FAIRY_JAR:'pinkfairyjar',
+  PINK_FLOWER_SEEDS:'pinkflowerseeds',
+  PINK_GEL:'pinkgel',
+  PINK_GEL_DYE:'pinkgeldye',
+  PINK_GOLF_BALL:'pinkgolfball',
+  PINK_HORSESHOE_BALLOON:'pinkhorseshoeballoon',
+  PINK_ICE_BLOCK:'pinkiceblock',
+  PINK_JELLYFISH:'pinkjellyfish',
+  PINK_JELLYFISH_JAR:'pinkjellyfishjar',
+  PINK_MAID_BONNET:'pinkmaidbonnet',
+  PINK_MAID_DRESS:'pinkmaiddress',
+  PINK_MAID_SHOES:'pinkmaidshoes',
+  PINK_PAINT:'pinkpaint',
+  PINK_PEARL:'pinkpearl',
+  PINK_SLAB_WALL:'pinkslabwall',
+  PINK_SLIME_BLOCK:'pinkslimeblock',
+  PINK_SNOW_COAT:'pinksnowcoat',
+  PINK_SNOW_HOOD:'pinksnowhood',
+  PINK_SNOW_PANTS:'pinksnowpants',
+  PINK_STREAMER:'pinkstreamer',
+  PINK_STRING:'pinkstring',
+  PINK_TEAM_BLOCK:'pinkteamblock',
+  PINK_THREAD:'pinkthread',
+  PINK_TILED_WALL:'pinktiledwall',
+  PINK_VASE:'pinkvase',
+  PINK_WEIGHTED_PRESSURE_PLATE:'pinkweightedpressureplate',
+  PINKAND_BLACK_DYE:'pinkandblackdye',
+  PINKAND_SILVER_DYE:'pinkandsilverdye',
+  PINSTRIPE_PANTS:'pinstripepants',
+  PIRATE_HAT:'piratehat',
+  PIRATE_PANTS:'piratepants',
+  PIRATE_SHIRT:'pirateshirt',
+  PIXEL_BOX:'pixelbox',
+  PIXIE_DUST:'pixiedust',
+  PIXIE_DYE:'pixiedye',
+  PIXIE_PANTS:'pixiepants',
+  PIXIE_SHIRT:'pixieshirt',
+  PIXIEFISH:'pixiefish',
+  PIZZA:'pizza',
+  PIA_COLADA:'piacolada',
+  PLACE_ABOVETHE_CLOUDS:'placeabovetheclouds',
+  PLAGUEBRINGERS_CLOAK:'plaguebringerscloak',
+  PLAGUEBRINGERS_SKULL:'plaguebringersskull',
+  PLAGUEBRINGERS_TREADS:'plaguebringerstreads',
+  PLANKED_WALL:'plankedwall',
+  PLANTERA_SEEDLING:'planteraseedling',
+  PLATE:'plate',
+  PLATINUM_BRICK:'platinumbrick',
+  PLATINUM_BRICK_WALL:'platinumbrickwall',
+  PLATINUM_CROWN:'platinumcrown',
+  PLATINUM_SHORTSWORD:'platinumshortsword',
+  PLATINUM_WATCH:'platinumwatch',
+  PLUM:'plum',
+  PLUMBERS_HAT:'plumbershat',
+  PLUMBERS_PANTS:'plumberspants',
+  PLUMBERS_SHIRT:'plumbersshirt',
+  POCKET_MIRROR:'pocketmirror',
+  POGO_STICK:'pogostick',
+  POISON_BARB:'poisonbarb',
+  POMEGRANATE:'pomegranate',
+  POO:'poo',
+  POO_BOULDER:'pooboulder',
+  POO_WALL:'poowall',
+  PORKOFTHE_SEA:'porkofthesea',
+  PORTABLE_CEMENT_MIXER:'portablecementmixer',
+  PORTAL_GUN:'portalgun',
+  PORTAL_GUN_STATION:'portalgunstation',
+  POSSESSED_SKULL:'possessedskull',
+  POTATO_CHIPS:'potatochips',
+  POTIONOF_RETURN:'potionofreturn',
+  POTTED_BRIMSTONE_BUSH:'pottedbrimstonebush',
+  POTTED_CRYSTAL_FERN:'pottedcrystalfern',
+  POTTED_CRYSTAL_SPIRAL:'pottedcrystalspiral',
+  POTTED_CRYSTAL_TEARDROP:'pottedcrystalteardrop',
+  POTTED_CRYSTAL_TREE:'pottedcrystaltree',
+  POTTED_EMBER_TENDRILS:'pottedembertendrils',
+  POTTED_FIRE_BRAMBLES:'pottedfirebrambles',
+  POTTED_FOREST_BAMBOO:'pottedforestbamboo',
+  POTTED_FOREST_CEDAR:'pottedforestcedar',
+  POTTED_FOREST_PALM:'pottedforestpalm',
+  POTTED_FOREST_TREE:'pottedforesttree',
+  POTTED_HALLOW_BAMBOO:'pottedhallowbamboo',
+  POTTED_HALLOW_CEDAR:'pottedhallowcedar',
+  POTTED_HALLOW_PALM:'pottedhallowpalm',
+  POTTED_HALLOW_TREE:'pottedhallowtree',
+  POTTED_JUNGLE_BAMBOO:'pottedjunglebamboo',
+  POTTED_JUNGLE_CEDAR:'pottedjunglecedar',
+  POTTED_JUNGLE_PALM:'pottedjunglepalm',
+  POTTED_JUNGLE_TREE:'pottedjungletree',
+  POTTED_LAVA_BULB:'pottedlavabulb',
+  POTTED_MAGMA_PALM:'pottedmagmapalm',
+  POWER_BOMB:'powerbomb',
+  POWER_GLOVE:'powerglove',
+  POWEREDBY_BIRDS:'poweredbybirds',
+  PREHISTORY_PRESERVED:'prehistorypreserved',
+  PREMIUM_GOLF_CLUB_DRIVER:'premiumgolfclubdriver',
+  PREMIUM_GOLF_CLUB_IRON:'premiumgolfclubiron',
+  PREMIUM_GOLF_CLUB_PUTTER:'premiumgolfclubputter',
+  PREMIUM_GOLF_CLUB_WEDGE:'premiumgolfclubwedge',
+  PRESENT:'present',
+  PRESSERATOR:'presserator',
+  PRESSURE_PLATE_TRACK:'pressureplatetrack',
+  PRETTY_MIRROR:'prettymirror',
+  PRETTY_PINK_DRESS:'prettypinkdress',
+  PRETTY_PINK_RIBBON:'prettypinkribbon',
+  PRETTY_PINK_STOCKINGS:'prettypinkstockings',
+  PRINCE_CAPE:'princecape',
+  PRINCE_PANTS:'princepants',
+  PRINCE_UNIFORM:'princeuniform',
+  PRINCESS64:'princess64',
+  PRINCESS_DRESS:'princessdress',
+  PRINCESS_FISH:'princessfish',
+  PRINCESS_HAT:'princesshat',
+  PRINCESS_STYLE:'princessstyle',
+  PRISMATIC_DYE:'prismaticdye',
+  PRISMATIC_LACEWING:'prismaticlacewing',
+  PRISMATIC_LACEWING_JAR:'prismaticlacewingjar',
+  PRISMATIC_PUNCH:'prismaticpunch',
+  PRISMITE:'prismite',
+  PROSPECTOR_HELMET:'prospectorhelmet',
+  PROSPECTOR_PANTS:'prospectorpants',
+  PROSPECTOR_SHIRT:'prospectorshirt',
+  PROST:'prost',
+  PUFFER_SHRIMP:'puffershrimp',
+  PUFFERFISH_CAGE:'pufferfishcage',
+  PUMPKIN_BREASTPLATE:'pumpkinbreastplate',
+  PUMPKIN_HELMET:'pumpkinhelmet',
+  PUMPKIN_LEGGINGS:'pumpkinleggings',
+  PUMPKIN_PANTS:'pumpkinpants',
+  PUMPKIN_SCENTED_CANDLE:'pumpkinscentedcandle',
+  PUMPKIN_SEED:'pumpkinseed',
+  PUMPKIN_SHIRT:'pumpkinshirt',
+  PUMPKIN_WALL:'pumpkinwall',
+  PUPFISH:'pupfish',
+  PUPFISH_BOWL:'pupfishbowl',
+  PURE_WATER_FOUNTAIN:'purewaterfountain',
+  PURITY:'purity',
+  PURPLE_COUNTERWEIGHT:'purplecounterweight',
+  PURPLE_EMPEROR_BUTTERFLY:'purpleemperorbutterfly',
+  PURPLE_EMPEROR_BUTTERFLY_JAR:'purpleemperorbutterflyjar',
+  PURPLE_GOLF_BALL:'purplegolfball',
+  PURPLE_ICE_BLOCK:'purpleiceblock',
+  PURPLE_MOSS:'purplemoss',
+  PURPLE_MOSSY_WALL:'purplemossywall',
+  PURPLE_OOZE_DYE:'purpleoozedye',
+  PURPLE_PAINT:'purplepaint',
+  PURPLE_PIN_FLAG:'purplepinflag',
+  PURPLE_SOLUTION:'purplesolution',
+  PURPLE_STAINED_GLASS:'purplestainedglass',
+  PURPLE_STRING:'purplestring',
+  PURPLE_WEIGHTED_PRESSURE_PLATE:'purpleweightedpressureplate',
+  PURPLEAND_BLACK_DYE:'purpleandblackdye',
+  PURPLEAND_SILVER_DYE:'purpleandsilverdye',
+  PYROCLASTIC_STONE:'pyroclasticstone',
+  QUEENOF_BEES:'queenofbees',
+  RABBIT_PERCH:'rabbitperch',
+  RADIO_THING:'radiothing',
+  RAGGED_BROTHERHOOD_SIGIL:'raggedbrotherhoodsigil',
+  RAIN_CLOUD:'raincloud',
+  RAIN_COAT:'raincoat',
+  RAIN_HAT:'rainhat',
+  RAIN_SONG:'rainsong',
+  RAINBOW_BOULDER:'rainbowboulder',
+  RAINBOW_BRICK:'rainbowbrick',
+  RAINBOW_BRICK_WALL:'rainbowbrickwall',
+  RAINBOW_CAMPFIRE:'rainbowcampfire',
+  RAINBOW_CLOUD:'rainbowcloud',
+  RAINBOW_CURSOR:'rainbowcursor',
+  RAINBOW_GLOWSTICK:'rainbowglowstick',
+  RAINBOW_HAIR_DYE:'rainbowhairdye',
+  RAINBOW_STRING:'rainbowstring',
+  RALLY:'rally',
+  RAM_RUNE:'ramrune',
+  RAMBUTAN:'rambutan',
+  RARE_ENCHANTMENT:'rareenchantment',
+  RAT:'rat',
+  RAT_CAGE:'ratcage',
+  RAVEN_FEATHER:'ravenfeather',
+  RAYNBROS_HOOD:'raynbroshood',
+  RAYNBROS_HOODIE:'raynbroshoodie',
+  RAYNBROS_PANTS:'raynbrospants',
+  RAZORTIP:'razortip',
+  REAPER_HOOD:'reaperhood',
+  REAPER_ROBE:'reaperrobe',
+  REBORN:'reborn',
+  RECON_SCOPE:'reconscope',
+  RED_ADMIRAL_BUTTERFLY:'redadmiralbutterfly',
+  RED_ADMIRAL_BUTTERFLY_JAR:'redadmiralbutterflyjar',
+  RED_BULB:'redbulb',
+  RED_CAPE:'redcape',
+  RED_COUNTERWEIGHT:'redcounterweight',
+  RED_DRAGONFLY:'reddragonfly',
+  RED_DRAGONFLY_JAR:'reddragonflyjar',
+  RED_DYNASTY_SHINGLES:'reddynastyshingles',
+  RED_FLOWER_SEEDS:'redflowerseeds',
+  RED_GARLAND:'redgarland',
+  RED_GOLF_BALL:'redgolfball',
+  RED_HAT:'redhat',
+  RED_ICE_BLOCK:'rediceblock',
+  RED_LIGHT:'redlight',
+  RED_LIGHTS:'redlights',
+  RED_MOSS:'redmoss',
+  RED_MOSSY_WALL:'redmossywall',
+  RED_PAINT:'redpaint',
+  RED_PIN_FLAG:'redpinflag',
+  RED_POTION:'redpotion',
+  RED_PRESSURE_PLATE:'redpressureplate',
+  RED_RIDING_DRESS:'redridingdress',
+  RED_RIDING_HOOD:'redridinghood',
+  RED_RIDING_LEGGINGS:'redridingleggings',
+  RED_ROCKET:'redrocket',
+  RED_SNAPPER:'redsnapper',
+  RED_SOLUTION:'redsolution',
+  RED_SQUIRREL:'redsquirrel',
+  RED_SQUIRREL_CAGE:'redsquirrelcage',
+  RED_STAINED_GLASS:'redstainedglass',
+  RED_STRING:'redstring',
+  RED_STUCCO:'redstucco',
+  RED_STUCCO_WALL:'redstuccowall',
+  RED_SWIMSUIT:'redswimsuit',
+  RED_TEAM_BLOCK:'redteamblock',
+  RED_WRENCH:'redwrench',
+  REDAND_BLACK_DYE:'redandblackdye',
+  REDAND_BLUE_LIGHTS:'redandbluelights',
+  REDAND_GREEN_BULB:'redandgreenbulb',
+  REDAND_GREEN_GARLAND:'redandgreengarland',
+  REDAND_GREEN_LIGHTS:'redandgreenlights',
+  REDAND_SILVER_DYE:'redandsilverdye',
+  REDAND_YELLOW_BULB:'redandyellowbulb',
+  REDAND_YELLOW_LIGHTS:'redandyellowlights',
+  REDS_BREASTPLATE:'redsbreastplate',
+  REDS_HELMET:'redshelmet',
+  REDS_LEGGINGS:'redsleggings',
+  REDS_THROW:'redsthrow',
+  REDS_WINGS:'redswings',
+  REEF_BLOCK:'reefblock',
+  REEF_WALL:'reefwall',
+  REFLECTIVE_COPPER_DYE:'reflectivecopperdye',
+  REFLECTIVE_DYE:'reflectivedye',
+  REFLECTIVE_GOLD_DYE:'reflectivegolddye',
+  REFLECTIVE_METAL_DYE:'reflectivemetaldye',
+  REFLECTIVE_OBSIDIAN_DYE:'reflectiveobsidiandye',
+  REFLECTIVE_SHADES:'reflectiveshades',
+  REFLECTIVE_SILVER_DYE:'reflectivesilverdye',
+  REGAL_DELICACY:'regaldelicacy',
+  REINDEER_ANTLERS:'reindeerantlers',
+  REINFORCED_FISHING_POLE:'reinforcedfishingpole',
+  RELEASE_DOVES:'releasedoves',
+  REMIX:'remix',
+  REMNANTSOF_DEVOTION:'remnantsofdevotion',
+  REPAIRED_LIFE_CRYSTAL:'repairedlifecrystal',
+  REPAIRED_MANA_CRYSTAL:'repairedmanacrystal',
+  REPLICA_CRIMSON_ALTAR:'replicacrimsonaltar',
+  REPLICA_CRIMSON_HEART:'replicacrimsonheart',
+  REPLICA_DEMON_ALTAR:'replicademonaltar',
+  REPLICA_SHADOW_ORB:'replicashadoworb',
+  REQUIEM:'requiem',
+  RESPLENDENT_DESSERT:'resplendentdessert',
+  RESTORATION_SHIELD:'restorationshield',
+  RETRO_MONOLITH:'retromonolith',
+  RICH_MAHOGANY:'richmahogany',
+  RICH_MAHOGANY_BEAM:'richmahoganybeam',
+  RICH_MAHOGANY_BREASTPLATE:'richmahoganybreastplate',
+  RICH_MAHOGANY_FENCE:'richmahoganyfence',
+  RICH_MAHOGANY_GREAVES:'richmahoganygreaves',
+  RICH_MAHOGANY_HELMET:'richmahoganyhelmet',
+  RICH_MAHOGANY_LEAF_WAND:'richmahoganyleafwand',
+  ROASTED_BIRD:'roastedbird',
+  ROASTED_DUCK:'roastedduck',
+  ROBE:'robe',
+  ROBOT_HAT:'robothat',
+  ROBOT_PANTS:'robotpants',
+  ROBOT_SHIRT:'robotshirt',
+  ROBOTIC_SKULL:'roboticskull',
+  ROCK_CANDY:'rockcandy',
+  ROCK_GOLEM_HEAD:'rockgolemhead',
+  ROCK_LOBSTER:'rocklobster',
+  ROCKY_DIRT_WALL:'rockydirtwall',
+  RODOF_DISCORD:'rodofdiscord',
+  RODOF_HARMONY:'rodofharmony',
+  ROLLING_CACTUS:'rollingcactus',
+  ROPE:'rope',
+  ROPE_COIL:'ropecoil',
+  ROUGH_DIRT_WALL:'roughdirtwall',
+  ROYAL_BLOUSE:'royalblouse',
+  ROYAL_DELIGHT:'royaldelight',
+  ROYAL_DRESS:'royaldress',
+  ROYAL_GEL:'royalgel',
+  ROYAL_GILDED_SADDLE:'royalgildedsaddle',
+  ROYAL_GUARDS_HARNESS:'royalguardsharness',
+  ROYAL_ROMANCE:'royalromance',
+  ROYAL_SCEPTER:'royalscepter',
+  ROYAL_TIARA:'royaltiara',
+  RUBBLEMAKER_LARGE:'rubblemakerlarge',
+  RUBBLEMAKER_MEDIUM:'rubblemakermedium',
+  RUBBLEMAKER_SMALL:'rubblemakersmall',
+  RUBY_BUNNY:'rubybunny',
+  RUBY_BUNNY_CAGE:'rubybunnycage',
+  RUBY_GEM_LOCK:'rubygemlock',
+  RUBY_GEMCORN:'rubygemcorn',
+  RUBY_GEMSPARK_BLOCK:'rubygemsparkblock',
+  RUBY_GEMSPARK_WALL:'rubygemsparkwall',
+  RUBY_HOOK:'rubyhook',
+  RUBY_MINECART:'rubyminecart',
+  RUBY_ROBE:'rubyrobe',
+  RUBY_SQUIRREL:'rubysquirrel',
+  RUBY_SQUIRREL_CAGE:'rubysquirrelcage',
+  RUBY_STONE_BLOCK:'rubystoneblock',
+  RUBY_STONE_WALL:'rubystonewall',
+  RULER:'ruler',
+  RUNE_HAT:'runehat',
+  RUNE_ROBE:'runerobe',
+  RUSTED_COMPANY_STANDARD:'rustedcompanystandard',
+  S_W_A_T_HELMET:'swathelmet',
+  SAFE:'safe',
+  SAFEMANS_BLANKET_CAPE:'safemansblanketcape',
+  SAFEMANS_PINK_LEGGINGS:'safemanspinkleggings',
+  SAFEMANS_SUN_DRESS:'safemanssundress',
+  SAFEMANS_SUNNY_DAY:'safemanssunnyday',
+  SAIL:'sail',
+  SAILFISH_BOOTS:'sailfishboots',
+  SAILOR_HAT:'sailorhat',
+  SAILOR_PANTS:'sailorpants',
+  SAILOR_SHIRT:'sailorshirt',
+  SAKE:'sake',
+  SAKURA_SAPLING:'sakurasapling',
+  SAND_BLOCK:'sandblock',
+  SANDCASTLE_BUCKET:'sandcastlebucket',
+  SANDFALL_BLOCK:'sandfallblock',
+  SANDFALL_WALL:'sandfallwall',
+  SANDSTONE_BRICK_WALL:'sandstonebrickwall',
+  SANDSTONE_COLUMN:'sandstonecolumn',
+  SANDSTONE_SLAB:'sandstoneslab',
+  SANDSTORMINA_BALLOON:'sandstorminaballoon',
+  SANTA_HAT:'santahat',
+  SANTA_PANTS:'santapants',
+  SANTA_SHIRT:'santashirt',
+  SAPPHIRE_BUNNY:'sapphirebunny',
+  SAPPHIRE_BUNNY_CAGE:'sapphirebunnycage',
+  SAPPHIRE_GEM_LOCK:'sapphiregemlock',
+  SAPPHIRE_GEMCORN:'sapphiregemcorn',
+  SAPPHIRE_GEMSPARK_BLOCK:'sapphiregemsparkblock',
+  SAPPHIRE_GEMSPARK_WALL:'sapphiregemsparkwall',
+  SAPPHIRE_HOOK:'sapphirehook',
+  SAPPHIRE_MINECART:'sapphireminecart',
+  SAPPHIRE_ROBE:'sapphirerobe',
+  SAPPHIRE_SQUIRREL:'sapphiresquirrel',
+  SAPPHIRE_SQUIRREL_CAGE:'sapphiresquirrelcage',
+  SAPPHIRE_STONE_BLOCK:'sapphirestoneblock',
+  SAPPHIRE_STONE_WALL:'sapphirestonewall',
+  SASHIMI:'sashimi',
+  SAUTEED_FROG_LEGS:'sauteedfroglegs',
+  SAWMILL:'sawmill',
+  SAWTOOTH_SHARK:'sawtoothshark',
+  SCALY_TRUFFLE:'scalytruffle',
+  SCARAB_BOMB:'scarabbomb',
+  SCARAB_FISH:'scarabfish',
+  SCARAB_FISHING_ROD:'scarabfishingrod',
+  SCARECROW_HAT:'scarecrowhat',
+  SCARECROW_PANTS:'scarecrowpants',
+  SCARECROW_SHIRT:'scarecrowshirt',
+  SCARLET_MACAW:'scarletmacaw',
+  SCARLET_MACAW_CAGE:'scarletmacawcage',
+  SCORPIO_FISH:'scorpiofish',
+  SCORPION:'scorpion',
+  SCORPION_CAGE:'scorpioncage',
+  SCOUTS_SLING:'scoutssling',
+  SCRYING_ORB:'scryingorb',
+  SEAFOOD_DINNER:'seafooddinner',
+  SEAGULL:'seagull',
+  SEAGULL_CAGE:'seagullcage',
+  SEAHORSE:'seahorse',
+  SEAHORSE_CAGE:'seahorsecage',
+  SEASHELL:'seashell',
+  SEASHELL_HAIRPIN:'seashellhairpin',
+  SEASIDE_CRATE:'seasidecrate',
+  SEAWEED:'seaweed',
+  SEAWEED_PLANTER:'seaweedplanter',
+  SECRETOFTHE_SANDS:'secretofthesands',
+  SECRETS:'secrets',
+  SEE_THE_WORLD_FOR_WHAT_IT_IS:'seetheworldforwhatitis',
+  SEEDLING:'seedling',
+  SERAPH_NECKLACE:'seraphnecklace',
+  SERGEANT_UNITED_SHIELD:'sergeantunitedshield',
+  SHADEWOOD:'shadewood',
+  SHADEWOOD_BREASTPLATE:'shadewoodbreastplate',
+  SHADEWOOD_FENCE:'shadewoodfence',
+  SHADEWOOD_GREAVES:'shadewoodgreaves',
+  SHADEWOOD_HELMET:'shadewoodhelmet',
+  SHADOW_DYE:'shadowdye',
+  SHADOW_JOUSTING_LANCE:'shadowjoustinglance',
+  SHADOW_PAINT:'shadowpaint',
+  SHADOWFLAME_HADES_DYE:'shadowflamehadesdye',
+  SHARK_BAIT:'sharkbait',
+  SHARKRON_BALLOON:'sharkronballoon',
+  SHARP_SPIKE_BLOCK:'sharpspikeblock',
+  SHARPENING_STATION:'sharpeningstation',
+  SHELL_PILE:'shellpile',
+  SHELLPHONE:'shellphone',
+  SHELLPHONE_HOME:'shellphonehome',
+  SHELLPHONE_OCEAN:'shellphoneocean',
+  SHELLPHONE_SPAWN:'shellphonespawn',
+  SHELLPHONE_UNDERWORLD:'shellphoneunderworld',
+  SHIFTING_PEARLSANDS_DYE:'shiftingpearlsandsdye',
+  SHIFTING_SANDS_DYE:'shiftingsandsdye',
+  SHIMMER_GUN:'shimmergun',
+  SHIMMERFALL_BLOCK:'shimmerfallblock',
+  SHIMMERFALL_WALL:'shimmerfallwall',
+  SHINING_MOON:'shiningmoon',
+  SHINOBI_INFILTRATORS_HELMET:'shinobiinfiltratorshelmet',
+  SHINOBI_INFILTRATORS_PANTS:'shinobiinfiltratorspants',
+  SHINOBI_INFILTRATORS_TORSO:'shinobiinfiltratorstorso',
+  SHINY_RED_BALLOON:'shinyredballoon',
+  SHINY_STONE:'shinystone',
+  SHIPINA_BOTTLE:'shipinabottle',
+  SHIPS_WHEEL:'shipswheel',
+  SHIVERTHORN:'shiverthorn',
+  SHIVERTHORN_PLANTER_BOX:'shiverthornplanterbox',
+  SHIVERTHORN_SEEDS:'shiverthornseeds',
+  SHOE_SPIKES:'shoespikes',
+  SHRIMP:'shrimp',
+  SHRIMP_PO_BOY:'shrimppoboy',
+  SHROOM_MINECART:'shroomminecart',
+  SHROOMERANG:'shroomerang',
+  SHROOMITE_HELMET:'shroomitehelmet',
+  SHROOMITE_PLATING:'shroomiteplating',
+  SHROOMITE_PLATING_WALL:'shroomiteplatingwall',
+  SHRUB_STAR:'shrubstar',
+  SHUCKED_OYSTER:'shuckedoyster',
+  SILENT_FISH:'silentfish',
+  SILK_ROPE:'silkrope',
+  SILK_ROPE_COIL:'silkropecoil',
+  SILLY_BALLOON_MACHINE:'sillyballoonmachine',
+  SILLY_GREEN_BALLOON:'sillygreenballoon',
+  SILLY_GREEN_BALLOON_WALL:'sillygreenballoonwall',
+  SILLY_PINK_BALLOON:'sillypinkballoon',
+  SILLY_PINK_BALLOON_WALL:'sillypinkballoonwall',
+  SILLY_PURPLE_BALLOON:'sillypurpleballoon',
+  SILLY_PURPLE_BALLOON_WALL:'sillypurpleballoonwall',
+  SILLY_SUNFLOWER_BOTTOMS:'sillysunflowerbottoms',
+  SILLY_SUNFLOWER_PETALS:'sillysunflowerpetals',
+  SILLY_SUNFLOWER_TOPS:'sillysunflowertops',
+  SILLY_TIED_BALLOON_GREEN:'sillytiedballoongreen',
+  SILLY_TIED_BALLOON_PINK:'sillytiedballoonpink',
+  SILLY_TIED_BALLOON_PURPLE:'sillytiedballoonpurple',
+  SILLY_TIED_BUNDLEOF_BALLOONS:'sillytiedbundleofballoons',
+  SILT_BLOCK:'siltblock',
+  SILVER_BRACER:'silverbracer',
+  SILVER_BRICK:'silverbrick',
+  SILVER_DYE:'silverdye',
+  SILVER_SHIELD:'silvershield',
+  SILVER_SHORTSWORD:'silvershortsword',
+  SILVER_WATCH:'silverwatch',
+  SILVERAND_BLACK_DYE:'silverandblackdye',
+  SITTING_DUCKS_FISHING_POLE:'sittingducksfishingpole',
+  SKELEHEAD:'skelehead',
+  SKELLINGTON_J_SKELLINGSWORTH:'skellingtonjskellingsworth',
+  SKIPHS_BEAR_BUTT:'skiphsbearbutt',
+  SKIPHS_BLOOD:'skiphsblood',
+  SKIPHS_PAWS:'skiphspaws',
+  SKIPHS_SKIN:'skiphsskin',
+  SKULL:'skull',
+  SKY_BLUE_DYE:'skybluedye',
+  SKY_BLUE_FLOWER:'skyblueflower',
+  SKY_BLUE_GOLF_BALL:'skybluegolfball',
+  SKY_BLUE_PAINT:'skybluepaint',
+  SKY_BLUE_STRING:'skybluestring',
+  SKY_BLUEAND_BLACK_DYE:'skyblueandblackdye',
+  SKY_BLUEAND_SILVER_DYE:'skyblueandsilverdye',
+  SKY_CRATE:'skycrate',
+  SKY_DRAGONS_FURY:'skydragonsfury',
+  SKY_GUARDIAN:'skyguardian',
+  SKY_MILL:'skymill',
+  SLASHERS_MYSTERIOUS_SKULL:'slashersmysteriousskull',
+  SLEEPY_OCTOPOD:'sleepyoctopod',
+  SLICEOF_HELL_CAKE:'sliceofhellcake',
+  SLIME_BLOCK:'slimeblock',
+  SLIME_BLOCK_WALL:'slimeblockwall',
+  SLIME_GUN:'slimegun',
+  SLIME_SPEAR:'slimespear',
+  SLIMEFISH:'slimefish',
+  SLIMY_SADDLE:'slimysaddle',
+  SLUGGY:'sluggy',
+  SLUGGY_CAGE:'sluggycage',
+  SLUSH_BLOCK:'slushblock',
+  SMOKE_BLOCK:'smokeblock',
+  SMOKE_BOMB:'smokebomb',
+  SMOOTH_GRANITE_BLOCK:'smoothgraniteblock',
+  SMOOTH_GRANITE_WALL:'smoothgranitewall',
+  SMOOTH_MARBLE_BLOCK:'smoothmarbleblock',
+  SMOOTH_MARBLE_WALL:'smoothmarblewall',
+  SMOOTH_SANDSTONE:'smoothsandstone',
+  SMOOTH_SANDSTONE_WALL:'smoothsandstonewall',
+  SMOOTHIEOF_DARKNESS:'smoothieofdarkness',
+  SMOULDERING_STONE_WALL:'smoulderingstonewall',
+  SNAIL:'snail',
+  SNAIL_CAGE:'snailcage',
+  SNAKE_BAND:'snakeband',
+  SNAKE_CHARMERS_FLUTE:'snakecharmersflute',
+  SNAKES_I_HATE_SNAKES:'snakesihatesnakes',
+  SNAPPING_STONE:'snappingstone',
+  SNOW_BRICK_WALL:'snowbrickwall',
+  SNOW_CLOUD:'snowcloud',
+  SNOW_COAT:'snowcoat',
+  SNOW_HAT:'snowhat',
+  SNOW_HOOD:'snowhood',
+  SNOW_PANTS:'snowpants',
+  SNOWBALL_LAUNCHER:'snowballlauncher',
+  SNOWFALL_BLOCK:'snowfallblock',
+  SNOWFALL_WALL:'snowfallwall',
+  SNOWFELLAS:'snowfellas',
+  SOARING_INSIGNIA:'soaringinsignia',
+  SOLAR_BRICK:'solarbrick',
+  SOLAR_BRICK_WALL:'solarbrickwall',
+  SOLAR_CULTIST_HOOD:'solarcultisthood',
+  SOLAR_CULTIST_ROBE:'solarcultistrobe',
+  SOLAR_DYE:'solardye',
+  SOLAR_ERUPTION:'solareruption',
+  SOLAR_FLARE_CHAINSAW:'solarflarechainsaw',
+  SOLAR_FLARE_DRILL:'solarflaredrill',
+  SOLAR_FRAGMENT_BLOCK:'solarfragmentblock',
+  SOLAR_MONOLITH:'solarmonolith',
+  SOLIDIFIER:'solidifier',
+  SOMETHING_EVILIS_WATCHING_YOU:'somethingeviliswatchingyou',
+  SORCERER_EMBLEM:'sorcereremblem',
+  SOUL_CAKE:'soulcake',
+  SOULOF_FLIGHTINA_BOTTLE:'soulofflightinabottle',
+  SOULOF_FRIGHTINA_BOTTLE:'souloffrightinabottle',
+  SOULOF_LIGHTINA_BOTTLE:'souloflightinabottle',
+  SOULOF_MIGHTINA_BOTTLE:'soulofmightinabottle',
+  SOULOF_NIGHTINA_BOTTLE:'soulofnightinabottle',
+  SOULOF_SIGHTINA_BOTTLE:'soulofsightinabottle',
+  SPACE_CREATURE_PANTS:'spacecreaturepants',
+  SPACE_CREATURE_SHIRT:'spacecreatureshirt',
+  SPAGHETTI:'spaghetti',
+  SPARKLE_SLIME_BALLOON:'sparkleslimeballoon',
+  SPARKLING_HONEY:'sparklinghoney',
+  SPARKY:'sparky',
+  SPEAR:'spear',
+  SPEAR_RACK:'spearrack',
+  SPEAR_TRAP:'speartrap',
+  SPECTRE_BAR:'spectrebar',
+  SPECTRE_GOGGLES:'spectregoggles',
+  SPECTRE_PAINT_ROLLER:'spectrepaintroller',
+  SPECTRE_PAINT_SCRAPER:'spectrepaintscraper',
+  SPECTRE_PAINTBRUSH:'spectrepaintbrush',
+  SPECTRE_PANTS:'spectrepants',
+  SPECTRE_WINGS:'spectrewings',
+  SPECULAR_FISH:'specularfish',
+  SPEED_HAIR_DYE:'speedhairdye',
+  SPELUNKER_GLOWSTICK:'spelunkerglowstick',
+  SPICY_PEPPER:'spicypepper',
+  SPIDER_BOULDER:'spiderboulder',
+  SPIDER_BREASTPLATE:'spiderbreastplate',
+  SPIDER_EGG:'spideregg',
+  SPIDER_FANG:'spiderfang',
+  SPIDER_GREAVES:'spidergreaves',
+  SPIDER_NEST_BLOCK:'spidernestblock',
+  SPIDER_NEST_WALL:'spidernestwall',
+  SPIDERFISH:'spiderfish',
+  SPIFFO_PLUSH:'spiffoplush',
+  SPIKE:'spike',
+  SPIKE_BLOCK:'spikeblock',
+  SPIKE_WALL:'spikewall',
+  SPIKY_BALL_TRAP:'spikyballtrap',
+  SPOOKY_TWIG:'spookytwig',
+  SPOOKY_WOOD_WALL:'spookywoodwall',
+  SPORE_SAC:'sporesac',
+  SQUIRES_GREAT_HELM:'squiresgreathelm',
+  SQUIRES_GREAVES:'squiresgreaves',
+  SQUIRES_PLATING:'squiresplating',
+  SQUIRES_SHIELD:'squiresshield',
+  SQUIRREL:'squirrel',
+  SQUIRREL_CAGE:'squirrelcage',
+  STAFFOF_REGROWTH:'staffofregrowth',
+  STALACTITE_STONE_WALL:'stalactitestonewall',
+  STALKERS_QUIVER:'stalkersquiver',
+  STAR:'star',
+  STAR_CLOUD:'starcloud',
+  STAR_FRUIT:'starfruit',
+  STAR_HAIRPIN:'starhairpin',
+  STAR_PRINCESS_CROWN:'starprincesscrown',
+  STAR_PRINCESS_DRESS:'starprincessdress',
+  STAR_ROYALE_BRICK:'starroyalebrick',
+  STAR_ROYALE_BRICK_WALL:'starroyalebrickwall',
+  STAR_TOPPER1:'startopper1',
+  STAR_TOPPER2:'startopper2',
+  STAR_TOPPER3:'startopper3',
+  STARINA_BOTTLE:'starinabottle',
+  STARDROP:'stardrop',
+  STARDUST_BRICK:'stardustbrick',
+  STARDUST_BRICK_WALL:'stardustbrickwall',
+  STARDUST_CHAINSAW:'stardustchainsaw',
+  STARDUST_DRILL:'stardustdrill',
+  STARDUST_DYE:'stardustdye',
+  STARDUST_FRAGMENT_BLOCK:'stardustfragmentblock',
+  STARDUST_MONOLITH:'stardustmonolith',
+  STARDUST_PLATE:'stardustplate',
+  STARFISH:'starfish',
+  STARLIGHT:'starlight',
+  STARRY_NIGHT:'starrynight',
+  STEAK:'steak',
+  STEAMPUNK_BOILER:'steampunkboiler',
+  STEAMPUNK_GOGGLES:'steampunkgoggles',
+  STEAMPUNK_HAT:'steampunkhat',
+  STEAMPUNK_MINECART:'steampunkminecart',
+  STEAMPUNK_PANTS:'steampunkpants',
+  STEAMPUNK_SHIRT:'steampunkshirt',
+  STEAMPUNK_WINGS:'steampunkwings',
+  STEP_STOOL:'stepstool',
+  STICKMANVS_TERR_TERR:'stickmanvsterrterr',
+  STICKY_BOMB:'stickybomb',
+  STICKY_DIRT_BOMB:'stickydirtbomb',
+  STICKY_DYNAMITE:'stickydynamite',
+  STICKY_GLOWSTICK:'stickyglowstick',
+  STICKY_POWER_BOMB:'stickypowerbomb',
+  STILL_LIFE:'stilllife',
+  STINGER:'stinger',
+  STINGER_NECKLACE:'stingernecklace',
+  STINKBUG:'stinkbug',
+  STINKBUG_BLOCKER:'stinkbugblocker',
+  STINKBUG_CAGE:'stinkbugcage',
+  STINKFISH:'stinkfish',
+  STOCKADE_CRATE:'stockadecrate',
+  STONE_ACCENT_SLAB:'stoneaccentslab',
+  STONE_BLOCK:'stoneblock',
+  STONE_SLAB:'stoneslab',
+  STONE_SLAB_WALL:'stoneslabwall',
+  STORM_SPEAR:'stormspear',
+  STRANGE_DEAD_FELLOWS:'strangedeadfellows',
+  STRANGE_GLOWING_MUSHROOM:'strangeglowingmushroom',
+  STRANGE_GROWTH:'strangegrowth',
+  STRESS_BALL:'stressball',
+  STRUNG_COUNTERWEIGHT:'strungcounterweight',
+  STUDYOFA_BALLAT_REST:'studyofaballatrest',
+  SUFFICIENTLY_ADVANCED:'sufficientlyadvanced',
+  SUGAR_COOKIE:'sugarcookie',
+  SUGAR_PLUM:'sugarplum',
+  SULPHUR_BUTTERFLY:'sulphurbutterfly',
+  SULPHUR_BUTTERFLY_JAR:'sulphurbutterflyjar',
+  SUMMONING_POTION:'summoningpotion',
+  SUNFLOWER_MINECART:'sunflowerminecart',
+  SUNFLOWERS:'sunflowers',
+  SUNGLASSES:'sunglasses',
+  SUNPLATE_BLOCK:'sunplateblock',
+  SUNSHINEOF_ISRAPONY:'sunshineofisrapony',
+  SUPER_ABSORBANT_SPONGE:'superabsorbantsponge',
+  SUPER_DART_TRAP:'superdarttrap',
+  SUPER_MANA_POTION:'supermanapotion',
+  SUPERHEATED_BLOOD:'superheatedblood',
+  SUPERHERO_COSTUME:'superherocostume',
+  SUPERHERO_TIGHTS:'superherotights',
+  SUSPICIOUS_GRINNING_EYE:'suspiciousgrinningeye',
+  SUSPICIOUS_LOOKING_TENTACLE:'suspiciouslookingtentacle',
+  SUSPICIOUSLY_SPARKLY:'suspiciouslysparkly',
+  SWARM_GRENADE:'swarmgrenade',
+  SWEET_BARB:'sweetbarb',
+  SWEETHEART_NECKLACE:'sweetheartnecklace',
+  SWITCH:'switch',
+  SWORD_RACK:'swordrack',
+  SWORDFISH:'swordfish',
+  T_N_T_BARREL:'tntbarrel',
+  TABLET_FRAGMENT:'tabletfragment',
+  TALL_GATE:'tallgate',
+  TALL_GRASS_SEEDS:'tallgrassseeds',
+  TALLY_COUNTER:'tallycounter',
+  TAM_O_SHANTER:'tamoshanter',
+  TARGET_DUMMY:'targetdummy',
+  TATTERED_BEE_WING:'tatteredbeewing',
+  TATTERED_FAIRY_WINGS:'tatteredfairywings',
+  TAX_COLLECTORS_HAT:'taxcollectorshat',
+  TAX_COLLECTORS_PANTS:'taxcollectorspants',
+  TAX_COLLECTORS_SUIT:'taxcollectorssuit',
+  TEACUP:'teacup',
+  TEAL_DYE:'tealdye',
+  TEAL_GOLF_BALL:'tealgolfball',
+  TEAL_MUSHROOM:'tealmushroom',
+  TEAL_PAINT:'tealpaint',
+  TEAL_PRESSURE_PAD:'tealpressurepad',
+  TEAL_STRING:'tealstring',
+  TEALAND_BLACK_DYE:'tealandblackdye',
+  TEALAND_SILVER_DYE:'tealandsilverdye',
+  TEAM_DYE:'teamdye',
+  TEAM_HAIR_DYE:'teamhairdye',
+  TEAPOT:'teapot',
+  TELEPORTER:'teleporter',
+  TEMPLARS_SLING:'templarssling',
+  TEMPLE_KEY:'templekey',
+  TERRA_BLADE_CHRONICLES:'terrabladechronicles',
+  TERRA_FART_KART:'terrafartkart',
+  TERRAFORMER:'terraformer',
+  TERRAGRIM:'terragrim',
+  TERRARIAN_GOTHIC:'terrariangothic',
+  TERRARIUM:'terrarium',
+  THE_BEHEADEDS_CUIRASS:'thebeheadedscuirass',
+  THE_BEHEADEDS_HEAD:'thebeheadedshead',
+  THE_BEHEADEDS_TROUSERS:'thebeheadedstrousers',
+  THE_BEREAVED:'thebereaved',
+  THE_BLACK_SPOT:'theblackspot',
+  THE_CREATIONOFTHE_GUIDE:'thecreationoftheguide',
+  THE_CURSED_MAN:'thecursedman',
+  THE_DESTROYER:'thedestroyer',
+  THE_DIRTIEST_BLOCK:'thedirtiestblock',
+  THE_DOCTORS_PANTS:'thedoctorspants',
+  THE_DOCTORS_SHIRT:'thedoctorsshirt',
+  THE_DUKE:'theduke',
+  THE_DUPLICITYOF_REFLECTIONS:'theduplicityofreflections',
+  THE_DUTCHMAN:'thedutchman',
+  THE_EYE_SEESTHE_END:'theeyeseestheend',
+  THE_FIRESTARTER:'thefirestarter',
+  THE_FISHOF_CTHULHU:'thefishofcthulhu',
+  THE_GENTLEMAN_SCIENTIST:'thegentlemanscientist',
+  THE_GRAND_DESIGN:'thegranddesign',
+  THE_GUARDIANS_GAZE:'theguardiansgaze',
+  THE_HANGED_MAN:'thehangedman',
+  THE_HORSEMANS_BLADE:'thehorsemansblade',
+  THE_IMPLODER:'theimploder',
+  THE_LANDOF_DECEIVING_LOOKS:'thelandofdeceivinglooks',
+  THE_MEATBALL:'themeatball',
+  THE_MERCHANT:'themerchant',
+  THE_PERSISTENCYOF_EYES:'thepersistencyofeyes',
+  THE_PLAN:'theplan',
+  THE_ROLLING_GREENS:'therollinggreens',
+  THE_RUNIC_PIXIE:'therunicpixie',
+  THE_SANDSOF_SLIME:'thesandsofslime',
+  THE_SCREAMER:'thescreamer',
+  THE_SEAOF_SILENCE:'theseaofsilence',
+  THE_SEASON:'theseason',
+  THE_STRONGMAN:'thestrongman',
+  THE_TRUTH_IS_UP_THERE:'thetruthisupthere',
+  THE_TWINS_HAVE_AWOKEN:'thetwinshaveawoken',
+  THE_WEREWOLF:'thewerewolf',
+  THIN_ICE:'thinice',
+  THIS_IS_GETTING_OUT_OF_HAND:'thisisgettingoutofhand',
+  THORN_CHAKRAM:'thornchakram',
+  THRONE:'throne',
+  THROUGHTHE_WINDOW:'throughthewindow',
+  THUNDERBOLT:'thunderbolt',
+  TIARA:'tiara',
+  TIGER_CLIMBING_GEAR:'tigerclimbinggear',
+  TIGER_SKIN:'tigerskin',
+  TIKI_PANTS:'tikipants',
+  TIKI_SHIRT:'tikishirt',
+  TIKI_TOTEM:'tikitotem',
+  TIME_HAIR_DYE:'timehairdye',
+  TIMELESS_TRAVELERS_CLOAK:'timelesstravelerscloak',
+  TIMELESS_TRAVELERS_FOOTWEAR:'timelesstravelersfootwear',
+  TIMELESS_TRAVELERS_HOOD:'timelesstravelershood',
+  TIN_BRICK:'tinbrick',
+  TIN_BRICK_WALL:'tinbrickwall',
+  TIN_CAN:'tincan',
+  TIN_PLATING:'tinplating',
+  TIN_PLATING_WALL:'tinplatingwall',
+  TIN_SHORTSWORD:'tinshortsword',
+  TIN_WATCH:'tinwatch',
+  TINKERERS_WORKSHOP:'tinkerersworkshop',
+  TITANIUM_CHAINSAW:'titaniumchainsaw',
+  TITANIUM_CRATE:'titaniumcrate',
+  TITANIUM_DRILL:'titaniumdrill',
+  TITANIUM_FORGE:'titaniumforge',
+  TITANIUM_HEADGEAR:'titaniumheadgear',
+  TITANSTONE_BLOCK:'titanstoneblock',
+  TITANSTONE_BLOCK_WALL:'titanstoneblockwall',
+  TOOLBELT:'toolbelt',
+  TOOLBOX:'toolbox',
+  TOP_HAT:'tophat',
+  TOPAZ_BUNNY:'topazbunny',
+  TOPAZ_BUNNY_CAGE:'topazbunnycage',
+  TOPAZ_GEM_LOCK:'topazgemlock',
+  TOPAZ_GEMCORN:'topazgemcorn',
+  TOPAZ_GEMSPARK_BLOCK:'topazgemsparkblock',
+  TOPAZ_GEMSPARK_WALL:'topazgemsparkwall',
+  TOPAZ_HOOK:'topazhook',
+  TOPAZ_MINECART:'topazminecart',
+  TOPAZ_ROBE:'topazrobe',
+  TOPAZ_SQUIRREL:'topazsquirrel',
+  TOPAZ_SQUIRREL_CAGE:'topazsquirrelcage',
+  TOPAZ_STONE_BLOCK:'topazstoneblock',
+  TOPAZ_STONE_WALL:'topazstonewall',
+  TORCH_GODS_FAVOR:'torchgodsfavor',
+  TORCH_GODS_FLAVOR:'torchgodsflavor',
+  TOUCAN:'toucan',
+  TOUCAN_CAGE:'toucancage',
+  TOY_SLED:'toysled',
+  TOY_TANK:'toytank',
+  TOYBREAKER_BRICK:'toybreakerbrick',
+  TRAPPED_GHOST:'trappedghost',
+  TRASH_CAN:'trashcan',
+  TREACHEROUS_HARDENED_SAND_WALL:'treacheroushardenedsandwall',
+  TREACHEROUS_SANDSTONE_WALL:'treacheroussandstonewall',
+  TREASURE_BAG_BETSY:'treasurebagbetsy',
+  TREASURE_BAG_BRAINOF_CTHULHU:'treasurebagbrainofcthulhu',
+  TREASURE_BAG_DEERCLOPS:'treasurebagdeerclops',
+  TREASURE_BAG_DUKE_FISHRON:'treasurebagdukefishron',
+  TREASURE_BAG_EATEROF_WORLDS:'treasurebageaterofworlds',
+  TREASURE_BAG_EMPRESSOF_LIGHT:'treasurebagempressoflight',
+  TREASURE_BAG_EYEOF_CTHULHU:'treasurebageyeofcthulhu',
+  TREASURE_BAG_GOLEM:'treasurebaggolem',
+  TREASURE_BAG_KING_SLIME:'treasurebagkingslime',
+  TREASURE_BAG_LUNATIC_CULTIST:'treasurebaglunaticcultist',
+  TREASURE_BAG_MOON_LORD:'treasurebagmoonlord',
+  TREASURE_BAG_PLANTERA:'treasurebagplantera',
+  TREASURE_BAG_QUEEN_BEE:'treasurebagqueenbee',
+  TREASURE_BAG_QUEEN_SLIME:'treasurebagqueenslime',
+  TREASURE_BAG_SKELETRON_PRIME:'treasurebagskeletronprime',
+  TREASURE_BAG_SKELETRON:'treasurebagskeletron',
+  TREASURE_BAG_THE_DESTROYER:'treasurebagthedestroyer',
+  TREASURE_BAG_THE_TWINS:'treasurebagthetwins',
+  TREASURE_BAG_WALLOF_FLESH:'treasurebagwallofflesh',
+  TREASURE_HUNTER_PANTS:'treasurehunterpants',
+  TREASURE_HUNTER_SHIRT:'treasurehuntershirt',
+  TREASURE_MAGNET:'treasuremagnet',
+  TREASURE_MAP:'treasuremap',
+  TREE_GLOBE:'treeglobe',
+  TREE_NYMPH_BUTTERFLY:'treenymphbutterfly',
+  TREE_NYMPH_BUTTERFLY_JAR:'treenymphbutterflyjar',
+  TREE_SHIRT:'treeshirt',
+  TREE_TRUNKS:'treetrunks',
+  TRIDENT:'trident',
+  TRIFOLD_MAP:'trifoldmap',
+  TRIMARANG:'trimarang',
+  TRIO_SUPER_HEROES:'triosuperheroes',
+  TROPICAL_BARRACUDA:'tropicalbarracuda',
+  TROPICAL_SMOOTHIE:'tropicalsmoothie',
+  TRUE_COPPER_SHORTSWORD:'truecoppershortsword',
+  TRUE_NIGHTS_EDGE:'truenightsedge',
+  TRUFFLE_WORM_CAGE:'trufflewormcage',
+  TRUSTY_CHILLET:'trustychillet',
+  TRUSTY_CHILLET_IGNIS:'trustychilletignis',
+  TRUSTY_DIGTOISE:'trustydigtoise',
+  TULIP_SHELL:'tulipshell',
+  TUNA:'tuna',
+  TUNDRA_TROUT:'tundratrout',
+  TUNGSTEN_BRICK:'tungstenbrick',
+  TUNGSTEN_BRICK_WALL:'tungstenbrickwall',
+  TUNGSTEN_SHORTSWORD:'tungstenshortsword',
+  TUNGSTEN_WATCH:'tungstenwatch',
+  TURKEY_WATTLE_NECKLACE:'turkeywattlenecklace',
+  TURTLE:'turtle',
+  TURTLE_CAGE:'turtlecage',
+  TURTLE_HELMET:'turtlehelmet',
+  TWILIGHT_DYE:'twilightdye',
+  TWILIGHT_GRASP:'twilightgrasp',
+  TWILIGHT_HAIR_DYE:'twilighthairdye',
+  UGLY_SWEATER:'uglysweater',
+  ULTRA_ABSORBANT_SPONGE:'ultraabsorbantsponge',
+  ULTRABRIGHT_CAMPFIRE:'ultrabrightcampfire',
+  ULTRABRIGHT_HELMET:'ultrabrighthelmet',
+  ULURU:'uluru',
+  ULYSSES_BUTTERFLY:'ulyssesbutterfly',
+  ULYSSES_BUTTERFLY_JAR:'ulyssesbutterflyjar',
+  UMBRELLA_HAT:'umbrellahat',
+  UNCUMBERING_STONE:'uncumberingstone',
+  UNDERGROUND_REWARD:'undergroundreward',
+  UNDERWORLD_PYLON:'underworldpylon',
+  UNICORN_CROSSINGTHE_HALLOWS:'unicorncrossingthehallows',
+  UNICORN_FISH:'unicornfish',
+  UNICORN_HORN:'unicornhorn',
+  UNICORN_PANTS:'unicornpants',
+  UNICORN_SHIRT:'unicornshirt',
+  UNICORN_WISP_DYE:'unicornwispdye',
+  UNICORNONA_STICK:'unicornonastick',
+  USED_GAS_TRAP:'usedgastrap',
+  VALHALLA_KNIGHTS_BREASTPLATE:'valhallaknightsbreastplate',
+  VALHALLA_KNIGHTS_GREAVES:'valhallaknightsgreaves',
+  VALHALLA_KNIGHTS_HELM:'valhallaknightshelm',
+  VALKYRIE_YOYO:'valkyrieyoyo',
+  VALOR:'valor',
+  VAMPIRE_PANTS:'vampirepants',
+  VAMPIRE_PENDANT:'vampirependant',
+  VAMPIRE_SHIRT:'vampireshirt',
+  VARIEGATED_LARDFISH:'variegatedlardfish',
+  VENOM_DART_TRAP:'venomdarttrap',
+  VIALOF_VENOM:'vialofvenom',
+  VICIOUS_MUSHROOM:'viciousmushroom',
+  VICIOUS_POWDER:'viciouspowder',
+  VICTORIAN_GOTH_DRESS:'victoriangothdress',
+  VICTORIAN_GOTH_HAT:'victoriangothhat',
+  VIDEO_VISAGE:'videovisage',
+  VIKING_HELMET:'vikinghelmet',
+  VIKING_VOYAGE:'vikingvoyage',
+  VILE_MUSHROOM:'vilemushroom',
+  VILE_POWDER:'vilepowder',
+  VINE_ROPE:'vinerope',
+  VINE_ROPE_COIL:'vineropecoil',
+  VIOLET_DYE:'violetdye',
+  VIOLET_FLOWER_SEEDS:'violetflowerseeds',
+  VIOLET_GOLF_BALL:'violetgolfball',
+  VIOLET_GRADIENT_DYE:'violetgradientdye',
+  VIOLET_PAINT:'violetpaint',
+  VIOLET_STRING:'violetstring',
+  VIOLETAND_BLACK_DYE:'violetandblackdye',
+  VIOLETAND_SILVER_DYE:'violetandsilverdye',
+  VISITINGTHE_PYRAMIDS:'visitingthepyramids',
+  VITAMINS:'vitamins',
+  VOID_BAG:'voidbag',
+  VOID_DYE:'voiddye',
+  VOID_MONOLITH:'voidmonolith',
+  VOID_VAULT:'voidvault',
+  VOLATILE_GELATIN:'volatilegelatin',
+  VORTEX_BOOSTER:'vortexbooster',
+  VORTEX_BRICK:'vortexbrick',
+  VORTEX_BRICK_WALL:'vortexbrickwall',
+  VORTEX_CHAINSAW:'vortexchainsaw',
+  VORTEX_DRILL:'vortexdrill',
+  VORTEX_DYE:'vortexdye',
+  VORTEX_FRAGMENT_BLOCK:'vortexfragmentblock',
+  VORTEX_MONOLITH:'vortexmonolith',
+  VULKELF_EARS:'vulkelfears',
+  WALDO:'waldo',
+  WALL_ANCHOR:'wallanchor',
+  WALL_RACER_CAR:'wallracercar',
+  WALL_SKELETON:'wallskeleton',
+  WANDERING_GETA:'wanderinggeta',
+  WANDERING_JINGASA:'wanderingjingasa',
+  WANDERING_YUKATA:'wanderingyukata',
+  WARMTH_POTION:'warmthpotion',
+  WATCHFUL_ANTLION:'watchfulantlion',
+  WATER_BUCKET:'waterbucket',
+  WATER_GUN:'watergun',
+  WATER_STRIDER:'waterstrider',
+  WATER_STRIDER_CAGE:'waterstridercage',
+  WATERFALL_BLOCK:'waterfallblock',
+  WATERLEAF:'waterleaf',
+  WATERLEAF_PLANTER_BOX:'waterleafplanterbox',
+  WATERLEAF_SEEDS:'waterleafseeds',
+  WAVY_DIRT_WALL:'wavydirtwall',
+  WEAPON_RACK:'weaponrack',
+  WEATHER_VANE:'weathervane',
+  WEB_ROPE:'webrope',
+  WEB_ROPE_COIL:'webropecoil',
+  WEDDING_DRESS:'weddingdress',
+  WEDDING_VEIL:'weddingveil',
+  WET_BOMB:'wetbomb',
+  WHAT_LURKS_BELOW:'whatlurksbelow',
+  WHITE_BULB:'whitebulb',
+  WHITE_DYNASTY_WALL:'whitedynastywall',
+  WHITE_FLOWER_SEEDS:'whiteflowerseeds',
+  WHITE_GARLAND:'whitegarland',
+  WHITE_HORSESHOE_BALLOON:'whitehorseshoeballoon',
+  WHITE_PAINT:'whitepaint',
+  WHITE_PEARL:'whitepearl',
+  WHITE_PIN_FLAG:'whitepinflag',
+  WHITE_SOLUTION:'whitesolution',
+  WHITE_STRING:'whitestring',
+  WHITE_TEAM_BLOCK:'whiteteamblock',
+  WHITE_TUXEDO_PANTS:'whitetuxedopants',
+  WHITE_TUXEDO_SHIRT:'whitetuxedoshirt',
+  WHITEAND_GREEN_BULB:'whiteandgreenbulb',
+  WHITEAND_RED_BULB:'whiteandredbulb',
+  WHITEAND_RED_GARLAND:'whiteandredgarland',
+  WHITEAND_YELLOW_BULB:'whiteandyellowbulb',
+  WHOOPIE_CUSHION:'whoopiecushion',
+  WICKED_ARMLET:'wickedarmlet',
+  WICKED_CLAWS:'wickedclaws',
+  WICKED_UNDEAD:'wickedundead',
+  WILD_FLOWER_SEEDS:'wildflowerseeds',
+  WILDFLOWERS:'wildflowers',
+  WILLS_BREASTPLATE:'willsbreastplate',
+  WILLS_HELMET:'willshelmet',
+  WILLS_LEGGINGS:'willsleggings',
+  WILLS_WINGS:'willswings',
+  WILTED_CLOVER:'wiltedclover',
+  WINE_GLASS:'wineglass',
+  WINGSOF_EVIL:'wingsofevil',
+  WINTER_AT_VARINGSKOLLEN:'winteratvaringskollen',
+  WINTER_CAPE:'wintercape',
+  WIRE:'wire',
+  WIRE_BULB:'wirebulb',
+  WIRE_CUTTER:'wirecutter',
+  WISP_DYE:'wispdye',
+  WITCH_BOOTS:'witchboots',
+  WITCH_DRESS:'witchdress',
+  WITCH_HAT:'witchhat',
+  WITCHS_BROOM:'witchsbroom',
+  WIZARD_HAT:'wizardhat',
+  WIZARDS_HAT:'wizardshat',
+  WOLF_PANTS:'wolfpants',
+  WOLF_SHIRT:'wolfshirt',
+  WOMANNEQUIN:'womannequin',
+  WOOD_BREASTPLATE:'woodbreastplate',
+  WOOD_FISHING_POLE:'woodfishingpole',
+  WOOD_GREAVES:'woodgreaves',
+  WOOD_HELMET:'woodhelmet',
+  WOOD_SHELF:'woodshelf',
+  WOODEN_BEAM:'woodenbeam',
+  WOODEN_BOOMERANG:'woodenboomerang',
+  WOODEN_FENCE:'woodenfence',
+  WOODEN_SPIKE:'woodenspike',
+  WOODEN_YOYO:'woodenyoyo',
+  WORLD_GLOBE:'worldglobe',
+  WORM_CAGE:'wormcage',
+  WORM_HOOK:'wormhook',
+  WORM_SCARF:'wormscarf',
+  WORM_TOOTH:'wormtooth',
+  WORN_GOLF_CLUB_DRIVER:'worngolfclubdriver',
+  WORN_GOLF_CLUB_IRON:'worngolfclubiron',
+  WORN_GOLF_CLUB_PUTTER:'worngolfclubputter',
+  WORN_GOLF_CLUB_WEDGE:'worngolfclubwedge',
+  WORN_STONE_WALL:'wornstonewall',
+  WRITHING_REMAINS:'writhingremains',
+  WROUGHT_IRON_FENCE:'wroughtironfence',
+  WYVERNTAIL:'wyverntail',
+  XENON_MOSS:'xenonmoss',
+  XENON_MOSS_BRICK:'xenonmossbrick',
+  XENON_MOSS_BRICK_WALL:'xenonmossbrickwall',
+  XENON_MOSS_FISHING_BOBBER:'xenonmossfishingbobber',
+  YELLOW_BULB:'yellowbulb',
+  YELLOW_COCKATIEL:'yellowcockatiel',
+  YELLOW_COCKATIEL_CAGE:'yellowcockatielcage',
+  YELLOW_COUNTERWEIGHT:'yellowcounterweight',
+  YELLOW_DRAGONFLY:'yellowdragonfly',
+  YELLOW_DRAGONFLY_JAR:'yellowdragonflyjar',
+  YELLOW_FLOWER_SEEDS:'yellowflowerseeds',
+  YELLOW_GOLF_BALL:'yellowgolfball',
+  YELLOW_GRADIENT_DYE:'yellowgradientdye',
+  YELLOW_HORSESHOE_BALLOON:'yellowhorseshoeballoon',
+  YELLOW_LIGHTS:'yellowlights',
+  YELLOW_MARIGOLD:'yellowmarigold',
+  YELLOW_PAINT:'yellowpaint',
+  YELLOW_PIN_FLAG:'yellowpinflag',
+  YELLOW_PRESENT:'yellowpresent',
+  YELLOW_PRESSURE_PLATE:'yellowpressureplate',
+  YELLOW_ROCKET:'yellowrocket',
+  YELLOW_SOLUTION:'yellowsolution',
+  YELLOW_STAINED_GLASS:'yellowstainedglass',
+  YELLOW_STRING:'yellowstring',
+  YELLOW_STUCCO:'yellowstucco',
+  YELLOW_STUCCO_WALL:'yellowstuccowall',
+  YELLOW_TEAM_BLOCK:'yellowteamblock',
+  YELLOW_WILLOW_SAPLING:'yellowwillowsapling',
+  YELLOW_WRENCH:'yellowwrench',
+  YELLOWAND_BLACK_DYE:'yellowandblackdye',
+  YELLOWAND_GREEN_BULB:'yellowandgreenbulb',
+  YELLOWAND_GREEN_LIGHTS:'yellowandgreenlights',
+  YELLOWAND_SILVER_DYE:'yellowandsilverdye',
+  YORAIZ0RS_RECOLORED_GOGGLES:'yoraiz0rsrecoloredgoggles',
+  YORAIZ0RS_SCOWL:'yoraiz0rsscowl',
+  YORAIZ0RS_SKIRT:'yoraiz0rsskirt',
+  YORAIZ0RS_SPELL:'yoraiz0rsspell',
+  YORAIZ0RS_UNIFORM:'yoraiz0rsuniform',
+  YOYO_GLOVE:'yoyoglove',
+  YUUMA_THE_BLUE_TIGER:'yuumathebluetiger',
+  ZEBRA_SKIN:'zebraskin',
+  ZEBRA_SWALLOWTAIL_BUTTERFLY:'zebraswallowtailbutterfly',
+  ZEBRA_SWALLOWTAIL_BUTTERFLY_JAR:'zebraswallowtailbutterflyjar',
+  ZENITH:'zenith',
+  ZOMBIE_FISH:'zombiefish',
+  R_TERRARIA:'rterraria',
+  R_TERRARIA2023:'rterraria2023',
     BOSSBAG:'bossbag'
 };
 
@@ -2334,3 +6758,4433 @@ defItem(I.UNLUCKY_YARN, { name:'Unlucky Yarn', type:'pet', pet:'yarn', color:'#3
 defItem(I.SUMMER_HAT, { name:'Summer Hat', type:'armor', slot:'head', def:1, color:'#ffe14d', icon:'👕', maxStack:1, desc:'Defense +1' });
 defItem(I.TUXEDO_PANTS, { name:'Tuxedo Pants', type:'armor', slot:'legs', def:2, color:'#ffe14d', icon:'👕', maxStack:1, desc:'Defense +2' });
 defItem(I.TUXEDO_SHIRT, { name:'Tuxedo Shirt', type:'armor', slot:'chest', def:2, color:'#ffe14d', icon:'👕', maxStack:1, desc:'Defense +2' });
+
+// ---------- Batch 83 Phase 2 furniture ----------
+defItem(I.ANVIL_STATUE, { name:'Anvil Statue', type:'block', tile:T.FURN_ANVIL, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.IRON_ANVIL, { name:'Iron Anvil', type:'block', tile:T.FURN_ANVIL, color:'#9a8c7c', icon:'block', maxStack:999, desc:'Iron furniture.' });
+defItem(I.LEAD_ANVIL, { name:'Lead Anvil', type:'block', tile:T.FURN_ANVIL, color:'#6a6a76', icon:'block', maxStack:999, desc:'Lead furniture.' });
+defItem(I.MYTHRIL_ANVIL, { name:'Mythril Anvil', type:'block', tile:T.FURN_ANVIL, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ORICHALCUM_ANVIL, { name:'Orichalcum Anvil', type:'block', tile:T.FURN_ANVIL, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AETHERIUM_BATHTUB, { name:'Aetherium Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_BATHTUB, { name:'Aquarium Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_BATHTUB, { name:'Ash Wood Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_BATHTUB, { name:'Balloon Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_BATHTUB, { name:'Bamboo Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BATHTUB, { name:'Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_BATHTUB, { name:'Blue Dungeon Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_BATHTUB, { name:'Bone Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_BATHTUB, { name:'Boreal Wood Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_BATHTUB, { name:'Boulder Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_BATHTUB, { name:'Cactus Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_BATHTUB, { name:'Cloud Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_BATHTUB, { name:'Crimtane Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_BATHTUB, { name:'Crystal Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_BATHTUB, { name:'Demonite Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_BATHTUB, { name:'Duskware Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_BATHTUB, { name:'Dynasty Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_BATHTUB, { name:'Easter Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_BATHTUB, { name:'Ebonwood Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_BATHTUB, { name:'Fallen Star Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_BATHTUB, { name:'Feywood Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_BATHTUB, { name:'Flesh Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_BATHTUB, { name:'Flinx Fur Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_BATHTUB, { name:'Forbidden Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_BATHTUB, { name:'Frozen Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_BATHTUB, { name:'Glass Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_BATHTUB, { name:'Golden Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_BATHTUB, { name:'Gothic Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_BATHTUB, { name:'Granite Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_BATHTUB, { name:'Green Dungeon Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_BATHTUB, { name:'Hallowed Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_BATHTUB, { name:'Harpy Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_BATHTUB, { name:'Honey Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_BATHTUB, { name:'Jellyfish Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_BATHTUB, { name:'Lesion Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_BATHTUB, { name:'Librarian Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_BATHTUB, { name:'Lihzahrd Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_BATHTUB, { name:'Living Wood Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_BATHTUB, { name:'Marble Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_BATHTUB, { name:'Martian Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_BATHTUB, { name:'Meteorite Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_BATHTUB, { name:'Mushroom Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_BATHTUB, { name:'Nebula Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_BATHTUB, { name:'Obsidian Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_BATHTUB, { name:'Office Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_BATHTUB, { name:'Palm Wood Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_BATHTUB, { name:'Pearlwood Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_BATHTUB, { name:'Pine Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_BATHTUB, { name:'Pink Dungeon Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PUMPKIN_BATHTUB, { name:'Pumpkin Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_BATHTUB, { name:'Reef Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_BATHTUB, { name:'Rich Mahogany Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_BATHTUB, { name:'Sandstone Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_BATHTUB, { name:'Shadewood Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_BATHTUB, { name:'Skyware Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_BATHTUB, { name:'Slime Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_BATHTUB, { name:'Snow Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_BATHTUB, { name:'Solar Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_BATHTUB, { name:'Spider Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_BATHTUB, { name:'Spike Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_BATHTUB, { name:'Spooky Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_BATHTUB, { name:'Stardust Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_BATHTUB, { name:'Steampunk Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_BATHTUB, { name:'Stone Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.VORTEX_BATHTUB, { name:'Vortex Bathtub', type:'block', tile:T.FURN_BATHTUB, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.AETHERIUM_BED, { name:'Aetherium Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_BED, { name:'Aquarium Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_BED, { name:'Ash Wood Bed', type:'block', tile:T.FURN_BED, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_BED, { name:'Balloon Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_BED, { name:'Bamboo Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_BED, { name:'Blue Dungeon Bed', type:'block', tile:T.FURN_BED, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_BED, { name:'Bone Bed', type:'block', tile:T.FURN_BED, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_BED, { name:'Boreal Wood Bed', type:'block', tile:T.FURN_BED, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_BED, { name:'Boulder Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_BED, { name:'Cactus Bed', type:'block', tile:T.FURN_BED, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_BED, { name:'Cloud Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_BED, { name:'Crimtane Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_BED, { name:'Crystal Bed', type:'block', tile:T.FURN_BED, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_BED, { name:'Demonite Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_BED, { name:'Duskware Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_BED, { name:'Dynasty Bed', type:'block', tile:T.FURN_BED, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_BED, { name:'Easter Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_BED, { name:'Ebonwood Bed', type:'block', tile:T.FURN_BED, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_BED, { name:'Fallen Star Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_BED, { name:'Feywood Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_BED, { name:'Flesh Bed', type:'block', tile:T.FURN_BED, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_BED, { name:'Flinx Fur Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_BED, { name:'Forbidden Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_BED, { name:'Frozen Bed', type:'block', tile:T.FURN_BED, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_BED, { name:'Glass Bed', type:'block', tile:T.FURN_BED, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_BED, { name:'Golden Bed', type:'block', tile:T.FURN_BED, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_BED, { name:'Gothic Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_BED, { name:'Granite Bed', type:'block', tile:T.FURN_BED, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_BED, { name:'Green Dungeon Bed', type:'block', tile:T.FURN_BED, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_BED, { name:'Hallowed Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_BED, { name:'Harpy Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_BED, { name:'Honey Bed', type:'block', tile:T.FURN_BED, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_BED, { name:'Jellyfish Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_BED, { name:'Lesion Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_BED, { name:'Librarian Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_BED, { name:'Lihzahrd Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_BED, { name:'Living Wood Bed', type:'block', tile:T.FURN_BED, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_BED, { name:'Marble Bed', type:'block', tile:T.FURN_BED, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_BED, { name:'Martian Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_BED, { name:'Meteorite Bed', type:'block', tile:T.FURN_BED, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_BED, { name:'Mushroom Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_BED, { name:'Nebula Bed', type:'block', tile:T.FURN_BED, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_BED, { name:'Obsidian Bed', type:'block', tile:T.FURN_BED, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_BED, { name:'Office Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_BED, { name:'Palm Wood Bed', type:'block', tile:T.FURN_BED, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_BED, { name:'Pearlwood Bed', type:'block', tile:T.FURN_BED, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_BED, { name:'Pine Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_BED, { name:'Pink Dungeon Bed', type:'block', tile:T.FURN_BED, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PUMPKIN_BED, { name:'Pumpkin Bed', type:'block', tile:T.FURN_BED, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_BED, { name:'Reef Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_BED, { name:'Rich Mahogany Bed', type:'block', tile:T.FURN_BED, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_BED, { name:'Sandstone Bed', type:'block', tile:T.FURN_BED, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_BED, { name:'Shadewood Bed', type:'block', tile:T.FURN_BED, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_BED, { name:'Skyware Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_BED, { name:'Slime Bed', type:'block', tile:T.FURN_BED, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_BED, { name:'Snow Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_BED, { name:'Solar Bed', type:'block', tile:T.FURN_BED, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_BED, { name:'Spider Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_BED, { name:'Spike Bed', type:'block', tile:T.FURN_BED, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_BED, { name:'Spooky Bed', type:'block', tile:T.FURN_BED, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_BED, { name:'Stardust Bed', type:'block', tile:T.FURN_BED, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_BED, { name:'Steampunk Bed', type:'block', tile:T.FURN_BED, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_BED, { name:'Stone Bed', type:'block', tile:T.FURN_BED, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.VORTEX_BED, { name:'Vortex Bed', type:'block', tile:T.FURN_BED, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.AETHERIUM_WORK_BENCH, { name:'Aetherium Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_WORK_BENCH, { name:'Aquarium Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_WORK_BENCH, { name:'Ash Wood Work Bench', type:'block', tile:T.FURN_BENCH, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_WORK_BENCH, { name:'Balloon Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_WORK_BENCH, { name:'Bamboo Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BENCH, { name:'Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_WORK_BENCH, { name:'Blue Dungeon Work Bench', type:'block', tile:T.FURN_BENCH, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_WORK_BENCH, { name:'Bone Work Bench', type:'block', tile:T.FURN_BENCH, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_WORK_BENCH, { name:'Boreal Wood Work Bench', type:'block', tile:T.FURN_BENCH, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_WORK_BENCH, { name:'Boulder Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_WORK_BENCH, { name:'Cactus Work Bench', type:'block', tile:T.FURN_BENCH, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_WORK_BENCH, { name:'Cloud Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_WORK_BENCH, { name:'Crimtane Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_WORK_BENCH, { name:'Crystal Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_WORK_BENCH, { name:'Demonite Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_WORK_BENCH, { name:'Duskware Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_WORK_BENCH, { name:'Dynasty Work Bench', type:'block', tile:T.FURN_BENCH, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_WORK_BENCH, { name:'Easter Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_WORK_BENCH, { name:'Ebonwood Work Bench', type:'block', tile:T.FURN_BENCH, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_WORK_BENCH, { name:'Fallen Star Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_WORK_BENCH, { name:'Feywood Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_WORK_BENCH, { name:'Flesh Work Bench', type:'block', tile:T.FURN_BENCH, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_WORK_BENCH, { name:'Flinx Fur Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_WORK_BENCH, { name:'Forbidden Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_WORK_BENCH, { name:'Frozen Work Bench', type:'block', tile:T.FURN_BENCH, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_WORK_BENCH, { name:'Glass Work Bench', type:'block', tile:T.FURN_BENCH, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_WORK_BENCH, { name:'Golden Work Bench', type:'block', tile:T.FURN_BENCH, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_WORK_BENCH, { name:'Gothic Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_WORK_BENCH, { name:'Granite Work Bench', type:'block', tile:T.FURN_BENCH, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_WORK_BENCH, { name:'Green Dungeon Work Bench', type:'block', tile:T.FURN_BENCH, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_WORK_BENCH, { name:'Hallowed Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_WORK_BENCH, { name:'Harpy Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_WORK_BENCH, { name:'Honey Work Bench', type:'block', tile:T.FURN_BENCH, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_WORK_BENCH, { name:'Jellyfish Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_WORK_BENCH, { name:'Lesion Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_WORK_BENCH, { name:'Librarian Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_WORK_BENCH, { name:'Lihzahrd Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_WORK_BENCH, { name:'Living Wood Work Bench', type:'block', tile:T.FURN_BENCH, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_WORK_BENCH, { name:'Marble Work Bench', type:'block', tile:T.FURN_BENCH, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_WORK_BENCH, { name:'Martian Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_WORK_BENCH, { name:'Meteorite Work Bench', type:'block', tile:T.FURN_BENCH, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_BENCH, { name:'Mushroom Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.MUSHROOM_WORK_BENCH, { name:'Mushroom Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_WORK_BENCH, { name:'Nebula Work Bench', type:'block', tile:T.FURN_BENCH, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_WORK_BENCH, { name:'Obsidian Work Bench', type:'block', tile:T.FURN_BENCH, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_WORK_BENCH, { name:'Office Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_BENCH, { name:'Palm Wood Bench', type:'block', tile:T.FURN_BENCH, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PALM_WOOD_WORK_BENCH, { name:'Palm Wood Work Bench', type:'block', tile:T.FURN_BENCH, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_WORK_BENCH, { name:'Pearlwood Work Bench', type:'block', tile:T.FURN_BENCH, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_WORK_BENCH, { name:'Pine Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_WORK_BENCH, { name:'Pink Dungeon Work Bench', type:'block', tile:T.FURN_BENCH, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PUMPKIN_WORK_BENCH, { name:'Pumpkin Work Bench', type:'block', tile:T.FURN_BENCH, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_WORK_BENCH, { name:'Reef Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_WORK_BENCH, { name:'Rich Mahogany Work Bench', type:'block', tile:T.FURN_BENCH, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_WORK_BENCH, { name:'Sandstone Work Bench', type:'block', tile:T.FURN_BENCH, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_WORK_BENCH, { name:'Shadewood Work Bench', type:'block', tile:T.FURN_BENCH, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_WORK_BENCH, { name:'Skyware Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_WORK_BENCH, { name:'Slime Work Bench', type:'block', tile:T.FURN_BENCH, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_WORK_BENCH, { name:'Snow Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_WORK_BENCH, { name:'Solar Work Bench', type:'block', tile:T.FURN_BENCH, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_WORK_BENCH, { name:'Spider Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_WORK_BENCH, { name:'Spike Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_WORK_BENCH, { name:'Spooky Work Bench', type:'block', tile:T.FURN_BENCH, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_WORK_BENCH, { name:'Stardust Work Bench', type:'block', tile:T.FURN_BENCH, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_WORK_BENCH, { name:'Steampunk Work Bench', type:'block', tile:T.FURN_BENCH, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_WORK_BENCH, { name:'Stone Work Bench', type:'block', tile:T.FURN_BENCH, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.VORTEX_WORK_BENCH, { name:'Vortex Work Bench', type:'block', tile:T.FURN_BENCH, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.WORK_BENCH, { name:'Work Bench', type:'block', tile:T.FURN_BENCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AETHERIUM_BOOKCASE, { name:'Aetherium Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_BOOKCASE, { name:'Aquarium Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_BOOKCASE, { name:'Ash Wood Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_BOOKCASE, { name:'Balloon Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_BOOKCASE, { name:'Bamboo Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_BOOKCASE, { name:'Blue Dungeon Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_BOOKCASE, { name:'Bone Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOOKCASE, { name:'Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BOREAL_WOOD_BOOKCASE, { name:'Boreal Wood Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_BOOKCASE, { name:'Boulder Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_BOOKCASE, { name:'Cactus Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_BOOKCASE, { name:'Cloud Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_BOOKCASE, { name:'Crimtane Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_BOOKCASE, { name:'Crystal Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_BOOKCASE, { name:'Demonite Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_BOOKCASE, { name:'Duskware Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_BOOKCASE, { name:'Dynasty Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_BOOKCASE, { name:'Easter Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_BOOKCASE, { name:'Ebonwood Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_BOOKCASE, { name:'Fallen Star Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_BOOKCASE, { name:'Feywood Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_BOOKCASE, { name:'Flesh Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_BOOKCASE, { name:'Flinx Fur Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_BOOKCASE, { name:'Forbidden Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_BOOKCASE, { name:'Frozen Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_BOOKCASE, { name:'Glass Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_BOOKCASE, { name:'Golden Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_BOOKCASE, { name:'Gothic Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_BOOKCASE, { name:'Granite Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_BOOKCASE, { name:'Green Dungeon Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_BOOKCASE, { name:'Hallowed Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_BOOKCASE, { name:'Harpy Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_BOOKCASE, { name:'Honey Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_BOOKCASE, { name:'Jellyfish Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_BOOKCASE, { name:'Lesion Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_BOOKCASE, { name:'Librarian Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_BOOKCASE, { name:'Lihzahrd Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_BOOKCASE, { name:'Living Wood Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_BOOKCASE, { name:'Marble Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_HOLOBOOKCASE, { name:'Martian Holobookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_BOOKCASE, { name:'Meteorite Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_BOOKCASE, { name:'Mushroom Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_BOOKCASE, { name:'Nebula Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_BOOKCASE, { name:'Obsidian Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_BOOKCASE, { name:'Office Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_BOOKCASE, { name:'Palm Wood Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_BOOKCASE, { name:'Pearlwood Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_BOOKCASE, { name:'Pine Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_BOOKCASE, { name:'Pink Dungeon Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PUMPKIN_BOOKCASE, { name:'Pumpkin Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_BOOKCASE, { name:'Reef Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_BOOKCASE, { name:'Rich Mahogany Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_BOOKCASE, { name:'Sandstone Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_BOOKCASE, { name:'Shadewood Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_BOOKCASE, { name:'Skyware Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_BOOKCASE, { name:'Slime Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_BOOKCASE, { name:'Snow Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_BOOKCASE, { name:'Solar Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_BOOKCASE, { name:'Spider Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_BOOKCASE, { name:'Spike Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_BOOKCASE, { name:'Spooky Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_BOOKCASE, { name:'Stardust Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_BOOKCASE, { name:'Steampunk Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_BOOKCASE, { name:'Stone Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.VORTEX_BOOKCASE, { name:'Vortex Bookcase', type:'block', tile:T.FURN_BOOKCASE, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.AETHERIUM_CANDELABRA, { name:'Aetherium Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_CANDELABRA, { name:'Aquarium Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_CANDELABRA, { name:'Ash Wood Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_CANDELABRA, { name:'Balloon Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_CANDELABRA, { name:'Bamboo Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_CANDELABRA, { name:'Blue Dungeon Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_CANDELABRA, { name:'Bone Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_CANDELABRA, { name:'Boreal Wood Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_CANDELABRA, { name:'Boulder Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_CANDELABRA, { name:'Cactus Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CANDELABRA, { name:'Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CLOUD_CANDELABRA, { name:'Cloud Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_CANDELABRA, { name:'Crimtane Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_CANDELABRA, { name:'Crystal Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_CANDELABRA, { name:'Demonite Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_CANDELABRA, { name:'Duskware Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EASTER_CANDELABRA, { name:'Easter Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_CANDELABRA, { name:'Ebonwood Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_CANDELABRA, { name:'Fallen Star Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_CANDELABRA, { name:'Feywood Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_CANDELABRA, { name:'Flesh Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_CANDELABRA, { name:'Flinx Fur Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_CANDELABRA, { name:'Forbidden Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_CANDELABRA, { name:'Frozen Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_CANDELABRA, { name:'Glass Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_CANDELABRA, { name:'Golden Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_CANDELABRA, { name:'Gothic Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_CANDELABRA, { name:'Granite Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_CANDELABRA, { name:'Green Dungeon Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_CANDELABRA, { name:'Hallowed Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_CANDELABRA, { name:'Harpy Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_CANDELABRA, { name:'Honey Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_CANDELABRA, { name:'Jellyfish Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_CANDELABRA, { name:'Lesion Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_CANDELABRA, { name:'Librarian Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_CANDELABRA, { name:'Lihzahrd Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_CANDELABRA, { name:'Living Wood Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_CANDELABRA, { name:'Marble Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.METEORITE_CANDELABRA, { name:'Meteorite Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_CANDELABRA, { name:'Mushroom Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_CANDELABRA, { name:'Nebula Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_CANDELABRA, { name:'Obsidian Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_CANDELABRA, { name:'Office Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_CANDELABRA, { name:'Palm Wood Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_CANDELABRA, { name:'Pearlwood Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_CANDELABRA, { name:'Pine Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_CANDELABRA, { name:'Pink Dungeon Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PLATINUM_CANDELABRA, { name:'Platinum Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#b09a78', icon:'block', maxStack:999, desc:'Platinum furniture.' });
+defItem(I.PUMPKIN_CANDELABRA, { name:'Pumpkin Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_CANDELABRA, { name:'Reef Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_CANDELABRA, { name:'Rich Mahogany Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_CANDELABRA, { name:'Sandstone Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_CANDELABRA, { name:'Shadewood Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_CANDELABRA, { name:'Skyware Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_CANDELABRA, { name:'Slime Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_CANDELABRA, { name:'Snow Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_CANDELABRA, { name:'Solar Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_CANDELABRA, { name:'Spider Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_CANDELABRA, { name:'Spike Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_CANDELABRA, { name:'Spooky Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_CANDELABRA, { name:'Stardust Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_CANDELABRA, { name:'Steampunk Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_CANDELABRA, { name:'Stone Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.VORTEX_CANDELABRA, { name:'Vortex Candelabra', type:'block', tile:T.FURN_CANDELABRA, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.AETHERIUM_CANDLE, { name:'Aetherium Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_CANDLE, { name:'Aquarium Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_CANDLE, { name:'Ash Wood Candle', type:'block', tile:T.FURN_CANDLE, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_CANDLE, { name:'Balloon Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_CANDLE, { name:'Bamboo Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_CANDLE, { name:'Blue Dungeon Candle', type:'block', tile:T.FURN_CANDLE, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BOREAL_WOOD_CANDLE, { name:'Boreal Wood Candle', type:'block', tile:T.FURN_CANDLE, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_CANDLE, { name:'Boulder Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_CANDLE, { name:'Cactus Candle', type:'block', tile:T.FURN_CANDLE, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CANDLE, { name:'Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CLOUD_CANDLE, { name:'Cloud Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_CANDLE, { name:'Crimtane Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_CANDLE, { name:'Crystal Candle', type:'block', tile:T.FURN_CANDLE, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_CANDLE, { name:'Demonite Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_CANDLE, { name:'Duskware Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_CANDLE, { name:'Dynasty Candle', type:'block', tile:T.FURN_CANDLE, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_CANDLE, { name:'Easter Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_CANDLE, { name:'Ebonwood Candle', type:'block', tile:T.FURN_CANDLE, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_CANDLE, { name:'Fallen Star Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_CANDLE, { name:'Feywood Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_CANDLE, { name:'Flesh Candle', type:'block', tile:T.FURN_CANDLE, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_CANDLE, { name:'Flinx Fur Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_CANDLE, { name:'Forbidden Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_CANDLE, { name:'Frozen Candle', type:'block', tile:T.FURN_CANDLE, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_CANDLE, { name:'Glass Candle', type:'block', tile:T.FURN_CANDLE, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_CANDLE, { name:'Golden Candle', type:'block', tile:T.FURN_CANDLE, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_CANDLE, { name:'Gothic Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_CANDLE, { name:'Granite Candle', type:'block', tile:T.FURN_CANDLE, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_CANDLE, { name:'Green Dungeon Candle', type:'block', tile:T.FURN_CANDLE, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_CANDLE, { name:'Hallowed Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_CANDLE, { name:'Harpy Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_CANDLE, { name:'Honey Candle', type:'block', tile:T.FURN_CANDLE, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_CANDLE, { name:'Jellyfish Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LARGE_DYNASTY_CANDLE, { name:'Large Dynasty Candle', type:'block', tile:T.FURN_CANDLE, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.LESION_CANDLE, { name:'Lesion Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_CANDLE, { name:'Librarian Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_CANDLE, { name:'Lihzahrd Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_CANDLE, { name:'Living Wood Candle', type:'block', tile:T.FURN_CANDLE, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_CANDLE, { name:'Marble Candle', type:'block', tile:T.FURN_CANDLE, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_HOVER_CANDLE, { name:'Martian Hover Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_CANDLE, { name:'Meteorite Candle', type:'block', tile:T.FURN_CANDLE, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_CANDLE, { name:'Mushroom Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_CANDLE, { name:'Nebula Candle', type:'block', tile:T.FURN_CANDLE, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_CANDLE, { name:'Obsidian Candle', type:'block', tile:T.FURN_CANDLE, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_CANDLE, { name:'Office Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_CANDLE, { name:'Palm Wood Candle', type:'block', tile:T.FURN_CANDLE, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEACE_CANDLE, { name:'Peace Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PEARLWOOD_CANDLE, { name:'Pearlwood Candle', type:'block', tile:T.FURN_CANDLE, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_CANDLE, { name:'Pine Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_CANDLE, { name:'Pink Dungeon Candle', type:'block', tile:T.FURN_CANDLE, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PLATINUM_CANDLE, { name:'Platinum Candle', type:'block', tile:T.FURN_CANDLE, color:'#b09a78', icon:'block', maxStack:999, desc:'Platinum furniture.' });
+defItem(I.PUMPKIN_CANDLE, { name:'Pumpkin Candle', type:'block', tile:T.FURN_CANDLE, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_CANDLE, { name:'Reef Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_CANDLE, { name:'Rich Mahogany Candle', type:'block', tile:T.FURN_CANDLE, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_CANDLE, { name:'Sandstone Candle', type:'block', tile:T.FURN_CANDLE, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_CANDLE, { name:'Shadewood Candle', type:'block', tile:T.FURN_CANDLE, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_CANDLE, { name:'Skyware Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_CANDLE, { name:'Slime Candle', type:'block', tile:T.FURN_CANDLE, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_CANDLE, { name:'Snow Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_CANDLE, { name:'Solar Candle', type:'block', tile:T.FURN_CANDLE, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_CANDLE, { name:'Spider Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_CANDLE, { name:'Spike Candle', type:'block', tile:T.FURN_CANDLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_CANDLE, { name:'Spooky Candle', type:'block', tile:T.FURN_CANDLE, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_CANDLE, { name:'Stardust Candle', type:'block', tile:T.FURN_CANDLE, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_CANDLE, { name:'Steampunk Candle', type:'block', tile:T.FURN_CANDLE, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_CANDLE, { name:'Stone Candle', type:'block', tile:T.FURN_CANDLE, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.VORTEX_CANDLE, { name:'Vortex Candle', type:'block', tile:T.FURN_CANDLE, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.WATER_CANDLE, { name:'Water Candle', type:'block', tile:T.FURN_CANDLE, color:'#2f6bd0', icon:'block', maxStack:999, desc:'Water furniture.' });
+defItem(I.AETHERIUM_CHAIR, { name:'Aetherium Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_CHAIR, { name:'Aquarium Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_CHAIR, { name:'Ash Wood Chair', type:'block', tile:T.FURN_CHAIR, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_CHAIR, { name:'Balloon Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_CHAIR, { name:'Bamboo Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_CHAIR, { name:'Blue Dungeon Chair', type:'block', tile:T.FURN_CHAIR, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_CHAIR, { name:'Bone Chair', type:'block', tile:T.FURN_CHAIR, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_CHAIR, { name:'Boreal Wood Chair', type:'block', tile:T.FURN_CHAIR, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_CHAIR, { name:'Boulder Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_CHAIR, { name:'Cactus Chair', type:'block', tile:T.FURN_CHAIR, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_CHAIR, { name:'Cloud Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_CHAIR, { name:'Crimtane Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_CHAIR, { name:'Crystal Chair', type:'block', tile:T.FURN_CHAIR, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_CHAIR, { name:'Demonite Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_CHAIR, { name:'Duskware Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_CHAIR, { name:'Dynasty Chair', type:'block', tile:T.FURN_CHAIR, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_CHAIR, { name:'Easter Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_CHAIR, { name:'Ebonwood Chair', type:'block', tile:T.FURN_CHAIR, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_CHAIR, { name:'Fallen Star Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_CHAIR, { name:'Feywood Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_CHAIR, { name:'Flesh Chair', type:'block', tile:T.FURN_CHAIR, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_CHAIR, { name:'Flinx Fur Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_CHAIR, { name:'Forbidden Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_CHAIR, { name:'Frozen Chair', type:'block', tile:T.FURN_CHAIR, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_CHAIR, { name:'Glass Chair', type:'block', tile:T.FURN_CHAIR, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_CHAIR, { name:'Golden Chair', type:'block', tile:T.FURN_CHAIR, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_CHAIR, { name:'Gothic Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_CHAIR, { name:'Granite Chair', type:'block', tile:T.FURN_CHAIR, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_CHAIR, { name:'Green Dungeon Chair', type:'block', tile:T.FURN_CHAIR, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_CHAIR, { name:'Hallowed Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_CHAIR, { name:'Harpy Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_CHAIR, { name:'Honey Chair', type:'block', tile:T.FURN_CHAIR, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_CHAIR, { name:'Jellyfish Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_CHAIR, { name:'Lesion Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_CHAIR, { name:'Librarian Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_CHAIR, { name:'Lihzahrd Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_CHAIR, { name:'Living Wood Chair', type:'block', tile:T.FURN_CHAIR, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_CHAIR, { name:'Marble Chair', type:'block', tile:T.FURN_CHAIR, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_HOVER_CHAIR, { name:'Martian Hover Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_CHAIR, { name:'Meteorite Chair', type:'block', tile:T.FURN_CHAIR, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_CHAIR, { name:'Mushroom Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_CHAIR, { name:'Nebula Chair', type:'block', tile:T.FURN_CHAIR, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_CHAIR, { name:'Obsidian Chair', type:'block', tile:T.FURN_CHAIR, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_CHAIR, { name:'Office Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_CHAIR, { name:'Palm Wood Chair', type:'block', tile:T.FURN_CHAIR, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_CHAIR, { name:'Pearlwood Chair', type:'block', tile:T.FURN_CHAIR, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_CHAIR, { name:'Pine Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_CHAIR, { name:'Pink Dungeon Chair', type:'block', tile:T.FURN_CHAIR, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PUMPKIN_CHAIR, { name:'Pumpkin Chair', type:'block', tile:T.FURN_CHAIR, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_CHAIR, { name:'Reef Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_CHAIR, { name:'Rich Mahogany Chair', type:'block', tile:T.FURN_CHAIR, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_CHAIR, { name:'Sandstone Chair', type:'block', tile:T.FURN_CHAIR, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_CHAIR, { name:'Shadewood Chair', type:'block', tile:T.FURN_CHAIR, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_CHAIR, { name:'Skyware Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_CHAIR, { name:'Slime Chair', type:'block', tile:T.FURN_CHAIR, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_CHAIR, { name:'Snow Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_CHAIR, { name:'Solar Chair', type:'block', tile:T.FURN_CHAIR, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_CHAIR, { name:'Spider Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_CHAIR, { name:'Spike Chair', type:'block', tile:T.FURN_CHAIR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_CHAIR, { name:'Spooky Chair', type:'block', tile:T.FURN_CHAIR, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_CHAIR, { name:'Stardust Chair', type:'block', tile:T.FURN_CHAIR, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_CHAIR, { name:'Steampunk Chair', type:'block', tile:T.FURN_CHAIR, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_CHAIR, { name:'Stone Chair', type:'block', tile:T.FURN_CHAIR, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.VORTEX_CHAIR, { name:'Vortex Chair', type:'block', tile:T.FURN_CHAIR, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.AETHERIUM_CHANDELIER, { name:'Aetherium Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_CHANDELIER, { name:'Aquarium Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_CHANDELIER, { name:'Ash Wood Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_CHANDELIER, { name:'Balloon Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_CHANDELIER, { name:'Bamboo Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_CHANDELIER, { name:'Blue Dungeon Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_CHANDELIER, { name:'Bone Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_CHANDELIER, { name:'Boreal Wood Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_CHANDELIER, { name:'Boulder Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_CHANDELIER, { name:'Cactus Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_CHANDELIER, { name:'Cloud Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.COPPER_CHANDELIER, { name:'Copper Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#e0834d', icon:'block', maxStack:999, desc:'Copper furniture.' });
+defItem(I.CRIMTANE_CHANDELIER, { name:'Crimtane Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_CHANDELIER, { name:'Crystal Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_CHANDELIER, { name:'Demonite Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_CHANDELIER, { name:'Duskware Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EASTER_CHANDELIER, { name:'Easter Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_CHANDELIER, { name:'Ebonwood Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_CHANDELIER, { name:'Fallen Star Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_CHANDELIER, { name:'Feywood Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_CHANDELIER, { name:'Flesh Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_CHANDELIER, { name:'Flinx Fur Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_CHANDELIER, { name:'Forbidden Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_CHANDELIER, { name:'Frozen Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_CHANDELIER, { name:'Glass Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLD_CHANDELIER, { name:'Gold Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#ffd75e', icon:'block', maxStack:999, desc:'Gold furniture.' });
+defItem(I.GOLDEN_CHANDELIER, { name:'Golden Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_CHANDELIER, { name:'Gothic Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_CHANDELIER, { name:'Granite Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_CHANDELIER, { name:'Green Dungeon Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_CHANDELIER, { name:'Hallowed Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_CHANDELIER, { name:'Harpy Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_CHANDELIER, { name:'Honey Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_CHANDELIER, { name:'Jellyfish Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_CHANDELIER, { name:'Lesion Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_CHANDELIER, { name:'Librarian Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_CHANDELIER, { name:'Lihzahrd Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_CHANDELIER, { name:'Living Wood Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_CHANDELIER, { name:'Marble Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_CHANDELIER, { name:'Martian Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_CHANDELIER, { name:'Meteorite Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_CHANDELIER, { name:'Mushroom Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_CHANDELIER, { name:'Nebula Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_CHANDELIER, { name:'Obsidian Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_CHANDELIER, { name:'Office Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_CHANDELIER, { name:'Palm Wood Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_CHANDELIER, { name:'Pearlwood Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_CHANDELIER, { name:'Pine Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_CHANDELIER, { name:'Pink Dungeon Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PLATINUM_CHANDELIER, { name:'Platinum Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#b09a78', icon:'block', maxStack:999, desc:'Platinum furniture.' });
+defItem(I.PUMPKIN_CHANDELIER, { name:'Pumpkin Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_CHANDELIER, { name:'Reef Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_CHANDELIER, { name:'Rich Mahogany Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_CHANDELIER, { name:'Sandstone Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_CHANDELIER, { name:'Shadewood Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SILVER_CHANDELIER, { name:'Silver Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#cfd6e0', icon:'block', maxStack:999, desc:'Silver furniture.' });
+defItem(I.SKYWARE_CHANDELIER, { name:'Skyware Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_CHANDELIER, { name:'Slime Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_CHANDELIER, { name:'Snow Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_CHANDELIER, { name:'Solar Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_CHANDELIER, { name:'Spider Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_CHANDELIER, { name:'Spike Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_CHANDELIER, { name:'Spooky Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_CHANDELIER, { name:'Stardust Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_CHANDELIER, { name:'Steampunk Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_CHANDELIER, { name:'Stone Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.TIN_CHANDELIER, { name:'Tin Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#b09a78', icon:'block', maxStack:999, desc:'Tin furniture.' });
+defItem(I.TUNGSTEN_CHANDELIER, { name:'Tungsten Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#8a92ad', icon:'block', maxStack:999, desc:'Tungsten furniture.' });
+defItem(I.VORTEX_CHANDELIER, { name:'Vortex Chandelier', type:'block', tile:T.FURN_CHANDELIER, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.AETHERIUM_CHEST, { name:'Aetherium Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_CHEST, { name:'Ash Wood Chest', type:'block', tile:T.FURN_CHEST, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_CHEST, { name:'Balloon Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_CHEST, { name:'Bamboo Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_CHEST, { name:'Blue Dungeon Chest', type:'block', tile:T.FURN_CHEST, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_CHEST, { name:'Bone Chest', type:'block', tile:T.FURN_CHEST, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_CHEST, { name:'Boreal Wood Chest', type:'block', tile:T.FURN_CHEST, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_CHEST, { name:'Boulder Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_CHEST, { name:'Cactus Chest', type:'block', tile:T.FURN_CHEST, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CHEST_STATUE, { name:'Chest Statue', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CLOUD_CHEST, { name:'Cloud Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CORRUPTION_CHEST, { name:'Corruption Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMSON_CHEST, { name:'Crimson Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_CHEST, { name:'Crimtane Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_CHEST, { name:'Crystal Chest', type:'block', tile:T.FURN_CHEST, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEAD_MANS_CHEST, { name:'Dead Man\'s Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DEMONITE_CHEST, { name:'Demonite Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DESERT_CHEST, { name:'Desert Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_CHEST, { name:'Duskware Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_CHEST, { name:'Dynasty Chest', type:'block', tile:T.FURN_CHEST, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_CHEST, { name:'Easter Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_CHEST, { name:'Ebonwood Chest', type:'block', tile:T.FURN_CHEST, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_CHEST, { name:'Fallen Star Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FANCY_HALLOWED_CHEST, { name:'Fancy Hallowed Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_CHEST, { name:'Feywood Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_CHEST, { name:'Flesh Chest', type:'block', tile:T.FURN_CHEST, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_CHEST, { name:'Flinx Fur Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_CHEST, { name:'Forbidden Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_CHEST, { name:'Frozen Chest', type:'block', tile:T.FURN_CHEST, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_CHEST, { name:'Glass Chest', type:'block', tile:T.FURN_CHEST, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLD_CHEST, { name:'Gold Chest', type:'block', tile:T.FURN_CHEST, color:'#ffd75e', icon:'block', maxStack:999, desc:'Gold furniture.' });
+defItem(I.GOLDEN_CHEST, { name:'Golden Chest', type:'block', tile:T.FURN_CHEST, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOLF_CHEST, { name:'Golf Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GOTHIC_CHEST, { name:'Gothic Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_CHEST, { name:'Granite Chest', type:'block', tile:T.FURN_CHEST, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_CHEST, { name:'Green Dungeon Chest', type:'block', tile:T.FURN_CHEST, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_CHEST, { name:'Hallowed Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_CHEST, { name:'Harpy Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_CHEST, { name:'Honey Chest', type:'block', tile:T.FURN_CHEST, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.ICE_CHEST, { name:'Ice Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.IVY_CHEST, { name:'Ivy Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.JELLYFISH_CHEST, { name:'Jellyfish Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.JUNGLE_CHEST, { name:'Jungle Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_CHEST, { name:'Lesion Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_CHEST, { name:'Librarian Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_CHEST, { name:'Lihzahrd Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_CHEST, { name:'Living Wood Chest', type:'block', tile:T.FURN_CHEST, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_CHEST, { name:'Marble Chest', type:'block', tile:T.FURN_CHEST, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_CHEST, { name:'Martian Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_CHEST, { name:'Meteorite Chest', type:'block', tile:T.FURN_CHEST, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_CHEST, { name:'Mushroom Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_CHEST, { name:'Nebula Chest', type:'block', tile:T.FURN_CHEST, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_CHEST, { name:'Obsidian Chest', type:'block', tile:T.FURN_CHEST, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_CHEST, { name:'Office Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_CHEST, { name:'Palm Wood Chest', type:'block', tile:T.FURN_CHEST, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_CHEST, { name:'Pearlwood Chest', type:'block', tile:T.FURN_CHEST, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_CHEST, { name:'Pine Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_CHEST, { name:'Pink Dungeon Chest', type:'block', tile:T.FURN_CHEST, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PUMPKIN_CHEST, { name:'Pumpkin Chest', type:'block', tile:T.FURN_CHEST, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_CHEST, { name:'Reef Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_CHEST, { name:'Rich Mahogany Chest', type:'block', tile:T.FURN_CHEST, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_CHEST, { name:'Sandstone Chest', type:'block', tile:T.FURN_CHEST, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_CHEST, { name:'Shadewood Chest', type:'block', tile:T.FURN_CHEST, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SHADOW_CHEST, { name:'Shadow Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SKYWARE_CHEST, { name:'Skyware Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_CHEST, { name:'Slime Chest', type:'block', tile:T.FURN_CHEST, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_CHEST, { name:'Snow Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_CHEST, { name:'Solar Chest', type:'block', tile:T.FURN_CHEST, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_CHEST, { name:'Spider Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_CHEST, { name:'Spike Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_CHEST, { name:'Spooky Chest', type:'block', tile:T.FURN_CHEST, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_CHEST, { name:'Stardust Chest', type:'block', tile:T.FURN_CHEST, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_CHEST, { name:'Steampunk Chest', type:'block', tile:T.FURN_CHEST, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_CHEST, { name:'Stone Chest', type:'block', tile:T.FURN_CHEST, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.TRAPPED_AETHERIUM_CHEST, { name:'Trapped Aetherium Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_ASH_WOOD_CHEST, { name:'Trapped Ash Wood Chest', type:'block', tile:T.FURN_CHEST, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.TRAPPED_BALLOON_CHEST, { name:'Trapped Balloon Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_BAMBOO_CHEST, { name:'Trapped Bamboo Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_BLUE_DUNGEON_CHEST, { name:'Trapped Blue Dungeon Chest', type:'block', tile:T.FURN_CHEST, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.TRAPPED_BONE_CHEST, { name:'Trapped Bone Chest', type:'block', tile:T.FURN_CHEST, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.TRAPPED_BOREAL_WOOD_CHEST, { name:'Trapped Boreal Wood Chest', type:'block', tile:T.FURN_CHEST, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.TRAPPED_BOULDER_CHEST, { name:'Trapped Boulder Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_CACTUS_CHEST, { name:'Trapped Cactus Chest', type:'block', tile:T.FURN_CHEST, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.TRAPPED_CHEST, { name:'Trapped Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_CLOUD_CHEST, { name:'Trapped Cloud Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_CORRUPTION_CHEST, { name:'Trapped Corruption Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_CRIMSON_CHEST, { name:'Trapped Crimson Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_CRIMTANE_CHEST, { name:'Trapped Crimtane Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_CRYSTAL_CHEST, { name:'Trapped Crystal Chest', type:'block', tile:T.FURN_CHEST, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.TRAPPED_DEMONITE_CHEST, { name:'Trapped Demonite Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_DESERT_CHEST, { name:'Trapped Desert Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_DUSKWARE_CHEST, { name:'Trapped Duskware Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_DYNASTY_CHEST, { name:'Trapped Dynasty Chest', type:'block', tile:T.FURN_CHEST, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.TRAPPED_EASTER_CHEST, { name:'Trapped Easter Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_EBONWOOD_CHEST, { name:'Trapped Ebonwood Chest', type:'block', tile:T.FURN_CHEST, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.TRAPPED_FALLEN_STAR_CHEST, { name:'Trapped Fallen Star Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_FANCY_HALLOWED_CHEST, { name:'Trapped Fancy Hallowed Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_FEYWOOD_CHEST, { name:'Trapped Feywood Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_FLESH_CHEST, { name:'Trapped Flesh Chest', type:'block', tile:T.FURN_CHEST, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.TRAPPED_FLINX_FUR_CHEST, { name:'Trapped Flinx Fur Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_FORBIDDEN_CHEST, { name:'Trapped Forbidden Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_FROZEN_CHEST, { name:'Trapped Frozen Chest', type:'block', tile:T.FURN_CHEST, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.TRAPPED_GLASS_CHEST, { name:'Trapped Glass Chest', type:'block', tile:T.FURN_CHEST, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.TRAPPED_GOLD_CHEST, { name:'Trapped Gold Chest', type:'block', tile:T.FURN_CHEST, color:'#ffd75e', icon:'block', maxStack:999, desc:'Gold furniture.' });
+defItem(I.TRAPPED_GOLDEN_CHEST, { name:'Trapped Golden Chest', type:'block', tile:T.FURN_CHEST, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.TRAPPED_GOLF_CHEST, { name:'Trapped Golf Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_GOTHIC_CHEST, { name:'Trapped Gothic Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_GRANITE_CHEST, { name:'Trapped Granite Chest', type:'block', tile:T.FURN_CHEST, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.TRAPPED_GREEN_DUNGEON_CHEST, { name:'Trapped Green Dungeon Chest', type:'block', tile:T.FURN_CHEST, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.TRAPPED_HALLOWED_CHEST, { name:'Trapped Hallowed Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_HARPY_CHEST, { name:'Trapped Harpy Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_HONEY_CHEST, { name:'Trapped Honey Chest', type:'block', tile:T.FURN_CHEST, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.TRAPPED_ICE_CHEST, { name:'Trapped Ice Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_IVY_CHEST, { name:'Trapped Ivy Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_JELLYFISH_CHEST, { name:'Trapped Jellyfish Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_JUNGLE_CHEST, { name:'Trapped Jungle Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_LESION_CHEST, { name:'Trapped Lesion Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_LIBRARIAN_CHEST, { name:'Trapped Librarian Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_LIHZAHRD_CHEST, { name:'Trapped Lihzahrd Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_LIVING_WOOD_CHEST, { name:'Trapped Living Wood Chest', type:'block', tile:T.FURN_CHEST, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.TRAPPED_MARBLE_CHEST, { name:'Trapped Marble Chest', type:'block', tile:T.FURN_CHEST, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.TRAPPED_MARTIAN_CHEST, { name:'Trapped Martian Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_METEORITE_CHEST, { name:'Trapped Meteorite Chest', type:'block', tile:T.FURN_CHEST, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.TRAPPED_MUSHROOM_CHEST, { name:'Trapped Mushroom Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_NEBULA_CHEST, { name:'Trapped Nebula Chest', type:'block', tile:T.FURN_CHEST, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.TRAPPED_OBSIDIAN_CHEST, { name:'Trapped Obsidian Chest', type:'block', tile:T.FURN_CHEST, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.TRAPPED_OFFICE_CHEST, { name:'Trapped Office Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_PALM_WOOD_CHEST, { name:'Trapped Palm Wood Chest', type:'block', tile:T.FURN_CHEST, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.TRAPPED_PEARLWOOD_CHEST, { name:'Trapped Pearlwood Chest', type:'block', tile:T.FURN_CHEST, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.TRAPPED_PINE_CHEST, { name:'Trapped Pine Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_PINK_DUNGEON_CHEST, { name:'Trapped Pink Dungeon Chest', type:'block', tile:T.FURN_CHEST, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.TRAPPED_PUMPKIN_CHEST, { name:'Trapped Pumpkin Chest', type:'block', tile:T.FURN_CHEST, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.TRAPPED_REEF_CHEST, { name:'Trapped Reef Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_RICH_MAHOGANY_CHEST, { name:'Trapped Rich Mahogany Chest', type:'block', tile:T.FURN_CHEST, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.TRAPPED_SANDSTONE_CHEST, { name:'Trapped Sandstone Chest', type:'block', tile:T.FURN_CHEST, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.TRAPPED_SHADEWOOD_CHEST, { name:'Trapped Shadewood Chest', type:'block', tile:T.FURN_CHEST, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.TRAPPED_SHADOW_CHEST, { name:'Trapped Shadow Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_SKYWARE_CHEST, { name:'Trapped Skyware Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_SLIME_CHEST, { name:'Trapped Slime Chest', type:'block', tile:T.FURN_CHEST, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.TRAPPED_SNOW_CHEST, { name:'Trapped Snow Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_SOLAR_CHEST, { name:'Trapped Solar Chest', type:'block', tile:T.FURN_CHEST, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.TRAPPED_SPIDER_CHEST, { name:'Trapped Spider Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_SPIKE_CHEST, { name:'Trapped Spike Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TRAPPED_SPOOKY_CHEST, { name:'Trapped Spooky Chest', type:'block', tile:T.FURN_CHEST, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.TRAPPED_STARDUST_CHEST, { name:'Trapped Stardust Chest', type:'block', tile:T.FURN_CHEST, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.TRAPPED_STEAMPUNK_CHEST, { name:'Trapped Steampunk Chest', type:'block', tile:T.FURN_CHEST, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.TRAPPED_STONE_CHEST, { name:'Trapped Stone Chest', type:'block', tile:T.FURN_CHEST, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.TRAPPED_VORTEX_CHEST, { name:'Trapped Vortex Chest', type:'block', tile:T.FURN_CHEST, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.TRAPPED_WATER_CHEST, { name:'Trapped Water Chest', type:'block', tile:T.FURN_CHEST, color:'#2f6bd0', icon:'block', maxStack:999, desc:'Water furniture.' });
+defItem(I.TRAPPED_WEB_COVERED_CHEST, { name:'Trapped Web Covered Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.VORTEX_CHEST, { name:'Vortex Chest', type:'block', tile:T.FURN_CHEST, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.WATER_CHEST, { name:'Water Chest', type:'block', tile:T.FURN_CHEST, color:'#2f6bd0', icon:'block', maxStack:999, desc:'Water furniture.' });
+defItem(I.WEB_COVERED_CHEST, { name:'Web Covered Chest', type:'block', tile:T.FURN_CHEST, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AETHERIUM_CLOCK, { name:'Aetherium Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_CLOCK, { name:'Aquarium Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_CLOCK, { name:'Ash Wood Clock', type:'block', tile:T.FURN_CLOCK, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_CLOCK, { name:'Balloon Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_CLOCK, { name:'Bamboo Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_CLOCK, { name:'Blue Dungeon Clock', type:'block', tile:T.FURN_CLOCK, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_CLOCK, { name:'Bone Clock', type:'block', tile:T.FURN_CLOCK, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_CLOCK, { name:'Boreal Wood Clock', type:'block', tile:T.FURN_CLOCK, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_CLOCK, { name:'Boulder Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_CLOCK, { name:'Cactus Clock', type:'block', tile:T.FURN_CLOCK, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_CLOCK, { name:'Cloud Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CONVEYOR_BELT_CLOCKWISE, { name:'Conveyor Belt (Clockwise)', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CONVEYOR_BELT_COUNTER_CLOCKWISE, { name:'Conveyor Belt (Counter Clockwise)', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_CLOCK, { name:'Crimtane Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_CLOCK, { name:'Crystal Clock', type:'block', tile:T.FURN_CLOCK, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_CLOCK, { name:'Demonite Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_CLOCK, { name:'Duskware Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_CLOCK, { name:'Dynasty Clock', type:'block', tile:T.FURN_CLOCK, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_CLOCK, { name:'Easter Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_CLOCK, { name:'Ebonwood Clock', type:'block', tile:T.FURN_CLOCK, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_CLOCK, { name:'Fallen Star Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_CLOCK, { name:'Feywood Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_CLOCK, { name:'Flesh Clock', type:'block', tile:T.FURN_CLOCK, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_CLOCK, { name:'Flinx Fur Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_CLOCK, { name:'Forbidden Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_CLOCK, { name:'Frozen Clock', type:'block', tile:T.FURN_CLOCK, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_CLOCK, { name:'Glass Clock', type:'block', tile:T.FURN_CLOCK, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_CLOCK, { name:'Golden Clock', type:'block', tile:T.FURN_CLOCK, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_CLOCK, { name:'Gothic Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANDFATHER_CLOCK, { name:'Grandfather Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_CLOCK, { name:'Granite Clock', type:'block', tile:T.FURN_CLOCK, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_CLOCK, { name:'Green Dungeon Clock', type:'block', tile:T.FURN_CLOCK, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_CLOCK, { name:'Hallowed Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_CLOCK, { name:'Harpy Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_CLOCK, { name:'Honey Clock', type:'block', tile:T.FURN_CLOCK, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_CLOCK, { name:'Jellyfish Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_CLOCK, { name:'Lesion Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_CLOCK, { name:'Librarian Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_CLOCK, { name:'Lihzahrd Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_CLOCK, { name:'Living Wood Clock', type:'block', tile:T.FURN_CLOCK, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_CLOCK, { name:'Marble Clock', type:'block', tile:T.FURN_CLOCK, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_ASTRO_CLOCK, { name:'Martian Astro Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_CLOCK, { name:'Meteorite Clock', type:'block', tile:T.FURN_CLOCK, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_CLOCK, { name:'Mushroom Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_CLOCK, { name:'Nebula Clock', type:'block', tile:T.FURN_CLOCK, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_CLOCK, { name:'Obsidian Clock', type:'block', tile:T.FURN_CLOCK, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_CLOCK, { name:'Office Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_CLOCK, { name:'Palm Wood Clock', type:'block', tile:T.FURN_CLOCK, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_CLOCK, { name:'Pearlwood Clock', type:'block', tile:T.FURN_CLOCK, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_CLOCK, { name:'Pine Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_CLOCK, { name:'Pink Dungeon Clock', type:'block', tile:T.FURN_CLOCK, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PUMPKIN_CLOCK, { name:'Pumpkin Clock', type:'block', tile:T.FURN_CLOCK, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_CLOCK, { name:'Reef Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_CLOCK, { name:'Rich Mahogany Clock', type:'block', tile:T.FURN_CLOCK, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_CLOCK, { name:'Sandstone Clock', type:'block', tile:T.FURN_CLOCK, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_CLOCK, { name:'Shadewood Clock', type:'block', tile:T.FURN_CLOCK, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_CLOCK, { name:'Skyware Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_CLOCK, { name:'Slime Clock', type:'block', tile:T.FURN_CLOCK, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_CLOCK, { name:'Snow Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_CLOCK, { name:'Solar Clock', type:'block', tile:T.FURN_CLOCK, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_CLOCK, { name:'Spider Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_CLOCK, { name:'Spike Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_CLOCK, { name:'Spooky Clock', type:'block', tile:T.FURN_CLOCK, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_CLOCK, { name:'Stardust Clock', type:'block', tile:T.FURN_CLOCK, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_CLOCK, { name:'Steampunk Clock', type:'block', tile:T.FURN_CLOCK, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_CLOCK, { name:'Stone Clock', type:'block', tile:T.FURN_CLOCK, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.SUNPLATE_CLOCK, { name:'Sunplate Clock', type:'block', tile:T.FURN_CLOCK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.VORTEX_CLOCK, { name:'Vortex Clock', type:'block', tile:T.FURN_CLOCK, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.AETHERIUM_DOOR, { name:'Aetherium Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_DOOR, { name:'Aquarium Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_DOOR, { name:'Ash Wood Door', type:'block', tile:T.FURN_DOOR, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_DOOR, { name:'Balloon Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_DOOR, { name:'Bamboo Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_DOOR, { name:'Blue Dungeon Door', type:'block', tile:T.FURN_DOOR, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_DOOR, { name:'Bone Door', type:'block', tile:T.FURN_DOOR, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_DOOR, { name:'Boreal Wood Door', type:'block', tile:T.FURN_DOOR, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_DOOR, { name:'Boulder Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_DOOR, { name:'Cactus Door', type:'block', tile:T.FURN_DOOR, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_DOOR, { name:'Cloud Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_DOOR, { name:'Crimtane Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_DOOR, { name:'Crystal Door', type:'block', tile:T.FURN_DOOR, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_DOOR, { name:'Demonite Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUNGEON_DOOR, { name:'Dungeon Door', type:'block', tile:T.FURN_DOOR, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_DOOR, { name:'Duskware Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_DOOR, { name:'Dynasty Door', type:'block', tile:T.FURN_DOOR, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_DOOR, { name:'Easter Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_DOOR, { name:'Ebonwood Door', type:'block', tile:T.FURN_DOOR, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_DOOR, { name:'Fallen Star Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_DOOR, { name:'Feywood Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_DOOR, { name:'Flesh Door', type:'block', tile:T.FURN_DOOR, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_DOOR, { name:'Flinx Fur Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_DOOR, { name:'Forbidden Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_DOOR, { name:'Frozen Door', type:'block', tile:T.FURN_DOOR, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_DOOR, { name:'Glass Door', type:'block', tile:T.FURN_DOOR, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_DOOR, { name:'Golden Door', type:'block', tile:T.FURN_DOOR, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_DOOR, { name:'Gothic Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_DOOR, { name:'Granite Door', type:'block', tile:T.FURN_DOOR, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_DOOR, { name:'Green Dungeon Door', type:'block', tile:T.FURN_DOOR, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_DOOR, { name:'Hallowed Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_DOOR, { name:'Harpy Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_DOOR, { name:'Honey Door', type:'block', tile:T.FURN_DOOR, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.IRON_DOOR, { name:'Iron Door', type:'block', tile:T.FURN_DOOR, color:'#9a8c7c', icon:'block', maxStack:999, desc:'Iron furniture.' });
+defItem(I.JELLYFISH_DOOR, { name:'Jellyfish Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LEAD_DOOR, { name:'Lead Door', type:'block', tile:T.FURN_DOOR, color:'#6a6a76', icon:'block', maxStack:999, desc:'Lead furniture.' });
+defItem(I.LESION_DOOR, { name:'Lesion Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_DOOR, { name:'Librarian Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_DOOR, { name:'Lihzahrd Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_DOOR, { name:'Living Wood Door', type:'block', tile:T.FURN_DOOR, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_DOOR, { name:'Marble Door', type:'block', tile:T.FURN_DOOR, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_DOOR, { name:'Martian Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_DOOR, { name:'Meteorite Door', type:'block', tile:T.FURN_DOOR, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_DOOR, { name:'Mushroom Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_DOOR, { name:'Nebula Door', type:'block', tile:T.FURN_DOOR, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_DOOR, { name:'Obsidian Door', type:'block', tile:T.FURN_DOOR, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_DOOR, { name:'Office Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_DOOR, { name:'Palm Wood Door', type:'block', tile:T.FURN_DOOR, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_DOOR, { name:'Pearlwood Door', type:'block', tile:T.FURN_DOOR, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_DOOR, { name:'Pine Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_DOOR, { name:'Pink Dungeon Door', type:'block', tile:T.FURN_DOOR, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PUMPKIN_DOOR, { name:'Pumpkin Door', type:'block', tile:T.FURN_DOOR, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_DOOR, { name:'Reef Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_DOOR, { name:'Rich Mahogany Door', type:'block', tile:T.FURN_DOOR, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_DOOR, { name:'Sandstone Door', type:'block', tile:T.FURN_DOOR, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_DOOR, { name:'Shadewood Door', type:'block', tile:T.FURN_DOOR, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_DOOR, { name:'Skyware Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_DOOR, { name:'Slime Door', type:'block', tile:T.FURN_DOOR, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_DOOR, { name:'Snow Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_DOOR, { name:'Solar Door', type:'block', tile:T.FURN_DOOR, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_DOOR, { name:'Spider Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_DOOR, { name:'Spike Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_DOOR, { name:'Spooky Door', type:'block', tile:T.FURN_DOOR, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_DOOR, { name:'Stardust Door', type:'block', tile:T.FURN_DOOR, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_DOOR, { name:'Steampunk Door', type:'block', tile:T.FURN_DOOR, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_DOOR, { name:'Stone Door', type:'block', tile:T.FURN_DOOR, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.TRAP_DOOR, { name:'Trap Door', type:'block', tile:T.FURN_DOOR, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.VORTEX_DOOR, { name:'Vortex Door', type:'block', tile:T.FURN_DOOR, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.AETHERIUM_DRESSER, { name:'Aetherium Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_DRESSER, { name:'Aquarium Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_DRESSER, { name:'Ash Wood Dresser', type:'block', tile:T.FURN_DRESSER, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_DRESSER, { name:'Balloon Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_DRESSER, { name:'Bamboo Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_DRESSER, { name:'Blue Dungeon Dresser', type:'block', tile:T.FURN_DRESSER, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_DRESSER, { name:'Bone Dresser', type:'block', tile:T.FURN_DRESSER, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_DRESSER, { name:'Boreal Wood Dresser', type:'block', tile:T.FURN_DRESSER, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_DRESSER, { name:'Boulder Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_DRESSER, { name:'Cactus Dresser', type:'block', tile:T.FURN_DRESSER, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_DRESSER, { name:'Cloud Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_DRESSER, { name:'Crimtane Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_DRESSER, { name:'Crystal Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_DRESSER, { name:'Demonite Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DRESSER, { name:'Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_DRESSER, { name:'Duskware Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_DRESSER, { name:'Dynasty Dresser', type:'block', tile:T.FURN_DRESSER, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_DRESSER, { name:'Easter Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_DRESSER, { name:'Ebonwood Dresser', type:'block', tile:T.FURN_DRESSER, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_DRESSER, { name:'Fallen Star Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_DRESSER, { name:'Feywood Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_DRESSER, { name:'Flesh Dresser', type:'block', tile:T.FURN_DRESSER, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_DRESSER, { name:'Flinx Fur Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_DRESSER, { name:'Forbidden Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_DRESSER, { name:'Frozen Dresser', type:'block', tile:T.FURN_DRESSER, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_DRESSER, { name:'Glass Dresser', type:'block', tile:T.FURN_DRESSER, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_DRESSER, { name:'Golden Dresser', type:'block', tile:T.FURN_DRESSER, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_DRESSER, { name:'Gothic Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_DRESSER, { name:'Granite Dresser', type:'block', tile:T.FURN_DRESSER, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_DRESSER, { name:'Green Dungeon Dresser', type:'block', tile:T.FURN_DRESSER, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_DRESSER, { name:'Hallowed Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_DRESSER, { name:'Harpy Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_DRESSER, { name:'Honey Dresser', type:'block', tile:T.FURN_DRESSER, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_DRESSER, { name:'Jellyfish Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_DRESSER, { name:'Lesion Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_DRESSER, { name:'Librarian Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_DRESSER, { name:'Lihzahrd Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_DRESSER, { name:'Living Wood Dresser', type:'block', tile:T.FURN_DRESSER, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_DRESSER, { name:'Marble Dresser', type:'block', tile:T.FURN_DRESSER, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_DRESSER, { name:'Martian Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_DRESSER, { name:'Meteorite Dresser', type:'block', tile:T.FURN_DRESSER, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_DRESSER, { name:'Mushroom Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_DRESSER, { name:'Nebula Dresser', type:'block', tile:T.FURN_DRESSER, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_DRESSER, { name:'Obsidian Dresser', type:'block', tile:T.FURN_DRESSER, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_DRESSER, { name:'Office Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_DRESSER, { name:'Palm Wood Dresser', type:'block', tile:T.FURN_DRESSER, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_DRESSER, { name:'Pearlwood Dresser', type:'block', tile:T.FURN_DRESSER, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_DRESSER, { name:'Pine Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_DRESSER, { name:'Pink Dungeon Dresser', type:'block', tile:T.FURN_DRESSER, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PUMPKIN_DRESSER, { name:'Pumpkin Dresser', type:'block', tile:T.FURN_DRESSER, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_DRESSER, { name:'Reef Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_DRESSER, { name:'Rich Mahogany Dresser', type:'block', tile:T.FURN_DRESSER, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_DRESSER, { name:'Sandstone Dresser', type:'block', tile:T.FURN_DRESSER, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_DRESSER, { name:'Shadewood Dresser', type:'block', tile:T.FURN_DRESSER, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_DRESSER, { name:'Skyware Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_DRESSER, { name:'Slime Dresser', type:'block', tile:T.FURN_DRESSER, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_DRESSER, { name:'Snow Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_DRESSER, { name:'Solar Dresser', type:'block', tile:T.FURN_DRESSER, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_DRESSER, { name:'Spider Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_DRESSER, { name:'Spike Dresser', type:'block', tile:T.FURN_DRESSER, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_DRESSER, { name:'Spooky Dresser', type:'block', tile:T.FURN_DRESSER, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_DRESSER, { name:'Stardust Dresser', type:'block', tile:T.FURN_DRESSER, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_DRESSER, { name:'Steampunk Dresser', type:'block', tile:T.FURN_DRESSER, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_DRESSER, { name:'Stone Dresser', type:'block', tile:T.FURN_DRESSER, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.VORTEX_DRESSER, { name:'Vortex Dresser', type:'block', tile:T.FURN_DRESSER, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.FURNACE, { name:'Furnace', type:'block', tile:T.FURN_FURNACE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_FURNACE, { name:'Lihzahrd Furnace', type:'block', tile:T.FURN_FURNACE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AETHERIUM_LAMP, { name:'Aetherium Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_LAMP, { name:'Aquarium Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_LAMP, { name:'Ash Wood Lamp', type:'block', tile:T.FURN_LAMP, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_LAMP, { name:'Balloon Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_LAMP, { name:'Bamboo Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_LAMP, { name:'Blue Dungeon Lamp', type:'block', tile:T.FURN_LAMP, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_LAMP, { name:'Bone Lamp', type:'block', tile:T.FURN_LAMP, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_LAMP, { name:'Boreal Wood Lamp', type:'block', tile:T.FURN_LAMP, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_LAMP, { name:'Boulder Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_LAMP, { name:'Cactus Lamp', type:'block', tile:T.FURN_LAMP, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_LAMP, { name:'Cloud Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_LAMP, { name:'Crimtane Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_LAMP, { name:'Crystal Lamp', type:'block', tile:T.FURN_LAMP, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_LAMP, { name:'Demonite Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DESERT_SPIRIT_LAMP, { name:'Desert Spirit Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DIABOLIST_LAMP, { name:'Diabolist Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_LAMP, { name:'Duskware Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_LAMP, { name:'Dynasty Lamp', type:'block', tile:T.FURN_LAMP, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_LAMP, { name:'Easter Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_LAMP, { name:'Ebonwood Lamp', type:'block', tile:T.FURN_LAMP, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_LAMP, { name:'Fallen Star Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_LAMP, { name:'Feywood Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_LAMP, { name:'Flesh Lamp', type:'block', tile:T.FURN_LAMP, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_LAMP, { name:'Flinx Fur Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_LAMP, { name:'Forbidden Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_LAMP, { name:'Frozen Lamp', type:'block', tile:T.FURN_LAMP, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_LAMP, { name:'Glass Lamp', type:'block', tile:T.FURN_LAMP, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_LAMP, { name:'Golden Lamp', type:'block', tile:T.FURN_LAMP, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_LAMP, { name:'Gothic Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_LAMP, { name:'Granite Lamp', type:'block', tile:T.FURN_LAMP, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_LAMP, { name:'Green Dungeon Lamp', type:'block', tile:T.FURN_LAMP, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_LAMP, { name:'Hallowed Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_LAMP, { name:'Harpy Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_LAMP, { name:'Honey Lamp', type:'block', tile:T.FURN_LAMP, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_LAMP, { name:'Jellyfish Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LAMP_POST, { name:'Lamp Post', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LAVA_LAMP, { name:'Lava Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_LAMP, { name:'Lesion Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_LAMP, { name:'Librarian Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_LAMP, { name:'Lihzahrd Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_LAMP, { name:'Living Wood Lamp', type:'block', tile:T.FURN_LAMP, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.LOGIC_GATE_LAMP_FAULTY, { name:'Logic Gate Lamp (Faulty)', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LOGIC_GATE_LAMP_OFF, { name:'Logic Gate Lamp (Off)', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LOGIC_GATE_LAMP_ON, { name:'Logic Gate Lamp (On)', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.MARBLE_LAMP, { name:'Marble Lamp', type:'block', tile:T.FURN_LAMP, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_LAMPPOST, { name:'Martian Lamppost', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_LAMP, { name:'Meteorite Lamp', type:'block', tile:T.FURN_LAMP, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_LAMP, { name:'Mushroom Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_LAMP, { name:'Nebula Lamp', type:'block', tile:T.FURN_LAMP, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_LAMP, { name:'Obsidian Lamp', type:'block', tile:T.FURN_LAMP, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_LAMP, { name:'Office Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_LAMP, { name:'Palm Wood Lamp', type:'block', tile:T.FURN_LAMP, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_LAMP, { name:'Pearlwood Lamp', type:'block', tile:T.FURN_LAMP, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_LAMP, { name:'Pine Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_LAMP, { name:'Pink Dungeon Lamp', type:'block', tile:T.FURN_LAMP, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PLASMA_LAMP, { name:'Plasma Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PUMPKIN_LAMP, { name:'Pumpkin Lamp', type:'block', tile:T.FURN_LAMP, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_LAMP, { name:'Reef Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_LAMP, { name:'Rich Mahogany Lamp', type:'block', tile:T.FURN_LAMP, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_LAMP, { name:'Sandstone Lamp', type:'block', tile:T.FURN_LAMP, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_LAMP, { name:'Shadewood Lamp', type:'block', tile:T.FURN_LAMP, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_LAMP, { name:'Skyware Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_LAMP, { name:'Slime Lamp', type:'block', tile:T.FURN_LAMP, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_LAMP, { name:'Snow Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_LAMP, { name:'Solar Lamp', type:'block', tile:T.FURN_LAMP, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_LAMP, { name:'Spider Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_LAMP, { name:'Spike Lamp', type:'block', tile:T.FURN_LAMP, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_LAMP, { name:'Spooky Lamp', type:'block', tile:T.FURN_LAMP, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_LAMP, { name:'Stardust Lamp', type:'block', tile:T.FURN_LAMP, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_LAMP, { name:'Steampunk Lamp', type:'block', tile:T.FURN_LAMP, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_LAMP, { name:'Stone Lamp', type:'block', tile:T.FURN_LAMP, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.VORTEX_LAMP, { name:'Vortex Lamp', type:'block', tile:T.FURN_LAMP, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.AETHERIUM_LANTERN, { name:'Aetherium Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ALCHEMY_LANTERN, { name:'Alchemy Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_LANTERN, { name:'Aquarium Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_LANTERN, { name:'Ash Wood Lantern', type:'block', tile:T.FURN_LANTERN, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_LANTERN, { name:'Balloon Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_LANTERN, { name:'Bamboo Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BONE_LANTERN, { name:'Bone Lantern', type:'block', tile:T.FURN_LANTERN, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_LANTERN, { name:'Boreal Wood Lantern', type:'block', tile:T.FURN_LANTERN, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_LANTERN, { name:'Boulder Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BRASS_LANTERN, { name:'Brass Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_LANTERN, { name:'Cactus Lantern', type:'block', tile:T.FURN_LANTERN, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CAGED_LANTERN, { name:'Caged Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CARRIAGE_LANTERN, { name:'Carriage Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CHAIN_LANTERN, { name:'Chain Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CHINESE_LANTERN, { name:'Chinese Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CLOUD_LANTERN, { name:'Cloud Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_LANTERN, { name:'Crimtane Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_LANTERN, { name:'Crystal Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_LANTERN, { name:'Demonite Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_LANTERN, { name:'Duskware Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_LANTERN, { name:'Dynasty Lantern', type:'block', tile:T.FURN_LANTERN, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_LANTERN, { name:'Easter Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_LANTERN, { name:'Ebonwood Lantern', type:'block', tile:T.FURN_LANTERN, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_LANTERN, { name:'Fallen Star Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_LANTERN, { name:'Feywood Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_LANTERN, { name:'Flesh Lantern', type:'block', tile:T.FURN_LANTERN, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_LANTERN, { name:'Flinx Fur Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_LANTERN, { name:'Forbidden Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_LANTERN, { name:'Frozen Lantern', type:'block', tile:T.FURN_LANTERN, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_LANTERN, { name:'Glass Lantern', type:'block', tile:T.FURN_LANTERN, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_LANTERN, { name:'Golden Lantern', type:'block', tile:T.FURN_LANTERN, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_LANTERN, { name:'Gothic Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_LANTERN, { name:'Granite Lantern', type:'block', tile:T.FURN_LANTERN, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.HALLOWED_LANTERN, { name:'Hallowed Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HANGING_JACK_O_LANTERN, { name:'Hanging Jack \'O Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_LANTERN, { name:'Harpy Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HEART_LANTERN, { name:'Heart Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_LANTERN, { name:'Honey Lantern', type:'block', tile:T.FURN_LANTERN, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JACK_O_LANTERN, { name:'Jack \'O Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.JELLYFISH_LANTERN, { name:'Jellyfish Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LARGE_DYNASTY_LANTERN, { name:'Large Dynasty Lantern', type:'block', tile:T.FURN_LANTERN, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.LESION_LANTERN, { name:'Lesion Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_LANTERN, { name:'Librarian Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_LANTERN, { name:'Lihzahrd Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_LANTERN, { name:'Living Wood Lantern', type:'block', tile:T.FURN_LANTERN, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_LANTERN, { name:'Marble Lantern', type:'block', tile:T.FURN_LANTERN, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_LANTERN, { name:'Martian Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_LANTERN, { name:'Meteorite Lantern', type:'block', tile:T.FURN_LANTERN, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_LANTERN, { name:'Mushroom Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_LANTERN, { name:'Nebula Lantern', type:'block', tile:T.FURN_LANTERN, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_LANTERN, { name:'Obsidian Lantern', type:'block', tile:T.FURN_LANTERN, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_LANTERN, { name:'Office Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_LANTERN, { name:'Palm Wood Lantern', type:'block', tile:T.FURN_LANTERN, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_LANTERN, { name:'Pearlwood Lantern', type:'block', tile:T.FURN_LANTERN, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_LANTERN, { name:'Pine Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PUMPKIN_LANTERN, { name:'Pumpkin Lantern', type:'block', tile:T.FURN_LANTERN, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_LANTERN, { name:'Reef Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_LANTERN, { name:'Rich Mahogany Lantern', type:'block', tile:T.FURN_LANTERN, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_LANTERN, { name:'Sandstone Lantern', type:'block', tile:T.FURN_LANTERN, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_LANTERN, { name:'Shadewood Lantern', type:'block', tile:T.FURN_LANTERN, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKULL_LANTERN, { name:'Skull Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SKYWARE_LANTERN, { name:'Skyware Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_LANTERN, { name:'Slime Lantern', type:'block', tile:T.FURN_LANTERN, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_LANTERN, { name:'Snow Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_LANTERN, { name:'Solar Lantern', type:'block', tile:T.FURN_LANTERN, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_LANTERN, { name:'Spider Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_LANTERN, { name:'Spike Lantern', type:'block', tile:T.FURN_LANTERN, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_LANTERN, { name:'Spooky Lantern', type:'block', tile:T.FURN_LANTERN, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_LANTERN, { name:'Stardust Lantern', type:'block', tile:T.FURN_LANTERN, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_LANTERN, { name:'Steampunk Lantern', type:'block', tile:T.FURN_LANTERN, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_LANTERN, { name:'Stone Lantern', type:'block', tile:T.FURN_LANTERN, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.VORTEX_LANTERN, { name:'Vortex Lantern', type:'block', tile:T.FURN_LANTERN, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.AETHERIUM_PIANO, { name:'Aetherium Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_PIANO, { name:'Aquarium Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_PIANO, { name:'Ash Wood Piano', type:'block', tile:T.FURN_PIANO, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_PIANO, { name:'Balloon Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_PIANO, { name:'Bamboo Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_PIANO, { name:'Blue Dungeon Piano', type:'block', tile:T.FURN_PIANO, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_PIANO, { name:'Bone Piano', type:'block', tile:T.FURN_PIANO, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_PIANO, { name:'Boreal Wood Piano', type:'block', tile:T.FURN_PIANO, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_PIANO, { name:'Boulder Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_PIANO, { name:'Cactus Piano', type:'block', tile:T.FURN_PIANO, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_PIANO, { name:'Cloud Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_PIANO, { name:'Crimtane Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_PIANO, { name:'Crystal Piano', type:'block', tile:T.FURN_PIANO, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_PIANO, { name:'Demonite Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_PIANO, { name:'Duskware Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_PIANO, { name:'Dynasty Piano', type:'block', tile:T.FURN_PIANO, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_PIANO, { name:'Easter Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_PIANO, { name:'Ebonwood Piano', type:'block', tile:T.FURN_PIANO, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_PIANO, { name:'Fallen Star Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_PIANO, { name:'Feywood Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_PIANO, { name:'Flesh Piano', type:'block', tile:T.FURN_PIANO, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_PIANO, { name:'Flinx Fur Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_PIANO, { name:'Forbidden Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_PIANO, { name:'Frozen Piano', type:'block', tile:T.FURN_PIANO, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_PIANO, { name:'Glass Piano', type:'block', tile:T.FURN_PIANO, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_PIANO, { name:'Golden Piano', type:'block', tile:T.FURN_PIANO, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_PIANO, { name:'Gothic Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_PIANO, { name:'Granite Piano', type:'block', tile:T.FURN_PIANO, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_PIANO, { name:'Green Dungeon Piano', type:'block', tile:T.FURN_PIANO, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_PIANO, { name:'Hallowed Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_PIANO, { name:'Harpy Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_PIANO, { name:'Honey Piano', type:'block', tile:T.FURN_PIANO, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_PIANO, { name:'Jellyfish Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_PIANO, { name:'Lesion Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_PIANO, { name:'Librarian Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_PIANO, { name:'Lihzahrd Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_PIANO, { name:'Living Wood Piano', type:'block', tile:T.FURN_PIANO, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_PIANO, { name:'Marble Piano', type:'block', tile:T.FURN_PIANO, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_PIANO, { name:'Martian Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_PIANO, { name:'Meteorite Piano', type:'block', tile:T.FURN_PIANO, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_PIANO, { name:'Mushroom Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_PIANO, { name:'Nebula Piano', type:'block', tile:T.FURN_PIANO, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_PIANO, { name:'Obsidian Piano', type:'block', tile:T.FURN_PIANO, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_PIANO, { name:'Office Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_PIANO, { name:'Palm Wood Piano', type:'block', tile:T.FURN_PIANO, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_PIANO, { name:'Pearlwood Piano', type:'block', tile:T.FURN_PIANO, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PIANO, { name:'Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINE_PIANO, { name:'Pine Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_PIANO, { name:'Pink Dungeon Piano', type:'block', tile:T.FURN_PIANO, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PUMPKIN_PIANO, { name:'Pumpkin Piano', type:'block', tile:T.FURN_PIANO, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_PIANO, { name:'Reef Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_PIANO, { name:'Rich Mahogany Piano', type:'block', tile:T.FURN_PIANO, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_PIANO, { name:'Sandstone Piano', type:'block', tile:T.FURN_PIANO, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_PIANO, { name:'Shadewood Piano', type:'block', tile:T.FURN_PIANO, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_PIANO, { name:'Skyware Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_PIANO, { name:'Slime Piano', type:'block', tile:T.FURN_PIANO, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_PIANO, { name:'Snow Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_PIANO, { name:'Solar Piano', type:'block', tile:T.FURN_PIANO, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_PIANO, { name:'Spider Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_PIANO, { name:'Spike Piano', type:'block', tile:T.FURN_PIANO, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_PIANO, { name:'Spooky Piano', type:'block', tile:T.FURN_PIANO, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_PIANO, { name:'Stardust Piano', type:'block', tile:T.FURN_PIANO, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_PIANO, { name:'Steampunk Piano', type:'block', tile:T.FURN_PIANO, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_PIANO, { name:'Stone Piano', type:'block', tile:T.FURN_PIANO, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.VORTEX_PIANO, { name:'Vortex Piano', type:'block', tile:T.FURN_PIANO, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.AETHERIUM_PLATFORM, { name:'Aetherium Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_PLATFORM, { name:'Aquarium Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_PLATFORM, { name:'Ash Wood Platform', type:'block', tile:T.FURN_PLATFORM, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_PLATFORM, { name:'Balloon Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_PLATFORM, { name:'Bamboo Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_BRICK_PLATFORM, { name:'Blue Brick Platform', type:'block', tile:T.FURN_PLATFORM, color:'#b0503a', icon:'block', maxStack:999, desc:'Brick furniture.' });
+defItem(I.BLUE_TEAM_PLATFORM, { name:'Blue Team Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BONE_PLATFORM, { name:'Bone Platform', type:'block', tile:T.FURN_PLATFORM, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_PLATFORM, { name:'Boreal Wood Platform', type:'block', tile:T.FURN_PLATFORM, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_PLATFORM, { name:'Boulder Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_PLATFORM, { name:'Cactus Platform', type:'block', tile:T.FURN_PLATFORM, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_PLATFORM, { name:'Cloud Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_PLATFORM, { name:'Crimtane Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_PLATFORM, { name:'Crystal Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_PLATFORM, { name:'Demonite Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_PLATFORM, { name:'Duskware Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_WOOD_PLATFORM, { name:'Dynasty Wood Platform', type:'block', tile:T.FURN_PLATFORM, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_PLATFORM, { name:'Easter Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_PLATFORM, { name:'Ebonwood Platform', type:'block', tile:T.FURN_PLATFORM, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.ECHO_PLATFORM, { name:'Echo Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FALLEN_STAR_PLATFORM, { name:'Fallen Star Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_PLATFORM, { name:'Feywood Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_PLATFORM, { name:'Flesh Platform', type:'block', tile:T.FURN_PLATFORM, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_PLATFORM, { name:'Flinx Fur Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_PLATFORM, { name:'Forbidden Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_PLATFORM, { name:'Frozen Platform', type:'block', tile:T.FURN_PLATFORM, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_PLATFORM, { name:'Glass Platform', type:'block', tile:T.FURN_PLATFORM, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_PLATFORM, { name:'Golden Platform', type:'block', tile:T.FURN_PLATFORM, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_PLATFORM, { name:'Gothic Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_PLATFORM, { name:'Granite Platform', type:'block', tile:T.FURN_PLATFORM, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_BRICK_PLATFORM, { name:'Green Brick Platform', type:'block', tile:T.FURN_PLATFORM, color:'#b0503a', icon:'block', maxStack:999, desc:'Brick furniture.' });
+defItem(I.GREEN_TEAM_PLATFORM, { name:'Green Team Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HALLOWED_PLATFORM, { name:'Hallowed Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_PLATFORM, { name:'Harpy Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_PLATFORM, { name:'Honey Platform', type:'block', tile:T.FURN_PLATFORM, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_PLATFORM, { name:'Jellyfish Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_PLATFORM, { name:'Lesion Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_PLATFORM, { name:'Librarian Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_PLATFORM, { name:'Lihzahrd Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_PLATFORM, { name:'Living Wood Platform', type:'block', tile:T.FURN_PLATFORM, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_PLATFORM, { name:'Marble Platform', type:'block', tile:T.FURN_PLATFORM, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_PLATFORM, { name:'Martian Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_PLATFORM, { name:'Meteorite Platform', type:'block', tile:T.FURN_PLATFORM, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_PLATFORM, { name:'Mushroom Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_PLATFORM, { name:'Nebula Platform', type:'block', tile:T.FURN_PLATFORM, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_PLATFORM, { name:'Obsidian Platform', type:'block', tile:T.FURN_PLATFORM, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_PLATFORM, { name:'Office Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_PLATFORM, { name:'Palm Wood Platform', type:'block', tile:T.FURN_PLATFORM, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_PLATFORM, { name:'Pearlwood Platform', type:'block', tile:T.FURN_PLATFORM, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_PLATFORM, { name:'Pine Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_BRICK_PLATFORM, { name:'Pink Brick Platform', type:'block', tile:T.FURN_PLATFORM, color:'#b0503a', icon:'block', maxStack:999, desc:'Brick furniture.' });
+defItem(I.PINK_TEAM_PLATFORM, { name:'Pink Team Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PUMPKIN_PLATFORM, { name:'Pumpkin Platform', type:'block', tile:T.FURN_PLATFORM, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.RED_TEAM_PLATFORM, { name:'Red Team Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.REEF_PLATFORM, { name:'Reef Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_PLATFORM, { name:'Rich Mahogany Platform', type:'block', tile:T.FURN_PLATFORM, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_PLATFORM, { name:'Sandstone Platform', type:'block', tile:T.FURN_PLATFORM, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_PLATFORM, { name:'Shadewood Platform', type:'block', tile:T.FURN_PLATFORM, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_PLATFORM, { name:'Skyware Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_PLATFORM, { name:'Slime Platform', type:'block', tile:T.FURN_PLATFORM, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_PLATFORM, { name:'Snow Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_PLATFORM, { name:'Solar Platform', type:'block', tile:T.FURN_PLATFORM, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_PLATFORM, { name:'Spider Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_PLATFORM, { name:'Spike Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_WOOD_PLATFORM, { name:'Spooky Wood Platform', type:'block', tile:T.FURN_PLATFORM, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_PLATFORM, { name:'Stardust Platform', type:'block', tile:T.FURN_PLATFORM, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_PLATFORM, { name:'Steampunk Platform', type:'block', tile:T.FURN_PLATFORM, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_PLATFORM, { name:'Stone Platform', type:'block', tile:T.FURN_PLATFORM, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.VORTEX_PLATFORM, { name:'Vortex Platform', type:'block', tile:T.FURN_PLATFORM, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.WHITE_TEAM_PLATFORM, { name:'White Team Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.YELLOW_TEAM_PLATFORM, { name:'Yellow Team Platform', type:'block', tile:T.FURN_PLATFORM, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AETHERIUM_SINK, { name:'Aetherium Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_SINK, { name:'Aquarium Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_SINK, { name:'Ash Wood Sink', type:'block', tile:T.FURN_SINK, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_SINK, { name:'Balloon Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_SINK, { name:'Bamboo Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_SINK, { name:'Blue Dungeon Sink', type:'block', tile:T.FURN_SINK, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_SINK, { name:'Bone Sink', type:'block', tile:T.FURN_SINK, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_SINK, { name:'Boreal Wood Sink', type:'block', tile:T.FURN_SINK, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_SINK, { name:'Boulder Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_SINK, { name:'Cactus Sink', type:'block', tile:T.FURN_SINK, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_SINK, { name:'Cloud Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_SINK, { name:'Crimtane Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_SINK, { name:'Crystal Sink', type:'block', tile:T.FURN_SINK, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_SINK, { name:'Demonite Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_SINK, { name:'Duskware Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_SINK, { name:'Dynasty Sink', type:'block', tile:T.FURN_SINK, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_SINK, { name:'Easter Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_SINK, { name:'Ebonwood Sink', type:'block', tile:T.FURN_SINK, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_SINK, { name:'Fallen Star Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_SINK, { name:'Feywood Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_SINK, { name:'Flesh Sink', type:'block', tile:T.FURN_SINK, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_SINK, { name:'Flinx Fur Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_SINK, { name:'Forbidden Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_SINK, { name:'Frozen Sink', type:'block', tile:T.FURN_SINK, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_SINK, { name:'Glass Sink', type:'block', tile:T.FURN_SINK, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_SINK, { name:'Golden Sink', type:'block', tile:T.FURN_SINK, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_SINK, { name:'Gothic Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_SINK, { name:'Granite Sink', type:'block', tile:T.FURN_SINK, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_SINK, { name:'Green Dungeon Sink', type:'block', tile:T.FURN_SINK, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_SINK, { name:'Hallowed Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_SINK, { name:'Harpy Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_SINK, { name:'Honey Sink', type:'block', tile:T.FURN_SINK, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_SINK, { name:'Jellyfish Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_SINK, { name:'Lesion Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_SINK, { name:'Librarian Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_SINK, { name:'Lihzahrd Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_SINK, { name:'Living Wood Sink', type:'block', tile:T.FURN_SINK, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_SINK, { name:'Marble Sink', type:'block', tile:T.FURN_SINK, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_SINK, { name:'Martian Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METAL_SINK, { name:'Metal Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_SINK, { name:'Meteorite Sink', type:'block', tile:T.FURN_SINK, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_SINK, { name:'Mushroom Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_SINK, { name:'Nebula Sink', type:'block', tile:T.FURN_SINK, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_SINK, { name:'Obsidian Sink', type:'block', tile:T.FURN_SINK, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_SINK, { name:'Office Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_SINK, { name:'Palm Wood Sink', type:'block', tile:T.FURN_SINK, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_SINK, { name:'Pearlwood Sink', type:'block', tile:T.FURN_SINK, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_SINK, { name:'Pine Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_SINK, { name:'Pink Dungeon Sink', type:'block', tile:T.FURN_SINK, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PUMPKIN_SINK, { name:'Pumpkin Sink', type:'block', tile:T.FURN_SINK, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_SINK, { name:'Reef Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_SINK, { name:'Rich Mahogany Sink', type:'block', tile:T.FURN_SINK, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_SINK, { name:'Sandstone Sink', type:'block', tile:T.FURN_SINK, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_SINK, { name:'Shadewood Sink', type:'block', tile:T.FURN_SINK, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_SINK, { name:'Skyware Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_SINK, { name:'Slime Sink', type:'block', tile:T.FURN_SINK, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_SINK, { name:'Snow Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_SINK, { name:'Solar Sink', type:'block', tile:T.FURN_SINK, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_SINK, { name:'Spider Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_SINK, { name:'Spike Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_SINK, { name:'Spooky Sink', type:'block', tile:T.FURN_SINK, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_SINK, { name:'Stardust Sink', type:'block', tile:T.FURN_SINK, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_SINK, { name:'Steampunk Sink', type:'block', tile:T.FURN_SINK, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_SINK, { name:'Stone Sink', type:'block', tile:T.FURN_SINK, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.VORTEX_SINK, { name:'Vortex Sink', type:'block', tile:T.FURN_SINK, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.WOODEN_SINK, { name:'Wooden Sink', type:'block', tile:T.FURN_SINK, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AETHERIUM_SOFA, { name:'Aetherium Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_SOFA, { name:'Aquarium Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_SOFA, { name:'Ash Wood Sofa', type:'block', tile:T.FURN_SOFA, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_SOFA, { name:'Balloon Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_SOFA, { name:'Bamboo Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_SOFA, { name:'Blue Dungeon Sofa', type:'block', tile:T.FURN_SOFA, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_SOFA, { name:'Bone Sofa', type:'block', tile:T.FURN_SOFA, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_SOFA, { name:'Boreal Wood Sofa', type:'block', tile:T.FURN_SOFA, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_SOFA, { name:'Boulder Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_SOFA, { name:'Cactus Sofa', type:'block', tile:T.FURN_SOFA, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_SOFA, { name:'Cloud Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_SOFA, { name:'Crimtane Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_SOFA, { name:'Crystal Sofa', type:'block', tile:T.FURN_SOFA, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_SOFA, { name:'Demonite Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_SOFA, { name:'Duskware Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_SOFA, { name:'Dynasty Sofa', type:'block', tile:T.FURN_SOFA, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_SOFA, { name:'Easter Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_SOFA, { name:'Ebonwood Sofa', type:'block', tile:T.FURN_SOFA, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_SOFA, { name:'Fallen Star Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_SOFA, { name:'Feywood Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_SOFA, { name:'Flesh Sofa', type:'block', tile:T.FURN_SOFA, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_SOFA, { name:'Flinx Fur Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_SOFA, { name:'Forbidden Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_SOFA, { name:'Frozen Sofa', type:'block', tile:T.FURN_SOFA, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_SOFA, { name:'Glass Sofa', type:'block', tile:T.FURN_SOFA, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_SOFA, { name:'Golden Sofa', type:'block', tile:T.FURN_SOFA, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_SOFA, { name:'Gothic Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_SOFA, { name:'Granite Sofa', type:'block', tile:T.FURN_SOFA, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_SOFA, { name:'Green Dungeon Sofa', type:'block', tile:T.FURN_SOFA, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_SOFA, { name:'Hallowed Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_SOFA, { name:'Harpy Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_SOFA, { name:'Honey Sofa', type:'block', tile:T.FURN_SOFA, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_SOFA, { name:'Jellyfish Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_SOFA, { name:'Lesion Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_SOFA, { name:'Librarian Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_SOFA, { name:'Lihzahrd Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_SOFA, { name:'Living Wood Sofa', type:'block', tile:T.FURN_SOFA, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_SOFA, { name:'Marble Sofa', type:'block', tile:T.FURN_SOFA, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_SOFA, { name:'Martian Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_SOFA, { name:'Meteorite Sofa', type:'block', tile:T.FURN_SOFA, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_SOFA, { name:'Mushroom Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_SOFA, { name:'Nebula Sofa', type:'block', tile:T.FURN_SOFA, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_SOFA, { name:'Obsidian Sofa', type:'block', tile:T.FURN_SOFA, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_SOFA, { name:'Office Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_SOFA, { name:'Palm Wood Sofa', type:'block', tile:T.FURN_SOFA, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_SOFA, { name:'Pearlwood Sofa', type:'block', tile:T.FURN_SOFA, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_SOFA, { name:'Pine Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_SOFA, { name:'Pink Dungeon Sofa', type:'block', tile:T.FURN_SOFA, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PUMPKIN_SOFA, { name:'Pumpkin Sofa', type:'block', tile:T.FURN_SOFA, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_SOFA, { name:'Reef Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_SOFA, { name:'Rich Mahogany Sofa', type:'block', tile:T.FURN_SOFA, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_SOFA, { name:'Sandstone Sofa', type:'block', tile:T.FURN_SOFA, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_SOFA, { name:'Shadewood Sofa', type:'block', tile:T.FURN_SOFA, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_SOFA, { name:'Skyware Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_SOFA, { name:'Slime Sofa', type:'block', tile:T.FURN_SOFA, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_SOFA, { name:'Snow Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOFA, { name:'Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_SOFA, { name:'Solar Sofa', type:'block', tile:T.FURN_SOFA, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_SOFA, { name:'Spider Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_SOFA, { name:'Spike Sofa', type:'block', tile:T.FURN_SOFA, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_SOFA, { name:'Spooky Sofa', type:'block', tile:T.FURN_SOFA, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_SOFA, { name:'Stardust Sofa', type:'block', tile:T.FURN_SOFA, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_SOFA, { name:'Steampunk Sofa', type:'block', tile:T.FURN_SOFA, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_SOFA, { name:'Stone Sofa', type:'block', tile:T.FURN_SOFA, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.VORTEX_SOFA, { name:'Vortex Sofa', type:'block', tile:T.FURN_SOFA, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.AETHERIUM_TABLE, { name:'Aetherium Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ALCHEMY_TABLE, { name:'Alchemy Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ANCIENT_TABLET, { name:'Ancient Tablet', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_TABLE, { name:'Aquarium Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_TABLE, { name:'Ash Wood Table', type:'block', tile:T.FURN_TABLE, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_TABLE, { name:'Balloon Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_TABLE, { name:'Bamboo Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BANQUET_TABLE, { name:'Banquet Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BEWITCHING_TABLE, { name:'Bewitching Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_TABLE, { name:'Blue Dungeon Table', type:'block', tile:T.FURN_TABLE, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_TABLE, { name:'Bone Table', type:'block', tile:T.FURN_TABLE, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_TABLE, { name:'Boreal Wood Table', type:'block', tile:T.FURN_TABLE, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_TABLE, { name:'Boulder Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_TABLE, { name:'Cactus Table', type:'block', tile:T.FURN_TABLE, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_TABLE, { name:'Cloud Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_TABLE, { name:'Crimtane Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_TABLE, { name:'Crystal Table', type:'block', tile:T.FURN_TABLE, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_TABLE, { name:'Demonite Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_TABLE, { name:'Duskware Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_TABLE, { name:'Dynasty Table', type:'block', tile:T.FURN_TABLE, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_TABLE, { name:'Easter Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_TABLE, { name:'Ebonwood Table', type:'block', tile:T.FURN_TABLE, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_TABLE, { name:'Fallen Star Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FANCY_PICNIC_TABLE, { name:'Fancy Picnic Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_TABLE, { name:'Feywood Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_TABLE, { name:'Flesh Table', type:'block', tile:T.FURN_TABLE, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_TABLE, { name:'Flinx Fur Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_TABLE, { name:'Forbidden Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_TABLE, { name:'Frozen Table', type:'block', tile:T.FURN_TABLE, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_TABLE, { name:'Glass Table', type:'block', tile:T.FURN_TABLE, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_TABLE, { name:'Golden Table', type:'block', tile:T.FURN_TABLE, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_TABLE, { name:'Gothic Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_TABLE, { name:'Granite Table', type:'block', tile:T.FURN_TABLE, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_TABLE, { name:'Green Dungeon Table', type:'block', tile:T.FURN_TABLE, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_TABLE, { name:'Hallowed Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_TABLE, { name:'Harpy Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_TABLE, { name:'Honey Table', type:'block', tile:T.FURN_TABLE, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_TABLE, { name:'Jellyfish Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_TABLE, { name:'Lesion Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_TABLE, { name:'Librarian Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_TABLE, { name:'Lihzahrd Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_TABLE, { name:'Living Wood Table', type:'block', tile:T.FURN_TABLE, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_TABLE, { name:'Marble Table', type:'block', tile:T.FURN_TABLE, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_TABLE, { name:'Martian Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.MARTIAN_TABLE_LAMP, { name:'Martian Table Lamp', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_TABLE, { name:'Meteorite Table', type:'block', tile:T.FURN_TABLE, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_TABLE, { name:'Mushroom Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_TABLE, { name:'Nebula Table', type:'block', tile:T.FURN_TABLE, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_TABLE, { name:'Obsidian Table', type:'block', tile:T.FURN_TABLE, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_TABLE, { name:'Office Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_TABLE, { name:'Palm Wood Table', type:'block', tile:T.FURN_TABLE, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_TABLE, { name:'Pearlwood Table', type:'block', tile:T.FURN_TABLE, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PICNIC_TABLE, { name:'Picnic Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINE_TABLE, { name:'Pine Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_TABLE, { name:'Pink Dungeon Table', type:'block', tile:T.FURN_TABLE, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PORTABLE_KILN, { name:'Portable Kiln', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PUMPKIN_TABLE, { name:'Pumpkin Table', type:'block', tile:T.FURN_TABLE, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_TABLE, { name:'Reef Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_TABLE, { name:'Rich Mahogany Table', type:'block', tile:T.FURN_TABLE, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_TABLE, { name:'Sandstone Table', type:'block', tile:T.FURN_TABLE, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_TABLE, { name:'Shadewood Table', type:'block', tile:T.FURN_TABLE, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_TABLE, { name:'Skyware Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_TABLE, { name:'Slime Table', type:'block', tile:T.FURN_TABLE, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_TABLE, { name:'Snow Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_TABLE, { name:'Solar Table', type:'block', tile:T.FURN_TABLE, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_TABLE, { name:'Spider Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_TABLE, { name:'Spike Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_TABLE, { name:'Spooky Table', type:'block', tile:T.FURN_TABLE, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_TABLE, { name:'Stardust Table', type:'block', tile:T.FURN_TABLE, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_TABLE, { name:'Steampunk Table', type:'block', tile:T.FURN_TABLE, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_TABLE, { name:'Stone Table', type:'block', tile:T.FURN_TABLE, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.VORTEX_TABLE, { name:'Vortex Table', type:'block', tile:T.FURN_TABLE, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.WAR_TABLE, { name:'War Table', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.WAR_TABLE_BANNER, { name:'War Table Banner', type:'block', tile:T.FURN_TABLE, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AETHERIUM_TOILET, { name:'Aetherium Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.AQUARIUM_TOILET, { name:'Aquarium Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ASH_WOOD_TOILET, { name:'Ash Wood Toilet', type:'block', tile:T.FURN_TOILET, color:'#7a7a8a', icon:'block', maxStack:999, desc:'Ash wood furniture.' });
+defItem(I.BALLOON_TOILET, { name:'Balloon Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BAMBOO_TOILET, { name:'Bamboo Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_DUNGEON_TOILET, { name:'Blue Dungeon Toilet', type:'block', tile:T.FURN_TOILET, color:'#4a6ab8', icon:'block', maxStack:999, desc:'Blue dungeon furniture.' });
+defItem(I.BONE_TOILET, { name:'Bone Toilet', type:'block', tile:T.FURN_TOILET, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.BOREAL_WOOD_TOILET, { name:'Boreal Wood Toilet', type:'block', tile:T.FURN_TOILET, color:'#8a5c3a', icon:'block', maxStack:999, desc:'Boreal wood furniture.' });
+defItem(I.BOULDER_TOILET, { name:'Boulder Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CACTUS_TOILET, { name:'Cactus Toilet', type:'block', tile:T.FURN_TOILET, color:'#5a9a3a', icon:'block', maxStack:999, desc:'Cactus furniture.' });
+defItem(I.CLOUD_TOILET, { name:'Cloud Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMTANE_TOILET, { name:'Crimtane Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRYSTAL_TOILET, { name:'Crystal Toilet', type:'block', tile:T.FURN_TOILET, color:'#9ad8e8', icon:'block', maxStack:999, desc:'Crystal furniture.' });
+defItem(I.DEMONITE_TOILET, { name:'Demonite Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DIAMOND_TOILET, { name:'Diamond Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DUSKWARE_TOILET, { name:'Duskware Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DYNASTY_TOILET, { name:'Dynasty Toilet', type:'block', tile:T.FURN_TOILET, color:'#c8a86a', icon:'block', maxStack:999, desc:'Dynasty furniture.' });
+defItem(I.EASTER_TOILET, { name:'Easter Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.EBONWOOD_TOILET, { name:'Ebonwood Toilet', type:'block', tile:T.FURN_TOILET, color:'#3a2a4a', icon:'block', maxStack:999, desc:'Ebonwood furniture.' });
+defItem(I.FALLEN_STAR_TOILET, { name:'Fallen Star Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FEYWOOD_TOILET, { name:'Feywood Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FLESH_TOILET, { name:'Flesh Toilet', type:'block', tile:T.FURN_TOILET, color:'#c04858', icon:'block', maxStack:999, desc:'Flesh furniture.' });
+defItem(I.FLINX_FUR_TOILET, { name:'Flinx Fur Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FORBIDDEN_TOILET, { name:'Forbidden Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.FROZEN_TOILET, { name:'Frozen Toilet', type:'block', tile:T.FURN_TOILET, color:'#a8d8f0', icon:'block', maxStack:999, desc:'Frozen furniture.' });
+defItem(I.GLASS_TOILET, { name:'Glass Toilet', type:'block', tile:T.FURN_TOILET, color:'#b8dce8', icon:'block', maxStack:999, desc:'Glass furniture.' });
+defItem(I.GOLDEN_TOILET, { name:'Golden Toilet', type:'block', tile:T.FURN_TOILET, color:'#ffd75e', icon:'block', maxStack:999, desc:'Golden furniture.' });
+defItem(I.GOTHIC_TOILET, { name:'Gothic Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GRANITE_TOILET, { name:'Granite Toilet', type:'block', tile:T.FURN_TOILET, color:'#6a6a7a', icon:'block', maxStack:999, desc:'Granite furniture.' });
+defItem(I.GREEN_DUNGEON_TOILET, { name:'Green Dungeon Toilet', type:'block', tile:T.FURN_TOILET, color:'#4ab86a', icon:'block', maxStack:999, desc:'Green dungeon furniture.' });
+defItem(I.HALLOWED_TOILET, { name:'Hallowed Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HARPY_TOILET, { name:'Harpy Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HONEY_TOILET, { name:'Honey Toilet', type:'block', tile:T.FURN_TOILET, color:'#e8a83d', icon:'block', maxStack:999, desc:'Honey furniture.' });
+defItem(I.JELLYFISH_TOILET, { name:'Jellyfish Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LESION_TOILET, { name:'Lesion Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIBRARIAN_TOILET, { name:'Librarian Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIHZAHRD_TOILET, { name:'Lihzahrd Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.LIVING_WOOD_TOILET, { name:'Living Wood Toilet', type:'block', tile:T.FURN_TOILET, color:'#6a8a3a', icon:'block', maxStack:999, desc:'Living wood furniture.' });
+defItem(I.MARBLE_TOILET, { name:'Marble Toilet', type:'block', tile:T.FURN_TOILET, color:'#d0d0dc', icon:'block', maxStack:999, desc:'Marble furniture.' });
+defItem(I.MARTIAN_TOILET, { name:'Martian Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.METEORITE_TOILET, { name:'Meteorite Toilet', type:'block', tile:T.FURN_TOILET, color:'#763c2e', icon:'block', maxStack:999, desc:'Meteorite furniture.' });
+defItem(I.MUSHROOM_TOILET, { name:'Mushroom Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.NEBULA_TOILET, { name:'Nebula Toilet', type:'block', tile:T.FURN_TOILET, color:'#c85cff', icon:'block', maxStack:999, desc:'Nebula furniture.' });
+defItem(I.OBSIDIAN_TOILET, { name:'Obsidian Toilet', type:'block', tile:T.FURN_TOILET, color:'#2d1f2d', icon:'block', maxStack:999, desc:'Obsidian furniture.' });
+defItem(I.OFFICE_TOILET, { name:'Office Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PALM_WOOD_TOILET, { name:'Palm Wood Toilet', type:'block', tile:T.FURN_TOILET, color:'#c8a86a', icon:'block', maxStack:999, desc:'Palm wood furniture.' });
+defItem(I.PEARLWOOD_TOILET, { name:'Pearlwood Toilet', type:'block', tile:T.FURN_TOILET, color:'#e8e0d0', icon:'block', maxStack:999, desc:'Pearlwood furniture.' });
+defItem(I.PINE_TOILET, { name:'Pine Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_DUNGEON_TOILET, { name:'Pink Dungeon Toilet', type:'block', tile:T.FURN_TOILET, color:'#d86a9a', icon:'block', maxStack:999, desc:'Pink dungeon furniture.' });
+defItem(I.PUMPKIN_TOILET, { name:'Pumpkin Toilet', type:'block', tile:T.FURN_TOILET, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Pumpkin furniture.' });
+defItem(I.REEF_TOILET, { name:'Reef Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RICH_MAHOGANY_TOILET, { name:'Rich Mahogany Toilet', type:'block', tile:T.FURN_TOILET, color:'#8a4a2a', icon:'block', maxStack:999, desc:'Rich mahogany furniture.' });
+defItem(I.SANDSTONE_TOILET, { name:'Sandstone Toilet', type:'block', tile:T.FURN_TOILET, color:'#4a4e58', icon:'block', maxStack:999, desc:'Sandstone furniture.' });
+defItem(I.SHADEWOOD_TOILET, { name:'Shadewood Toilet', type:'block', tile:T.FURN_TOILET, color:'#4a3a3a', icon:'block', maxStack:999, desc:'Shadewood furniture.' });
+defItem(I.SKYWARE_TOILET, { name:'Skyware Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SLIME_TOILET, { name:'Slime Toilet', type:'block', tile:T.FURN_TOILET, color:'#5cbf6c', icon:'block', maxStack:999, desc:'Slime furniture.' });
+defItem(I.SNOW_TOILET, { name:'Snow Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SOLAR_TOILET, { name:'Solar Toilet', type:'block', tile:T.FURN_TOILET, color:'#ff8a3d', icon:'block', maxStack:999, desc:'Solar furniture.' });
+defItem(I.SPIDER_TOILET, { name:'Spider Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPIKE_TOILET, { name:'Spike Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.SPOOKY_TOILET, { name:'Spooky Toilet', type:'block', tile:T.FURN_TOILET, color:'#4a4a5a', icon:'block', maxStack:999, desc:'Spooky furniture.' });
+defItem(I.STARDUST_TOILET, { name:'Stardust Toilet', type:'block', tile:T.FURN_TOILET, color:'#6bc8ff', icon:'block', maxStack:999, desc:'Stardust furniture.' });
+defItem(I.STEAMPUNK_TOILET, { name:'Steampunk Toilet', type:'block', tile:T.FURN_TOILET, color:'#c8a04a', icon:'block', maxStack:999, desc:'Steampunk furniture.' });
+defItem(I.STONE_TOILET, { name:'Stone Toilet', type:'block', tile:T.FURN_TOILET, color:'#4a4e58', icon:'block', maxStack:999, desc:'Stone furniture.' });
+defItem(I.TERRA_TOILET, { name:'Terra Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TOILET, { name:'Toilet', type:'block', tile:T.FURN_TOILET, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.VORTEX_TOILET, { name:'Vortex Toilet', type:'block', tile:T.FURN_TOILET, color:'#3dff9d', icon:'block', maxStack:999, desc:'Vortex furniture.' });
+defItem(I.AETHER_TORCH, { name:'Aether Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BLUE_TORCH, { name:'Blue Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.BONE_TORCH, { name:'Bone Torch', type:'block', tile:T.FURN_TORCH, color:'#e0d8c0', icon:'block', maxStack:999, desc:'Bone furniture.' });
+defItem(I.CORAL_TORCH, { name:'Coral Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CORRUPT_TORCH, { name:'Corrupt Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CRIMSON_TORCH, { name:'Crimson Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.CURSED_TORCH, { name:'Cursed Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DEMON_TORCH, { name:'Demon Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.DESERT_TORCH, { name:'Desert Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.GREEN_TORCH, { name:'Green Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.HALLOWED_TORCH, { name:'Hallowed Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ICE_TORCH, { name:'Ice Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ICHOR_TORCH, { name:'Ichor Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.JUNGLE_TORCH, { name:'Jungle Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.MUSHROOM_TORCH, { name:'Mushroom Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.MUSIC_BOX_ALT_TORCH_GOD, { name:'Music Box (Alt Torch God)', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.MUSIC_BOX_TORCH_GOD, { name:'Music Box (Torch God)', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ORANGE_TORCH, { name:'Orange Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PINK_TORCH, { name:'Pink Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.PURPLE_TORCH, { name:'Purple Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RAINBOW_TORCH, { name:'Rainbow Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.RED_TORCH, { name:'Red Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.TIKI_TORCH, { name:'Tiki Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.ULTRABRIGHT_TORCH, { name:'Ultrabright Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.WHITE_TORCH, { name:'White Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+defItem(I.YELLOW_TORCH, { name:'Yellow Torch', type:'block', tile:T.FURN_TORCH, color:'#9a6b3f', icon:'block', maxStack:999, desc:'Wood furniture.' });
+
+// ---------- Batch 83 Phase 2 walls/blocks/materials ----------
+defItem(I.ASH_WOOD_WALL, { name:'Ash Wood Wall', type:'wall', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.BLUE_BRICK_WALL, { name:'Blue Brick Wall', type:'wall', color:'#8a8a92', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.BOREAL_WOOD_WALL, { name:'Boreal Wood Wall', type:'wall', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.CACTUS_WALL, { name:'Cactus Wall', type:'wall', color:'#5a9a3a', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.CLOUD_WALL, { name:'Cloud Wall', type:'wall', color:'#e8f0f8', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.COPPER_BRICK_WALL, { name:'Copper Brick Wall', type:'wall', color:'#8a8a92', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.COPPER_PLATING, { name:'Copper Plating', type:'wall', color:'#e0834d', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.DISC_WALL, { name:'Disc Wall', type:'wall', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.EBONWOOD_WALL, { name:'Ebonwood Wall', type:'wall', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.GLASS_WALL, { name:'Glass Wall', type:'wall', color:'#b8dce8', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.GOLD_BRICK_WALL, { name:'Gold Brick Wall', type:'wall', color:'#8a8a92', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.GRANITE_WALL, { name:'Granite Wall', type:'wall', color:'#6a6a7a', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.GRAY_BRICK_WALL, { name:'Gray Brick Wall', type:'wall', color:'#8a8a92', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.GREEN_BRICK_WALL, { name:'Green Brick Wall', type:'wall', color:'#8a8a92', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.HELLSTONE_BRICK_WALL, { name:'Hellstone Brick Wall', type:'wall', color:'#4a4e58', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.ICE_WALL, { name:'Ice Wall', type:'wall', color:'#a8d8f0', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.JUNGLE_WALL, { name:'Jungle Wall', type:'wall', color:'#3f9d4a', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.LAVAFALL_WALL, { name:'Lavafall Wall', type:'wall', color:'#e85828', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.LIVING_WOOD_WALL, { name:'Living Wood Wall', type:'wall', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.MARBLE_WALL, { name:'Marble Wall', type:'wall', color:'#d0d0dc', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.MUSHROOM_WALL, { name:'Mushroom Wall', type:'wall', color:'#7a5cff', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.OBSIDIAN_BRICK_WALL, { name:'Obsidian Brick Wall', type:'wall', color:'#8a8a92', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.OBSIDIAN_WALL, { name:'Obsidian Wall', type:'wall', color:'#2d1f2d', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.PALM_WOOD_WALL, { name:'Palm Wood Wall', type:'wall', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.PEARLWOOD_WALL, { name:'Pearlwood Wall', type:'wall', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.PINK_BRICK_WALL, { name:'Pink Brick Wall', type:'wall', color:'#8a8a92', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.RED_BRICK_WALL, { name:'Red Brick Wall', type:'wall', color:'#8a8a92', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.RICH_MAHOGANY_WALL, { name:'Rich Mahogany Wall', type:'wall', color:'#8a4a2a', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.SANDSTONE_WALL, { name:'Sandstone Wall', type:'wall', color:'#4a4e58', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.SHADEWOOD_WALL, { name:'Shadewood Wall', type:'wall', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.SILVER_BRICK_WALL, { name:'Silver Brick Wall', type:'wall', color:'#8a8a92', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.SNOW_WALL, { name:'Snow Wall', type:'wall', color:'#e8f0f8', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.SPIDER_WALL, { name:'Spider Wall', type:'wall', color:'#5a5a6a', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.STONE_WALL, { name:'Stone Wall', type:'wall', color:'#4a4e58', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.WATERFALL_WALL, { name:'Waterfall Wall', type:'wall', color:'#2f6bd0', icon:'block', maxStack:999, desc:'A decorative background wall.' });
+defItem(I.ASH_WOOD, { name:'Ash Wood', type:'block', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.BOREAL_WOOD, { name:'Boreal Wood', type:'block', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CRIMSTONE_BLOCK, { name:'Crimstone Block', type:'block', color:'#4a4e58', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.DESERT_FOSSIL, { name:'Desert Fossil', type:'block', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.EBONSTONE_BLOCK, { name:'Ebonstone Block', type:'block', color:'#4a4e58', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.FLESH_BLOCK, { name:'Flesh Block', type:'block', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.HIVE, { name:'Hive', type:'block', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.LESION_BLOCK, { name:'Lesion Block', type:'block', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PALM_WOOD, { name:'Palm Wood', type:'block', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PEARLSTONE_BLOCK, { name:'Pearlstone Block', type:'block', color:'#4a4e58', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SANDSTONE_BLOCK, { name:'Sandstone Block', type:'block', color:'#4a4e58', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SANDSTONE_BRICK, { name:'Sandstone Brick', type:'block', color:'#4a4e58', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SNOW_BRICK, { name:'Snow Brick', type:'block', color:'#8a8a92', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ADHESIVE_BANDAGE, { name:'Adhesive Bandage', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.ANTLION_MANDIBLE, { name:'Antlion Mandible', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.ARMOR_POLISH, { name:'Armor Polish', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.BEZOAR, { name:'Bezoar', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.BLACK_LENS, { name:'Black Lens', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.CYAN_HUSK, { name:'Cyan Husk', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.FIRE_FEATHER, { name:'Fire Feather', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.FROST_CORE, { name:'Frost Core', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.LIME_KELP, { name:'Lime Kelp', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.ORANGE_BLOODROOT, { name:'Orange Bloodroot', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.PINK_PRICKLY_PEAR, { name:'Pink Prickly Pear', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.PURPLE_MUCUS, { name:'Purple Mucus', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.RED_HUSK, { name:'Red Husk', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.ROTTEN_CHUNK, { name:'Rotten Chunk', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.UNHOLY_WATER, { name:'Unholy Water', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.VERTEBRA, { name:'Vertebra', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+defItem(I.VIOLET_HUSK, { name:'Violet Husk', type:'material', color:'#b8b8a0', icon:'\u25C6', maxStack:999, desc:'A crafting material.' });
+
+// ---------- Batch 83 Phase 2 bulk catalog ----------
+defItem(I.I_0X33S_AVIATORS, { name:'0x33\'s Aviators', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.I_1_SECOND_TIMER, { name:'1 Second Timer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.I_12_SECOND_TIMER, { name:'1/2 Second Timer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.I_14_SECOND_TIMER, { name:'1/4 Second Timer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.I_3_SECOND_TIMER, { name:'3 Second Timer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.I_5_SECOND_TIMER, { name:'5 Second Timer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.A_HORRIBLE_NIGHTFOR_ALCHEMY, { name:'A Horrible Night for Alchemy', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.A_MACHINEFOR_TERRARIANS, { name:'A Machine for Terrarians', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AARONS_BREASTPLATE, { name:'Aaron\'s Breastplate', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.AARONS_HELMET, { name:'Aaron\'s Helmet', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.AARONS_LEGGINGS, { name:'Aaron\'s Leggings', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.ABIGAILS_FLOWER, { name:'Abigail\'s Flower', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ACORN_SLINGSHOT, { name:'Acorn Slingshot', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ACORNS, { name:'Acorns', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ACTIVE_STONE_BLOCK, { name:'Active Stone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ACTUATION_ROD, { name:'Actuation Rod', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ACTUATOR, { name:'Actuator', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ADAMANTITE_BEAM, { name:'Adamantite Beam', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ADAMANTITE_BEAM_WALL, { name:'Adamantite Beam Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ADAMANTITE_CHAINSAW, { name:'Adamantite Chainsaw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ADAMANTITE_DRILL, { name:'Adamantite Drill', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ADAMANTITE_FORGE, { name:'Adamantite Forge', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ADAMANTITE_HEADGEAR, { name:'Adamantite Headgear', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ADVANCED_COMBAT_TECHNIQUES, { name:'Advanced Combat Techniques', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AETHER_CAMPFIRE, { name:'Aether Campfire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AETHER_MONOLITH, { name:'Aether Monolith', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AETHER_PYLON, { name:'Aether Pylon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AETHERIUM_BLOCK, { name:'Aetherium Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.AETHERIUM_BRICK, { name:'Aetherium Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.AETHERIUM_BRICK_WALL, { name:'Aetherium Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.AETHERIUM_WALL, { name:'Aetherium Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ALCHEMY_FLASK, { name:'Alchemy Flask', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ALE, { name:'Ale', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMANITA_FUNGIFIN, { name:'Amanita Fungifin', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMAZON, { name:'Amazon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMBER_BUNNY, { name:'Amber Bunny', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMBER_BUNNY_CAGE, { name:'Amber Bunny Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMBER_GEM_LOCK, { name:'Amber Gem Lock', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMBER_GEMCORN, { name:'Amber Gemcorn', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMBER_GEMSPARK_BLOCK, { name:'Amber Gemspark Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.AMBER_GEMSPARK_WALL, { name:'Amber Gemspark Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.AMBER_HORSESHOE_BALLOON, { name:'Amber Horseshoe Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMBER_MINECART, { name:'Amber Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMBER_MOSQUITO, { name:'Amber Mosquito', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMBER_SQUIRREL, { name:'Amber Squirrel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMBER_SQUIRREL_CAGE, { name:'Amber Squirrel Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMBER_STONE_BLOCK, { name:'Amber Stone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.AMBER_STONE_WALL, { name:'Amber Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.AMERICAN_EXPLOSIVE, { name:'American Explosive', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMETHYST_BUNNY, { name:'Amethyst Bunny', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMETHYST_BUNNY_CAGE, { name:'Amethyst Bunny Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMETHYST_GEM_LOCK, { name:'Amethyst Gem Lock', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMETHYST_GEMCORN, { name:'Amethyst Gemcorn', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMETHYST_GEMSPARK_BLOCK, { name:'Amethyst Gemspark Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.AMETHYST_GEMSPARK_WALL, { name:'Amethyst Gemspark Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.AMETHYST_HOOK, { name:'Amethyst Hook', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMETHYST_MINECART, { name:'Amethyst Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMETHYST_ROBE, { name:'Amethyst Robe', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.AMETHYST_SQUIRREL, { name:'Amethyst Squirrel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMETHYST_SQUIRREL_CAGE, { name:'Amethyst Squirrel Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMETHYST_STONE_BLOCK, { name:'Amethyst Stone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.AMETHYST_STONE_WALL, { name:'Amethyst Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.AMMO_BOX, { name:'Ammo Box', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AMULETOFTHE_NIGHT, { name:'Amulet of the Night', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANCHOR, { name:'Anchor', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANCIENT_BLUE_BRICK, { name:'Ancient Blue Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ANCIENT_BLUE_BRICK_WALL, { name:'Ancient Blue Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ANCIENT_CHISEL, { name:'Ancient Chisel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANCIENT_CLOTH, { name:'Ancient Cloth', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANCIENT_COBALT_BRICK, { name:'Ancient Cobalt Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ANCIENT_COBALT_BRICK_WALL, { name:'Ancient Cobalt Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ANCIENT_COBALT_LEGGINGS, { name:'Ancient Cobalt Leggings', type:'armor', slot:'legs', def:6, icon:'A', maxStack:1, desc:'Defense +6' });
+defItem(I.ANCIENT_COPPER_BRICK, { name:'Ancient Copper Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ANCIENT_COPPER_BRICK_WALL, { name:'Ancient Copper Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ANCIENT_GARMENTS, { name:'Ancient Garments', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANCIENT_GOLD_BRICK, { name:'Ancient Gold Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ANCIENT_GOLD_BRICK_WALL, { name:'Ancient Gold Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ANCIENT_GOLD_HELMET, { name:'Ancient Gold Helmet', type:'armor', slot:'head', def:4, icon:'A', maxStack:1, desc:'Defense +4' });
+defItem(I.ANCIENT_GREEN_BRICK, { name:'Ancient Green Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ANCIENT_GREEN_BRICK_WALL, { name:'Ancient Green Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ANCIENT_HALLOWED_GREAVES, { name:'Ancient Hallowed Greaves', type:'armor', slot:'legs', def:11, icon:'A', maxStack:1, desc:'Defense +11' });
+defItem(I.ANCIENT_HALLOWED_HEADGEAR, { name:'Ancient Hallowed Headgear', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANCIENT_HALLOWED_HELMET, { name:'Ancient Hallowed Helmet', type:'armor', slot:'head', def:9, icon:'A', maxStack:1, desc:'Defense +9' });
+defItem(I.ANCIENT_HALLOWED_HOOD, { name:'Ancient Hallowed Hood', type:'armor', slot:'head', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.ANCIENT_HALLOWED_PLATE_MAIL, { name:'Ancient Hallowed Plate Mail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANCIENT_HEADDRESS, { name:'Ancient Headdress', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.ANCIENT_HELLSTONE_BRICK, { name:'Ancient Hellstone Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ANCIENT_HELLSTONE_BRICK_WALL, { name:'Ancient Hellstone Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ANCIENT_HORN, { name:'Ancient Horn', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANCIENT_IRON_HELMET, { name:'Ancient Iron Helmet', type:'armor', slot:'head', def:2, icon:'A', maxStack:1, desc:'Defense +2' });
+defItem(I.ANCIENT_MANIPULATOR, { name:'Ancient Manipulator', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANCIENT_MYTHRIL_BRICK, { name:'Ancient Mythril Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ANCIENT_MYTHRIL_BRICK_WALL, { name:'Ancient Mythril Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ANCIENT_NECRO_HELMET, { name:'Ancient Necro Helmet', type:'armor', slot:'head', def:6, icon:'A', maxStack:1, desc:'Defense +6' });
+defItem(I.ANCIENT_OBSIDIAN_BRICK, { name:'Ancient Obsidian Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ANCIENT_OBSIDIAN_BRICK_WALL, { name:'Ancient Obsidian Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ANCIENT_PINK_BRICK, { name:'Ancient Pink Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ANCIENT_PINK_BRICK_WALL, { name:'Ancient Pink Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ANCIENT_SHADOW_GREAVES, { name:'Ancient Shadow Greaves', type:'armor', slot:'legs', def:6, icon:'A', maxStack:1, desc:'Defense +6' });
+defItem(I.ANCIENT_SHADOW_HELMET, { name:'Ancient Shadow Helmet', type:'armor', slot:'head', def:6, icon:'A', maxStack:1, desc:'Defense +6' });
+defItem(I.ANCIENT_SHADOW_SCALEMAIL, { name:'Ancient Shadow Scalemail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANCIENT_SILVER_BRICK, { name:'Ancient Silver Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ANCIENT_SILVER_BRICK_WALL, { name:'Ancient Silver Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ANCIENT_SLACKS, { name:'Ancient Slacks', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANDREW_SPHINX, { name:'Andrew Sphinx', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANGEL_HALO, { name:'Angel Halo', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANGELFISH, { name:'Angelfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANGLER_HAT, { name:'Angler Hat', type:'armor', slot:'head', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.ANGLER_PANTS, { name:'Angler Pants', type:'armor', slot:'legs', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.ANGLER_TACKLE_BAG, { name:'Angler Tackle Bag', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANGLER_VEST, { name:'Angler Vest', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANKLETOFTHE_WIND, { name:'Anklet of the Wind', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANNOUNCEMENT_BOX, { name:'Announcement Box', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ANTI_PORTAL_BLOCK, { name:'Anti-Portal Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ANTLION_EGGS, { name:'Antlion Eggs', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.APPLE, { name:'Apple', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.APPLE_JUICE, { name:'Apple Juice', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.APPLE_PIE_SLICE, { name:'Apple Pie Slice', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.APPRENTICE_BAIT, { name:'Apprentice Bait', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.APPRENTICES_HAT, { name:'Apprentice\'s Hat', type:'armor', slot:'head', def:7, icon:'A', maxStack:1, desc:'Defense +7' });
+defItem(I.APPRENTICES_ROBE, { name:'Apprentice\'s Robe', type:'armor', slot:'chest', def:15, icon:'A', maxStack:1, desc:'Defense +15' });
+defItem(I.APPRENTICES_SCARF, { name:'Apprentice\'s Scarf', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.APPRENTICES_TROUSERS, { name:'Apprentice\'s Trousers', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.APRICOT, { name:'Apricot', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AQUARIUM_BLOCK, { name:'Aquarium Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.AQUARIUM_WALL, { name:'Aquarium Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ARCANE_CRYSTAL, { name:'Arcane Crystal', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ARCANE_FLOWER, { name:'Arcane Flower', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ARCANE_RUNE_WALL, { name:'Arcane Rune Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ARCHAEOLOGISTS_HAT, { name:'Archaeologist\'s Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.ARCHAEOLOGISTS_JACKET, { name:'Archaeologist\'s Jacket', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.ARCHAEOLOGISTS_PANTS, { name:'Archaeologist\'s Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.ARCHITECT_GIZMO_PACK, { name:'Architect Gizmo Pack', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ARGON_MOSS, { name:'Argon Moss', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ARGON_MOSS_BRICK, { name:'Argon Moss Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ARGON_MOSS_BRICK_WALL, { name:'Argon Moss Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ARGON_MOSS_FISHING_BOBBER, { name:'Argon Moss Fishing Bobber', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ARKHALIS, { name:'Arkhalis', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ARKHALIS_BODICE, { name:'Arkhalis\' Bodice', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ARKHALIS_HOOD, { name:'Arkhalis\' Hood', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.ARKHALIS_LIGHTWINGS, { name:'Arkhalis\' Lightwings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ARKHALIS_TIGHTS, { name:'Arkhalis\' Tights', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ARMLET_OF_RUIN, { name:'Armlet Of Ruin', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ARMOR_BRACING, { name:'Armor Bracing', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ARROW_SIGN, { name:'Arrow Sign', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ARTERY, { name:'Artery', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ARTISAN_LOAF, { name:'Artisan Loaf', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ASH_GRASS_SEEDS, { name:'Ash Grass Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ASH_WOOD_BREASTPLATE, { name:'Ash Wood Breastplate', type:'armor', slot:'legs', def:3, icon:'A', maxStack:1, desc:'Defense +3' });
+defItem(I.ASH_WOOD_FENCE, { name:'Ash Wood Fence', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ASH_WOOD_GREAVES, { name:'Ash Wood Greaves', type:'armor', slot:'legs', def:2, icon:'A', maxStack:1, desc:'Defense +2' });
+defItem(I.ASH_WOOD_HELMET, { name:'Ash Wood Helmet', type:'armor', slot:'head', def:2, icon:'A', maxStack:1, desc:'Defense +2' });
+defItem(I.ASPHALT_BLOCK, { name:'Asphalt Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ASTRA_BRICK, { name:'Astra Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ASTRA_BRICK_WALL, { name:'Astra Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ATLANTIC_COD, { name:'Atlantic Cod', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AURORA_BOREALIS, { name:'Aurora Borealis', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.AUTOHAMMER, { name:'Autohammer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AXEARANG, { name:'Axearang', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.AZURE_CRATE, { name:'Azure Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.B_B_Q_RIBS, { name:'BBQ Ribs', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BABY_GRINCHS_MISCHIEF_WHISTLE, { name:'Baby Grinch\'s Mischief Whistle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BACON, { name:'Bacon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BADGERS_HAT, { name:'Badger\'s Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.BALL_O_FUSE_WIRE, { name:'Ball O\' Fuse Wire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BALL_O_HURT, { name:'Ball O\' Hurt', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BALLA_HAT, { name:'Balla Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.BALLOON_ANIMAL, { name:'Balloon Animal', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BALLOON_PUFFERFISH, { name:'Balloon Pufferfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BALLOONY_BEADS, { name:'Balloony Beads', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BAMBOO, { name:'Bamboo', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BAMBOO_FENCE, { name:'Bamboo Fence', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BAMBOO_LEAF, { name:'Bamboo Leaf', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BAMBOO_WALL, { name:'Bamboo Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.BANANA, { name:'Banana', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BANANA_SPLIT, { name:'Banana Split', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BANDAGE_BOY, { name:'Bandage Boy', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BAR, { name:'Bar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BAR_STOOL, { name:'Bar Stool', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BARREL, { name:'Barrel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BATFISH, { name:'Batfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BEACH_BALL, { name:'Beach Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BEANIE, { name:'Beanie', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BEDAZZLED_NECTAR, { name:'Bedazzled Nectar', type:'block', icon:'block', maxStack:999, desc:'A piece of furniture.' });
+defItem(I.BEE_CLOAK, { name:'Bee Cloak', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BEE_HAT, { name:'Bee Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.BEE_HIVE, { name:'Bee Hive', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BEE_MINECART, { name:'Bee Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BEE_PANTS, { name:'Bee Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.BEE_SHIRT, { name:'Bee Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.BEE_WINGS, { name:'Bee Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BEETLE_MINECART, { name:'Beetle Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BEETLE_WINGS, { name:'Beetle Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BEGUILING_LYRE, { name:'Beguiling Lyre', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BELL, { name:'Bell', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BENNY_WARHOL, { name:'Benny Warhol', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BERNIES_BUTTON, { name:'Bernie\'s Button', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BERSERKERS_GLOVE, { name:'Berserker\'s Glove', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BETSYS_EGG, { name:'Betsy\'s Egg', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BETSYS_WINGS, { name:'Betsy\'s Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BIFROST, { name:'Bifrost', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BINOCULARS, { name:'Binoculars', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BIOLUMINESCENCE, { name:'Bioluminescence', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BIOME_HAIR_DYE, { name:'Biome Hair Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BIOME_SIGHT_POTION, { name:'Biome Sight Potion', type:'consumable', heal:50, potionCd:60, icon:'P', maxStack:30, desc:'Restores 50 health.' });
+defItem(I.BIRD, { name:'Bird', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BIRD_CAGE, { name:'Bird Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BIRDIE_RATTLE, { name:'Birdie Rattle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BITTER_HARVEST, { name:'Bitter Harvest', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACK_COUNTERWEIGHT, { name:'Black Counterweight', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACK_DRAGONFLY, { name:'Black Dragonfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACK_DRAGONFLY_JAR, { name:'Black Dragonfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACK_FAIRY_DUST, { name:'Black Fairy Dust', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACK_GOLF_BALL, { name:'Black Golf Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACK_GRADUATION_CAP, { name:'Black Graduation Cap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACK_GRADUATION_GOWN, { name:'Black Graduation Gown', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACK_INK, { name:'Black Ink', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACK_PAINT, { name:'Black Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACK_PEARL, { name:'Black Pearl', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACK_SCORPION, { name:'Black Scorpion', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACK_SCORPION_CAGE, { name:'Black Scorpion Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACK_STRING, { name:'Black String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACK_STUDDED_SADDLE, { name:'Black Studded Saddle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACK_THREAD, { name:'Black Thread', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACKAND_WHITE_DYE, { name:'Black and White Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACKCURRANT, { name:'Blackcurrant', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACKENED_FISH, { name:'Blackened Fish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLACKSMITH_RACK, { name:'Blacksmith Rack', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLEND_O_MATIC, { name:'Blend-O-Matic', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLESSINGFROMTHE_HEAVENS, { name:'Blessing from the Heavens', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLINDFOLD, { name:'Blindfold', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLINKROOT, { name:'Blinkroot', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLINKROOT_PLANTER_BOX, { name:'Blinkroot Planter Box', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLINKROOT_SEEDS, { name:'Blinkroot Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLIZZARDINA_BALLOON, { name:'Blizzard in a Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLOOD_MOON_COUNTESS, { name:'Blood Moon Countess', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLOOD_MOON_MONOLITH, { name:'Blood Moon Monolith', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLOOD_MOON_RISING, { name:'Blood Moon Rising', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLOOD_ORANGE, { name:'Blood Orange', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLOOD_WATER, { name:'Blood Water', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLOOD_WATER_FOUNTAIN, { name:'Blood Water Fountain', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLOODBATH_DYE, { name:'Bloodbath Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLOODY_GOBLET, { name:'Bloody Goblet', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLOODY_MACHETE, { name:'Bloody Machete', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLOODY_MANOWAR, { name:'Bloody Manowar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLOODY_MOSCATO, { name:'Bloody Moscato', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_BERRIES, { name:'Blue Berries', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_BIKINI_BOTTOM, { name:'Blue Bikini Bottom', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_BIKINI_TOP, { name:'Blue Bikini Top', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_BRICK, { name:'Blue Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.BLUE_CHICKEN_EGG, { name:'Blue Chicken Egg', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_COUNTERWEIGHT, { name:'Blue Counterweight', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_DRAGONFLY, { name:'Blue Dragonfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_DRAGONFLY_JAR, { name:'Blue Dragonfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_DUNGEON_VASE, { name:'Blue Dungeon Vase', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_DYNASTY_SHINGLES, { name:'Blue Dynasty Shingles', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_DYNASTY_WALL, { name:'Blue Dynasty Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.BLUE_FAIRY, { name:'Blue Fairy', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_FAIRY_JAR, { name:'Blue Fairy Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_FLAME_DYE, { name:'Blue Flame Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_FLAMEAND_BLACK_DYE, { name:'Blue Flame and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_FLAMEAND_SILVER_DYE, { name:'Blue Flame and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_FLOWER_SEEDS, { name:'Blue Flower Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_GOLF_BALL, { name:'Blue Golf Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_GRADUATION_CAP, { name:'Blue Graduation Cap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_GRADUATION_GOWN, { name:'Blue Graduation Gown', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_HORSESHOE_BALLOON, { name:'Blue Horseshoe Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_JAY, { name:'Blue Jay', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_JAY_CAGE, { name:'Blue Jay Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_JELLYFISH, { name:'Blue Jellyfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_JELLYFISH_JAR, { name:'Blue Jellyfish Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_LIGHT, { name:'Blue Light', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_LIGHTS, { name:'Blue Lights', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_MACAW, { name:'Blue Macaw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_MACAW_CAGE, { name:'Blue Macaw Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_MOON, { name:'Blue Moon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_MOSS, { name:'Blue Moss', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_MOSSY_WALL, { name:'Blue Mossy Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.BLUE_PAINT, { name:'Blue Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_PIN_FLAG, { name:'Blue Pin Flag', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_PRESENT, { name:'Blue Present', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_PRESSURE_PLATE, { name:'Blue Pressure Plate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_ROCKET, { name:'Blue Rocket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_ROLLER_SKATES, { name:'Blue Roller Skates', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_SLAB_WALL, { name:'Blue Slab Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.BLUE_SOLUTION, { name:'Blue Solution', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_STAINED_GLASS, { name:'Blue Stained Glass', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_STARRY_BLOCK, { name:'Blue Starry Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.BLUE_STARRY_WALL, { name:'Blue Starry Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.BLUE_STREAMER, { name:'Blue Streamer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_STRING, { name:'Blue String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUE_TEAM_BLOCK, { name:'Blue Team Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.BLUE_TILED_WALL, { name:'Blue Tiled Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.BLUE_WRENCH, { name:'Blue Wrench', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUEAND_BLACK_DYE, { name:'Blue and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUEAND_GREEN_LIGHTS, { name:'Blue and Green Lights', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUEAND_SILVER_DYE, { name:'Blue and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BLUEAND_YELLOW_LIGHTS, { name:'Blue and Yellow Lights', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BOMB, { name:'Bomb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BOMB_FISH, { name:'Bomb Fish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BONE_BLOCK, { name:'Bone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.BONE_BLOCK_WALL, { name:'Bone Block Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.BONE_CAMPFIRE, { name:'Bone Campfire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BONE_FEATHER, { name:'Bone Feather', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BONE_GLOVE, { name:'Bone Glove', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BONE_HELM, { name:'Bone Helm', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BONE_KEY, { name:'Bone Key', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BONE_RATTLE, { name:'Bone Rattle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BONE_WAND, { name:'Bone Wand', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BONE_WARP, { name:'Bone Warp', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BONE_WELDER, { name:'Bone Welder', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BONEFISH, { name:'Bonefish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BOOSTER_TRACK, { name:'Booster Track', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BOREAL_BEAM, { name:'Boreal Beam', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.BOREAL_CRATE, { name:'Boreal Crate', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.BOREAL_WOOD_BREASTPLATE, { name:'Boreal Wood Breastplate', type:'armor', slot:'legs', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.BOREAL_WOOD_FENCE, { name:'Boreal Wood Fence', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.BOREAL_WOOD_GREAVES, { name:'Boreal Wood Greaves', type:'armor', slot:'legs', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.BOREAL_WOOD_HELMET, { name:'Boreal Wood Helmet', type:'armor', slot:'head', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.BOTTOMLESS_HONEY_BUCKET, { name:'Bottomless Honey Bucket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BOTTOMLESS_LAVA_BUCKET, { name:'Bottomless Lava Bucket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BOTTOMLESS_SHIMMER_BUCKET, { name:'Bottomless Shimmer Bucket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BOTTOMLESS_WATER_BUCKET, { name:'Bottomless Water Bucket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BOULDAND_BASH, { name:'Bould and Bash', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BOULDER, { name:'Boulder', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BOULDER_BLOCK, { name:'Boulder Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.BOULDER_WALL, { name:'Boulder Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.BOUNCY_BOMB, { name:'Bouncy Bomb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BOUNCY_BOULDER, { name:'Bouncy Boulder', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BOUNCY_DYNAMITE, { name:'Bouncy Dynamite', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BOUNCY_GLOWSTICK, { name:'Bouncy Glowstick', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BOW_TOPPER, { name:'Bow Topper', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.BOWL, { name:'Bowl', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.BOWLOF_SOUP, { name:'Bowl of Soup', type:'melee', dmg:10, speed:0.283, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.BRAININA_JAR, { name:'Brain in a Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRAINOF_CONFUSION, { name:'Brain of Confusion', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRAMBLE_CRATE, { name:'Bramble Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRASILIAN_SKIES, { name:'Brasilian Skies', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRASS_SHELF, { name:'Brass Shelf', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRICK_LAYER, { name:'Brick Layer', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.BRIDEOF_FRANKENSTEIN_DRESS, { name:'Bride of Frankenstein Dress', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.BRIGHT_BLUE_DYE, { name:'Bright Blue Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRIGHT_BROWN_DYE, { name:'Bright Brown Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRIGHT_CYAN_DYE, { name:'Bright Cyan Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRIGHT_GREEN_DYE, { name:'Bright Green Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRIGHT_LIME_DYE, { name:'Bright Lime Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRIGHT_ORANGE_DYE, { name:'Bright Orange Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRIGHT_PINK_DYE, { name:'Bright Pink Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRIGHT_PURPLE_DYE, { name:'Bright Purple Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRIGHT_RED_DYE, { name:'Bright Red Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRIGHT_SILVER_DYE, { name:'Bright Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRIGHT_SKY_BLUE_DYE, { name:'Bright Sky Blue Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRIGHT_TEAL_DYE, { name:'Bright Teal Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRIGHT_VIOLET_DYE, { name:'Bright Violet Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BRIGHT_YELLOW_DYE, { name:'Bright Yellow Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BROWN_GOLF_BALL, { name:'Brown Golf Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BROWN_MOSS, { name:'Brown Moss', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BROWN_MOSSY_WALL, { name:'Brown Mossy Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.BROWN_PAINT, { name:'Brown Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BROWN_PRESSURE_PLATE, { name:'Brown Pressure Plate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BROWN_SOLUTION, { name:'Brown Solution', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BROWN_STRING, { name:'Brown String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BROWNAND_BLACK_DYE, { name:'Brown and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BROWNAND_SILVER_DYE, { name:'Brown and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUBBLE, { name:'Bubble', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUBBLE_MACHINE, { name:'Bubble Machine', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUBBLE_WAND, { name:'Bubble Wand', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUBBLEGUM_BLOCK, { name:'Bubblegum Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.BUBBLEGUM_BLOCK_WALL, { name:'Bubblegum Block Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.BUCCANEER_BANDANA, { name:'Buccaneer Bandana', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUCCANEER_PANTALOONS, { name:'Buccaneer Pantaloons', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUCCANEER_TUNIC, { name:'Buccaneer Tunic', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUDDIES, { name:'Buddies', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUG_NET, { name:'Bug Net', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUGGY, { name:'Buggy', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUGGY_CAGE, { name:'Buggy Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUILDER_POTION, { name:'Builder Potion', type:'consumable', heal:50, potionCd:60, icon:'P', maxStack:30, desc:'Restores 50 health.' });
+defItem(I.BUMBLEBEE_TUNA, { name:'Bumblebee Tuna', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUNDLEOF_BALLOONS, { name:'Bundle of Balloons', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUNDLEOF_HORSESHOE_BALLOONS, { name:'Bundle of Horseshoe Balloons', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUNDLED_PARTY_BALLOONS, { name:'Bundled Party Balloons', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUNNY, { name:'Bunny', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUNNY_CAGE, { name:'Bunny Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUNNY_CANNON, { name:'Bunny Cannon', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.BUNNY_EARS, { name:'Bunny Ears', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUNNY_HOOD, { name:'Bunny Hood', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.BUNNY_LICENSE, { name:'Bunny License', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUNNY_STEW, { name:'Bunny Stew', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUNNY_TAIL, { name:'Bunny Tail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUNNYFISH, { name:'Bunnyfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BURNING_HADES_DYE, { name:'Burning Hades Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BURNING_SPIRIT, { name:'Burning Spirit', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUTCHERS_BLOODSTAINED_APRON, { name:'Butcher\'s Bloodstained Apron', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUTCHERS_BLOODSTAINED_PANTS, { name:'Butcher\'s Bloodstained Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.BUTCHERS_CHAINSAW, { name:'Butcher\'s Chainsaw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.BUTTERFLY_DUST, { name:'Butterfly Dust', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.C_R_T_MONOLITH, { name:'CRT Monolith', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CACTUS, { name:'Cactus', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CACTUS_BREASTPLATE, { name:'Cactus Breastplate', type:'armor', slot:'legs', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.CACTUS_HELMET, { name:'Cactus Helmet', type:'armor', slot:'head', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.CACTUS_LEGGINGS, { name:'Cactus Leggings', type:'armor', slot:'legs', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.CAMPFIRE, { name:'Campfire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CAN_OF_WORMS, { name:'Can Of Worms', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CANDY_APPLE, { name:'Candy Apple', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CANDY_CANE, { name:'Candy Cane', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CANDY_CANE_BLOCK, { name:'Candy Cane Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CANDY_CANE_HOOK, { name:'Candy Cane Hook', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CANDY_CANE_WALL, { name:'Candy Cane Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CANNON, { name:'Cannon', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.CANNONBALL, { name:'Cannonball', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.CAPN_TUNABEARD, { name:'Cap\'n Tunabeard', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CAPRICORN_CHESTPLATE, { name:'Capricorn Chestplate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CAPRICORN_HELMET, { name:'Capricorn Helmet', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CAPRICORN_HOOVES, { name:'Capricorn Hooves', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CAPRICORN_TAIL, { name:'Capricorn Tail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CAPTAIN_HAT, { name:'Captain Hat', type:'armor', slot:'head', def:10, icon:'A', maxStack:1, desc:'Defense +10' });
+defItem(I.CAPTAIN_PANTS, { name:'Captain Pants', type:'armor', slot:'legs', def:11, icon:'A', maxStack:1, desc:'Defense +11' });
+defItem(I.CAPTAIN_VEST, { name:'Captain Vest', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CARDINAL, { name:'Cardinal', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CARDINAL_CAGE, { name:'Cardinal Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CARPENTRY_RACK, { name:'Carpentry Rack', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CARROT, { name:'Carrot', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CARTONOF_MILK, { name:'Carton of Milk', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CASCADE, { name:'Cascade', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CASTLE_MARSBERG, { name:'Castle Marsberg', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CAT_CHIME, { name:'Cat Chime', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CAT_EARS, { name:'Cat Ears', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CAT_PANTS, { name:'Cat Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CAT_SHIRT, { name:'Cat Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CAT_SWORD, { name:'Cat Sword', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.CATACOMB, { name:'Catacomb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CATALYST_BAND, { name:'Catalyst Band', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CATFISH, { name:'Catfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CAULDRON, { name:'Cauldron', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CAVE_DIRT_WALL, { name:'Cave Dirt Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CAVERN_PYLON, { name:'Cavern Pylon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CAVERN_WATER_FOUNTAIN, { name:'Cavern Water Fountain', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CELESTIAL_MAGNET, { name:'Celestial Magnet', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CELESTIAL_STARBOARD, { name:'Celestial Starboard', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CELESTIAL_WAND, { name:'Celestial Wand', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CENXS_BREASTPLATE, { name:'Cenx\'s Breastplate', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CENXS_DRESS, { name:'Cenx\'s Dress', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.CENXS_DRESS_PANTS, { name:'Cenx\'s Dress Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CENXS_LEGGINGS, { name:'Cenx\'s Leggings', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CENXS_TIARA, { name:'Cenx\'s Tiara', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CENXS_WINGS, { name:'Cenx\'s Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHAIN_KNIFE, { name:'Chain Knife', type:'melee', dmg:12, speed:0.333, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.CHALICE, { name:'Chalice', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHAOS_CYLINDER, { name:'Chaos Cylinder', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHAOS_CYLINDER_FULL, { name:'Chaos Cylinder (Full)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHAOS_CYLINDER_RANDOM, { name:'Chaos Cylinder (Random)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHAOS_CYLINDER_SIMPLE, { name:'Chaos Cylinder (Simple)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHAOS_FISH, { name:'Chaos Fish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHEESY_PIZZA_POSTER, { name:'Cheesy Pizza Poster', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHEF_HAT, { name:'Chef Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CHEF_PANTS, { name:'Chef Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CHEF_UNIFORM, { name:'Chef Uniform', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHERRY, { name:'Cherry', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHEST_LOCK, { name:'Chest Lock', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHICKEN_BONES_PANTS, { name:'Chicken Bones\' Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CHICKEN_BONES_ROBE, { name:'Chicken Bones\' Robe', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CHICKEN_BONES_VEST, { name:'Chicken Bones\' Vest', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHICKEN_BONES_VISOR, { name:'Chicken Bones\' Visor', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHICKEN_BONES_WINGS, { name:'Chicken Bones\' Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHICKEN_CHARM, { name:'Chicken Charm', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHICKEN_NUGGET, { name:'Chicken Nugget', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHIK, { name:'Chik', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHILLET, { name:'Chillet', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHILLET_IGNIS, { name:'Chillet Ignis', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHIMNEY, { name:'Chimney', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHIPPYS_CHESTPLATE, { name:'Chippy\'s Chestplate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHIPPYS_CLOAK, { name:'Chippy\'s Cloak', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHIPPYS_CLOAK_INACTIVE, { name:'Chippy\'s Cloak (Inactive)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHIPPYS_COUCH, { name:'Chippy\'s Couch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHIPPYS_GREAVES, { name:'Chippy\'s Greaves', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CHIPPYS_HEADBAND, { name:'Chippy\'s Headband', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHIPPYS_HELMET, { name:'Chippy\'s Helmet', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CHLOROPHYTE_BRICK, { name:'Chlorophyte Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CHLOROPHYTE_BRICK_WALL, { name:'Chlorophyte Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CHLOROPHYTE_CHAINSAW, { name:'Chlorophyte Chainsaw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHLOROPHYTE_CLAYMORE, { name:'Chlorophyte Claymore', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CHLOROPHYTE_DRILL, { name:'Chlorophyte Drill', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHLOROPHYTE_DYE, { name:'Chlorophyte Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHLOROPHYTE_EXTRACTINATOR, { name:'Chlorophyte Extractinator', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHLOROPHYTE_PLATE_MAIL, { name:'Chlorophyte Plate Mail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHLOROPHYTE_VISOR, { name:'Chlorophyte Visor', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHOCOLATE_CHIP_COOKIE, { name:'Chocolate Chip Cookie', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHRISTMAS_PUDDING, { name:'Christmas Pudding', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHRISTMAS_TREE, { name:'Christmas Tree', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHROMATIC_CLOAK, { name:'Chromatic Cloak', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CHUM_BUCKET, { name:'Chum Bucket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CINDER_WALL, { name:'Cinder Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CLASSIC_ROLLER_SKATES, { name:'Classic Roller Skates', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CLAY_BLOCK, { name:'Clay Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CLENTAMINATOR, { name:'Clentaminator', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CLOSED_VOID_BAG, { name:'Closed Void Bag', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CLOTHIERS_JACKET, { name:'Clothier\'s Jacket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CLOTHIERS_PANTS, { name:'Clothier\'s Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CLOUDINA_BALLOON, { name:'Cloud in a Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CLOUDFISH, { name:'Cloudfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CLOWN_HAT, { name:'Clown Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CLOWN_PANTS, { name:'Clown Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CLOWN_SHIRT, { name:'Clown Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CLOWNFISH, { name:'Clownfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COAL, { name:'Coal', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COBALT_BRICK, { name:'Cobalt Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.COBALT_BRICK_WALL, { name:'Cobalt Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.COBALT_CHAINSAW, { name:'Cobalt Chainsaw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COBALT_DRILL, { name:'Cobalt Drill', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COBALT_HAT, { name:'Cobalt Hat', type:'armor', slot:'head', def:3, icon:'A', maxStack:1, desc:'Defense +3' });
+defItem(I.COBALT_NAGINATA, { name:'Cobalt Naginata', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COCONUT, { name:'Coconut', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CODE1, { name:'Code 1', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CODE2, { name:'Code 2', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COFFEE, { name:'Coffee', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COFFIN_MINECART, { name:'Coffin Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COG, { name:'Cog', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COG_WALL, { name:'Cog Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.COIN_RING, { name:'Coin Ring', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COLD_SNAP, { name:'Cold Snap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COLD_WATERSINTHE_WHITE_LAND, { name:'Cold Waters in the White Land', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COMBAT_WRENCH, { name:'Combat Wrench', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COMPANION_CUBE, { name:'Companion Cube', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COMPASS_ROSE, { name:'Compass Rose', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CONFETTI, { name:'Confetti', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CONFETTI_BLOCK, { name:'Confetti Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CONFETTI_CANNON, { name:'Confetti Cannon', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.CONFETTI_GUN, { name:'Confetti Gun', type:'ranged', dmg:10, speed:0.25, kb:4, range:4, auto:true, ammo:I.ARROW, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.CONFETTI_WALL, { name:'Confetti Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CONSTELLATION, { name:'Constellation', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COOKED_MARSHMALLOW, { name:'Cooked Marshmallow', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COOKED_SHRIMP, { name:'Cooked Shrimp', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COOKING_POT, { name:'Cooking Pot', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COPPER_BRICK, { name:'Copper Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.COPPER_PLATING_WALL, { name:'Copper Plating Wall', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.COPPER_WATCH, { name:'Copper Watch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CORAL, { name:'Coral', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CORAL_CAMPFIRE, { name:'Coral Campfire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CORALSTONE_BLOCK, { name:'Coralstone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CORRUPT_CAMPFIRE, { name:'Corrupt Campfire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CORRUPT_CRATE, { name:'Corrupt Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CORRUPT_GRASS_WALL, { name:'Corrupt Grass Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CORRUPT_GROWTH_WALL, { name:'Corrupt Growth Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CORRUPT_MASS_WALL, { name:'Corrupt Mass Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CORRUPT_PUSTULE_WALL, { name:'Corrupt Pustule Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CORRUPT_TENDRIL_WALL, { name:'Corrupt Tendril Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CORRUPT_WATER_FOUNTAIN, { name:'Corrupt Water Fountain', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CORRUPTION_KEY, { name:'Corruption Key', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CORRUPTION_KEY_MOLD, { name:'Corruption Key Mold', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COSMIC_EMBER_BRICK, { name:'Cosmic Ember Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.COSMIC_EMBER_BRICK_WALL, { name:'Cosmic Ember Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.COSMIC_SKATEBOARD, { name:'Cosmic Skateboard', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COUCH_GAG, { name:'Couch Gag', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COUNTERCURSE_MANTRA, { name:'Countercurse Mantra', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COUNTRY_CLUB_CAP, { name:'Country Club Cap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COUNTRY_CLUB_TROUSERS, { name:'Country Club Trousers', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COUNTRY_CLUB_VEST, { name:'Country Club Vest', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COUNTRY_CLUB_VISOR, { name:'Country Club Visor', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COW_BELL, { name:'Cow Bell', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COWBOY_HAT, { name:'Cowboy Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.COWBOY_JACKET, { name:'Cowboy Jacket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.COWBOY_PANTS, { name:'Cowboy Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.COZY_WINDOW, { name:'Cozy Window', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CRACKED_BLUE_BRICK, { name:'Cracked Blue Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CRACKED_DIRT_WALL, { name:'Cracked Dirt Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CRACKED_GREEN_BRICK, { name:'Cracked Green Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CRACKED_PINK_BRICK, { name:'Cracked Pink Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CRAGGY_STONE_WALL, { name:'Craggy Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CREAM_SODA, { name:'Cream Soda', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CREEPER_EGG, { name:'Creeper Egg', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CREEPER_PANTS, { name:'Creeper Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CREEPER_SHIRT, { name:'Creeper Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CRESCENT_WALL, { name:'Crescent Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CRIMSAND_BLOCK, { name:'Crimsand Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CRIMSANDSTONE_BLOCK, { name:'Crimsandstone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CRIMSANDSTONE_WALL, { name:'Crimsandstone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CRIMSON_ALTAR, { name:'Crimson Altar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CRIMSON_BLISTER_WALL, { name:'Crimson Blister Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CRIMSON_CAMPFIRE, { name:'Crimson Campfire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CRIMSON_CLOAK, { name:'Crimson Cloak', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CRIMSON_CRATE, { name:'Crimson Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CRIMSON_CRUST_WALL, { name:'Crimson Crust Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CRIMSON_GRASS_WALL, { name:'Crimson Grass Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CRIMSON_HEART, { name:'Crimson Heart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CRIMSON_KEY, { name:'Crimson Key', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CRIMSON_KEY_MOLD, { name:'Crimson Key Mold', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CRIMSON_SCAB_WALL, { name:'Crimson Scab Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CRIMSON_SEEDS, { name:'Crimson Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CRIMSON_TEETH_WALL, { name:'Crimson Teeth Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CRIMSON_WATER_FOUNTAIN, { name:'Crimson Water Fountain', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CRIMSTONE_BRICK, { name:'Crimstone Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CRIMSTONE_BRICK_WALL, { name:'Crimstone Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CRIMSTONE_WALL, { name:'Crimstone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CRIMTANE_BRICK, { name:'Crimtane Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CRIMTANE_BRICK_WALL, { name:'Crimtane Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CRISPY_HONEY_BLOCK, { name:'Crispy Honey Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CRITTER_SHAMPOO, { name:'Critter Shampoo', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CROSS_GRAVE_MARKER, { name:'Cross Grave Marker', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CROSSED_HEART_NECKLACE, { name:'Crossed Heart Necklace', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CROWS_BEAK, { name:'Crow\'s Beak', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CROWNO_DEVOURS_HIS_LUNCH, { name:'Crowno Devours His Lunch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CROWNOS_BREASTPLATE, { name:'Crowno\'s Breastplate', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CROWNOS_LEGGINGS, { name:'Crowno\'s Leggings', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CROWNOS_WINGS, { name:'Crowno\'s Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CRUMBLING_DIRT_WALL, { name:'Crumbling Dirt Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CRUSTOGRAPHY, { name:'Crustography', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CRYOCORE_BRICK, { name:'Cryocore Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CRYOCORE_BRICK_WALL, { name:'Cryocore Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CRYSTAL_ASSASSIN_HOOD, { name:'Crystal Assassin Hood', type:'armor', slot:'head', def:12, icon:'A', maxStack:1, desc:'Defense +12' });
+defItem(I.CRYSTAL_ASSASSIN_PANTS, { name:'Crystal Assassin Pants', type:'armor', slot:'legs', def:10, icon:'A', maxStack:1, desc:'Defense +10' });
+defItem(I.CRYSTAL_ASSASSIN_SHIRT, { name:'Crystal Assassin Shirt', type:'armor', slot:'chest', def:14, icon:'A', maxStack:1, desc:'Defense +14' });
+defItem(I.CRYSTAL_BALL, { name:'Crystal Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CRYSTAL_BLOCK, { name:'Crystal Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.CRYSTAL_BLOCK_WALL, { name:'Crystal Block Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CRYSTALLIZE, { name:'Crystallize', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CURSED_BLUE_BRICK_WALL, { name:'Cursed Blue Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CURSED_BLUE_SLAB_WALL, { name:'Cursed Blue Slab Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CURSED_BLUE_TILED_WALL, { name:'Cursed Blue Tiled Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CURSED_CAMPFIRE, { name:'Cursed Campfire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CURSED_FLAME, { name:'Cursed Flame', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CURSED_GREEN_BRICK_WALL, { name:'Cursed Green Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CURSED_GREEN_SLAB_WALL, { name:'Cursed Green Slab Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CURSED_GREEN_TILED_WALL, { name:'Cursed Green Tiled Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CURSED_PINK_BRICK_WALL, { name:'Cursed Pink Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CURSED_PINK_SLAB_WALL, { name:'Cursed Pink Slab Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CURSED_PINK_TILED_WALL, { name:'Cursed Pink Tiled Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.CURSED_PIPER_FLUTE, { name:'Cursed Piper Flute', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CURSED_SAINT, { name:'Cursed Saint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CURSED_SAPLING, { name:'Cursed Sapling', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CURSEDFISH, { name:'Cursedfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CYAN_GOLF_BALL, { name:'Cyan Golf Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CYAN_GRADIENT_DYE, { name:'Cyan Gradient Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CYAN_PAINT, { name:'Cyan Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CYAN_STRING, { name:'Cyan String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CYAN_WEIGHTED_PRESSURE_PLATE, { name:'Cyan Weighted Pressure Plate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CYANAND_BLACK_DYE, { name:'Cyan and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CYANAND_SILVER_DYE, { name:'Cyan and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.CYBORG_HELMET, { name:'Cyborg Helmet', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CYBORG_PANTS, { name:'Cyborg Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.CYBORG_SHIRT, { name:'Cyborg Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.D_TOWNS_BREASTPLATE, { name:'D-Town\'s Breastplate', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.D_TOWNS_HELMET, { name:'D-Town\'s Helmet', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.D_TOWNS_LEGGINGS, { name:'D-Town\'s Leggings', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.D_TOWNS_WINGS, { name:'D-Town\'s Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DAMAGE_BOOSTER, { name:'Damage Booster', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DAMSELFISH, { name:'Damselfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DANGERSENSE_POTION, { name:'Dangersense Potion', type:'consumable', heal:50, potionCd:60, icon:'P', maxStack:30, desc:'Restores 50 health.' });
+defItem(I.DARK_ARTISTS_HAT, { name:'Dark Artist\'s Hat', type:'armor', slot:'head', def:7, icon:'A', maxStack:1, desc:'Defense +7' });
+defItem(I.DARK_ARTISTS_LEGGINGS, { name:'Dark Artist\'s Leggings', type:'armor', slot:'legs', def:14, icon:'A', maxStack:1, desc:'Defense +14' });
+defItem(I.DARK_ARTISTS_ROBES, { name:'Dark Artist\'s Robes', type:'armor', slot:'chest', def:21, icon:'A', maxStack:1, desc:'Defense +21' });
+defItem(I.DARK_BLUE_SOLUTION, { name:'Dark Blue Solution', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DARK_CELESTIAL_BRICK, { name:'Dark Celestial Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.DARK_CELESTIAL_BRICK_WALL, { name:'Dark Celestial Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.DARK_FOREBODINGS, { name:'Dark Forebodings', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.DARK_MAGES_TOME, { name:'Dark Mage\'s Tome', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DARK_SHARD, { name:'Dark Shard', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DARK_SIDEOFTHE_HALLOW, { name:'Dark Side of the Hallow', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DARK_SOUL_REAPER, { name:'Dark Soul Reaper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DARKNESS, { name:'Darkness', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DART_TRAP, { name:'Dart Trap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DAYBLOOM_PLANTER_BOX, { name:'Daybloom Planter Box', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DAYBLOOM_SEEDS, { name:'Daybloom Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DAYBREAK, { name:'Daybreak', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DAYLIGHT, { name:'Daylight', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEACTIVATED_PROBE, { name:'Deactivated Probe', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.DEAD_MANS_SWEATER, { name:'Dead Man\'s Sweater', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEADLAND_COMES_ALIVE, { name:'Deadland Comes Alive', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEATHWEED, { name:'Deathweed', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEATHWEED_PLANTER_BOX, { name:'Deathweed Planter Box', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEATHWEED_SEEDS, { name:'Deathweed Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DECAY_CHAMBER, { name:'Decay Chamber', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DECORATIVE_COBWEB, { name:'Decorative Cobweb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DECORATIVE_HEALING_POTION, { name:'Decorative Healing Potion', type:'consumable', heal:50, potionCd:60, icon:'P', maxStack:30, desc:'Restores 50 health.' });
+defItem(I.DECORATIVE_MANA_POTION, { name:'Decorative Mana Potion', type:'consumable', heal:50, potionCd:60, icon:'P', maxStack:30, desc:'Restores 50 health.' });
+defItem(I.DEEP_BLUE_PAINT, { name:'Deep Blue Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEEP_CYAN_PAINT, { name:'Deep Cyan Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEEP_GREEN_PAINT, { name:'Deep Green Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEEP_LIME_PAINT, { name:'Deep Lime Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEEP_ORANGE_PAINT, { name:'Deep Orange Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEEP_PINK_PAINT, { name:'Deep Pink Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEEP_PURPLE_PAINT, { name:'Deep Purple Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEEP_RED_PAINT, { name:'Deep Red Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEEP_SKY_BLUE_PAINT, { name:'Deep Sky Blue Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEEP_TEAL_PAINT, { name:'Deep Teal Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEEP_VIOLET_PAINT, { name:'Deep Violet Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEEP_YELLOW_PAINT, { name:'Deep Yellow Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEERCLOPS_EYEBALL, { name:'Deerclops Eyeball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEFENDER_MEDAL, { name:'Defender Medal', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEFENDERS_FORGE, { name:'Defender\'s Forge', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEFILED_CRATE, { name:'Defiled Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEMON_ALTAR, { name:'Demon Altar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEMON_CAMPFIRE, { name:'Demon Campfire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEMON_CONCH, { name:'Demon Conch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEMON_HEART, { name:'Demon Heart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEMON_HORNS, { name:'Demon Horns', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEMONS_EYE, { name:'Demon\'s Eye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEMONIC_HELLCART, { name:'Demonic Hellcart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEMONIC_HELLFISH, { name:'Demonic Hellfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEMONITE_BRICK, { name:'Demonite Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.DEMONITE_BRICK_WALL, { name:'Demonite Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.DEPTH_HAIR_DYE, { name:'Depth Hair Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DERPFISH, { name:'Derpfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DESERT_CAMPFIRE, { name:'Desert Campfire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DESERT_FOSSIL_WALL, { name:'Desert Fossil Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.DESERT_KEY, { name:'Desert Key', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DESERT_MINECART, { name:'Desert Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DESERT_WATER_FOUNTAIN, { name:'Desert Water Fountain', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DETONATOR, { name:'Detonator', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DEVIL_HORNS, { name:'Devil Horns', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIABOLIC_SIGIL, { name:'Diabolic Sigil', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIAMOND_BUNNY, { name:'Diamond Bunny', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIAMOND_BUNNY_CAGE, { name:'Diamond Bunny Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIAMOND_GEM_LOCK, { name:'Diamond Gem Lock', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIAMOND_GEMCORN, { name:'Diamond Gemcorn', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIAMOND_GEMSPARK_BLOCK, { name:'Diamond Gemspark Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.DIAMOND_GEMSPARK_WALL, { name:'Diamond Gemspark Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.DIAMOND_HOOK, { name:'Diamond Hook', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIAMOND_MINECART, { name:'Diamond Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIAMOND_RING, { name:'Diamond Ring', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIAMOND_ROBE, { name:'Diamond Robe', type:'armor', slot:'chest', def:3, icon:'A', maxStack:1, desc:'Defense +3' });
+defItem(I.DIAMOND_SQUIRREL, { name:'Diamond Squirrel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIAMOND_SQUIRREL_CAGE, { name:'Diamond Squirrel Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIAMOND_STONE_BLOCK, { name:'Diamond Stone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.DIAMOND_STONE_WALL, { name:'Diamond Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.DIGGING_MOLECART, { name:'Digging Molecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIGTOISE, { name:'Digtoise', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIRT_BLOCK, { name:'Dirt Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.DIRT_BOMB, { name:'Dirt Bomb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIRT_ROD, { name:'Dirt Rod', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIRT_WALL, { name:'Dirt Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.DIRTFISH, { name:'Dirtfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DISCO_BALL, { name:'Disco Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DISCOVER, { name:'Discover', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIVINE_CRATE, { name:'Divine Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIVINE_EYE, { name:'Divine Eye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIVING_GEAR, { name:'Diving Gear', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DIVING_HELMET, { name:'Diving Helmet', type:'armor', slot:'head', def:2, icon:'A', maxStack:1, desc:'Defense +2' });
+defItem(I.DIZZYS_RARE_GECKO_CHESTER, { name:'Dizzy\'s Rare Gecko Chester', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DJINNS_CURSE, { name:'Djinn\'s Curse', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DO_NOT_EATTHE_VILE_MUSHROOM, { name:'Do Not Eat the Vile Mushroom!', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DO_NOT_STEPONTHE_GRASS, { name:'Do Not Step on the Grass', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DOG_COLLAR, { name:'Dog Collar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DOG_EARS, { name:'Dog Ears', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DOG_LICENSE, { name:'Dog License', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DOG_TAIL, { name:'Dog Tail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DOG_WHISTLE, { name:'Dog Whistle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DOUBLE_COD, { name:'Double Cod', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DR_MAN_FLYS_LAB_COAT, { name:'Dr. Man Fly\'s Lab Coat', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DRAGON_EGG, { name:'Dragon Egg', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DRAGON_FRUIT, { name:'Dragon Fruit', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DREADOFTHE_RED_SEA, { name:'Dread of the Red Sea', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DRILL_CONTAINMENT_UNIT, { name:'Drill Containment Unit', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DRUIDIC_SERPENT_CLOAK, { name:'Druidic Serpent Cloak', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DRUM_SET, { name:'Drum Set', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DRUMSTICK, { name:'Drumstick', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DRY_BOMB, { name:'Dry Bomb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DRYAD_COVERINGS, { name:'Dryad Coverings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DRYAD_LOINCLOTH, { name:'Dryad Loincloth', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DRYADISQUE, { name:'Dryadisque', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DUALITY, { name:'Duality', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DUCK, { name:'Duck', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DUCK_CAGE, { name:'Duck Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DULL_BLUE_TEAM_BLOCK, { name:'Dull Blue Team Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.DULL_GREEN_TEAM_BLOCK, { name:'Dull Green Team Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.DULL_PINK_TEAM_BLOCK, { name:'Dull Pink Team Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.DULL_RED_TEAM_BLOCK, { name:'Dull Red Team Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.DULL_WHITE_TEAM_BLOCK, { name:'Dull White Team Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.DULL_YELLOW_TEAM_BLOCK, { name:'Dull Yellow Team Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.DUNERIDER_BOOTS, { name:'Dunerider Boots', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DUNGEON_CRATE, { name:'Dungeon Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DUNGEON_SHELF, { name:'Dungeon Shelf', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DUSTY_RAWHIDE_SADDLE, { name:'Dusty Rawhide Saddle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DYE_TRADER_ROBE, { name:'Dye Trader Robe', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.DYE_TRADERS_TURBAN, { name:'Dye Trader\'s Turban', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DYE_VAT, { name:'Dye Vat', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DYNAMITE, { name:'Dynamite', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DYNAMITE_FISH, { name:'Dynamite Fish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DYNASTY_BOWL, { name:'Dynasty Bowl', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.DYNASTY_CUP, { name:'Dynasty Cup', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.DYNASTY_WOOD, { name:'Dynasty Wood', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.EASTER_BLOCK, { name:'Easter Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.EASTER_WALL, { name:'Easter Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.EATER_OF_LIFE, { name:'Eater Of Life', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EATEROF_PLANKTON, { name:'Eater of Plankton', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EATERS_BONE, { name:'Eater\'s Bone', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EBONSAND_BLOCK, { name:'Ebonsand Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.EBONSANDSTONE_BLOCK, { name:'Ebonsandstone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.EBONSANDSTONE_WALL, { name:'Ebonsandstone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.EBONSTONE_BRICK, { name:'Ebonstone Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.EBONSTONE_BRICK_WALL, { name:'Ebonstone Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.EBONSTONE_WALL, { name:'Ebonstone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.EBONWOOD, { name:'Ebonwood', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.EBONWOOD_BREASTPLATE, { name:'Ebonwood Breastplate', type:'armor', slot:'legs', def:2, icon:'A', maxStack:1, desc:'Defense +2' });
+defItem(I.EBONWOOD_FENCE, { name:'Ebonwood Fence', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.EBONWOOD_GREAVES, { name:'Ebonwood Greaves', type:'armor', slot:'legs', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.EBONWOOD_HELMET, { name:'Ebonwood Helmet', type:'armor', slot:'head', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.ECHO_BLOCK, { name:'Echo Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ECHO_CHAMBER, { name:'Echo Chamber', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ECHO_COATING, { name:'Echo Coating', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ECHO_WALL, { name:'Echo Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ELDERBERRY, { name:'Elderberry', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ELF_HAT, { name:'Elf Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.ELF_PANTS, { name:'Elf Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.ELF_SHIRT, { name:'Elf Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.EMBER_WALL, { name:'Ember Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.EMERALD_BUNNY, { name:'Emerald Bunny', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EMERALD_BUNNY_CAGE, { name:'Emerald Bunny Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EMERALD_GEM_LOCK, { name:'Emerald Gem Lock', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EMERALD_GEMCORN, { name:'Emerald Gemcorn', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EMERALD_GEMSPARK_BLOCK, { name:'Emerald Gemspark Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.EMERALD_GEMSPARK_WALL, { name:'Emerald Gemspark Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.EMERALD_HOOK, { name:'Emerald Hook', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EMERALD_MINECART, { name:'Emerald Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EMERALD_ROBE, { name:'Emerald Robe', type:'armor', slot:'chest', def:2, icon:'A', maxStack:1, desc:'Defense +2' });
+defItem(I.EMERALD_SQUIRREL, { name:'Emerald Squirrel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EMERALD_SQUIRREL_CAGE, { name:'Emerald Squirrel Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EMERALD_STONE_BLOCK, { name:'Emerald Stone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.EMERALD_STONE_WALL, { name:'Emerald Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.EMPRESS_WINGS, { name:'Empress Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EMPTY_BUCKET, { name:'Empty Bucket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EMPTY_BULLET, { name:'Empty Bullet', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EMPTY_DROPPER, { name:'Empty Dropper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ENCHANTED_BOOMERANG, { name:'Enchanted Boomerang', type:'melee', dmg:17, speed:0.333, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.ENCHANTED_MOONDIAL, { name:'Enchanted Moondial', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ENCHANTED_NIGHTCRAWLER_CAGE, { name:'Enchanted Nightcrawler Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ENCHANTED_PIXIE_DUST, { name:'Enchanted Pixie Dust', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ENCHANTED_SUNDIAL, { name:'Enchanted Sundial', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ENCHANTED_TIMER, { name:'Enchanted Timer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ENCUMBERING_STONE, { name:'Encumbering Stone', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ENGINEERING_HELMET, { name:'Engineering Helmet', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.ESCARGOT, { name:'Escargot', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ETERNIA_CRYSTAL, { name:'Eternia Crystal', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ETERNIA_CRYSTAL_STAND, { name:'Eternia Crystal Stand', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ETHERIAN_MANA, { name:'Etherian Mana', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EUCALYPTUS_SAP, { name:'Eucalyptus Sap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EVIL_PRESENCE, { name:'Evil Presence', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EXOTIC_CHEW_TOY, { name:'Exotic Chew Toy', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EXPLOSIVE_BUNNY, { name:'Explosive Bunny', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EXPLOSIVE_POWDER, { name:'Explosive Powder', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EXPLOSIVES, { name:'Explosives', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EXTENDO_GRIP, { name:'Extendo Grip', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EXTRACTINATOR, { name:'Extractinator', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EYE_PATCH, { name:'Eye Patch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EYEOFTHE_GOLEM, { name:'Eye of the Golem', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EYEOFTHE_SUN, { name:'Eye of the Sun', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EYEBRELLA, { name:'Eyebrella', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.EYEZORHEAD, { name:'Eyezorhead', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.F_P_V_GOGGLES, { name:'FPV Goggles', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FACINGTHE_CEREBRAL_MASTERMIND, { name:'Facing the Cerebral Mastermind', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FAECORN, { name:'Faecorn', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FAELING, { name:'Faeling', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FAELINGINA_BOTTLE, { name:'Faeling in a Bottle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FAIRY_BELL, { name:'Fairy Bell', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FAIRY_BOOTS, { name:'Fairy Boots', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FAIRY_CHOKER, { name:'Fairy Choker', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FAIRY_GLOWSTICK, { name:'Fairy Glowstick', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FAIRY_GUIDES, { name:'Fairy Guides', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FAIRY_WINGS, { name:'Fairy Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FAKE_UNICORN_HORN, { name:'Fake Unicorn Horn', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FALLEN_STAR_BLOCK, { name:'Fallen Star Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.FALLEN_STAR_WALL, { name:'Fallen Star Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.FALLEN_STARFISH, { name:'Fallen Starfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FALLEN_TUXEDO_PANTS, { name:'Fallen Tuxedo Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.FALLEN_TUXEDO_SHIRT, { name:'Fallen Tuxedo Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.FAMILIAR_PANTS, { name:'Familiar Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.FAMILIAR_SHIRT, { name:'Familiar Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.FAMILIAR_WIG, { name:'Familiar Wig', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FANCY_DISHES, { name:'Fancy Dishes', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FANCY_GOLF_CLUB_DRIVER, { name:'Fancy Golf Club (Driver)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FANCY_GOLF_CLUB_IRON, { name:'Fancy Golf Club (Iron)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FANCY_GOLF_CLUB_PUTTER, { name:'Fancy Golf Club (Putter)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FANCY_GOLF_CLUB_WEDGE, { name:'Fancy Golf Club (Wedge)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FANGS, { name:'Fangs', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FART_KART, { name:'Fart Kart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FARTINA_BALLOON, { name:'Fart in a Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FAST_CLOCK, { name:'Fast Clock', type:'block', icon:'block', maxStack:999, desc:'A piece of furniture.' });
+defItem(I.FATHEROF_SOMEONE, { name:'Father of Someone', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FEDORA, { name:'Fedora', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FERTILIZER, { name:'Fertilizer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FESTIVE_WINGS, { name:'Festive Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FEYWOOD, { name:'Feywood', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.FEYWOOD_WALL, { name:'Feywood Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.FEZ, { name:'Fez', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FILM_PROJECTOR, { name:'Film Projector', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FIN_WINGS, { name:'Fin Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FINDING_GOLD, { name:'Finding Gold', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FIREBLOSSOM, { name:'Fireblossom', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FIREBLOSSOM_PLANTER_BOX, { name:'Fireblossom Planter Box', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FIREBLOSSOM_SEEDS, { name:'Fireblossom Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FIREFLY, { name:'Firefly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FIREFLYINA_BOTTLE, { name:'Firefly in a Bottle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FIREPLACE, { name:'Fireplace', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FIRESTARTERS_SKIRT, { name:'Firestarter\'s Skirt', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FIRESTARTERS_SWEATER, { name:'Firestarter\'s Sweater', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FIREWORK_FOUNTAIN, { name:'Firework Fountain', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FIREWORKS_BOX, { name:'Fireworks Box', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FIRST_ENCOUNTER, { name:'First Encounter', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FISH, { name:'Fish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FISH_BOWL, { name:'Fish Bowl', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.FISH_COSTUME_FINSKIRT, { name:'Fish Costume Finskirt', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.FISH_COSTUME_SHIRT, { name:'Fish Costume Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.FISH_HOOK, { name:'Fish Hook', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FISHEROF_SOULS, { name:'Fisher of Souls', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FISHERMANS_POCKET_GUIDE, { name:'Fisherman\'s Pocket Guide', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FISHING_BOBBER, { name:'Fishing Bobber', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FISHOTRON, { name:'Fishotron', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FISHRON, { name:'Fishron', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLAIROON, { name:'Flairoon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLAMARANG, { name:'Flamarang', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLAME_DYE, { name:'Flame Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLAME_TRAP, { name:'Flame Trap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLAME_WAKER_BOOTS, { name:'Flame Waker Boots', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLAMEAND_BLACK_DYE, { name:'Flame and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLAMEAND_SILVER_DYE, { name:'Flame and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLAMING_MACE, { name:'Flaming Mace', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLARE_GUN, { name:'Flare Gun', type:'melee', dmg:2, speed:0.3, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.FLAREFIN_KOI, { name:'Flarefin Koi', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLASKOF_CURSED_FLAMES, { name:'Flask of Cursed Flames', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLASKOF_FIRE, { name:'Flask of Fire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLASKOF_GOLD, { name:'Flask of Gold', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLASKOF_ICHOR, { name:'Flask of Ichor', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLASKOF_NANITES, { name:'Flask of Nanites', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLASKOF_PARTY, { name:'Flask of Party', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLASKOF_POISON, { name:'Flask of Poison', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLASKOF_VENOM, { name:'Flask of Venom', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLEDGLING_WINGS, { name:'Fledgling Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLESH_BLOCK_WALL, { name:'Flesh Block Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.FLESH_CLONING_VAT, { name:'Flesh Cloning Vat', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLESHCATCHER, { name:'Fleshcatcher', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLINT, { name:'Flint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLINX_FUR_BLOCK, { name:'Flinx Fur Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.FLINX_FUR_COAT, { name:'Flinx Fur Coat', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLINX_FUR_WALL, { name:'Flinx Fur Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.FLIPPER, { name:'Flipper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLORET_PROTECTOR_HELMET, { name:'Floret Protector Helmet', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.FLORET_PROTECTOR_PANTS, { name:'Floret Protector Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.FLORET_PROTECTOR_SHIRT, { name:'Floret Protector Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.FLOWER_BOOTS, { name:'Flower Boots', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLOWER_POW, { name:'Flower Pow', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLOWER_WALL, { name:'Flower Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.FLOWING_MAGMA, { name:'Flowing Magma', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FLURRY_BOOTS, { name:'Flurry Boots', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FOG_MACHINE, { name:'Fog Machine', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FOGBOUND_DYE, { name:'Fogbound Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FOOD_BARBARIANS_HORNED_HELM, { name:'FoodBarbarian\'s Horned Helm', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FOOD_BARBARIANS_SAVAGE_GREAVES, { name:'FoodBarbarian\'s Savage Greaves', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.FOOD_BARBARIANS_TATTERED_DRAGON_WINGS, { name:'FoodBarbarian\'s Tattered Dragon Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FOOD_BARBARIANS_WILD_WOLF_SPAULDERS, { name:'FoodBarbarian\'s Wild Wolf Spaulders', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FOOTBALL, { name:'Football', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FORBIDDEN_BLOCK, { name:'Forbidden Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.FORBIDDEN_LIHZAHRD_BRICK_WALL, { name:'Forbidden Lihzahrd Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.FORBIDDEN_ROBES, { name:'Forbidden Robes', type:'armor', slot:'chest', def:12, icon:'A', maxStack:1, desc:'Defense +12' });
+defItem(I.FORBIDDEN_WALL, { name:'Forbidden Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.FORE, { name:'Fore!', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.FOREST_TROLL, { name:'Forest Troll', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.FORMAT_C, { name:'Format:C', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FOX_EARS, { name:'Fox Ears', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FOX_PANTS, { name:'Fox Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.FOX_SHIRT, { name:'Fox Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.FOX_TAIL, { name:'Fox Tail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FRACTURED_STONE_WALL, { name:'Fractured Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.FREEZE_BOMB, { name:'Freeze Bomb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FRIED_EGG, { name:'Fried Egg', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FRIENDLY_BOULDER, { name:'Friendly Boulder', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FRIENDLY_RAINBOW_BOULDER, { name:'Friendly Rainbow Boulder', type:'melee', dmg:10, speed:0.333, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.FRIES, { name:'Fries', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FROG, { name:'Frog', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FROG_CAGE, { name:'Frog Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FROG_FLIPPER, { name:'Frog Flipper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FROG_GEAR, { name:'Frog Gear', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FROGGLE_BUNWICH, { name:'Froggle Bunwich', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FROGGY_NECKBAND, { name:'Froggy Neckband', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FROST_MINNOW, { name:'Frost Minnow', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FROZEN_BANANA_DAIQUIRI, { name:'Frozen Banana Daiquiri', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FROZEN_CAMPFIRE, { name:'Frozen Campfire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FROZEN_CRATE, { name:'Frozen Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FROZEN_CROWN, { name:'Frozen Crown', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FROZEN_KEY, { name:'Frozen Key', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FROZEN_KEY_MOLD, { name:'Frozen Key Mold', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FROZEN_SHIELD, { name:'Frozen Shield', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FROZEN_SLIME_BLOCK, { name:'Frozen Slime Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.FROZEN_WINGS, { name:'Frozen Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FRUIT_JUICE, { name:'Fruit Juice', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FRUIT_SALAD, { name:'Fruit Salad', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FRUITCAKE_CHAKRAM, { name:'Fruitcake Chakram', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FULL_MOON_SQUEAKY_TOY, { name:'Full Moon Squeaky Toy', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FUNERAL_COAT, { name:'Funeral Coat', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.FUNERAL_HAT, { name:'Funeral Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.FUNERAL_PANTS, { name:'Funeral Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.FUZZY_CARROT, { name:'Fuzzy Carrot', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GALAXY_PEARL, { name:'Galaxy Pearl', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GANGSTA_HAT, { name:'Gangsta Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.GARDEN_GNOME, { name:'Garden Gnome', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GARLAND, { name:'Garland', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GAS_TRAP, { name:'Gas Trap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GATO_EGG, { name:'Gato Egg', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GEL_DYE, { name:'Gel Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GELATIN_CRYSTAL, { name:'Gelatin Crystal', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GELATINOUS_PILLION, { name:'Gelatinous Pillion', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GENDER_CHANGE_POTION, { name:'Gender Change Potion', type:'consumable', heal:50, potionCd:60, icon:'P', maxStack:30, desc:'Restores 50 health.' });
+defItem(I.GENTLEMANS_BEARD, { name:'Gentleman\'s Beard', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GENTLEMANS_LONG_BEARD, { name:'Gentleman\'s Long Beard', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GENTLEMANS_MAGNIFICENT_BEARD, { name:'Gentleman\'s Magnificent Beard', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GENTLEMANS_TROUSERS, { name:'Gentleman\'s Trousers', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GENTLEMANS_VEST, { name:'Gentleman\'s Vest', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GEODE, { name:'Geode', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GEYSER, { name:'Geyser', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GHASTLY_GLAIVE, { name:'Ghastly Glaive', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GHOST_MANIFESTATION, { name:'Ghost Manifestation', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GHOST_SHIRT, { name:'Ghost Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.GHOSTARS_GARB, { name:'Ghostar\'s Garb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GHOSTARS_INFINITY_EIGHT, { name:'Ghostar\'s Infinity Eight', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GHOSTARS_SOUL_JAR, { name:'Ghostar\'s Soul Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GHOSTARS_TIGHTS, { name:'Ghostar\'s Tights', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GHOSTLY_STINKBUG_BLOCKER, { name:'Ghostly Stinkbug Blocker', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.GHOULDER, { name:'Ghoulder', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GI, { name:'Gi', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GIANT_BOW, { name:'Giant Bow', type:'melee', dmg:10, speed:0.417, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.GIANT_HARPY_FEATHER, { name:'Giant Harpy Feather', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GIANT_TIKI, { name:'Giant Tiki', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GINGER_BEARD, { name:'Ginger Beard', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GINGERBREAD_COOKIE, { name:'Gingerbread Cookie', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GLADIUS, { name:'Gladius', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GLASS_BOWL, { name:'Glass Bowl', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.GLASS_KILN, { name:'Glass Kiln', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GLASS_SLIPPER, { name:'Glass Slipper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GLOMMERS_FLOWER, { name:'Glommer\'s Flower', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GLORIOUS_NIGHT, { name:'Glorious Night', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GLORYOFTHE_FIRE, { name:'Glory of the Fire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GLOW_TULIP, { name:'Glow Tulip', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GLOWING_FISHING_BOBBER, { name:'Glowing Fishing Bobber', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GLOWING_MUSHROOM, { name:'Glowing Mushroom', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GLOWING_SNAIL, { name:'Glowing Snail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GLOWING_SNAIL_CAGE, { name:'Glowing Snail Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GLOWSTICK, { name:'Glowstick', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOAT_SKULL, { name:'Goat Skull', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOATS_TUFT, { name:'Goat\'s Tuft', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOBLIN_TECH, { name:'Goblin Tech', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOBLINS_PLAYING_POKER, { name:'Goblins Playing Poker', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOBLORC_EARS, { name:'Goblorc Ears', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOGGLES, { name:'Goggles', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_BIRD, { name:'Gold Bird', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_BIRD_CAGE, { name:'Gold Bird Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_BRICK, { name:'Gold Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.GOLD_BUNNY, { name:'Gold Bunny', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_BUNNY_CAGE, { name:'Gold Bunny Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_BUTTERFLY, { name:'Gold Butterfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_BUTTERFLY_JAR, { name:'Gold Butterfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_CROWN, { name:'Gold Crown', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_DRAGONFLY, { name:'Gold Dragonfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_DRAGONFLY_JAR, { name:'Gold Dragonfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_DUST, { name:'Gold Dust', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_FISH_BOWL, { name:'Gold Fish Bowl', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.GOLD_FROG, { name:'Gold Frog', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_FROG_CAGE, { name:'Gold Frog Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_GOLDFISH, { name:'Gold Goldfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_GRASSHOPPER, { name:'Gold Grasshopper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_GRASSHOPPER_CAGE, { name:'Gold Grasshopper Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_LADYBUG, { name:'Gold Ladybug', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_LADYBUG_CAGE, { name:'Gold Ladybug Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_MOUSE, { name:'Gold Mouse', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_MOUSE_CAGE, { name:'Gold Mouse Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_SEAHORSE, { name:'Gold Seahorse', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_SEAHORSE_CAGE, { name:'Gold Seahorse Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_SHORTSWORD, { name:'Gold Shortsword', type:'melee', dmg:12, speed:0.183, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.GOLD_SQUIRREL, { name:'Gold Squirrel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_SQUIRREL_CAGE, { name:'Gold Squirrel Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_STARRY_BLOCK, { name:'Gold Starry Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.GOLD_STARRY_WALL, { name:'Gold Starry Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.GOLD_WATCH, { name:'Gold Watch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_WATER_STRIDER, { name:'Gold Water Strider', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_WATER_STRIDER_CAGE, { name:'Gold Water Strider Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_WORM, { name:'Gold Worm', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLD_WORM_CAGE, { name:'Gold Worm Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLDEN_BUG_NET, { name:'Golden Bug Net', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLDEN_CARP, { name:'Golden Carp', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLDEN_CROSS_GRAVE_MARKER, { name:'Golden Cross Grave Marker', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLDEN_DELIGHT, { name:'Golden Delight', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLDEN_GRAVE_MARKER, { name:'Golden Grave Marker', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLDEN_GRAVESTONE, { name:'Golden Gravestone', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.GOLDEN_HEADSTONE, { name:'Golden Headstone', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.GOLDEN_LOCK_BOX, { name:'Golden Lock Box', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLDEN_TOMBSTONE, { name:'Golden Tombstone', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.GOLDFISH, { name:'Goldfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLEM_FIST, { name:'Golem Fist', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLF_BALL, { name:'Golf Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLF_CART_KEYS, { name:'Golf Cart Keys', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLF_CLUB_DRIVER, { name:'Golf Club (Driver)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLF_CLUB_IRON, { name:'Golf Club (Iron)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLF_CLUB_PUTTER, { name:'Golf Club (Putter)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLF_CLUB_WEDGE, { name:'Golf Club (Wedge)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLF_CUP, { name:'Golf Cup', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLF_TEE, { name:'Golf Tee', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOLF_WHISTLE, { name:'Golf Whistle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOOD_MORNING, { name:'Good Morning', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOODIE_BAG, { name:'Goodie Bag', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GOTHIC_BRICK, { name:'Gothic Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.GOTHIC_BRICK_WALL, { name:'Gothic Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.GRANITE_COLUMN, { name:'Granite Column', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRAPE_JUICE, { name:'Grape Juice', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRAPEFRUIT, { name:'Grapefruit', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRAPES, { name:'Grapes', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRASS_WALL, { name:'Grass Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.GRASSHOPPER, { name:'Grasshopper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRASSHOPPER_CAGE, { name:'Grasshopper Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRATE, { name:'Grate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRAVE_MARKER, { name:'Grave Marker', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRAVEDIGGER_COAT, { name:'Gravedigger Coat', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRAVEDIGGER_HAT, { name:'Gravedigger Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.GRAVEDIGGERS_SHOVEL, { name:'Gravedigger\'s Shovel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRAVESTONE, { name:'Gravestone', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.GRAVEYARD, { name:'Graveyard', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRAVITY_GLOBE, { name:'Gravity Globe', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRAY_COCKATIEL, { name:'Gray Cockatiel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRAY_COCKATIEL_CAGE, { name:'Gray Cockatiel Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRAY_PAINT, { name:'Gray Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRAY_PRESSURE_PLATE, { name:'Gray Pressure Plate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRAY_STUCCO, { name:'Gray Stucco', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRAY_STUCCO_WALL, { name:'Gray Stucco Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.GRAY_SWIMSHORTS, { name:'Gray Swimshorts', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREAT_WAVE, { name:'Great Wave', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREATER_LUCK_POTION, { name:'Greater Luck Potion', type:'consumable', heal:50, potionCd:60, icon:'P', maxStack:30, desc:'Restores 50 health.' });
+defItem(I.GREBE, { name:'Grebe', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREBE_CAGE, { name:'Grebe Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEDY_RING, { name:'Greedy Ring', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_BRICK, { name:'Green Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.GREEN_BULB, { name:'Green Bulb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_CANDY_CANE_BLOCK, { name:'Green Candy Cane Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.GREEN_CANDY_CANE_WALL, { name:'Green Candy Cane Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.GREEN_CAP, { name:'Green Cap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_COUNTERWEIGHT, { name:'Green Counterweight', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_DRAGONFLY, { name:'Green Dragonfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_DRAGONFLY_JAR, { name:'Green Dragonfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_DUNGEON_VASE, { name:'Green Dungeon Vase', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_FAIRY, { name:'Green Fairy', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_FAIRY_JAR, { name:'Green Fairy Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_FLAME_DYE, { name:'Green Flame Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_FLAMEAND_BLACK_DYE, { name:'Green Flame and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_FLAMEAND_SILVER_DYE, { name:'Green Flame and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_GARLAND, { name:'Green Garland', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_GOLF_BALL, { name:'Green Golf Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_HORSESHOE_BALLOON, { name:'Green Horseshoe Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_JELLYFISH, { name:'Green Jellyfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_JELLYFISH_JAR, { name:'Green Jellyfish Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_LIGHT, { name:'Green Light', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_LIGHTS, { name:'Green Lights', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_MOSS, { name:'Green Moss', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_MOSSY_WALL, { name:'Green Mossy Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.GREEN_MUSHROOM, { name:'Green Mushroom', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_PAINT, { name:'Green Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_PIN_FLAG, { name:'Green Pin Flag', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_PRESENT, { name:'Green Present', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_PRESSURE_PLATE, { name:'Green Pressure Plate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_ROCKET, { name:'Green Rocket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_ROLLER_SKATES, { name:'Green Roller Skates', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_SLAB_WALL, { name:'Green Slab Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.GREEN_SOLUTION, { name:'Green Solution', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_STAINED_GLASS, { name:'Green Stained Glass', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_STREAMER, { name:'Green Streamer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_STRING, { name:'Green String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_STUCCO, { name:'Green Stucco', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_STUCCO_WALL, { name:'Green Stucco Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.GREEN_SWIMSHORTS, { name:'Green Swimshorts', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_TEAM_BLOCK, { name:'Green Team Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.GREEN_THREAD, { name:'Green Thread', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREEN_TILED_WALL, { name:'Green Tiled Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.GREEN_WRENCH, { name:'Green Wrench', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREENAND_BLACK_DYE, { name:'Green and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREENAND_SILVER_DYE, { name:'Green and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GREENAND_WHITE_GARLAND, { name:'Green and White Garland', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRILLED_SQUIRREL, { name:'Grilled Squirrel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRIM_DYE, { name:'Grim Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRIM_OLD_BARB, { name:'Grim Old Barb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GROX_THE_GREATS_CHESTPLATE, { name:'Grox The Great\'s Chestplate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GROX_THE_GREATS_GREAVES, { name:'Grox The Great\'s Greaves', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.GROX_THE_GREATS_HORNED_COWL, { name:'Grox The Great\'s Horned Cowl', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GROX_THE_GREATS_WINGS, { name:'Grox The Great\'s Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRUB_SOUP, { name:'Grub Soup', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRUBBY, { name:'Grubby', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GRUBBY_CAGE, { name:'Grubby Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GUARDIAN_GOLEM, { name:'Guardian Golem', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GUIDE_PICASSO, { name:'Guide Picasso', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GUIDE_VOODOO_FISH, { name:'Guide Voodoo Fish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GUIDETO_CRITTER_COMPANIONSHIP, { name:'Guide to Critter Companionship', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GUIDETO_CRITTER_COMPANIONSHIP_INACTIVE, { name:'Guide to Critter Companionship (Inactive)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GUIDETO_ENVIRONMENTAL_PRESERVATION, { name:'Guide to Environmental Preservation', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GUIDETO_ENVIRONMENTAL_PRESERVATION_INACTIVE, { name:'Guide to Environmental Preservation (Inactive)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GUIDETO_OLD_WORLD_PARKOUR, { name:'Guide to Old World Parkour', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GUIDETO_OLD_WORLD_PARKOUR_INACTIVE, { name:'Guide to Old World Parkour (Inactive)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GUIDETO_PEACEFUL_COEXISTENCE, { name:'Guide to Peaceful Coexistence', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GUIDETO_PEACEFUL_COEXISTENCE_INACTIVE, { name:'Guide to Peaceful Coexistence (Inactive)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GUIDETO_PLANT_FIBER_CORDAGE, { name:'Guide to Plant Fiber Cordage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.GUMMY_WORM, { name:'Gummy Worm', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HADES_DYE, { name:'Hades Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HAILTOTHE_KING, { name:'Hail to the King', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HAIR_DYE_REMOVER, { name:'Hair Dye Remover', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HALLOWS_EVE, { name:'Hallow\'s Eve', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HALLOWED_BRICK, { name:'Hallowed Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.HALLOWED_BRICK_WALL, { name:'Hallowed Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HALLOWED_CAMPFIRE, { name:'Hallowed Campfire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HALLOWED_CAVERN_WALL, { name:'Hallowed Cavern Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HALLOWED_CRATE, { name:'Hallowed Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HALLOWED_CROWN, { name:'Hallowed Crown', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HALLOWED_CRYSTALLINE_WALL, { name:'Hallowed Crystalline Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HALLOWED_GRASS_WALL, { name:'Hallowed Grass Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HALLOWED_GREAVES, { name:'Hallowed Greaves', type:'armor', slot:'legs', def:11, icon:'A', maxStack:1, desc:'Defense +11' });
+defItem(I.HALLOWED_HOOD, { name:'Hallowed Hood', type:'armor', slot:'head', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.HALLOWED_JOUSTING_LANCE, { name:'Hallowed Jousting Lance', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HALLOWED_KEY, { name:'Hallowed Key', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HALLOWED_KEY_MOLD, { name:'Hallowed Key Mold', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HALLOWED_PRISM_WALL, { name:'Hallowed Prism Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HALLOWED_SEEDS, { name:'Hallowed Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HALLOWED_SHARD_WALL, { name:'Hallowed Shard Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HALLOWED_WATER_FOUNTAIN, { name:'Hallowed Water Fountain', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HAND_EARTH, { name:'Hand Earth', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HAND_OF_CREATION, { name:'Hand Of Creation', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HAND_WARMER, { name:'Hand Warmer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HANGING_BLINKROOT, { name:'Hanging Blinkroot', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HANGING_BRAZIER, { name:'Hanging Brazier', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HANGING_CORRUPT_DEATHWEED, { name:'Hanging Corrupt Deathweed', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HANGING_CRIMSON_DEATHWEED, { name:'Hanging Crimson Deathweed', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HANGING_DAYBLOOM, { name:'Hanging Daybloom', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HANGING_FIREBLOSSOM, { name:'Hanging Fireblossom', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HANGING_MOONGLOW, { name:'Hanging Moonglow', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HANGING_POT, { name:'Hanging Pot', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HANGING_SHIVERTHORN, { name:'Hanging Shiverthorn', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HANGING_SKELETON, { name:'Hanging Skeleton', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HANGING_WATERLEAF, { name:'Hanging Waterleaf', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HAPPY_LITTLE_TREE, { name:'Happy Little Tree', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HARDENED_CRIMSAND_BLOCK, { name:'Hardened Crimsand Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.HARDENED_CRIMSAND_WALL, { name:'Hardened Crimsand Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HARDENED_EBONSAND_BLOCK, { name:'Hardened Ebonsand Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.HARDENED_EBONSAND_WALL, { name:'Hardened Ebonsand Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HARDENED_PEARLSAND_BLOCK, { name:'Hardened Pearlsand Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.HARDENED_PEARLSAND_WALL, { name:'Hardened Pearlsand Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HARDENED_SAND_BLOCK, { name:'Hardened Sand Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.HARDENED_SAND_WALL, { name:'Hardened Sand Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HARDY_SADDLE, { name:'Hardy Saddle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HARPY_BLOCK, { name:'Harpy Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.HARPY_CHARM, { name:'Harpy Charm', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HARPY_WALL, { name:'Harpy Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HARPYFISH, { name:'Harpyfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HAT_RACK, { name:'Hat Rack', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.HAY, { name:'Hay', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HAY_WALL, { name:'Hay Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HEADSTONE, { name:'Headstone', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.HEART_HAIRPIN, { name:'Heart Hairpin', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HEARTLANDS, { name:'Heartlands', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HEARTREACH_POTION, { name:'Heartreach Potion', type:'consumable', heal:50, potionCd:60, icon:'P', maxStack:30, desc:'Restores 50 health.' });
+defItem(I.HEAVENFORGE_BRICK, { name:'Heavenforge Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.HEAVENFORGE_BRICK_WALL, { name:'Heavenforge Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HEAVY_ASSEMBLER, { name:'Heavy Assembler', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HEAVY_SLING, { name:'Heavy Sling', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HELIUM_MOSS, { name:'Helium Moss', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HELIUM_MOSS_BRICK, { name:'Helium Moss Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.HELIUM_MOSS_BRICK_WALL, { name:'Helium Moss Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HELIUM_MOSS_FISHING_BOBBER, { name:'Helium Moss Fishing Bobber', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HELL_BUTTERFLY, { name:'Hell Butterfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HELL_BUTTERFLY_JAR, { name:'Hell Butterfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HELLFIRE_TREADS, { name:'Hellfire Treads', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HELLSTONE_CRATE, { name:'Hellstone Crate', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.HELMET_RACK, { name:'Helmet Rack', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.HEMATIC_CRATE, { name:'Hematic Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HEMOPIRANHA, { name:'Hemopiranha', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HERB_BAG, { name:'Herb Bag', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HERO_SHIELD, { name:'Hero Shield', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HEROS_HAT, { name:'Hero\'s Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.HEROS_PANTS, { name:'Hero\'s Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.HEROS_SHIRT, { name:'Hero\'s Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.HEROES_FROM_ANOTHER_WORLD, { name:'Heroes From Another World', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HEROICIS_COAT, { name:'Heroicis\' Coat', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HEROICIS_HAT, { name:'Heroicis\' Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.HEROICIS_PANTS, { name:'Heroicis\' Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.HEROICIS_WINGS, { name:'Heroicis\' Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HEROICIS_WINGS_INACTIVE, { name:'Heroicis\' Wings (Inactive)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HEXXED_BRANCH, { name:'Hexxed Branch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HI_TEK_SUNGLASSES, { name:'HiTek Sunglasses', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HIGH_PITCH, { name:'High Pitch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HIGH_TEST_FISHING_LINE, { name:'High Test Fishing Line', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HIVE_PACK, { name:'Hive Pack', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HIVE_WALL, { name:'Hive Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HIVE_WAND, { name:'Hive Wand', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HIVE_FIVE, { name:'Hive-Five', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HOLLY, { name:'Holly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HOLY_WATER, { name:'Holy Water', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HONEY_ABSORBANT_SPONGE, { name:'Honey Absorbant Sponge', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HONEY_BALLOON, { name:'Honey Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HONEY_BOMB, { name:'Honey Bomb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HONEY_BUCKET, { name:'Honey Bucket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HONEY_COMB, { name:'Honey Comb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HONEY_CUP, { name:'Honey Cup', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HONEY_DISPENSER, { name:'Honey Dispenser', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HONEYED_GOGGLES, { name:'Honeyed Goggles', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HONEYFALL_BLOCK, { name:'Honeyfall Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.HONEYFALL_WALL, { name:'Honeyfall Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.HOOK, { name:'Hook', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HOOKOF_DISSONANCE, { name:'Hook of Dissonance', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HOTDOG, { name:'Hotdog', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HUGE_DRAGON_EGG, { name:'Huge Dragon Egg', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HUNGERFISH, { name:'Hungerfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HUNTER_CLOAK, { name:'Hunter Cloak', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HUNTRESSS_BUCKLER, { name:'Huntress\'s Buckler', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HUNTRESSS_JERKIN, { name:'Huntress\'s Jerkin', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.HUNTRESSS_PANTS, { name:'Huntress\'s Pants', type:'armor', slot:'legs', def:12, icon:'A', maxStack:1, desc:'Defense +12' });
+defItem(I.HUNTRESSS_WIG, { name:'Huntress\'s Wig', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ICE_BOOMERANG, { name:'Ice Boomerang', type:'melee', dmg:21, speed:0.333, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.ICE_BRICK, { name:'Ice Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.ICE_BRICK_WALL, { name:'Ice Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ICE_CREAM, { name:'Ice Cream', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ICE_FEATHER, { name:'Ice Feather', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ICE_MACHINE, { name:'Ice Machine', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ICE_MIRROR, { name:'Ice Mirror', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ICE_SKATES, { name:'Ice Skates', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ICHOR_CAMPFIRE, { name:'Ichor Campfire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ICHORFISH, { name:'Ichorfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ICY_WATER_FOUNTAIN, { name:'Icy Water Fountain', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ILLUMINANT_COATING, { name:'Illuminant Coating', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ILLUMINANT_HOOK, { name:'Illuminant Hook', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.IMBUING_STATION, { name:'Imbuing Station', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.IMP_FACE, { name:'Imp Face', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.IMPACT, { name:'Impact', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.INACTIVE_STONE_BLOCK, { name:'Inactive Stone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.INFECTED_SCABBARDFISH, { name:'Infected Scabbardfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.INFERNAL_WISP_DYE, { name:'Infernal Wisp Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.INFESTED_SPIDER_WALL, { name:'Infested Spider Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.INFUSED_FERTILIZER, { name:'Infused Fertilizer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.INLET_PUMP, { name:'Inlet Pump', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.INNER_TUBE, { name:'Inner Tube', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.INTENSE_BLUE_FLAME_DYE, { name:'Intense Blue Flame Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.INTENSE_FLAME_DYE, { name:'Intense Flame Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.INTENSE_GREEN_FLAME_DYE, { name:'Intense Green Flame Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.INTENSE_RAINBOW_DYE, { name:'Intense Rainbow Dye', type:'melee', dmg:10, speed:0.417, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.INVISIBILITY_POTION, { name:'Invisibility Potion', type:'consumable', heal:50, potionCd:60, icon:'P', maxStack:30, desc:'Restores 50 health.' });
+defItem(I.IRIDESCENT_BRICK, { name:'Iridescent Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.IRIDESCENT_BRICK_WALL, { name:'Iridescent Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.IRON_BRICK, { name:'Iron Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.IRON_BRICK_WALL, { name:'Iron Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.IRON_FENCE, { name:'Iron Fence', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.IRON_SHORTSWORD, { name:'Iron Shortsword', type:'melee', dmg:8, speed:0.2, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.ITS_SCRAGGLIN_TIME, { name:'It\'s Scragglin\' Time', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ITEM_FLASK, { name:'Item Flask', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ITEM_FRAME, { name:'Item Frame', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.IVY, { name:'Ivy', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.IVY_STONE_WALL, { name:'Ivy Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.JACKELIER, { name:'Jackelier', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JACKING_SKELETRON, { name:'Jacking Skeletron', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JAWSOF_DEATH, { name:'Jaws of Death', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JELLYFISH_BLOCK, { name:'Jellyfish Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.JELLYFISH_DIVING_GEAR, { name:'Jellyfish Diving Gear', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JELLYFISH_NECKLACE, { name:'Jellyfish Necklace', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JELLYFISH_WALL, { name:'Jellyfish Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.JESTERS_ARROW, { name:'Jester\'s Arrow', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JETPACK, { name:'Jetpack', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JEWELOF_LIGHT, { name:'Jewel of Light', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JEWELFISH, { name:'Jewelfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JIMS_BREASTPLATE, { name:'Jim\'s Breastplate', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.JIMS_CAP, { name:'Jim\'s Cap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JIMS_HELMET, { name:'Jim\'s Helmet', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.JIMS_LEGGINGS, { name:'Jim\'s Leggings', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.JIMS_WINGS, { name:'Jim\'s Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JOJA_COLA, { name:'Joja Cola', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JOURNEYMAN_BAIT, { name:'Journeyman Bait', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JOUSTING_LANCE, { name:'Jousting Lance', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JULIA_BUTTERFLY, { name:'Julia Butterfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JULIA_BUTTERFLY_JAR, { name:'Julia Butterfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JUNCTION_BOX, { name:'Junction Box', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JUNGLE_CAMPFIRE, { name:'Jungle Campfire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JUNGLE_CRATE, { name:'Jungle Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JUNGLE_KEY, { name:'Jungle Key', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JUNGLE_KEY_MOLD, { name:'Jungle Key Mold', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JUNGLE_ROSE, { name:'Jungle Rose', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JUNGLE_TURTLE, { name:'Jungle Turtle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JUNGLE_TURTLE_CAGE, { name:'Jungle Turtle Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JUNGLE_VINE_WALL, { name:'Jungle Vine Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.JUNGLE_WATER_FOUNTAIN, { name:'Jungle Water Fountain', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.JUNONIA_SHELL, { name:'Junonia Shell', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.KAGUYA, { name:'Kaguya', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.KARATE_TORTOISE_PANTS, { name:'Karate Tortoise Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.KARATE_TORTOISE_SHIRT, { name:'Karate Tortoise Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.KARGOHS_SUMMON, { name:'Kargoh\'s Summon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.KAZZYMODUS_CHESTPIECE, { name:'Kazzymodus\' Chestpiece', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.KAZZYMODUS_HOOD, { name:'Kazzymodus\' Hood', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.KAZZYMODUS_LEGGINGS, { name:'Kazzymodus\' Leggings', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.KAZZYMODUS_WINGS, { name:'Kazzymodus\' Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.KEG, { name:'Keg', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.KIMONO, { name:'Kimono', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.KINSHIP_PEACH, { name:'Kinship Peach', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.KRYPTON_MOSS, { name:'Krypton Moss', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.KRYPTON_MOSS_BRICK, { name:'Krypton Moss Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.KRYPTON_MOSS_BRICK_WALL, { name:'Krypton Moss Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.KRYPTON_MOSS_FISHING_BOBBER, { name:'Krypton Moss Fishing Bobber', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.KWAD_RACER_DRONE, { name:'Kwad Racer Drone', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LADY_OF_THE_LAKE, { name:'Lady Of The Lake', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LADYBUG, { name:'Ladybug', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LADYBUG_CAGE, { name:'Ladybug Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LADYBUG_MINECART, { name:'Ladybug Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAKEOF_FIRE, { name:'Lake of Fire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAMIA_TAIL, { name:'Lamia Tail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAMIA_WRAPS, { name:'Lamia Wraps', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAND, { name:'Land', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAND_MINE, { name:'Land Mine', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LARGE_AMBER, { name:'Large Amber', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LARGE_AMETHYST, { name:'Large Amethyst', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LARGE_BAMBOO, { name:'Large Bamboo', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LARGE_BAMBOO_WALL, { name:'Large Bamboo Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.LARGE_DIAMOND, { name:'Large Diamond', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LARGE_EMERALD, { name:'Large Emerald', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LARGE_RUBY, { name:'Large Ruby', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LARGE_SAPPHIRE, { name:'Large Sapphire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LARGE_TOPAZ, { name:'Large Topaz', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LARGE_VOLCANO, { name:'Large Volcano', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAVA_ABSORBANT_SPONGE, { name:'Lava Absorbant Sponge', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAVA_BOMB, { name:'Lava Bomb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAVA_BOULDER, { name:'Lava Boulder', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAVA_BUCKET, { name:'Lava Bucket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAVA_CHARM, { name:'Lava Charm', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAVA_CLOUD, { name:'Lava Cloud', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAVA_MOSS, { name:'Lava Moss', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAVA_MOSS_BRICK, { name:'Lava Moss Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.LAVA_MOSS_BRICK_WALL, { name:'Lava Moss Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.LAVA_MOSS_FISHING_BOBBER, { name:'Lava Moss Fishing Bobber', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAVA_SERPENT_BOWL, { name:'Lava Serpent Bowl', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.LAVAFALL_BLOCK, { name:'Lavafall Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.LAVAFLY, { name:'Lavafly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAVAFLYINA_BOTTLE, { name:'Lavafly in a Bottle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAVAPROOF_BUG_NET, { name:'Lavaproof Bug Net', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAVAPROOF_FISHING_HOOK, { name:'Lavaproof Fishing Hook', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAVAPROOF_TACKLE_BAG, { name:'Lavaproof Tackle Bag', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAWN_FLAMINGO, { name:'Lawn Flamingo', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAWN_MOWER, { name:'Lawn Mower', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAYERED_DIRT_WALL, { name:'Layered Dirt Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.LAZER_BLAZER, { name:'Lazer Blazer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAZURES_BARRIER_PLATFORM, { name:'Lazure\'s Barrier Platform', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAZURES_VALKYRIE_CIRCLET, { name:'Lazure\'s Valkyrie Circlet', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LAZURES_VALKYRIE_CLOAK, { name:'Lazure\'s Valkyrie Cloak', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LEAD_BRICK, { name:'Lead Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.LEAD_BRICK_WALL, { name:'Lead Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.LEAD_FENCE, { name:'Lead Fence', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LEAD_SHORTSWORD, { name:'Lead Shortsword', type:'melee', dmg:9, speed:0.2, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.LEAF_WAND, { name:'Leaf Wand', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LEAFY_JUNGLE_WALL, { name:'Leafy Jungle Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.LEINFORS_EXCESSIVE_STYLE, { name:'Leinfors\' Excessive Style', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LEINFORS_FANCYPANTS, { name:'Leinfors\' Fancypants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.LEINFORS_HAIR_PROTECTOR, { name:'Leinfors\' Hair Protector', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LEINFORS_LUXURY_SHAMPOO, { name:'Leinfors\' Luxury Shampoo', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LEINFORS_PREHENSILE_CLOAK, { name:'Leinfors\' Prehensile Cloak', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LEMON, { name:'Lemon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LEMONADE, { name:'Lemonade', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LEOPARD_SKIN, { name:'Leopard Skin', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LEPRECHAUN_HAT, { name:'Leprechaun Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.LEPRECHAUN_PANTS, { name:'Leprechaun Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.LEPRECHAUN_SHIRT, { name:'Leprechaun Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.LESION_BLOCK_WALL, { name:'Lesion Block Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.LESSER_LUCK_POTION, { name:'Lesser Luck Potion', type:'consumable', heal:20, potionCd:60, icon:'P', maxStack:30, desc:'Restores 20 health.' });
+defItem(I.LESSER_MANA_POTION, { name:'Lesser Mana Potion', type:'consumable', heal:20, potionCd:60, icon:'P', maxStack:30, desc:'Restores 20 health.' });
+defItem(I.LEVER, { name:'Lever', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIBRARIAN_BLOCK, { name:'Librarian Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.LIBRARIAN_WALL, { name:'Librarian Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.LICHEN_STONE_WALL, { name:'Lichen Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.LIFE_ABOVETHE_SAND, { name:'Life Above the Sand', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIFE_BOOSTER, { name:'Life Booster', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIFE_CRYSTAL, { name:'Life Crystal', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIFE_CRYSTAL_BOULDER, { name:'Life Crystal Boulder', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIFE_HAIR_DYE, { name:'Life Hair Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIFE_PRESERVER, { name:'Life Preserver', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIGHT_SHARD, { name:'Light Shard', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIGHTLESS_CHASMS, { name:'Lightless Chasms', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIGHTNING_BUG, { name:'Lightning Bug', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIGHTNING_BUGINA_BOTTLE, { name:'Lightning Bug in a Bottle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIGHTNING_WHELK_SHELL, { name:'Lightning Whelk Shell', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIHZAHRD_ALTAR, { name:'Lihzahrd Altar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIHZAHRD_BRICK_WALL, { name:'Lihzahrd Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.LIHZAHRD_PRESSURE_PLATE, { name:'Lihzahrd Pressure Plate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LILAC_DUSK_DRESS, { name:'Lilac Dusk Dress', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.LILAC_DUSK_HAIRCLIP, { name:'Lilac Dusk Hairclip', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LILAC_DUSK_SKIRT, { name:'Lilac Dusk Skirt', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LILITHS_NECKLACE, { name:'Lilith\'s Necklace', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIME_DYE, { name:'Lime Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIME_GOLF_BALL, { name:'Lime Golf Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIME_PAINT, { name:'Lime Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIME_STRING, { name:'Lime String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIMEAND_BLACK_DYE, { name:'Lime and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIMEAND_SILVER_DYE, { name:'Lime and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIQUID_SENSOR_ANY, { name:'Liquid Sensor (Any)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIQUID_SENSOR_HONEY, { name:'Liquid Sensor (Honey)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIQUID_SENSOR_LAVA, { name:'Liquid Sensor (Lava)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIQUID_SENSOR_WATER, { name:'Liquid Sensor (Water)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LITTLE_KINSHIP_PEACH, { name:'Little Kinship Peach', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIVING_CURSED_FIRE_BLOCK, { name:'Living Cursed Fire Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.LIVING_DEMON_FIRE_BLOCK, { name:'Living Demon Fire Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.LIVING_FIRE_BLOCK, { name:'Living Fire Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.LIVING_FLAME_DYE, { name:'Living Flame Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIVING_FROST_FIRE_BLOCK, { name:'Living Frost Fire Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.LIVING_GORE, { name:'Living Gore', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.LIVING_ICHOR_BLOCK, { name:'Living Ichor Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.LIVING_LEAF_WALL, { name:'Living Leaf Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.LIVING_LOOM, { name:'Living Loom', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIVING_MAHOGANY_WAND, { name:'Living Mahogany Wand', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIVING_OCEAN_DYE, { name:'Living Ocean Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIVING_RAINBOW_DYE, { name:'Living Rainbow Dye', type:'melee', dmg:10, speed:0.417, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.LIVING_ULTRABRIGHT_FIRE_BLOCK, { name:'Living Ultrabright Fire Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.LIVING_WOOD_WAND, { name:'Living Wood Wand', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.LIZARD_EARS, { name:'Lizard Ears', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIZARD_EGG, { name:'Lizard Egg', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIZARD_KING, { name:'Lizard King', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LIZARD_TAIL, { name:'Lizard Tail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LOBSTER_TAIL, { name:'Lobster Tail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LOGIC_GATE_A_N_D, { name:'Logic Gate (AND)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LOGIC_GATE_N_A_N_D, { name:'Logic Gate (NAND)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LOGIC_GATE_N_O_R, { name:'Logic Gate (NOR)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LOGIC_GATE_O_R, { name:'Logic Gate (OR)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LOGIC_GATE_X_N_O_R, { name:'Logic Gate (XNOR)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LOGIC_GATE_X_O_R, { name:'Logic Gate (XOR)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LOGIC_SENSOR_DAY, { name:'Logic Sensor (Day)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LOGIC_SENSOR_NIGHT, { name:'Logic Sensor (Night)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LOGIC_SENSOR_PLAYER_ABOVE, { name:'Logic Sensor (Player Above)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LOKIS_BREASTPLATE, { name:'Loki\'s Breastplate', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.LOKIS_DYE, { name:'Loki\'s Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LOKIS_GREAVES, { name:'Loki\'s Greaves', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.LOKIS_HELMET, { name:'Loki\'s Helmet', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.LOKIS_WINGS, { name:'Loki\'s Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LOOM, { name:'Loom', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LOVEISINTHE_TRASH_SLOT, { name:'Love is in the Trash Slot', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LUCK_POTION, { name:'Luck Potion', type:'consumable', heal:50, potionCd:60, icon:'P', maxStack:30, desc:'Restores 50 health.' });
+defItem(I.LUCKY_CLOVER, { name:'Lucky Clover', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LUMINITE_BRICK, { name:'Luminite Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.LUMINITE_BRICK_WALL, { name:'Luminite Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.LUNAS_RUNIC_PIXIE_CLOAK, { name:'Luna\'s Runic Pixie Cloak', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LUNAS_RUNIC_PIXIE_HOOD, { name:'Luna\'s Runic Pixie Hood', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.LUNAS_RUNIC_PIXIE_PANTS, { name:'Luna\'s Runic Pixie Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.LUNAS_RUNIC_PIXIE_SHIRT, { name:'Luna\'s Runic Pixie Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.LUNAS_RUNIC_PIXIE_WINGS, { name:'Luna\'s Runic Pixie Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.LUNAR_CULTIST_HOOD, { name:'Lunar Cultist Hood', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.LUNAR_CULTIST_ROBE, { name:'Lunar Cultist Robe', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.LUNAR_RUST_BRICK, { name:'Lunar Rust Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.LUNAR_RUST_BRICK_WALL, { name:'Lunar Rust Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.MACE, { name:'Mace', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAGENTA_FLOWER_SEEDS, { name:'Magenta Flower Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAGGOT, { name:'Maggot', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAGGOT_CAGE, { name:'Maggot Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAGIC_CONCH, { name:'Magic Conch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAGIC_HAT, { name:'Magic Hat', type:'armor', slot:'head', def:2, icon:'A', maxStack:1, desc:'Defense +2' });
+defItem(I.MAGIC_HONEY_DROPPER, { name:'Magic Honey Dropper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAGIC_LAVA_DROPPER, { name:'Magic Lava Dropper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAGIC_SAND_DROPPER, { name:'Magic Sand Dropper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAGIC_SHIMMER_DROPPER, { name:'Magic Shimmer Dropper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAGIC_STRING, { name:'Magic String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAGIC_WATER_DROPPER, { name:'Magic Water Dropper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAGIC_YOYO_BAG, { name:'Magic Yoyo Bag', type:'melee', dmg:10, speed:0.417, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.MAGILUMINESCENCE, { name:'Magiluminescence', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAGMA_SKULL, { name:'Magma Skull', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAGMA_SNAIL, { name:'Magma Snail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAGMA_SNAIL_CAGE, { name:'Magma Snail Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAGMA_WALL, { name:'Magma Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.MAGNET_FLOWER, { name:'Magnet Flower', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAID_BONNET, { name:'Maid Bonnet', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAID_DRESS, { name:'Maid Dress', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.MAID_SHOES, { name:'Maid Shoes', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MALAISE, { name:'Malaise', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MALLARD_DUCK, { name:'Mallard Duck', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MALLARD_DUCK_CAGE, { name:'Mallard Duck Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MANA_BOOSTER, { name:'Mana Booster', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MANA_CLOAK, { name:'Mana Cloak', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MANA_HAIR_DYE, { name:'Mana Hair Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MANA_REGENERATION_BAND, { name:'Mana Regeneration Band', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MANGO, { name:'Mango', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MANNEQUIN, { name:'Mannequin', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MARBLE_COLUMN, { name:'Marble Column', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAROON_GRADUATION_CAP, { name:'Maroon Graduation Cap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MAROON_GRADUATION_GOWN, { name:'Maroon Graduation Gown', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MARSHMALLOW, { name:'Marshmallow', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MARSHMALLOWONA_STICK, { name:'Marshmallow on a Stick', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MARTIA_LISA, { name:'Martia Lisa', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MARTIAN_CONDUIT_PLATING, { name:'Martian Conduit Plating', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.MARTIAN_CONDUIT_WALL, { name:'Martian Conduit Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.MARTIAN_COSTUME_PANTS, { name:'Martian Costume Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.MARTIAN_COSTUME_SHIRT, { name:'Martian Costume Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.MARTIAN_DYE, { name:'Martian Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MARTIAN_HAIR_DYE, { name:'Martian Hair Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MARTIAN_UNIFORM_HELMET, { name:'Martian Uniform Helmet', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.MARTIAN_UNIFORM_PANTS, { name:'Martian Uniform Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.MARTIAN_UNIFORM_TORSO, { name:'Martian Uniform Torso', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MASTER_BAIT, { name:'Master Bait', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MASTER_GAMERS_JACKET, { name:'Master Gamer\'s Jacket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MASTER_GAMERS_PANTS, { name:'Master Gamer\'s Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.MEAN_GOBLINS_SPIKES, { name:'Mean Goblin\'s Spikes', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MEAT_GRINDER, { name:'Meat Grinder', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MECHANICS_ROD, { name:'Mechanic\'s Rod', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MECHANICAL_BATTERY_PIECE, { name:'Mechanical Battery Piece', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MECHANICAL_CART, { name:'Mechanical Cart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MECHANICAL_LENS, { name:'Mechanical Lens', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MECHANICAL_RULER, { name:'Mechanical Ruler', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MECHANICAL_WAGON_PIECE, { name:'Mechanical Wagon Piece', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MECHANICAL_WHEEL_PIECE, { name:'Mechanical Wheel Piece', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MEDICATED_BANDAGE, { name:'Medicated Bandage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MEGAPHONE, { name:'Megaphone', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MEOWMERE_MINECART, { name:'Meowmere Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MERCURY_BRICK, { name:'Mercury Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.MERCURY_BRICK_WALL, { name:'Mercury Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.MERMAID_ADORNMENT, { name:'Mermaid Adornment', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MERMAID_TAIL, { name:'Mermaid Tail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.METAL_SHELF, { name:'Metal Shelf', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.METEOR_SUIT, { name:'Meteor Suit', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.METEORITE_BRICK, { name:'Meteorite Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.METEORITE_BRICK_WALL, { name:'Meteorite Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.MIDNIGHT_CONFETTI_BLOCK, { name:'Midnight Confetti Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.MIDNIGHT_CONFETTI_WALL, { name:'Midnight Confetti Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.MIDNIGHT_RAINBOW_DYE, { name:'Midnight Rainbow Dye', type:'melee', dmg:10, speed:0.417, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.MIDNIGHT_SUN, { name:'Midnight Sun', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MILKSHAKE, { name:'Milkshake', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MINECARP, { name:'Minecarp', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MINECART, { name:'Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MINECART_TRACK, { name:'Minecart Track', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MINECART_UPGRADE_KIT, { name:'Minecart Upgrade Kit', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MINI_VOLCANO, { name:'Mini Volcano', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MINING_HELMET, { name:'Mining Helmet', type:'armor', slot:'head', def:2, icon:'A', maxStack:1, desc:'Defense +2' });
+defItem(I.MINING_PANTS, { name:'Mining Pants', type:'armor', slot:'legs', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.MINING_SHIRT, { name:'Mining Shirt', type:'armor', slot:'chest', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.MIRAGE_CRATE, { name:'Mirage Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MIRAGE_DYE, { name:'Mirage Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MIRAGE_FISH, { name:'Mirage Fish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MITEY_TITEY, { name:'Mitey-Titey', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MOBIUS_STRIP, { name:'Mobius Strip', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MOLLUSK_WHISTLE, { name:'Mollusk Whistle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MOLTEN_LEGION_FLAG, { name:'Molten Legion Flag', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MOLTEN_SKULL_ROSE, { name:'Molten Skull Rose', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MONARCH_BUTTERFLY, { name:'Monarch Butterfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MONARCH_BUTTERFLY_JAR, { name:'Monarch Butterfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MONEY_HAIR_DYE, { name:'Money Hair Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MONEY_TROUGH, { name:'Money Trough', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MONKS_BELT, { name:'Monk\'s Belt', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MONKS_BUSHY_BROW_BALD_CAP, { name:'Monk\'s Bushy Brow Bald Cap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MONKS_PANTS, { name:'Monk\'s Pants', type:'armor', slot:'legs', def:16, icon:'A', maxStack:1, desc:'Defense +16' });
+defItem(I.MONKS_SHIRT, { name:'Monk\'s Shirt', type:'armor', slot:'chest', def:22, icon:'A', maxStack:1, desc:'Defense +22' });
+defItem(I.MONSTER_LASAGNA, { name:'Monster Lasagna', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MONSTER_MEAT, { name:'Monster Meat', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MOON_GLOBE, { name:'Moon Globe', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MOON_LORD_LEGS, { name:'Moon Lord Legs', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MOON_LORD_TORSO, { name:'Moon Lord Torso', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MOON_SHELL, { name:'Moon Shell', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MOONGLOW, { name:'Moonglow', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MOONGLOW_PLANTER_BOX, { name:'Moonglow Planter Box', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MOONGLOW_SEEDS, { name:'Moonglow Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MOONMAN_COMPANY, { name:'Moonman & Company', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MOONPLATE_BLOCK, { name:'Moonplate Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.MORBID_CURIOSITY, { name:'Morbid Curiosity', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MORNING_HUNT, { name:'Morning Hunt', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MOTTLED_STONE_WALL, { name:'Mottled Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.MOUSE, { name:'Mouse', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MOUSE_CAGE, { name:'Mouse Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MRS_CLAUS_HAT, { name:'Mrs. Claus Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.MRS_CLAUS_HEELS, { name:'Mrs. Claus Heels', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MRS_CLAUS_SHIRT, { name:'Mrs. Claus Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.MUD_BALL, { name:'Mud Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MUD_BLOCK, { name:'Mud Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.MUD_BUD, { name:'Mud Bud', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MUD_WALL, { name:'Mud Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.MUDFISH, { name:'Mudfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MUDSTONE_BRICK, { name:'Mudstone Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.MUDSTONE_BRICK_WALL, { name:'Mudstone Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.MUG, { name:'Mug', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MULTICOLOR_WRENCH, { name:'Multicolor Wrench', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MULTICOLORED_BULB, { name:'Multicolored Bulb', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.MULTICOLORED_LIGHTS, { name:'Multicolored Lights', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.MULTICOLORED_STAINED_GLASS, { name:'Multicolored Stained Glass', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.MUMMY_PANTS, { name:'Mummy Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.MUMMY_SHIRT, { name:'Mummy Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.MUSHROOM_BEAM, { name:'Mushroom Beam', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MUSHROOM_CAMPFIRE, { name:'Mushroom Campfire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MUSHROOM_CAP, { name:'Mushroom Cap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MUSHROOM_HAT, { name:'Mushroom Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.MUSHROOM_PANTS, { name:'Mushroom Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.MUSHROOM_PYLON, { name:'Mushroom Pylon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MUSHROOM_VEST, { name:'Mushroom Vest', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MUTANT_FLINXFIN, { name:'Mutant Flinxfin', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MY_SON, { name:'My Son', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MYSTERIOUS_CAPE, { name:'Mysterious Cape', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.MYSTIC_ARTS_SASH, { name:'Mystic Arts Sash', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MYSTIC_ROBE, { name:'Mystic Robe', type:'armor', slot:'chest', def:2, icon:'A', maxStack:1, desc:'Defense +2' });
+defItem(I.MYTHRIL_BRICK, { name:'Mythril Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.MYTHRIL_BRICK_WALL, { name:'Mythril Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.MYTHRIL_CHAINMAIL, { name:'Mythril Chainmail', type:'armor', slot:'chest', def:12, icon:'A', maxStack:1, desc:'Defense +12' });
+defItem(I.MYTHRIL_CHAINSAW, { name:'Mythril Chainsaw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MYTHRIL_CRATE, { name:'Mythril Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MYTHRIL_DRILL, { name:'Mythril Drill', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MYTHRIL_GREAVES, { name:'Mythril Greaves', type:'armor', slot:'legs', def:9, icon:'A', maxStack:1, desc:'Defense +9' });
+defItem(I.MYTHRIL_HALBERD, { name:'Mythril Halberd', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.MYTHRIL_HAT, { name:'Mythril Hat', type:'armor', slot:'head', def:6, icon:'A', maxStack:1, desc:'Defense +6' });
+defItem(I.MYTHRIL_HOOD, { name:'Mythril Hood', type:'armor', slot:'head', def:3, icon:'A', maxStack:1, desc:'Defense +3' });
+defItem(I.NACHOS, { name:'Nachos', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NANITES, { name:'Nanites', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NATURAL_DIRT_WALL, { name:'Natural Dirt Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.NATURES_GIFT, { name:'Nature\'s Gift', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NAZAR, { name:'Nazar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NEBULA_BRICK, { name:'Nebula Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.NEBULA_BRICK_WALL, { name:'Nebula Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.NEBULA_CHAINSAW, { name:'Nebula Chainsaw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NEBULA_DRILL, { name:'Nebula Drill', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NEBULA_DYE, { name:'Nebula Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NEBULA_FRAGMENT_BLOCK, { name:'Nebula Fragment Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.NEBULA_MANTLE, { name:'Nebula Mantle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NEBULA_MONOLITH, { name:'Nebula Monolith', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NECROMANTIC_SIGN, { name:'Necromantic Sign', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NECTAR, { name:'Nectar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NEGATIVE_DYE, { name:'Negative Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NEGATIVE_PAINT, { name:'Negative Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NEON_MOSS, { name:'Neon Moss', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NEON_MOSS_BRICK, { name:'Neon Moss Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.NEON_MOSS_BRICK_WALL, { name:'Neon Moss Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.NEON_MOSS_FISHING_BOBBER, { name:'Neon Moss Fishing Bobber', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NEPTUNES_SHELL, { name:'Neptune\'s Shell', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NEVERMORE, { name:'Nevermore', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.NIGHT_VISION_HELMET, { name:'Night Vision Helmet', type:'armor', slot:'head', def:4, icon:'A', maxStack:1, desc:'Defense +4' });
+defItem(I.NIGHTS_EDGE, { name:'Night\'s Edge', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NOT_SO_LOST_IN_PARADISE, { name:'Not So Lost In Paradise', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NOTA_KIDNORA_SQUID, { name:'Not a Kid, nor a Squid', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NURSE_HAT, { name:'Nurse Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.NURSE_LISA, { name:'Nurse Lisa', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.NURSE_PANTS, { name:'Nurse Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.NURSE_SHIRT, { name:'Nurse Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.OASIS, { name:'Oasis', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OASIS_CRATE, { name:'Oasis Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OASIS_WATER_FOUNTAIN, { name:'Oasis Water Fountain', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OBELISK, { name:'Obelisk', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OBSIDIAN_BRICK, { name:'Obsidian Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.OBSIDIAN_CRATE, { name:'Obsidian Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OBSIDIAN_HORSESHOE, { name:'Obsidian Horseshoe', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OBSIDIAN_LOCK_BOX, { name:'Obsidian Lock Box', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OBSIDIAN_SKULL_ROSE, { name:'Obsidian Skull Rose', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OBSIDIAN_SWORDFISH, { name:'Obsidian Swordfish', type:'melee', dmg:70, speed:0.333, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.OBSIDIAN_VASE, { name:'Obsidian Vase', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OBSIDIAN_WATER_WALKING_BOOTS, { name:'Obsidian Water Walking Boots', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OBSIDIFISH, { name:'Obsidifish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OCEAN_CRATE, { name:'Ocean Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OCRAMS_RAZOR, { name:'Ocram\'s Razor', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OCULAR_RESONANCE, { name:'Ocular Resonance', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OF_SEAAND_DREAMS, { name:'Of Sea and Dreams', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OFFICE_BLOCK, { name:'Office Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.OFFICE_WALL, { name:'Office Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.OFFLINE_AMBER_GEMSPARK_WALL, { name:'Offline Amber Gemspark Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.OFFLINE_AMETHYST_GEMSPARK_WALL, { name:'Offline Amethyst Gemspark Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.OFFLINE_DIAMOND_GEMSPARK_WALL, { name:'Offline Diamond Gemspark Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.OFFLINE_EMERALD_GEMSPARK_WALL, { name:'Offline Emerald Gemspark Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.OFFLINE_RUBY_GEMSPARK_WALL, { name:'Offline Ruby Gemspark Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.OFFLINE_SAPPHIRE_GEMSPARK_WALL, { name:'Offline Sapphire Gemspark Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.OFFLINE_TOPAZ_GEMSPARK_WALL, { name:'Offline Topaz Gemspark Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.OGRES_CLUB, { name:'Ogre\'s Club', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OIL_RAG_SCONCE, { name:'Oil Rag Sconce', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OKTOBER, { name:'Oktober', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OLD_COMPANION_LOCKET, { name:'Old Companion Locket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OLD_MINER, { name:'Old Miner', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OLD_SHOE, { name:'Old Shoe', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OLD_STONE_WALL, { name:'Old Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.OMINOUS_PRESENCE, { name:'Ominous Presence', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ORANGE_DRAGONFLY, { name:'Orange Dragonfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ORANGE_DRAGONFLY_JAR, { name:'Orange Dragonfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ORANGE_GOLF_BALL, { name:'Orange Golf Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ORANGE_PAINT, { name:'Orange Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ORANGE_PRESSURE_PLATE, { name:'Orange Pressure Plate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ORANGE_STAINED_GLASS, { name:'Orange Stained Glass', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ORANGE_STRING, { name:'Orange String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ORANGE_WEIGHTED_PRESSURE_PLATE, { name:'Orange Weighted Pressure Plate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ORANGEAND_BLACK_DYE, { name:'Orange and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ORANGEAND_SILVER_DYE, { name:'Orange and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ORICHALCUM_CHAINSAW, { name:'Orichalcum Chainsaw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ORICHALCUM_DRILL, { name:'Orichalcum Drill', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ORICHALCUM_HALBERD, { name:'Orichalcum Halberd', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ORICHALCUM_HEADGEAR, { name:'Orichalcum Headgear', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ORNATE_SHADOW_KEY, { name:'Ornate Shadow Key', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OUROBOROS_RING, { name:'Ouroboros Ring', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OUTCAST, { name:'Outcast', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OUTLET_PUMP, { name:'Outlet Pump', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OVERGROWN_LIVING_WOOD_WALL, { name:'Overgrown Living Wood Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.OWL, { name:'Owl', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OWL_CAGE, { name:'Owl Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.OYSTER, { name:'Oyster', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PAD_THAI, { name:'Pad Thai', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PAINT_ROLLER, { name:'Paint Roller', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PAINT_SCRAPER, { name:'Paint Scraper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PAINT_SPRAYER, { name:'Paint Sprayer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PAINTBRUSH, { name:'Paintbrush', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PAINTED_ARROW_SIGN, { name:'Painted Arrow Sign', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PAIROF_EYEBALLS, { name:'Pair of Eyeballs', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PAL_METAL_CHESTPLATE, { name:'Pal Metal Chestplate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PAL_METAL_LEGGINGS, { name:'Pal Metal Leggings', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PALADINS_HAMMER, { name:'Paladin\'s Hammer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PALADINS_SHIELD, { name:'Paladin\'s Shield', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PALLADIUM_CHAINSAW, { name:'Palladium Chainsaw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PALLADIUM_COLUMN, { name:'Palladium Column', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PALLADIUM_COLUMN_WALL, { name:'Palladium Column Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.PALLADIUM_DRILL, { name:'Palladium Drill', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PALLADIUM_HEADGEAR, { name:'Palladium Headgear', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PALLADIUM_PIKE, { name:'Palladium Pike', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PALM_WOOD_BREASTPLATE, { name:'Palm Wood Breastplate', type:'armor', slot:'legs', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.PALM_WOOD_FENCE, { name:'Palm Wood Fence', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PALM_WOOD_GREAVES, { name:'Palm Wood Greaves', type:'armor', slot:'legs', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.PALM_WOOD_HELMET, { name:'Palm Wood Helmet', type:'armor', slot:'head', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.PANDA_EARS, { name:'Panda Ears', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PARKA_COAT, { name:'Parka Coat', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PARKA_HOOD, { name:'Parka Hood', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PARKA_PANTS, { name:'Parka Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PARSEC_PALS, { name:'Parsec Pals', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PARTY_HAIR_DYE, { name:'Party Hair Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PARTY_ROLLER_SKATES, { name:'Party Roller Skates', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PARTY_WAGON, { name:'Party Wagon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PEACH, { name:'Peach', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PEACH_SANGRIA, { name:'Peach Sangria', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PEARLSAND_BLOCK, { name:'Pearlsand Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PEARLSANDSTONE_BLOCK, { name:'Pearlsandstone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PEARLSANDSTONE_WALL, { name:'Pearlsandstone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.PEARLSTONE_BRICK, { name:'Pearlstone Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PEARLSTONE_BRICK_WALL, { name:'Pearlstone Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.PEARLSTONE_WALL, { name:'Pearlstone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.PEARLWOOD, { name:'Pearlwood', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PEARLWOOD_BREASTPLATE, { name:'Pearlwood Breastplate', type:'armor', slot:'legs', def:3, icon:'A', maxStack:1, desc:'Defense +3' });
+defItem(I.PEARLWOOD_CRATE, { name:'Pearlwood Crate', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PEARLWOOD_FENCE, { name:'Pearlwood Fence', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PEARLWOOD_GREAVES, { name:'Pearlwood Greaves', type:'armor', slot:'legs', def:2, icon:'A', maxStack:1, desc:'Defense +2' });
+defItem(I.PEARLWOOD_HELMET, { name:'Pearlwood Helmet', type:'armor', slot:'head', def:2, icon:'A', maxStack:1, desc:'Defense +2' });
+defItem(I.PEDDLERS_HAT, { name:'Peddler\'s Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PEDDLERS_SATCHEL, { name:'Peddler\'s Satchel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PEDGUINS_HOOD, { name:'Pedguin\'s Hood', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PEDGUINS_JACKET, { name:'Pedguin\'s Jacket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PEDGUINS_TROUSERS, { name:'Pedguin\'s Trousers', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PENGFISH, { name:'Pengfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PENGUIN, { name:'Penguin', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PENGUIN_CAGE, { name:'Penguin Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PHARAOHS_ROBE, { name:'Pharaoh\'s Robe', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PHASE_DYE, { name:'Phase Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PHASIC_WARP_EJECTOR, { name:'Phasic Warp Ejector', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PHO, { name:'Pho', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PHOENIX_QUIVER, { name:'Phoenix Quiver', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PIECEOF_MOON_SQUID, { name:'Piece of Moon Squid', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PIGRON_MINECART, { name:'Pigron Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PILLAGIN_ME_PIXELS, { name:'Pillagin\' Me Pixels', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINE_TREE_BLOCK, { name:'Pine Tree Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PINE_TREE_WALL, { name:'Pine Tree Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.PINE_WOOD, { name:'Pine Wood', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PINE_WOOD_WALL, { name:'Pine Wood Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.PINEAPPLE, { name:'Pineapple', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_BRICK, { name:'Pink Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PINK_DUNGEON_VASE, { name:'Pink Dungeon Vase', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_FAIRY, { name:'Pink Fairy', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_FAIRY_JAR, { name:'Pink Fairy Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_FLOWER_SEEDS, { name:'Pink Flower Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_GEL, { name:'Pink Gel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_GEL_DYE, { name:'Pink Gel Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_GOLF_BALL, { name:'Pink Golf Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_HORSESHOE_BALLOON, { name:'Pink Horseshoe Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_ICE_BLOCK, { name:'Pink Ice Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PINK_JELLYFISH, { name:'Pink Jellyfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_JELLYFISH_JAR, { name:'Pink Jellyfish Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_MAID_BONNET, { name:'Pink Maid Bonnet', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_MAID_DRESS, { name:'Pink Maid Dress', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.PINK_MAID_SHOES, { name:'Pink Maid Shoes', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_PAINT, { name:'Pink Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_PEARL, { name:'Pink Pearl', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_SLAB_WALL, { name:'Pink Slab Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.PINK_SLIME_BLOCK, { name:'Pink Slime Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PINK_SNOW_COAT, { name:'Pink Snow Coat', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_SNOW_HOOD, { name:'Pink Snow Hood', type:'armor', slot:'head', def:3, icon:'A', maxStack:1, desc:'Defense +3' });
+defItem(I.PINK_SNOW_PANTS, { name:'Pink Snow Pants', type:'armor', slot:'legs', def:3, icon:'A', maxStack:1, desc:'Defense +3' });
+defItem(I.PINK_STREAMER, { name:'Pink Streamer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_STRING, { name:'Pink String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_TEAM_BLOCK, { name:'Pink Team Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PINK_THREAD, { name:'Pink Thread', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_TILED_WALL, { name:'Pink Tiled Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.PINK_VASE, { name:'Pink Vase', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINK_WEIGHTED_PRESSURE_PLATE, { name:'Pink Weighted Pressure Plate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINKAND_BLACK_DYE, { name:'Pink and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINKAND_SILVER_DYE, { name:'Pink and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PINSTRIPE_PANTS, { name:'Pinstripe Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PIRATE_HAT, { name:'Pirate Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PIRATE_PANTS, { name:'Pirate Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PIRATE_SHIRT, { name:'Pirate Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PIXEL_BOX, { name:'Pixel Box', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PIXIE_DUST, { name:'Pixie Dust', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PIXIE_DYE, { name:'Pixie Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PIXIE_PANTS, { name:'Pixie Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PIXIE_SHIRT, { name:'Pixie Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PIXIEFISH, { name:'Pixiefish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PIZZA, { name:'Pizza', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PIA_COLADA, { name:'Piña Colada', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PLACE_ABOVETHE_CLOUDS, { name:'Place Above the Clouds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PLAGUEBRINGERS_CLOAK, { name:'Plaguebringer\'s Cloak', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PLAGUEBRINGERS_SKULL, { name:'Plaguebringer\'s Skull', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PLAGUEBRINGERS_TREADS, { name:'Plaguebringer\'s Treads', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PLANKED_WALL, { name:'Planked Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.PLANTERA_SEEDLING, { name:'Plantera Seedling', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PLATE, { name:'Plate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PLATINUM_BRICK, { name:'Platinum Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PLATINUM_BRICK_WALL, { name:'Platinum Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.PLATINUM_CROWN, { name:'Platinum Crown', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PLATINUM_SHORTSWORD, { name:'Platinum Shortsword', type:'melee', dmg:13, speed:0.167, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.PLATINUM_WATCH, { name:'Platinum Watch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PLUM, { name:'Plum', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PLUMBERS_HAT, { name:'Plumber\'s Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PLUMBERS_PANTS, { name:'Plumber\'s Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PLUMBERS_SHIRT, { name:'Plumber\'s Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.POCKET_MIRROR, { name:'Pocket Mirror', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POGO_STICK, { name:'Pogo Stick', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POISON_BARB, { name:'Poison Barb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POMEGRANATE, { name:'Pomegranate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POO, { name:'Poo', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POO_BOULDER, { name:'Poo Boulder', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POO_WALL, { name:'Poo Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.PORKOFTHE_SEA, { name:'Pork of the Sea', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PORTABLE_CEMENT_MIXER, { name:'Portable Cement Mixer', type:'block', icon:'block', maxStack:999, desc:'A piece of furniture.' });
+defItem(I.PORTAL_GUN, { name:'Portal Gun', type:'melee', dmg:10, speed:0.333, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.PORTAL_GUN_STATION, { name:'Portal Gun Station', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.POSSESSED_SKULL, { name:'Possessed Skull', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTATO_CHIPS, { name:'Potato Chips', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTIONOF_RETURN, { name:'Potion of Return', type:'consumable', heal:50, potionCd:60, icon:'P', maxStack:30, desc:'Restores 50 health.' });
+defItem(I.POTTED_BRIMSTONE_BUSH, { name:'Potted Brimstone Bush', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.POTTED_CRYSTAL_FERN, { name:'Potted Crystal Fern', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTTED_CRYSTAL_SPIRAL, { name:'Potted Crystal Spiral', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTTED_CRYSTAL_TEARDROP, { name:'Potted Crystal Teardrop', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTTED_CRYSTAL_TREE, { name:'Potted Crystal Tree', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTTED_EMBER_TENDRILS, { name:'Potted Ember Tendrils', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTTED_FIRE_BRAMBLES, { name:'Potted Fire Brambles', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTTED_FOREST_BAMBOO, { name:'Potted Forest Bamboo', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.POTTED_FOREST_CEDAR, { name:'Potted Forest Cedar', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.POTTED_FOREST_PALM, { name:'Potted Forest Palm', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.POTTED_FOREST_TREE, { name:'Potted Forest Tree', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.POTTED_HALLOW_BAMBOO, { name:'Potted Hallow Bamboo', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTTED_HALLOW_CEDAR, { name:'Potted Hallow Cedar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTTED_HALLOW_PALM, { name:'Potted Hallow Palm', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTTED_HALLOW_TREE, { name:'Potted Hallow Tree', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTTED_JUNGLE_BAMBOO, { name:'Potted Jungle Bamboo', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTTED_JUNGLE_CEDAR, { name:'Potted Jungle Cedar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTTED_JUNGLE_PALM, { name:'Potted Jungle Palm', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTTED_JUNGLE_TREE, { name:'Potted Jungle Tree', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTTED_LAVA_BULB, { name:'Potted Lava Bulb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POTTED_MAGMA_PALM, { name:'Potted Magma Palm', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POWER_BOMB, { name:'Power Bomb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POWER_GLOVE, { name:'Power Glove', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.POWEREDBY_BIRDS, { name:'Powered by Birds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PREHISTORY_PRESERVED, { name:'Prehistory Preserved', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PREMIUM_GOLF_CLUB_DRIVER, { name:'Premium Golf Club (Driver)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PREMIUM_GOLF_CLUB_IRON, { name:'Premium Golf Club (Iron)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PREMIUM_GOLF_CLUB_PUTTER, { name:'Premium Golf Club (Putter)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PREMIUM_GOLF_CLUB_WEDGE, { name:'Premium Golf Club (Wedge)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PRESENT, { name:'Present', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PRESSERATOR, { name:'Presserator', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PRESSURE_PLATE_TRACK, { name:'Pressure Plate Track', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PRETTY_MIRROR, { name:'Pretty Mirror', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PRETTY_PINK_DRESS, { name:'Pretty Pink Dress', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.PRETTY_PINK_RIBBON, { name:'Pretty Pink Ribbon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PRETTY_PINK_STOCKINGS, { name:'Pretty Pink Stockings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PRINCE_CAPE, { name:'Prince Cape', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.PRINCE_PANTS, { name:'Prince Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PRINCE_UNIFORM, { name:'Prince Uniform', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PRINCESS64, { name:'Princess 64', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PRINCESS_DRESS, { name:'Princess Dress', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.PRINCESS_FISH, { name:'Princess Fish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PRINCESS_HAT, { name:'Princess Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PRINCESS_STYLE, { name:'Princess Style', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PRISMATIC_DYE, { name:'Prismatic Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PRISMATIC_LACEWING, { name:'Prismatic Lacewing', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PRISMATIC_LACEWING_JAR, { name:'Prismatic Lacewing Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PRISMATIC_PUNCH, { name:'Prismatic Punch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PRISMITE, { name:'Prismite', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PROSPECTOR_HELMET, { name:'Prospector Helmet', type:'armor', slot:'head', def:10, icon:'A', maxStack:1, desc:'Defense +10' });
+defItem(I.PROSPECTOR_PANTS, { name:'Prospector Pants', type:'armor', slot:'legs', def:11, icon:'A', maxStack:1, desc:'Defense +11' });
+defItem(I.PROSPECTOR_SHIRT, { name:'Prospector Shirt', type:'armor', slot:'chest', def:12, icon:'A', maxStack:1, desc:'Defense +12' });
+defItem(I.PROST, { name:'Prost', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PUFFER_SHRIMP, { name:'Puffer Shrimp', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PUFFERFISH_CAGE, { name:'Pufferfish Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PUMPKIN_BREASTPLATE, { name:'Pumpkin Breastplate', type:'armor', slot:'legs', def:3, icon:'A', maxStack:1, desc:'Defense +3' });
+defItem(I.PUMPKIN_HELMET, { name:'Pumpkin Helmet', type:'armor', slot:'head', def:2, icon:'A', maxStack:1, desc:'Defense +2' });
+defItem(I.PUMPKIN_LEGGINGS, { name:'Pumpkin Leggings', type:'armor', slot:'legs', def:2, icon:'A', maxStack:1, desc:'Defense +2' });
+defItem(I.PUMPKIN_PANTS, { name:'Pumpkin Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PUMPKIN_SCENTED_CANDLE, { name:'Pumpkin Scented Candle', type:'block', icon:'block', maxStack:999, desc:'A piece of furniture.' });
+defItem(I.PUMPKIN_SEED, { name:'Pumpkin Seed', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PUMPKIN_SHIRT, { name:'Pumpkin Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.PUMPKIN_WALL, { name:'Pumpkin Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.PUPFISH, { name:'Pupfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PUPFISH_BOWL, { name:'Pupfish Bowl', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.PURE_WATER_FOUNTAIN, { name:'Pure Water Fountain', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PURITY, { name:'Purity', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PURPLE_COUNTERWEIGHT, { name:'Purple Counterweight', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PURPLE_EMPEROR_BUTTERFLY, { name:'Purple Emperor Butterfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PURPLE_EMPEROR_BUTTERFLY_JAR, { name:'Purple Emperor Butterfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PURPLE_GOLF_BALL, { name:'Purple Golf Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PURPLE_ICE_BLOCK, { name:'Purple Ice Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.PURPLE_MOSS, { name:'Purple Moss', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PURPLE_MOSSY_WALL, { name:'Purple Mossy Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.PURPLE_OOZE_DYE, { name:'Purple Ooze Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PURPLE_PAINT, { name:'Purple Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PURPLE_PIN_FLAG, { name:'Purple Pin Flag', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PURPLE_SOLUTION, { name:'Purple Solution', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PURPLE_STAINED_GLASS, { name:'Purple Stained Glass', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PURPLE_STRING, { name:'Purple String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PURPLE_WEIGHTED_PRESSURE_PLATE, { name:'Purple Weighted Pressure Plate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PURPLEAND_BLACK_DYE, { name:'Purple and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PURPLEAND_SILVER_DYE, { name:'Purple and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.PYROCLASTIC_STONE, { name:'Pyroclastic Stone', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.QUEENOF_BEES, { name:'Queen of Bees', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RABBIT_PERCH, { name:'Rabbit Perch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RADIO_THING, { name:'Radio Thing', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RAGGED_BROTHERHOOD_SIGIL, { name:'Ragged Brotherhood Sigil', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.RAIN_CLOUD, { name:'Rain Cloud', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RAIN_COAT, { name:'Rain Coat', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RAIN_HAT, { name:'Rain Hat', type:'armor', slot:'head', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.RAIN_SONG, { name:'Rain Song', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RAINBOW_BOULDER, { name:'Rainbow Boulder', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.RAINBOW_BRICK, { name:'Rainbow Brick', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.RAINBOW_BRICK_WALL, { name:'Rainbow Brick Wall', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.RAINBOW_CAMPFIRE, { name:'Rainbow Campfire', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.RAINBOW_CLOUD, { name:'Rainbow Cloud', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.RAINBOW_CURSOR, { name:'Rainbow Cursor', type:'melee', dmg:10, speed:0.417, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.RAINBOW_GLOWSTICK, { name:'Rainbow Glowstick', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.RAINBOW_HAIR_DYE, { name:'Rainbow Hair Dye', type:'melee', dmg:10, speed:0.283, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.RAINBOW_STRING, { name:'Rainbow String', type:'melee', dmg:10, speed:0.417, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.RALLY, { name:'Rally', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RAM_RUNE, { name:'Ram Rune', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RAMBUTAN, { name:'Rambutan', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RARE_ENCHANTMENT, { name:'Rare Enchantment', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RAT, { name:'Rat', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RAT_CAGE, { name:'Rat Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RAVEN_FEATHER, { name:'Raven Feather', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RAYNBROS_HOOD, { name:'Raynbro\'s Hood', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.RAYNBROS_HOODIE, { name:'Raynbro\'s Hoodie', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.RAYNBROS_PANTS, { name:'Raynbro\'s Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.RAZORTIP, { name:'Razortip', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REAPER_HOOD, { name:'Reaper Hood', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.REAPER_ROBE, { name:'Reaper Robe', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.REBORN, { name:'Reborn', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RECON_SCOPE, { name:'Recon Scope', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_ADMIRAL_BUTTERFLY, { name:'Red Admiral Butterfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_ADMIRAL_BUTTERFLY_JAR, { name:'Red Admiral Butterfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_BULB, { name:'Red Bulb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_CAPE, { name:'Red Cape', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.RED_COUNTERWEIGHT, { name:'Red Counterweight', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_DRAGONFLY, { name:'Red Dragonfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_DRAGONFLY_JAR, { name:'Red Dragonfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_DYNASTY_SHINGLES, { name:'Red Dynasty Shingles', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_FLOWER_SEEDS, { name:'Red Flower Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_GARLAND, { name:'Red Garland', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_GOLF_BALL, { name:'Red Golf Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_HAT, { name:'Red Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.RED_ICE_BLOCK, { name:'Red Ice Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.RED_LIGHT, { name:'Red Light', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_LIGHTS, { name:'Red Lights', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_MOSS, { name:'Red Moss', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_MOSSY_WALL, { name:'Red Mossy Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.RED_PAINT, { name:'Red Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_PIN_FLAG, { name:'Red Pin Flag', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_POTION, { name:'Red Potion', type:'consumable', heal:50, potionCd:60, icon:'P', maxStack:30, desc:'Restores 50 health.' });
+defItem(I.RED_PRESSURE_PLATE, { name:'Red Pressure Plate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_RIDING_DRESS, { name:'Red Riding Dress', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.RED_RIDING_HOOD, { name:'Red Riding Hood', type:'armor', slot:'head', def:8, icon:'A', maxStack:1, desc:'Defense +8' });
+defItem(I.RED_RIDING_LEGGINGS, { name:'Red Riding Leggings', type:'armor', slot:'legs', def:16, icon:'A', maxStack:1, desc:'Defense +16' });
+defItem(I.RED_ROCKET, { name:'Red Rocket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_SNAPPER, { name:'Red Snapper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_SOLUTION, { name:'Red Solution', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_SQUIRREL, { name:'Red Squirrel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_SQUIRREL_CAGE, { name:'Red Squirrel Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_STAINED_GLASS, { name:'Red Stained Glass', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_STRING, { name:'Red String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_STUCCO, { name:'Red Stucco', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_STUCCO_WALL, { name:'Red Stucco Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.RED_SWIMSUIT, { name:'Red Swimsuit', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RED_TEAM_BLOCK, { name:'Red Team Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.RED_WRENCH, { name:'Red Wrench', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REDAND_BLACK_DYE, { name:'Red and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REDAND_BLUE_LIGHTS, { name:'Red and Blue Lights', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REDAND_GREEN_BULB, { name:'Red and Green Bulb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REDAND_GREEN_GARLAND, { name:'Red and Green Garland', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REDAND_GREEN_LIGHTS, { name:'Red and Green Lights', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REDAND_SILVER_DYE, { name:'Red and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REDAND_YELLOW_BULB, { name:'Red and Yellow Bulb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REDAND_YELLOW_LIGHTS, { name:'Red and Yellow Lights', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REDS_BREASTPLATE, { name:'Red\'s Breastplate', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.REDS_HELMET, { name:'Red\'s Helmet', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.REDS_LEGGINGS, { name:'Red\'s Leggings', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.REDS_THROW, { name:'Red\'s Throw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REDS_WINGS, { name:'Red\'s Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REEF_BLOCK, { name:'Reef Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.REEF_WALL, { name:'Reef Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.REFLECTIVE_COPPER_DYE, { name:'Reflective Copper Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REFLECTIVE_DYE, { name:'Reflective Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REFLECTIVE_GOLD_DYE, { name:'Reflective Gold Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REFLECTIVE_METAL_DYE, { name:'Reflective Metal Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REFLECTIVE_OBSIDIAN_DYE, { name:'Reflective Obsidian Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REFLECTIVE_SHADES, { name:'Reflective Shades', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REFLECTIVE_SILVER_DYE, { name:'Reflective Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REGAL_DELICACY, { name:'Regal Delicacy', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REINDEER_ANTLERS, { name:'Reindeer Antlers', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REINFORCED_FISHING_POLE, { name:'Reinforced Fishing Pole', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RELEASE_DOVES, { name:'Release Doves', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REMIX, { name:'Remix', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REMNANTSOF_DEVOTION, { name:'Remnants of Devotion', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REPAIRED_LIFE_CRYSTAL, { name:'Repaired Life Crystal', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REPAIRED_MANA_CRYSTAL, { name:'Repaired Mana Crystal', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REPLICA_CRIMSON_ALTAR, { name:'Replica Crimson Altar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REPLICA_CRIMSON_HEART, { name:'Replica Crimson Heart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REPLICA_DEMON_ALTAR, { name:'Replica Demon Altar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REPLICA_SHADOW_ORB, { name:'Replica Shadow Orb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.REQUIEM, { name:'Requiem', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RESPLENDENT_DESSERT, { name:'Resplendent Dessert', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RESTORATION_SHIELD, { name:'Restoration Shield', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RETRO_MONOLITH, { name:'Retro Monolith', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RICH_MAHOGANY, { name:'Rich Mahogany', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RICH_MAHOGANY_BEAM, { name:'Rich Mahogany Beam', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RICH_MAHOGANY_BREASTPLATE, { name:'Rich Mahogany Breastplate', type:'armor', slot:'legs', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.RICH_MAHOGANY_FENCE, { name:'Rich Mahogany Fence', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RICH_MAHOGANY_GREAVES, { name:'Rich Mahogany Greaves', type:'armor', slot:'legs', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.RICH_MAHOGANY_HELMET, { name:'Rich Mahogany Helmet', type:'armor', slot:'head', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.RICH_MAHOGANY_LEAF_WAND, { name:'Rich Mahogany Leaf Wand', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROASTED_BIRD, { name:'Roasted Bird', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROASTED_DUCK, { name:'Roasted Duck', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROBE, { name:'Robe', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.ROBOT_HAT, { name:'Robot Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.ROBOT_PANTS, { name:'Robot Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.ROBOT_SHIRT, { name:'Robot Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.ROBOTIC_SKULL, { name:'Robotic Skull', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROCK_CANDY, { name:'Rock Candy', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROCK_GOLEM_HEAD, { name:'Rock Golem Head', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROCK_LOBSTER, { name:'Rock Lobster', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROCKY_DIRT_WALL, { name:'Rocky Dirt Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.RODOF_DISCORD, { name:'Rod of Discord', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RODOF_HARMONY, { name:'Rod of Harmony', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROLLING_CACTUS, { name:'Rolling Cactus', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROPE, { name:'Rope', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROPE_COIL, { name:'Rope Coil', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROUGH_DIRT_WALL, { name:'Rough Dirt Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ROYAL_BLOUSE, { name:'Royal Blouse', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROYAL_DELIGHT, { name:'Royal Delight', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROYAL_DRESS, { name:'Royal Dress', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.ROYAL_GEL, { name:'Royal Gel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROYAL_GILDED_SADDLE, { name:'Royal Gilded Saddle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROYAL_GUARDS_HARNESS, { name:'Royal Guard\'s Harness', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROYAL_ROMANCE, { name:'Royal Romance', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROYAL_SCEPTER, { name:'Royal Scepter', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ROYAL_TIARA, { name:'Royal Tiara', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RUBBLEMAKER_LARGE, { name:'Rubblemaker (Large)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RUBBLEMAKER_MEDIUM, { name:'Rubblemaker (Medium)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RUBBLEMAKER_SMALL, { name:'Rubblemaker (Small)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RUBY_BUNNY, { name:'Ruby Bunny', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RUBY_BUNNY_CAGE, { name:'Ruby Bunny Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RUBY_GEM_LOCK, { name:'Ruby Gem Lock', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RUBY_GEMCORN, { name:'Ruby Gemcorn', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RUBY_GEMSPARK_BLOCK, { name:'Ruby Gemspark Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.RUBY_GEMSPARK_WALL, { name:'Ruby Gemspark Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.RUBY_HOOK, { name:'Ruby Hook', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RUBY_MINECART, { name:'Ruby Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RUBY_ROBE, { name:'Ruby Robe', type:'armor', slot:'chest', def:2, icon:'A', maxStack:1, desc:'Defense +2' });
+defItem(I.RUBY_SQUIRREL, { name:'Ruby Squirrel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RUBY_SQUIRREL_CAGE, { name:'Ruby Squirrel Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RUBY_STONE_BLOCK, { name:'Ruby Stone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.RUBY_STONE_WALL, { name:'Ruby Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.RULER, { name:'Ruler', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.RUNE_HAT, { name:'Rune Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.RUNE_ROBE, { name:'Rune Robe', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.RUSTED_COMPANY_STANDARD, { name:'Rusted Company Standard', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.S_W_A_T_HELMET, { name:'SWAT Helmet', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SAFE, { name:'Safe', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAFEMANS_BLANKET_CAPE, { name:'Safeman\'s Blanket Cape', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.SAFEMANS_PINK_LEGGINGS, { name:'Safeman\'s Pink Leggings', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SAFEMANS_SUN_DRESS, { name:'Safeman\'s Sun Dress', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.SAFEMANS_SUNNY_DAY, { name:'Safeman\'s Sunny Day', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAIL, { name:'Sail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAILFISH_BOOTS, { name:'Sailfish Boots', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAILOR_HAT, { name:'Sailor Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SAILOR_PANTS, { name:'Sailor Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SAILOR_SHIRT, { name:'Sailor Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SAKE, { name:'Sake', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAKURA_SAPLING, { name:'Sakura Sapling', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAND_BLOCK, { name:'Sand Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SANDCASTLE_BUCKET, { name:'Sandcastle Bucket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SANDFALL_BLOCK, { name:'Sandfall Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SANDFALL_WALL, { name:'Sandfall Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SANDSTONE_BRICK_WALL, { name:'Sandstone Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SANDSTONE_COLUMN, { name:'Sandstone Column', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SANDSTONE_SLAB, { name:'Sandstone Slab', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SANDSTORMINA_BALLOON, { name:'Sandstorm in a Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SANTA_HAT, { name:'Santa Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SANTA_PANTS, { name:'Santa Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SANTA_SHIRT, { name:'Santa Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SAPPHIRE_BUNNY, { name:'Sapphire Bunny', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAPPHIRE_BUNNY_CAGE, { name:'Sapphire Bunny Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAPPHIRE_GEM_LOCK, { name:'Sapphire Gem Lock', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAPPHIRE_GEMCORN, { name:'Sapphire Gemcorn', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAPPHIRE_GEMSPARK_BLOCK, { name:'Sapphire Gemspark Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SAPPHIRE_GEMSPARK_WALL, { name:'Sapphire Gemspark Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SAPPHIRE_HOOK, { name:'Sapphire Hook', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAPPHIRE_MINECART, { name:'Sapphire Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAPPHIRE_ROBE, { name:'Sapphire Robe', type:'armor', slot:'chest', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.SAPPHIRE_SQUIRREL, { name:'Sapphire Squirrel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAPPHIRE_SQUIRREL_CAGE, { name:'Sapphire Squirrel Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAPPHIRE_STONE_BLOCK, { name:'Sapphire Stone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SAPPHIRE_STONE_WALL, { name:'Sapphire Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SASHIMI, { name:'Sashimi', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAUTEED_FROG_LEGS, { name:'Sauteed Frog Legs', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAWMILL, { name:'Sawmill', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SAWTOOTH_SHARK, { name:'Sawtooth Shark', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SCALY_TRUFFLE, { name:'Scaly Truffle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SCARAB_BOMB, { name:'Scarab Bomb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SCARAB_FISH, { name:'Scarab Fish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SCARAB_FISHING_ROD, { name:'Scarab Fishing Rod', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SCARECROW_HAT, { name:'Scarecrow Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SCARECROW_PANTS, { name:'Scarecrow Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SCARECROW_SHIRT, { name:'Scarecrow Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SCARLET_MACAW, { name:'Scarlet Macaw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SCARLET_MACAW_CAGE, { name:'Scarlet Macaw Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SCORPIO_FISH, { name:'Scorpio Fish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SCORPION, { name:'Scorpion', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SCORPION_CAGE, { name:'Scorpion Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SCOUTS_SLING, { name:'Scout\'s Sling', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SCRYING_ORB, { name:'Scrying Orb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SEAFOOD_DINNER, { name:'Seafood Dinner', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SEAGULL, { name:'Seagull', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SEAGULL_CAGE, { name:'Seagull Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SEAHORSE, { name:'Seahorse', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SEAHORSE_CAGE, { name:'Seahorse Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SEASHELL, { name:'Seashell', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SEASHELL_HAIRPIN, { name:'Seashell Hairpin', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SEASIDE_CRATE, { name:'Seaside Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SEAWEED, { name:'Seaweed', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SEAWEED_PLANTER, { name:'Seaweed Planter', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SECRETOFTHE_SANDS, { name:'Secret of the Sands', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SECRETS, { name:'Secrets', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SEE_THE_WORLD_FOR_WHAT_IT_IS, { name:'See The World For What It Is', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SEEDLING, { name:'Seedling', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SERAPH_NECKLACE, { name:'Seraph Necklace', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SERGEANT_UNITED_SHIELD, { name:'Sergeant United Shield', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHADEWOOD, { name:'Shadewood', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SHADEWOOD_BREASTPLATE, { name:'Shadewood Breastplate', type:'armor', slot:'legs', def:2, icon:'A', maxStack:1, desc:'Defense +2' });
+defItem(I.SHADEWOOD_FENCE, { name:'Shadewood Fence', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SHADEWOOD_GREAVES, { name:'Shadewood Greaves', type:'armor', slot:'legs', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.SHADEWOOD_HELMET, { name:'Shadewood Helmet', type:'armor', slot:'head', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.SHADOW_DYE, { name:'Shadow Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHADOW_JOUSTING_LANCE, { name:'Shadow Jousting Lance', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHADOW_PAINT, { name:'Shadow Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHADOWFLAME_HADES_DYE, { name:'Shadowflame Hades Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHARK_BAIT, { name:'Shark Bait', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHARKRON_BALLOON, { name:'Sharkron Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHARP_SPIKE_BLOCK, { name:'Sharp Spike Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SHARPENING_STATION, { name:'Sharpening Station', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHELL_PILE, { name:'Shell Pile', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHELLPHONE, { name:'Shellphone', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHELLPHONE_HOME, { name:'Shellphone (Home)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHELLPHONE_OCEAN, { name:'Shellphone (Ocean)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHELLPHONE_SPAWN, { name:'Shellphone (Spawn)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHELLPHONE_UNDERWORLD, { name:'Shellphone (Underworld)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHIFTING_PEARLSANDS_DYE, { name:'Shifting Pearlsands Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHIFTING_SANDS_DYE, { name:'Shifting Sands Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHIMMER_GUN, { name:'Shimmer Gun', type:'melee', dmg:10, speed:0.333, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.SHIMMERFALL_BLOCK, { name:'Shimmerfall Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SHIMMERFALL_WALL, { name:'Shimmerfall Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SHINING_MOON, { name:'Shining Moon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHINOBI_INFILTRATORS_HELMET, { name:'Shinobi Infiltrator\'s Helmet', type:'armor', slot:'head', def:10, icon:'A', maxStack:1, desc:'Defense +10' });
+defItem(I.SHINOBI_INFILTRATORS_PANTS, { name:'Shinobi Infiltrator\'s Pants', type:'armor', slot:'legs', def:18, icon:'A', maxStack:1, desc:'Defense +18' });
+defItem(I.SHINOBI_INFILTRATORS_TORSO, { name:'Shinobi Infiltrator\'s Torso', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHINY_RED_BALLOON, { name:'Shiny Red Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHINY_STONE, { name:'Shiny Stone', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SHIPINA_BOTTLE, { name:'Ship in a Bottle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHIPS_WHEEL, { name:'Ship\'s Wheel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHIVERTHORN, { name:'Shiverthorn', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHIVERTHORN_PLANTER_BOX, { name:'Shiverthorn Planter Box', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHIVERTHORN_SEEDS, { name:'Shiverthorn Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHOE_SPIKES, { name:'Shoe Spikes', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHRIMP, { name:'Shrimp', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHRIMP_PO_BOY, { name:'Shrimp Po\' Boy', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHROOM_MINECART, { name:'Shroom Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHROOMERANG, { name:'Shroomerang', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHROOMITE_HELMET, { name:'Shroomite Helmet', type:'armor', slot:'head', def:11, icon:'A', maxStack:1, desc:'Defense +11' });
+defItem(I.SHROOMITE_PLATING, { name:'Shroomite Plating', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SHROOMITE_PLATING_WALL, { name:'Shroomite Plating Wall', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SHRUB_STAR, { name:'Shrub Star', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SHUCKED_OYSTER, { name:'Shucked Oyster', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILENT_FISH, { name:'Silent Fish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILK_ROPE, { name:'Silk Rope', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILK_ROPE_COIL, { name:'Silk Rope Coil', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILLY_BALLOON_MACHINE, { name:'Silly Balloon Machine', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILLY_GREEN_BALLOON, { name:'Silly Green Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILLY_GREEN_BALLOON_WALL, { name:'Silly Green Balloon Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SILLY_PINK_BALLOON, { name:'Silly Pink Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILLY_PINK_BALLOON_WALL, { name:'Silly Pink Balloon Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SILLY_PURPLE_BALLOON, { name:'Silly Purple Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILLY_PURPLE_BALLOON_WALL, { name:'Silly Purple Balloon Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SILLY_SUNFLOWER_BOTTOMS, { name:'Silly Sunflower Bottoms', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILLY_SUNFLOWER_PETALS, { name:'Silly Sunflower Petals', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILLY_SUNFLOWER_TOPS, { name:'Silly Sunflower Tops', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILLY_TIED_BALLOON_GREEN, { name:'Silly Tied Balloon (Green)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILLY_TIED_BALLOON_PINK, { name:'Silly Tied Balloon (Pink)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILLY_TIED_BALLOON_PURPLE, { name:'Silly Tied Balloon (Purple)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILLY_TIED_BUNDLEOF_BALLOONS, { name:'Silly Tied Bundle of Balloons', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILT_BLOCK, { name:'Silt Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SILVER_BRACER, { name:'Silver Bracer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILVER_BRICK, { name:'Silver Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SILVER_DYE, { name:'Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILVER_SHIELD, { name:'Silver Shield', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILVER_SHORTSWORD, { name:'Silver Shortsword', type:'melee', dmg:9, speed:0.2, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.SILVER_WATCH, { name:'Silver Watch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SILVERAND_BLACK_DYE, { name:'Silver and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SITTING_DUCKS_FISHING_POLE, { name:'Sitting Duck\'s Fishing Pole', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKELEHEAD, { name:'Skelehead', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKELLINGTON_J_SKELLINGSWORTH, { name:'Skellington J Skellingsworth', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKIPHS_BEAR_BUTT, { name:'Skiphs\' Bear Butt', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKIPHS_BLOOD, { name:'Skiphs\' Blood', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKIPHS_PAWS, { name:'Skiphs\' Paws', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKIPHS_SKIN, { name:'Skiphs\' Skin', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKULL, { name:'Skull', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKY_BLUE_DYE, { name:'Sky Blue Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKY_BLUE_FLOWER, { name:'Sky Blue Flower', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKY_BLUE_GOLF_BALL, { name:'Sky Blue Golf Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKY_BLUE_PAINT, { name:'Sky Blue Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKY_BLUE_STRING, { name:'Sky Blue String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKY_BLUEAND_BLACK_DYE, { name:'Sky Blue and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKY_BLUEAND_SILVER_DYE, { name:'Sky Blue and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKY_CRATE, { name:'Sky Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKY_DRAGONS_FURY, { name:'Sky Dragon\'s Fury', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKY_GUARDIAN, { name:'Sky Guardian', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SKY_MILL, { name:'Sky Mill', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SLASHERS_MYSTERIOUS_SKULL, { name:'Slasher\'s Mysterious Skull', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SLEEPY_OCTOPOD, { name:'Sleepy Octopod', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SLICEOF_HELL_CAKE, { name:'Slice of Hell Cake', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SLIME_BLOCK, { name:'Slime Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SLIME_BLOCK_WALL, { name:'Slime Block Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SLIME_GUN, { name:'Slime Gun', type:'melee', dmg:10, speed:0.2, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.SLIME_SPEAR, { name:'Slime Spear', type:'melee', dmg:12, speed:0.4, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.SLIMEFISH, { name:'Slimefish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SLIMY_SADDLE, { name:'Slimy Saddle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SLUGGY, { name:'Sluggy', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SLUGGY_CAGE, { name:'Sluggy Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SLUSH_BLOCK, { name:'Slush Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SMOKE_BLOCK, { name:'Smoke Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SMOKE_BOMB, { name:'Smoke Bomb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SMOOTH_GRANITE_BLOCK, { name:'Smooth Granite Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SMOOTH_GRANITE_WALL, { name:'Smooth Granite Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SMOOTH_MARBLE_BLOCK, { name:'Smooth Marble Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SMOOTH_MARBLE_WALL, { name:'Smooth Marble Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SMOOTH_SANDSTONE, { name:'Smooth Sandstone', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SMOOTH_SANDSTONE_WALL, { name:'Smooth Sandstone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SMOOTHIEOF_DARKNESS, { name:'Smoothie of Darkness', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SMOULDERING_STONE_WALL, { name:'Smouldering Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SNAIL, { name:'Snail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SNAIL_CAGE, { name:'Snail Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SNAKE_BAND, { name:'Snake Band', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SNAKE_CHARMERS_FLUTE, { name:'Snake Charmer\'s Flute', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SNAKES_I_HATE_SNAKES, { name:'Snakes, I Hate Snakes', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SNAPPING_STONE, { name:'Snapping Stone', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SNOW_BRICK_WALL, { name:'Snow Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SNOW_CLOUD, { name:'Snow Cloud', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SNOW_COAT, { name:'Snow Coat', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SNOW_HAT, { name:'Snow Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SNOW_HOOD, { name:'Snow Hood', type:'armor', slot:'head', def:3, icon:'A', maxStack:1, desc:'Defense +3' });
+defItem(I.SNOW_PANTS, { name:'Snow Pants', type:'armor', slot:'legs', def:3, icon:'A', maxStack:1, desc:'Defense +3' });
+defItem(I.SNOWBALL_LAUNCHER, { name:'Snowball Launcher', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.SNOWFALL_BLOCK, { name:'Snowfall Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SNOWFALL_WALL, { name:'Snowfall Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SNOWFELLAS, { name:'Snowfellas', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SOARING_INSIGNIA, { name:'Soaring Insignia', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SOLAR_BRICK, { name:'Solar Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SOLAR_BRICK_WALL, { name:'Solar Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SOLAR_CULTIST_HOOD, { name:'Solar Cultist Hood', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SOLAR_CULTIST_ROBE, { name:'Solar Cultist Robe', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SOLAR_DYE, { name:'Solar Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SOLAR_ERUPTION, { name:'Solar Eruption', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SOLAR_FLARE_CHAINSAW, { name:'Solar Flare Chainsaw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SOLAR_FLARE_DRILL, { name:'Solar Flare Drill', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SOLAR_FRAGMENT_BLOCK, { name:'Solar Fragment Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SOLAR_MONOLITH, { name:'Solar Monolith', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SOLIDIFIER, { name:'Solidifier', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SOMETHING_EVILIS_WATCHING_YOU, { name:'Something Evil is Watching You', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SORCERER_EMBLEM, { name:'Sorcerer Emblem', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SOUL_CAKE, { name:'Soul Cake', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SOULOF_FLIGHTINA_BOTTLE, { name:'Soul of Flight in a Bottle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SOULOF_FRIGHTINA_BOTTLE, { name:'Soul of Fright in a Bottle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SOULOF_LIGHTINA_BOTTLE, { name:'Soul of Light in a Bottle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SOULOF_MIGHTINA_BOTTLE, { name:'Soul of Might in a Bottle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SOULOF_NIGHTINA_BOTTLE, { name:'Soul of Night in a Bottle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SOULOF_SIGHTINA_BOTTLE, { name:'Soul of Sight in a Bottle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPACE_CREATURE_PANTS, { name:'Space Creature Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SPACE_CREATURE_SHIRT, { name:'Space Creature Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.SPAGHETTI, { name:'Spaghetti', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPARKLE_SLIME_BALLOON, { name:'Sparkle Slime Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPARKLING_HONEY, { name:'Sparkling Honey', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPARKY, { name:'Sparky', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPEAR, { name:'Spear', type:'melee', dmg:8, speed:0.517, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.SPEAR_RACK, { name:'Spear Rack', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.SPEAR_TRAP, { name:'Spear Trap', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.SPECTRE_BAR, { name:'Spectre Bar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPECTRE_GOGGLES, { name:'Spectre Goggles', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPECTRE_PAINT_ROLLER, { name:'Spectre Paint Roller', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPECTRE_PAINT_SCRAPER, { name:'Spectre Paint Scraper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPECTRE_PAINTBRUSH, { name:'Spectre Paintbrush', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPECTRE_PANTS, { name:'Spectre Pants', type:'armor', slot:'legs', def:10, icon:'A', maxStack:1, desc:'Defense +10' });
+defItem(I.SPECTRE_WINGS, { name:'Spectre Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPECULAR_FISH, { name:'Specular Fish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPEED_HAIR_DYE, { name:'Speed Hair Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPELUNKER_GLOWSTICK, { name:'Spelunker Glowstick', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPICY_PEPPER, { name:'Spicy Pepper', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPIDER_BOULDER, { name:'Spider Boulder', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPIDER_BREASTPLATE, { name:'Spider Breastplate', type:'armor', slot:'legs', def:8, icon:'A', maxStack:1, desc:'Defense +8' });
+defItem(I.SPIDER_EGG, { name:'Spider Egg', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPIDER_FANG, { name:'Spider Fang', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPIDER_GREAVES, { name:'Spider Greaves', type:'armor', slot:'legs', def:7, icon:'A', maxStack:1, desc:'Defense +7' });
+defItem(I.SPIDER_NEST_BLOCK, { name:'Spider Nest Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SPIDER_NEST_WALL, { name:'Spider Nest Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SPIDERFISH, { name:'Spiderfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPIFFO_PLUSH, { name:'Spiffo Plush', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPIKE, { name:'Spike', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPIKE_BLOCK, { name:'Spike Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SPIKE_WALL, { name:'Spike Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SPIKY_BALL_TRAP, { name:'Spiky Ball Trap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPOOKY_TWIG, { name:'Spooky Twig', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SPOOKY_WOOD_WALL, { name:'Spooky Wood Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.SPORE_SAC, { name:'Spore Sac', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SQUIRES_GREAT_HELM, { name:'Squire\'s Great Helm', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SQUIRES_GREAVES, { name:'Squire\'s Greaves', type:'armor', slot:'legs', def:18, icon:'A', maxStack:1, desc:'Defense +18' });
+defItem(I.SQUIRES_PLATING, { name:'Squire\'s Plating', type:'armor', slot:'chest', def:27, icon:'A', maxStack:1, desc:'Defense +27' });
+defItem(I.SQUIRES_SHIELD, { name:'Squire\'s Shield', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SQUIRREL, { name:'Squirrel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SQUIRREL_CAGE, { name:'Squirrel Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STAFFOF_REGROWTH, { name:'Staff of Regrowth', type:'melee', dmg:7, speed:0.417, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.STALACTITE_STONE_WALL, { name:'Stalactite Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.STALKERS_QUIVER, { name:'Stalker\'s Quiver', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STAR, { name:'Star', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STAR_CLOUD, { name:'Star Cloud', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STAR_FRUIT, { name:'Star Fruit', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STAR_HAIRPIN, { name:'Star Hairpin', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STAR_PRINCESS_CROWN, { name:'Star Princess Crown', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STAR_PRINCESS_DRESS, { name:'Star Princess Dress', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.STAR_ROYALE_BRICK, { name:'Star Royale Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.STAR_ROYALE_BRICK_WALL, { name:'Star Royale Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.STAR_TOPPER1, { name:'Star Topper 1', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STAR_TOPPER2, { name:'Star Topper 2', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STAR_TOPPER3, { name:'Star Topper 3', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STARINA_BOTTLE, { name:'Star in a Bottle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STARDROP, { name:'Stardrop', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STARDUST_BRICK, { name:'Stardust Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.STARDUST_BRICK_WALL, { name:'Stardust Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.STARDUST_CHAINSAW, { name:'Stardust Chainsaw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STARDUST_DRILL, { name:'Stardust Drill', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STARDUST_DYE, { name:'Stardust Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STARDUST_FRAGMENT_BLOCK, { name:'Stardust Fragment Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.STARDUST_MONOLITH, { name:'Stardust Monolith', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STARDUST_PLATE, { name:'Stardust Plate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STARFISH, { name:'Starfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STARLIGHT, { name:'Starlight', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STARRY_NIGHT, { name:'Starry Night', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STEAK, { name:'Steak', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STEAMPUNK_BOILER, { name:'Steampunk Boiler', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STEAMPUNK_GOGGLES, { name:'Steampunk Goggles', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STEAMPUNK_HAT, { name:'Steampunk Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.STEAMPUNK_MINECART, { name:'Steampunk Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STEAMPUNK_PANTS, { name:'Steampunk Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.STEAMPUNK_SHIRT, { name:'Steampunk Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.STEAMPUNK_WINGS, { name:'Steampunk Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STEP_STOOL, { name:'Step Stool', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STICKMANVS_TERR_TERR, { name:'Stickman vs Terr Terr', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STICKY_BOMB, { name:'Sticky Bomb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STICKY_DIRT_BOMB, { name:'Sticky Dirt Bomb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STICKY_DYNAMITE, { name:'Sticky Dynamite', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STICKY_GLOWSTICK, { name:'Sticky Glowstick', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STICKY_POWER_BOMB, { name:'Sticky Power Bomb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STILL_LIFE, { name:'Still Life', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STINGER, { name:'Stinger', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STINGER_NECKLACE, { name:'Stinger Necklace', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STINKBUG, { name:'Stinkbug', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STINKBUG_BLOCKER, { name:'Stinkbug Blocker', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.STINKBUG_CAGE, { name:'Stinkbug Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STINKFISH, { name:'Stinkfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STOCKADE_CRATE, { name:'Stockade Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STONE_ACCENT_SLAB, { name:'Stone Accent Slab', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.STONE_BLOCK, { name:'Stone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.STONE_SLAB, { name:'Stone Slab', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.STONE_SLAB_WALL, { name:'Stone Slab Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.STORM_SPEAR, { name:'Storm Spear', type:'melee', dmg:14, speed:0.467, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.STRANGE_DEAD_FELLOWS, { name:'Strange Dead Fellows', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STRANGE_GLOWING_MUSHROOM, { name:'Strange Glowing Mushroom', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STRANGE_GROWTH, { name:'Strange Growth', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STRESS_BALL, { name:'Stress Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STRUNG_COUNTERWEIGHT, { name:'Strung Counterweight', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.STUDYOFA_BALLAT_REST, { name:'Study of a Ball at Rest', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SUFFICIENTLY_ADVANCED, { name:'Sufficiently Advanced', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SUGAR_COOKIE, { name:'Sugar Cookie', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SUGAR_PLUM, { name:'Sugar Plum', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SULPHUR_BUTTERFLY, { name:'Sulphur Butterfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SULPHUR_BUTTERFLY_JAR, { name:'Sulphur Butterfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SUMMONING_POTION, { name:'Summoning Potion', type:'consumable', heal:50, potionCd:60, icon:'P', maxStack:30, desc:'Restores 50 health.' });
+defItem(I.SUNFLOWER_MINECART, { name:'Sunflower Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SUNFLOWERS, { name:'Sunflowers', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SUNGLASSES, { name:'Sunglasses', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SUNPLATE_BLOCK, { name:'Sunplate Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.SUNSHINEOF_ISRAPONY, { name:'Sunshine of Israpony', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SUPER_ABSORBANT_SPONGE, { name:'Super Absorbant Sponge', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SUPER_DART_TRAP, { name:'Super Dart Trap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SUPER_MANA_POTION, { name:'Super Mana Potion', type:'consumable', heal:100, potionCd:60, icon:'P', maxStack:30, desc:'Restores 100 health.' });
+defItem(I.SUPERHEATED_BLOOD, { name:'Superheated Blood', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SUPERHERO_COSTUME, { name:'Superhero Costume', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.SUPERHERO_TIGHTS, { name:'Superhero Tights', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SUSPICIOUS_GRINNING_EYE, { name:'Suspicious Grinning Eye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SUSPICIOUS_LOOKING_TENTACLE, { name:'Suspicious Looking Tentacle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SUSPICIOUSLY_SPARKLY, { name:'Suspiciously Sparkly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SWARM_GRENADE, { name:'Swarm Grenade', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SWEET_BARB, { name:'Sweet Barb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SWEETHEART_NECKLACE, { name:'Sweetheart Necklace', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SWITCH, { name:'Switch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.SWORD_RACK, { name:'Sword Rack', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.SWORDFISH, { name:'Swordfish', type:'melee', dmg:19, speed:0.333, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.T_N_T_BARREL, { name:'TNT Barrel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TABLET_FRAGMENT, { name:'Tablet Fragment', type:'block', icon:'block', maxStack:999, desc:'A piece of furniture.' });
+defItem(I.TALL_GATE, { name:'Tall Gate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TALL_GRASS_SEEDS, { name:'Tall Grass Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TALLY_COUNTER, { name:'Tally Counter', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TAM_O_SHANTER, { name:'Tam O\' Shanter', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TARGET_DUMMY, { name:'Target Dummy', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TATTERED_BEE_WING, { name:'Tattered Bee Wing', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TATTERED_FAIRY_WINGS, { name:'Tattered Fairy Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TAX_COLLECTORS_HAT, { name:'Tax Collector\'s Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.TAX_COLLECTORS_PANTS, { name:'Tax Collector\'s Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.TAX_COLLECTORS_SUIT, { name:'Tax Collector\'s Suit', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TEACUP, { name:'Teacup', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TEAL_DYE, { name:'Teal Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TEAL_GOLF_BALL, { name:'Teal Golf Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TEAL_MUSHROOM, { name:'Teal Mushroom', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TEAL_PAINT, { name:'Teal Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TEAL_PRESSURE_PAD, { name:'Teal Pressure Pad', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TEAL_STRING, { name:'Teal String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TEALAND_BLACK_DYE, { name:'Teal and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TEALAND_SILVER_DYE, { name:'Teal and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TEAM_DYE, { name:'Team Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TEAM_HAIR_DYE, { name:'Team Hair Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TEAPOT, { name:'Teapot', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TELEPORTER, { name:'Teleporter', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TEMPLARS_SLING, { name:'Templar\'s Sling', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TEMPLE_KEY, { name:'Temple Key', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TERRA_BLADE_CHRONICLES, { name:'Terra Blade Chronicles', type:'melee', dmg:10, speed:0.25, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.TERRA_FART_KART, { name:'Terra Fart Kart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TERRAFORMER, { name:'Terraformer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TERRAGRIM, { name:'Terragrim', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TERRARIAN_GOTHIC, { name:'Terrarian Gothic', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TERRARIUM, { name:'Terrarium', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_BEHEADEDS_CUIRASS, { name:'The Beheaded\'s Cuirass', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_BEHEADEDS_HEAD, { name:'The Beheaded\'s Head', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_BEHEADEDS_TROUSERS, { name:'The Beheaded\'s Trousers', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_BEREAVED, { name:'The Bereaved', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_BLACK_SPOT, { name:'The Black Spot', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_CREATIONOFTHE_GUIDE, { name:'The Creation of the Guide', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_CURSED_MAN, { name:'The Cursed Man', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_DESTROYER, { name:'The Destroyer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_DIRTIEST_BLOCK, { name:'The Dirtiest Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.THE_DOCTORS_PANTS, { name:'The Doctor\'s Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.THE_DOCTORS_SHIRT, { name:'The Doctor\'s Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.THE_DUKE, { name:'The Duke', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_DUPLICITYOF_REFLECTIONS, { name:'The Duplicity of Reflections', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_DUTCHMAN, { name:'The Dutchman', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_EYE_SEESTHE_END, { name:'The Eye Sees the End', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_FIRESTARTER, { name:'The Firestarter', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_FISHOF_CTHULHU, { name:'The Fish of Cthulhu', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_GENTLEMAN_SCIENTIST, { name:'The Gentleman Scientist', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_GRAND_DESIGN, { name:'The Grand Design', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_GUARDIANS_GAZE, { name:'The Guardian\'s Gaze', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_HANGED_MAN, { name:'The Hanged Man', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_HORSEMANS_BLADE, { name:'The Horseman\'s Blade', type:'melee', dmg:150, speed:0.433, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.THE_IMPLODER, { name:'The Imploder', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_LANDOF_DECEIVING_LOOKS, { name:'The Land of Deceiving Looks', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_MEATBALL, { name:'The Meatball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_MERCHANT, { name:'The Merchant', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_PERSISTENCYOF_EYES, { name:'The Persistency of Eyes', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_PLAN, { name:'The Plan', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_ROLLING_GREENS, { name:'The Rolling Greens', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_RUNIC_PIXIE, { name:'The Runic Pixie', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_SANDSOF_SLIME, { name:'The Sands of Slime', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_SCREAMER, { name:'The Screamer', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_SEAOF_SILENCE, { name:'The Sea of Silence', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_SEASON, { name:'The Season', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_STRONGMAN, { name:'The Strongman', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_TRUTH_IS_UP_THERE, { name:'The Truth Is Up There', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_TWINS_HAVE_AWOKEN, { name:'The Twins Have Awoken', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THE_WEREWOLF, { name:'The Werewolf', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THIN_ICE, { name:'Thin Ice', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THIS_IS_GETTING_OUT_OF_HAND, { name:'This Is Getting Out Of Hand', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THORN_CHAKRAM, { name:'Thorn Chakram', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THRONE, { name:'Throne', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THROUGHTHE_WINDOW, { name:'Through the Window', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.THUNDERBOLT, { name:'Thunderbolt', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TIARA, { name:'Tiara', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TIGER_CLIMBING_GEAR, { name:'Tiger Climbing Gear', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TIGER_SKIN, { name:'Tiger Skin', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TIKI_PANTS, { name:'Tiki Pants', type:'armor', slot:'legs', def:12, icon:'A', maxStack:1, desc:'Defense +12' });
+defItem(I.TIKI_SHIRT, { name:'Tiki Shirt', type:'armor', slot:'chest', def:17, icon:'A', maxStack:1, desc:'Defense +17' });
+defItem(I.TIKI_TOTEM, { name:'Tiki Totem', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TIME_HAIR_DYE, { name:'Time Hair Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TIMELESS_TRAVELERS_CLOAK, { name:'Timeless Traveler\'s Cloak', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TIMELESS_TRAVELERS_FOOTWEAR, { name:'Timeless Traveler\'s Footwear', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TIMELESS_TRAVELERS_HOOD, { name:'Timeless Traveler\'s Hood', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.TIN_BRICK, { name:'Tin Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.TIN_BRICK_WALL, { name:'Tin Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.TIN_CAN, { name:'Tin Can', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TIN_PLATING, { name:'Tin Plating', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.TIN_PLATING_WALL, { name:'Tin Plating Wall', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.TIN_SHORTSWORD, { name:'Tin Shortsword', type:'melee', dmg:7, speed:0.2, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.TIN_WATCH, { name:'Tin Watch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TINKERERS_WORKSHOP, { name:'Tinkerer\'s Workshop', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TITANIUM_CHAINSAW, { name:'Titanium Chainsaw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TITANIUM_CRATE, { name:'Titanium Crate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TITANIUM_DRILL, { name:'Titanium Drill', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TITANIUM_FORGE, { name:'Titanium Forge', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TITANIUM_HEADGEAR, { name:'Titanium Headgear', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TITANSTONE_BLOCK, { name:'Titanstone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.TITANSTONE_BLOCK_WALL, { name:'Titanstone Block Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.TOOLBELT, { name:'Toolbelt', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TOOLBOX, { name:'Toolbox', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TOP_HAT, { name:'Top Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.TOPAZ_BUNNY, { name:'Topaz Bunny', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TOPAZ_BUNNY_CAGE, { name:'Topaz Bunny Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TOPAZ_GEM_LOCK, { name:'Topaz Gem Lock', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TOPAZ_GEMCORN, { name:'Topaz Gemcorn', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TOPAZ_GEMSPARK_BLOCK, { name:'Topaz Gemspark Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.TOPAZ_GEMSPARK_WALL, { name:'Topaz Gemspark Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.TOPAZ_HOOK, { name:'Topaz Hook', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TOPAZ_MINECART, { name:'Topaz Minecart', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TOPAZ_ROBE, { name:'Topaz Robe', type:'armor', slot:'chest', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.TOPAZ_SQUIRREL, { name:'Topaz Squirrel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TOPAZ_SQUIRREL_CAGE, { name:'Topaz Squirrel Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TOPAZ_STONE_BLOCK, { name:'Topaz Stone Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.TOPAZ_STONE_WALL, { name:'Topaz Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.TORCH_GODS_FAVOR, { name:'Torch God\'s Favor', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TORCH_GODS_FLAVOR, { name:'Torch God\'s Flavor', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TOUCAN, { name:'Toucan', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TOUCAN_CAGE, { name:'Toucan Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TOY_SLED, { name:'Toy Sled', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TOY_TANK, { name:'Toy Tank', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TOYBREAKER_BRICK, { name:'Toybreaker Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.TRAPPED_GHOST, { name:'Trapped Ghost', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TRASH_CAN, { name:'Trash Can', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREACHEROUS_HARDENED_SAND_WALL, { name:'Treacherous Hardened Sand Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.TREACHEROUS_SANDSTONE_WALL, { name:'Treacherous Sandstone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.TREASURE_BAG_BETSY, { name:'Treasure Bag (Betsy)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_BRAINOF_CTHULHU, { name:'Treasure Bag (Brain of Cthulhu)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_DEERCLOPS, { name:'Treasure Bag (Deerclops)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_DUKE_FISHRON, { name:'Treasure Bag (Duke Fishron)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_EATEROF_WORLDS, { name:'Treasure Bag (Eater of Worlds)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_EMPRESSOF_LIGHT, { name:'Treasure Bag (Empress of Light)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_EYEOF_CTHULHU, { name:'Treasure Bag (Eye of Cthulhu)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_GOLEM, { name:'Treasure Bag (Golem)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_KING_SLIME, { name:'Treasure Bag (King Slime)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_LUNATIC_CULTIST, { name:'Treasure Bag (Lunatic Cultist)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_MOON_LORD, { name:'Treasure Bag (Moon Lord)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_PLANTERA, { name:'Treasure Bag (Plantera)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_QUEEN_BEE, { name:'Treasure Bag (Queen Bee)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_QUEEN_SLIME, { name:'Treasure Bag (Queen Slime)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_SKELETRON_PRIME, { name:'Treasure Bag (Skeletron Prime)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_SKELETRON, { name:'Treasure Bag (Skeletron)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_THE_DESTROYER, { name:'Treasure Bag (The Destroyer)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_THE_TWINS, { name:'Treasure Bag (The Twins)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_BAG_WALLOF_FLESH, { name:'Treasure Bag (Wall of Flesh)', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.TREASURE_HUNTER_PANTS, { name:'Treasure Hunter Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.TREASURE_HUNTER_SHIRT, { name:'Treasure Hunter Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.TREASURE_MAGNET, { name:'Treasure Magnet', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREASURE_MAP, { name:'Treasure Map', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREE_GLOBE, { name:'Tree Globe', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREE_NYMPH_BUTTERFLY, { name:'Tree Nymph Butterfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREE_NYMPH_BUTTERFLY_JAR, { name:'Tree Nymph Butterfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TREE_SHIRT, { name:'Tree Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.TREE_TRUNKS, { name:'Tree Trunks', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TRIDENT, { name:'Trident', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TRIFOLD_MAP, { name:'Trifold Map', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TRIMARANG, { name:'Trimarang', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TRIO_SUPER_HEROES, { name:'Trio Super Heroes', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TROPICAL_BARRACUDA, { name:'Tropical Barracuda', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TROPICAL_SMOOTHIE, { name:'Tropical Smoothie', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TRUE_COPPER_SHORTSWORD, { name:'True Copper Shortsword', type:'melee', dmg:190, speed:0.5, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.TRUE_NIGHTS_EDGE, { name:'True Night\'s Edge', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TRUFFLE_WORM_CAGE, { name:'Truffle Worm Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TRUSTY_CHILLET, { name:'Trusty Chillet', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TRUSTY_CHILLET_IGNIS, { name:'Trusty Chillet Ignis', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TRUSTY_DIGTOISE, { name:'Trusty Digtoise', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TULIP_SHELL, { name:'Tulip Shell', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TUNA, { name:'Tuna', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TUNDRA_TROUT, { name:'Tundra Trout', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TUNGSTEN_BRICK, { name:'Tungsten Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.TUNGSTEN_BRICK_WALL, { name:'Tungsten Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.TUNGSTEN_SHORTSWORD, { name:'Tungsten Shortsword', type:'melee', dmg:10, speed:0.183, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.TUNGSTEN_WATCH, { name:'Tungsten Watch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TURKEY_WATTLE_NECKLACE, { name:'Turkey Wattle Necklace', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TURTLE, { name:'Turtle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TURTLE_CAGE, { name:'Turtle Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TURTLE_HELMET, { name:'Turtle Helmet', type:'armor', slot:'head', def:21, icon:'A', maxStack:1, desc:'Defense +21' });
+defItem(I.TWILIGHT_DYE, { name:'Twilight Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TWILIGHT_GRASP, { name:'Twilight Grasp', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.TWILIGHT_HAIR_DYE, { name:'Twilight Hair Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.UGLY_SWEATER, { name:'Ugly Sweater', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ULTRA_ABSORBANT_SPONGE, { name:'Ultra Absorbant Sponge', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ULTRABRIGHT_CAMPFIRE, { name:'Ultrabright Campfire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ULTRABRIGHT_HELMET, { name:'Ultrabright Helmet', type:'armor', slot:'head', def:4, icon:'A', maxStack:1, desc:'Defense +4' });
+defItem(I.ULURU, { name:'Uluru', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ULYSSES_BUTTERFLY, { name:'Ulysses Butterfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ULYSSES_BUTTERFLY_JAR, { name:'Ulysses Butterfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.UMBRELLA_HAT, { name:'Umbrella Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.UNCUMBERING_STONE, { name:'Uncumbering Stone', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.UNDERGROUND_REWARD, { name:'Underground Reward', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.UNDERWORLD_PYLON, { name:'Underworld Pylon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.UNICORN_CROSSINGTHE_HALLOWS, { name:'Unicorn Crossing the Hallows', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.UNICORN_FISH, { name:'Unicorn Fish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.UNICORN_HORN, { name:'Unicorn Horn', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.UNICORN_PANTS, { name:'Unicorn Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.UNICORN_SHIRT, { name:'Unicorn Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.UNICORN_WISP_DYE, { name:'Unicorn Wisp Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.UNICORNONA_STICK, { name:'Unicorn on a Stick', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.USED_GAS_TRAP, { name:'Used Gas Trap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VALHALLA_KNIGHTS_BREASTPLATE, { name:'Valhalla Knight\'s Breastplate', type:'armor', slot:'legs', def:24, icon:'A', maxStack:1, desc:'Defense +24' });
+defItem(I.VALHALLA_KNIGHTS_GREAVES, { name:'Valhalla Knight\'s Greaves', type:'armor', slot:'legs', def:24, icon:'A', maxStack:1, desc:'Defense +24' });
+defItem(I.VALHALLA_KNIGHTS_HELM, { name:'Valhalla Knight\'s Helm', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VALKYRIE_YOYO, { name:'Valkyrie Yoyo', type:'melee', dmg:70, speed:0.417, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.VALOR, { name:'Valor', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VAMPIRE_PANTS, { name:'Vampire Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.VAMPIRE_PENDANT, { name:'Vampire Pendant', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VAMPIRE_SHIRT, { name:'Vampire Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.VARIEGATED_LARDFISH, { name:'Variegated Lardfish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VENOM_DART_TRAP, { name:'Venom Dart Trap', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VIALOF_VENOM, { name:'Vial of Venom', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VICIOUS_MUSHROOM, { name:'Vicious Mushroom', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VICIOUS_POWDER, { name:'Vicious Powder', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VICTORIAN_GOTH_DRESS, { name:'Victorian Goth Dress', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.VICTORIAN_GOTH_HAT, { name:'Victorian Goth Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.VIDEO_VISAGE, { name:'Video Visage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VIKING_HELMET, { name:'Viking Helmet', type:'armor', slot:'head', def:4, icon:'A', maxStack:1, desc:'Defense +4' });
+defItem(I.VIKING_VOYAGE, { name:'Viking Voyage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VILE_MUSHROOM, { name:'Vile Mushroom', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VILE_POWDER, { name:'Vile Powder', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VINE_ROPE, { name:'Vine Rope', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VINE_ROPE_COIL, { name:'Vine Rope Coil', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VIOLET_DYE, { name:'Violet Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VIOLET_FLOWER_SEEDS, { name:'Violet Flower Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VIOLET_GOLF_BALL, { name:'Violet Golf Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VIOLET_GRADIENT_DYE, { name:'Violet Gradient Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VIOLET_PAINT, { name:'Violet Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VIOLET_STRING, { name:'Violet String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VIOLETAND_BLACK_DYE, { name:'Violet and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VIOLETAND_SILVER_DYE, { name:'Violet and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VISITINGTHE_PYRAMIDS, { name:'Visiting the Pyramids', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VITAMINS, { name:'Vitamins', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VOID_BAG, { name:'Void Bag', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VOID_DYE, { name:'Void Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VOID_MONOLITH, { name:'Void Monolith', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VOID_VAULT, { name:'Void Vault', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VOLATILE_GELATIN, { name:'Volatile Gelatin', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VORTEX_BOOSTER, { name:'Vortex Booster', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VORTEX_BRICK, { name:'Vortex Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.VORTEX_BRICK_WALL, { name:'Vortex Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.VORTEX_CHAINSAW, { name:'Vortex Chainsaw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VORTEX_DRILL, { name:'Vortex Drill', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VORTEX_DYE, { name:'Vortex Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VORTEX_FRAGMENT_BLOCK, { name:'Vortex Fragment Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.VORTEX_MONOLITH, { name:'Vortex Monolith', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.VULKELF_EARS, { name:'Vulkelf Ears', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WALDO, { name:'Waldo', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WALL_ANCHOR, { name:'Wall Anchor', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.WALL_RACER_CAR, { name:'Wall Racer Car', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.WALL_SKELETON, { name:'Wall Skeleton', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.WANDERING_GETA, { name:'Wandering Geta', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WANDERING_JINGASA, { name:'Wandering Jingasa', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WANDERING_YUKATA, { name:'Wandering Yukata', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WARMTH_POTION, { name:'Warmth Potion', type:'consumable', heal:50, potionCd:60, icon:'P', maxStack:30, desc:'Restores 50 health.' });
+defItem(I.WATCHFUL_ANTLION, { name:'Watchful Antlion', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WATER_BUCKET, { name:'Water Bucket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WATER_GUN, { name:'Water Gun', type:'melee', dmg:10, speed:0.333, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.WATER_STRIDER, { name:'Water Strider', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WATER_STRIDER_CAGE, { name:'Water Strider Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WATERFALL_BLOCK, { name:'Waterfall Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.WATERLEAF, { name:'Waterleaf', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WATERLEAF_PLANTER_BOX, { name:'Waterleaf Planter Box', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WATERLEAF_SEEDS, { name:'Waterleaf Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WAVY_DIRT_WALL, { name:'Wavy Dirt Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.WEAPON_RACK, { name:'Weapon Rack', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WEATHER_VANE, { name:'Weather Vane', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WEB_ROPE, { name:'Web Rope', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WEB_ROPE_COIL, { name:'Web Rope Coil', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WEDDING_DRESS, { name:'Wedding Dress', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.WEDDING_VEIL, { name:'Wedding Veil', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WET_BOMB, { name:'Wet Bomb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WHAT_LURKS_BELOW, { name:'What Lurks Below', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.WHITE_BULB, { name:'White Bulb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WHITE_DYNASTY_WALL, { name:'White Dynasty Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.WHITE_FLOWER_SEEDS, { name:'White Flower Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WHITE_GARLAND, { name:'White Garland', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WHITE_HORSESHOE_BALLOON, { name:'White Horseshoe Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WHITE_PAINT, { name:'White Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WHITE_PEARL, { name:'White Pearl', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WHITE_PIN_FLAG, { name:'White Pin Flag', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WHITE_SOLUTION, { name:'White Solution', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WHITE_STRING, { name:'White String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WHITE_TEAM_BLOCK, { name:'White Team Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.WHITE_TUXEDO_PANTS, { name:'White Tuxedo Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.WHITE_TUXEDO_SHIRT, { name:'White Tuxedo Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.WHITEAND_GREEN_BULB, { name:'White and Green Bulb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WHITEAND_RED_BULB, { name:'White and Red Bulb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WHITEAND_RED_GARLAND, { name:'White and Red Garland', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WHITEAND_YELLOW_BULB, { name:'White and Yellow Bulb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WHOOPIE_CUSHION, { name:'Whoopie Cushion', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WICKED_ARMLET, { name:'Wicked Armlet', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WICKED_CLAWS, { name:'Wicked Claws', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WICKED_UNDEAD, { name:'Wicked Undead', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WILD_FLOWER_SEEDS, { name:'Wild Flower Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WILDFLOWERS, { name:'Wildflowers', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WILLS_BREASTPLATE, { name:'Will\'s Breastplate', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.WILLS_HELMET, { name:'Will\'s Helmet', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.WILLS_LEGGINGS, { name:'Will\'s Leggings', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.WILLS_WINGS, { name:'Will\'s Wings', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WILTED_CLOVER, { name:'Wilted Clover', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WINE_GLASS, { name:'Wine Glass', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WINGSOF_EVIL, { name:'Wings of Evil', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WINTER_AT_VARINGSKOLLEN, { name:'Winter At Varingskollen', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WINTER_CAPE, { name:'Winter Cape', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.WIRE, { name:'Wire', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WIRE_BULB, { name:'Wire Bulb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WIRE_CUTTER, { name:'Wire Cutter', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WISP_DYE, { name:'Wisp Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WITCH_BOOTS, { name:'Witch Boots', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WITCH_DRESS, { name:'Witch Dress', type:'vanity', icon:'V', maxStack:1, desc:'A vanity outfit.' });
+defItem(I.WITCH_HAT, { name:'Witch Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.WITCHS_BROOM, { name:'Witch\'s Broom', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WIZARD_HAT, { name:'Wizard Hat', type:'armor', slot:'head', def:4, icon:'A', maxStack:1, desc:'Defense +4' });
+defItem(I.WIZARDS_HAT, { name:'Wizard\'s Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.WOLF_PANTS, { name:'Wolf Pants', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.WOLF_SHIRT, { name:'Wolf Shirt', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.WOMANNEQUIN, { name:'Womannequin', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WOOD_BREASTPLATE, { name:'Wood Breastplate', type:'armor', slot:'legs', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.WOOD_FISHING_POLE, { name:'Wood Fishing Pole', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.WOOD_GREAVES, { name:'Wood Greaves', type:'armor', slot:'legs', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
+defItem(I.WOOD_HELMET, { name:'Wood Helmet', type:'armor', slot:'head', def:1, icon:'A', maxStack:1, desc:'Defense +1' });
+defItem(I.WOOD_SHELF, { name:'Wood Shelf', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.WOODEN_BEAM, { name:'Wooden Beam', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.WOODEN_BOOMERANG, { name:'Wooden Boomerang', type:'melee', dmg:10, speed:0.333, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.WOODEN_FENCE, { name:'Wooden Fence', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.WOODEN_SPIKE, { name:'Wooden Spike', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.WOODEN_YOYO, { name:'Wooden Yoyo', type:'melee', dmg:9, speed:0.417, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.WORLD_GLOBE, { name:'World Globe', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WORM_CAGE, { name:'Worm Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WORM_HOOK, { name:'Worm Hook', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WORM_SCARF, { name:'Worm Scarf', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WORM_TOOTH, { name:'Worm Tooth', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WORN_GOLF_CLUB_DRIVER, { name:'Worn Golf Club (Driver)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WORN_GOLF_CLUB_IRON, { name:'Worn Golf Club (Iron)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WORN_GOLF_CLUB_PUTTER, { name:'Worn Golf Club (Putter)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WORN_GOLF_CLUB_WEDGE, { name:'Worn Golf Club (Wedge)', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WORN_STONE_WALL, { name:'Worn Stone Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.WRITHING_REMAINS, { name:'Writhing Remains', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WROUGHT_IRON_FENCE, { name:'Wrought Iron Fence', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.WYVERNTAIL, { name:'Wyverntail', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.XENON_MOSS, { name:'Xenon Moss', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.XENON_MOSS_BRICK, { name:'Xenon Moss Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.XENON_MOSS_BRICK_WALL, { name:'Xenon Moss Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.XENON_MOSS_FISHING_BOBBER, { name:'Xenon Moss Fishing Bobber', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_BULB, { name:'Yellow Bulb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_COCKATIEL, { name:'Yellow Cockatiel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_COCKATIEL_CAGE, { name:'Yellow Cockatiel Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_COUNTERWEIGHT, { name:'Yellow Counterweight', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_DRAGONFLY, { name:'Yellow Dragonfly', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_DRAGONFLY_JAR, { name:'Yellow Dragonfly Jar', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_FLOWER_SEEDS, { name:'Yellow Flower Seeds', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_GOLF_BALL, { name:'Yellow Golf Ball', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_GRADIENT_DYE, { name:'Yellow Gradient Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_HORSESHOE_BALLOON, { name:'Yellow Horseshoe Balloon', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_LIGHTS, { name:'Yellow Lights', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_MARIGOLD, { name:'Yellow Marigold', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_PAINT, { name:'Yellow Paint', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_PIN_FLAG, { name:'Yellow Pin Flag', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_PRESENT, { name:'Yellow Present', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_PRESSURE_PLATE, { name:'Yellow Pressure Plate', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_ROCKET, { name:'Yellow Rocket', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_SOLUTION, { name:'Yellow Solution', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_STAINED_GLASS, { name:'Yellow Stained Glass', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_STRING, { name:'Yellow String', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_STUCCO, { name:'Yellow Stucco', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_STUCCO_WALL, { name:'Yellow Stucco Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.YELLOW_TEAM_BLOCK, { name:'Yellow Team Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.YELLOW_WILLOW_SAPLING, { name:'Yellow Willow Sapling', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOW_WRENCH, { name:'Yellow Wrench', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOWAND_BLACK_DYE, { name:'Yellow and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOWAND_GREEN_BULB, { name:'Yellow and Green Bulb', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOWAND_GREEN_LIGHTS, { name:'Yellow and Green Lights', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YELLOWAND_SILVER_DYE, { name:'Yellow and Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YORAIZ0RS_RECOLORED_GOGGLES, { name:'Yoraiz0r\'s Recolored Goggles', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
+defItem(I.YORAIZ0RS_SCOWL, { name:'Yoraiz0r\'s Scowl', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YORAIZ0RS_SKIRT, { name:'Yoraiz0r\'s Skirt', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YORAIZ0RS_SPELL, { name:'Yoraiz0r\'s Spell', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YORAIZ0RS_UNIFORM, { name:'Yoraiz0r\'s Uniform', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.YOYO_GLOVE, { name:'Yoyo Glove', type:'melee', dmg:10, speed:0.417, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.YUUMA_THE_BLUE_TIGER, { name:'Yuuma, The Blue Tiger', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ZEBRA_SKIN, { name:'Zebra Skin', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ZEBRA_SWALLOWTAIL_BUTTERFLY, { name:'Zebra Swallowtail Butterfly', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ZEBRA_SWALLOWTAIL_BUTTERFLY_JAR, { name:'Zebra Swallowtail Butterfly Jar', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
+defItem(I.ZENITH, { name:'Zenith', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.ZOMBIE_FISH, { name:'Zombie Fish', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.R_TERRARIA, { name:'r/Terraria', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
+defItem(I.R_TERRARIA2023, { name:'r/Terraria 2023', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });

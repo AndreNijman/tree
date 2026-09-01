@@ -95,6 +95,7 @@ TILE_COLORS[T.PYLON] = ['#6fd3ff', '#3f9ad0'];
 TILE_COLORS[T.PARTYCENTER] = ['#ff70b8', '#6bc8ff'];
 TILE_COLORS[T.TOMBSTONE] = ['#777780', '#42424a'];
 TILE_COLORS[T.SUNFLOWER] = ['#ffe050', '#6a9a38'];
+
 TILE_COLORS[T.BED] = ['#c04050', '#8a3040'];
 TILE_COLORS[T.PIGGYBANK] = ['#f0a0c0', '#c07890'];
 TILE_COLORS[T.DOOR] = ['#9a6b3f', '#7a5030'];
@@ -572,6 +573,20 @@ function makeTileSprite(t, rng) {
       ctx.lineWidth = 2;
       ctx.beginPath(); ctx.moveTo(8, 0); ctx.lineTo(8, 16); ctx.stroke();
       break;
+    case T.FURN_CHAIR: case T.FURN_TABLE: case T.FURN_PIANO: case T.FURN_BATHTUB:
+    case T.FURN_BOOKCASE: case T.FURN_CANDELABRA: case T.FURN_CHANDELIER: case T.FURN_LAMP:
+    case T.FURN_LANTERN: case T.FURN_CLOCK: case T.FURN_SOFA: case T.FURN_SINK: case T.FURN_TOILET:
+    case T.FURN_DRESSER: case T.FURN_BENCH: case T.FURN_ANVIL: case T.FURN_FURNACE:
+    case T.FURN_PLATFORM: case T.FURN_CHEST: case T.FURN_DOOR: case T.FURN_CANDLE: case T.FURN_TORCH: {
+      var fc = tileColor(t) || '#9a6b3f';
+      ctx.fillStyle = fc;
+      ctx.fillRect(1, 4, 14, 12);
+      ctx.fillStyle = 'rgba(0,0,0,0.25)';
+      ctx.fillRect(1, 12, 14, 4);
+      ctx.fillStyle = 'rgba(255,255,255,0.15)';
+      ctx.fillRect(1, 4, 14, 2);
+      break;
+    }
     case T.ALTAR:
       ctx.clearRect(0, 0, TILE, TILE);
       ctx.fillStyle = '#2a2238';
@@ -5186,6 +5201,60 @@ MINIMAP_COLORS[T.PYLON] = '#6fd3ff';
 MINIMAP_COLORS[T.PARTYCENTER] = '#ff70b8';
 MINIMAP_COLORS[T.TOMBSTONE] = '#888892';
 MINIMAP_COLORS[T.SUNFLOWER] = '#ffe050';
+TILE_COLORS[T.FURN_ANVIL] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_ANVIL] = '#9a6b3f';
+TILE_COLORS[T.FURN_BATHTUB] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_BATHTUB] = '#9a6b3f';
+TILE_COLORS[T.FURN_BED] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_BED] = '#9a6b3f';
+TILE_COLORS[T.FURN_BENCH] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_BENCH] = '#9a6b3f';
+TILE_COLORS[T.FURN_BOOKCASE] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_BOOKCASE] = '#9a6b3f';
+TILE_COLORS[T.FURN_CANDELABRA] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_CANDELABRA] = '#9a6b3f';
+TILE_COLORS[T.FURN_CANDLE] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_CANDLE] = '#9a6b3f';
+TILE_COLORS[T.FURN_CHAIR] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_CHAIR] = '#9a6b3f';
+TILE_COLORS[T.FURN_CHANDELIER] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_CHANDELIER] = '#9a6b3f';
+TILE_COLORS[T.FURN_CHEST] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_CHEST] = '#9a6b3f';
+TILE_COLORS[T.FURN_CLOCK] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_CLOCK] = '#9a6b3f';
+TILE_COLORS[T.FURN_DOOR] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_DOOR] = '#9a6b3f';
+TILE_COLORS[T.FURN_DRESSER] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_DRESSER] = '#9a6b3f';
+TILE_COLORS[T.FURN_FURNACE] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_FURNACE] = '#9a6b3f';
+TILE_COLORS[T.FURN_LAMP] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_LAMP] = '#9a6b3f';
+TILE_COLORS[T.FURN_LANTERN] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_LANTERN] = '#9a6b3f';
+TILE_COLORS[T.FURN_PIANO] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_PIANO] = '#9a6b3f';
+TILE_COLORS[T.FURN_PLATFORM] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_PLATFORM] = '#9a6b3f';
+TILE_COLORS[T.FURN_SINK] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_SINK] = '#9a6b3f';
+TILE_COLORS[T.FURN_SOFA] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_SOFA] = '#9a6b3f';
+TILE_COLORS[T.FURN_TABLE] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_TABLE] = '#9a6b3f';
+TILE_COLORS[T.FURN_TOILET] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_TOILET] = '#9a6b3f';
+TILE_COLORS[T.FURN_TORCH] = ['#9a6b3f', '#9a6b3f'];
+MINIMAP_COLORS[T.FURN_TORCH] = '#9a6b3f';
+
+
+
+
+
+
+
+
 MINIMAP_COLORS[T.BED] = '#c04050';
 MINIMAP_COLORS[T.PIGGYBANK] = '#f0a0c0';
 MINIMAP_COLORS[T.DOOR] = '#9a6b3f';
