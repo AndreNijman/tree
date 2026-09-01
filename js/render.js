@@ -5109,31 +5109,53 @@ function updateMapCache(game) {
 }
 
 function drawFullMap(game, ctx) {
-  updateMapCache(game);
-  var mapC = game.mapCanvas;
   var W = canvas.width, H = canvas.height;
-  ctx.fillStyle = 'rgba(6,8,14,0.92)';
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.fillStyle = '#0a0a12';
   ctx.fillRect(0, 0, W, H);
   var p = game.player;
   if (game.mapPanX === null) { game.mapPanX = p.x / TILE; game.mapPanY = p.y / TILE; }
   var scale = game.mapZoom;
-  var srcW = W / scale, srcH = H / scale;
-  var sx = clamp(game.mapPanX - srcW / 2, 0, Math.max(0, mapC.width - srcW));
-  var sy = clamp(game.mapPanY - srcH / 2, 0, Math.max(0, mapC.height - srcH));
-  ctx.imageSmoothingEnabled = false;
-  ctx.drawImage(mapC, sx, sy, srcW, srcH, 0, 0, W, H);
-  // markers: player, spawn, town NPCs
+  var ts = TILE * scale; // pixel size of each tile on screen
+  var startTx = Math.floor(game.mapPanX - W / (2 * ts));
+  var startTy = Math.floor(game.mapPanY - H / (2 * ts));
+  var endTx = Math.ceil(startTx + W / ts + 1);
+  var endTy = Math.ceil(startTy + H / ts + 1);
+  var world = game.world;
+  for (var ty = Math.max(0, startTy); ty < Math.min(world.H, endTy); ty++) {
+    for (var tx = Math.max(0, startTx); tx < Math.min(world.W, endTx); tx++) {
+      var t = world.get(tx, ty);
+      var col;
+      if (t === T.AIR) {
+        var wl = world.wall(tx, ty);
+        if (wl === WALL.NONE) col = '#0c0c14';
+        else if (wl === WALL.DIRT) col = '#282018';
+        else col = '#202028';
+      } else {
+        col = MINIMAP_COLORS[t] || '#888';
+      }
+      var sx2 = Math.round((tx - game.mapPanX) * ts + W / 2);
+      var sy2 = Math.round((ty - game.mapPanY) * ts + H / 2);
+      ctx.fillStyle = col;
+      ctx.fillRect(sx2, sy2, Math.ceil(ts), Math.ceil(ts));
+    }
+  }
   function toScreen(wx, wy) {
-    return [(wx / TILE - sx) * scale, (wy / TILE - sy) * scale];
+    return [(wx / TILE - game.mapPanX) * ts + W / 2, (wy / TILE - game.mapPanY) * ts + H / 2];
   }
   var sp = toScreen(game.world.spawnX, game.world.spawnY);
   ctx.fillStyle = '#ffe14d';
   ctx.fillRect(sp[0] - 4, sp[1] - 4, 8, 8);
-  ctx.fillStyle = '#fff';
+  ctx.strokeStyle = '#ffe14d';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(sp[0] - 4, sp[1] - 4, 8, 8);
   for (var i = 0; i < game.entities.length; i++) {
     var e = game.entities[i];
     if (e.dead || e.dmg > 0 || e.boss) continue;
-    if (e.type === E.GUIDE || ENT_DEF[e.type] && e.type >= E.MERCHANT && e.type <= E.PRINCESS) {
+    if (e.type === E.GUIDE || (ENT_DEF[e.type] && e.type >= E.MERCHANT && e.type <= E.PRINCESS)) {
       var s = toScreen(e.x, e.y);
       ctx.fillStyle = e.type === E.GUIDE ? '#8ad8ff' : '#7dff8a';
       ctx.beginPath(); ctx.arc(s[0], s[1], 4, 0, Math.PI * 2); ctx.fill();
@@ -5151,13 +5173,13 @@ function drawFullMap(game, ctx) {
   ctx.lineWidth = 1;
   ctx.fillStyle = 'rgba(255,255,255,0.85)';
   ctx.font = '12px monospace';
-  var hoverTx = Math.floor(sx + MOUSE.x / scale), hoverTy = Math.floor(sy + MOUSE.y / scale);
-  var ht = game.world.get(hoverTx, hoverTy);
+  var hoverTx = Math.floor(game.mapPanX + (MOUSE.x - W / 2) / ts);
+  var hoverTy = Math.floor(game.mapPanY + (MOUSE.y - H / 2) / ts);
+  var ht = world.get(hoverTx, hoverTy);
   var htName = 'the void';
-  for (var tk in T) {
-    if (T[tk] === ht) { htName = tk.charAt(0) + tk.slice(1).toLowerCase(); break; }
-  }
+  for (var tk in T) { if (T[tk] === ht) { htName = tk.charAt(0) + tk.slice(1).toLowerCase(); break; } }
   ctx.fillText('World Map  ' + Math.round(hoverTx) + ', ' + Math.round(hoverTy) + '  ' + htName + '   scroll = zoom, drag = pan, M = close', 10, H - 10);
+  ctx.restore();
 }
 
 var MINIMAP_COLORS = {};

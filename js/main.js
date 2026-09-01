@@ -1861,7 +1861,8 @@ function step(dt) {
 
   handleKeys();
   if (typeof Net !== 'undefined') Net.update(dt);
-  if (game.mapOpen) { updateMessage(dt); return; }
+  if (game.mapOpen) { $('hud').style.opacity = '0'; updateMessage(dt); return; }
+  $('hud').style.opacity = '1';
 
   // mouse wheel hotbar scroll
   if (MOUSE.wheel !== 0) {
