@@ -8,8 +8,9 @@ var lastNow = 0;
 
 function $(id) { return document.getElementById(id); }
 
-var WORLD_W = 1600;
-var WORLD_H = 640;
+// vanilla small world: 4200 x 2400 tiles
+var WORLD_W = 4200;
+var WORLD_H = 2400;
 
 // ---------- Cached DOM ----------
 var el = {};

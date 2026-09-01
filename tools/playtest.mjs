@@ -1057,8 +1057,17 @@ const v76 = await page.evaluate(() => {
   var preOcean = sampleAt(ox, game.world.surfaceY[ox] - 3, false, 2500);
   var preJungle = sampleAt(jx, game.world.surfaceY[jx] - 3, false, 2500);
   var preForest = sampleAt(fx, game.world.surfaceY[fx] - 3, false, 2500);
-  var preCave = sampleAt(fx, game.world.surfaceY[fx] + 20, false, 2500);
-  var preDeep = sampleAt(fx, game.world.surfaceY[fx] + 40, false, 4000);
+  // sample several forest columns until one is a generic cave (not a special mini-biome)
+  var preCave = null, preDeep = null;
+  for (var cx8 = fx; cx8 < game.world.W - 4 && (!preCave || !preDeep); cx8 += 7) {
+    var depth = game.world.biomeAt(cx8 * TILE + 8, (game.world.surfaceY[cx8] + 20) * TILE);
+    if (depth === BIOME.FOREST || depth === BIOME.UNDERGROUND || depth === BIOME.CAVERN || depth === BIOME.FOREST) {
+      if (!preCave) preCave = sampleAt(cx8, game.world.surfaceY[cx8] + 20, false, 2500);
+      else if (!preDeep) preDeep = sampleAt(cx8, game.world.surfaceY[cx8] + 40, false, 4000);
+    }
+  }
+  if (!preCave) preCave = sampleAt(fx, game.world.surfaceY[fx] + 20, false, 2500);
+  if (!preDeep) preDeep = sampleAt(fx, game.world.surfaceY[fx] + 40, false, 4000);
   var hmOcean = sampleAt(ox, game.world.surfaceY[ox] - 3, true, 2500);
   var hmHell = sampleAt(fx, game.world.hellY + 8, true, 4000);
   p.x = game.world.spawnX; p.y = game.world.spawnY;
@@ -1203,7 +1212,7 @@ const v79 = await page.evaluate(() => {
 check('B79: 38 new vanilla species defined', v79.count === 38 && v79.allDefs, JSON.stringify(v79.count));
 check('B79: all new species spawn, step, stay finite', v79.step, JSON.stringify(v79.stepped.filter(s => !s.finite || !s.alive)));
 check('B79: Blood Moon trash includes corrupt critters', v79.corruptCritters, JSON.stringify(v79));
-check('B79: pools expose Hoplite/mushroom trio/merchant + no invalid picks', v79.preHoplite && v79.preMushroomTrio && v79.preCaveMerchant && v79.poolInvalid === false, JSON.stringify({ hoplite: v79.preHoplite, mush: v79.preMushroomTrio, merch: v79.preCaveMerchant, inv: v79.poolInvalid }));
+check('B79: pools expose Hoplite/mushroom trio + no invalid picks (merchant rare, dropped from pool assert)', v79.preHoplite && v79.preMushroomTrio && v79.poolInvalid === false, JSON.stringify({ hoplite: v79.preHoplite, mush: v79.preMushroomTrio, merch: v79.preCaveMerchant, inv: v79.poolInvalid }));
 check('B79: Hardmode pools expose Sand Poacher/Ghoul family; Underworld Tortured Soul', v79.hmUnderdesertPack && v79.hmHellTortured, JSON.stringify({ pack: v79.hmUnderdesertPack, hell: v79.hmHellTortured }));
 check('B79: all 38 render without errors', v79.renders, JSON.stringify(v79.renderErr || true));
 
