@@ -1782,6 +1782,7 @@ function drawEnemy(ctx, e, cam, W, H) {
       drawWorm(ctx, e, cam, W, H, col);
       break;
     case E.SANDSLIME: case E.CRIMSLIME: case E.SLIMELING:
+    case E.PURPLESLIME: case E.YELLOWSLIME: case E.REDSLIME: case E.BLACKSLIME:
       drawSlime(ctx, x, y, e.w, e.h, col, e.type);
       break;
     case E.NYMPH:
@@ -1869,7 +1870,7 @@ function drawEnemy(ctx, e, cam, W, H) {
     case E.ANTLIONSWARMER:
       drawFlyingWinged(ctx, x, y, e.w, col, '#ead09a');
       break;
-    case E.BUNNY: case E.SQUIRREL: case E.FROG: case E.TURTLE:
+    case E.BUNNY: case E.SQUIRREL: case E.FROG: case E.TURTLE: case E.PENGUIN:
       drawGroundCritter(ctx, x, y, e, col);
       break;
     case E.BIRD:
@@ -2427,6 +2428,65 @@ function drawEnemy(ctx, e, cam, W, H) {
       ctx.fillStyle = '#cc3333';
       ctx.fillRect(x - e.w / 2, y + 4, e.w, 3);
       break;
+    case E.SNATCHER:
+      ctx.fillStyle = shade(col, -25);
+      ctx.fillRect(x - 2, y + 2, 4, e.h / 2);
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.arc(x, y - 2, e.w / 2 + 2, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#7ac84a';
+      ctx.beginPath(); ctx.arc(x - e.dir * 6, y - 6, 3, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(x + e.dir * 3 - 5, y - 5, 4, 4);
+      ctx.fillRect(x + e.dir * 3 + 1, y - 5, 4, 4);
+      ctx.fillStyle = '#cc3333';
+      ctx.fillRect(x - e.w / 2 - 2, y - 2, e.w + 4, 3);
+      break;
+    case E.VULTURE:
+      drawFlyingWinged(ctx, x, y, e.w, col, '#d8c8a8');
+      ctx.fillStyle = '#e05a4a';
+      ctx.beginPath(); ctx.arc(x + e.dir * 8, y - 3, 2.5, 0, Math.PI * 2); ctx.fill();
+      break;
+    case E.METEORHEAD:
+      ctx.fillStyle = '#ff8a3d';
+      ctx.beginPath(); ctx.arc(x, y, e.w / 2, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.arc(x, y, e.w / 2 - 3, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffe14d';
+      ctx.fillRect(x - 2, y - 5, 2, 3);
+      ctx.fillRect(x + 2, y - 5, 2, 3);
+      break;
+    case E.REDDEVIL:
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.ellipse(x, y, e.w / 2, e.h / 2 - 4, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(x - 7, y - e.h / 2 + 8); ctx.lineTo(x - 3, y - e.h / 2 - 5); ctx.lineTo(x + 1, y - e.h / 2 + 5); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(x + 7, y - e.h / 2 + 8); ctx.lineTo(x + 3, y - e.h / 2 - 5); ctx.lineTo(x - 1, y - e.h / 2 + 5); ctx.fill();
+      var devilFlap = Math.sin(Time.seconds * 8 + e.x * 0.1) * 5;
+      ctx.beginPath(); ctx.moveTo(x - e.w / 2, y - 2); ctx.lineTo(x - e.w / 2 - 12, y + devilFlap); ctx.lineTo(x - e.w / 2 + 3, y + 6); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(x + e.w / 2, y - 2); ctx.lineTo(x + e.w / 2 + 12, y + devilFlap); ctx.lineTo(x + e.w / 2 - 3, y + 6); ctx.fill();
+      ctx.fillStyle = '#ffe14d';
+      ctx.fillRect(x - 6, y - 5, 4, 3);
+      ctx.fillRect(x + 2, y - 5, 4, 3);
+      break;
+    case E.SHARK:
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.ellipse(x, y, e.w / 2, e.h / 2, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(x + e.dir * 6, y - 5); ctx.lineTo(x + e.dir * 10, y - 14); ctx.lineTo(x + e.dir * 1, y - 7); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(x - e.dir * (e.w / 2 - 2), y); ctx.lineTo(x - e.dir * (e.w / 2 + 11), y - 6); ctx.lineTo(x - e.dir * (e.w / 2 + 9), y + 6); ctx.fill();
+      ctx.fillStyle = '#e8f4ff';
+      ctx.fillRect(x - e.w / 2 + 2, y + 2, e.w - 4, 3);
+      ctx.fillStyle = '#171719';
+      ctx.beginPath(); ctx.arc(x + e.dir * 10, y - 3, 1.5, 0, Math.PI * 2); ctx.fill();
+      break;
+    case E.ORCA:
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.ellipse(x, y, e.w / 2, e.h / 2, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(x + e.dir * 4, y - 7); ctx.lineTo(x + e.dir * 9, y - 18); ctx.lineTo(x + e.dir * 14, y - 7); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(x - e.dir * (e.w / 2 - 2), y); ctx.lineTo(x - e.dir * (e.w / 2 + 13), y - 7); ctx.lineTo(x - e.dir * (e.w / 2 + 11), y + 7); ctx.fill();
+      ctx.fillStyle = '#f0f4f8';
+      ctx.beginPath(); ctx.ellipse(x + e.dir * 6, y + 2, 7, 4, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillRect(x - e.w / 2 + 2, y + 4, e.w - 6, 3);
+      ctx.beginPath(); ctx.ellipse(x + e.dir * 9, y - 3, 3, 1.5, 0, 0, Math.PI * 2); ctx.fill();
+      break;
     case E.BASILISK:
       ctx.fillStyle = col;
       ctx.beginPath(); ctx.ellipse(x, y, e.w / 2, e.h / 2, 0, 0, Math.PI * 2); ctx.fill();
@@ -2586,6 +2646,15 @@ function drawGroundCritter(ctx, x, y, e, col) {
   if (e.type === E.FROG) {
     ctx.beginPath(); ctx.ellipse(x, y, 7, 5, 0, 0, Math.PI * 2); ctx.fill();
     ctx.fillRect(x - 9, y + 2, 5, 2); ctx.fillRect(x + 4, y + 2, 5, 2);
+  } else if (e.type === E.PENGUIN) {
+    ctx.beginPath(); ctx.ellipse(x, y, 6, 8, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#f0f4f8';
+    ctx.beginPath(); ctx.ellipse(x, y + 1, 4, 6, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = col;
+    ctx.beginPath(); ctx.arc(x + dir * 3, y - 8, 4, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#e8b84a';
+    ctx.fillRect(x + dir * 5, y - 9, 4, 1.5);
+    ctx.fillRect(x - 2, y + 7, 4, 2);
   } else if (e.type === E.TURTLE) {
     ctx.beginPath(); ctx.ellipse(x, y, 10, 6, 0, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = shade(col, -25); ctx.beginPath(); ctx.ellipse(x, y - 1, 7, 5, 0, 0, Math.PI * 2); ctx.fill();
