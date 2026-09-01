@@ -143,8 +143,8 @@ function twinsStep(e, game) {
 function spawnDestroyer(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  var segCount = 62, segHp = 650, headHp = 6200;
-  var e = makeBoss(game, { boss:'destroyer', name:'The Destroyer', w:52, h:36, hp:headHp + segCount * segHp, maxHp:headHp + segCount * segHp, dmg:75, def:12, color:'#8a8f9a', barColor:'#9ad0ff', x:p.x + 600, y:p.y - 220 });
+  var segCount = 62, segHp = 500, headHp = 49000;
+  var e = makeBoss(game, { boss:'destroyer', name:'The Destroyer', w:52, h:36, hp:headHp + segCount * segHp, maxHp:headHp + segCount * segHp, dmg:70, def:0, color:'#8a8f9a', barColor:'#9ad0ff', x:p.x + 600, y:p.y - 220 });
   e.headHp = headHp; e.segHp = segHp; e.segCount = segCount;
   e.wave = 0;
   e.segments = [];
@@ -184,7 +184,7 @@ function destroyerStep(e, game) {
     for (var i2 = 0; i2 < 3; i2++) {
       var probe = {
         type: -2, boss: 'probe', w: 22, h: 22, x: e.x + (Math.random() * 100 - 50), y: e.y - 40,
-        vx: 0, vy: 0, hp: 320, maxHp: 320, dmg: 28, def: 4, dead: false, flash: 0,
+        vx: 0, vy: 0, hp: 200, maxHp: 200, dmg: 50, def: 20, dead: false, flash: 0,
         timer: 1.0 + Math.random(), color: '#ff6d6d', name: 'Probe'
       };
       e.probes.push(probe);
@@ -226,7 +226,7 @@ function destroyerStep(e, game) {
 function spawnSkeleton(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  var head = makeBoss(game, { boss:'skelprime', name:'Skeletron Prime', w:56, h:56, hp:17000, dmg:60, def:25, color:'#cfd6e0', barColor:'#8a9abf', x:p.x + 200, y:p.y - 260 });
+  var head = makeBoss(game, { boss:'skelprime', name:'Skeletron Prime', w:56, h:56, hp:28000, dmg:47, def:24, color:'#cfd6e0', barColor:'#8a9abf', x:p.x + 200, y:p.y - 260 });
   head.armCount = 4;
   var armDefs = ['laser', 'cannon', 'saw', 'vice'];
   var armColors = { laser:'#ff4d6d', cannon:'#4d9aff', saw:'#d0d0d0', vice:'#9ad0ff' };
@@ -235,7 +235,7 @@ function spawnSkeleton(game) {
     var arm = {
       type: -3, boss: 'skelprime', armType: t, parent: head,
       x: head.x, y: head.y, w: 22, h: 22, vx: 0, vy: 0,
-      hp: 2100, maxHp: 2100, dmg: t === 'saw' ? 65 : 45, def: 4,
+      hp: 9000, maxHp: 9000, dmg: t === 'saw' ? 67 : 55, def: 30,
       dead: false, flash: 0, timer: 0, ang: (i / 4) * Math.PI * 2 + 0.5,
       color: armColors[t], name: t
     };
@@ -338,7 +338,7 @@ function skelStep(e, game) {
 function spawnQueenSlime(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'queenslime', name:'Queen Slime', w:72, h:52, hp:14000, dmg:45, def:14, color:'#ff8fd0', barColor:'#ff8fd0', x:p.x + 300, y:p.y - 160 });
+  return makeBoss(game, { boss:'queenslime', name:'Queen Slime', w:72, h:52, hp:18000, dmg:60, def:26, color:'#ff8fd0', barColor:'#ff8fd0', x:p.x + 300, y:p.y - 160 });
 }
 
 function queenSlimeStep(e, game) {
@@ -387,7 +387,7 @@ function queenSlimeStep(e, game) {
 function spawnPlantera(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'plantera', name:'Plantera', w:78, h:78, hp:26000, dmg:60, def:18, color:'#6bff8a', barColor:'#6bff8a', x:p.x, y:p.y - 60 });
+  return makeBoss(game, { boss:'plantera', name:'Plantera', w:78, h:78, hp:30000, dmg:50, def:36, color:'#6bff8a', barColor:'#6bff8a', x:p.x, y:p.y - 60 });
 }
 
 function planteraStep(e, game) {
@@ -441,7 +441,7 @@ function planteraStep(e, game) {
 function spawnGolem(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'golem', name:'Golem', w:70, h:70, hp:22000, dmg:65, def:22, color:'#c8b090', barColor:'#ffb84d', x:p.x, y:p.y - 120 });
+  return makeBoss(game, { boss:'golem', name:'Golem', w:70, h:70, hp:25000, dmg:64, def:20, color:'#c8b090', barColor:'#ffb84d', x:p.x, y:p.y - 120 });
 }
 
 function golemStep(e, game) {
@@ -487,7 +487,7 @@ function golemStep(e, game) {
 function spawnDuke(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'duke', name:'Duke Fishron', w:64, h:46, hp:30000, dmg:70, def:20, color:'#5ac8ff', barColor:'#5ac8ff', x:p.x + 400, y:p.y - 180 });
+  return makeBoss(game, { boss:'duke', name:'Duke Fishron', w:64, h:46, hp:60000, dmg:100, def:50, color:'#5ac8ff', barColor:'#5ac8ff', x:p.x + 400, y:p.y - 180 });
 }
 
 function dukeStep(e, game) {
@@ -537,7 +537,7 @@ function dukeStep(e, game) {
 function spawnEmpress(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'empress', name:'Empress of Light', w:56, h:56, hp:28000, dmg:65, def:20, color:'#ffe9a8', barColor:'#ffe14d', x:p.x, y:p.y - 200 });
+  return makeBoss(game, { boss:'empress', name:'Empress of Light', w:56, h:56, hp:70000, dmg:80, def:50, color:'#ffe9a8', barColor:'#ffe14d', x:p.x, y:p.y - 200 });
 }
 
 function empressStep(e, game) {
@@ -575,7 +575,7 @@ function empressStep(e, game) {
 function spawnCultist(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'cultist', name:'Lunatic Cultist', w:40, h:64, hp:24000, dmg:50, def:24, color:'#e0d8ff', barColor:'#c85cff', x:p.x + 200, y:p.y - 160 });
+  return makeBoss(game, { boss:'cultist', name:'Lunatic Cultist', w:40, h:64, hp:32000, dmg:50, def:42, color:'#e0d8ff', barColor:'#c85cff', x:p.x + 200, y:p.y - 160 });
 }
 
 function cultistStep(e, game) {
@@ -615,7 +615,7 @@ function cultistStep(e, game) {
 function spawnMoonLord(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'moonlord', name:'Moon Lord', w:120, h:120, hp:70000, dmg:80, def:30, color:'#8a9ad0', barColor:'#c85cff', x:p.x, y:p.y - 260 });
+  return makeBoss(game, { boss:'moonlord', name:'Moon Lord', w:120, h:120, hp:145000, dmg:50, def:50, color:'#8a9ad0', barColor:'#c85cff', x:p.x, y:p.y - 260 });
 }
 
 function moonLordStep(e, game) {
@@ -672,14 +672,14 @@ function spawnLunarPillar(game, type) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var w = game.world;
   var themes = {
-    solar: { name:'Solar Pillar', hp:30000, dmg:70, color:'#ff8a3d', barColor:'#ff8a3d', frag:I.FRAG_SOLAR, enemies:[E.CORITE,E.SELENIAN,E.CRAWLTIPEDE] },
-    vortex: { name:'Vortex Pillar', hp:30000, dmg:70, color:'#3dff9d', barColor:'#3dff9d', frag:I.FRAG_VORTEX, enemies:[E.VORTEXIAN,E.STORMDIVER,E.ALIENQUEEN,E.ALIENHORNET] },
-    nebula: { name:'Nebula Pillar', hp:30000, dmg:70, color:'#c85cff', barColor:'#c85cff', frag:I.FRAG_NEBULA, enemies:[E.NEBULAFLOATER,E.PREDICTOR,E.EVOLUTIONBEAST] },
-    stardust: { name:'Stardust Pillar', hp:30000, dmg:70, color:'#6bc8ff', barColor:'#6bc8ff', frag:I.FRAG_STARDUST, enemies:[E.STARDJUSTCELL,E.STARGAZER,E.FLOWINVADER] }
+    solar: { name:'Solar Pillar', hp:20000, dmg:0, color:'#ff8a3d', barColor:'#ff8a3d', frag:I.FRAG_SOLAR, enemies:[E.CORITE,E.SELENIAN,E.CRAWLTIPEDE] },
+    vortex: { name:'Vortex Pillar', hp:20000, dmg:0, color:'#3dff9d', barColor:'#3dff9d', frag:I.FRAG_VORTEX, enemies:[E.VORTEXIAN,E.STORMDIVER,E.ALIENQUEEN,E.ALIENHORNET] },
+    nebula: { name:'Nebula Pillar', hp:20000, dmg:0, color:'#c85cff', barColor:'#c85cff', frag:I.FRAG_NEBULA, enemies:[E.NEBULAFLOATER,E.PREDICTOR,E.EVOLUTIONBEAST] },
+    stardust: { name:'Stardust Pillar', hp:20000, dmg:0, color:'#6bc8ff', barColor:'#6bc8ff', frag:I.FRAG_STARDUST, enemies:[E.STARDJUSTCELL,E.STARGAZER,E.FLOWINVADER] }
   };
   var th = themes[type] || themes.solar;
   AudioSys.play('roar');
-  var e = makeBoss(game, { boss:'lunar', sub:type, name:th.name, w:56, h:160, hp:th.hp, dmg:th.dmg, def:40, color:th.color, barColor:th.barColor, x:p.x, y:p.y });
+  var e = makeBoss(game, { boss:'lunar', sub:type, name:th.name, w:56, h:160, hp:th.hp, dmg:th.dmg, def:20, color:th.color, barColor:th.barColor, x:p.x, y:p.y });
   e.shieldHp = 15000; e.shieldMax = 15000; e.shieldDown = false;
   e.pillarType = type; e.pillarFrag = th.frag; e.pillarEnemies = th.enemies; e.pillarEnemy = th.enemies[0];
   e.spawnT = 0; e.shootT = 0;
@@ -763,7 +763,7 @@ function eventBossSpray(e, game, type, dmg, n, spread) {
 function spawnMourningWood(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'mourningwood', name:'Mourning Wood', w:56, h:56, hp:24000, dmg:70, def:22, color:'#7a4d3d', barColor:'#ff9a3d', x:p.x + 300, y:p.y - 160 });
+  return makeBoss(game, { boss:'mourningwood', name:'Mourning Wood', w:56, h:56, hp:14000, dmg:120, def:34, color:'#7a4d3d', barColor:'#ff9a3d', x:p.x + 300, y:p.y - 160 });
 }
 
 function mourningWoodStep(e, game) {
@@ -790,7 +790,7 @@ function mourningWoodStep(e, game) {
 function spawnPumpking(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'pumpking', name:'Pumpking', w:60, h:60, hp:36000, dmg:80, def:24, color:'#ff8a3d', barColor:'#ff8a3d', x:p.x, y:p.y - 220 });
+  return makeBoss(game, { boss:'pumpking', name:'Pumpking', w:60, h:60, hp:26000, dmg:50, def:40, color:'#ff8a3d', barColor:'#ff8a3d', x:p.x, y:p.y - 220 });
 }
 
 function pumpkingStep(e, game) {
@@ -818,13 +818,13 @@ function pumpkingStep(e, game) {
 function spawnEverscream(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'everscream', name:'Everscream', w:56, h:56, hp:24000, dmg:70, def:22, color:'#8ac84a', barColor:'#8ac84a', x:p.x + 300, y:p.y - 160 });
+  return makeBoss(game, { boss:'everscream', name:'Everscream', w:56, h:56, hp:13000, dmg:110, def:38, color:'#8ac84a', barColor:'#8ac84a', x:p.x + 300, y:p.y - 160 });
 }
 
 function spawnSantank(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'santank', name:'Santa-NK1', w:52, h:56, hp:32000, dmg:75, def:22, color:'#d04040', barColor:'#d04040', x:p.x + 260, y:p.y - 140 });
+  return makeBoss(game, { boss:'santank', name:'Santa-NK1', w:52, h:56, hp:18000, dmg:120, def:56, color:'#d04040', barColor:'#d04040', x:p.x + 260, y:p.y - 140 });
 }
 
 function santankStep(e, game) {
@@ -851,7 +851,7 @@ function santankStep(e, game) {
 function spawnIceQueen(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'icequeen', name:'Ice Queen', w:58, h:58, hp:34000, dmg:78, def:24, color:'#a8d8f0', barColor:'#a8d8f0', x:p.x, y:p.y - 220 });
+  return makeBoss(game, { boss:'icequeen', name:'Ice Queen', w:58, h:58, hp:34000, dmg:120, def:38, color:'#a8d8f0', barColor:'#a8d8f0', x:p.x, y:p.y - 220 });
 }
 
 function iceQueenStep(e, game) {
@@ -1029,7 +1029,7 @@ function flyingDutchmanStep(e, game) {
 function spawnMothron(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'mothron', name:'Mothron', w:40, h:26, hp:8000, dmg:70, def:20, color:'#8a8ab8', barColor:'#c8a8ff', x:p.x + 260, y:p.y - 200 });
+  return makeBoss(game, { boss:'mothron', name:'Mothron', w:40, h:26, hp:6000, dmg:80, def:30, color:'#8a8ab8', barColor:'#c8a8ff', x:p.x + 260, y:p.y - 200 });
 }
 
 function mothronStep(e, game) {
@@ -1060,7 +1060,7 @@ function mothronStep(e, game) {
 function spawnDeerclops(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'deerclops', name:'Deerclops', w:70, h:78, hp:7000, dmg:44, def:12, color:'#5a4638', barColor:'#9ed8f0', x:p.x + 260, y:p.y - 180 });
+  return makeBoss(game, { boss:'deerclops', name:'Deerclops', w:70, h:78, hp:7000, dmg:20, def:10, color:'#5a4638', barColor:'#9ed8f0', x:p.x + 260, y:p.y - 180 });
 }
 
 function deerclopsStep(e, game) {
@@ -1101,7 +1101,7 @@ function deerclopsStep(e, game) {
 function spawnKingSlime(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'kingslime', name:'King Slime', w:52, h:40, hp:2500, dmg:25, def:8, color:'#5cbf6c', barColor:'#3dbf6c', x:p.x + 200, y:p.y - 240 });
+  return makeBoss(game, { boss:'kingslime', name:'King Slime', w:52, h:40, hp:2000, dmg:40, def:10, color:'#5cbf6c', barColor:'#3dbf6c', x:p.x + 200, y:p.y - 240 });
 }
 
 function kingSlimeStep(e, game) {
@@ -1138,7 +1138,7 @@ function kingSlimeStep(e, game) {
 function spawnEyeOfCthulhu(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'eyeofcthulhu', name:'Eye of Cthulhu', w:40, h:40, hp:3500, dmg:30, def:5, color:'#c04040', barColor:'#d04040', x:p.x + 350, y:p.y - 200 });
+  return makeBoss(game, { boss:'eyeofcthulhu', name:'Eye of Cthulhu', w:40, h:40, hp:2800, dmg:15, def:12, color:'#c04040', barColor:'#d04040', x:p.x + 350, y:p.y - 200 });
 }
 
 function eyeStep(e, game) {
@@ -1177,8 +1177,8 @@ function eyeStep(e, game) {
 function spawnEaterOfWorlds(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  var segCount = 18, segHp = 300, headHp = 1800;
-  var e = makeBoss(game, { boss:'eaterofworlds', name:'Eater of Worlds', w:30, h:24, hp:headHp + segCount * segHp, maxHp:headHp + segCount * segHp, dmg:35, def:10, color:'#5a4d7a', barColor:'#7a5c9a', x:p.x + 300, y:p.y - 220 });
+  var segCount = 20, segHp = 150, headHp = 1500;
+  var e = makeBoss(game, { boss:'eaterofworlds', name:'Eater of Worlds', w:30, h:24, hp:headHp + segCount * segHp, maxHp:headHp + segCount * segHp, dmg:22, def:2, color:'#5a4d7a', barColor:'#7a5c9a', x:p.x + 300, y:p.y - 220 });
   e.headHp = headHp; e.segHp = segHp; e.segCount = segCount;
   e.wave = 0;
   e.segments = [];
@@ -1232,7 +1232,7 @@ function moveSegments(e, game) {
 function spawnBrainOfCthulhu(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'brainofcthulhu', name:'Brain of Cthulhu', w:44, h:44, hp:3800, dmg:32, def:5, color:'#c04848', barColor:'#e04848', x:p.x + 250, y:p.y - 240 });
+  return makeBoss(game, { boss:'brainofcthulhu', name:'Brain of Cthulhu', w:44, h:44, hp:1250, dmg:30, def:14, color:'#c04848', barColor:'#e04848', x:p.x + 250, y:p.y - 240 });
 }
 
 function brainStep(e, game) {
@@ -1256,7 +1256,7 @@ function brainStep(e, game) {
 function spawnQueenBee(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  return makeBoss(game, { boss:'queenbee', name:'Queen Bee', w:46, h:42, hp:3000, dmg:28, def:6, color:'#ffd75e', barColor:'#ffc040', x:p.x + 280, y:p.y - 220 });
+  return makeBoss(game, { boss:'queenbee', name:'Queen Bee', w:46, h:42, hp:3400, dmg:30, def:8, color:'#ffd75e', barColor:'#ffc040', x:p.x + 280, y:p.y - 220 });
 }
 
 function queenBeeStep(e, game) {
@@ -1285,10 +1285,10 @@ function queenBeeStep(e, game) {
 function spawnSkeletron(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  var e = makeBoss(game, { boss:'skeletron', name:'Skeletron', w:46, h:54, hp:5500, dmg:40, def:12, color:'#d8c8a8', barColor:'#c8b090', x:p.x + 260, y:p.y - 220 });
+  var e = makeBoss(game, { boss:'skeletron', name:'Skeletron', w:46, h:54, hp:4400, dmg:32, def:10, color:'#d8c8a8', barColor:'#c8b090', x:p.x + 260, y:p.y - 220 });
   e.armCount = 2;
-  var handL = { boss:'skeletron', armType:'hand', parent:e, x:e.x - 60, y:e.y + 40, w:26, h:26, hp:1200, maxHp:1200, def:6, flash:0, dead:false, side:'left' };
-  var handR = { boss:'skeletron', armType:'hand', parent:e, x:e.x + 60, y:e.y + 40, w:26, h:26, hp:1200, maxHp:1200, def:6, flash:0, dead:false, side:'right' };
+  var handL = { boss:'skeletron', armType:'hand', parent:e, x:e.x - 60, y:e.y + 40, w:26, h:26, hp:600, maxHp:600, dmg:20, def:14, flash:0, dead:false, side:'left' };
+  var handR = { boss:'skeletron', armType:'hand', parent:e, x:e.x + 60, y:e.y + 40, w:26, h:26, hp:600, maxHp:600, dmg:20, def:14, flash:0, dead:false, side:'right' };
   e.arms = [handL, handR];
   game.entities.push(handL);
   game.entities.push(handR);
@@ -1342,7 +1342,7 @@ function skeletronStep(e, game) {
 function spawnWallOfFlesh(game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   AudioSys.play('roar');
-  var e = makeBoss(game, { boss:'wallofflesh', name:'Wall of Flesh', w:120, h:90, hp:12000, dmg:55, def:20, color:'#c04848', barColor:'#e04848', x:p.x - 700, y:p.y - 40 });
+  var e = makeBoss(game, { boss:'wallofflesh', name:'Wall of Flesh', w:120, h:90, hp:8000, dmg:30, def:12, color:'#c04848', barColor:'#e04848', x:p.x - 700, y:p.y - 40 });
   e.moveDir = 1;
   e.hungries = [];
   return e;

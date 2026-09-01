@@ -608,6 +608,17 @@ This file tracks the staged expansion toward Terraria 1.4.4 parity. Progression 
 - [x] Add the Purple, Yellow, Red, and Black slime palette with phase-correct biome pools and Gel drops.
 - [x] Integrate all eleven with AI dispatch, procedural rendering, drops, bestiary discovery, and pool assertions in the playtest suite.
 
+## Batch 77: Canonical Terraria 1.4.4 Stat Parity
+
+- [x] Set all 224 mapped `ENT_DEF` enemy stats (HP/damage/defense) to wiki classic-mode values, including worm variant rows and Goblin roles.
+- [x] Set 158 weapons to canonical damage, use-time, knockback, mana, and projectile velocity from the wiki item database.
+- [x] Set all boss stats including per-arm Skeletron Prime limbs, Destroyer/Eater shared segment pools, and Celestial Pillar shield/HP split.
+- [x] Set melee reach by vanilla family: broadswords 4 tiles, shortswords 2.5, yoyos 12-16, flails 7-8, spears 4.5.
+- [x] Canonicalize ammunition damage so ranged weapon DPS composes correctly.
+- [x] Canonicalize the Old One's Army roster and Dark Mage tier stats.
+- [x] Keep town NPCs at hp 9999 as a deliberate engine deviation and document it.
+- [x] Commit the canonical data sources and transform script under `tools/canonical/` for provenance.
+
 ## Long-Term Catalog Parity
 
 - [x] Audit notable missing vanilla enemies and critters against `E` and `ENT_DEF` (ongoing; Ocean/Cavern/Spider/Underworld gaps continued in Batch 73).
