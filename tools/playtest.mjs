@@ -810,6 +810,7 @@ const v74 = await page.evaluate(() => {
   enemy.hp = enemy.maxHp; enemy.hp = 600;
   game.entities.push(enemy);
   MOUSE.wx = enemy.x; MOUSE.wy = enemy.y;
+  p.mana = p.maxMana;
   p.attackCd = 0;
   p.tryMagic(game, ITEMS['rainbowgun'], 'rainbowgun', null);
   var wallProj = null;

@@ -11,7 +11,7 @@
 ^- [ ] B78d — Spawn system canonical: max 5 hostile ambient enemies, spawn cadence + depth/biome rate scaling.
 ^- [ ] B78e — Weapon autoswing flags from items DB (autoReuse), magic mana costs re-verified, Melee/weapon hitbox sizes.
 ^- [ ] B78f — playtest green + docs + merge.
-- [ ] B79 — remaining vanilla roster (Hoplite, Icy Merman, Giant Shelly, Floaty Gross, Sand Poacher, Desert Spirit, Tomb Crawler, Sand Shark family, Anomura Fungus, Fungo Fish, Skeleton Merchant w/ shop, Rock Golem, Possessed Armor, Wandering Eye, Rune Wizard, Enchanted Sword NPC, Angry Trapper, Illuminant Bat/Slime, Ghoul family, Lamia, Beetle trio, world Feeder, Blood Jelly, Blood Feeder, Corrupt Goldfish/Bunny/Penguin blood-moon variants).
+^- [x] B79 — remaining vanilla roster (Hoplite, Icy Merman, Giant Shelly, Floaty Gross, Sand Poacher, Desert Spirit, Tomb Crawler, Sand Shark family, Anomura Fungus, Fungo Fish, Skeleton Merchant w/ shop, Rock Golem, Possessed Armor, Wandering Eye, Rune Wizard, Enchanted Sword NPC, Angry Trapper, Illuminant Bat/Slime, Ghoul family, Lamia, Beetle trio, world Feeder, Blood Jelly, Blood Feeder, Corrupt Goldfish/Bunny/Penguin blood-moon variants).
 - [ ] B80 — vanilla event/invasion roster audit vs EVENT_WAVES; spawn conditions 1:1 (Blood Moon chance, eclipse chance, pirate map drop rates etc.).
 - [ ] B81 — shop prices to canonical coin values (Gold Ore currency mapping), NPC happiness thresholds.
 - [ ] B82 — world gen dimensions 1:1 (world size 8400x2400 tiles / small, jungle/corruption/dungeon sizes and positions).

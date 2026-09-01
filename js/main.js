@@ -779,7 +779,7 @@ function applySaveData(data) {
   p.dir = ps.dir || 1;
   p.hair = ps.hair || 0;
   p.maxHp = ps.maxHp || 100; p.hp = clamp(ps.hp || 1, 1, p.maxHp);
-  p.maxMana = ps.maxMana || 200; p.mana = clamp(ps.mana === undefined ? p.maxMana : ps.mana, 0, p.maxMana);
+  p.maxMana = ps.maxMana || 20; p.mana = clamp(ps.mana === undefined ? p.maxMana : ps.mana, 0, p.maxMana);
   p.buffs = ps.buffs || {}; p.buffMaxHp = ps.buffMaxHp || 0;
   p.torchGodFavor = !!ps.torchGodFavor;
   var upgrades = ps.permanentUpgrades || {};
@@ -3126,19 +3126,18 @@ function checkDawn() {
   if (day && game._wasNight && !game.weather.active && Math.random() < 0.22) startWeather();
   if (dusk && game.party.active) endParty('The Party has ended.');
   if (dusk) rollStarfallNight();
-  if (dusk && !game.event && !game.anyBossAlive() && game.player.maxHp >= 120 && Math.random() < 0.12) {
+  if (dusk && !game.event && !game.anyBossAlive() && game.player.maxHp >= 120 && Math.random() < 1 / 9) {
     game.startEvent('bloodmoon');
   }
   if (day && game._wasNight && !game.event && !game.anyBossAlive()) {
-    var r = Math.random();
-    if (game.player.maxHp >= 140 && r < 0.12) {
-      game.startEvent('slimerain');
-    } else if (game.evilObjectsBroken >= 1 && r < 0.3) {
-      game.startEvent('goblinarmy');
-    } else if (game.hardmode && r < 0.4) {
-      game.startEvent('pirateinvasion');
-    } else if (anyMechanicalBossDefeated() && r < 0.6) {
+    if (anyMechanicalBossDefeated() && Math.random() < 1 / 20) {
       game.startEvent('solareclipse');
+    } else if (game.hardmode && Math.random() < 1 / 30) {
+      game.startEvent('pirateinvasion');
+    } else if (game.evilObjectsBroken >= 1 && Math.random() < 1 / 3) {
+      game.startEvent('goblinarmy');
+    } else if (game.player.maxHp >= 140 && Math.random() < 1 / 3) {
+      game.startEvent('slimerain');
     }
   }
   if (day && game._wasNight && !game.event && !game.anyBossAlive() && !game.party.active &&

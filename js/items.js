@@ -320,6 +320,7 @@ defItem(I.MECH_SKULL, { name:'Mechanical Skull', type:'summon', boss:'skeletronp
 
 // --- Souls & hearts ---
 defItem(I.HEART, { name:'Heart Crystal', type:'consumable', heart:20, color:'#ff5c8a', icon:'💖', maxStack:99, desc:'Increases max health by 20.' });
+defItem(I.MANACRYSTAL, { name:'Mana Crystal', type:'consumable', star:20, color:'#6bc8ff', icon:'💠', maxStack:99, desc:'Increases max mana by 20. Crafted from Fallen Stars.' });
 defItem(I.SOUL_LIGHT, { name:'Soul of Light', type:'material', color:'#ffe9a8', icon:'✨', maxStack:999, desc:'Dropped by Hallow creatures.' });
 defItem(I.SOUL_NIGHT, { name:'Soul of Night', type:'material', color:'#a9b0ff', icon:'🌑', maxStack:999, desc:'Dropped by Corruption creatures.' });
 defItem(I.SOUL_MIGHT, { name:'Soul of Might', type:'material', color:'#ffd75e', icon:'⚡', maxStack:999, desc:'Dropped by The Destroyer.' });

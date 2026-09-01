@@ -11,7 +11,7 @@ function Player(world) {
   this.onGround = false;
   this.maxHp = 100;
   this.hp = 100;
-  this.maxMana = 200;
+  this.maxMana = 20;
   this.mana = 200;
   this.manaRegen = 0;
   this.inventory = new Inventory();
@@ -500,10 +500,13 @@ Player.prototype.tryMelee = function(game, def, force, item) {
   }
   this.attackCd = def.speed;
   this.swingT = Math.max(0.12, def.speed * 0.7);
+  if (crit) game.spawnFloatingText(this.x, this.y - 30, 'Critical!', '#ffe14d');
   this.dir = (MOUSE.wx >= this.x) ? 1 : -1;
   this.swingAng = Math.atan2(MOUSE.wy - this.y, MOUSE.wx - this.x);
   AudioSys.play('shoot');
+  var crit = Math.random() < 0.04;
   var mdmg = Math.round(def.dmg * this.inventory.damageMultiplier('melee') * this.inventory.itemDamageMul(item));
+  if (crit) mdmg *= 2;
   if (def.nearbyBonus) {
     var ncnt = 0, nr = (def.nearbyRadius || 96) * (def.nearbyRadius || 96);
     for (var ni = 0; ni < game.entities.length; ni++) {
@@ -624,7 +627,9 @@ Player.prototype.tryShoot = function(game, def, id, item) {
   var ammoDef = ITEMS[ammoId];
   var ammoDmg = ammoDef.dmg || 0;
   var shots = Math.max(1, def.spread || 1);
+  var crit = Math.random() < 0.04;
   var shotDmg = Math.round((def.dmg + ammoDmg) * inv.damageMultiplier('ranged') * inv.itemDamageMul(item));
+  if (crit) shotDmg *= 2;
   if (def.terrainMode === 'rain') {
     for (var ri = 0; ri < shots; ri++) {
       var rainOffset = (ri - (shots - 1) / 2) * 22;
@@ -650,6 +655,7 @@ Player.prototype.tryShoot = function(game, def, id, item) {
       status:def.status || ammoDef.status, mine:!!def.projMine, mineTrigger:def.mineTrigger, mineDuration:def.mineDuration, color:ammoDef.color, spawnSphere:!!def.electro, dead: false
     });
   }
+  if (crit) game.spawnFloatingText(this.x, this.y - 30, 'Critical!', '#ffe14d');
   AudioSys.play('bow');
 };
 
@@ -672,7 +678,9 @@ Player.prototype.tryMagic = function(game, def, id, item) {
   this.mana -= cost;
   var ang = Math.atan2(MOUSE.wy - this.y, MOUSE.wx - this.x);
   var n = def.projCount || 1;
+  var crit = Math.random() < 0.04;
   var mdmg = Math.round(def.dmg * this.inventory.damageMultiplier('magic') * this.inventory.itemDamageMul(item));
+  if (crit) mdmg *= 2;
   if (def.magicMode === 'beam') {
     game.projectiles.add({
       x:this.x, y:this.y - 8, vx:Math.cos(ang), vy:Math.sin(ang), dmg:mdmg, type:def.proj,
@@ -730,6 +738,7 @@ Player.prototype.tryMagic = function(game, def, id, item) {
         color:def.color, magic:true, dead:false
       });
     }
+    if (crit) game.spawnFloatingText(this.x, this.y - 30, 'Critical!', '#ffe14d');
     AudioSys.play('magic');
     game.fx.push({ type:'cast', x:this.x, y:this.y - 6, t:0.2 });
     return;
@@ -760,6 +769,17 @@ Player.prototype.tryConsume = function(game, def, id, item) {
     AudioSys.play('pickup');
     game.spawnFloatingText(this.x, this.y - 26, def.name + '!', def.color);
     game.message(def.permanentMsg || 'A permanent blessing settles over you.');
+    return;
+  }
+  if (def.star) {
+    if (this.maxMana >= 200) { game.message('Your mana is already at its peak.'); return; }
+    this.maxMana = Math.min(200, this.maxMana + def.star);
+    this.mana = Math.min(this.maxMana, this.mana + def.star);
+    this.inventory.removeAt(this.inventory.selected, 1);
+    AudioSys.play('magic');
+    game.fx.push({ type:'star', x:this.x, y:this.y - 20, t:0.6 });
+    game.spawnFloatingText(this.x, this.y - 26, 'Mana increased!', '#6bc8ff');
+    if (Achievements && this.maxMana >= 200) Achievements.unlock('starpower', game);
     return;
   }
   if (def.heart) {
