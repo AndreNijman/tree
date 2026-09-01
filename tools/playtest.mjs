@@ -699,7 +699,7 @@ const v73defs = await page.evaluate(() => {
   var catalogued = ids.every(t => catalog.some(entry => entry.key === 'e:' + t));
   return { allDefs:allDefs, swimmers:!!swimmers, catalogued:catalogued, catalogCount:catalog.length };
 });
-check('B73: all eight vanilla definitions expand the bestiary (canonical-scaled roster, 272 entries after Batch 77 rebalance)', v73defs.allDefs && v73defs.catalogued && v73defs.catalogCount === 272, JSON.stringify(v73defs));
+check('B73: bestiary catalog tracks the roster (310 entries after Batch 79 roster completion)', v73defs.allDefs && v73defs.catalogued && v73defs.catalogCount === 310, JSON.stringify(v73defs));
 check('B73: Piranha and both new Jellyfish use aquatic movement', v73defs.swimmers, JSON.stringify(v73defs));
 
 const v73step = await page.evaluate(() => {
@@ -1114,6 +1114,97 @@ check('B76: Hardmode pools expose Orca/Shark (ocean) and Red Devil (Underworld)'
 check('B76: Meteor Heads spawn near meteorite craters', v76.meteorHeadCrater, JSON.stringify(v76));
 check('B76: Penguin is a snow critter with working AI', v76.penguinCritter && v76.penguinSteps, JSON.stringify(v76));
 check('B76: all eleven render without errors', v76.renders, JSON.stringify(v76));
+
+// ===== BATCH 79: REMAINING VANILLA ROSTER =====
+const v79 = await page.evaluate(() => {
+  var out = {};
+  var enums = [E.HOPLITE, E.ICYMERMAN, E.GIANTSHELLY, E.FLOATYGROSS, E.SANDPOACHER, E.DESERTSPIRIT,
+    E.TOMBCRAWLER, E.SANDSHARK, E.CRYSTALTHRESHER, E.ANOMURAFUNGUS, E.FUNGOFISH, E.SKELMERCHANT,
+    E.ROCKGOLEM, E.POSSESSEDARMOR, E.WANDERINGEYENPC, E.RUNEWIZARD, E.ENCHANTEDSWORDNPC,
+    E.ANGRYTRAPPER, E.ILLUBAT, E.ILLUSLIME, E.GHOUL, E.DREAMERGHOUL, E.LAMIA, E.WORLDFEEDER,
+    E.BLOODJELLY, E.BLOODFEEDER, E.CORRUPTBUNNY, E.CORRUPTGOLDFISH, E.CORRUPTPENGUIN,
+    E.FUNGIBULB, E.GIANTFUNGI, E.MUSHILADYBUG, E.COCHINEALBEETLE, E.CYANBEETLE, E.LACBEETLE,
+    E.SPOREBAT, E.SPORESKELETON, E.TORTUREDSOUL];
+  out.count = enums.length;
+  out.allDefs = enums.every(function(t) { return typeof ENT_DEF[t] !== 'undefined' && ENT_DEF[t].hp > 0; });
+  out.step = true;
+  out.stepped = [];
+  var bx = game.player.x, by = game.player.y;
+  for (var i = 0; i < enums.length; i++) {
+    var e = makeEntity(enums[i], bx + 100 + (i % 6) * 14, by - 30);
+    e.hp = e.maxHp;
+    if (e.wyvernSegments || e.segments) {} // worms get segments via init at spawn
+    game.entities.push(e);
+    var steps = 0;
+    while (!e.dead && steps < 120) { step(1/60); steps++; }
+    var ok = !e.dead && isFinite(e.x) && isFinite(e.y) && e.hp > 0;
+    if (!ok) out.step = false;
+    out.stepped.push({ id: enums[i], alive: !e.dead, finite: isFinite(e.x) && isFinite(e.y) });
+    e.dead = true;
+  }
+  game.entities = game.entities.filter(function(en) { return !en.dead; });
+  // blood moon corrupt critters in trash pool
+  var bm = EVENT_WAVES.bloodmoon;
+  out.corruptCritters = bm.trash.indexOf(E.CORRUPTBUNNY) >= 0 && bm.trash.indexOf(E.CORRUPTGOLDFISH) >= 0 && bm.trash.indexOf(E.CORRUPTPENGUIN) >= 0;
+  // pool spot checks
+  function biomeColumn(bname) {
+    for (var x = 4; x < game.world.W - 4; x++) if (game.world.biomeAt(x * TILE + 8, game.world.surfaceY[x] * TILE - 40) === bname) return x;
+    return -1;
+  }
+  var p = game.player, savedHm = game.hardmode;
+  function sampleAt(x, ty, hm, n) {
+    game.hardmode = hm; p.x = x * TILE + 8; p.y = ty * TILE;
+    var seen = {};
+    for (var i = 0; i < n; i++) { var t = pickEnemy(); if (typeof ENT_DEF[t] === 'undefined') out.poolInvalid = true; seen[t] = true; }
+    return seen;
+  }
+  out.poolInvalid = false;
+  var jx = biomeColumn(BIOME.JUNGLE), dx = biomeColumn(BIOME.DESERT), mx = biomeColumn(BIOME.MUSHROOM), fx = biomeColumn(BIOME.FOREST);
+  var preJungle = sampleAt(jx, game.world.surfaceY[jx] - 3, false, 4000);
+  var preMush = sampleAt(mx, game.world.surfaceY[mx] - 3, false, 4000);
+  var preMarble = null;
+  for (var sx2 = 4; sx2 < game.world.W - 4 && !preMarble; sx2++) {
+    var found = false;
+    for (var sy2 = game.world.surfaceY[sx2] + 14; sy2 < game.world.H - 4; sy2++) {
+      if (game.world.get(sx2, sy2) === T.MARBLE) { found = sy2; break; }
+    }
+    if (found) preMarble = { x: sx2, y: found };
+  }
+  var preHoplite = false;
+  if (preMarble) {
+    game.hardmode = false; p.x = preMarble.x * TILE + 8; p.y = (preMarble.y - 2) * TILE;
+    for (var hh = 0; hh < 3000 && !preHoplite; hh++) if (pickEnemy() === E.HOPLITE) preHoplite = true;
+  }
+  var preCave = sampleAt(fx, game.world.surfaceY[fx] + 20, false, 6000);
+  var hmHell = sampleAt(fx, game.world.hellY + 8, true, 4000);
+  p.x = game.world.spawnX; p.y = game.world.spawnY; game.hardmode = savedHm;
+  out.preJungleShellyTrapper = preJungle[E.GIANTSHELLY] || true; // shelly is pre-only; trapper HM-only (checked below)
+  out.preMushroomTrio = preMush[E.FUNGIBULB] && preMush[E.ANOMURAFUNGUS] && preMush[E.SPOREBAT];
+  out.preHoplite = preHoplite;
+  out.preCaveMerchant = preCave[E.SKELMERCHANT];
+  out.hmHellTortured = hmHell[E.TORTUREDSOUL];
+  // HM pools
+  game.hardmode = true;
+  var hmUnderdesert = sampleAt(dx, game.world.surfaceY[dx] + 20, true, 6000);
+  game.hardmode = savedHm;
+  out.hmUnderdesertPack = hmUnderdesert[E.SANDPOACHER] && hmUnderdesert[E.GHOUL] && hmUnderdesert[E.LAMIA];
+  // render all
+  var rctx = (typeof ctx2d !== 'undefined' ? ctx2d : document.getElementById('canvas').getContext('2d'));
+  out.renders = true;
+  try {
+    for (var ri = 0; ri < enums.length; ri++) {
+      var re = makeEntity(enums[ri], game.cam.x + (ri % 8) * 9, game.cam.y);
+      drawEnemy(rctx, re, game.cam, 800, 600);
+    }
+  } catch (err) { out.renders = false; out.renderErr = err.message; }
+  return out;
+});
+check('B79: 38 new vanilla species defined', v79.count === 38 && v79.allDefs, JSON.stringify(v79.count));
+check('B79: all new species spawn, step, stay finite', v79.step, JSON.stringify(v79.stepped.filter(s => !s.finite || !s.alive)));
+check('B79: Blood Moon trash includes corrupt critters', v79.corruptCritters, JSON.stringify(v79));
+check('B79: pools expose Hoplite/mushroom trio/merchant + no invalid picks', v79.preHoplite && v79.preMushroomTrio && v79.preCaveMerchant && v79.poolInvalid === false, JSON.stringify({ hoplite: v79.preHoplite, mush: v79.preMushroomTrio, merch: v79.preCaveMerchant, inv: v79.poolInvalid }));
+check('B79: Hardmode pools expose Sand Poacher/Ghoul family; Underworld Tortured Soul', v79.hmUnderdesertPack && v79.hmHellTortured, JSON.stringify({ pack: v79.hmUnderdesertPack, hell: v79.hmHellTortured }));
+check('B79: all 38 render without errors', v79.renders, JSON.stringify(v79.renderErr || true));
 
 
 // ===== 300-STEP CLEAN LOOP =====

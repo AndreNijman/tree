@@ -346,7 +346,45 @@ var ENT_DEF = {
   [E.PURPLESLIME]: { w:22, h:16, hp:40, dmg:12, def:6, color:'#a05ad8', kbResist:0.1, speed:1.4, name:'Purple Slime', exp:4 },
   [E.YELLOWSLIME]: { w:22, h:16, hp:45, dmg:15, def:7, color:'#e8d84a', kbResist:0.0, speed:1.8, name:'Yellow Slime', exp:3 },
   [E.REDSLIME]: { w:22, h:16, hp:35, dmg:12, def:4, color:'#d84848', kbResist:0.0, speed:1.6, name:'Red Slime', exp:5 },
-  [E.BLACKSLIME]: { w:22, h:16, hp:45, dmg:15, def:4, color:'#2c2c34', kbResist:0.0, speed:1.2, name:'Black Slime', exp:6 }
+  [E.BLACKSLIME]: { w:22, h:16, hp:45, dmg:15, def:4, color:'#2c2c34', kbResist:0.0, speed:1.2, name:'Black Slime', exp:6 },
+  [E.HOPLITE]: { w:18, h:32, hp:70, dmg:22, def:10, color:'#c8b890', speed:1.2, name:'Hoplite', exp:5 },
+  [E.ICYMERMAN]: { w:18, h:34, hp:280, dmg:60, def:30, color:'#6ab8d8', speed:1.1, name:'Icy Merman', exp:12 },
+  [E.GIANTSHELLY]: { w:22, h:16, hp:50, dmg:16, def:12, color:'#8a7a5a', speed:0.9, name:'Giant Shelly', exp:4 },
+  [E.FLOATYGROSS]: { w:28, h:20, hp:240, dmg:65, def:18, color:'#7a5a6a', speed:1.9, fly:true, name:'Floaty Gross', exp:10 },
+  [E.SANDPOACHER]: { w:18, h:32, hp:320, dmg:66, def:24, color:'#a8845c', speed:1.3, name:'Sand Poacher', exp:13 },
+  [E.DESERTSPIRIT]: { w:22, h:26, hp:220, dmg:40, def:20, color:'#e8b06a', speed:2.2, ghost:true, name:'Desert Spirit', exp:11 },
+  [E.TOMBCRAWLER]: { w:18, h:14, hp:60, dmg:18, def:0, color:'#c8b898', speed:2.4, name:'Tomb Crawler', exp:4 },
+  [E.SANDSHARK]: { w:34, h:18, hp:360, dmg:50, def:20, color:'#c8a878', speed:2.2, name:'Sand Shark', exp:14 },
+  [E.CRYSTALTHRESHER]: { w:30, h:20, hp:450, dmg:54, def:26, color:'#d86a8a', speed:1.8, name:'Crystal Thresher', exp:16 },
+  [E.ANOMURAFUNGUS]: { w:20, h:22, hp:230, dmg:38, def:24, color:'#b8c8d8', speed:1.0, name:'Anomura Fungus', exp:8 },
+  [E.FUNGOFISH]: { w:20, h:16, hp:140, dmg:90, def:20, color:'#8ad8b8', speed:2.2, swim:true, glow:true, name:'Fungo Fish', exp:9 },
+  [E.SKELMERCHANT]: { w:18, h:32, hp:250, dmg:10, def:30, color:'#d0c8b8', speed:1.0, name:'Skeleton Merchant', exp:0 },
+  [E.ROCKGOLEM]: { w:30, h:36, hp:1000, dmg:85, def:35, color:'#8a8478', speed:0.9, name:'Rock Golem', exp:20 },
+  [E.POSSESSEDARMOR]: { w:20, h:34, hp:260, dmg:55, def:28, color:'#5a6a8a', speed:1.6, name:'Possessed Armor', exp:12 },
+  [E.WANDERINGEYENPC]: { w:24, h:20, hp:300, dmg:40, def:20, color:'#c8d8e8', speed:2.6, fly:true, name:'Wandering Eye', exp:10 },
+  [E.RUNEWIZARD]: { w:18, h:36, hp:600, dmg:200, def:30, color:'#7a4ad8', speed:1.2, name:'Rune Wizard', exp:25 },
+  [E.ENCHANTEDSWORDNPC]: { w:20, h:28, hp:200, dmg:80, def:18, color:'#9ad0ff', speed:2.8, fly:true, glow:true, name:'Enchanted Sword', exp:11 },
+  [E.ANGRYTRAPPER]: { w:20, h:40, hp:300, dmg:100, def:30, color:'#5a8a4a', speed:0, name:'Angry Trapper', exp:14 },
+  [E.ILLUBAT]: { w:22, h:16, hp:200, dmg:75, def:30, color:'#9ad8ff', speed:3.2, fly:true, glow:true, name:'Illuminant Bat', exp:11 },
+  [E.ILLUSLIME]: { w:22, h:16, hp:180, dmg:70, def:30, color:'#b8e8ff', speed:1.5, glow:true, name:'Illuminant Slime', exp:10 },
+  [E.GHOUL]: { w:20, h:32, hp:180, dmg:50, def:26, color:'#b8a488', speed:1.6, name:'Ghoul', exp:9 },
+  [E.DREAMERGHOUL]: { w:20, h:32, hp:300, dmg:54, def:32, color:'#88a8c8', speed:1.7, name:'Dreamer Ghoul', exp:11 },
+  [E.LAMIA]: { w:22, h:34, hp:350, dmg:52, def:28, color:'#c8a06a', speed:1.5, name:'Lamia', exp:12 },
+  [E.WORLDFEEDER]: { w:20, h:16, hp:500, dmg:70, def:36, color:'#6a8a5a', speed:2.4, name:'World Feeder', exp:15 },
+  [E.BLOODJELLY]: { w:22, h:18, hp:150, dmg:75, def:20, color:'#d84a5a', speed:2.0, swim:true, glow:true, name:'Blood Jelly', exp:10 },
+  [E.BLOODFEEDER]: { w:22, h:16, hp:150, dmg:50, def:20, color:'#c85a6a', speed:3.0, fly:true, name:'Blood Feeder', exp:9 },
+  [E.CORRUPTBUNNY]: { w:16, h:16, hp:70, dmg:20, def:4, color:'#7a5a8a', speed:1.4, name:'Corrupt Bunny', exp:4 },
+  [E.CORRUPTGOLDFISH]: { w:16, h:10, hp:100, dmg:30, def:6, color:'#6a5a8a', speed:2.2, swim:true, name:'Corrupt Goldfish', exp:5 },
+  [E.CORRUPTPENGUIN]: { w:14, h:16, hp:70, dmg:20, def:4, color:'#5a5a7a', speed:1.2, name:'Corrupt Penguin', exp:4 },
+  [E.FUNGIBULB]: { w:18, h:18, hp:90, dmg:24, def:4, color:'#c86ad8', speed:1.2, name:'Fungi Bulb', exp:4 },
+  [E.GIANTFUNGI]: { w:26, h:26, hp:300, dmg:70, def:20, color:'#a84ac8', speed:1.3, name:'Giant Fungi Bulb', exp:11 },
+  [E.MUSHILADYBUG]: { w:18, h:14, hp:220, dmg:60, def:16, color:'#e87ad8', speed:2.4, fly:true, glow:true, name:'Mushi Ladybug', exp:8 },
+  [E.COCHINEALBEETLE]: { w:14, h:10, hp:40, dmg:20, def:10, color:'#d84a4a', speed:1.3, name:'Cochineal Beetle', exp:3 },
+  [E.CYANBEETLE]: { w:14, h:14, hp:40, dmg:20, def:10, color:'#4ad8d8', speed:1.3, glow:true, name:'Cyan Beetle', exp:3 },
+  [E.LACBEETLE]: { w:14, h:14, hp:40, dmg:20, def:10, color:'#c84a9a', speed:1.3, name:'Lac Beetle', exp:3 },
+  [E.SPOREBAT]: { w:20, h:14, hp:16, dmg:13, def:2, color:'#b8a8d8', speed:2.8, fly:true, name:'Spore Bat', exp:2 },
+  [E.SPORESKELETON]: { w:18, h:32, hp:60, dmg:20, def:8, color:'#b0a8c8', speed:1.1, name:'Spore Skeleton', exp:5 },
+  [E.TORTUREDSOUL]: { w:18, h:34, hp:400, dmg:14, def:20, color:'#8898a8', speed:1.4, fly:true, name:'Tortured Soul', exp:10 },
 };
 
 function makeEntity(type, x, y) {
@@ -770,6 +808,18 @@ function dropTable(type, game) {
       return [{ id:I.GEL, count:1 + Math.floor(Math.random() * 2) }];
     case E.SHARK:
       return [{ id:I.SHARKFIN, count:1 }, { id:I.GEL, count:1 }];
+    case E.ROCKGOLEM:
+      return [{ id:I.STONE, count:2 + Math.floor(Math.random() * 3) }, { id:I.GEM_DIAMOND, count:Math.random() < 0.08 ? 1 : 0 }];
+    case E.ANGRYTRAPPER: case E.WORLDFEEDER:
+      return [{ id:I.VINE, count:Math.random() < 0.5 ? 1 : 0 }];
+    case E.LAMIA: case E.GHOUL: case E.DREAMERGHOUL:
+      return [{ id:I.GOLD, count:Math.random() < 0.3 ? 1 : 0 }];
+    case E.ANOMURAFUNGUS: case E.FUNGIBULB: case E.GIANTFUNGI:
+      return [{ id:I.GLOWSTONE, count:Math.random() < 0.4 ? 1 : 0 }];
+    case E.COCHINEALBEETLE: case E.CYANBEETLE: case E.LACBEETLE:
+      return [{ id:I.GEL, count:Math.random() < 0.3 ? 1 : 0 }];
+    case E.CORRUPTBUNNY: case E.CORRUPTPENGUIN:
+      return [{ id:I.GEL, count:1 }];
     case E.UMBRELLASLIME:
       return [{ id:I.UMBRELLA, count:1 }, { id:I.GEL, count:1 }];
     case E.DUNESPLICER: case E.ANTLIONSWARMER:
@@ -807,6 +857,9 @@ function dropTable(type, game) {
       return [{ id:I.HELLSTONE, count:Math.random() < 0.35 ? 1 : 0 }];
     case E.JUNGLECREEPER:
       return [{ id:I.VINE, count:Math.random() < 0.5 ? 1 : 0 }];
+    case E.DESERTSPIRIT: case E.RUNEWIZARD:
+      ghostShooterStep(e, game);
+      break;
     case E.DRBONES:
       return [{ id:I.GRAPPLINGHOOK, count:Math.random() < 0.1 ? 1 : 0 }, { id:I.HEALINGPOTION, count:Math.random() < 0.1 ? 1 : 0 }];
     default: return [];
@@ -1660,11 +1713,11 @@ function enemyStep(e, game) {
       contactCheck(e, game);
       break;
     case E.SANDSLIME: case E.CRIMSLIME: case E.SLIMELING:
-    case E.PURPLESLIME: case E.YELLOWSLIME: case E.REDSLIME: case E.BLACKSLIME:
+    case E.PURPLESLIME: case E.YELLOWSLIME: case E.REDSLIME: case E.BLACKSLIME: case E.ILLUSLIME:
       slimeStep(e, game);
       physicsStep(e, game);
       break;
-    case E.GIANTWORM: case E.DIGGER:
+    case E.GIANTWORM: case E.DIGGER: case E.TOMBCRAWLER: case E.WORLDFEEDER:
       wyvernStep(e, game);
       break;
     case E.NYMPH:
@@ -1731,20 +1784,29 @@ function enemyStep(e, game) {
       break;
     case E.MEDUSA: case E.SPIKEBALL: case E.GRANITEELEMENTAL:
     case E.VULTURE: case E.METEORHEAD: case E.REDDEVIL:
+    case E.FLOATYGROSS: case E.ILLUBAT: case E.BLOODFEEDER: case E.MUSHILADYBUG:
+    case E.SPOREBAT: case E.WANDERINGEYENPC: case E.ENCHANTEDSWORDNPC: case E.TORTUREDSOUL:
       flyStep(e, game);
       break;
     case E.PINKJELLYFISH: case E.BLUEJELLYFISH: case E.GREENJELLYFISH: case E.PIRANHA:
-    case E.SHARK: case E.ORCA:
+    case E.SHARK: case E.ORCA: case E.FUNGOFISH: case E.BLOODJELLY: case E.CORRUPTGOLDFISH:
       jellyfishStep(e, game);
       break;
     case E.CRAWDAD: case E.JUNGLECREEPER: case E.CRAB: case E.SEASNAIL: case E.WALLCREEPER: case E.SALAMANDER:
+    case E.HOPLITE: case E.ICYMERMAN: case E.GIANTSHELLY: case E.SANDPOACHER: case E.SANDSHARK:
+    case E.CRYSTALTHRESHER: case E.ANOMURAFUNGUS: case E.SKELMERCHANT: case E.ROCKGOLEM:
+    case E.POSSESSEDARMOR: case E.GHOUL: case E.DREAMERGHOUL: case E.LAMIA:
+    case E.FUNGIBULB: case E.GIANTFUNGI: case E.SPORESKELETON: case E.CORRUPTBUNNY: case E.CORRUPTPENGUIN:
       zombieStep(e, game);
       physicsStep(e, game);
+      break;
+    case E.DESERTSPIRIT: case E.RUNEWIZARD:
+      ghostShooterStep(e, game);
       break;
     case E.DRBONES:
       rangedWalkerStep(e, game, P.ARROW, 5.0, 22, 2.2, '#e0d8c8');
       break;
-    case E.MANEATER: case E.SNATCHER:
+    case E.MANEATER: case E.SNATCHER: case E.ANGRYTRAPPER:
       maneaterStep(e, game);
       break;
   }

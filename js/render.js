@@ -1597,6 +1597,16 @@ function drawEnemy(ctx, e, cam, W, H) {
     case E.ICETORTOISE: case E.GIANTTORTOSE:
       drawTortoise(ctx, x, y, e.w, e.h, col);
       break;
+    case E.HOPLITE: case E.ICYMERMAN: case E.GIANTSHELLY: case E.SANDPOACHER:
+    case E.SANDSHARK: case E.CRYSTALTHRESHER: case E.ANOMURAFUNGUS: case E.SKELMERCHANT:
+    case E.ROCKGOLEM: case E.POSSESSEDARMOR: case E.GHOUL: case E.DREAMERGHOUL: case E.LAMIA:
+    case E.FUNGIBULB: case E.GIANTFUNGI: case E.SPORESKELETON: case E.CORRUPTBUNNY:
+    case E.CORRUPTPENGUIN: case E.RUNEWIZARD: case E.TORTUREDSOUL:
+      drawHumanoid(ctx, x, y, col, false, e.dir, false);
+      break;
+    case E.COCHINEALBEETLE: case E.CYANBEETLE: case E.LACBEETLE:
+      drawGroundCritter(ctx, x, y, e, col);
+      break;
     case E.SNOWFLINX:
       drawHumanoid(ctx, x, y, col, false, e.dir, false);
       ctx.fillStyle = '#ffffff';
@@ -1609,6 +1619,22 @@ function drawEnemy(ctx, e, cam, W, H) {
       break;
     case E.ARAPAIMA:
       drawFish(ctx, x, y, e.w, col, '#a04a2a');
+      break;
+    case E.FLOATYGROSS: case E.ILLUBAT: case E.BLOODFEEDER: case E.MUSHILADYBUG:
+    case E.SPOREBAT: case E.ENCHANTEDSWORDNPC: case E.TORTUREDSOUL:
+      drawFlyingWinged(ctx, x, y, e.w, col, '#ffffff88');
+      break;
+    case E.WANDERINGEYENPC:
+      drawCrimera(ctx, x, y, e.w, col);
+      break;
+    case E.DESERTSPIRIT:
+      ctx.globalAlpha = 0.75;
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.arc(x, y, e.w / 2, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(x - 5, y - 3, 3, 3);
+      ctx.fillRect(x + 2, y - 3, 3, 3);
+      ctx.globalAlpha = 1;
       break;
     case E.DERPLING:
       drawFlyingWinged(ctx, x, y, e.w, col, '#8a7ac0');
@@ -1778,7 +1804,7 @@ function drawEnemy(ctx, e, cam, W, H) {
     case E.BONESERPENT:
       drawWyvern(ctx, e, cam, W, H, Time.seconds);
       break;
-    case E.GIANTWORM: case E.DIGGER:
+    case E.GIANTWORM: case E.DIGGER: case E.TOMBCRAWLER: case E.WORLDFEEDER:
       drawWorm(ctx, e, cam, W, H, col);
       break;
     case E.SANDSLIME: case E.CRIMSLIME: case E.SLIMELING:
@@ -1878,6 +1904,9 @@ function drawEnemy(ctx, e, cam, W, H) {
       break;
     case E.GOLDFISH:
       drawFish(ctx, x, y, e.w, col, '#f6c45d');
+      break;
+    case E.FUNGOFISH: case E.BLOODJELLY: case E.CORRUPTGOLDFISH:
+      drawFish(ctx, x, y, e.w, col, col);
       break;
     case E.CRIMERA:
       drawCrimera(ctx, x, y, e.w, col);
@@ -2417,6 +2446,17 @@ function drawEnemy(ctx, e, cam, W, H) {
       ctx.closePath(); ctx.fill();
       ctx.fillStyle = '#ffffff';
       ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
+      break;
+    case E.ANGRYTRAPPER:
+      ctx.fillStyle = shade(col, -25);
+      ctx.fillRect(x - 3, y, 6, e.h / 2);
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.arc(x, y - 4, e.w / 2 + 3, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(x + e.dir * 3 - 5, y - 7, 4, 4);
+      ctx.fillRect(x + e.dir * 3 + 1, y - 7, 4, 4);
+      ctx.fillStyle = '#cc3333';
+      ctx.fillRect(x - e.w / 2 - 2, y - 4, e.w + 4, 3);
       break;
     case E.MANEATER:
       ctx.fillStyle = col;
