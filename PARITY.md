@@ -619,6 +619,18 @@ This file tracks the staged expansion toward Terraria 1.4.4 parity. Progression 
 - [x] Keep town NPCs at hp 9999 as a deliberate engine deviation and document it.
 - [x] Commit the canonical data sources and transform script under `tools/canonical/` for provenance.
 
+## Batch 78: Canonical Fidelity (Movement, Events, Combat, Progression)
+
+- [x] Set player physics to canonical values: gravity 0.4, max fall 10, walk 3.0, run 4.2, jump -8.5, 5 damage per tile beyond 25.
+- [x] Add enemy knockback-resistance from the wiki table (251 entries) applied in the damage path.
+- [x] Set the day cycle to 15 minutes of day + 9 minutes of night.
+- [x] Set ambient spawning to a 5-enemy cap with vanilla cadence.
+- [x] Set natural event chances: Blood Moon 1/9 per night, Solar Eclipse 1/20 and Pirate 1/30 per Hardmode dawn, Goblin Army and Slime Rain 1/3 per dawn.
+- [x] Add 4% critical hits (double damage) to melee, ranged, and magic with feedback text.
+- [x] Add Mana Crystals (3 Fallen Stars, +20 max mana to a 200 cap) with max mana starting at 20.
+- [x] Generate ~30 Heart Crystals on cave floors per world, mineable to consumable hearts.
+- [x] Add 38 remaining vanilla enemies and critter corruption during Blood Moons (Batch 79 merged into this branch).
+
 ## Long-Term Catalog Parity
 
 - [x] Audit notable missing vanilla enemies and critters against `E` and `ENT_DEF` (ongoing; Ocean/Cavern/Spider/Underworld gaps continued in Batch 73).
