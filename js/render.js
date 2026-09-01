@@ -1757,7 +1757,7 @@ function drawEnemy(ctx, e, cam, W, H) {
       ctx.arc(x, y - 2, 4, 0, Math.PI * 2);
       ctx.fill();
       break;
-    case E.HELLBAT:
+    case E.HELLBAT: case E.LAVABAT:
       drawHellbat(ctx, x, y, e.w, col);
       break;
     case E.DEMON:
@@ -2435,7 +2435,7 @@ function drawEnemy(ctx, e, cam, W, H) {
       ctx.fillStyle = '#111111';
       ctx.beginPath(); ctx.arc(x + e.dir * 6, y - 2, 2, 0, Math.PI * 2); ctx.fill();
       break;
-    case E.PINKJELLYFISH:
+    case E.PINKJELLYFISH: case E.BLUEJELLYFISH: case E.GREENJELLYFISH:
       ctx.fillStyle = col;
       ctx.globalAlpha = 0.75;
       ctx.beginPath();
@@ -2457,8 +2457,34 @@ function drawEnemy(ctx, e, cam, W, H) {
       ctx.beginPath(); ctx.arc(x - 4, y - 2, 2, 0, Math.PI * 2); ctx.fill();
       ctx.beginPath(); ctx.arc(x + 4, y - 2, 2, 0, Math.PI * 2); ctx.fill();
       break;
-    case E.CRAWDAD:
+    case E.CRAWDAD: case E.CRAB: case E.WALLCREEPER:
       drawCrawdad(ctx, x, y, e.w, col);
+      break;
+    case E.SEASNAIL:
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.ellipse(x, y + 3, e.w / 2.4, e.h / 3, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = white ? '#fff' : '#c8a050';
+      ctx.beginPath(); ctx.arc(x + 3, y - 2, e.w / 2.6, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(x + 3, y - 2, e.w / 2.6 - 1, 0, Math.PI * 1.6); ctx.stroke();
+      break;
+    case E.PIRANHA:
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.ellipse(x, y, e.w / 2, e.h / 2, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = white ? '#fff' : '#e06848';
+      ctx.beginPath(); ctx.moveTo(x + e.w / 2, y); ctx.lineTo(x + e.w / 2 + 6, y - 4); ctx.lineTo(x + e.w / 2 + 6, y + 4); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#111';
+      ctx.fillRect(x - 3, y - 3, 2, 2);
+      ctx.fillStyle = white ? '#fff' : '#e8e8e8';
+      ctx.fillRect(x - 5, y + 3, 7, 2);
+      break;
+    case E.SALAMANDER:
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.ellipse(x, y, e.w / 2, e.h / 2, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(x - e.w / 2, y); ctx.lineTo(x - e.w / 2 - 9, y - 4); ctx.lineTo(x - e.w / 2 - 5, y + 4); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#111';
+      ctx.fillRect(x + e.dir * 7, y - 3, 2, 2);
       break;
     case E.JUNGLECREEPER:
       ctx.fillStyle = col;

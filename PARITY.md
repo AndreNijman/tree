@@ -575,6 +575,14 @@ This file tracks the staged expansion toward Terraria 1.4.4 parity. Progression 
 - [x] Add Doctor Bones (rare surface-night skeleton archer) with a rare Grappling Hook drop path.
 - [x] Wire all four into Biome pools, drop tables, firing AI, bestiary discovery/kills, and procedural rendering.
 
+## Batch 73: Vanilla Enemy And Critter Audit Continued
+
+- [x] Add Crab, Sea Snail, Piranha, and Blue Jellyfish to pre-Hardmode Ocean encounters.
+- [x] Add Wall Creeper to pre-Hardmode Spider Caves and Salamander to ordinary Caverns.
+- [x] Add Hardmode-only Green Jellyfish and Lava Bat with phase-correct Ocean/Underworld routing.
+- [x] Spawn aquatic enemies in actual nearby water and give Piranha/Jellyfish water-bound movement.
+- [x] Integrate all eight with drops, the expanded 262-entry bestiary, and procedural rendering.
+
 ## Batch 74: Remaining Weapon Behavior Specialization
 
 - [x] Add Flower of Fire as a Hellforge-crafted magic weapon that fires a twice-bouncing enchanted fireball through the generic bouncing-projectile path.
@@ -584,7 +592,7 @@ This file tracks the staged expansion toward Terraria 1.4.4 parity. Progression 
 
 ## Long-Term Catalog Parity
 
-- [x] Audit notable missing vanilla enemies and critters against `E` and `ENT_DEF` (ongoing; high-value pre-Hardmode foes added in Batch 72).
+- [x] Audit notable missing vanilla enemies and critters against `E` and `ENT_DEF` (ongoing; Ocean/Cavern/Spider/Underworld gaps continued in Batch 73).
 - [ ] Audit every vanilla event and invasion against `EVENT_WAVES` and world-state drivers.
 - [ ] Audit every vanilla item against `I`, `ITEMS`, recipes, drops, chests, fishing, and shops.
 - [ ] Add authentic weapon behaviors where generic melee/ranged/magic behavior currently substitutes (Flower of Fire, Piranha Gun, and Rainbow Gun completed in Batch 74; Candy Cane weapons and other generic archetypes remain).

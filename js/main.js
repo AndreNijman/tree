@@ -2881,6 +2881,10 @@ function updateSpawning(dt) {
     while (wormTy < game.world.H - 3 && !game.world.isSolid(wormTx, wormTy)) wormTy++;
     if (wormTy >= game.world.H - 3) return;
     sy = wormTy * TILE + 8;
+  } else if (def.swim) {
+    var swimSpot = findCritterWaterSpot(sx);
+    if (!swimSpot) return;
+    sx = swimSpot.x; sy = swimSpot.y;
   } else if (def.fly) sy = clamp(game.world.surfaceY[clamp(Math.floor(sx / TILE), 0, game.world.W - 1)] * TILE - 40 - Math.random() * 80, 16, game.world.H * TILE - 16);
   else sy = findGroundY(sx);
   var e2 = spawnEntity(game, type, sx, sy);
@@ -3717,7 +3721,7 @@ function pickEnemy() {
       if (biome === BIOME.JUNGLE) {
         pool.push(E.JUNGLEBAT, E.JUNGLESLIME, E.SPIKEDJUNGLESLIME, E.HORNET);
       } else if (biome === BIOME.OCEAN) {
-        pool.push(E.ZOMBIE, E.GIANTBAT, E.SQUID, E.PINKJELLYFISH, E.CRAWDAD);
+        pool.push(E.ZOMBIE, E.GIANTBAT, E.SQUID, E.PINKJELLYFISH, E.BLUEJELLYFISH, E.CRAWDAD, E.CRAB, E.SEASNAIL, E.PIRANHA);
       } else if (biome === BIOME.CORRUPT) {
         pool.push(E.EATEROFSOULS, E.DEVOURER, E.CORRUPTSLIME, E.CORRUPTCRIMSONFLYER);
       } else if (biome === BIOME.CRIMSON) {
@@ -3742,7 +3746,7 @@ function pickEnemy() {
       if (biome === BIOME.UNDERWORLD) {
         pool.push(E.LAVASLIME, E.HELLBAT, E.DEMON, E.FIREIMP, E.BONESERPENT, E.VOODOODEMON);
       } else if (biome === BIOME.SPIDER) {
-        pool.push(E.BLOODCRAWLER);
+        pool.push(E.BLOODCRAWLER, E.WALLCREEPER);
       } else if (biome === BIOME.GRANITE) {
         pool.push(E.GRANITEGOLEM);
       if (game.hardmode) pool.push(E.GRANITEELEMENTAL);
@@ -3765,7 +3769,7 @@ function pickEnemy() {
       } else if (biome === BIOME.UNDERSNOW) {
         pool.push(E.ICESLIME, E.SPIKEDICESLIME, E.ICEBAT, E.SNOWFLINX, E.UNDEADVIKING);
       } else {
-        pool.push(E.ZOMBIE, E.CAVEBAT, E.GIANTBAT, E.SLIME, E.JUNGLESLIME, E.GIANTWORM, E.SKELETON, E.MOTHERSLIME, E.BLUESLIME);
+        pool.push(E.ZOMBIE, E.CAVEBAT, E.GIANTBAT, E.SLIME, E.JUNGLESLIME, E.GIANTWORM, E.SKELETON, E.MOTHERSLIME, E.BLUESLIME, E.SALAMANDER);
         if (Math.random() < 0.03) pool.push(E.PINKY);
       }
       pool.push(E.CAVEBAT, E.GIANTBAT);
@@ -3773,7 +3777,7 @@ function pickEnemy() {
       if (biome === BIOME.UNDERWORLD) {
         pool.push(E.LAVASLIME, E.HELLBAT, E.DEMON, E.FIREIMP, E.BONESERPENT, E.VOODOODEMON);
       } else if (biome === BIOME.SPIDER) {
-        pool.push(E.BLOODCRAWLER);
+        pool.push(E.BLOODCRAWLER, E.WALLCREEPER);
       } else if (biome === BIOME.GRANITE) {
         pool.push(E.GRANITEGOLEM);
       if (game.hardmode) pool.push(E.GRANITEELEMENTAL);
@@ -3788,7 +3792,7 @@ function pickEnemy() {
       } else if (biome === BIOME.UNDERSNOW) {
         pool.push(E.ICESLIME, E.SPIKEDICESLIME, E.ICEBAT, E.SNOWFLINX, E.UNDEADVIKING);
       } else {
-        pool.push(E.ZOMBIE, E.CAVEBAT, E.GIANTBAT, E.SLIME, E.UNDEADMINER, E.GIANTWORM, E.SKELETON, E.BLUESLIME);
+        pool.push(E.ZOMBIE, E.CAVEBAT, E.GIANTBAT, E.SLIME, E.UNDEADMINER, E.GIANTWORM, E.SKELETON, E.BLUESLIME, E.SALAMANDER);
         if (Math.random() < 0.03) pool.push(E.MOTHERSLIME, E.PINKY);
       }
     }
@@ -3821,7 +3825,7 @@ function pickEnemy() {
       pool.push(E.JUNGLEBAT, E.JUNGLESLIME, E.SPIKEDJUNGLESLIME, E.HORNET, E.MOSSHORNET, E.DERPLING);
       if (night) pool.push(E.MOTH);
       } else if (biome === BIOME.OCEAN) {
-        pool.push(E.ZOMBIE, E.HARDZOMBIE, E.ANGLERFISH, E.ARAPAIMA, E.SQUID, E.PINKJELLYFISH, E.CRAWDAD);
+        pool.push(E.ZOMBIE, E.HARDZOMBIE, E.ANGLERFISH, E.ARAPAIMA, E.SQUID, E.PINKJELLYFISH, E.BLUEJELLYFISH, E.GREENJELLYFISH, E.CRAWDAD, E.CRAB, E.SEASNAIL, E.PIRANHA);
       } else if (biome === BIOME.CORRUPT) {
       pool.push(E.EATEROFSOULS, E.CORRUPTOR, E.CORRUPTSLIME, E.WRATH, E.HARDZOMBIE, E.CURSEDHAMMER);
     } else if (biome === BIOME.CRIMSON) {
@@ -3842,7 +3846,7 @@ function pickEnemy() {
     if (lunarActive && Math.random() < 0.1) pool.push(E.CORITE, E.SELENIAN, E.LUNARFLAME, E.ALIENHORNET, E.STORMDIVER, E.PREDICTOR, E.STARGAZER);
   } else if (depth < 45) {
     if (biome === BIOME.UNDERWORLD) {
-      pool.push(E.LAVASLIME, E.HELLBAT, E.DEMON, E.FIREIMP, E.BONESERPENT, E.VOODOODEMON);
+      pool.push(E.LAVASLIME, E.HELLBAT, E.LAVABAT, E.DEMON, E.FIREIMP, E.BONESERPENT, E.VOODOODEMON);
     } else if (biome === BIOME.SPIDER) {
       pool.push(E.BLOODCRAWLER, E.BLACKRECLUSE);
     } else if (biome === BIOME.GRANITE) {
@@ -3878,7 +3882,7 @@ function pickEnemy() {
     if (lunarActive && Math.random() < 0.1) pool.push(E.CORITE, E.SELENIAN, E.LUNARFLAME, E.ALIENHORNET, E.STORMDIVER, E.PREDICTOR, E.STARGAZER);
   } else {
     if (biome === BIOME.UNDERWORLD) {
-      pool.push(E.LAVASLIME, E.HELLBAT, E.DEMON, E.FIREIMP, E.BONESERPENT, E.VOODOODEMON);
+      pool.push(E.LAVASLIME, E.HELLBAT, E.LAVABAT, E.DEMON, E.FIREIMP, E.BONESERPENT, E.VOODOODEMON);
     } else if (biome === BIOME.SPIDER) {
       pool.push(E.BLOODCRAWLER, E.BLACKRECLUSE);
     } else if (biome === BIOME.GRANITE) {

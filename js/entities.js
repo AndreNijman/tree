@@ -327,7 +327,15 @@ var ENT_DEF = {
   [E.PINKJELLYFISH]: { w:26, h:18, hp:120, dmg:18, def:2, color:'#ff9ad8', speed:2.6, swim:true, glow:true, name:'Pink Jellyfish', exp:3 },
   [E.CRAWDAD]: { w:26, h:16, hp:110, dmg:16, def:3, color:'#d8a878', speed:2.4, name:'Crawdad', exp:3 },
   [E.JUNGLECREEPER]: { w:30, h:18, hp:180, dmg:26, def:4, color:'#4d8a3d', speed:2.6, name:'Jungle Creeper', exp:5 },
-  [E.DRBONES]: { w:22, h:36, hp:260, dmg:30, def:4, color:'#e8e0d0', speed:2.0, name:'Doctor Bones', exp:10, shoot:true }
+  [E.DRBONES]: { w:22, h:36, hp:260, dmg:30, def:4, color:'#e8e0d0', speed:2.0, name:'Doctor Bones', exp:10, shoot:true },
+  [E.CRAB]: { w:22, h:16, hp:85, dmg:16, def:4, color:'#c86a4a', speed:3.0, name:'Crab', exp:2 },
+  [E.SEASNAIL]: { w:20, h:15, hp:60, dmg:10, def:2, color:'#e0c070', speed:0.7, name:'Sea Snail', exp:1 },
+  [E.PIRANHA]: { w:20, h:14, hp:120, dmg:20, def:2, color:'#78b0d8', speed:2.6, swim:true, name:'Piranha', exp:3, fly:true },
+  [E.LAVABAT]: { w:18, h:14, hp:120, dmg:28, def:6, color:'#e05c3a', speed:2.8, name:'Lava Bat', exp:4, fly:true },
+  [E.WALLCREEPER]: { w:20, h:16, hp:110, dmg:18, def:3, color:'#82624a', speed:2.2, name:'Wall Creeper', exp:2 },
+  [E.SALAMANDER]: { w:30, h:15, hp:140, dmg:22, def:4, color:'#b87848', speed:2.3, name:'Salamander', exp:3 },
+  [E.BLUEJELLYFISH]: { w:20, h:16, hp:90, dmg:18, def:3, color:'#6aa8e8', speed:1.9, swim:true, glow:true, name:'Blue Jellyfish', exp:3 },
+  [E.GREENJELLYFISH]: { w:20, h:16, hp:90, dmg:18, def:3, color:'#5ce87a', speed:1.9, swim:true, glow:true, name:'Green Jellyfish', exp:3 }
 };
 
 function makeEntity(type, x, y) {
@@ -771,10 +779,12 @@ function dropTable(type, game) {
       return [{ id:I.GRANITE, count:1 + Math.floor(Math.random() * 2) }];
     case E.BASILISK:
       return [{ id:I.SAND, count:2 }, { id:I.GOLD, count:Math.random() < 0.05 ? 1 : 0 }];
-    case E.PINKJELLYFISH:
+    case E.PINKJELLYFISH: case E.BLUEJELLYFISH: case E.GREENJELLYFISH:
       return [{ id:I.GLOWSTONE, count:Math.random() < 0.4 ? 1 : 0 }];
-    case E.CRAWDAD:
+    case E.CRAWDAD: case E.CRAB: case E.SEASNAIL: case E.PIRANHA: case E.WALLCREEPER: case E.SALAMANDER:
       return [];
+    case E.LAVABAT:
+      return [{ id:I.HELLSTONE, count:Math.random() < 0.35 ? 1 : 0 }];
     case E.JUNGLECREEPER:
       return [{ id:I.VINE, count:Math.random() < 0.5 ? 1 : 0 }];
     case E.DRBONES:
@@ -1257,7 +1267,7 @@ function enemyStep(e, game) {
       slimeStep(e, game);
       physicsStep(e, game);
       break;
-    case E.HELLBAT:
+    case E.HELLBAT: case E.LAVABAT:
       flyStep(e, game);
       break;
     case E.DEMON: case E.VOODOODEMON:
@@ -1701,10 +1711,10 @@ function enemyStep(e, game) {
     case E.MEDUSA: case E.SPIKEBALL: case E.GRANITEELEMENTAL:
       flyStep(e, game);
       break;
-    case E.PINKJELLYFISH:
+    case E.PINKJELLYFISH: case E.BLUEJELLYFISH: case E.GREENJELLYFISH: case E.PIRANHA:
       jellyfishStep(e, game);
       break;
-    case E.CRAWDAD: case E.JUNGLECREEPER:
+    case E.CRAWDAD: case E.JUNGLECREEPER: case E.CRAB: case E.SEASNAIL: case E.WALLCREEPER: case E.SALAMANDER:
       zombieStep(e, game);
       physicsStep(e, game);
       break;

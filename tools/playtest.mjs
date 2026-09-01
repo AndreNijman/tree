@@ -690,6 +690,94 @@ const v72render = await page.evaluate(() => {
 });
 check('B72: all four enemies render without errors', v72render.ok, JSON.stringify(v72render));
 
+// ===== BATCH 73: VANILLA ENEMY AUDIT CONTINUED =====
+const v73defs = await page.evaluate(() => {
+  var ids = [E.CRAB, E.SEASNAIL, E.PIRANHA, E.LAVABAT, E.WALLCREEPER, E.SALAMANDER, E.BLUEJELLYFISH, E.GREENJELLYFISH];
+  var allDefs = ids.every(t => ENT_DEF[t] && ENT_DEF[t].name && ENT_DEF[t].hp > 0);
+  var swimmers = ENT_DEF[E.PIRANHA].swim && ENT_DEF[E.BLUEJELLYFISH].swim && ENT_DEF[E.GREENJELLYFISH].swim;
+  var catalog = bestiaryCatalog();
+  var catalogued = ids.every(t => catalog.some(entry => entry.key === 'e:' + t));
+  return { allDefs:allDefs, swimmers:!!swimmers, catalogued:catalogued, catalogCount:catalog.length };
+});
+check('B73: all eight vanilla definitions expand the bestiary to 262 entries', v73defs.allDefs && v73defs.catalogued && v73defs.catalogCount === 262, JSON.stringify(v73defs));
+check('B73: Piranha and both new Jellyfish use aquatic movement', v73defs.swimmers, JSON.stringify(v73defs));
+
+const v73step = await page.evaluate(() => {
+  var ids = [E.CRAB, E.SEASNAIL, E.PIRANHA, E.LAVABAT, E.WALLCREEPER, E.SALAMANDER, E.BLUEJELLYFISH, E.GREENJELLYFISH];
+  var results = [];
+  game.player.invuln = 99999;
+  for (var t = 0; t < ids.length; t++) {
+    var e = spawnEntity(game, ids[t], game.player.x + 100 + t * 4, game.player.y - 80);
+    e.hp = 99999;
+    try {
+      for (var s = 0; s < 20; s++) enemyStep(e, game);
+      results.push({ id:ids[t], alive:!e.dead, finite:isFinite(e.x) && isFinite(e.y) });
+    } catch (err) { results.push({ id:ids[t], alive:false, finite:false, err:err.message }); }
+    e.dead = true;
+  }
+  return { all:results.every(r => r.alive && r.finite), results:results };
+});
+check('B73: all eight enemies spawn and step with finite positions', v73step.all, JSON.stringify(v73step.results));
+
+const v73drops = await page.evaluate(() => {
+  var ids = [E.CRAB, E.SEASNAIL, E.PIRANHA, E.LAVABAT, E.WALLCREEPER, E.SALAMANDER, E.BLUEJELLYFISH, E.GREENJELLYFISH];
+  var valid = ids.every(t => dropTable(t, game).every(d => typeof ITEMS[d.id] !== 'undefined'));
+  var lava = dropTable(E.LAVABAT, game).every(d => d.id === I.HELLSTONE);
+  var jellies = [E.BLUEJELLYFISH, E.GREENJELLYFISH].every(t => dropTable(t, game).every(d => d.id === I.GLOWSTONE));
+  return { valid:valid, lava:lava, jellies:jellies };
+});
+check('B73: all drop paths resolve, including Hellstone and Glowstone', v73drops.valid && v73drops.lava && v73drops.jellies, JSON.stringify(v73drops));
+
+const v73pools = await page.evaluate(() => {
+  var oldHardmode = game.hardmode;
+  var oldBiomeAt = game.world.biomeAt;
+  var oldY = game.player.y;
+  var surf = game.world.surfaceY[Math.floor(game.player.x / TILE)] * TILE;
+  function sweep(hardmode, biome, depth) {
+    game.hardmode = hardmode;
+    game.world.biomeAt = function () { return biome; };
+    game.player.y = surf + depth * TILE;
+    var counts = {};
+    for (var i = 0; i < 600; i++) {
+      var id = pickEnemy();
+      counts[id] = (counts[id] || 0) + 1;
+    }
+    return counts;
+  }
+  var preOcean = sweep(false, BIOME.OCEAN, 0);
+  var preSpider = sweep(false, BIOME.SPIDER, 20);
+  var preCavern = sweep(false, BIOME.FOREST, 20);
+  var preHell = sweep(false, BIOME.UNDERWORLD, 60);
+  var hardOcean = sweep(true, BIOME.OCEAN, 0);
+  var hardHell = sweep(true, BIOME.UNDERWORLD, 60);
+  game.hardmode = oldHardmode;
+  game.world.biomeAt = oldBiomeAt;
+  game.player.y = oldY;
+  function has(pool, id) { return (pool[id] || 0) > 0; }
+  return {
+    preOcean:has(preOcean, E.CRAB) && has(preOcean, E.SEASNAIL) && has(preOcean, E.PIRANHA) && has(preOcean, E.BLUEJELLYFISH),
+    preCaves:has(preSpider, E.WALLCREEPER) && has(preCavern, E.SALAMANDER),
+    preSealed:!has(preOcean, E.GREENJELLYFISH) && !has(preHell, E.LAVABAT),
+    hardOcean:has(hardOcean, E.GREENJELLYFISH),
+    hardHell:has(hardHell, E.LAVABAT)
+  };
+});
+check('B73: pre-Hardmode Ocean, Spider Cave, and Cavern pools expose the correct roster', v73pools.preOcean && v73pools.preCaves, JSON.stringify(v73pools));
+check('B73: Green Jellyfish and Lava Bat remain Hardmode-only', v73pools.preSealed && v73pools.hardOcean && v73pools.hardHell, JSON.stringify(v73pools));
+
+const v73render = await page.evaluate(() => {
+  var ids = [E.CRAB, E.SEASNAIL, E.PIRANHA, E.LAVABAT, E.WALLCREEPER, E.SALAMANDER, E.BLUEJELLYFISH, E.GREENJELLYFISH];
+  var rctx = (typeof ctx2d !== 'undefined' ? ctx2d : document.getElementById('canvas').getContext('2d'));
+  try {
+    for (var t = 0; t < ids.length; t++) {
+      var e = makeEntity(ids[t], game.cam.x + t * 8, game.cam.y);
+      drawEnemy(rctx, e, game.cam, 800, 600);
+    }
+  } catch (err) { return { ok:false, err:err.message }; }
+  return { ok:true, count:ids.length };
+});
+check('B73: all eight enemies render without errors', v73render.ok && v73render.count === 8, JSON.stringify(v73render));
+
 // ===== BATCH 74: SIGNATURE WEAPONS =====
 const v74 = await page.evaluate(() => {
   var out = {};
