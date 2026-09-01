@@ -103,6 +103,17 @@ const mineSpeed = await page.evaluate(() => {
     }
     if (stoneTx >= 0 && dirtTx >= 0) break;
   }
+  // guarantee test tiles if not found naturally (new cave gen may not expose them near spawn)
+  if (stoneTx < 0) {
+    stoneTx = Math.floor(game.world.spawnX / TILE) + 10;
+    stoneTy = game.world.surfaceY[stoneTx] + 15;
+    w.set(stoneTx, stoneTy, T.STONE);
+  }
+  if (dirtTx < 0) {
+    dirtTx = Math.floor(game.world.spawnX / TILE) + 12;
+    dirtTy = game.world.surfaceY[dirtTx] + 5;
+    w.set(dirtTx, dirtTy, T.DIRT);
+  }
   var stoneHits = 0, dirtHits = 0;
   if (stoneTx >= 0) {
     p.x = stoneTx * TILE + 32; p.y = stoneTy * TILE;

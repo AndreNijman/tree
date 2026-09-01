@@ -807,83 +807,77 @@ function renderGame(game, ctx) {
   var tileCtx = ctx;
   var world = game.world;
 
-  // draw walls (behind)
-  for (var wy = y0; wy <= y1; wy++) {
-    for (var wx = x0; wx <= x1; wx++) {
-      var t = world.get(wx, wy);
-      var wl = world.wall(wx, wy);
-      if (wl === WALL.NONE) continue;
-      if (wy < world.surfaceY[wx] && wl !== WALL.WOOD) continue;
-      if (t !== T.AIR) continue;
-      var px = wx * TILE - cam.x + W / 2;
-      var py = wy * TILE - cam.y + H / 2;
-      if (px < -TILE || py < -TILE || px > W || py > H) continue;
-      var col = wl === WALL.DIRT ? '#4a3a28' : (wl === WALL.STONE ? '#3a3d45' : '#2e2e34');
-      tileCtx.fillStyle = col;
-      tileCtx.fillRect(Math.floor(px), Math.floor(py), TILE, TILE);
+  // draw walls + tiles (optimized: direct array access, occlusion culling)
+  var tilesArr = world.tiles;
+  var wallsArr = world.walls;
+  var surfaceArr = world.surfaceY;
+  var wW = world.W, wH = world.H;
+  var tileCtx2 = tileCtx;
+  for (var ty2 = y0; ty2 <= y1; ty2++) {
+    var rowBase = ty2 * wW;
+    var screenY = Math.floor(ty2 * TILE - cam.y + H / 2);
+    if (screenY < -TILE || screenY > H) continue;
+    var surfY2 = surfaceArr[ty2] !== undefined ? surfaceArr[Math.floor(cam.x / TILE)] : 0;
+    for (var tx2 = x0; tx2 <= x1; tx2++) {
+      var ii2 = rowBase + tx2;
+      var t2 = tilesArr[ii2];
+      var wl2 = wallsArr[ii2];
+      var px2 = Math.floor(tx2 * TILE - cam.x + W / 2);
+      if (px2 < -TILE || px2 > W) continue;
+      // wall behind air tiles
+      if (t2 === 0 && wl2 !== 0 && (ty2 >= (surfaceArr[tx2] || 0) || wl2 === 3)) {
+        tileCtx2.fillStyle = wl2 === 1 ? '#4a3a28' : (wl2 === 2 ? '#3a3d45' : '#2e2e34');
+        tileCtx2.fillRect(px2, screenY, TILE, TILE);
+        continue;
+      }
+      if (t2 === 0) continue;
+      // tile sprite with occlusion culling (direct array access for neighbors)
+      if (t2 !== 17 && t2 !== 29 && t2 !== 50 && t2 !== 51 && t2 !== 36 &&
+          tx2 > 0 && tx2 < wW - 1 && ty2 > 0 && ty2 < wH - 1) {
+        if (tilesArr[ii2 - 1] !== 0 && tilesArr[ii2 + 1] !== 0 &&
+            tilesArr[ii2 - wW] !== 0 && tilesArr[ii2 + wW] !== 0) {
+          continue;
+        }
+      }
+      if (t2 === 17) {
+        // torch
+        var flick = 0.8 + 0.2 * Math.sin(Time.seconds * 10 + tx2);
+        tileCtx2.fillStyle = '#8a5c34';
+        tileCtx2.fillRect(px2 + 7, screenY + 8, 2, 8);
+        tileCtx2.fillStyle = 'rgba(255,180,60,' + (0.8 + flick * 0.2) + ')';
+        tileCtx2.beginPath();
+        tileCtx2.arc(px2 + 8, screenY + 6, 2.2 + flick, 0, Math.PI * 2);
+        tileCtx2.fill();
+        continue;
+      }
+      var arr2 = SPRITES[t2];
+      if (!arr2) continue;
+      var variant2 = hash2(tx2, ty2) % TILE_VARIANTS;
+      tileCtx2.drawImage(arr2[variant2], px2, screenY);
+      // liquid surface
+      if ((t2 === 29 || t2 === 50 || t2 === 51 || t2 === 36) && tilesArr[ii2 - wW] !== t2) {
+        var wave = Math.sin(Time.seconds * 2.4 + tx2 * 0.85) * 1.3;
+        if (t2 === 29) {
+          tileCtx2.fillStyle = 'rgba(150,200,255,0.35)';
+          tileCtx2.fillRect(px2, Math.floor(screenY + 2 + wave), TILE, 1);
+        } else if (t2 === 50) {
+          tileCtx2.fillStyle = 'rgba(255,210,90,0.45)';
+          tileCtx2.fillRect(px2, Math.floor(screenY + 2 + wave), TILE, 2);
+        }
+      }
     }
   }
 
-  // draw tiles
-  for (var ty2 = y0; ty2 <= y1; ty2++) {
-    for (var tx2 = x0; tx2 <= x1; tx2++) {
-      var t2 = world.get(tx2, ty2);
-      if (t2 === T.AIR) continue;
-      var px2 = Math.floor(tx2 * TILE - cam.x + W / 2);
-      var py2 = Math.floor(ty2 * TILE - cam.y + H / 2);
-      if (px2 < -TILE || py2 < -TILE || px2 > W || py2 > H) continue;
-      if (t2 === T.TORCH) {
-        var flick = 0.8 + 0.2 * Math.sin(Time.seconds * 10 + tx2);
-        var flame = [255, Math.floor(150 + flick * 50), 60];
-        if (game.player.torchGodFavor) {
-          var torchBiome = world.biomeAt(tx2 * TILE + 8, ty2 * TILE + 8);
-          if (torchBiome === BIOME.SNOW || torchBiome === BIOME.UNDERSNOW) flame = [140, 210, 255];
-          else if (torchBiome === BIOME.JUNGLE) flame = [100, 255, 130];
-          else if (torchBiome === BIOME.CORRUPT) flame = [170, 100, 255];
-          else if (torchBiome === BIOME.CRIMSON) flame = [255, 80, 90];
-          else if (torchBiome === BIOME.HALLOW) flame = [255, 150, 235];
-        }
-        tileCtx.fillStyle = '#8a5c34';
-        tileCtx.fillRect(px2 + 7, py2 + 8, 2, 8);
-        tileCtx.fillStyle = 'rgba(' + flame[0] + ',' + flame[1] + ',' + flame[2] + ',' + (0.8 + flick * 0.2) + ')';
-        tileCtx.beginPath();
-        tileCtx.arc(px2 + 8, py2 + 6, 2.2 + flick, 0, Math.PI * 2);
-        tileCtx.fill();
-        continue;
-      }
-      var arr = SPRITES[t2];
-      if (!arr) continue;
-      var variant = hash2(tx2, ty2) % TILE_VARIANTS;
-      tileCtx.drawImage(arr[variant], px2, py2);
-      // animated liquid surface: highlight band on the top tile of each liquid column
-      if ((t2 === T.WATER || t2 === T.LAVA || t2 === T.SHIMMER || t2 === T.HONEY) &&
-          world.get(tx2, ty2 - 1) !== t2) {
-        var wave = Math.sin(Time.seconds * 2.4 + tx2 * 0.85) * 1.3;
-        var wave2 = Math.sin(Time.seconds * 3.1 + tx2 * 1.7 + 1.3) * 0.8;
-        if (t2 === T.WATER) {
-          tileCtx.fillStyle = 'rgba(150,200,255,' + (0.28 + 0.1 * Math.sin(Time.seconds * 1.8 + tx2)) + ')';
-          tileCtx.fillRect(px2, Math.floor(py2 + 2 + wave), TILE, 1);
-          tileCtx.fillStyle = 'rgba(220,240,255,0.22)';
-          tileCtx.fillRect(px2 + ((tx2 * 5 + Math.floor(Time.seconds * 12)) % 12), Math.floor(py2 + 4 + wave), 4, 1);
-        } else if (t2 === T.LAVA) {
-          tileCtx.fillStyle = 'rgba(255,210,90,' + (0.45 + 0.15 * Math.sin(Time.seconds * 3 + tx2)) + ')';
-          tileCtx.fillRect(px2, Math.floor(py2 + 2 + wave), TILE, 2);
-          if (Math.sin(Time.seconds * 1.3 + tx2 * 2.6) > 0.86) {
-            tileCtx.fillStyle = 'rgba(255,160,60,0.8)';
-            tileCtx.fillRect(px2 + 6 + Math.floor(wave2), py2 - 2, 2, 2);
-          }
-        } else if (t2 === T.SHIMMER) {
-          tileCtx.fillStyle = 'rgba(230,250,255,' + (0.35 + 0.25 * Math.sin(Time.seconds * 2 + tx2 * 0.7)) + ')';
-          tileCtx.fillRect(px2, Math.floor(py2 + 2 + wave), TILE, 1);
-          tileCtx.fillStyle = 'rgba(180,130,255,' + (0.18 + 0.14 * Math.sin(Time.seconds * 1.4 + tx2 * 1.9)) + ')';
-          tileCtx.fillRect(px2, Math.floor(py2 + 5 + wave2), TILE, 1);
-        } else {
-          tileCtx.fillStyle = 'rgba(255,225,140,' + (0.3 + 0.12 * Math.sin(Time.seconds * 1.6 + tx2)) + ')';
-          tileCtx.fillRect(px2, Math.floor(py2 + 2 + wave * 0.6), TILE, 1);
-        }
-      }
-    }
+  // heart crystals
+  for (var h = 0; h < world.heartCrystals.length; h++) {
+    var hc = world.heartCrystals[h];
+    var hpx = hc.x - cam.x + W / 2;
+    var hpy = hc.y - cam.y + H / 2;
+    if (hpx < -40 || hpy < -40 || hpx > W + 40 || hpy > H + 40) continue;
+    drawHeartCrystal(tileCtx, hpx, hpy, Time.seconds);
   }
+
+  if (game.event && game.event.type === 'oldonesarmy') drawOldOnesArmyWorld(game, tileCtx, cam, W, H);
 
   // heart crystals
   for (var h = 0; h < world.heartCrystals.length; h++) {
@@ -1301,12 +1295,15 @@ function drawGraveyardMist(game, ctx, W, H) {
 }
 
 // ---------- Lighting ----------
+var LIGHT_SCALE = 0.25;
 function drawLighting(game, ctx, cam, W, H) {
-  if (!game.lightCanvas || game.lightCanvas.width !== W || game.lightCanvas.height !== H) {
+  var lw = Math.ceil(W * LIGHT_SCALE), lh = Math.ceil(H * LIGHT_SCALE);
+  if (!game.lightCanvas || game.lightCanvas.width !== lw || game.lightCanvas.height !== lh) {
     game.lightCanvas = document.createElement('canvas');
-    game.lightCanvas.width = W; game.lightCanvas.height = H;
+    game.lightCanvas.width = lw; game.lightCanvas.height = lh;
   }
   var lc = game.lightCanvas.getContext('2d');
+  var W = lw, H = lh;
   var t = game.timeOfDay;
   var nightAmt = Math.min(1, Math.max(0, Math.abs(t - 0.5) * 4 - 0.4));
   var base = 0.05 + 0.58 * nightAmt;
@@ -1321,23 +1318,24 @@ function drawLighting(game, ctx, cam, W, H) {
   lc.fillRect(0, 0, W, H);
 
   var world = game.world;
-  var lightX0 = Math.max(0, Math.floor((cam.x - W / 2) / TILE) - 2);
-  var lightX1 = Math.min(world.W - 1, Math.ceil((cam.x + W / 2) / TILE) + 2);
-  var lightY0 = Math.max(0, Math.floor((cam.y - H / 2) / TILE) - 2);
-  var lightY1 = Math.min(world.H - 1, Math.ceil((cam.y + H / 2) / TILE) + 2);
+  var lightTile = TILE * LIGHT_SCALE;
+  var lightX0 = Math.max(0, Math.floor((cam.x - W / 2 / LIGHT_SCALE) / TILE) - 2);
+  var lightX1 = Math.min(world.W - 1, Math.ceil((cam.x + W / 2 / LIGHT_SCALE) / TILE) + 2);
+  var lightY0 = Math.max(0, Math.floor((cam.y - H / 2 / LIGHT_SCALE) / TILE) - 2);
+  var lightY1 = Math.min(world.H - 1, Math.ceil((cam.y + H / 2 / LIGHT_SCALE) / TILE) + 2);
 
   // Draw a single smooth underground darkness polygon to avoid column seams.
   var maxSurfaceScreen = -Infinity;
   for (var surfaceX = lightX0; surfaceX <= lightX1; surfaceX++) {
-    var surfScreen = world.surfaceY[surfaceX] * TILE - cam.y + H / 2;
+    var surfScreen = world.surfaceY[surfaceX] * lightTile - cam.y * LIGHT_SCALE + lh / 2;
     maxSurfaceScreen = Math.max(maxSurfaceScreen, surfScreen);
   }
   if (maxSurfaceScreen > 0) {
     lc.beginPath();
     lc.moveTo(0, H);
     for (surfaceX = lightX0; surfaceX <= lightX1; surfaceX++) {
-      var polyX = surfaceX * TILE - cam.x + W / 2;
-      var polyTop = (world.surfaceY[surfaceX] + 1) * TILE - cam.y + H / 2;
+      var polyX = surfaceX * lightTile - cam.x * LIGHT_SCALE + lw / 2;
+      var polyTop = (world.surfaceY[surfaceX] + 1) * lightTile - cam.y * LIGHT_SCALE + lh / 2;
       lc.lineTo(polyX, Math.max(0, polyTop));
     }
     lc.lineTo(W, H);
@@ -1373,12 +1371,12 @@ function drawLighting(game, ctx, cam, W, H) {
   }
 
   // A held torch or glowstone lights the player; there is no free cave light.
-  var px = game.player.x - cam.x + W / 2;
-  var py = game.player.y - cam.y + H / 2;
+  var px = (game.player.x - cam.x) * LIGHT_SCALE + lw / 2;
+  var py = (game.player.y - cam.y) * LIGHT_SCALE + lh / 2;
   var held = game.player.inventory.selectedItem();
   var heldDef = held && ITEMS[held.id];
-  if (heldDef && heldDef.tile === T.TORCH) cutLight(px, py - 10, 180);
-  else if (heldDef && heldDef.tile === T.GLOWSTONE) cutLight(px, py - 10, 140);
+  if (heldDef && heldDef.tile === T.TORCH) cutLight(px, py - 10 * LIGHT_SCALE, 180 * LIGHT_SCALE);
+  else if (heldDef && heldDef.tile === T.GLOWSTONE) cutLight(px, py - 10 * LIGHT_SCALE, 140 * LIGHT_SCALE);
 
   // torches / glowstone
   var lw = world.lights;
@@ -1429,7 +1427,9 @@ function drawLighting(game, ctx, cam, W, H) {
     cutLight(lpX, lpY, (lpp.def.lightR || 4) * 30);
   }
 
-  ctx.drawImage(game.lightCanvas, 0, 0);
+  ctx.imageSmoothingEnabled = true;
+  ctx.drawImage(game.lightCanvas, 0, 0, lw, lh, 0, 0, W, H);
+  ctx.imageSmoothingEnabled = false;
   ctx.save();
   ctx.globalCompositeOperation = 'screen';
   for (var og = 0; og < oreGlows.length; og++) {
@@ -5022,8 +5022,26 @@ function drawItemIcon(ctx, it, x, y) {
 }
 
 // ---------- Minimap ----------
+var _minimapFrame = 0;
+var _minimapCache = null;
+var _minimapCanvas = null;
 function drawMinimap(game, ctx) {
-  updateMapCache(game);
+  _minimapFrame++;
+  if (!_minimapCanvas) {
+    _minimapCanvas = document.createElement('canvas');
+    _minimapCanvas.width = canvas.width;
+    _minimapCanvas.height = canvas.height;
+  }
+  if (_minimapFrame % 30 === 0 || !_minimapCache) {
+    var mctx = _minimapCanvas.getContext('2d');
+    mctx.clearRect(0, 0, _minimapCanvas.width, _minimapCanvas.height);
+    drawMinimapInner(game, mctx);
+    _minimapCache = true;
+  }
+  ctx.drawImage(_minimapCanvas, 0, 0);
+}
+
+function drawMinimapInner(game, ctx) {
   var mapC = game.mapCanvas;
   if (!mapC) return;
   var vw = 220, vh = 130;
@@ -5037,14 +5055,12 @@ function drawMinimap(game, ctx) {
   var bx = canvas.width - vw * 2 - 8, by = 8;
   ctx.strokeStyle = 'rgba(255,255,255,0.45)';
   ctx.strokeRect(bx, by, vw * 2, vh * 2);
-  // player marker
   var sx = bx + clamp(px, 0, mapC.width) * 2 - clamp(px - vw / 2, 0, mapC.width - vw) * 2;
   var sy = by + clamp(py, 0, mapC.height) * 2 - clamp(py - vh / 2, 0, mapC.height - vh) * 2;
   ctx.fillStyle = '#fff';
   ctx.beginPath();
   ctx.moveTo(sx, sy - 5); ctx.lineTo(sx - 4, sy + 4); ctx.lineTo(sx + 4, sy + 4);
   ctx.closePath(); ctx.fill();
-  // spawn marker
   var spx = bx + (game.world.spawnX / TILE - clamp(px - vw / 2, 0, mapC.width - vw)) * 2;
   var spy = by + (game.world.spawnY / TILE - clamp(py - vh / 2, 0, mapC.height - vh)) * 2;
   if (spx > bx && spx < bx + vw * 2 && spy > by && spy < by + vh * 2) {
@@ -5077,7 +5093,7 @@ function updateMapCache(game) {
   if (!game.mapCanvas) initMapCache(game);
   var world = game.world;
   var ctx = game.mapCtx;
-  var cols = Math.min(260, world.W);
+  var cols = Math.min(120, world.W);
   var budget = cols;
   while (budget > 0) {
     if (game.mapCol >= world.W) {

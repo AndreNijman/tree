@@ -153,6 +153,7 @@ World.prototype.breakTile = function(x, y) {
   var t = this.tiles[this.idx(x, y)];
   if (t === T.AIR) return null;
   this.tiles[this.idx(x, y)] = T.AIR;
+  if (typeof terrainCache !== 'undefined') terrainCache.dirty = true;
   this.hp[this.idx(x, y)] = 0;
   if (t === T.TORCH) this.rebuildLights();
   if (t === T.CHEST || t === T.SHADOWCHEST) {
