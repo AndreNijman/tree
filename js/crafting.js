@@ -710,3 +710,34 @@ recipe({ name:'Luminite Bullet', result:I.LUMINITE_BULLET, count:1, mat:[[I.MUSK
 recipe({ name:'Nano Bullet', result:I.NANO_BULLET, count:1, mat:[[I.MUSKETBALL,20]], station:'anvil' });
 recipe({ name:'Party Bullet', result:I.PARTY_BULLET, count:1, mat:[[I.MUSKETBALL,20]], station:'anvil' });
 recipe({ name:'Tungsten Bullet', result:I.TUNGSTEN_BULLET, count:1, mat:[[I.MUSKETBALL,20]], station:'anvil' });
+
+// ---------- Batch 83 armor recipes ----------
+recipe({ name:'Bee Breastplate', result:I.BEE_BREASTPLATE, count:1, mat:[[I.BEE_WAX,8]], station:'anvil' });
+recipe({ name:'Bee Greaves', result:I.BEE_GREAVES, count:1, mat:[[I.BEE_WAX,8]], station:'anvil' });
+recipe({ name:'Bee Headgear', result:I.BEE_HEADGEAR, count:1, mat:[[I.BEE_WAX,8]], station:'anvil' });
+recipe({ name:'Chlorophyte Greaves', result:I.CHLOROPHYTE_GREAVES, count:1, mat:[[I.CHLOROPHYTEBAR,10]], station:'anvil' });
+recipe({ name:'Chlorophyte Headgear', result:I.CHLOROPHYTE_HEADGEAR, count:1, mat:[[I.CHLOROPHYTEBAR,10]], station:'anvil' });
+recipe({ name:'Chlorophyte Mask', result:I.CHLOROPHYTE_MASK, count:1, mat:[[I.CHLOROPHYTEBAR,10]], station:'anvil' });
+recipe({ name:'Crimson Greaves', result:I.CRIMSON_GREAVES, count:1, mat:[[I.CRIMTANEBAR,8], [I.TISSUESAMPLE,6]], station:'anvil' });
+recipe({ name:'Crimson Helmet', result:I.CRIMSON_HELMET, count:1, mat:[[I.CRIMTANEBAR,8], [I.TISSUESAMPLE,6]], station:'anvil' });
+recipe({ name:'Crimson Scalemail', result:I.CRIMSON_SCALEMAIL, count:1, mat:[[I.CRIMTANEBAR,8], [I.TISSUESAMPLE,6]], station:'anvil' });
+recipe({ name:'Fossil Greaves', result:I.FOSSIL_GREAVES, count:1, mat:[[I.STURDY_FOSSIL,8]], station:'anvil' });
+recipe({ name:'Fossil Helmet', result:I.FOSSIL_HELMET, count:1, mat:[[I.STURDY_FOSSIL,8]], station:'anvil' });
+recipe({ name:'Fossil Plate', result:I.FOSSIL_PLATE, count:1, mat:[[I.STURDY_FOSSIL,8]], station:'anvil' });
+recipe({ name:'Hallowed Headgear', result:I.HALLOWED_HEADGEAR, count:1, mat:[[I.HALLOWEDBAR,10]], station:'anvil' });
+recipe({ name:'Hallowed Mask', result:I.HALLOWED_MASK, count:1, mat:[[I.HALLOWEDBAR,10]], station:'anvil' });
+recipe({ name:'Iron Chainmail', result:I.IRON_CHAINMAIL, count:1, mat:[[I.IRONBAR,10]], station:'anvil' });
+recipe({ name:'Iron Greaves', result:I.IRON_GREAVES, count:1, mat:[[I.IRONBAR,8]], station:'anvil' });
+recipe({ name:'Iron Helmet', result:I.IRON_HELMET, count:1, mat:[[I.IRONBAR,8]], station:'anvil' });
+recipe({ name:'Jungle Hat', result:I.JUNGLE_HAT, count:1, mat:[[I.JUNGLE_SPORES,8], [I.VINE,2]], station:'anvil' });
+recipe({ name:'Jungle Pants', result:I.JUNGLE_PANTS, count:1, mat:[[I.JUNGLE_SPORES,8], [I.VINE,2]], station:'anvil' });
+recipe({ name:'Jungle Shirt', result:I.JUNGLE_SHIRT, count:1, mat:[[I.JUNGLE_SPORES,8], [I.VINE,2]], station:'anvil' });
+recipe({ name:'Necro Breastplate', result:I.NECRO_BREASTPLATE, count:1, mat:[[I.BONE,25], [I.COBWEB,15]], station:'workbench' });
+recipe({ name:'Necro Greaves', result:I.NECRO_GREAVES, count:1, mat:[[I.BONE,25], [I.COBWEB,15]], station:'workbench' });
+recipe({ name:'Necro Helmet', result:I.NECRO_HELMET, count:1, mat:[[I.BONE,25], [I.COBWEB,15]], station:'workbench' });
+recipe({ name:'Obsidian Longcoat', result:I.OBSIDIAN_LONGCOAT, count:1, mat:[[I.SILK,6], [I.OBSIDIAN,8]], station:'workbench' });
+recipe({ name:'Obsidian Pants', result:I.OBSIDIAN_PANTS, count:1, mat:[[I.SILK,6], [I.OBSIDIAN,8]], station:'workbench' });
+recipe({ name:'Shadow Greaves', result:I.SHADOW_GREAVES, count:1, mat:[[I.DEMONITEBAR,8], [I.SHADOWSCALE,6]], station:'anvil' });
+recipe({ name:'Shadow Helmet', result:I.SHADOW_HELMET, count:1, mat:[[I.DEMONITEBAR,8], [I.SHADOWSCALE,6]], station:'anvil' });
+recipe({ name:'Shadow Scalemail', result:I.SHADOW_SCALEMAIL, count:1, mat:[[I.DEMONITEBAR,8], [I.SHADOWSCALE,6]], station:'anvil' });
+recipe({ name:'Shroomite Mask', result:I.SHROOMITE_MASK, count:1, mat:[[I.CHLOROPHYTEBAR,10]], station:'anvil' });

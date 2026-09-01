@@ -543,7 +543,54 @@ var I = {
   VASCULASH:'vasculash',
   VULGAR_DISPLAY_OF_FLOWER:'vulgardisplayofflower',
   TENTACLE_SPIKE:'tentaclespike',
-  BOSSBAG:'bossbag'
+  STURDY_FOSSIL:'sturdyfossil',
+  BEE_WAX:'beewax',
+  JUNGLE_SPORES:'junglespore',
+  BEETLE_HUSK:'beetlehusk',
+  ANCIENT_COBALT_BREASTPLATE:'ancientcobaltbreastplate',
+  ANCIENT_COBALT_HELMET:'ancientcobalthelmet',
+  BEE_BREASTPLATE:'beebreastplate',
+  BEE_GREAVES:'beegreaves',
+  BEE_HEADGEAR:'beeheadgear',
+  BEETLE_SCALE_MAIL:'beetlescalemail',
+  CHLOROPHYTE_GREAVES:'chlorophytegreaves',
+  CHLOROPHYTE_HEADGEAR:'chlorophyteheadgear',
+  CHLOROPHYTE_MASK:'chlorophytemask',
+  CRIMSON_GREAVES:'crimsongreaves',
+  CRIMSON_HELMET:'crimsonhelmet',
+  CRIMSON_SCALEMAIL:'crimsonscalemail',
+  FORBIDDEN_MASK:'forbiddenmask',
+  FORBIDDEN_TREADS:'forbiddentreads',
+  FOSSIL_GREAVES:'fossilgreaves',
+  FOSSIL_HELMET:'fossilhelmet',
+  FOSSIL_PLATE:'fossilplate',
+  GLADIATOR_BREASTPLATE:'gladiatorbreastplate',
+  GLADIATOR_HELMET:'gladiatorhelmet',
+  GLADIATOR_LEGGINGS:'gladiatorleggings',
+  HALLOWED_HEADGEAR:'hallowedheadgear',
+  HALLOWED_MASK:'hallowedmask',
+  HALLOWED_PLATE_MAIL:'hallowedplatemail',
+  IRON_CHAINMAIL:'ironchainmail',
+  IRON_GREAVES:'irongreaves',
+  IRON_HELMET:'ironhelmet',
+  JUNGLE_HAT:'junglehat',
+  JUNGLE_PANTS:'junglepants',
+  JUNGLE_SHIRT:'jungleshirt',
+  NECRO_BREASTPLATE:'necrobreastplate',
+  NECRO_GREAVES:'necrogreaves',
+  NECRO_HELMET:'necrohelmet',
+  NINJA_HOOD:'ninjahood',
+  NINJA_PANTS:'ninjapants',
+  NINJA_SHIRT:'ninjashirt',
+  OBSIDIAN_LONGCOAT:'obsidianlongcoat',
+  OBSIDIAN_OUTLAW_HAT:'obsidianoutlawhat',
+  OBSIDIAN_PANTS:'obsidianpants',
+  SHADOW_GREAVES:'shadowgreaves',
+  SHADOW_HELMET:'shadowhelmet',
+  SHADOW_SCALEMAIL:'shadowscalemail',
+  SHROOMITE_MASK:'shroomitemask',
+  TURTLE_SCALE_MAIL:'turtlescalemail',
+    BOSSBAG:'bossbag'
 };
 
 var ITEMS = {};
@@ -2036,3 +2083,52 @@ defItem(I.VAMPIRE_FROG_STAFF, { name:'Vampire Frog Staff', type:'summonstaff', d
 defItem(I.VASCULASH, { name:'Vasculash', type:'summonstaff', dmg:19, speed:0.5, kb:1, minion:1, range:999, desc:'Summons a minion.' });
 defItem(I.VULGAR_DISPLAY_OF_FLOWER, { name:'Vulgar Display of Flower', type:'summonstaff', dmg:50, speed:0.5, kb:1, minion:1, range:999, desc:'Summons a minion.' });
 defItem(I.TENTACLE_SPIKE, { name:'Tentacle Spike', type:'melee', dmg:20, speed:0.35, kb:5.5, range:4.5, meleeMode:'spear', spearDuration:0.4, projectileOnly:true, persistentProj:true, desc:'A thrusting spear.' });
+
+// ---------- Batch 83 armor expansion ----------
+defItem(I.STURDY_FOSSIL, { name:'Sturdy Fossil', type:'material', color:'#e8d8a8', icon:'\u25C6', maxStack:999, desc:'Dug from the Underground Desert.' });
+defItem(I.BEE_WAX, { name:'Bee Wax', type:'material', color:'#ffc85c', icon:'\u25C6', maxStack:999, desc:'Waxy material from the Bee Hive.' });
+defItem(I.JUNGLE_SPORES, { name:'Jungle Spores', type:'material', color:'#7dff5c', icon:'\u25C6', maxStack:999, desc:'Glowing spores from the Underground Jungle.' });
+defItem(I.BEETLE_HUSK, { name:'Beetle Husk', type:'material', color:'#8a9a5c', icon:'\u25C6', maxStack:999, desc:'Chitin shed by the Golem.' });
+defItem(I.ANCIENT_COBALT_BREASTPLATE, { name:'Ancient Cobalt Breastplate', type:'armor', slot:'chest', def:6, color:'#3a6ad0', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +6' });
+defItem(I.ANCIENT_COBALT_HELMET, { name:'Ancient Cobalt Helmet', type:'armor', slot:'head', def:5, color:'#3a6ad0', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +5' });
+defItem(I.BEE_BREASTPLATE, { name:'Bee Breastplate', type:'armor', slot:'chest', def:5, color:'#ffd75e', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +5' });
+defItem(I.BEE_GREAVES, { name:'Bee Greaves', type:'armor', slot:'legs', def:4, color:'#ffd75e', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +4' });
+defItem(I.BEE_HEADGEAR, { name:'Bee Headgear', type:'armor', slot:'head', def:4, color:'#ffd75e', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +4' });
+defItem(I.BEETLE_SCALE_MAIL, { name:'Beetle Scale Mail', type:'armor', slot:'legs', def:20, color:'#8a9a5c', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +20' });
+defItem(I.CHLOROPHYTE_GREAVES, { name:'Chlorophyte Greaves', type:'armor', slot:'legs', def:13, color:'#4dff6b', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +13' });
+defItem(I.CHLOROPHYTE_HEADGEAR, { name:'Chlorophyte Headgear', type:'armor', slot:'head', def:7, color:'#4dff6b', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +7' });
+defItem(I.CHLOROPHYTE_MASK, { name:'Chlorophyte Mask', type:'armor', slot:'head', def:20, color:'#4dff6b', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +20' });
+defItem(I.CRIMSON_GREAVES, { name:'Crimson Greaves', type:'armor', slot:'legs', def:6, color:'#b04858', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +6' });
+defItem(I.CRIMSON_HELMET, { name:'Crimson Helmet', type:'armor', slot:'head', def:6, color:'#b04858', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +6' });
+defItem(I.CRIMSON_SCALEMAIL, { name:'Crimson Scalemail', type:'armor', slot:'chest', def:7, color:'#b04858', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +7' });
+defItem(I.FORBIDDEN_MASK, { name:'Forbidden Mask', type:'armor', slot:'head', def:6, color:'#d8b878', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +6' });
+defItem(I.FORBIDDEN_TREADS, { name:'Forbidden Treads', type:'armor', slot:'legs', def:8, color:'#d8b878', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +8' });
+defItem(I.FOSSIL_GREAVES, { name:'Fossil Greaves', type:'armor', slot:'legs', def:4, color:'#d8c8a0', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +4' });
+defItem(I.FOSSIL_HELMET, { name:'Fossil Helmet', type:'armor', slot:'head', def:4, color:'#d8c8a0', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +4' });
+defItem(I.FOSSIL_PLATE, { name:'Fossil Plate', type:'armor', slot:'chest', def:5, color:'#d8c8a0', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +5' });
+defItem(I.GLADIATOR_BREASTPLATE, { name:'Gladiator Breastplate', type:'armor', slot:'chest', def:6, color:'#c8b090', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +6' });
+defItem(I.GLADIATOR_HELMET, { name:'Gladiator Helmet', type:'armor', slot:'head', def:5, color:'#c8b090', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +5' });
+defItem(I.GLADIATOR_LEGGINGS, { name:'Gladiator Leggings', type:'armor', slot:'legs', def:5, color:'#c8b090', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +5' });
+defItem(I.HALLOWED_HEADGEAR, { name:'Hallowed Headgear', type:'armor', slot:'head', def:5, color:'#ffe9a8', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +5' });
+defItem(I.HALLOWED_MASK, { name:'Hallowed Mask', type:'armor', slot:'head', def:24, color:'#ffe9a8', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +24' });
+defItem(I.HALLOWED_PLATE_MAIL, { name:'Hallowed Plate Mail', type:'armor', slot:'chest', def:15, color:'#ffe9a8', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +15' });
+defItem(I.IRON_CHAINMAIL, { name:'Iron Chainmail', type:'armor', slot:'chest', def:3, color:'#b0a8a0', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +3' });
+defItem(I.IRON_GREAVES, { name:'Iron Greaves', type:'armor', slot:'legs', def:2, color:'#b0a8a0', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +2' });
+defItem(I.IRON_HELMET, { name:'Iron Helmet', type:'armor', slot:'head', def:2, color:'#b0a8a0', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +2' });
+defItem(I.JUNGLE_HAT, { name:'Jungle Hat', type:'armor', slot:'head', def:5, color:'#4a8a3a', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +5' });
+defItem(I.JUNGLE_PANTS, { name:'Jungle Pants', type:'armor', slot:'legs', def:6, color:'#4a8a3a', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +6' });
+defItem(I.JUNGLE_SHIRT, { name:'Jungle Shirt', type:'armor', slot:'chest', def:6, color:'#4a8a3a', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +6' });
+defItem(I.NECRO_BREASTPLATE, { name:'Necro Breastplate', type:'armor', slot:'chest', def:7, color:'#b0b0c0', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +7' });
+defItem(I.NECRO_GREAVES, { name:'Necro Greaves', type:'armor', slot:'legs', def:6, color:'#b0b0c0', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +6' });
+defItem(I.NECRO_HELMET, { name:'Necro Helmet', type:'armor', slot:'head', def:6, color:'#b0b0c0', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +6' });
+defItem(I.NINJA_HOOD, { name:'Ninja Hood', type:'armor', slot:'head', def:2, color:'#3a3a4a', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +2' });
+defItem(I.NINJA_PANTS, { name:'Ninja Pants', type:'armor', slot:'legs', def:3, color:'#3a3a4a', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +3' });
+defItem(I.NINJA_SHIRT, { name:'Ninja Shirt', type:'armor', slot:'chest', def:4, color:'#3a3a4a', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +4' });
+defItem(I.OBSIDIAN_LONGCOAT, { name:'Obsidian Longcoat', type:'armor', slot:'chest', def:6, color:'#3a2a4a', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +6' });
+defItem(I.OBSIDIAN_OUTLAW_HAT, { name:'Obsidian Outlaw Hat', type:'armor', slot:'head', def:4, color:'#3a2a4a', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +4' });
+defItem(I.OBSIDIAN_PANTS, { name:'Obsidian Pants', type:'armor', slot:'legs', def:5, color:'#3a2a4a', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +5' });
+defItem(I.SHADOW_GREAVES, { name:'Shadow Greaves', type:'armor', slot:'legs', def:6, color:'#5a4d8a', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +6' });
+defItem(I.SHADOW_HELMET, { name:'Shadow Helmet', type:'armor', slot:'head', def:6, color:'#5a4d8a', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +6' });
+defItem(I.SHADOW_SCALEMAIL, { name:'Shadow Scalemail', type:'armor', slot:'chest', def:7, color:'#5a4d8a', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +7' });
+defItem(I.SHROOMITE_MASK, { name:'Shroomite Mask', type:'armor', slot:'head', def:11, color:'#c84ad8', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +11' });
+defItem(I.TURTLE_SCALE_MAIL, { name:'Turtle Scale Mail', type:'armor', slot:'legs', def:27, color:'#4a8a4a', icon:'\uD83C\uDF96\uFE0F', maxStack:1, desc:'Defense +27' });
