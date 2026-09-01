@@ -151,6 +151,7 @@ var I = {
   PARTYCENTER:'partycenter', PARTYHAT:'partyhat', PARTYPRESENT:'partypresent', PIGRONATA:'pigronata',
   PARTYSTREAMER:'partystreamer', SILLYBALLOON:'sillyballoon', SLICEOFCAKE:'sliceofcake', RELEASELANTERN:'releaselantern',
   FALLENSTAR:'fallenstar', MANACRYSTAL:'manacrystal',
+  SILVERCOIN:'silvercoin', GOLDCOIN:'goldcoin', PLATINUMCOIN:'platinumcoin',
   TOMBSTONE:'tombstone', SUNFLOWER:'sunflower', GRAVEDIGGERSHOVEL:'gravediggersshovel', SHADOWCANDLE:'shadowcandle', TATTEREDSIGN:'tatteredsign',
   VITALCRYSTAL:'vitalcrystal', AEGISFRUIT:'aegisfruit', AMBROSIA:'ambrosia', ADVCOMBAT2:'advancedcombat2',
   FLINXSTAFF:'flinxstaff', AMBER:'amber', AMBERROBE:'amberrobe', AMBERSTAFF:'amberstaff',
@@ -194,7 +195,7 @@ var I = {
   COPPER:'copper', SILVER:'silver', GOLD:'gold', DEMONITE:'demonite', SHADOWSCALE:'shadowscale', TISSUESAMPLE:'tissuesample',
   COPPERBAR:'copperbar', SILVERBAR:'silverbar', GOLDBAR:'goldbar', DEMONITEBAR:'demonitebar', CRIMTANEBAR:'crimtanebar',
   COPPERPICK:'copperpick', SILVERPICK:'silverpick', GOLDPICK:'goldpick', DEMONITEPICK:'demonitepick', DEATHBRINGERPICK:'deathbringerpick',
-  COPPERSWORD:'coppersword', SILVERSWORD:'silversword', GOLDSWORD:'goldsword', DEMONITESWORD:'demonitesword',
+  COPPERSWORD:'coppersword', COPPERSHORT:'coppershort', COPPERAXE:'copperaxe', SILVERSWORD:'silversword', GOLDSWORD:'goldsword', DEMONITESWORD:'demonitesword',
   COPPERBOW:'copperbow', SILVERBOW:'silverbow', GOLDBOW:'goldbow',
   COPPERHELM:'copperhelm', COPPERCHEST:'copperchest', COPPERLEGS:'copperlegs',
   SILVERHELM:'silverhelm', SILVERCHEST:'silverchest', SILVERLEGS:'silverlegs',
@@ -933,7 +934,10 @@ defItem(I.INFLUXWAVER, { name:'Influx Waver', type:'melee', dmg:100, speed:0.333
 defItem(I.CHARGEDBLASTER, { name:'Charged Blaster Cannon', type:'ranged', dmg:100, speed:0.333, kb:2, ammo:I.BULLET, proj:P.PLASMA, auto:true, range:999, color:'#3dff9d', icon:'🔫', maxStack:1, desc:'A plasma cannon carried by Gigazappers.', projSpeed:14});
 defItem(I.CELEBRATION, { name:'Celebration', type:'ranged', dmg:25, speed:0.5, kb:4, ammo:I.ROCKET4, proj:P.ROCKET, auto:true, range:999, color:'#ff9de0', icon:'🎆', maxStack:1, desc:'A party that ends worlds. Uses rockets.', projSpeed:15});
 defItem(I.COINGUN, { name:'Coin Gun', type:'ranged', dmg:20, speed:0.1, kb:1, ammo:I.COIN, proj:P.GUNBULLET, auto:true, range:999, color:'#ffd75e', icon:'🪙', maxStack:1, desc:'A rare prize from the Pirate Invasion. Fires coins.' });
-defItem(I.COIN, { name:'Coin', type:'ammo', dmg:12, color:'#ffd75e', icon:'🪙', maxStack:999, desc:'Shiny loot. Powers the Coin Gun.' });
+defItem(I.COIN, { name:'Copper Coin', type:'ammo', ammoGroup:'coin', dmg:12, value:1, color:'#d88a5a', icon:'🪙', maxStack:999, desc:'One copper. The base unit of the town economy. Powers the Coin Gun.' });
+defItem(I.SILVERCOIN, { name:'Silver Coin', type:'ammo', ammoGroup:'coin', dmg:20, value:100, color:'#d8d8e8', icon:'🪙', maxStack:999, desc:'Worth 100 copper.' });
+defItem(I.GOLDCOIN, { name:'Gold Coin', type:'ammo', ammoGroup:'coin', dmg:35, value:10000, color:'#ffd75e', icon:'🪙', maxStack:999, desc:'Worth 100 silver.' });
+defItem(I.PLATINUMCOIN, { name:'Platinum Coin', type:'ammo', ammoGroup:'coin', dmg:60, value:1000000, color:'#d8f0ff', icon:'🪙', maxStack:999, desc:'Worth 100 gold. A fortune in one coin.' });
 
 // Darts & rockets
 defItem(I.DART, { name:'Wooden Dart', type:'ammo', dmg:6, color:'#b5824f', icon:'➶', maxStack:999 });
@@ -1004,13 +1008,15 @@ defItem(I.DEMONITEBAR, { name:'Demonite Bar', type:'bar', color:'#6a5cb8', icon:
   defItem(I.PLATINUMBAR, { name:'Platinum Bar', type:'bar', color:'#d8f0ff', icon:'bar', desc:'A rarer cousin of gold.' });
   defItem(I.METEORITEBAR, { name:'Meteorite Bar', type:'bar', color:'#a06050', icon:'bar', desc:'Smelted from fallen meteorite.' });
 // Tools
-defItem(I.COPPERPICK, { name:'Copper Pickaxe', type:'tool', power:35, speed:0.7, dmg:4, range:3.0, color:'#e0834d', icon:'⛏️', maxStack:1, desc:'Mines silver ore.' });
+defItem(I.COPPERPICK, { name:'Copper Pickaxe', type:'tool', power:35, speed:0.7, dmg:4, range:3.0, color:'#e0834d', icon:'⛏️', maxStack:1, desc:'Mines stone and ore. Cannot cut trees.' });
+defItem(I.COPPERAXE, { name:'Copper Axe', type:'tool', axe:7, speed:0.85, dmg:3, range:3.0, color:'#e0834d', icon:'🪓', maxStack:1, desc:'Chops down trees for wood.' });
 defItem(I.SILVERPICK, { name:'Silver Pickaxe', type:'tool', power:45, speed:1.0, dmg:6, range:3.1, color:'#cfd6e0', icon:'⛏️', maxStack:1, desc:'Mines gold ore.' });
 defItem(I.GOLDPICK, { name:'Gold Pickaxe', type:'tool', power:55, speed:1.3, dmg:8, range:3.2, color:'#ffd75e', icon:'⛏️', maxStack:1, desc:'Mines demonite ore.' });
 defItem(I.DEMONITEPICK, { name:'Nightmare Pickaxe', type:'tool', power:65, speed:1.8, dmg:11, range:3.4, color:'#6a5cb8', icon:'⛏️', maxStack:1, desc:'Forged from Demonite and Shadow Scales.' });
 defItem(I.DEATHBRINGERPICK, { name:'Deathbringer Pickaxe', type:'tool', power:65, speed:1.8, dmg:11, range:3.4, color:'#c04048', icon:'⛏️', maxStack:1, desc:'Forged from Crimtane and Tissue Samples.' });
 // Melee
-defItem(I.COPPERSWORD, { name:'Copper Sword', type:'melee', dmg:9, speed:0.35, kb:5.5, range:4, color:'#e0834d', icon:'🗡️', maxStack:1 });
+defItem(I.COPPERSWORD, { name:'Copper Broadsword', type:'melee', dmg:9, speed:0.35, kb:5.5, range:4, color:'#e0834d', icon:'🗡️', maxStack:1 });
+defItem(I.COPPERSHORT, { name:'Copper Shortsword', type:'melee', dmg:5, speed:0.217, kb:4, range:1.5, shortSword:true, color:'#e0834d', icon:'🗡️', maxStack:1, desc:'A quick, narrow thrust. Every legend starts somewhere.' });
 defItem(I.SILVERSWORD, { name:'Silver Sword', type:'melee', dmg:14, speed:0.333, kb:6, range:4, color:'#cfd6e0', icon:'🗡️', maxStack:1 });
 defItem(I.GOLDSWORD, { name:'Gold Sword', type:'melee', dmg:15, speed:0.3, kb:6.5, range:4, color:'#ffd75e', icon:'🗡️', maxStack:1 });
 defItem(I.DEMONITESWORD, { name:'Demonite Sword', type:'melee', dmg:16, speed:0.333, kb:5, range:4, color:'#6a5cb8', icon:'🗡️', maxStack:1, desc:'Forged from demonite. Bane of the corruption.' });
@@ -1124,6 +1130,83 @@ function ammoCompatible(required, candidate) {
   if (req.ammoGroup) return ammo.type === 'ammo' && req.ammoGroup === ammo.ammoGroup;
   return required === candidate;
 }
+
+
+// ---------- Coin economy ----------
+var COIN_IDS = [I.PLATINUMCOIN, I.GOLDCOIN, I.SILVERCOIN, I.COIN];
+var COIN_VALUES = {};
+COIN_VALUES[I.PLATINUMCOIN] = 1000000;
+COIN_VALUES[I.GOLDCOIN] = 10000;
+COIN_VALUES[I.SILVERCOIN] = 100;
+COIN_VALUES[I.COIN] = 1;
+
+function itemValue(id) {
+  var d = ITEMS[id];
+  if (!d) return 0;
+  if (COIN_VALUES[id]) return COIN_VALUES[id];
+  var v = ITEM_VALUES[d.name.toLowerCase()];
+  return typeof v === 'number' ? v : 0;
+}
+
+function copperToCoins(c) {
+  c = Math.max(0, Math.floor(c));
+  var out = [];
+  var denoms = [[I.PLATINUMCOIN, 1000000], [I.GOLDCOIN, 10000], [I.SILVERCOIN, 100], [I.COIN, 1]];
+  for (var i = 0; i < denoms.length; i++) {
+    var n = Math.floor(c / denoms[i][1]);
+    if (n > 0) { out.push({ id: denoms[i][0], count: n }); c -= n * denoms[i][1]; }
+  }
+  return out;
+}
+
+function fmtCoins(c) {
+  c = Math.max(0, Math.floor(c));
+  var parts = [];
+  var denoms = [['p', 1000000], ['g', 10000], ['s', 100], ['c', 1]];
+  for (var i = 0; i < denoms.length; i++) {
+    var n = Math.floor(c / denoms[i][1]);
+    if (n > 0) { parts.push(n + denoms[i][0]); c -= n * denoms[i][1]; }
+  }
+  return parts.length ? parts.join(' ') : '0c';
+}
+
+Inventory.prototype.coinValue = function() {
+  var total = 0;
+  for (var i = 0; i < this.slots.length; i++) {
+    var s = this.slots[i];
+    if (s && COIN_VALUES[s.id]) total += COIN_VALUES[s.id] * s.count;
+  }
+  return total;
+};
+
+Inventory.prototype.spendCoins = function(price) {
+  if (this.coinValue() < price) return false;
+  var remaining = price;
+  var order = [I.PLATINUMCOIN, I.GOLDCOIN, I.SILVERCOIN, I.COIN];
+  for (var i = 0; i < order.length && remaining > 0; i++) {
+    var id = order[i];
+    var have = this.countOf(id);
+    if (!have) continue;
+    var take = Math.min(have, Math.ceil(remaining / COIN_VALUES[id]));
+    this.consume(id, take);
+    remaining -= take * COIN_VALUES[id];
+  }
+  if (remaining < 0) {
+    var back = copperToCoins(-remaining);
+    for (var b = 0; b < back.length; b++) this.add(back[b].id, back[b].count);
+  }
+  return true;
+};
+
+Inventory.prototype.grantCoins = function(copper) {
+  var coins = copperToCoins(copper);
+  var ok = true;
+  for (var i = 0; i < coins.length; i++) {
+    if (!this.canAdd(coins[i].id, coins[i].count)) ok = false;
+    else this.add(coins[i].id, coins[i].count);
+  }
+  return ok;
+};
 
 // Reverse mapping: tile -> item id (for picking up placed items)
 var TILE_ITEM = {};
