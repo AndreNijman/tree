@@ -771,3 +771,15 @@ recipe({ name:'Strange Brew', result:I.STRANGE_BREW, count:1, mat:[[I.MUSHROOM,3
 recipe({ name:'Teleportation Potion', result:I.TELEPORTATION_POTION, count:1, mat:[[I.GLOWSTONE,3]], station:'workbench' });
 recipe({ name:'Titan Potion', result:I.TITAN_POTION, count:1, mat:[[I.DAYBLOOM,1], [I.STONE,3]], station:'workbench' });
 recipe({ name:'Wormhole Potion', result:I.WORMHOLE_POTION, count:1, mat:[[I.GLOWSTONE,2]], station:'workbench' });
+
+// ---------- Batch 83 block recipes ----------
+recipe({ name:'Bed', result:I.BED, count:1, mat:[[I.WOOD,15], [I.SILK,5]], station:'workbench' });
+recipe({ name:'Wooden Door', result:I.WOODEN_DOOR, count:1, mat:[[I.WOOD,6]], station:'workbench' });
+recipe({ name:'Gray Brick', result:I.GRAY_BRICK, count:1, mat:[[I.STONE,2]], station:'furnace' });
+recipe({ name:'Red Brick', result:I.RED_BRICK, count:1, mat:[[I.CLAY,2]], station:'furnace' });
+recipe({ name:'Bottle', result:I.BOTTLE, count:1, mat:[[I.GLASS,1]], station:'furnace' });
+recipe({ name:'Clay Pot', result:I.CLAY_POT, count:1, mat:[[I.CLAY,3]], station:'furnace' });
+recipe({ name:'Sign', result:I.SIGN, count:1, mat:[[I.WOOD,6]], station:'workbench' });
+recipe({ name:'Book', result:I.BOOK, count:1, mat:[[I.SILK,3], [I.BONE,3]], station:'workbench' });
+recipe({ name:'Chain', result:I.CHAIN, count:1, mat:[[I.IRONBAR,1]], station:'anvil' });
+recipe({ name:'Corrupt Seeds', result:I.CORRUPT_SEEDS, count:1, mat:[[I.EBONSTONE,1], [I.GEL,2]], station:'workbench' });

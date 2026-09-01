@@ -657,6 +657,22 @@ var I = {
   TELEPORTATION_POTION:'teleportationpotion',
   TITAN_POTION:'titanpotion',
   WORMHOLE_POTION:'wormholepotion',
+  BED:'bed',
+  PIGGY_BANK:'piggybank',
+  WOODEN_DOOR:'woodendoor',
+  CLAY:'clay',
+  GRAY_BRICK:'graybrick',
+  RED_BRICK:'redbrick',
+  BOTTLE:'bottle',
+  CLAY_POT:'claypot',
+  SIGN:'sign',
+  BOOK:'book',
+  CHAIN:'chain',
+  ACORN:'acorn',
+  CORRUPT_SEEDS:'corruptseeds',
+  GRASS_SEEDS:'grassseeds',
+  JUNGLE_GRASS_SEEDS:'junglegrassseeds',
+  MUSHROOM_GRASS_SEEDS:'mushroomgrassseeds',
     BOSSBAG:'bossbag'
 };
 
@@ -2270,3 +2286,21 @@ defItem(I.STRANGE_BREW, { name:'Strange Brew', type:'consumable', color:'#ff6ac8
 defItem(I.TELEPORTATION_POTION, { name:'Teleportation Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, teleport:true, desc:'Random teleport.' });
 defItem(I.TITAN_POTION, { name:'Titan Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, buff:'knockbackImmune', t:480, desc:'Increased knockback resistance.' });
 defItem(I.WORMHOLE_POTION, { name:'Wormhole Potion', type:'consumable', color:'#ff6ac8', icon:'🧪', maxStack:30, wormhole:true, desc:'Teleport to a teammate.' });
+
+// ---------- Batch 83 blocks & furniture ----------
+defItem(I.BED, { name:'Bed', type:'block', tile:T.BED, color:'#c04050', icon:'block', maxStack:999, desc:'Spawn point. Sleep the night away.' });
+defItem(I.PIGGY_BANK, { name:'Piggy Bank', type:'block', color:'#f0a0c0', icon:'block', maxStack:999, desc:'Personal storage. Place and right-click.' });
+defItem(I.WOODEN_DOOR, { name:'Wooden Door', type:'block', color:'#9a6b3f', icon:'block', maxStack:999, desc:'A door for your town.' });
+defItem(I.CLAY, { name:'Clay', type:'block', color:'#b06a4a', icon:'block', maxStack:999, desc:'Soft clay. Kiln into bricks.' });
+defItem(I.GRAY_BRICK, { name:'Gray Brick', type:'block', color:'#8a8a92', icon:'block', maxStack:999, desc:'Sturdy stone brick.' });
+defItem(I.RED_BRICK, { name:'Red Brick', type:'block', color:'#b0503a', icon:'block', maxStack:999, desc:'Classic red brick.' });
+defItem(I.BOTTLE, { name:'Bottle', type:'block', color:'#a8d8f0', icon:'block', maxStack:999, desc:'Crafting material for potions.' });
+defItem(I.CLAY_POT, { name:'Clay Pot', type:'block', color:'#b06a3a', icon:'block', maxStack:999, desc:'Sometimes hides treasure.' });
+defItem(I.SIGN, { name:'Sign', type:'block', color:'#9a6b3f', icon:'block', maxStack:999, desc:'Leave a message.' });
+defItem(I.BOOK, { name:'Book', type:'material', color:'#c84a6a', icon:'block', maxStack:999, desc:'A weighty tome.' });
+defItem(I.CHAIN, { name:'Chain', type:'material', color:'#b0b0b8', icon:'block', maxStack:999, desc:'For lanterns and mechanisms.' });
+defItem(I.ACORN, { name:'Acorn', type2:'seed', type:'material', color:'#9a7a4a', icon:'block', maxStack:999, desc:'Plant it on grass to grow a tree.' });
+defItem(I.CORRUPT_SEEDS, { name:'Corrupt Seeds', type:'material', color:'#7a5a8a', icon:'block', maxStack:999, desc:'Spreads the Corruption on grass.' });
+defItem(I.GRASS_SEEDS, { name:'Grass Seeds', type:'material', color:'#4fae40', icon:'block', maxStack:999, desc:'Grows grass on dirt.' });
+defItem(I.JUNGLE_GRASS_SEEDS, { name:'Jungle Grass Seeds', type:'material', color:'#3f9d4a', icon:'block', maxStack:999, desc:'Grows the Jungle.' });
+defItem(I.MUSHROOM_GRASS_SEEDS, { name:'Mushroom Grass Seeds', type:'material', color:'#7a5cff', icon:'block', maxStack:999, desc:'Grows a Glowing Mushroom biome.' });
