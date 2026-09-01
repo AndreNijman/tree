@@ -1262,13 +1262,18 @@ Player.prototype.die = function() {
   if (game && game.difficulty) {
     var dm = DIFFICULTY[game.difficulty] || DIFFICULTY.normal;
     if (dm.coinLoss > 0) {
-      var coins = [I.COIN, I.GOLD, I.PLATINUM];
-      for (var ci = 0; ci < coins.length; ci++) {
-        var id = coins[ci];
-        var have = this.inventory.countOf(id);
-        var drop = Math.floor(have * dm.coinLoss);
-        if (drop > 0) {
+      var total = this.inventory.coinValue();
+      var lose = Math.floor(total * dm.coinLoss);
+      if (lose > 0) {
+        var order = [I.PLATINUMCOIN, I.GOLDCOIN, I.SILVERCOIN, I.COIN];
+        var remaining = lose;
+        for (var ci = 0; ci < order.length && remaining > 0; ci++) {
+          var id = order[ci];
+          var have = this.inventory.countOf(id);
+          if (!have) continue;
+          var drop = Math.min(have, Math.ceil(remaining / COIN_VALUES[id]));
           this.inventory.consume(id, drop);
+          remaining -= drop * COIN_VALUES[id];
           game.addPickup(this.x + (Math.random() * 20 - 10), this.y, id, drop);
         }
       }

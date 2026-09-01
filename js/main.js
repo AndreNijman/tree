@@ -734,7 +734,7 @@ function applySaveData(data) {
   game.townArrivals = pr.townArrivals || {};
   game.eventCompletions = pr.eventCompletions || {};
   game.housing = pr.housing || {};
-  game.taxSavings = clamp(pr.taxSavings || 0, 0, 20);
+  game.taxSavings = clamp(pr.taxSavings || 0, 0, 5000);
   game.townRescues = pr.townRescues || {};
   game.dayCount = Math.max(0, pr.dayCount || 0);
   game.party = pr.party || { active:false, natural:false, nextDay:0, cakeClaimed:false };
@@ -1095,10 +1095,10 @@ function anyBossDefeated() {
 
 function updateTownArrivals() {
   var inv = game.player.inventory, b = game.bossesDefeated, arrivals = game.townArrivals;
-  var wealth = inv.countOf(I.GOLD) + inv.countOf(I.GOLDBAR) * 3 + inv.countOf(I.PLATINUM) + inv.countOf(I.PLATINUMBAR) * 3;
+  var wealth = inv.coinValue();
   var biome = game.world.biomeAt(game.player.x, game.player.y);
   var conditions = {};
-  conditions[E.MERCHANT] = wealth >= 5;
+  conditions[E.MERCHANT] = wealth >= 5000;
   conditions[E.NURSE] = !!arrivals[E.MERCHANT] && game.player.maxHp >= 120;
   conditions[E.ARMSDEALER] = playerHasBulletGear();
   conditions[E.DEMOLITIONIST] = inv.countOf(I.GRENADE) > 0 || inv.countOf(I.EXPLOSIVEBULLET) > 0;
@@ -1220,7 +1220,7 @@ function updateTownTax(dt) {
   game.taxT = 60;
   var housed = 0;
   for (var type in game.housing) if (game.townArrivals[type]) housed++;
-  game.taxSavings = Math.min(20, game.taxSavings + Math.max(1, Math.floor(housed / 3)));
+  game.taxSavings = Math.min(5000, game.taxSavings + housed * 25);
   if (game.panelTab === 'town' && game.townNpcOpen && game.townNpcOpen.type === E.TAXCOLLECTOR) renderTownPanel();
 }
 
@@ -4188,109 +4188,109 @@ function bestiaryHTML() {
 
 var TOWN_SHOPS = {};
 TOWN_SHOPS[E.MERCHANT] = [
-  { item:I.TORCH, count:10, cost:1 }, { item:I.PLATFORM, count:20, cost:1 },
-  { item:I.ARROW, count:25, cost:1 }, { item:I.HEALINGPOTION, count:1, cost:2 },
-  { item:I.MANAPOTION, count:1, cost:2 }, { item:I.FISHINGROD_WOODEN, count:1, cost:2 },
-  { item:I.WORM, count:5, cost:1 }, { item:I.MININGPOTION, count:1, cost:3, gate:'evil' },
-  { item:I.PYLON_FOREST, count:1, cost:8, pylon:true }, { item:I.PINWHEEL, count:1, cost:1, gate:'windy' }
+  { item:I.TORCH, count:10, cost:500 }, { item:I.PLATFORM, count:20, cost:10000 },
+  { item:I.ARROW, count:25, cost:125 }, { item:I.HEALINGPOTION, count:1, cost:1000 },
+  { item:I.MANAPOTION, count:1, cost:250 }, { item:I.FISHINGROD_WOODEN, count:1, cost:300 },
+  { item:I.WORM, count:5, cost:12500 }, { item:I.MININGPOTION, count:1, cost:1000, gate:'evil' },
+  { item:I.PYLON_FOREST, count:1, cost:100000, pylon:true }, { item:I.PINWHEEL, count:1, cost:2000, gate:'windy' }
 ];
 TOWN_SHOPS[E.ARMSDEALER] = [
-  { item:I.MUSKETBALL, count:50, cost:1 }, { item:I.SILVERBULLET, count:50, cost:2, gate:'skeletron' },
-  { item:I.SHOTGUN, count:1, cost:8, gate:'evil' }, { item:I.ILLEGALGUNPARTS, count:1, cost:8, gate:'hardmode' },
-  { item:I.EXPLOSIVEBULLET, count:25, cost:3, gate:'hardmode' }
+  { item:I.MUSKETBALL, count:50, cost:350 }, { item:I.SILVERBULLET, count:50, cost:750, gate:'skeletron' },
+  { item:I.SHOTGUN, count:1, cost:250000, gate:'evil' }, { item:I.ILLEGALGUNPARTS, count:1, cost:200000, gate:'hardmode' },
+  { item:I.EXPLOSIVEBULLET, count:25, cost:30000, gate:'hardmode' }
 ];
 TOWN_SHOPS[E.DEMOLITIONIST] = [
-  { item:I.GRENADE, count:10, cost:2 }, { item:I.EXPLOSIVEBULLET, count:25, cost:3, gate:'hardmode' }
+  { item:I.GRENADE, count:10, cost:750 }, { item:I.EXPLOSIVEBULLET, count:25, cost:30000, gate:'hardmode' }
 ];
 TOWN_SHOPS[E.DRYAD] = [
-  { item:I.DIRT, count:25, cost:1 }, { item:I.MUD, count:25, cost:1 }, { item:I.PUMPKIN, count:5, cost:1 }, { item:I.SUNFLOWER, count:1, cost:1 },
-  { item:I.PURIFICATIONPOWDER, count:10, cost:2, gate:'anyBoss' },
-  { item:I.PYLON_CORRUPT, count:1, cost:9, gate:'corruptWorld', pylon:true },
-  { item:I.PYLON_CRIMSON, count:1, cost:9, gate:'crimsonWorld', pylon:true }
+  { item:I.DIRT, count:25, cost:10000 }, { item:I.MUD, count:25, cost:10000 }, { item:I.PUMPKIN, count:5, cost:625 }, { item:I.SUNFLOWER, count:1, cost:5000 },
+  { item:I.PURIFICATIONPOWDER, count:10, cost:750, gate:'anyBoss' },
+  { item:I.PYLON_CORRUPT, count:1, cost:90000, gate:'corruptWorld', pylon:true },
+  { item:I.PYLON_CRIMSON, count:1, cost:90000, gate:'crimsonWorld', pylon:true }
 ];
 TOWN_SHOPS[E.MECHANIC] = [
-  { item:I.TORCH, count:20, cost:1 }, { item:I.PLATFORM, count:25, cost:1 },
-  { item:I.GLASS, count:20, cost:2 }, { item:I.CHEST, count:1, cost:3 }, { item:I.PYLON_SNOW, count:1, cost:8, pylon:true }
+  { item:I.TORCH, count:20, cost:1000 }, { item:I.PLATFORM, count:25, cost:10000 },
+  { item:I.GLASS, count:20, cost:20000 }, { item:I.CHEST, count:1, cost:500 }, { item:I.PYLON_SNOW, count:1, cost:100000, pylon:true }
 ];
 TOWN_SHOPS[E.WIZARD] = [
-  { item:I.MANAPOTION, count:3, cost:2, gate:'hardmode' }, { item:I.GREATERMANAPOTION, count:3, cost:4, gate:'hardmode' },
-  { item:I.MAGICPOWERPOTION, count:1, cost:4, gate:'hardmode' }, { item:I.SPELLTOME, count:1, cost:6, gate:'hardmode' },
-  { item:I.HARP, count:1, cost:6, gate:'anyMech' }, { item:I.PYLON_HALLOW, count:1, cost:10, pylon:true }
+  { item:I.MANAPOTION, count:3, cost:750, gate:'hardmode' }, { item:I.GREATERMANAPOTION, count:3, cost:1500, gate:'hardmode' },
+  { item:I.MAGICPOWERPOTION, count:1, cost:1000, gate:'hardmode' }, { item:I.SPELLTOME, count:1, cost:50000, gate:'hardmode' },
+  { item:I.HARP, count:1, cost:10000, gate:'anyMech' }, { item:I.PYLON_HALLOW, count:1, cost:100000, pylon:true }
 ];
 TOWN_SHOPS[E.DYETRADER] = [
-  { item:I.DYE_RED, count:1, cost:1 }, { item:I.DYE_ORANGE, count:1, cost:1 }, { item:I.DYE_YELLOW, count:1, cost:1 },
-  { item:I.DYE_GREEN, count:1, cost:1 }, { item:I.DYE_CYAN, count:1, cost:1 }, { item:I.DYE_BLUE, count:1, cost:1 },
-  { item:I.DYE_PURPLE, count:1, cost:1 }, { item:I.DYE_PINK, count:1, cost:1 }, { item:I.DYE_WHITE, count:1, cost:1 },
-  { item:I.DYE_BLACK, count:1, cost:1 }, { item:I.DYE_BROWN, count:1, cost:1 }, { item:I.DYE_RAINBOW, count:1, cost:5, gate:'hardmode' },
-  { item:I.PYLON_DESERT, count:1, cost:8, pylon:true }
+  { item:I.DYE_RED, count:1, cost:10000 }, { item:I.DYE_ORANGE, count:1, cost:10000 }, { item:I.DYE_YELLOW, count:1, cost:10000 },
+  { item:I.DYE_GREEN, count:1, cost:10000 }, { item:I.DYE_CYAN, count:1, cost:10000 }, { item:I.DYE_BLUE, count:1, cost:10000 },
+  { item:I.DYE_PURPLE, count:1, cost:10000 }, { item:I.DYE_PINK, count:1, cost:10000 }, { item:I.DYE_WHITE, count:1, cost:10000 },
+  { item:I.DYE_BLACK, count:1, cost:10000 }, { item:I.DYE_BROWN, count:1, cost:10000 }, { item:I.DYE_RAINBOW, count:1, cost:10000, gate:'hardmode' },
+  { item:I.PYLON_DESERT, count:1, cost:100000, pylon:true }
 ];
 TOWN_SHOPS[E.ANGLER] = [
-  { item:I.WORM, count:5, cost:1 }, { item:I.NIGHTCRAWLER, count:5, cost:2, gate:'evil' },
-  { item:I.FISHINGPOTION, count:1, cost:3 }, { item:I.FISHINGROD_IRON, count:1, cost:4 },
-  { item:I.FISHINGROD_FIBERGLASS, count:1, cost:7, gate:'hardmode' }, { item:I.FISHINGROD_GOLDEN, count:1, cost:12, gate:'plantera' }
+  { item:I.WORM, count:5, cost:12500 }, { item:I.NIGHTCRAWLER, count:5, cost:50000, gate:'evil' },
+  { item:I.FISHINGPOTION, count:1, cost:1000 }, { item:I.FISHINGROD_IRON, count:1, cost:50000 },
+  { item:I.FISHINGROD_FIBERGLASS, count:1, cost:12000, gate:'hardmode' }, { item:I.FISHINGROD_GOLDEN, count:1, cost:1000000, gate:'plantera' }
 ];
 TOWN_SHOPS[E.ZOOLOGIST] = [
-  { item:I.LEATHERWHIP, count:1, cost:4 }, { item:I.PUPPY, count:1, cost:5 },
-  { item:I.CATLICENSE, count:1, cost:6, gate:'bestiary:30' },
-  { item:I.RABBITPERCH, count:1, cost:6, gate:'bestiary:40' },
-  { item:I.BABYDINO, count:1, cost:7, gate:'evil' },
-  { item:I.ZEPHYRFISH, count:1, cost:8, gate:'bestiary:50' },
-  { item:I.UNICORNMOUNT, count:1, cost:12, gate:'hardmode' },
-  { item:I.LIGHTNINGCARROT, count:1, cost:15, gate:'bestiary:90' }
+  { item:I.LEATHERWHIP, count:1, cost:50000 }, { item:I.PUPPY, count:1, cost:50000 },
+  { item:I.CATLICENSE, count:1, cost:50000, gate:'bestiary:30' },
+  { item:I.RABBITPERCH, count:1, cost:60000, gate:'bestiary:40' },
+  { item:I.BABYDINO, count:1, cost:70000, gate:'evil' },
+  { item:I.ZEPHYRFISH, count:1, cost:150000, gate:'bestiary:50' },
+  { item:I.UNICORNMOUNT, count:1, cost:250000, gate:'hardmode' },
+  { item:I.LIGHTNINGCARROT, count:1, cost:500000, gate:'bestiary:90' }
 ];
 TOWN_SHOPS[E.PAINTER] = [
-  { item:I.WOODWALL, count:25, cost:1 }, { item:I.GLASS, count:20, cost:2 }, { item:I.CHAIR, count:1, cost:2 },
-  { item:I.TABLE, count:1, cost:2 }, { item:I.CHEST, count:1, cost:3 }
+  { item:I.WOODWALL, count:25, cost:10000 }, { item:I.GLASS, count:20, cost:20000 }, { item:I.CHAIR, count:1, cost:150 },
+  { item:I.TABLE, count:1, cost:300 }, { item:I.CHEST, count:1, cost:500 }
 ];
 TOWN_SHOPS[E.GOLFER] = [
-  { item:I.SWIFTNESSPOTION, count:1, cost:2 }, { item:I.WATERWALKINGPOTION, count:1, cost:3 },
-  { item:I.FROGLEG, count:1, cost:7, gate:'hardmode' }
+  { item:I.SWIFTNESSPOTION, count:1, cost:1000 }, { item:I.WATERWALKINGPOTION, count:1, cost:1000 },
+  { item:I.FROGLEG, count:1, cost:50000, gate:'hardmode' }
 ];
 TOWN_SHOPS[E.PIRATE] = [
-  { item:I.COIN, count:50, cost:2 }, { item:I.PIRATEMAP, count:1, cost:8, gate:'hardmode' },
-  { item:I.PYLON_OCEAN, count:1, cost:9, pylon:true }
+  { item:I.COIN, count:50, cost:250 }, { item:I.PIRATEMAP, count:1, cost:80000, gate:'hardmode' },
+  { item:I.PYLON_OCEAN, count:1, cost:100000, pylon:true }
 ];
 TOWN_SHOPS[E.WITCHDOCTOR] = [
-  { item:I.LEATHERWHIP, count:1, cost:4 }, { item:I.MAGICLANTERN, count:1, cost:6 },
-  { item:I.PYGMYNECKLACE, count:1, cost:8, gate:'plantera' }, { item:I.HERCULESBEETLE, count:1, cost:10, gate:'plantera' },
-  { item:I.LEAFWINGS, count:1, cost:12, gate:'hardmode' }, { item:I.PYLON_JUNGLE, count:1, cost:9, pylon:true }
+  { item:I.LEATHERWHIP, count:1, cost:50000 }, { item:I.MAGICLANTERN, count:1, cost:100000 },
+  { item:I.PYGMYNECKLACE, count:1, cost:200000, gate:'plantera' }, { item:I.HERCULESBEETLE, count:1, cost:400000, gate:'plantera' },
+  { item:I.LEAFWINGS, count:1, cost:1500000, gate:'hardmode' }, { item:I.PYLON_JUNGLE, count:1, cost:100000, pylon:true }
 ];
 TOWN_SHOPS[E.PARTYGIRL] = [
-  { item:I.PARTYCENTER, count:1, cost:20 }, { item:I.PARTYHAT, count:1, cost:1 },
-  { item:I.PARTYPRESENT, count:1, cost:2, gate:'party' }, { item:I.PIGRONATA, count:1, cost:3, gate:'party' },
-  { item:I.PARTYSTREAMER, count:10, cost:1, gate:'party' }, { item:I.SILLYBALLOON, count:3, cost:1, gate:'party' },
-  { item:I.RELEASELANTERN, count:10, cost:1, gate:'lanternnight' },
-  { item:I.PUMPKINMEDALLION, count:1, cost:10, gate:'plantera' }
+  { item:I.PARTYCENTER, count:1, cost:200000 }, { item:I.PARTYHAT, count:1, cost:10000 },
+  { item:I.PARTYPRESENT, count:1, cost:2000, gate:'party' }, { item:I.PIGRONATA, count:1, cost:10000, gate:'party' },
+  { item:I.PARTYSTREAMER, count:10, cost:10000, gate:'party' }, { item:I.SILLYBALLOON, count:3, cost:20000, gate:'party' },
+  { item:I.RELEASELANTERN, count:10, cost:1000, gate:'lanternnight' },
+  { item:I.PUMPKINMEDALLION, count:1, cost:100000, gate:'plantera' }
 ];
 TOWN_SHOPS[E.STYLIST] = [
-  { item:I.DYE_PINK, count:1, cost:1 }, { item:I.DYE_BLACK, count:1, cost:1 }, { item:I.SILK, count:10, cost:2 },
-  { item:I.DYE_RAINBOW, count:1, cost:5, gate:'hardmode' }
+  { item:I.DYE_PINK, count:1, cost:10000 }, { item:I.DYE_BLACK, count:1, cost:10000 }, { item:I.SILK, count:10, cost:10000 },
+  { item:I.DYE_RAINBOW, count:1, cost:10000, gate:'hardmode' }
 ];
 TOWN_SHOPS[E.CLOTHIER] = [
-  { item:I.SILK, count:10, cost:2 }, { item:I.LEATHER, count:5, cost:2 }, { item:I.BONE, count:25, cost:3 },
-  { item:I.SPOOKYWOOD, count:20, cost:4, gate:'pumpkinmoon' }, { item:I.SILLYBALLOON, count:5, cost:2, gate:'party' }
+  { item:I.SILK, count:10, cost:10000 }, { item:I.LEATHER, count:5, cost:250 }, { item:I.BONE, count:25, cost:1250 },
+  { item:I.SPOOKYWOOD, count:20, cost:40000, gate:'pumpkinmoon' }, { item:I.SILLYBALLOON, count:5, cost:20000, gate:'party' }
 ];
 TOWN_SHOPS[E.STEAMPUNKER] = [
-  { item:I.PURIFICATIONPOWDER, count:25, cost:3 }, { item:I.MININGPOTION, count:1, cost:3 },
-  { item:I.HOVERBOARD, count:1, cost:14, gate:'plantera' }
+  { item:I.PURIFICATIONPOWDER, count:25, cost:1875 }, { item:I.MININGPOTION, count:1, cost:1000 },
+  { item:I.HOVERBOARD, count:1, cost:400000, gate:'plantera' }
 ];
 TOWN_SHOPS[E.CYBORG] = [
-  { item:I.ROCKET1, count:25, cost:2 }, { item:I.ROCKET2, count:25, cost:3 },
-  { item:I.ROCKET3, count:25, cost:4, gate:'plantera' }, { item:I.ROCKET4, count:25, cost:6, gate:'golem' },
-  { item:I.PROXIMITYMINELAUNCHER, count:1, cost:16, gate:'plantera' }
+  { item:I.ROCKET1, count:25, cost:1250 }, { item:I.ROCKET2, count:25, cost:6250 },
+  { item:I.ROCKET3, count:25, cost:2500, gate:'plantera' }, { item:I.ROCKET4, count:25, cost:12500, gate:'golem' },
+  { item:I.PROXIMITYMINELAUNCHER, count:1, cost:350000, gate:'plantera' }
 ];
 TOWN_SHOPS[E.TRUFFLE] = [
-  { item:I.MUSHROOM, count:25, cost:2 }, { item:I.TRUFFLEWORM, count:1, cost:8, gate:'plantera' },
-  { item:I.MUSHROOMSPEAR, count:1, cost:12, gate:'plantera' }
+  { item:I.MUSHROOM, count:25, cost:20000 }, { item:I.TRUFFLEWORM, count:1, cost:500000, gate:'plantera' },
+  { item:I.MUSHROOMSPEAR, count:1, cost:700000, gate:'plantera' }
 ];
 TOWN_SHOPS[E.SANTA] = [
-  { item:I.SNOW, count:25, cost:1 }, { item:I.ICE, count:25, cost:1 }, { item:I.SNOWGLOBE, count:1, cost:6 },
-  { item:I.CANDYCANESWORD, count:1, cost:12 }, { item:I.CANDYCANE_BOW, count:1, cost:10 },
-  { item:I.NAUGHTYPRESENT, count:1, cost:10, gate:'plantera' }
+  { item:I.SNOW, count:25, cost:10000 }, { item:I.ICE, count:25, cost:10000 }, { item:I.SNOWGLOBE, count:1, cost:60000 },
+  { item:I.CANDYCANESWORD, count:1, cost:13500 }, { item:I.CANDYCANE_BOW, count:1, cost:100000 },
+  { item:I.NAUGHTYPRESENT, count:1, cost:100000, gate:'plantera' }
 ];
 TOWN_SHOPS[E.PRINCESS] = [
-  { item:I.GOLDENAPPLE, count:1, cost:5 }, { item:I.GREATERHEALINGPOTION, count:3, cost:4 },
-  { item:I.DYE_RAINBOW, count:1, cost:4 }, { item:I.PYLON_UNIVERSAL, count:1, cost:20, gate:'victory', pylon:true }
+  { item:I.GOLDENAPPLE, count:1, cost:50000 }, { item:I.GREATERHEALINGPOTION, count:3, cost:15000 },
+  { item:I.DYE_RAINBOW, count:1, cost:10000 }, { item:I.PYLON_UNIVERSAL, count:1, cost:1000000, gate:'victory', pylon:true }
 ];
 
 var TOWN_PREFERENCES = {};
@@ -4458,11 +4458,10 @@ function currentAnglerQuest() {
 
 function anglerQuestRewards(completion) {
   var crate = completion % 10 === 0 ? I.GOLDENCRATE : (completion % 5 === 0 ? I.IRONCRATE : I.WOODENCRATE);
-  var rewards = [
-    { id:I.GOLD, count:2 + Math.min(3, Math.floor(completion / 5)) },
-    { id:I.NIGHTCRAWLER, count:3 },
-    { id:crate, count:1 }
-  ];
+  var coinCopper = (2 + Math.min(3, Math.floor(completion / 5))) * 10000;
+  var rewards = [{ id:I.NIGHTCRAWLER, count:3 }, { id:crate, count:1 }];
+  var coinDrops = copperToCoins(coinCopper);
+  for (var cd = 0; cd < coinDrops.length; cd++) rewards.push(coinDrops[cd]);
   if (completion % 3 === 0) rewards.push({ id:I.FISHINGPOTION, count:1 });
   if (completion === 5) rewards.push({ id:I.FISHERMANSPOCKETGUIDE, count:1 });
   if (completion === 10) rewards.push({ id:I.WEATHERRADIO, count:1 });
@@ -4621,16 +4620,16 @@ function endGolfRound() {
   g.completed++;
   if (score > g.best) g.best = score;
   Achievements.unlock('golfchallenge', game);
-  var gold = 3 + Math.floor(score / 3);
+  var coinCopper = (3 + Math.floor(score / 3)) * 10000;
   var inv = game.player.inventory;
-  var granted = 0;
-  if (inv.canAdd(I.GOLD, gold)) { inv.add(I.GOLD, gold); granted = gold; }
+  var granted = false;
+  if (inv.grantCoins(coinCopper)) granted = true;
   var msg = 'Golf round over! You holed ' + score + ' ball' + (score === 1 ? '' : 's') + '.';
   if (score >= 15) {
     Achievements.unlock('golfpar', game);
-    game.message(msg + ' Under par! ' + (granted ? 'Reward: ' + granted + ' Gold Ore.' : 'Your inventory is full.') );
+    game.message(msg + (granted ? ' Reward: ' + fmtCoins(coinCopper) + '.' : ' Your inventory is full.'));
   } else if (granted) {
-    game.message(msg + ' Reward: ' + granted + ' Gold Ore.');
+    game.message(msg + ' Reward: ' + fmtCoins(coinCopper) + '.');
   } else {
     game.message(msg);
   }
@@ -4658,7 +4657,7 @@ function renderTownPanel() {
   if (!root || !open) { if (root) root.innerHTML = ''; return; }
   var inv = game.player.inventory;
   var mood = townHappiness(open.type);
-  var html = '<h3>' + open.name + '</h3><div class="ddesc">Gold Ore: ' + inv.countOf(I.GOLD) + '</div>' +
+  var html = '<h3>' + open.name + '</h3><div class="ddesc">Coins: ' + fmtCoins(inv.coinValue()) + '</div>' +
     '<div class="ddesc">Mood: ' + mood.label + (mood.biome >= 0 ? ' in the ' + townBiomeLabel(mood.biome) : '') +
     ' &middot; Prices ' + Math.round(mood.multiplier * 100) + '%</div>';
   if (game.party.active) html += '<div class="ddesc">' + (open.type === E.PARTYGIRL ? 'I put the party in Party Girl!' : 'Confetti makes everything better!') + '</div>';
@@ -4672,7 +4671,7 @@ function renderTownPanel() {
       var it = ITEMS[row.item];
       if (!it) continue;
       html += '<div class="tavern-item"><div class="picon">' + itemIconHTML(it) + '</div><div class="shop-info"><div class="shop-name">' + it.name +
-        (row.count > 1 ? ' x' + row.count : '') + '</div><div class="shop-cost">' + townPrice(row, open.type) + ' Gold Ore</div></div><button class="tavern-buy" data-town-buy="' + i + '">Buy</button></div>';
+        (row.count > 1 ? ' x' + row.count : '') + '</div><div class="shop-cost">' + fmtCoins(townPrice(row, open.type)) + '</div></div><button class="tavern-buy" data-town-buy="' + i + '">Buy</button></div>';
     }
     html += '</div>';
     if (open.type === E.DRYAD && open.status) html += '<div class="town-service"><h4>World Status</h4><div class="ddesc">' +
@@ -4720,9 +4719,9 @@ function buyTownItem(index) {
   if (!row || !ITEMS[row.item] || !townStockAvailable(row, open.type) || !townServiceNpcActive(open.type)) return;
   var inv = game.player.inventory;
   var cost = townPrice(row, open.type);
-  if (inv.countOf(I.GOLD) < cost) { game.message('Not enough Gold Ore.'); return; }
+  if (inv.coinValue() < cost) { game.message('Not enough coins.'); return; }
   if (!inv.canAdd(row.item, row.count)) { game.message('Your inventory is full.'); return; }
-  inv.add(row.item, row.count); inv.consume(I.GOLD, cost);
+  inv.add(row.item, row.count); inv.spendCoins(cost);
   game.message('Purchased ' + ITEMS[row.item].name + (row.count > 1 ? ' x' + row.count : '') + '.'); AudioSys.play('pickup');
 }
 
@@ -4730,19 +4729,18 @@ function nurseHeal() {
   if (!game.townNpcOpen || game.townNpcOpen.type !== E.NURSE || !townServiceNpcActive(E.NURSE)) return;
   var p = game.player, missing = Math.max(0, p.maxHp - p.hp);
   if (!missing) { game.message('You are already at full health.'); return; }
-  var cost = Math.max(1, Math.ceil(missing / 50));
-  if (p.inventory.countOf(I.GOLD) < cost) { game.message('Not enough Gold Ore for treatment.'); return; }
-  p.inventory.consume(I.GOLD, cost); p.hp = p.maxHp;
+  var cost = Math.max(75, Math.ceil(missing * 0.75));
+  if (!p.inventory.spendCoins(cost)) { game.message('Not enough coins for treatment.'); return; }
+  p.hp = p.maxHp;
   game.fx.push({ type:'cast', x:p.x, y:p.y - 10, t:0.4, max:0.4 }); game.message('The Nurse restored you to full health.'); AudioSys.play('pickup');
 }
 
 function collectTownTax() {
   if (!game.townNpcOpen || game.townNpcOpen.type !== E.TAXCOLLECTOR || !townServiceNpcActive(E.TAXCOLLECTOR) || !game.taxSavings) return;
   var amount = game.taxSavings;
-  if (!game.player.inventory.canAdd(I.GOLD, amount)) { game.message('Your inventory is full.'); return; }
-  game.player.inventory.add(I.GOLD, amount);
+  if (!game.player.inventory.grantCoins(amount)) { game.message('Your inventory is full.'); return; }
   game.taxSavings = 0;
-  game.message('Collected ' + amount + ' Gold Ore in taxes.');
+  game.message('Collected ' + fmtCoins(amount) + ' in taxes.');
   AudioSys.play('pickup');
 }
 
@@ -4752,7 +4750,10 @@ function townReforgeEligible(stack) {
   return type === 'melee' || type === 'ranged' || type === 'magic' || type === 'whip';
 }
 
-function townReforgeCost(def) { return Math.max(1, Math.ceil((def.dmg || 10) / 10)); }
+function townReforgeCost(def) {
+  var base = typeof itemValue === 'function' ? itemValue(def.id || (ITEMS[def.id] ? def.id : null)) : 0;
+  return Math.max(100, Math.floor(base * 0.2));
+}
 
 function sanitizeReforge(reforge) {
   if (!reforge || !isFinite(reforge.dmgMul)) return null;
@@ -4768,8 +4769,8 @@ function reforgeSelectedItem() {
   var inv = game.player.inventory, stack = inv.selectedItem();
   if (!townReforgeEligible(stack)) { game.message('Select an unstackable weapon to reforge.'); return; }
   var cost = townReforgeCost(ITEMS[stack.id]);
-  if (inv.countOf(I.GOLD) < cost) { game.message('Not enough Gold Ore to reforge.'); return; }
-  inv.consume(I.GOLD, cost);
+  if (inv.coinValue() < cost) { game.message('Not enough coins to reforge.'); return; }
+  inv.spendCoins(cost);
   var choices = [];
   for (var i = 0; i < REFORGE_PREFIXES.length; i++) if (!stack.reforge || REFORGE_PREFIXES[i].name !== stack.reforge.name) choices.push(REFORGE_PREFIXES[i]);
   var prefix = choices[Math.floor(Math.random() * choices.length)];

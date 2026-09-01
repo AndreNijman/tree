@@ -1463,7 +1463,7 @@ function killBoss(e, game) {
     drops.push({ id:I.HEALINGPOTION, count:3 });
   } else if (e.boss === 'kingslime') {
     drops.push({ id: I.GEL, count: 40 + Math.floor(Math.random() * 30) });
-    drops.push({ id: I.GOLD, count: 8 + Math.floor(Math.random() * 6) });
+    drops.push({ id: I.GOLDCOIN, count: 8 + Math.floor(Math.random() * 6) });
     drops.push({ id: I.HEALINGPOTION, count: 1 });
   } else if (e.boss === 'eyeofcthulhu') {
     drops.push({ id: game.world.evil === 'crimson' ? I.CRIMTANE : I.DEMONITE, count: 30 + Math.floor(Math.random() * 20) });
@@ -1592,26 +1592,26 @@ function killBoss(e, game) {
   } else if (e.boss === 'piratecaptain') {
     drops.push({ id: Math.random() < 0.5 ? I.CUTLASS : I.GOLDRING, count: 1 });
     drops.push({ id: I.PIRATEMAP, count: 1 });
-    drops.push({ id: I.GOLD, count: 5 + Math.floor(Math.random() * 5) });
+    drops.push({ id: I.GOLDCOIN, count: 5 + Math.floor(Math.random() * 5) });
     drops.push({ id: I.HEALINGPOTION, count: 2 });
   } else if (e.boss === 'flyingdutchman') {
     var pirateLoot = [I.PIRATESTAFF, I.LUCKYCOIN, I.DISCOUNTCARD, I.GOLDRING, I.COINGUN];
     drops.push({ id: pirateLoot[Math.floor(Math.random() * pirateLoot.length)], count: 1 });
     drops.push({ id: I.CUTLASS, count: 1 });
-    drops.push({ id: I.GOLD, count: 15 + Math.floor(Math.random() * 10) });
+    drops.push({ id: I.GOLDCOIN, count: 15 + Math.floor(Math.random() * 10) });
     drops.push({ id: I.HEALINGPOTION, count: 3 });
   }
   // mark boss defeated
   game.bossesDefeated[e.boss] = true;
   var dm = diffScale();
   if (dm.bag) {
-    var bagDrops = drops.concat([{ id: I.GOLD, count: 5 + Math.floor(Math.random() * 5) }]);
+    var bagDrops = drops.concat([{ id: I.GOLDCOIN, count: 5 + Math.floor(Math.random() * 5) }]);
     game.pickups.push({ nid: typeof Net !== 'undefined' ? ++Net.seq : 0, item: I.BOSSBAG, count: 1, x: e.x, y: e.y, seed: Math.random() * 100, t: 0, bagBoss: e.boss, bagDrops: bagDrops });
   } else {
     for (var i = 0; i < drops.length; i++) {
       var d = drops[i];
       if (d && d.count > 0) {
-        if (dm.coin !== 1 && (d.id === I.COIN || d.id === I.GOLD || d.id === I.PLATINUM)) d.count = Math.max(1, Math.round(d.count * dm.coin));
+        if (dm.coin !== 1 && COIN_VALUES[d.id]) d.count = Math.max(1, Math.round(d.count * dm.coin));
         game.addPickup(e.x + (Math.random() * 60 - 30), e.y + (Math.random() * 40 - 20), d.id, d.count);
       }
     }

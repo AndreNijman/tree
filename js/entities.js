@@ -436,13 +436,21 @@ function hitEntity(e, dmg, kbx, kby, game) {
 function killEntity(e, game) {
   if (e.dead) return;
   e.dead = true;
+  // canonical coin drops (vanilla money values, classic column)
+  var eDef = e.type >= 0 ? ENT_DEF[e.type] : null;
+  var cname = eDef ? eDef.name.toLowerCase() : '';
+  if (cname && typeof ENEMY_COIN_VALUES !== 'undefined' && ENEMY_COIN_VALUES[cname] > 0) {
+    var dmC = diffScale();
+    var stacks = copperToCoins(Math.round(ENEMY_COIN_VALUES[cname] * dmC.coin));
+    for (var cs = 0; cs < stacks.length; cs++) game.addPickup(e.x, e.y, stacks[cs].id, stacks[cs].count);
+  }
   // Drops
   var drops = dropTable(e.type, game);
   var dm = diffScale();
   for (var i = 0; i < drops.length; i++) {
     var d = drops[i];
     var c = d.count;
-    if (dm.coin !== 1 && (d.id === I.COIN || d.id === I.GOLD || d.id === I.PLATINUM)) c = Math.max(1, Math.round(c * dm.coin));
+    if (dm.coin !== 1 && COIN_VALUES[d.id]) c = Math.max(1, Math.round(c * dm.coin));
     game.addPickup(e.x + (Math.random() * 24 - 12), e.y + (Math.random() * 12 - 6), d.id, c);
   }
   if (e.type === E.CRIMSLIME && !e.splitDone) {
@@ -634,7 +642,7 @@ function dropTable(type, game) {
       if (r < 0.4) return [{ id: I.BONE, count: 1 }, { id: I.BONE, count: Math.random() < 0.3 ? 1 : 0 }];
       return [{ id: I.BONE, count: 1 }];
     case E.ANGRYBONES:
-      if (r < 0.5) return [{ id: I.BONE, count: 1 }, { id: I.GOLD, count: Math.random() < 0.15 ? 1 : 0 }];
+      if (r < 0.5) return [{ id: I.BONE, count: 1 }];
       return [{ id: I.BONE, count: 1 }];
     case E.DARKCASTER:
       if (r < 0.35) return [{ id: I.BONE, count: 2 }, { id: I.GEM_AMETHYST, count: Math.random() < 0.2 ? 1 : 0 }];
@@ -657,21 +665,21 @@ function dropTable(type, game) {
       return [{ id:I.TATTEREDCLOTH, count:1 + Math.floor(Math.random() * 2) }];
     case E.GOBLINPEON: case E.GOBLINTHIEF: case E.GOBLINARCHER: case E.GOBLINWARRIOR: case E.GOBLINSORCERER:
       if (r < 0.65) return [{ id: I.GEL, count: 1 }];
-      return [{ id: I.GOLD, count: 1 }];
+      return [];
     case E.GOBLINSUMMONER:
       var summonLoot = [I.SHADOWFLAMEBOW, I.SHADOWFLAMEKNIFE, I.SHADOWFLAMEHEXDOLL];
       return [{ id:summonLoot[Math.floor(Math.random() * summonLoot.length)], count:1 }, { id:I.HEALINGPOTION, count:1 }];
     case E.GOBLINWARLOCK:
       return [{ id: I.TATTEREDCLOTH, count: 3 }, { id: I.HEALINGPOTION, count: 1 }];
     case E.PIRATEDECKHAND: case E.PIRATECORSAIR: case E.PIRATEDEADEYE:
-      if (r < 0.5) return [{ id: I.GOLD, count: 3 + Math.floor(Math.random() * 3) }];
+      if (r < 0.5) return [];
       if (r < 0.7) return [{ id: I.PIRATEMAP, count: Math.random() < 0.03 ? 1 : 0 }];
       return [{ id: I.COIN, count: 2 + Math.floor(Math.random() * 4) }, { id:I.COINGUN, count:Math.random() < 0.01 ? 1 : 0 }];
     case E.PIRATESHARK:
       if (r < 0.5) return [{ id: I.SHARKFIN, count: 1 }];
-      return [{ id: I.GOLD, count: 2 }];
+      return [];
     case E.PIRATECAPTAIN:
-      return [{ id: I.GOLD, count: 10 + Math.floor(Math.random() * 8) }, { id: I.PIRATEMAP, count: 1 }];
+      return [ { id: I.PIRATEMAP, count: 1 }];
     case E.SWAMPTHING: case E.WEREWOLF:
       return [{ id: I.SOUL_NIGHT, count: 1 }];
     case E.EYEBALL:
@@ -703,7 +711,7 @@ function dropTable(type, game) {
     case E.DREADNAUTILUS:
       return [{ id:I.SANGUINESTAFF, count:1 }, { id:I.BLOODYTEAR, count:1 }, { id:I.HEALINGPOTION, count:2 }];
     case E.BRIDE: case E.GROOM:
-      return [{ id:I.BLOODYTEAR, count:r < 0.12 ? 1 : 0 }, { id:I.GOLD, count:1 }];
+      return [{ id:I.BLOODYTEAR, count:r < 0.12 ? 1 : 0 }];
     case E.CLOWN:
       var clownLoot = [I.BANANARANG, I.KOCANNON];
       return [{ id:clownLoot[Math.floor(Math.random() * clownLoot.length)], count:r < 0.2 ? 1 : 0 }, { id:I.BLOODYTEAR, count:r > 0.9 ? 1 : 0 }];
@@ -714,7 +722,7 @@ function dropTable(type, game) {
     case E.SNOWMANGANGSTA: case E.MISTERSTABBY: case E.SNOWBALLA:
       return [{ id:I.SNOW, count:2 }, { id:I.ICE, count:1 }];
     case E.PIRATECROSSBOWER: case E.PARROT:
-      return [{ id:I.GOLD, count:2 + Math.floor(Math.random() * 3) }, { id:I.COIN, count:2 }, { id:I.COINGUN, count:Math.random() < 0.01 ? 1 : 0 }];
+      return [{ id:I.COIN, count:2 }, { id:I.COINGUN, count:Math.random() < 0.01 ? 1 : 0 }];
     case E.MARTIANWALKER: case E.MARTIANDRONE: case E.TESLATURRET:
       return [{ id:I.COIN, count:3 }, { id:I.ILLEGALGUNPARTS, count:Math.random() < 0.25 ? 1 : 0 }];
     case E.MARTIANOFFICER: case E.BRAINSCRAMBLER:
@@ -733,7 +741,7 @@ function dropTable(type, game) {
     case E.NUTCRACKER: case E.FLOCKO: case E.YETI:
       return [{ id:I.SNOW, count:2 + Math.floor(Math.random() * 3) }, { id:I.ECTOPLASM, count:Math.random() < 0.4 ? 1 : 0 }];
     case E.PRESENTMIMIC:
-      return [{ id:I.GOLD, count:5 + Math.floor(Math.random() * 5) }, { id:I.ECTOPLASM, count:2 }];
+      return [{ id:I.ECTOPLASM, count:2 }];
     case E.SELENIAN: return [{ id:I.FRAG_SOLAR, count:1 }];
     case E.STORMDIVER: return [{ id:I.FRAG_VORTEX, count:1 }];
     case E.PREDICTOR: return [{ id:I.FRAG_NEBULA, count:1 }];
@@ -813,7 +821,7 @@ function dropTable(type, game) {
     case E.ANGRYTRAPPER: case E.WORLDFEEDER:
       return [{ id:I.VINE, count:Math.random() < 0.5 ? 1 : 0 }];
     case E.LAMIA: case E.GHOUL: case E.DREAMERGHOUL:
-      return [{ id:I.GOLD, count:Math.random() < 0.3 ? 1 : 0 }];
+      return [];
     case E.ANOMURAFUNGUS: case E.FUNGIBULB: case E.GIANTFUNGI:
       return [{ id:I.GLOWSTONE, count:Math.random() < 0.4 ? 1 : 0 }];
     case E.COCHINEALBEETLE: case E.CYANBEETLE: case E.LACBEETLE:
@@ -842,13 +850,13 @@ function dropTable(type, game) {
     case E.MANEATER:
       return [{ id:I.VINE, count:1 + Math.floor(Math.random() * 2) }];
     case E.MEDUSA:
-      return [{ id:I.STONE, count:1 + Math.floor(Math.random() * 2) }, { id:I.GOLD, count:Math.random() < 0.1 ? 1 : 0 }];
+      return [{ id:I.STONE, count:1 + Math.floor(Math.random() * 2) }];
     case E.SPIKEBALL:
       return [{ id:I.BONE, count:Math.random() < 0.5 ? 1 : 0 }];
     case E.GRANITEELEMENTAL:
       return [{ id:I.GRANITE, count:1 + Math.floor(Math.random() * 2) }];
     case E.BASILISK:
-      return [{ id:I.SAND, count:2 }, { id:I.GOLD, count:Math.random() < 0.05 ? 1 : 0 }];
+      return [{ id:I.SAND, count:2 }];
     case E.PINKJELLYFISH: case E.BLUEJELLYFISH: case E.GREENJELLYFISH:
       return [{ id:I.GLOWSTONE, count:Math.random() < 0.4 ? 1 : 0 }];
     case E.CRAWDAD: case E.CRAB: case E.SEASNAIL: case E.PIRANHA: case E.WALLCREEPER: case E.SALAMANDER:
