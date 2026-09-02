@@ -1126,12 +1126,15 @@ self.underworldHouses = [];
       var th = 5 + Math.floor(rng() * (b3 === BIOME.JUNGLE ? 8 : 4));
       for (var j = 1; j <= th; j++) this.set(tx2, sy - j, T.TREETRUNK);
       var topY = sy - th - 1;
-      for (var lx = -2; lx <= 2; lx++) {
-        for (var ly = -2; ly <= 1; ly++) {
+      // rounded Terraria-style canopy: 7 wide, 5 tall, ragged edges
+      for (var lx = -3; lx <= 3; lx++) {
+        for (var ly = -3; ly <= 1; ly++) {
+          var ax = Math.abs(lx);
+          var maxAx = (ly === -3 || ly === 1) ? 1 : (ly === -1 || ly === 0) ? 3 : 2;
+          if (ax > maxAx) continue;
+          if (ax === maxAx && rng() < 0.35) continue; // ragged edge
           var lxx = tx2 + lx, lyy = topY + ly;
-          if (this.get(lxx, lyy) === T.AIR && Math.abs(lx) + Math.abs(ly) <= 3) {
-            this.set(lxx, lyy, T.LEAVES);
-          }
+          if (this.get(lxx, lyy) === T.AIR) this.set(lxx, lyy, T.LEAVES);
         }
       }
       tx2 += 1;

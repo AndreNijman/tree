@@ -434,14 +434,9 @@ function renderGame(game, ctx) {
         continue;
       }
       if (t2 === 0) continue;
-      // tile sprite with occlusion culling (direct array access for neighbors)
-      if (t2 !== 17 && t2 !== 29 && t2 !== 50 && t2 !== 51 && t2 !== 36 &&
-          tx2 > 0 && tx2 < wW - 1 && ty2 > 0 && ty2 < wH - 1) {
-        if (tilesArr[ii2 - 1] !== 0 && tilesArr[ii2 + 1] !== 0 &&
-            tilesArr[ii2 - wW] !== 0 && tilesArr[ii2 + wW] !== 0) {
-          continue;
-        }
-      }
+      // NOTE: no occlusion culling here — tiles are not fully opaque (leaves have
+      // transparent pixels, variants differ), so culling "surrounded" tiles showed
+      // the dark background through tree canopies and solid underground.
       if (t2 === 17) {
         // torch
         var flick = 0.8 + 0.2 * Math.sin(Time.seconds * 10 + tx2);
@@ -696,8 +691,8 @@ function drawBackground(game, ctx, cam, W, H, horizon) {
     // Follow the actual surface profile so valleys retain sky instead of a flat underground band.
     var undergroundTop = clamp(horizonScreen, 0, H - 1);
     var ug = ctx.createLinearGradient(0, undergroundTop, 0, H);
-    ug.addColorStop(0, '#241e18');
-    ug.addColorStop(1, '#14100c');
+    ug.addColorStop(0, '#4a3a2a');
+    ug.addColorStop(1, '#1c1611');
     ctx.fillStyle = ug;
     for (surfaceX = surfaceX0; surfaceX <= surfaceX1; surfaceX++) {
       var surfaceScreenX = Math.floor(surfaceX * TILE - cam.x + W / 2);
@@ -979,11 +974,11 @@ function drawLighting(game, ctx, cam, W, H) {
     var gradTop = Math.max(0, maxSurfaceScreen - TILE);
     var gradBot = Math.min(H, maxSurfaceScreen + 14 * TILE);
     var depthGrad = lc.createLinearGradient(0, gradTop, 0, gradBot);
-    depthGrad.addColorStop(0, 'rgba(0,0,6,0.05)');
-    depthGrad.addColorStop(0.15, 'rgba(0,0,6,0.25)');
-    depthGrad.addColorStop(0.4, 'rgba(0,0,6,0.38)');
-    depthGrad.addColorStop(0.7, 'rgba(0,0,6,0.48)');
-    depthGrad.addColorStop(1, 'rgba(0,0,6,0.52)');
+    depthGrad.addColorStop(0, 'rgba(0,0,6,0.0)');
+    depthGrad.addColorStop(0.15, 'rgba(0,0,6,0.08)');
+    depthGrad.addColorStop(0.4, 'rgba(0,0,6,0.22)');
+    depthGrad.addColorStop(0.7, 'rgba(0,0,6,0.38)');
+    depthGrad.addColorStop(1, 'rgba(0,0,6,0.5)');
     lc.fillStyle = depthGrad;
     lc.fill();
   } else {
