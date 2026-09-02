@@ -107,7 +107,7 @@ World.prototype.setWall = function(x, y, wall) {
 
 World.prototype.isSolidTile = function(t) {
   if (t === T.AIR || t === T.PLATFORM || t === T.TORCH || t === T.COBWEB || t === T.WATER || t === T.LAVA || t === T.SHIMMER ||
-      t === T.TREETRUNK || t === T.LEAVES ||
+      t === T.TREETRUNK || t === T.LEAVES || t === T.LEAVES_CORRUPT || t === T.LEAVES_CRIMSON || t === T.LEAVES_HALLOW || t === T.LEAVES_JUNGLE ||
       t === T.SHADOWORB || t === T.CRIMSONHEART || t === T.LARVA || t === T.TOMBSTONE || t === T.SUNFLOWER) return false;
   if (t === T.ALTAR) return true;
   return t >= 0;
@@ -1858,13 +1858,19 @@ self.underworldHouses = [];
     else if (!groundR) roots = 2;
     if (roots === 0 || roots === 1) self.tiles[self.idx(tx3 + 1, ty3 - 1)] = T.TREETRUNK;
     if (roots === 0 || roots === 2) self.tiles[self.idx(tx3 - 1, ty3 - 1)] = T.TREETRUNK;
-    // leaf blob at the top (12/13 standard, 1/13 tall)
+    // leaf blob at the top (12/13 standard, 1/13 tall), colored by biome
+    var leafTile = T.LEAVES;
+    var gt = self.tiles[self.idx(tx3, ty3)];
+    if (gt === T.CORRUPTGRASS) leafTile = T.LEAVES_CORRUPT;
+    else if (gt === T.CRIMGRASS) leafTile = T.LEAVES_CRIMSON;
+    else if (gt === T.HALLOWGRASS) leafTile = T.LEAVES_HALLOW;
+    else if (gt === T.JUNGLEGRASS) leafTile = T.LEAVES_JUNGLE;
     var rows = [[-1, 1, topY - 2], [-2, 2, topY - 1], [-2, 2, topY], [-1, 1, topY + 1]];
     if (Math.floor(rng() * 13) === 0) rows = [[0, 0, topY - 4], [-1, 1, topY - 3], [-1, 1, topY - 2], [-2, 2, topY - 1], [-2, 2, topY]];
     for (var rr2 = 0; rr2 < rows.length; rr2++) {
       for (var lx2 = rows[rr2][0]; lx2 <= rows[rr2][1]; lx2++) {
         var lx3 = tx3 + lx2, ly3 = rows[rr2][2];
-        if (self.inBounds(lx3, ly3) && self.tiles[self.idx(lx3, ly3)] === T.AIR) self.tiles[self.idx(lx3, ly3)] = T.LEAVES;
+        if (self.inBounds(lx3, ly3) && self.tiles[self.idx(lx3, ly3)] === T.AIR) self.tiles[self.idx(lx3, ly3)] = leafTile;
       }
     }
     return true;
@@ -1911,6 +1917,18 @@ self.underworldHouses = [];
     return true;
   }
   // Placement pass: forest/jungle trees, snow pines, beach palms
+  // (late grass pass first — vanilla regrows surface grass after caves)
+  for (var gx3 = 4; gx3 < W - 4; gx3++) {
+    var gb = biomeAtX(gx3);
+    var gi2 = this.idx(gx3, this.surfaceY[gx3]);
+    if (this.tiles[gi2] !== T.DIRT) continue;
+    if (gb === BIOME.FOREST) this.tiles[gi2] = T.GRASS;
+    else if (gb === BIOME.JUNGLE || gb === BIOME.MUSHROOM) this.tiles[gi2] = gb === BIOME.JUNGLE ? T.JUNGLEGRASS : T.GRASS;
+    else if (gb === BIOME.SNOW) this.tiles[gi2] = T.SNOW;
+    else if (gb === BIOME.CORRUPT) this.tiles[gi2] = T.CORRUPTGRASS;
+    else if (gb === BIOME.CRIMSON) this.tiles[gi2] = T.CRIMGRASS;
+    else if (gb === BIOME.HALLOW) this.tiles[gi2] = T.HALLOWGRASS;
+  }
   for (var tx2 = 4; tx2 < W - 4; tx2++) {
     var b3 = biomeAtX(tx2);
     var sy = this.surfaceY[tx2];
@@ -1923,9 +1941,9 @@ self.underworldHouses = [];
       if (ground === T.SNOW && rng() < 0.3) { if (growPine(tx2, sy)) tx2 += 2; }
       continue;
     }
-    if (b3 !== BIOME.FOREST && b3 !== BIOME.JUNGLE) continue;
+    if (b3 !== BIOME.FOREST && b3 !== BIOME.JUNGLE && b3 !== BIOME.CORRUPT && b3 !== BIOME.CRIMSON && b3 !== BIOME.HALLOW) continue;
     var jungle2 = b3 === BIOME.JUNGLE;
-    if (jungle2 ? ground !== T.JUNGLEGRASS : ground !== T.GRASS) continue;
+    if (ground !== T.GRASS && ground !== T.JUNGLEGRASS && ground !== T.CORRUPTGRASS && ground !== T.CRIMGRASS && ground !== T.HALLOWGRASS) continue;
     if (rng() < (jungle2 ? 0.45 : 0.35)) {
       if (growTree(tx2, sy, jungle2)) tx2 += 2;
     }
