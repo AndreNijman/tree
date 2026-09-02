@@ -43,6 +43,7 @@ function World(width, height, seed, difficulty) {
   this.underDesertStart = new Uint16Array(width); // tile row where deep sand begins
   this.meteorCraters = []; // {x,y,r} meteor craters
   this.underworldHouses = []; // {x,y,w,h} furnished Hellbrick houses
+  this.rockY = new Uint16Array(width); // dirt/rock boundary per column
   this.spreadFrontier = []; // tile indexes of evil/Hallow stone that can spread (hardmode)
   this.pylons = []; // {x,y,item} town pylon nodes
   this.spilledPylonItem = null; // set when a pylon breaks; its item is recovered
@@ -480,6 +481,8 @@ World.prototype.generate = function(hardmode, evil) {
       if (y < surf + dirtDepth + 6) this.walls[idx] = WALL.DIRT;
       else this.walls[idx] = WALL.STONE;
     }
+    // record the dirt/rock boundary for the vein passes below
+    this.rockY[x] = surf + dirtDepth;
   }
 
   // Convert deep stone in corrupt/hallow/crimson biomes
@@ -542,6 +545,53 @@ World.prototype.generate = function(hardmode, evil) {
         }
       }
     }
+  }
+
+  // ---- vanilla texture passes: Rocks In Dirt, Dirt In Rocks, Clay ----
+  // (blob walkers, like vanilla's TileRunner, so stone/dirt interlock organically)
+  function placeBlob(cx, cy, r, tile, canReplace) {
+    var r2 = r * r;
+    for (var by = Math.floor(cy - r); by <= cy + r; by++) {
+      for (var bx = Math.floor(cx - r); bx <= cx + r; bx++) {
+        if (bx < 1 || bx >= W - 1 || by < 1 || by >= H - 1) continue;
+        var ddx = bx - cx, ddy = by - cy;
+        if (ddx * ddx + ddy * ddy > r2) continue;
+        var ii = self.idx(bx, by);
+        if (canReplace(self.tiles[ii])) self.tiles[ii] = tile;
+      }
+    }
+  }
+  function tileRunner(tile, sx, sy, strength, steps, canReplace) {
+    var rx = sx, ry = sy, rdx = rng() - 0.5, rdy = rng() - 0.5;
+    while (steps-- > 0 && strength > 0.8) {
+      rdx = Math.max(-0.5, Math.min(0.5, rdx + (rng() - 0.5) * 0.25));
+      rdy = Math.max(-0.5, Math.min(0.5, rdy + (rng() - 0.5) * 0.25));
+      rx += rdx * 1.5; ry += rdy * 1.5;
+      placeBlob(rx, ry, strength * 0.7, tile, canReplace);
+      strength -= 0.35; // veins shrink as they wander, like vanilla
+    }
+  }
+  var canDirt = function (t) { return t === T.DIRT; };
+  var canStone = function (t) { return t === T.STONE; };
+  var canDirtStone = function (t) { return t === T.DIRT || t === T.STONE; };
+  var area = W * H;
+  // Rocks In Dirt: stone chunks scattered through the dirt layer
+  for (var rd = 0; rd < area * 1.2e-04; rd++) {
+    var rdx2 = 20 + Math.floor(rng() * (W - 40));
+    var rdy2 = self.surfaceY[rdx2] + 8 + Math.floor(rng() * Math.max(4, self.rockY[rdx2] - self.surfaceY[rdx2] - 10));
+    tileRunner(T.STONE, rdx2, rdy2, 2 + rng() * 3.5, 2 + Math.floor(rng() * 4), canDirt);
+  }
+  // Dirt In Rocks: dirt pockets bleeding into the upper cavern
+  for (var dr = 0; dr < area * 9e-05; dr++) {
+    var drx = 20 + Math.floor(rng() * (W - 40));
+    var dry = self.rockY[drx] + Math.floor(rng() * 160);
+    tileRunner(T.DIRT, drx, dry, 2 + rng() * 4, 2 + Math.floor(rng() * 4), canStone);
+  }
+  // Clay: reddish patches through the shallow dirt
+  for (var cl = 0; cl < area * 8e-05; cl++) {
+    var clx = 20 + Math.floor(rng() * (W - 40));
+    var cly = self.surfaceY[clx] + 3 + Math.floor(rng() * 55);
+    placeBlob(clx, cly, 1.5 + rng() * 3, T.CLAY, canDirt);
   }
 
   // ---- Terraria-style cave generation ----
@@ -676,77 +726,86 @@ World.prototype.generate = function(hardmode, evil) {
     }
   }
 
-  // Ores (pre-hardmode: copper/iron/silver/gold/demonite; hardmode: cobalt+)
-  for (var oy = 0; oy < H; oy++) {
-    for (var ox = 0; ox < W; ox++) {
-      var st = this.surfaceY[ox];
-      var i4 = this.idx(ox, oy);
-      var t4 = this.tiles[i4];
-      if (t4 !== T.STONE && t4 !== T.EBONSTONE && t4 !== T.PEARLSTONE && t4 !== T.CRIMSTONE) continue;
-      var depth = oy - st;
-      var r = rng();
-      if (hardmode) {
-        if (depth > 235) {
-          if (r < 0.05) this.tiles[i4] = T.ADAMANTITE;
-          else if (r < 0.09) this.tiles[i4] = T.TITANIUM;
-          else if (r < 0.16) this.tiles[i4] = T.PALLADIUM;
-          else if (r < 0.24) this.tiles[i4] = T.GLOWSTONE;
-          else if (r < 0.30) this.tiles[i4] = T.PLATINUM;
-          else if (r < 0.36) this.tiles[i4] = T.GOLD;
-          else if (r < 0.44) this.tiles[i4] = T.IRON;
-        } else if (depth > 170) {
-          if (r < 0.09) this.tiles[i4] = T.MYTHRIL;
-          else if (r < 0.16) this.tiles[i4] = T.ORICHALCUM;
-          else if (r < 0.22) this.tiles[i4] = T.PALLADIUM;
-          else if (r < 0.27) this.tiles[i4] = T.SILVER;
-          else if (r < 0.32) this.tiles[i4] = T.TUNGSTEN;
-          else if (r < 0.40) this.tiles[i4] = T.IRON;
-        } else if (depth > 110) {
-          if (r < 0.11) this.tiles[i4] = T.COBALT;
-          else if (r < 0.19) this.tiles[i4] = T.ORICHALCUM;
-          else if (r < 0.24) this.tiles[i4] = T.SILVER;
-          else if (r < 0.28) this.tiles[i4] = T.TUNGSTEN;
-          else if (r < 0.34) this.tiles[i4] = T.IRON;
-        } else if (depth > 50) {
-          if (r < 0.06) this.tiles[i4] = T.SILVER;
-          else if (r < 0.09) this.tiles[i4] = T.TUNGSTEN;
-          else if (r < 0.15) this.tiles[i4] = T.LEAD;
-          else if (r < 0.24) this.tiles[i4] = T.COPPER;
-          else if (r < 0.28) this.tiles[i4] = T.TIN;
-          else if (r < 0.36) this.tiles[i4] = T.IRON;
-        } else {
-          if (r < 0.08) this.tiles[i4] = T.COPPER;
-          else if (r < 0.12) this.tiles[i4] = T.TIN;
-          else if (r < 0.19) this.tiles[i4] = T.IRON;
-          else if (r < 0.24) this.tiles[i4] = T.LEAD;
-        }
-      } else {
-        // Pre-hardmode ores
-        if (isCrimson && t4 === T.CRIMSTONE && depth > 40) {
-          if (r < 0.06) this.tiles[i4] = T.CRIMTANE;
-          else if (r < 0.10) this.tiles[i4] = T.IRON;
-        } else if (!isCrimson && t4 === T.EBONSTONE && depth > 40) {
-          if (r < 0.06) this.tiles[i4] = T.DEMONITE;
-          else if (r < 0.10) this.tiles[i4] = T.IRON;
-        } else if (depth > 160) {
-          if (r < 0.05) this.tiles[i4] = T.GOLD;
-          else if (r < 0.07) this.tiles[i4] = T.PLATINUM;
-          else if (r < 0.14) this.tiles[i4] = T.SILVER;
-          else if (r < 0.18) this.tiles[i4] = T.TUNGSTEN;
-          else if (r < 0.26) this.tiles[i4] = T.IRON;
-        } else if (depth > 70) {
-          if (r < 0.06) this.tiles[i4] = T.SILVER;
-          else if (r < 0.09) this.tiles[i4] = T.TUNGSTEN;
-          else if (r < 0.15) this.tiles[i4] = T.LEAD;
-          else if (r < 0.24) this.tiles[i4] = T.COPPER;
-          else if (r < 0.28) this.tiles[i4] = T.TIN;
-          else if (r < 0.36) this.tiles[i4] = T.IRON;
-        } else {
-          if (r < 0.08) this.tiles[i4] = T.COPPER;
-          else if (r < 0.12) this.tiles[i4] = T.TIN;
-          else if (r < 0.19) this.tiles[i4] = T.IRON;
-          else if (r < 0.24) this.tiles[i4] = T.LEAD;
-        }
+  // ---- Shinies: vanilla-style ore veins via TileRunner blob walkers ----
+  // Copper is everywhere (3 depth bands, densest deep); iron/silver/gold taper off.
+  function oreRunnerBand(tile, count, y0fn, y1fn, canReplace) {
+    for (var i = 0; i < count; i++) {
+      var vx = 20 + Math.floor(rng() * (W - 40));
+      var vy = y0fn(vx) + Math.floor(rng() * Math.max(4, y1fn(vx) - y0fn(vx)));
+      tileRunner(tile, vx, vy, 3 + rng() * 3.5, 2 + Math.floor(rng() * 4), canReplace);
+    }
+  }
+  function orePass(tile, m1, m2, m3) {
+    // band 1: dirt layer; band 2: upper cavern; band 3: down to the Underworld
+    oreRunnerBand(tile, Math.floor(area * m1),
+      function (x) { return self.surfaceY[x] + 4; },
+      function (x) { return self.rockY[x]; }, canDirtStone);
+    oreRunnerBand(tile, Math.floor(area * m2),
+      function (x) { return self.rockY[x]; },
+      function (x) { return self.rockY[x] + (self.hellY - 80 - self.rockY[x]) * 0.5; }, canStone);
+    oreRunnerBand(tile, Math.floor(area * m3),
+      function (x) { return self.rockY[x] + (self.hellY - 60 - self.rockY[x]) * 0.35; },
+      function (x) { return self.hellY - 40; }, canStone);
+  }
+  orePass(T.COPPER, 4e-05, 5e-05, 1.2e-04);
+  orePass(T.IRON, 3.2e-05, 4e-05, 9.5e-05);
+  orePass(T.SILVER, 2.2e-05, 2.8e-05, 6.5e-05);
+  orePass(T.TIN, 1.3e-05, 1.8e-05, 4e-05);
+  orePass(T.TUNGSTEN, 1e-05, 1.5e-05, 3.5e-05);
+  orePass(T.GOLD, 8e-06, 1.1e-05, 2.6e-05);
+  orePass(T.PLATINUM, 5e-06, 8e-06, 1.9e-05);
+  orePass(T.LEAD, 8e-06, 1.1e-05, 2.6e-05);
+  // Demonite/Crimtane: veins anchored inside the evil biome's stone
+  var eStone = isCrimson ? T.CRIMSTONE : T.EBONSTONE;
+  var eTile = isCrimson ? T.CRIMTANE : T.DEMONITE;
+  var eCan = function (t) { return t === eStone || t === T.STONE; };
+  for (var ev = 0; ev < area * 1.2e-05; ev++) {
+    var evx = 20 + Math.floor(rng() * (W - 40));
+    if (biomeAtX(evx) !== BIOME.CORRUPT && biomeAtX(evx) !== BIOME.CRIMSON) continue;
+    var evy = self.surfaceY[evx] + 40 + Math.floor(rng() * Math.max(4, self.hellY - self.surfaceY[evx] - 80));
+    tileRunner(eTile, evx, evy, 2 + rng() * 2.5, 2 + Math.floor(rng() * 3), eCan);
+  }
+  // Hardmode worlds: the three altar-tier pairs, one pick per pair like vanilla
+  if (hardmode) {
+    var hm1 = rng() < 0.5 ? T.COBALT : T.PALLADIUM;
+    var hm2 = rng() < 0.5 ? T.MYTHRIL : T.ORICHALCUM;
+    var hm3 = rng() < 0.5 ? T.ADAMANTITE : T.TITANIUM;
+    oreRunnerBand(hm1, Math.floor(area * 5e-05),
+      function (x) { return self.surfaceY[x] + 10; },
+      function (x) { return self.rockY[x] + 120; }, canStone);
+    oreRunnerBand(hm2, Math.floor(area * 5e-05),
+      function (x) { return self.rockY[x]; },
+      function (x) { return self.rockY[x] + (self.hellY - 100 - self.rockY[x]) * 0.6; }, canStone);
+    oreRunnerBand(hm3, Math.floor(area * 4e-05),
+      function (x) { return self.rockY[x] + (self.hellY - 80 - self.rockY[x]) * 0.4; },
+      function (x) { return self.hellY - 50; }, canStone);
+  }
+
+  // Webs: small cobweb clusters clinging to cave walls underground
+  for (var wb = 0; wb < area * 4e-05; wb++) {
+    var wbx = 20 + Math.floor(rng() * (W - 40));
+    var wby = self.surfaceY[wbx] + 15 + Math.floor(rng() * Math.max(4, self.hellY - self.surfaceY[wbx] - 30));
+    if (self.get(wbx, wby) === T.AIR) placeBlob(wbx, wby, 1 + rng() * 1.5, T.COBWEB, function (t) { return t === T.AIR; });
+  }
+
+  // Lakes: surface water bodies in the forest (vanilla `Lakes` pass)
+  var lakeCount = 10 + Math.floor(rng() * 5);
+  for (var lk = 0; lk < lakeCount; lk++) {
+    var lkx = 60 + Math.floor(rng() * (W - 120));
+    var lkb = biomeAtX(lkx);
+    if (lkb !== BIOME.FOREST) continue;
+    var lkw = 8 + Math.floor(rng() * 14);
+    var lkd = 3 + Math.floor(rng() * 4);
+    for (var ldx = -lkw; ldx <= lkw; ldx++) {
+      var lx2 = lkx + ldx;
+      if (lx2 < 2 || lx2 >= W - 2) continue;
+      var depthAt = Math.round(lkd * Math.sqrt(Math.max(0, 1 - (ldx * ldx) / (lkw * lkw))));
+      for (var ldy = 0; ldy <= depthAt; ldy++) {
+        var ly2 = this.surfaceY[lx2] + ldy;
+        if (ly2 >= H - 2) break;
+        var li3 = this.idx(lx2, ly2);
+        if (ldy === depthAt || this.tiles[li3] === T.STONE) { if (this.tiles[li3] !== T.STONE) this.tiles[li3] = T.DIRT; }
+        else this.tiles[li3] = T.WATER;
       }
     }
   }
