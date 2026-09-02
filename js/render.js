@@ -925,157 +925,193 @@ function drawGraveyardMist(game, ctx, W, H) {
 }
 
 // ---------- Lighting ----------
-var LIGHT_SCALE = 0.25;
+// Terraria-style per-tile light propagation:
+// 1. Seed light sources: sky-exposed air (daylight), torches, lava, emissive ores, player aura.
+// 2. Propagate tile-to-tile with 4-directional sweeps — light decays slowly through
+//    open tiles and fast through solid blocks, so caves go pitch black.
+// 3. Build a 1px-per-tile lightmap and stretch it over the screen with smoothing,
+//    black alpha = 1 - light (Terraria "Color" mode rendering).
+var LIGHT_AIR_DECAY = 0.09;    // ~11 tiles of torch reach through open space
+var LIGHT_WALL_DECAY = 0.13;   // enclosed rooms with walls lose light faster
+var LIGHT_SOLID_DECAY = 0.30;  // solid rock chokes light in ~3 tiles
+var LIGHT_LIQUID_DECAY = 0.16; // water dims light
+var LIGHT_PAD = 16;            // tiles of margin around the viewport
+
 function drawLighting(game, ctx, cam, W, H) {
-  var lw = Math.ceil(W * LIGHT_SCALE), lh = Math.ceil(H * LIGHT_SCALE);
-  if (!game.lightCanvas || game.lightCanvas.width !== lw || game.lightCanvas.height !== lh) {
-    game.lightCanvas = document.createElement('canvas');
-    game.lightCanvas.width = lw; game.lightCanvas.height = lh;
-  }
-  var lc = game.lightCanvas.getContext('2d');
-  var W = lw, H = lh;
-  var t = game.timeOfDay;
-  var nightAmt = Math.min(1, Math.max(0, Math.abs(t - 0.5) * 4 - 0.4));
-  var base = 0.04 + 0.35 * nightAmt;
-  if (weatherKindAt(game, game.player.x, game.player.y)) base = Math.min(0.9, base + 0.08 * game.weather.intensity);
-  var graveStrength = game.world.graveyardStrengthAt(game.player.x, game.player.y);
-  if (graveStrength >= 5) base = Math.min(0.9, base + Math.min(0.18, (graveStrength - 4) * 0.035));
-
-  lc.globalCompositeOperation = 'source-over';
-  lc.globalAlpha = 1;
-  lc.clearRect(0, 0, W, H);
-  lc.fillStyle = 'rgba(0,0,10,' + base + ')';
-  lc.fillRect(0, 0, W, H);
-
   var world = game.world;
-  var lightTile = TILE * LIGHT_SCALE;
-  var lightX0 = Math.max(0, Math.floor((cam.x - W / 2 / LIGHT_SCALE) / TILE) - 2);
-  var lightX1 = Math.min(world.W - 1, Math.ceil((cam.x + W / 2 / LIGHT_SCALE) / TILE) + 2);
-  var lightY0 = Math.max(0, Math.floor((cam.y - H / 2 / LIGHT_SCALE) / TILE) - 2);
-  var lightY1 = Math.min(world.H - 1, Math.ceil((cam.y + H / 2 / LIGHT_SCALE) / TILE) + 2);
+  var x0 = Math.max(0, Math.floor((cam.x - W / 2) / TILE) - LIGHT_PAD);
+  var x1 = Math.min(world.W - 1, Math.ceil((cam.x + W / 2) / TILE) + LIGHT_PAD);
+  var y0 = Math.max(0, Math.floor((cam.y - H / 2) / TILE) - LIGHT_PAD);
+  var y1 = Math.min(world.H - 1, Math.ceil((cam.y + H / 2) / TILE) + LIGHT_PAD);
+  var tw = x1 - x0 + 1, th = y1 - y0 + 1;
+  var n = tw * th;
 
-  // Draw a single smooth underground darkness polygon to avoid column seams.
-  var maxSurfaceScreen = -Infinity;
-  for (var surfaceX = lightX0; surfaceX <= lightX1; surfaceX++) {
-    var surfScreen = world.surfaceY[surfaceX] * lightTile - cam.y * LIGHT_SCALE + lh / 2;
-    maxSurfaceScreen = Math.max(maxSurfaceScreen, surfScreen);
+  if (!game.lightBuf || game.lightBuf.length !== n) {
+    game.lightBuf = new Float32Array(n);
+    game.lightDecay = new Float32Array(n);
+    game.lightMapCanvas = document.createElement('canvas');
+    game.lightMapImg = null;
   }
-  if (maxSurfaceScreen > 0) {
-    lc.beginPath();
-    lc.moveTo(0, H);
-    for (surfaceX = lightX0; surfaceX <= lightX1; surfaceX++) {
-      var polyX = surfaceX * lightTile - cam.x * LIGHT_SCALE + lw / 2;
-      var polyTop = (world.surfaceY[surfaceX] + 1) * lightTile - cam.y * LIGHT_SCALE + lh / 2;
-      lc.lineTo(polyX, Math.max(0, polyTop));
-    }
-    lc.lineTo(W, H);
-    lc.closePath();
-    // Vertical gradient: bright at the surface line, near-full dark ~28 tiles down.
-    var gradTop = Math.max(0, maxSurfaceScreen - lightTile);
-    var gradBot = Math.min(H, maxSurfaceScreen + 28 * lightTile);
-    var depthGrad = lc.createLinearGradient(0, gradTop, 0, gradBot);
-    depthGrad.addColorStop(0, 'rgba(0,0,6,0.0)');
-    depthGrad.addColorStop(0.08, 'rgba(0,0,6,0.1)');
-    depthGrad.addColorStop(0.3, 'rgba(0,0,6,0.45)');
-    depthGrad.addColorStop(0.65, 'rgba(0,0,6,0.78)');
-    depthGrad.addColorStop(1, 'rgba(0,0,6,0.93)');
-    lc.fillStyle = depthGrad;
-    lc.fill();
-  } else {
-    lc.fillStyle = 'rgba(0,0,6,0.9)';
-    lc.fillRect(0, 0, W, H);
+  if (!game.lightMapCanvas || game.lightMapCanvas.width !== tw || game.lightMapCanvas.height !== th) {
+    game.lightMapCanvas = document.createElement('canvas');
+    game.lightMapCanvas.width = tw; game.lightMapCanvas.height = th;
+    game.lightMapImg = null;
   }
-
-  function cutLight(x, y, r, strength) {
-    strength = strength === undefined ? 1 : strength;
-    var g = lc.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, 'rgba(0,0,0,' + strength + ')');
-    g.addColorStop(0.25, 'rgba(0,0,0,' + (strength * 0.85) + ')');
-    g.addColorStop(0.5, 'rgba(0,0,0,' + (strength * 0.5) + ')');
-    g.addColorStop(0.75, 'rgba(0,0,0,' + (strength * 0.18) + ')');
-    g.addColorStop(1, 'rgba(0,0,0,0)');
-    lc.globalCompositeOperation = 'destination-out';
-    lc.fillStyle = g;
-    lc.fillRect(x - r, y - r, r * 2, r * 2);
-    lc.globalCompositeOperation = 'source-over';
+  var lmc = game.lightMapCanvas.getContext('2d');
+  if (!game.lightMapImg || game.lightMapImg.width !== tw || game.lightMapImg.height !== th) {
+    game.lightMapImg = lmc.createImageData(tw, th);
   }
+  var light = game.lightBuf, decay = game.lightDecay;
+  var tiles = world.tiles, walls = world.walls, wW = world.W;
+  var surfaceArr = world.surfaceY;
 
-  // A held torch or glowstone lights the player; there is no free cave light.
-  var px = (game.player.x - cam.x) * LIGHT_SCALE + lw / 2;
-  var py = (game.player.y - cam.y) * LIGHT_SCALE + lh / 2;
-  var held = game.player.inventory.selectedItem();
-  var heldDef = held && ITEMS[held.id];
-  // faint aura around the player so shallow caves stay readable without torches
-  cutLight(px, py - 10 * LIGHT_SCALE, 120, 0.45);
-  if (heldDef && heldDef.tile === T.TORCH) cutLight(px, py - 10 * LIGHT_SCALE, 180 * LIGHT_SCALE);
-  else if (heldDef && heldDef.tile === T.GLOWSTONE) cutLight(px, py - 10 * LIGHT_SCALE, 140 * LIGHT_SCALE);
+  // --- sky brightness by time of day ---
+  var t = game.timeOfDay; // 0=midnight, 0.5=noon
+  var dayX = Math.abs(t - 0.5) * 2; // 0 noon .. 1 midnight
+  var day = Math.min(1, Math.max(0, (0.62 - dayX) / 0.24));
+  var sky = 0.12 + 0.88 * day;      // moonlight keeps the surface faintly visible
+  if (game.weather && game.weather.active) sky *= 1 - 0.3 * game.weather.intensity;
+  var bloodMoon = game.event && game.event.type === 'bloodmoon';
+  if (bloodMoon) sky = Math.max(sky, 0.22);
 
-  // torches / glowstone
-  var worldLights = world.lights;
-  for (var i = 0; i < worldLights.length; i++) {
-    var l = worldLights[i];
-    var lx = (l.x - cam.x) * LIGHT_SCALE + lw / 2;
-    var ly = (l.y - cam.y) * LIGHT_SCALE + lh / 2;
-    if (lx < -80 || ly < -80 || lx > lw + 80 || ly > lh + 80) continue;
-    cutLight(lx, ly, l.r * 40 * LIGHT_SCALE);
-  }
-
-  // Only naturally luminous ores reveal themselves through untouched darkness.
-  var oreGlows = [];
-  for (var oreY = lightY0; oreY <= lightY1; oreY++) {
-    for (var oreX = lightX0; oreX <= lightX1; oreX++) {
-      var oreGlow = EMISSIVE_ORE_GLOW[world.get(oreX, oreY)];
-      if (!oreGlow) continue;
-      var oreScreenX = oreX * TILE + 8 - cam.x + (lw / LIGHT_SCALE) / 2;
-      var oreScreenY = oreY * TILE + 8 - cam.y + (lh / LIGHT_SCALE) / 2;
-      cutLight(oreScreenX * LIGHT_SCALE, oreScreenY * LIGHT_SCALE, oreGlow.r * LIGHT_SCALE, oreGlow.strength);
-      oreGlows.push({ x:oreScreenX, y:oreScreenY, def:oreGlow });
+  // --- decay map ---
+  for (var ty = 0; ty < th; ty++) {
+    var wy = y0 + ty;
+    for (var tx = 0; tx < tw; tx++) {
+      var wx = x0 + tx;
+      var i = ty * tw + tx;
+      var tl = tiles[wy * wW + wx];
+      if (world.isSolidTile(tl)) {
+        decay[i] = LIGHT_SOLID_DECAY;
+        light[i] = 0;
+      } else {
+        decay[i] = LIGHT_AIR_DECAY;
+        if (walls[wy * wW + wx] !== 0) decay[i] = LIGHT_WALL_DECAY;
+        if (tl === T.WATER || tl === T.HONEY || tl === T.SHIMMER) decay[i] = LIGHT_LIQUID_DECAY;
+        light[i] = 0;
+      }
     }
   }
 
-  // projectiles light
-  var projs = game.projectiles.list;
-  for (var j = 0; j < projs.length; j++) {
-    var pp = projs[j];
-    if (pp.type === P.LASER || pp.type === P.MAGICBOLT || pp.type === P.CURSEDFLAME || pp.type === P.STAR) {
-      var qx = (pp.x - cam.x) * LIGHT_SCALE + lw / 2;
-      var qy = (pp.y - cam.y) * LIGHT_SCALE + lh / 2;
-      if (qx > 0 && qy > 0 && qx < lw && qy < lh) cutLight(qx, qy, 45 * LIGHT_SCALE);
+  // --- sunlight: every tile above the first solid tile from the sky is day-lit
+  // (open shafts and overhangs stay lit; sealed caves stay dark) ---
+  for (var sx2 = 0; sx2 < tw; sx2++) {
+    var colX = x0 + sx2;
+    var skyTop = world.skyTopAt(colX);
+    if (skyTop < y0) continue; // column is entirely below the sky-open zone
+    var yyEnd = Math.min(y1, skyTop);
+    for (var yy = y0; yy <= yyEnd; yy++) {
+      var ii = (yy - y0) * tw + sx2;
+      light[ii] = Math.max(light[ii], sky);
     }
   }
 
-  for (var sp = 0; sp < game.pickups.length; sp++) {
-    var starPickup = game.pickups[sp];
-    if (starPickup.item !== I.FALLENSTAR) continue;
-    var starX = (starPickup.x - cam.x) * LIGHT_SCALE + lw / 2, starY = (starPickup.y - cam.y) * LIGHT_SCALE + lh / 2;
-    if (starX > -20 && starY > -20 && starX < lw + 20 && starY < lh + 20) cutLight(starX, starY, 55 * LIGHT_SCALE);
+  // --- torches, lava, emissive ores ---
+  for (var sy = y0; sy <= y1; sy++) {
+    var rowBase = sy * wW;
+    for (var sx = x0; sx <= x1; sx++) {
+      var tl3 = tiles[rowBase + sx];
+      var li = (sy - y0) * tw + (sx - x0);
+      if (tl3 === T.TORCH) light[li] = 1;
+      else if (tl3 === T.LAVA) light[li] = Math.max(light[li], 0.75);
+      else {
+        var og2 = EMISSIVE_ORE_GLOW[tl3];
+        if (og2) light[li] = Math.max(light[li], og2.strength);
+      }
+    }
+  }
+  // dynamic world lights (placed torches register here too)
+  var wl = world.lights;
+  for (var li2 = 0; li2 < wl.length; li2++) {
+    var lgt = wl[li2];
+    var ltx = Math.floor(lgt.x / TILE) - x0, lty = Math.floor(lgt.y / TILE) - y0;
+    if (ltx < 0 || lty < 0 || ltx >= tw || lty >= th) continue;
+    light[lty * tw + ltx] = Math.max(light[lty * tw + ltx], 1);
+  }
+  // faint player aura so shallow caves stay readable without torches
+  var ptx = Math.floor(game.player.x / TILE) - x0, pty = Math.floor(game.player.y / TILE) - y0;
+  if (ptx >= 0 && pty >= 0 && ptx < tw && pty < th) {
+    light[pty * tw + ptx] = Math.max(light[pty * tw + ptx], 0.55);
   }
 
-  // light pets
-  for (var lp = 0; lp < game.player.lightPets.length; lp++) {
-    var lpp = game.player.lightPets[lp];
-    var lpX = (lpp.x - cam.x) * LIGHT_SCALE + lw / 2;
-    var lpY = (lpp.y - cam.y) * LIGHT_SCALE + lh / 2;
-    cutLight(lpX, lpY, (lpp.def.lightR || 4) * 30 * LIGHT_SCALE);
+  // --- propagation: 2 iterations of 4 directional sweeps ---
+  for (var iter = 0; iter < 2; iter++) {
+    // left -> right
+    for (var py = 0; py < th; py++) {
+      var row = py * tw;
+      for (var px = 1; px < tw; px++) {
+        var v = light[row + px - 1] - decay[row + px];
+        if (v > light[row + px]) light[row + px] = v;
+      }
+    }
+    // right -> left
+    for (py = 0; py < th; py++) {
+      row = py * tw;
+      for (px = tw - 2; px >= 0; px--) {
+        v = light[row + px + 1] - decay[row + px];
+        if (v > light[row + px]) light[row + px] = v;
+      }
+    }
+    // top -> bottom
+    for (px = 0; px < tw; px++) {
+      for (py = 1; py < th; py++) {
+        v = light[(py - 1) * tw + px] - decay[py * tw + px];
+        if (v > light[py * tw + px]) light[py * tw + px] = v;
+      }
+    }
+    // bottom -> top
+    for (px = 0; px < tw; px++) {
+      for (py = th - 2; py >= 0; py--) {
+        v = light[(py + 1) * tw + px] - decay[py * tw + px];
+        if (v > light[py * tw + px]) light[py * tw + px] = v;
+      }
+    }
   }
 
-  ctx.imageSmoothingEnabled = true;
-  // NOTE: W/H were shadowed to the light-canvas size above, so divide back out
-  // to blit the overlay across the full screen (1:1 blit = corner artifact).
-  ctx.drawImage(game.lightCanvas, 0, 0, lw, lh, 0, 0, W / LIGHT_SCALE, H / LIGHT_SCALE);
-  ctx.imageSmoothingEnabled = false;
+  // --- build 1px-per-tile lightmap ---
+  var img = game.lightMapImg, data = img.data;
+  for (ty = 0; ty < th; ty++) {
+    for (tx = 0; tx < tw; tx++) {
+      var mi = (ty * tw + tx) * 4;
+      var lv = light[ty * tw + tx];
+      if (lv < 0) lv = 0; else if (lv > 1) lv = 1;
+      var a = (1 - lv) * 255;
+      // never darken open sky (no tile, no wall) — stars/moon/clouds live there
+      if (walls[(y0 + ty) * wW + (x0 + tx)] === 0 && !world.isSolidTile(tiles[(y0 + ty) * wW + (x0 + tx)])) {
+        var tlA = tiles[(y0 + ty) * wW + (x0 + tx)];
+        if (tlA === 0 || tlA === T.TORCH || tlA === T.PLATFORM) a = 0;
+      }
+      data[mi] = 0;
+      data[mi + 1] = 0;
+      data[mi + 2] = 4;
+      data[mi + 3] = a;
+    }
+  }
+  lmc.putImageData(img, 0, 0);
+
+  // --- stretch the lightmap over the screen (smooth interpolation, like Terraria Color mode) ---
+  var destX = Math.floor(x0 * TILE - cam.x + W / 2);
+  var destY = Math.floor(y0 * TILE - cam.y + H / 2);
   ctx.save();
-  ctx.globalCompositeOperation = 'screen';
-  for (var og = 0; og < oreGlows.length; og++) {
-    var glow = oreGlows[og];
-    var color = glow.def.color;
-    var halo = ctx.createRadialGradient(glow.x, glow.y, 0, glow.x, glow.y, glow.def.r);
-    halo.addColorStop(0, 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',0.24)');
-    halo.addColorStop(1, 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',0)');
-    ctx.fillStyle = halo;
-    ctx.fillRect(glow.x - glow.def.r, glow.y - glow.def.r, glow.def.r * 2, glow.def.r * 2);
-  }
+  ctx.imageSmoothingEnabled = true;
+  ctx.drawImage(game.lightMapCanvas, destX, destY, tw * TILE, th * TILE);
   ctx.restore();
+
+  // re-scan visible ores for halos (screen coords)
+  for (var hy = Math.max(0, y0); hy <= y1; hy++) {
+    for (var hx = Math.max(0, x0); hx <= x1; hx++) {
+      var ogDef = EMISSIVE_ORE_GLOW[tiles[hy * wW + hx]];
+      if (!ogDef) continue;
+      var hxp = hx * TILE + 8 - cam.x + W / 2;
+      var hyp = hy * TILE + 8 - cam.y + H / 2;
+      if (hxp < -ogDef.r || hxp > W + ogDef.r || hyp < -ogDef.r || hyp > H + ogDef.r) continue;
+      var halo = ctx.createRadialGradient(hxp, hyp, 0, hxp, hyp, ogDef.r);
+      halo.addColorStop(0, 'rgba(' + ogDef.color[0] + ',' + ogDef.color[1] + ',' + ogDef.color[2] + ',0.24)');
+      halo.addColorStop(1, 'rgba(' + ogDef.color[0] + ',' + ogDef.color[1] + ',' + ogDef.color[2] + ',0)');
+      ctx.fillStyle = halo;
+      ctx.fillRect(hxp - ogDef.r, hyp - ogDef.r, ogDef.r * 2, ogDef.r * 2);
+    }
+  }
 }
 
 // ---------- Heart crystal ----------

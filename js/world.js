@@ -70,6 +70,24 @@ World.prototype.set = function(x, y, t) {
     this.hp[this.idx(x, y)] = 0;
   }
   if (t === T.TORCH) this.rebuildLights();
+  this._skyDirty = true; // first-solid-from-sky cache needs a refresh
+};
+
+// First solid tile from the top of the world per column — sunlight reaches
+// every tile above it (open shafts/wells stay lit, like Terraria).
+World.prototype.skyTopAt = function(x) {
+  if (!this._skyTop || this._skyTop.length !== this.W || this._skyDirty) {
+    this._skyTop = new Array(this.W);
+    this._skyDirty = false;
+  }
+  if (this._skyTop[x] === undefined) {
+    var st = this.H - 1;
+    for (var y = 0; y < this.H; y++) {
+      if (this.isSolidTile(this.tiles[this.idx(x, y)])) { st = y; break; }
+    }
+    this._skyTop[x] = st;
+  }
+  return this._skyTop[x];
 };
 
 World.prototype.wall = function(x, y) {
