@@ -4771,7 +4771,7 @@ function drawMinimap(game, ctx) {
   mctx.putImageData(img, 0, 0);
 
   // draw to screen
-  var dw = mw * 2, dh = mh * 2;
+  var dw = 210, dh = 126;
   var sx = canvas.width - dw - 8;
   ctx.save();
   ctx.globalAlpha = 0.88;

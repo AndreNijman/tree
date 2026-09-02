@@ -59,6 +59,7 @@ function buildGame(seed, evil, difficulty) {
     weather: { active:false, time:0, wind:1, intensity:0, windSpeed:0, windTarget:0, windChangeT:0, windy:false },
     panelOpen: false,
     panelTab: 'inventory',
+    held: null,
     paused: false,
     started: true,
     victory: false,
@@ -4839,6 +4840,16 @@ function openPanel() {
 
 function closePanel() {
   game.panelOpen = false;
+  if (game.held) {
+    var leftover = { id: game.held.id, count: game.held.count };
+    if (game.held.reforge) leftover.reforge = game.held.reforge;
+    var movedHeld = game.player.inventory.addStack(leftover);
+    if (movedHeld < leftover.count) {
+      game.addPickup(game.player.x, game.player.y - 10, leftover.id, leftover.count - movedHeld, leftover.reforge);
+    }
+    game.held = null;
+    updateCursorItem();
+  }
   $('panel').classList.add('hidden');
   if (game.chestOpen) {
     game.chestOpen = false;
@@ -4915,9 +4926,15 @@ function buildHotbar() {
     d.innerHTML = '<div class="num">' + ((i + 1) % 10) + '</div><div class="icon"></div><div class="count"></div>';
     hb.appendChild(d);
   }
-  hb.addEventListener('click', function(e) {
+  hb.addEventListener('mousedown', function(e) {
     var slot = e.target.closest('.hslot');
-    if (slot) game.player.inventory.selected = parseInt(slot.getAttribute('data-slot'), 10);
+    if (!slot) return;
+    if (game.panelOpen) {
+      e.preventDefault();
+      slotClick(parseInt(slot.getAttribute('data-slot'), 10), e.button === 2);
+      return;
+    }
+    game.player.inventory.selected = parseInt(slot.getAttribute('data-slot'), 10);
   });
 }
 
@@ -4992,12 +5009,12 @@ function renderInventory() {
   renderCrafting();
   var inv = game.player.inventory;
   var grid = $('inv-grid');
+  // vanilla: the grid under the hotbar holds slots 10-49 (hotbar = row 1)
   var html = '';
-  for (var i = 0; i < 50; i++) {
+  for (var i = 10; i < 50; i++) {
     var s = inv.slots[i];
-    var sel = inv.selected === i ? ' selected' : '';
     var loaded = s && inv.ammo === s.id ? ' ammo-selected' : '';
-    html += '<div class="inv-cell' + sel + loaded + '" data-idx="' + i + '"' + (s ? ' draggable="true"' : '') + '>';
+    html += '<div class="inv-cell' + loaded + '" data-idx="' + i + '">';
     if (s) {
       html += '<div class="icon">' + itemIconHTML(ITEMS[s.id]) + '</div>';
       if (s.count > 1) html += '<div class="count">' + s.count + '</div>';
@@ -5658,6 +5675,7 @@ function render() {
   if (!game || !game.started) return;
   renderGame(game, ctx2d);
   if (game.mapOpen) drawFullMap(game, ctx2d);
+  else drawMinimap(game, ctx2d);
 }
 
 // ---------- Init ----------
@@ -5705,39 +5723,144 @@ function initDOM() {
     var cells = $('inv-grid').querySelectorAll('.dragging, .drag-target');
     for (var dc = 0; dc < cells.length; dc++) cells[dc].classList.remove('dragging', 'drag-target');
   }
-  $('inv-grid').addEventListener('dragstart', function(e) {
+  // --- vanilla cursor-pickup interaction (left: pick up / place / swap, right: half / one) ---
+  function slotClick(idx, rightClick) {
+    var inv = game.player.inventory;
+    var s = inv.slots[idx];
+    var held = game.held;
+    if (!rightClick) {
+      if (!held && s) { game.held = s; inv.slots[idx] = null; }
+      else if (held && !s) { inv.slots[idx] = held; game.held = null; }
+      else if (held && s) {
+        if (s.id === held.id && !s.reforge && !held.reforge) {
+          var space = (ITEMS[s.id].maxStack || 999) - s.count;
+          var move = Math.min(space, held.count);
+          if (move > 0) { s.count += move; held.count -= move; if (held.count <= 0) game.held = null; }
+          else { inv.slots[idx] = held; game.held = s; }
+        } else { inv.slots[idx] = held; game.held = s; }
+      }
+    } else {
+      if (!held && s) {
+        var take = Math.ceil(s.count / 2);
+        var rest = s.count - take;
+        game.held = { id: s.id, count: take };
+        if (s.reforge) game.held.reforge = s.reforge;
+        if (rest > 0) s.count = rest; else inv.slots[idx] = null;
+      } else if (held && s && s.id === held.id && !s.reforge && !held.reforge) {
+        if (s.count < (ITEMS[s.id].maxStack || 999)) { s.count++; held.count--; if (held.count <= 0) game.held = null; }
+      }
+    }
+    AudioSys.play('place');
+    updateHotbar();
+    renderInventory();
+    updateCursorItem();
+  }
+  function updateCursorItem() {
+    var elc = $('cursor-item');
+    if (!game.held) { elc.style.display = 'none'; return; }
+    elc.style.display = 'flex';
+    elc.innerHTML = itemIconHTML(ITEMS[game.held.id]) + (game.held.count > 1 ? '<span class="count">' + game.held.count + '</span>' : '');
+    elc.style.left = (MOUSE.x + 6) + 'px';
+    elc.style.top = (MOUSE.y + 6) + 'px';
+  }
+  document.addEventListener('mousemove', updateCursorItem);
+  window.updateCursorItem = updateCursorItem;
+  window.returnHeldToInventory = returnHeldToInventory;
+  window.slotClick = slotClick;
+  function returnHeldToInventory() {
+    if (!game.held) return;
+    var leftover = { id: game.held.id, count: game.held.count };
+    if (game.held.reforge) leftover.reforge = game.held.reforge;
+    var moved = game.player.inventory.addStack(leftover);
+    var rest = game.held.count - moved;
+    game.held = null;
+    if (rest > 0) game.addPickup(game.player.x, game.player.y - 10, leftover.id, rest, leftover.reforge);
+    updateCursorItem();
+  }
+  $('inv-grid').addEventListener('mousedown', function(e) {
+    if (game.chestOpen) return; // chest mode keeps its own click behavior
     var cell = e.target.closest('.inv-cell[data-idx]');
     if (!cell) return;
     var idx = parseInt(cell.getAttribute('data-idx'), 10);
-    if (!game.player.inventory.slots[idx]) { e.preventDefault(); return; }
-    inventoryDragSlot = idx;
-    cell.classList.add('dragging');
-    if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', '' + idx); }
-  });
-  $('inv-grid').addEventListener('dragover', function(e) {
-    var cell = e.target.closest('.inv-cell[data-idx]');
-    if (!cell || inventoryDragSlot < 0) return;
+    var bag = game.player.inventory.slots[idx];
+    if (e.button === 2 && bag && bag.bagBoss && bag.bagDrops && !game.held) {
+      e.preventDefault();
+      game.openBossBag(idx, bag);
+      return;
+    }
     e.preventDefault();
-    var old = $('inv-grid').querySelectorAll('.drag-target');
-    for (var i = 0; i < old.length; i++) old[i].classList.remove('drag-target');
-    cell.classList.add('drag-target');
-    if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+    slotClick(idx, e.button === 2);
   });
-  $('inv-grid').addEventListener('drop', function(e) {
-    var cell = e.target.closest('.inv-cell[data-idx]');
-    if (!cell || inventoryDragSlot < 0) return;
-    e.preventDefault();
-    moveInventorySlot(inventoryDragSlot, parseInt(cell.getAttribute('data-idx'), 10));
-    inventoryDragFinishedAt = Date.now();
-    inventoryDragSlot = -1;
-    clearInventoryDragClasses();
+  // equipment slots with cursor-held items (vanilla: click to equip/unequip via cursor)
+  $('inv-armor').addEventListener('mousedown', function(e) {
+    var slotEl = e.target.closest('.armor-slot');
+    if (slotEl) {
+      e.preventDefault();
+      var slotName = slotEl.getAttribute('data-slot');
+      var inv = game.player.inventory;
+      var old = inv.armor[slotName];
+      if (game.held) {
+        var it = ITEMS[game.held.id];
+        if (!it || it.type !== 'armor' || it.slot !== slotName) return;
+        inv.armor[slotName] = game.held.id;
+        game.held = old ? { id: old, count: 1 } : null;
+        AudioSys.play('craft');
+      } else if (old) {
+        game.held = { id: old, count: 1 };
+        inv.armor[slotName] = null;
+        AudioSys.play('place');
+      }
+      updateHotbar(); renderInventory(); updateCursorItem();
+      return;
+    }
+    var accEl = e.target.closest('.acc-slot');
+    if (accEl) {
+      e.preventDefault();
+      var accIndex = parseInt(accEl.getAttribute('data-acc'), 10);
+      var inv2 = game.player.inventory;
+      var old2 = inv2.accessories[accIndex];
+      if (game.held) {
+        var it2 = ITEMS[game.held.id];
+        if (!it2 || it2.type !== 'accessory') return;
+        inv2.accessories[accIndex] = game.held.id;
+        game.held = old2 ? { id: old2, count: 1 } : null;
+        AudioSys.play('craft');
+      } else if (old2) {
+        game.held = { id: old2, count: 1 };
+        inv2.accessories[accIndex] = null;
+        AudioSys.play('place');
+      }
+      updateHotbar(); renderInventory(); updateCursorItem();
+      return;
+    }
+    var dyeEl = e.target.closest('.dye-slot');
+    if (dyeEl) {
+      e.preventDefault();
+      var dyeIndex = parseInt(dyeEl.getAttribute('data-dye'), 10);
+      var inv3 = game.player.inventory;
+      var old3 = inv3.dyes[dyeIndex];
+      if (game.held) {
+        var it3 = ITEMS[game.held.id];
+        if (!it3 || it3.type !== 'dye') return;
+        inv3.dyes[dyeIndex] = game.held.id;
+        game.held = old3 ? { id: old3, count: 1 } : null;
+      } else if (old3) {
+        game.held = { id: old3, count: 1 };
+        inv3.dyes[dyeIndex] = null;
+      }
+      updateHotbar(); renderInventory(); updateCursorItem();
+      return;
+    }
+    if (e.target.closest('.ammo-slot')) { selectAmmo(); return; }
+    if (e.target.closest('#inv-trash') && game.held) {
+      game.held = null;
+      updateHotbar(); renderInventory(); updateCursorItem();
+    }
   });
-  $('inv-grid').addEventListener('dragend', function() {
-    inventoryDragSlot = -1;
-    clearInventoryDragClasses();
-  });
+  $('inv-grid').addEventListener('contextmenu', function(e) { e.preventDefault(); });
+  $('inv-armor').addEventListener('contextmenu', function(e) { e.preventDefault(); });
   $('inv-grid').addEventListener('click', function(e) {
-    if (Date.now() - inventoryDragFinishedAt < 250) return;
+    if (!game.chestOpen) return;
     var cell = e.target.closest('.inv-cell');
     if (!cell) return;
     if (game.chestOpen) {
@@ -5771,21 +5894,6 @@ function initDOM() {
       renderChest();
       return;
     }
-    var idx = parseInt(cell.getAttribute('data-idx'), 10);
-    var s = game.player.inventory.slots[idx];
-    if (s && s.bagBoss && s.bagDrops) { game.openBossBag(idx, s); return; }
-    game.player.inventory.selected = idx;
-    renderInventory();
-  });
-  $('inv-armor').addEventListener('click', function(e) {
-    var slotEl = e.target.closest('.armor-slot');
-    if (slotEl) equipArmor(slotEl.getAttribute('data-slot'));
-    var accEl = e.target.closest('.acc-slot');
-    if (accEl) equipAccessory(parseInt(accEl.getAttribute('data-acc'), 10));
-    var dyeEl = e.target.closest('.dye-slot');
-    if (dyeEl) equipDye(parseInt(dyeEl.getAttribute('data-dye'), 10));
-    var ammoEl = e.target.closest('.ammo-slot');
-    if (ammoEl) selectAmmo();
   });
   $('panel-chest').addEventListener('click', function(e) {
     if (e.target.closest('[data-chest-loot]')) { lootAllChest(); return; }
