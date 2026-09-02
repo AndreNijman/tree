@@ -931,6 +931,8 @@ self.underworldHouses = [];
       for (var rix = rxx; rix <= rxx + rw; rix++) {
         var edge = riy === ryy || riy === ryy + rh || rix === rxx || rix === rxx + rw;
         var ri = self.idx(rix, riy);
+        // vanilla ruined houses are broken: randomly missing roof/side bricks
+        if (edge && rng() < 0.22) { self.tiles[ri] = T.AIR; continue; }
         self.tiles[ri] = edge ? T.HELLBRICK : T.AIR;
         self.walls[ri] = edge ? WALL.STONE : WALL.CAVE;
       }
@@ -957,40 +959,171 @@ self.underworldHouses = [];
     }
   }
 
-  // --- Sky islands ---
+  // --- Floating Islands (vanilla CloudIsland/IslandHouse geometry):
+  // 100-140 tile cloud discs with dirt tops, ponds, brick house, sky chest,
+  // and small sky-blobs floating above; ~W*0.0008 islands per world ---
   self.skyIslands = [];
-  var islandCount = 8;
-  for (var is = 0; is < islandCount; is++) {
-    var ix0 = Math.floor(W * ((is + 0.5 + (rng() - 0.5) * 0.5) / islandCount));
-    if (ix0 < 4 || ix0 > W - 4) ix0 = Math.floor(W * 0.5);
-    var iy0 = self.surfaceY[ix0] - (34 + Math.floor(rng() * 30));
-    if (iy0 < 10) iy0 = 10;
-    var ir = 5 + Math.floor(rng() * 4);
-    for (var idy = -ir; idy <= ir; idy++) {
-      for (var idx2 = -ir; idx2 <= ir; idx2++) {
-        var axx = ix0 + idx2, ayy = iy0 + idy;
-        if (!self.inBounds(axx, ayy)) continue;
-        var idd = idx2 * idx2 + idy * idy;
-        if (idd > ir * ir) continue;
-        var aii = self.idx(axx, ayy);
-        if (idd >= (ir - 2) * (ir - 2)) { self.tiles[aii] = T.CLOUD; }
-        else { self.tiles[aii] = T.AIR; }
-        self.walls[aii] = WALL.NONE;
+  var islandCount = Math.max(3, Math.round(W * 0.0008));
+  var islandHouseX = [];
+  function skyEll(cx2, cy2, rx, ry2, tile, onlyBelow) {
+    for (var ey = Math.max(0, Math.floor(cy2 - ry2)); ey <= Math.min(H - 1, Math.ceil(cy2 + ry2)); ey++) {
+      for (var ex = Math.max(0, Math.floor(cx2 - rx)); ex <= Math.min(W - 1, Math.ceil(cx2 + rx)); ex++) {
+        var ddx = ex - cx2, ddy = (ey - cy2) * 3;
+        if (onlyBelow !== undefined && ey < onlyBelow) continue;
+        if (Math.sqrt(ddx * ddx + ddy * ddy) < rx * (0.8 + rng() * 0.4)) self.tiles[self.idx(ex, ey)] = tile;
       }
     }
-    self.skyIslands.push({ x: ix0, y: iy0, w: ir });
-    if (rng() < 0.5) {
-      var icx = ix0 + Math.floor((rng() - 0.5) * (ir - 1));
-      var icy = iy0 - ir - 1;
-      if (self.inBounds(icx, icy) && self.get(icx, icy) === T.AIR) {
-        self.set(icx, icy, T.CHEST);
-        var cInv = [{ id: I.CLOUD, count: 4 + Math.floor(rng() * 4) }];
-        if (rng() < 0.7) cInv.push({ id: I.GOLDENHORSESHOE, count: 1 });
-        if (rng() < 0.6) cInv.push({ id: I.STARFURY, count: 1 });
-        if (rng() < 0.5) cInv.push({ id: I.GEM_DIAMOND, count: 1 });
-        self.chests.push({ x: icx, y: icy, inv: cInv });
+  }
+  function skyWaterStayPut(x2, y2) {
+    var below = self.tiles[self.idx(x2, y2 + 1)];
+    var left = self.tiles[self.idx(x2 - 1, y2)];
+    var right = self.tiles[self.idx(x2 + 1, y2)];
+    return (below !== T.AIR && below !== T.WATER) && (left !== T.AIR && left !== T.WATER) && (right !== T.AIR && right !== T.WATER);
+  }
+  for (var is2 = 0; is2 < islandCount; is2++) {
+    var ix0 = 0, tries2 = 0;
+    while (tries2++ < 40) {
+      ix0 = Math.floor(W * (0.1 + rng() * 0.8));
+      if (Math.abs(ix0 - W / 2) < 150) continue;
+      var clash = false;
+      for (var ih = 0; ih < islandHouseX.length; ih++) {
+        if (Math.abs(ix0 - islandHouseX[ih]) < 180) { clash = true; break; }
+      }
+      if (!clash) break;
+    }
+    islandHouseX.push(ix0);
+    // island top y: between y=90 and just above the surface (vanilla range)
+    var iy0 = 90 + rnd(Math.max(10, Math.min(170, this.worldSurfaceAvg - 140)));
+    var iLeft = ix0, iRight = ix0, iTop = iy0, iBot = iy0;
+    // phase 1: wandering flattened cloud discs forming the island base
+    var baseR = 100 + rng() * 50;
+    var steps2 = 20 + Math.floor(rng() * 10);
+    var px2 = ix0, py2 = iy0;
+    var vx2 = (rnd(41) - 20) * 0.2;
+    while (vx2 > -2 && vx2 < 2) vx2 = (rnd(41) - 20) * 0.2;
+    var vy2 = (rnd(11) - 20) * 0.02;
+    var sLeft = px2, sRight = px2;
+    for (var st = 0; st < steps2 && baseR > 0; st++) {
+      baseR -= rnd(4);
+      var rad = baseR * (0.8 + rng() * 0.4) * 0.4;
+      var topLine = py2 + 1;
+      for (var ey2 = Math.floor(py2); ey2 <= Math.ceil(py2 + rad / 3) + 2; ey2++) {
+        var wob = topLine;
+        for (var ex2 = Math.floor(px2 - rad); ex2 <= Math.ceil(px2 + rad); ex2++) {
+          if (rng() * 2 < 1) wob += rnd(3) - 1;
+          if (wob < py2) wob = Math.floor(py2);
+          if (wob > py2 + 2) wob = Math.floor(py2) + 2;
+          var ddx = ex2 - px2, ddy = (ey2 - py2) * 3;
+          if (ey2 <= wob) continue;
+          if (Math.sqrt(ddx * ddx + ddy * ddy) < rad && self.inBounds(ex2, ey2)) {
+            self.tiles[self.idx(ex2, ey2)] = T.CLOUD;
+            if (ex2 < iLeft) iLeft = ex2;
+            if (ex2 > iRight) iRight = ex2;
+            if (ey2 < iTop) iTop = ey2;
+            if (ey2 > iBot) iBot = ey2;
+          }
+        }
+      }
+      if (px2 - rad < sLeft) sLeft = px2 - rad;
+      if (px2 + rad > sRight) sRight = px2 + rad;
+      px2 += vx2; py2 += vy2;
+      vx2 = Math.max(-1, Math.min(1, vx2 + (rnd(41) - 20) * 0.05));
+      if (vy2 > 0.2) vy2 = -0.2;
+      if (vy2 < -0.2) vy2 = -0.2;
+    }
+    // phase 2: dirt cap along the top surface (grass spreads to it later)
+    for (var dc2 = iLeft + rnd(5); dc2 < iRight; dc2 += 3 + rnd(4)) {
+      var dcy = iBot;
+      while (dcy > iTop && self.tiles[self.idx(dc2, dcy)] === T.AIR) dcy--;
+      if (self.tiles[self.idx(dc2, dcy)] !== T.CLOUD) continue;
+      var drx = 2 + rnd(4);
+      for (var ddy2 = 0; ddy2 <= drx; ddy2++) {
+        for (var ddx2 = -drx; ddx2 <= drx; ddx2++) {
+          var dtx = dc2 + ddx2, dty = dcy + ddy2 - 2;
+          if (!self.inBounds(dtx, dty)) continue;
+          if (Math.abs(ddx2) + Math.abs(ddy2 * 2) < drx && self.tiles[self.idx(dtx, dty)] === T.CLOUD) {
+            self.tiles[self.idx(dtx, dty)] = T.DIRT;
+          }
+        }
       }
     }
+    // grass on the dirt cap
+    for (var gx2 = iLeft; gx2 <= iRight; gx2++) {
+      for (var gy2 = iTop; gy2 <= iBot; gy2++) {
+        if (self.tiles[self.idx(gx2, gy2)] === T.DIRT && self.tiles[self.idx(gx2, gy2 - 1)] === T.AIR) {
+          self.tiles[self.idx(gx2, gy2)] = T.GRASS;
+        }
+      }
+    }
+    // phase 3: water ponds settled into surface dips
+    for (var wx3 = iLeft; wx3 <= iRight; wx3++) {
+      if (rng() * 10 < 1) {
+        var wyy = iTop;
+        while (wyy < iBot && self.tiles[self.idx(wx3, wyy)] === T.AIR) wyy++;
+        if (wyy > iTop && self.tiles[self.idx(wx3, wyy)] === T.CLOUD && skyWaterStayPut(wx3, wyy - 1)) {
+          self.tiles[self.idx(wx3, wyy - 1)] = T.WATER;
+        }
+      }
+    }
+    // phase 4: 0-3 small sky-blobs floating above, some with water
+    var blobCount = rnd(4);
+    for (var bl = 0; bl < blobCount; bl++) {
+      var bx3 = iLeft - 5 + rnd(iRight - iLeft + 10);
+      var by3 = iTop - 20 - rnd(20);
+      var br = 4 + rnd(4);
+      var btile = (rng() * 2 < 1) ? T.CLOUD : T.CLOUD;
+      skyEll(bx3, by3, br, Math.floor(br / 3), btile);
+      for (var bwx = bx3 - br + 2; bwx <= bx3 + br - 2; bwx++) {
+        var bwy = by3 - br;
+        while (bwy < by3 + br && self.tiles[self.idx(bwx, bwy)] === T.AIR) bwy++;
+        if (self.tiles[self.idx(bwx, bwy)] !== T.AIR && skyWaterStayPut(bwx, bwy - 1)) {
+          self.tiles[self.idx(bwx, bwy - 1)] = T.WATER;
+        }
+      }
+    }
+    // phase 5: brick house sitting on the island (vanilla IslandHouse geometry)
+    var hw = 7 + rnd(5);                    // half-width
+    var hh2 = 5 + rnd(2);                   // height
+    var hdir = rng() < 0.5 ? -1 : 1;
+    var hx0 = ix0 + (hw + 2) * hdir;
+    var hy0 = iy0;
+    while (hy0 < iBot && self.tiles[self.idx(hx0, hy0)] === T.AIR) hy0++;
+    hy0 -= hh2 + 1;
+    for (var hyy2 = hy0 - 1; hyy2 <= hy0 + hh2 + 1; hyy2++) {
+      for (var hxx2 = hx0 - hw - 1; hxx2 <= hx0 + hw + 1; hxx2++) {
+        if (!self.inBounds(hxx2, hyy2)) continue;
+        if (hyy2 === hy0 - 1 && (hxx2 === hx0 - hw - 1 || hxx2 === hx0 + hw + 1)) continue;
+        self.tiles[self.idx(hxx2, hyy2)] = T.GRAYBRICK;
+        self.walls[self.idx(hxx2, hyy2)] = WALL.NONE;
+      }
+    }
+    for (var hy3 = hy0; hy3 < hy0 + hh2; hy3++) {
+      for (var hx3 = hx0 - hw; hx3 <= hx0 + hw; hx3++) {
+        if (hy3 > hy0 && hy3 < hy0 + hh2 && hx3 > hx0 - hw && hx3 < hx0 + hw) {
+          self.tiles[self.idx(hx3, hy3)] = T.AIR;
+          self.walls[self.idx(hx3, hy3)] = WALL.NONE;
+        }
+      }
+    }
+    // door gap on the outer side
+    var doorX2 = hx0 + (hw + 1) * hdir;
+    for (var dy3 = hy0 + hh2 - 3; dy3 <= hy0 + hh2 - 1; dy3++) {
+      if (self.inBounds(doorX2, dy3)) self.tiles[self.idx(doorX2, dy3)] = T.AIR;
+    }
+    // furniture: table, chair, torch, sky chest
+    self.tiles[self.idx(hx0 - 2, hy0 + hh2 - 1)] = T.TABLE;
+    self.tiles[self.idx(hx0 + 2, hy0 + hh2 - 1)] = T.CHAIR;
+    self.tiles[self.idx(hx0, hy0 + 1)] = T.TORCH;
+    var chestX2 = hx0 - 1, chestY2 = hy0 + hh2 - 1;
+    if (self.get(chestX2, chestY2) === T.AIR) {
+      self.set(chestX2, chestY2, T.CHEST);
+      var skyLoot = [{ id: I.FLYING_CARPET, count: 1 }];
+      if (rng() < 0.7) skyLoot.push({ id: I.GOLDENHORSESHOE, count: 1 });
+      if (rng() < 0.6) skyLoot.push({ id: I.STARFURY, count: 1 });
+      if (rng() < 0.5) skyLoot.push({ id: I.GEM_DIAMOND, count: 1 });
+      self.chests.push({ x: chestX2, y: chestY2, inv: skyLoot });
+    }
+    self.skyIslands.push({ x: ix0, y: iy0, w: Math.floor((iRight - iLeft) / 2) });
   }
 
   // --- Underground mini-biomes: spider / granite / marble ---
@@ -1006,7 +1139,7 @@ self.underworldHouses = [];
         if (pd2 > cr * cr) continue;
         var pii = self.idx(cx + pdx, cy + pdy);
         if (pd2 <= inner * inner) {
-          self.tiles[pii] = (web && rng() < 0.18) ? T.COBWEB : T.AIR;
+          self.tiles[pii] = (web && rng() < 0.82) ? T.COBWEB : T.AIR;
           self.walls[pii] = WALL.CAVE;
         } else {
           self.tiles[pii] = fillTile;
