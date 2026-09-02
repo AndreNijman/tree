@@ -1097,7 +1097,10 @@ function drawLighting(game, ctx, cam, W, H) {
   ctx.drawImage(game.lightMapCanvas, destX, destY, tw * TILE, th * TILE);
   ctx.restore();
 
-  // re-scan visible ores for halos (screen coords)
+  // re-scan visible ores for halos (screen coords); dedupe via a coarse grid so
+  // dense hellstone fields don't create hundreds of overlapping gradients
+  var haloGrid = {};
+  var haloCount = 0;
   for (var hy = Math.max(0, y0); hy <= y1; hy++) {
     for (var hx = Math.max(0, x0); hx <= x1; hx++) {
       var ogDef = EMISSIVE_ORE_GLOW[tiles[hy * wW + hx]];
@@ -1105,11 +1108,33 @@ function drawLighting(game, ctx, cam, W, H) {
       var hxp = hx * TILE + 8 - cam.x + W / 2;
       var hyp = hy * TILE + 8 - cam.y + H / 2;
       if (hxp < -ogDef.r || hxp > W + ogDef.r || hyp < -ogDef.r || hyp > H + ogDef.r) continue;
-      var halo = ctx.createRadialGradient(hxp, hyp, 0, hxp, hyp, ogDef.r);
-      halo.addColorStop(0, 'rgba(' + ogDef.color[0] + ',' + ogDef.color[1] + ',' + ogDef.color[2] + ',0.24)');
-      halo.addColorStop(1, 'rgba(' + ogDef.color[0] + ',' + ogDef.color[1] + ',' + ogDef.color[2] + ',0)');
+      var gx = (hxp / 64) | 0, gy = (hyp / 64) | 0;
+      var dup = false;
+      for (var oy2 = -1; oy2 <= 1 && !dup; oy2++) {
+        for (var ox2 = -1; ox2 <= 1 && !dup; ox2++) {
+          var bucket = haloGrid[(gx + ox2) + ',' + (gy + oy2)];
+          if (!bucket) continue;
+          for (var hi2 = 0; hi2 < bucket.length; hi2++) {
+            var ddx = hxp - bucket[hi2].x, ddy = hyp - bucket[hi2].y;
+            if (ddx * ddx + ddy * ddy < ogDef.r * ogDef.r * 0.64) { dup = true; break; }
+          }
+        }
+      }
+      if (dup || haloCount >= 90) continue;
+      var key = gx + ',' + gy;
+      (haloGrid[key] = haloGrid[key] || []).push({ x: hxp, y: hyp, def: ogDef });
+      haloCount++;
+    }
+  }
+  for (var gk in haloGrid) {
+    var bucket2 = haloGrid[gk];
+    for (hi2 = 0; hi2 < bucket2.length; hi2++) {
+      var hg = bucket2[hi2], hc = hg.def.color, hr = hg.def.r;
+      var halo = ctx.createRadialGradient(hg.x, hg.y, 0, hg.x, hg.y, hr);
+      halo.addColorStop(0, 'rgba(' + hc[0] + ',' + hc[1] + ',' + hc[2] + ',0.24)');
+      halo.addColorStop(1, 'rgba(' + hc[0] + ',' + hc[1] + ',' + hc[2] + ',0)');
       ctx.fillStyle = halo;
-      ctx.fillRect(hxp - ogDef.r, hyp - ogDef.r, ogDef.r * 2, ogDef.r * 2);
+      ctx.fillRect(hg.x - hr, hg.y - hr, hr * 2, hr * 2);
     }
   }
 }

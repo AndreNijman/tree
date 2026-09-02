@@ -20,7 +20,7 @@ function World(width, height, seed, difficulty) {
   this.planteraBulbs = []; // {x,y}
   this.mushroomAt = null; // Uint8Array over columns (mushroom patches)
   this.spilledChestItems = null; // set when a chest breaks; contents spill as pickups
-  this.hellY = Math.floor(height * 0.82); // tile row where the Underworld begins
+  this.hellY = Math.max(60, height - 360); // Underworld begins ~1300ft down (vanilla small: bottom 360 incl. ash ceiling)
   this.spiderCols = null; // Uint8Array over columns (spider caves)
   this.graniteCols = null; // Uint8Array over columns (granite caves)
   this.marbleCols = null; // Uint8Array over columns (marble caves)
@@ -355,6 +355,15 @@ World.prototype.biomeAt = function(px, py) {
   }
   if (py < surf * TILE - 28 * TILE) return BIOME.SKY;
   var f = px / (this.W * TILE);
+  if (this._bands) {
+    var fm = this.jungleLeft ? f : 1 - f;
+    for (var bi = 0; bi < this._bands.length; bi++) {
+      var bd = this._bands[bi];
+      if (fm >= bd[0] && fm < bd[1]) return bd[2] === BIOME.DUNGEON ? BIOME.FOREST : bd[2];
+    }
+    return BIOME.FOREST;
+  }
+  // legacy band layout for worlds generated before the vanilla layout
   if (f < 0.09 || f > 0.94) return BIOME.OCEAN;
   if (f < 0.30) return this.evil === 'crimson' ? BIOME.CRIMSON : BIOME.CORRUPT;
   if (f < 0.40) return BIOME.FOREST;
@@ -377,30 +386,47 @@ World.prototype.generate = function(hardmode, evil) {
   var n2 = makeNoise1D(rng, 256);
   var nCave = makeNoise2D(rng, 128, 128);
 
-  var baseY = Math.floor(H * 0.42);
+  var baseY = Math.floor(H * 0.16); // vanilla small-world surface line (~y190)
 
-  // Surface height
+  // Surface height: rolling hills around the surface line, dipping toward the oceans
   for (var x = 0; x < W; x++) {
+    var f0 = x / W;
+    var edge = f0 < 0.055 ? 1 - f0 / 0.055 : (f0 > 0.945 ? (f0 - 0.945) / 0.055 : 0);
     var h = baseY
-      + n1(x * 0.012) * 9
-      + n2(x * 0.025) * 3
-      + Math.sin(x * 0.035) * 2;
+      + n1(x * 0.010) * 22
+      + n2(x * 0.028) * 8
+      + Math.sin(x * 0.035) * 3
+      + edge * edge * 26; // ocean basins slope down at the map edges
     this.surfaceY[x] = Math.floor(h);
   }
 
-  // Biome assignment by x
+  // Biome layout (vanilla rule: Snow+Dungeon on one side, Jungle+Desert on the
+  // other, evil biome near the center on the snow/dungeon side, oceans at both ends)
+  this.jungleLeft = rng() < 0.5;
+  var EVILB = isCrimson ? BIOME.CRIMSON : BIOME.CORRUPT;
+  this._bands = [
+    [0.000, 0.055, BIOME.OCEAN],
+    [0.055, 0.160, BIOME.DESERT],
+    [0.160, 0.375, BIOME.JUNGLE],
+    [0.375, 0.545, BIOME.FOREST],
+    [0.545, 0.600, EVILB],
+    [0.600, 0.695, BIOME.FOREST],
+    [0.695, 0.815, BIOME.SNOW],
+    [0.815, 0.895, BIOME.DUNGEON],
+    [0.895, 0.945, BIOME.FOREST],
+    [0.945, 1.001, BIOME.OCEAN],
+  ];
+
+  // Biome assignment by x (mirrored depending on which side the jungle rolled).
+  // Uses the same pixel-center fraction as biomeAt so gen and runtime agree exactly.
+  var self2 = this;
   function biomeAtX(x) {
-    var f = x / W;
-    if (f < 0.09) return BIOME.OCEAN;
-    if (f < 0.30) return isCrimson ? BIOME.CRIMSON : BIOME.CORRUPT;
-    if (f < 0.40) return BIOME.FOREST;
-    if (f < 0.50) return BIOME.SNOW;
-    if (f < 0.56) return BIOME.DESERT;
-    if (f < 0.72) return BIOME.FOREST;
-    if (f < 0.78) return hardmode ? BIOME.HALLOW : BIOME.FOREST;
-    if (f < 0.88) return BIOME.JUNGLE;
-    if (f < 0.94) return isCrimson ? BIOME.CRIMSON : BIOME.CORRUPT;
-    return BIOME.OCEAN;
+    var f = (x * TILE + 8) / (W * TILE);
+    if (!self2.jungleLeft) f = 1 - f;
+    for (var bi = 0; bi < self2._bands.length; bi++) {
+      if (f >= self2._bands[bi][0] && f < self2._bands[bi][1]) return self2._bands[bi][2];
+    }
+    return BIOME.FOREST;
   }
 
   // Scatter mushroom patches through the forest
@@ -420,7 +446,8 @@ World.prototype.generate = function(hardmode, evil) {
   for (x = 0; x < W; x++) {
     var surf = this.surfaceY[x];
     var b = this.mushroomAt[x] === 1 ? BIOME.MUSHROOM : biomeAtX(x);
-    var dirtDepth = 10 + Math.floor(rng() * 12);
+    // dirt layer: ~100-150 tiles down to the rock (cavern) line, like vanilla
+    var dirtDepth = 100 + Math.floor(n1(x * 0.01 + 40) * 30 + rng() * 12);
     for (var y = 0; y < H; y++) {
       var idx = this.idx(x, y);
       if (y >= hellY) { this.tiles[idx] = T.ASH; this.walls[idx] = WALL.STONE; continue; }
@@ -440,7 +467,7 @@ World.prototype.generate = function(hardmode, evil) {
         else if (b === BIOME.DESERT) this.tiles[idx] = T.SAND;
         else if (b === BIOME.CRIMSON) this.tiles[idx] = T.CRIMGRASS;
         else this.tiles[idx] = T.GRASS;
-      } else if (b === BIOME.SNOW && y < surf + 5) {
+      } else if (b === BIOME.SNOW && y < surf + 12) {
         this.tiles[idx] = T.ICE;
       } else if (b === BIOME.DESERT && y < surf + dirtDepth) {
         this.tiles[idx] = T.SAND;
@@ -461,7 +488,7 @@ World.prototype.generate = function(hardmode, evil) {
     if (b2 === BIOME.CORRUPT || b2 === BIOME.HALLOW || b2 === BIOME.CRIMSON) {
       var s = this.surfaceY[x];
       var swap = b2 === BIOME.CORRUPT ? T.EBONSTONE : (b2 === BIOME.HALLOW ? T.PEARLSTONE : T.CRIMSTONE);
-      for (var y = s; y < Math.min(H, s + 220); y++) {
+      for (var y = s; y < Math.min(H, hellY - 30); y++) {
         var i2 = this.idx(x, y);
         if (this.tiles[i2] === T.STONE) {
           this.tiles[i2] = swap;
@@ -474,7 +501,7 @@ World.prototype.generate = function(hardmode, evil) {
   for (x = 0; x < W; x++) {
     if (biomeAtX(x) !== BIOME.JUNGLE) continue;
     var sj = this.surfaceY[x];
-    for (var y = sj + 14; y < Math.min(H, sj + 200); y++) {
+    for (var y = sj + 14; y < Math.min(H, hellY - 120); y++) {
       var i3 = this.idx(x, y);
       if (this.tiles[i3] === T.STONE) this.tiles[i3] = T.MUD;
     }
@@ -486,10 +513,10 @@ World.prototype.generate = function(hardmode, evil) {
     if (biomeAtX(x) !== BIOME.DESERT) continue;
     if (this.mushroomAt[x] === 1) continue;
     var sd = this.surfaceY[x];
-    var start = sd + 8 + Math.floor(rng() * 4);
+    var start = sd + 60 + Math.floor(rng() * 20);
     this.underDesertStart[x] = start;
     this.underDesertCols[x] = 1;
-    var depth = 34 + Math.floor(rng() * 26);
+    var depth = 110 + Math.floor(rng() * 50);
     for (var y = start; y < Math.min(H - 1, start + depth); y++) {
       var iud = this.idx(x, y);
       if (this.tiles[iud] === T.STONE || this.tiles[iud] === T.DIRT || this.tiles[iud] === T.SAND) {
@@ -505,7 +532,7 @@ World.prototype.generate = function(hardmode, evil) {
     if (this.mushroomAt[x] === 1) continue;
     var ss = this.surfaceY[x];
     this.underSnowCols[x] = 1;
-    var sDepth = 30 + Math.floor(rng() * 20);
+    var sDepth = 100 + Math.floor(rng() * 60);
     for (var y = ss + 8; y < Math.min(H - 1, ss + sDepth); y++) {
       var ius = this.idx(x, y);
       if (ius >= 0 && ius < this.tiles.length) {
@@ -913,10 +940,10 @@ self.underworldHouses = [];
     }
   }
 
-  // --- Aether (shimmer) pool ---
+  // --- Aether (shimmer) pool: outer fifth on the jungle side, in the cavern layer ---
   {
-    var axx2 = Math.floor(W * (0.9 + rng() * 0.04));
-    var ayy2 = Math.floor(H * (0.52 + rng() * 0.1));
+    var axx2 = this.jungleLeft ? Math.floor(W * (0.02 + rng() * 0.09)) : Math.floor(W * (0.89 + rng() * 0.09));
+    var ayy2 = Math.floor(H * (0.40 + rng() * 0.12));
     var arr = 5 + Math.floor(rng() * 3);
     carvePocket(axx2, ayy2, arr + 2, T.STONE, false);
     for (var asy = ayy2; asy <= ayy2 + arr + 1; asy++) {
@@ -931,9 +958,9 @@ self.underworldHouses = [];
     self.aetherPos = { x: axx2, y: ayy2 };
   }
 
-  // --- Dungeon: tall brick tower on the far west edge ---
+  // --- Dungeon: tall brick tower in the dungeon band (snow side, near the ocean) ---
   {
-    var dgx = Math.floor(W * (0.06 + rng() * 0.05));
+    var dgx = this.jungleLeft ? Math.floor(W * (0.83 + rng() * 0.04)) : Math.floor(W * (0.13 + rng() * 0.04));
     var dgw = 20 + Math.floor(rng() * 6);
     var dgTop = Math.max(4, this.surfaceY[dgx] - (3 + Math.floor(rng() * 4)));
     var dgH = 100 + Math.floor(rng() * 40);
@@ -1177,10 +1204,10 @@ self.underworldHouses = [];
     this.planteraBulbs.push({ x: pbx * TILE + 8, y: pby * TILE + 8 });
   }
 
-  // Lihzahrd temple: buried in the deep jungle
+  // Lihzahrd temple: buried in the deep jungle, above the Underworld
   {
-    var tlx = Math.floor(W * (0.79 + rng() * 0.07));
-    var tly = Math.floor(H * 0.78);
+    var tlx = this.jungleLeft ? Math.floor(W * (0.20 + rng() * 0.12)) : Math.floor(W * (0.68 + rng() * 0.12));
+    var tly = this.hellY - 170 - Math.floor(rng() * 60);
     var tw = 16 + Math.floor(rng() * 6);
     var th2 = 12 + Math.floor(rng() * 4);
     this.templeRect = { x0: tlx, y0: tly, x1: tlx + tw, y1: tly + th2 };

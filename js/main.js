@@ -8,9 +8,9 @@ var lastNow = 0;
 
 function $(id) { return document.getElementById(id); }
 
-// vanilla small world: 4200 x 2400 tiles
+// vanilla small world: 4200 x 1200 tiles
 var WORLD_W = 4200;
-var WORLD_H = 2400;
+var WORLD_H = 1200;
 
 // ---------- Cached DOM ----------
 var el = {};
@@ -4021,7 +4021,8 @@ function handleKeys() {
   if (game.mapOpen) {
     var mz = game.mapZoom || 0.15;
     if (MOUSE.wheel) { mz = clamp(mz * (MOUSE.wheel > 0 ? 1.25 : 0.8), 0.0625, 10); game.mapZoom = mz; MOUSE.wheel = 0; }
-    var panSpd = 480 / mz;
+    // constant on-screen pan speed regardless of zoom (~640px/s)
+    var panSpd = 40 / mz;
     if (KEY['a'] || KEY['ArrowLeft']) game.mapPanX -= panSpd / 60;
     if (KEY['d'] || KEY['ArrowRight']) game.mapPanX += panSpd / 60;
     if (KEY['w'] || KEY['ArrowUp']) game.mapPanY -= panSpd / 60;
