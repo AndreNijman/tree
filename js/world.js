@@ -889,11 +889,38 @@ World.prototype.generate = function(hardmode, evil) {
       if (self.tiles[self.idx(x, uy)] === T.AIR) self.tiles[self.idx(x, uy)] = T.LAVA;
     }
   }
-  // ash pillars sinking through the lava sea (vanilla 1/50 per column)
+  // Ash towers + side veins + lava pockets (vanilla per-column pass, 1/13)
   for (x = 0; x < W; x++) {
-    if (Math.floor(rng() * 50) === 0) {
-      var phx = rnd(W), phy = (H - 65) - rnd(60) + 20 + rnd(30);
-      tileRunnerV(phx, phy, 15 + rnd(5), 1000, 'ash', { speedY: 1 + rnd(2), noYChange: true });
+    if (Math.floor(rng() * 13) !== 0) continue;
+    // find the lava/air surface above the lava sea
+    var tvx = H - 65;
+    while (tvx > H - 140 && (self.tiles[self.idx(x, tvx)] !== T.AIR)) tvx--;
+    var towerTop = tvx - 2 - rnd(3);
+    // central vertical tower of ash
+    tileRunnerV(x, towerTop, 5 + rnd(25), 1000, 'ash', { speedY: 1 + rnd(2), noYChange: true });
+    // horizontal ash veins off the tower
+    var scale2 = 1 + rnd(2);
+    if (Math.floor(rng() * 3) === 0) scale2 *= 0.5;
+    if (Math.floor(rng() * 2) === 0) {
+      tileRunnerV(x, towerTop, (5 + rnd(10)) * scale2, Math.floor((10 + rnd(5)) * scale2), 'ash', { speedX: 1, speedY: 0.3 });
+    }
+    if (Math.floor(rng() * 2) === 0) {
+      var scale3 = 1 + rnd(2);
+      tileRunnerV(x, towerTop, (5 + rnd(10)) * scale3, Math.floor((10 + rnd(5)) * scale3), 'ash', { speedX: -1, speedY: 0.3 });
+    }
+    // lava pockets hidden inside the ash
+    tileRunnerV(x + rnd(21) - 10, tvx + rnd(21) - 10, 5 + rnd(10), 5 + rnd(5), 'liquid', { speedX: rnd(4) - 1, speedY: rnd(4) - 1 });
+    if (Math.floor(rng() * 3) === 0) tileRunnerV(x + rnd(21) - 10, tvx + rnd(21) - 10, 10 + rnd(20), 10 + rnd(10), 'liquid', { speedX: rnd(4) - 1, speedY: rnd(4) - 1 });
+    if (Math.floor(rng() * 5) === 0) tileRunnerV(x + rnd(31) - 15, tvx + rnd(26) - 15, 15 + rnd(15), 5 + rnd(15), 'liquid', { speedX: rnd(4) - 1, speedY: rnd(4) - 1 });
+  }
+  // scattered lava pockets through the bottom region (every column, vanilla)
+  for (x = 0; x < W; x++) {
+    tileRunnerV(20 + rnd(W - 40), H - 180 + rnd(170), 2 + rnd(5), 2 + rnd(5), 'liquid');
+  }
+  // flat lava level rows (vanilla enforces two rows at H-145/H-144)
+  for (x = 0; x < W; x++) {
+    for (var lr2 = H - 145; lr2 <= H - 144; lr2++) {
+      if (self.tiles[self.idx(x, lr2)] === T.AIR) self.tiles[self.idx(x, lr2)] = T.LAVA;
     }
   }
   // hellstone veins threading the ash and lower stone
@@ -920,42 +947,163 @@ World.prototype.generate = function(hardmode, evil) {
   }
 self.underworldHouses = [];
   var shadowLoot = [I.SUNFURY, I.FLAMELASH, I.HELLWINGBOW, I.DARKLANCE];
-  for (var ru = 0; ru < 8; ru++) {
-    var rw = 11 + Math.floor(rng() * 6);
-    var rh = 7 + Math.floor(rng() * 4);
-    var rxx = Math.floor(W * ((ru + 0.35 + rng() * 0.3) / 8));
-    rxx = clamp(rxx, 3, W - rw - 3);
-    var ryy = hellY2 + 6 + Math.floor(rng() * Math.max(1, H - hellY2 - rh - 15));
-    self.underworldHouses.push({ x:rxx, y:ryy, w:rw, h:rh });
-    for (var riy = ryy; riy <= ryy + rh; riy++) {
-      for (var rix = rxx; rix <= rxx + rw; rix++) {
-        var edge = riy === ryy || riy === ryy + rh || rix === rxx || rix === rxx + rw;
-        var ri = self.idx(rix, riy);
-        // vanilla ruined houses are broken: randomly missing roof/side bricks
-        if (edge && rng() < 0.22) { self.tiles[ri] = T.AIR; continue; }
-        self.tiles[ri] = edge ? T.HELLBRICK : T.AIR;
-        self.walls[ri] = edge ? WALL.STONE : WALL.CAVE;
+  // --- HellFort (vanilla): terraced hellbrick towers straddling the lava
+  // surface — 5 x-bands x 10 y-segments grid, ruined cells skipped ---
+  function hellFort(fx, fy) {
+    var minW = 8, maxW = 20;
+    var xL = [0, 0, 0, 0, 0], xR = [0, 0, 0, 0, 0];
+    xL[2] = fx - (Math.floor(minW / 2) + rnd(Math.max(1, maxW / 2 - minW / 2)));
+    xR[2] = fx + (Math.floor(minW / 2) + rnd(Math.max(1, maxW / 2 - minW / 2)));
+    xL[3] = xR[2]; xR[3] = xL[3] + minW + rnd(maxW - minW);
+    xL[4] = xR[3]; xR[4] = xL[4] + minW + rnd(maxW - minW);
+    xR[1] = xL[2]; xL[1] = xR[1] - minW - rnd(maxW - minW);
+    xR[0] = xL[1]; xL[0] = xR[0] - minW - rnd(maxW - minW);
+    var yT = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], yB = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    yT[3] = fy - (6 + rnd(6)); yB[3] = fy;
+    for (var ys = 4; ys < 10; ys++) { yT[ys] = yB[ys - 1]; yB[ys] = yT[ys] + 6 + rnd(6); }
+    for (ys = 2; ys >= 0; ys--) { yB[ys] = yT[ys + 1]; yT[ys] = yB[ys] - 6 - rnd(6); }
+    // which grid cells get built (ruined: random runs skipped)
+    var build = [];
+    for (var b2 = 0; b2 < 5; b2++) { build.push([false, false, false, false, false, false, false, false, false, false]); }
+    var lo = 3, hi = 3;
+    for (var at2 = 0; at2 < 2; at2++) {
+      if (Math.floor(rng() * 3) !== 0) continue;
+      var col = rng() < 0.5 ? 0 : 1;
+      if (col === 0) { lo = Math.min(lo, 0); } else { hi = Math.max(hi, 4); }
+      var row = rnd(10);
+      lo = Math.min(lo, row); hi = Math.max(hi, row);
+      var side = col; // 0/1 above-left run, 3/4 below-right run
+      var step2 = rng() < 0.5 ? -1 : 1;
+      for (var r2 = rnd(10); r2 >= 0 && r2 < 10; r2 += step2) build[col === 0 ? (step2 < 0 ? 0 : 1) : (step2 < 0 ? 3 : 4)][r2] = true;
+      if (rng() < 0.5) build[col === 0 ? 1 : 3][row] = true;
+    }
+    var crow = rnd(10); lo = Math.min(lo, crow); hi = Math.max(hi, crow);
+    while (hi - lo < 5) {
+      crow = rnd(10); lo = Math.min(lo, crow); hi = Math.max(hi, crow);
+    }
+    for (var r3 = lo; r3 <= hi; r3++) build[2][r3] = true;
+    // never build outside the underworld or overlapping existing structures
+    for (b2 = 0; b2 < 5; b2++) {
+      var bad = xL[b2] < 10 || xR[b2] > W - 10;
+      for (var yy3 = Math.max(0, hellY2); yy3 < H && !bad; yy3++) {
+        if (self.walls[self.idx(xL[b2], yy3)] > 0 && self.tiles[self.idx(xL[b2], yy3)] !== T.AIR) bad = false; // walls alone ok
+      }
+      for (r3 = 0; r3 < 10; r3++) {
+        if (build[b2][r3] && (yT[r3] < hellY2 || yB[r3] > H - 20)) build[b2][r3] = false;
+      }
+      if (bad) for (r3 = 0; r3 < 10; r3++) build[b2][r3] = false;
+    }
+    if (lo > hi) return;
+    // build flagged cells: hellbrick shell + hollow interior with hell walls
+    var roomsBuilt = [];
+    for (b2 = 0; b2 < 5; b2++) {
+      for (r3 = 0; r3 < 10; r3++) {
+        if (!build[b2][r3]) continue;
+        for (var yy4 = yT[r3]; yy4 <= yB[r3]; yy4++) {
+          for (var xx4 = xL[b2]; xx4 <= xR[b2]; xx4++) {
+            if (xx4 < 10 || xx4 > W - 10 || yy4 < 1 || yy4 >= H - 1) continue;
+            var ii3 = self.idx(xx4, yy4);
+            self.tiles[ii3] = T.LAVA; // clear liquid first
+            if (xx4 === xL[b2] || xx4 === xR[b2] || yy4 === yT[r3] || yy4 === yB[r3]) {
+              self.tiles[ii3] = T.HELLBRICK;
+              self.walls[ii3] = WALL.STONE;
+            } else {
+              self.tiles[ii3] = T.AIR;
+              self.walls[ii3] = WALL.CAVE;
+            }
+          }
+        }
+        roomsBuilt.push({ x0: xL[b2], x1: xR[b2], y0: yT[r3], y1: yB[r3] });
       }
     }
-    // Open doorway and furnish the carved interior.
-    self.tiles[self.idx(rxx, ryy + rh - 1)] = T.AIR;
-    self.tiles[self.idx(rxx, ryy + rh - 2)] = T.AIR;
-    var floorY = ryy + rh - 1;
-    self.tiles[self.idx(rxx + 2, floorY)] = T.TABLE;
-    self.tiles[self.idx(rxx + 4, floorY)] = T.CHAIR;
-    self.tiles[self.idx(rxx + rw - 2, ryy + 2)] = T.TORCH;
-    if (ru % 2 === 0) self.tiles[self.idx(rxx + 6, floorY)] = T.HELLFORGE;
-    if (ru % 2 === 1) {
-      var scx = rxx + rw - 3, scy = floorY;
-      self.tiles[self.idx(scx, scy)] = T.SHADOWCHEST;
-      self.chests.push({
-        x:scx, y:scy, kind:'shadow', locked:true, key:I.SHADOWKEY,
-        inv:[
-          { id:shadowLoot[(ru - 1) / 2], count:1 },
-          { id:I.HELLSTONEBAR, count:2 + Math.floor(rng() * 4) },
-          { id:I.OBSIDIANSKINPOTION, count:1 }
-        ]
-      });
+    // doors between adjacent bands + platforms + furnishings
+    for (b2 = 0; b2 < 4; b2++) {
+      for (r3 = 0; r3 < 10; r3++) {
+        if (build[b2][r3] && build[b2 + 1][r3]) {
+          var dx2 = xR[b2];
+          for (var dy4 = yB[r3] - 1; dy4 >= yB[r3] - 3; dy4--) {
+            if (self.inBounds(dx2, dy4)) self.tiles[self.idx(dx2, dy4)] = T.AIR;
+          }
+          if (self.inBounds(dx2, yB[r3] - 1)) self.tiles[self.idx(dx2, yB[r3] - 1)] = T.DOOR;
+        }
+      }
+    }
+    for (var rr = 0; rr < roomsBuilt.length; rr++) {
+      var rm = roomsBuilt[rr];
+      if (rm.x1 - rm.x0 < 4) continue;
+      // torch
+      self.tiles[self.idx(rm.x0 + 2, rm.y1 - 1)] = T.AIR;
+      if (self.get(rm.x0 + 2, rm.y1 - 2) === T.AIR && self.tiles[self.idx(rm.x0 + 2, rm.y1)] === T.HELLBRICK) {
+        self.set(rm.x0 + 2, rm.y1 - 2, T.TORCH);
+      }
+      // platform ledges
+      if (rng() < 0.5 && rm.x1 - rm.x0 > 6) {
+        var plx = rm.x0 + 2 + rnd(Math.max(1, rm.x1 - rm.x0 - 4));
+        var plw = 2 + rnd(3);
+        for (var p2 = plx; p2 <= Math.min(rm.x1 - 1, plx + plw); p2++) {
+          self.tiles[self.idx(p2, rm.y0 + 2)] = T.PLATFORM;
+          self.walls[self.idx(p2, rm.y0 + 2)] = WALL.CAVE;
+        }
+      }
+      // shadow chest on a floor
+      if (rng() < 0.3) {
+        var scx2 = rm.x0 + 2 + rnd(Math.max(1, rm.x1 - rm.x0 - 3));
+        var scy2 = rm.y1 - 1;
+        if (self.get(scx2, scy2) === T.AIR) {
+          self.set(scx2, scy2, T.SHADOWCHEST);
+          self.chests.push({
+            x: scx2, y: scy2, kind: 'shadow', locked: true, key: I.SHADOWKEY,
+            inv: [
+              { id: shadowLoot[rnd(shadowLoot.length)], count: 1 },
+              { id: I.HELLSTONEBAR, count: 2 + rnd(4) },
+              { id: I.OBSIDIANSKINPOTION, count: 1 }
+            ]
+          });
+        }
+      }
+      // hellforge in one room
+      if (rng() < 0.2) {
+        var hfx = rm.x0 + 2 + rnd(Math.max(1, rm.x1 - rm.x0 - 3));
+        if (self.get(hfx, rm.y1 - 1) === T.AIR) self.set(hfx, rm.y1 - 1, T.HELLFORGE);
+      }
+    }
+    self.underworldHouses.push({ x: xL[0], y: yT[lo], w: xR[4] - xL[0], h: yB[hi] - yT[lo] });
+  }
+  // AddHellHouses: forts along the lava surface, middle half of the world
+  var fi = Math.floor(W * 0.25);
+  while (fi < W * 0.75) {
+    var fj = H - 40;
+    while (fj > hellY2 && (self.tiles[self.idx(fi, fj)] !== T.AIR || self.tiles[self.idx(fi, fj)] === T.LAVA)) fj--;
+    if (self.tiles[self.idx(fi, fj + 1)] !== T.AIR && self.tiles[self.idx(fi, fj + 1)] !== T.LAVA) {
+      hellFort(fi, fj);
+      fi += 30 + rnd(100);
+      if (Math.floor(rng() * 10) === 0) fi += rnd(200);
+    } else {
+      fi += 10;
+    }
+  }
+  // shadow chests embedded around the underworld (vanilla AddHellHouses sweep)
+  for (var sct = 0; sct < 400; sct++) {
+    var scx3 = Math.floor(W * 0.25) + rnd(Math.floor(W * 0.5));
+    var scy3 = H - 250 + rnd(230);
+    if (!self.inBounds(scx3, scy3)) continue;
+    if (self.get(scx3, scy3) === T.AIR && self.isSolid(scx3, scy3 + 1) && self.get(scx3, scy3 - 1) === T.AIR) {
+      var nearBrick = false;
+      for (var nb = -3; nb <= 3 && !nearBrick; nb++) {
+        for (var nb2 = -3; nb2 <= 3; nb2++) {
+          if (self.get(scx3 + nb, scy3 + nb2) === T.HELLBRICK) { nearBrick = true; break; }
+        }
+      }
+      if (nearBrick) {
+        self.set(scx3, scy3, T.SHADOWCHEST);
+        self.chests.push({
+          x: scx3, y: scy3, kind: 'shadow', locked: true, key: I.SHADOWKEY,
+          inv: [
+            { id: shadowLoot[rnd(shadowLoot.length)], count: 1 },
+            { id: I.HELLSTONEBAR, count: 2 + rnd(4) }
+          ]
+        });
+      }
     }
   }
 
