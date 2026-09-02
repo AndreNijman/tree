@@ -970,19 +970,19 @@ function drawLighting(game, ctx, cam, W, H) {
     }
     lc.lineTo(W, H);
     lc.closePath();
-    // Vertical gradient: lighter near surface, full dark below — matches Terraria's shallow depth fade.
-    var gradTop = Math.max(0, maxSurfaceScreen - TILE);
-    var gradBot = Math.min(H, maxSurfaceScreen + 14 * TILE);
+    // Vertical gradient: bright at the surface line, near-full dark ~28 tiles down.
+    var gradTop = Math.max(0, maxSurfaceScreen - lightTile);
+    var gradBot = Math.min(H, maxSurfaceScreen + 28 * lightTile);
     var depthGrad = lc.createLinearGradient(0, gradTop, 0, gradBot);
     depthGrad.addColorStop(0, 'rgba(0,0,6,0.0)');
-    depthGrad.addColorStop(0.15, 'rgba(0,0,6,0.08)');
-    depthGrad.addColorStop(0.4, 'rgba(0,0,6,0.22)');
-    depthGrad.addColorStop(0.7, 'rgba(0,0,6,0.38)');
-    depthGrad.addColorStop(1, 'rgba(0,0,6,0.5)');
+    depthGrad.addColorStop(0.08, 'rgba(0,0,6,0.1)');
+    depthGrad.addColorStop(0.3, 'rgba(0,0,6,0.45)');
+    depthGrad.addColorStop(0.65, 'rgba(0,0,6,0.78)');
+    depthGrad.addColorStop(1, 'rgba(0,0,6,0.93)');
     lc.fillStyle = depthGrad;
     lc.fill();
   } else {
-    lc.fillStyle = 'rgba(0,0,6,0.52)';
+    lc.fillStyle = 'rgba(0,0,6,0.9)';
     lc.fillRect(0, 0, W, H);
   }
 
@@ -1005,17 +1005,19 @@ function drawLighting(game, ctx, cam, W, H) {
   var py = (game.player.y - cam.y) * LIGHT_SCALE + lh / 2;
   var held = game.player.inventory.selectedItem();
   var heldDef = held && ITEMS[held.id];
+  // faint aura around the player so shallow caves stay readable without torches
+  cutLight(px, py - 10 * LIGHT_SCALE, 120, 0.45);
   if (heldDef && heldDef.tile === T.TORCH) cutLight(px, py - 10 * LIGHT_SCALE, 180 * LIGHT_SCALE);
   else if (heldDef && heldDef.tile === T.GLOWSTONE) cutLight(px, py - 10 * LIGHT_SCALE, 140 * LIGHT_SCALE);
 
   // torches / glowstone
-  var lw = world.lights;
-  for (var i = 0; i < lw.length; i++) {
-    var l = lw[i];
-    var lx = l.x - cam.x + W / 2;
-    var ly = l.y - cam.y + H / 2;
-    if (lx < -200 || ly < -200 || lx > W + 200 || ly > H + 200) continue;
-    cutLight(lx, ly, l.r * 40);
+  var worldLights = world.lights;
+  for (var i = 0; i < worldLights.length; i++) {
+    var l = worldLights[i];
+    var lx = (l.x - cam.x) * LIGHT_SCALE + lw / 2;
+    var ly = (l.y - cam.y) * LIGHT_SCALE + lh / 2;
+    if (lx < -80 || ly < -80 || lx > lw + 80 || ly > lh + 80) continue;
+    cutLight(lx, ly, l.r * 40 * LIGHT_SCALE);
   }
 
   // Only naturally luminous ores reveal themselves through untouched darkness.
@@ -1024,9 +1026,9 @@ function drawLighting(game, ctx, cam, W, H) {
     for (var oreX = lightX0; oreX <= lightX1; oreX++) {
       var oreGlow = EMISSIVE_ORE_GLOW[world.get(oreX, oreY)];
       if (!oreGlow) continue;
-      var oreScreenX = oreX * TILE + 8 - cam.x + W / 2;
-      var oreScreenY = oreY * TILE + 8 - cam.y + H / 2;
-      cutLight(oreScreenX, oreScreenY, oreGlow.r, oreGlow.strength);
+      var oreScreenX = oreX * TILE + 8 - cam.x + (lw / LIGHT_SCALE) / 2;
+      var oreScreenY = oreY * TILE + 8 - cam.y + (lh / LIGHT_SCALE) / 2;
+      cutLight(oreScreenX * LIGHT_SCALE, oreScreenY * LIGHT_SCALE, oreGlow.r * LIGHT_SCALE, oreGlow.strength);
       oreGlows.push({ x:oreScreenX, y:oreScreenY, def:oreGlow });
     }
   }
@@ -1036,29 +1038,31 @@ function drawLighting(game, ctx, cam, W, H) {
   for (var j = 0; j < projs.length; j++) {
     var pp = projs[j];
     if (pp.type === P.LASER || pp.type === P.MAGICBOLT || pp.type === P.CURSEDFLAME || pp.type === P.STAR) {
-      var qx = pp.x - cam.x + W / 2;
-      var qy = pp.y - cam.y + H / 2;
-      if (qx > 0 && qy > 0 && qx < W && qy < H) cutLight(qx, qy, 45);
+      var qx = (pp.x - cam.x) * LIGHT_SCALE + lw / 2;
+      var qy = (pp.y - cam.y) * LIGHT_SCALE + lh / 2;
+      if (qx > 0 && qy > 0 && qx < lw && qy < lh) cutLight(qx, qy, 45 * LIGHT_SCALE);
     }
   }
 
   for (var sp = 0; sp < game.pickups.length; sp++) {
     var starPickup = game.pickups[sp];
     if (starPickup.item !== I.FALLENSTAR) continue;
-    var starX = starPickup.x - cam.x + W / 2, starY = starPickup.y - cam.y + H / 2;
-    if (starX > -50 && starY > -50 && starX < W + 50 && starY < H + 50) cutLight(starX, starY, 55);
+    var starX = (starPickup.x - cam.x) * LIGHT_SCALE + lw / 2, starY = (starPickup.y - cam.y) * LIGHT_SCALE + lh / 2;
+    if (starX > -20 && starY > -20 && starX < lw + 20 && starY < lh + 20) cutLight(starX, starY, 55 * LIGHT_SCALE);
   }
 
   // light pets
   for (var lp = 0; lp < game.player.lightPets.length; lp++) {
     var lpp = game.player.lightPets[lp];
-    var lpX = lpp.x - cam.x + W / 2;
-    var lpY = lpp.y - cam.y + H / 2;
-    cutLight(lpX, lpY, (lpp.def.lightR || 4) * 30);
+    var lpX = (lpp.x - cam.x) * LIGHT_SCALE + lw / 2;
+    var lpY = (lpp.y - cam.y) * LIGHT_SCALE + lh / 2;
+    cutLight(lpX, lpY, (lpp.def.lightR || 4) * 30 * LIGHT_SCALE);
   }
 
   ctx.imageSmoothingEnabled = true;
-  ctx.drawImage(game.lightCanvas, 0, 0, lw, lh, 0, 0, W, H);
+  // NOTE: W/H were shadowed to the light-canvas size above, so divide back out
+  // to blit the overlay across the full screen (1:1 blit = corner artifact).
+  ctx.drawImage(game.lightCanvas, 0, 0, lw, lh, 0, 0, W / LIGHT_SCALE, H / LIGHT_SCALE);
   ctx.imageSmoothingEnabled = false;
   ctx.save();
   ctx.globalCompositeOperation = 'screen';
