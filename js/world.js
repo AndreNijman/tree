@@ -991,6 +991,12 @@ self.underworldHouses = [];
       if (pcx > W * 0.74 && pcx < W * 0.9) pcx = Math.floor(W * 0.05 + rng() * 0.5);
       var pcy = self.surfaceY[pcx] + 24 + Math.floor(rng() * (self.hellY - self.surfaceY[pcx] - 40));
       var pr = 5 + Math.floor(rng() * 4);
+      // keep mini-biomes distinct: no column overlap with an existing pocket
+      var pocketOverlap = false;
+      for (var mk = Math.max(0, pcx - pr - 2); mk <= Math.min(W - 1, pcx + pr + 2) && !pocketOverlap; mk++) {
+        if (self.spiderCols[mk] || self.graniteCols[mk] || self.marbleCols[mk]) pocketOverlap = true;
+      }
+      if (pocketOverlap) continue;
       carvePocket(pcx, pcy, pr, pbi === 1 ? T.GRANITE : (pbi === 2 ? T.MARBLE : T.STONE), pbi === 0);
       var colsArr = pbi === 0 ? self.spiderCols : (pbi === 1 ? self.graniteCols : self.marbleCols);
       for (var mcx = pcx - pr; mcx <= pcx + pr; mcx++) {

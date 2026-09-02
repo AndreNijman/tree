@@ -1189,11 +1189,12 @@ const v79 = await page.evaluate(() => {
   var preMush = sampleAt(mx, game.world.surfaceY[mx] - 3, false, 4000);
   var preMarble = null;
   for (var sx2 = 4; sx2 < game.world.W - 4 && !preMarble; sx2++) {
+    if (!game.world.marbleCols || game.world.marbleCols[sx2] !== 1) continue;
     var found = false;
     for (var sy2 = game.world.surfaceY[sx2] + 14; sy2 < game.world.H - 4; sy2++) {
       if (game.world.get(sx2, sy2) === T.MARBLE) { found = sy2; break; }
     }
-    if (found) preMarble = { x: sx2, y: found };
+    if (found && game.world.biomeAt(sx2 * TILE + 8, found * TILE) === BIOME.MARBLE) preMarble = { x: sx2, y: found };
   }
   var preHoplite = false;
   if (preMarble) {
