@@ -3956,12 +3956,16 @@ function pickEnemy() {
 // ---------- Input ----------
 function initInput() {
   document.addEventListener('keydown', function(e) {
+    // don't hijack keys while typing in text fields
+    var isInput = e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable);
+    // block page-scroll keys BEFORE the repeat check — browser auto-repeat
+    // events would otherwise scroll the page while holding space/arrows
+    if (!isInput && [' ', 'Space', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].indexOf(e.key) >= 0) e.preventDefault();
     if (e.repeat) return;
     KEY[e.key] = true;
     KEY_JUST[e.key] = true;
     if (e.key === ' ') { KEY['Space'] = true; KEY_JUST['Space'] = true; }
     if (e.key === 'Escape' || e.key === 'Esc') { KEY_JUST['Escape'] = true; KEY_JUST['Esc'] = true; }
-    if ([' ', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Space'].indexOf(e.key) >= 0) e.preventDefault();
     AudioSys.init();
     AudioSys.resume();
   });
@@ -3991,7 +3995,10 @@ function initInput() {
   document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
   document.addEventListener('wheel', function(e) {
     MOUSE.wheel = e.deltaY > 0 ? 1 : -1;
-  }, { passive: true });
+    // while playing, the wheel belongs to the game (hotbar / map zoom) —
+    // never let it scroll the page; menus keep normal page scrolling
+    if (game && game.started && (e.target === canvas || game.mapOpen)) e.preventDefault();
+  }, { passive: false });
 }
 
 function handleKeys() {
@@ -4008,12 +4015,12 @@ function handleKeys() {
   if (KEY_JUST['m'] || KEY_JUST['M']) {
     KEY_JUST['m'] = false; KEY_JUST['M'] = false;
     if (game.mapOpen) { game.mapOpen = false; game.mapPanX = null; }
-    else if (!game.panelOpen) { game.mapOpen = true; game.mapPanX = null; }
+    else if (!game.panelOpen) { game.mapOpen = true; game.mapPanX = null; if (!game.mapZoom) game.mapZoom = 0.15; }
     AudioSys.play('pickup');
   }
   if (game.mapOpen) {
-    var mz = game.mapZoom;
-    if (MOUSE.wheel) { mz = clamp(mz * (MOUSE.wheel > 0 ? 1.25 : 0.8), 0.0625, 10); game.mapZoom = mz; }
+    var mz = game.mapZoom || 0.15;
+    if (MOUSE.wheel) { mz = clamp(mz * (MOUSE.wheel > 0 ? 1.25 : 0.8), 0.0625, 10); game.mapZoom = mz; MOUSE.wheel = 0; }
     var panSpd = 480 / mz;
     if (KEY['a'] || KEY['ArrowLeft']) game.mapPanX -= panSpd / 60;
     if (KEY['d'] || KEY['ArrowRight']) game.mapPanX += panSpd / 60;
