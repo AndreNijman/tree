@@ -1822,32 +1822,114 @@ self.underworldHouses = [];
     }
     this.surfaceY[cx3] = clearingY;
   }
-  // Trees on forest/jungle grass
+  // --- Trees: faithful port of vanilla GrowTree/GrowPalmTree geometry ---
+  // trunk height Next(5,17) (+5 jungle), 20% left / 20% right branch nubs per
+  // trunk tile (never same side twice running), base roots per ground, clearance
+  // EmptyTileCheck(i-2, i+2), leaf blob only at the top, 1/13 tall-top variant.
+  function growTree(tx3, ty3, jungle) {
+    var height = 5 + rnd(12) + (jungle ? 5 : 0);
+    // EmptyTileCheck(i-2, i+2, ty-height-4, ty-1)
+    for (var cy3 = ty3 - height - 4; cy3 < ty3; cy3++) {
+      for (var cx3 = tx3 - 2; cx3 <= tx3 + 2; cx3++) {
+        if (!self.inBounds(cx3, cy3) || self.tiles[self.idx(cx3, cy3)] !== T.AIR) return false;
+      }
+    }
+    var topY = ty3 - height;
+    var lastL = false, lastR = false;
+    for (var ty4 = ty3 - 1; ty4 >= topY; ty4--) {
+      self.tiles[self.idx(tx3, ty4)] = T.TREETRUNK;
+      if (ty4 !== ty3 - 1 && ty4 !== topY) {
+        var roll = rnd(10);
+        if (roll === 5 || roll === 7) {
+          if (!lastL) self.tiles[self.idx(tx3 - 1, ty4)] = T.TREETRUNK;
+          lastL = true;
+        } else lastL = false;
+        if (roll === 6 || roll === 7) {
+          if (!lastR) self.tiles[self.idx(tx3 + 1, ty4)] = T.TREETRUNK;
+          lastR = true;
+        } else lastR = false;
+      }
+    }
+    // base roots, per ground neighbors (vanilla num8 logic)
+    var groundL = self.inBounds(tx3 - 1, ty3) && self.tiles[self.idx(tx3 - 1, ty3)] !== T.AIR;
+    var groundR = self.inBounds(tx3 + 1, ty3) && self.tiles[self.idx(tx3 + 1, ty3)] !== T.AIR;
+    var roots = rnd(3); // 0 both, 1 right, 2 left
+    if (!groundL) roots = groundR ? 1 : 3;
+    else if (!groundR) roots = 2;
+    if (roots === 0 || roots === 1) self.tiles[self.idx(tx3 + 1, ty3 - 1)] = T.TREETRUNK;
+    if (roots === 0 || roots === 2) self.tiles[self.idx(tx3 - 1, ty3 - 1)] = T.TREETRUNK;
+    // leaf blob at the top (12/13 standard, 1/13 tall)
+    var rows = [[-1, 1, topY - 2], [-2, 2, topY - 1], [-2, 2, topY], [-1, 1, topY + 1]];
+    if (Math.floor(rng() * 13) === 0) rows = [[0, 0, topY - 4], [-1, 1, topY - 3], [-1, 1, topY - 2], [-2, 2, topY - 1], [-2, 2, topY]];
+    for (var rr2 = 0; rr2 < rows.length; rr2++) {
+      for (var lx2 = rows[rr2][0]; lx2 <= rows[rr2][1]; lx2++) {
+        var lx3 = tx3 + lx2, ly3 = rows[rr2][2];
+        if (self.inBounds(lx3, ly3) && self.tiles[self.idx(lx3, ly3)] === T.AIR) self.tiles[self.idx(lx3, ly3)] = T.LEAVES;
+      }
+    }
+    return true;
+  }
+  // Boreal pine (snow biome): layered triangular silhouette
+  function growPine(tx3, ty3) {
+    var height = 9 + rnd(8);
+    for (var cy4 = ty3 - height - 3; cy4 < ty3; cy4++) {
+      for (var cx4 = tx3 - 4; cx4 <= tx3 + 4; cx4++) {
+        if (!self.inBounds(cx4, cy4) || self.tiles[self.idx(cx4, cy4)] !== T.AIR) return false;
+      }
+    }
+    var topY = ty3 - height;
+    var widths = [1, 1, 3, 3, 5, 5, 7, 7];
+    var ri3 = 0;
+    for (var py3 = topY; py3 < ty3; py3++) {
+      var w4 = widths[Math.min(widths.length - 1, ri3)];
+      for (var px3 = tx3 - Math.floor(w4 / 2); px3 <= tx3 + Math.floor(w4 / 2); px3++) {
+        if (self.tiles[self.idx(px3, py3)] === T.AIR) self.tiles[self.idx(px3, py3)] = T.LEAVES;
+      }
+      if (ri3 % 2 === 1) self.tiles[self.idx(tx3, py3)] = T.TREETRUNK; // wood shows between layers
+      ri3++;
+    }
+    self.tiles[self.idx(tx3, ty3 - 1)] = T.TREETRUNK;
+    return true;
+  }
+  // Palm (ocean beaches): tall bare trunk, frond fan, drooping tips
+  function growPalm(tx3, ty3) {
+    var height = 7 + rnd(7);
+    for (var cy5 = ty3 - height - 3; cy5 < ty3; cy5++) {
+      for (var cx5 = tx3 - 3; cx5 <= tx3 + 3; cx5++) {
+        if (!self.inBounds(cx5, cy5) || self.tiles[self.idx(cx5, cy5)] !== T.AIR) return false;
+      }
+    }
+    var topY = ty3 - height;
+    for (var py4 = topY; py4 < ty3; py4++) self.tiles[self.idx(tx3, py4)] = T.TREETRUNK;
+    var fronds = [[-2, 2, topY - 1], [-1, 1, topY - 2], [-2, -2, topY], [2, 2, topY]];
+    for (var fr = 0; fr < fronds.length; fr++) {
+      for (var fx2 = fronds[fr][0]; fx2 <= fronds[fr][1]; fx2++) {
+        var fx3 = tx3 + fx2, fy3 = fronds[fr][2];
+        if (self.inBounds(fx3, fy3) && self.tiles[self.idx(fx3, fy3)] === T.AIR) self.tiles[self.idx(fx3, fy3)] = T.LEAVES;
+      }
+    }
+    return true;
+  }
+  // Placement pass: forest/jungle trees, snow pines, beach palms
   for (var tx2 = 4; tx2 < W - 4; tx2++) {
     var b3 = biomeAtX(tx2);
-    if (b3 !== BIOME.FOREST && b3 !== BIOME.JUNGLE) continue;
     var sy = this.surfaceY[tx2];
-    if (b3 === BIOME.FOREST && this.get(tx2, sy) !== T.GRASS) continue;
-    if (b3 === BIOME.JUNGLE && this.get(tx2, sy) !== T.JUNGLEGRASS) continue;
-    if (rng() < (b3 === BIOME.JUNGLE ? 0.45 : 0.35)) {
-      var th = 5 + Math.floor(rng() * (b3 === BIOME.JUNGLE ? 8 : 4));
-      for (var j = 1; j <= th; j++) this.set(tx2, sy - j, T.TREETRUNK);
-      var topY = sy - th - 1;
-      // rounded Terraria-style canopy: 7 wide, 5 tall, ragged edges
-      for (var lx = -3; lx <= 3; lx++) {
-        for (var ly = -3; ly <= 1; ly++) {
-          var ax = Math.abs(lx);
-          var maxAx = (ly === -3 || ly === 1) ? 1 : (ly === -1 || ly === 0) ? 3 : 2;
-          if (ax > maxAx) continue;
-          if (ax === maxAx && rng() < 0.35) continue; // ragged edge
-          var lxx = tx2 + lx, lyy = topY + ly;
-          if (this.get(lxx, lyy) === T.AIR) this.set(lxx, lyy, T.LEAVES);
-        }
-      }
-      tx2 += 1;
+    var ground = this.tiles[this.idx(tx2, sy)];
+    if (b3 === BIOME.OCEAN) {
+      if (ground === T.SAND && rng() < 0.25) { if (growPalm(tx2, sy)) tx2 += 2; }
+      continue;
+    }
+    if (b3 === BIOME.SNOW) {
+      if (ground === T.SNOW && rng() < 0.3) { if (growPine(tx2, sy)) tx2 += 2; }
+      continue;
+    }
+    if (b3 !== BIOME.FOREST && b3 !== BIOME.JUNGLE) continue;
+    var jungle2 = b3 === BIOME.JUNGLE;
+    if (jungle2 ? ground !== T.JUNGLEGRASS : ground !== T.GRASS) continue;
+    if (rng() < (jungle2 ? 0.45 : 0.35)) {
+      if (growTree(tx2, sy, jungle2)) tx2 += 2;
     }
   }
-
   // clear trees near spawn
   for (var cx4 = sp - 30; cx4 <= sp + 30; cx4++) {
     if (cx4 < 0 || cx4 >= W) continue;
