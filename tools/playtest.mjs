@@ -430,6 +430,8 @@ check('Zoo: mount attempt succeeds', zoo2.mounted);
 // ===== BATCH 70: GOLFER GOLF CHALLENGE =====
 const golf1 = await page.evaluate(() => {
   var g = game.golf, p = game.player;
+  // return to solid spawn ground (earlier checks teleport the player around)
+  p.x = game.world.spawnX; p.y = game.world.spawnY; p.vy = 0;
   // Ensure a real Golfer entity is nearby for the proximity gate
   var golfer = spawnEntity(game, E.GOLFER, p.x, p.y);
   game.townNpcOpen = { type: E.GOLFER, name: 'Golfer' };

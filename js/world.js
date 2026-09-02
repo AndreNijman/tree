@@ -20,7 +20,7 @@ function World(width, height, seed, difficulty) {
   this.planteraBulbs = []; // {x,y}
   this.mushroomAt = null; // Uint8Array over columns (mushroom patches)
   this.spilledChestItems = null; // set when a chest breaks; contents spill as pickups
-  this.hellY = Math.max(60, height - 360); // Underworld begins ~1300ft down (vanilla small: bottom 360 incl. ash ceiling)
+  this.hellY = Math.max(60, height - 200); // vanilla: Underworld detection is the bottom 200 tiles
   this.spiderCols = null; // Uint8Array over columns (spider caves)
   this.graniteCols = null; // Uint8Array over columns (granite caves)
   this.marbleCols = null; // Uint8Array over columns (marble caves)
@@ -44,6 +44,8 @@ function World(width, height, seed, difficulty) {
   this.meteorCraters = []; // {x,y,r} meteor craters
   this.underworldHouses = []; // {x,y,w,h} furnished Hellbrick houses
   this.rockY = new Uint16Array(width); // dirt/rock boundary per column
+  this.underSnowMinX = new Int16Array(height); // ice trapezoid edges per row
+  this.underSnowMaxX = new Int16Array(height);
   this.spreadFrontier = []; // tile indexes of evil/Hallow stone that can spread (hardmode)
   this.pylons = []; // {x,y,item} town pylon nodes
   this.spilledPylonItem = null; // set when a pylon breaks; its item is recovered
@@ -387,35 +389,73 @@ World.prototype.generate = function(hardmode, evil) {
   var n2 = makeNoise1D(rng, 256);
   var nCave = makeNoise2D(rng, 128, 128);
 
-  var baseY = Math.floor(H * 0.16); // vanilla small-world surface line (~y190)
-
-  // Surface height: rolling hills around the surface line, dipping toward the oceans
-  for (var x = 0; x < W; x++) {
-    var f0 = x / W;
-    var edge = f0 < 0.055 ? 1 - f0 / 0.055 : (f0 > 0.945 ? (f0 - 0.945) / 0.055 : 0);
-    var h = baseY
-      + n1(x * 0.010) * 22
-      + n2(x * 0.028) * 8
-      + Math.sin(x * 0.035) * 3
-      + edge * edge * 26; // ocean basins slope down at the map edges
-    this.surfaceY[x] = Math.floor(h);
+  // ---- Terrain: faithful port of vanilla TerrainPass ----
+  // Surface wanders with feature segments (Plateau/Hill/Dale/Mountain/Valley),
+  // rock line drifts below it, dirt above rock line / stone below (FillColumn).
+  var Hf = H;
+  var beachFrac = 0.08; // ocean exists within ~338 tiles of each edge
+  this.beachL = Math.floor(W * beachFrac);
+  this.beachR = W - Math.floor(W * beachFrac);
+  var surface = Hf * 0.3 * ((rng() * 20 + 90) * 0.005); // Next(90,110)*0.005
+  var rock = (surface + Hf * 0.2) * (0.9 + rng() * 0.2);
+  var featLen = 0;
+  var feature = 0; // 0 Plateau 1 Hill 2 Dale 3 Mountain 4 Valley
+  var maxSurf = 0, maxRock = 0, minSurf = surface;
+  var surfClampLo = Hf * 0.17, surfClampHi = Hf * 0.26;
+  var beachClampHi = Hf * 0.23;
+  for (x = 0; x < W; x++) {
+    if (featLen <= 0) {
+      feature = Math.floor(rng() * 5);
+      featLen = 5 + Math.floor(rng() * 35);
+      if (feature === 0) featLen *= Math.floor(5 + rng() * 30 * 0.2);
+    }
+    featLen--;
+    if (x > W * 0.45 && x < W * 0.55 && (feature === 3 || feature === 4)) feature = Math.floor(rng() * 3);
+    if (x > W * 0.48 && x < W * 0.52) feature = 0;
+    // GenerateWorldSurfaceOffset
+    var off = 0;
+    if (feature === 0) { while (rng() * 7 < 1) off += Math.floor(rng() * 3) - 1; }
+    else if (feature === 1) { while (rng() * 4 < 1) off--; while (rng() * 10 < 1) off++; }
+    else if (feature === 2) { while (rng() * 4 < 1) off++; while (rng() * 10 < 1) off--; }
+    else if (feature === 3) { while (rng() * 2 < 1) off--; while (rng() * 6 < 1) off++; }
+    else { while (rng() * 2 < 1) off++; while (rng() * 5 < 1) off--; }
+    surface += off;
+    var onBeach = x < this.beachL || x > this.beachR;
+    if (onBeach) surface = Math.max(Hf * 0.17, Math.min(beachClampHi, surface));
+    else if (surface < surfClampLo) { surface = surfClampLo; featLen = 0; }
+    else if (surface > surfClampHi) { surface = surfClampHi; featLen = 0; }
+    if (rng() * 3 < 1) rock += Math.floor(rng() * 5) - 2;
+    if (rock < surface + Hf * 0.06) rock++;
+    if (rock > surface + Hf * 0.35) rock--;
+    if (surface > maxSurf) maxSurf = surface;
+    if (surface < minSurf) minSurf = surface;
+    if (rock > maxRock) maxRock = rock;
+    this.surfaceY[x] = Math.floor(surface);
+    this.rockY[x] = Math.floor(rock);
   }
+  // worldSurface (0 feet) = max surface + 25; rockLayer rounded up to multiple of 6
+  this.worldSurfaceAvg = Math.floor(maxSurf + 25);
+  var rl = maxRock;
+  var num8 = Math.floor((rl - this.worldSurfaceAvg) / 6) * 6;
+  this.rockLayer = this.worldSurfaceAvg + num8;
+  this.waterLine = Math.floor((this.rockLayer + H) / 2) + Math.floor(rng() * 120) - 100;
+  this.lavaLine = this.waterLine + 50 + Math.floor(rng() * 30);
 
   // Biome layout (vanilla rule: Snow+Dungeon on one side, Jungle+Desert on the
   // other, evil biome near the center on the snow/dungeon side, oceans at both ends)
   this.jungleLeft = rng() < 0.5;
   var EVILB = isCrimson ? BIOME.CRIMSON : BIOME.CORRUPT;
   this._bands = [
-    [0.000, 0.055, BIOME.OCEAN],
-    [0.055, 0.160, BIOME.DESERT],
-    [0.160, 0.375, BIOME.JUNGLE],
+    [0.000, 0.080, BIOME.OCEAN],
+    [0.080, 0.165, BIOME.DESERT],
+    [0.165, 0.375, BIOME.JUNGLE],
     [0.375, 0.545, BIOME.FOREST],
     [0.545, 0.600, EVILB],
     [0.600, 0.695, BIOME.FOREST],
     [0.695, 0.815, BIOME.SNOW],
     [0.815, 0.895, BIOME.DUNGEON],
-    [0.895, 0.945, BIOME.FOREST],
-    [0.945, 1.001, BIOME.OCEAN],
+    [0.895, 0.920, BIOME.FOREST],
+    [0.920, 1.001, BIOME.OCEAN],
   ];
 
   // Biome assignment by x (mirrored depending on which side the jungle rolled).
@@ -442,47 +482,48 @@ World.prototype.generate = function(hardmode, evil) {
     }
   }
 
-  // Fill terrain
+  // FillColumn: air above the surface line, dirt to the rock line, stone below
   var hellY = this.hellY;
   for (x = 0; x < W; x++) {
     var surf = this.surfaceY[x];
-    var b = this.mushroomAt[x] === 1 ? BIOME.MUSHROOM : biomeAtX(x);
-    // dirt layer: ~100-150 tiles down to the rock (cavern) line, like vanilla
-    var dirtDepth = 100 + Math.floor(n1(x * 0.01 + 40) * 30 + rng() * 12);
+    var rock2 = this.rockY[x];
     for (var y = 0; y < H; y++) {
       var idx = this.idx(x, y);
       if (y >= hellY) { this.tiles[idx] = T.ASH; this.walls[idx] = WALL.STONE; continue; }
       if (y < surf) { this.tiles[idx] = T.AIR; this.walls[idx] = WALL.NONE; continue; }
-      if (b === BIOME.OCEAN) {
-        if (y < surf + 10) { this.tiles[idx] = T.WATER; this.walls[idx] = WALL.NONE; }
-        else if (y < surf + 14) { this.tiles[idx] = T.SAND; this.walls[idx] = WALL.DIRT; }
-        else { this.tiles[idx] = T.STONE; this.walls[idx] = WALL.STONE; }
-        continue;
-      }
-      if (y === surf) {
-        if (b === BIOME.CORRUPT) this.tiles[idx] = T.CORRUPTGRASS;
-        else if (b === BIOME.HALLOW) this.tiles[idx] = T.HALLOWGRASS;
-        else if (b === BIOME.JUNGLE) this.tiles[idx] = T.JUNGLEGRASS;
-        else if (b === BIOME.MUSHROOM) this.tiles[idx] = T.MUSHROOM;
-        else if (b === BIOME.SNOW) this.tiles[idx] = T.SNOW;
-        else if (b === BIOME.DESERT) this.tiles[idx] = T.SAND;
-        else if (b === BIOME.CRIMSON) this.tiles[idx] = T.CRIMGRASS;
-        else this.tiles[idx] = T.GRASS;
-      } else if (b === BIOME.SNOW && y < surf + 12) {
-        this.tiles[idx] = T.ICE;
-      } else if (b === BIOME.DESERT && y < surf + dirtDepth) {
-        this.tiles[idx] = T.SAND;
-      } else if (y < surf + dirtDepth) {
-        this.tiles[idx] = (b === BIOME.JUNGLE || b === BIOME.MUSHROOM) ? T.MUD : T.DIRT;
-      } else {
-        this.tiles[idx] = T.STONE;
-      }
-      // background walls
-      if (y < surf + dirtDepth + 6) this.walls[idx] = WALL.DIRT;
-      else this.walls[idx] = WALL.STONE;
+      if (y < rock2) { this.tiles[idx] = T.DIRT; this.walls[idx] = WALL.DIRT; }
+      else { this.tiles[idx] = T.STONE; this.walls[idx] = WALL.STONE; }
     }
-    // record the dirt/rock boundary for the vein passes below
-    this.rockY[x] = surf + dirtDepth;
+  }
+
+  // Biome surface conversion: grass/sand on the surface tile per band
+  for (x = 0; x < W; x++) {
+    var surfB = biomeAtX(x);
+    var top = this.idx(x, this.surfaceY[x]);
+    if (surfB === BIOME.CORRUPT) this.tiles[top] = T.CORRUPTGRASS;
+    else if (surfB === BIOME.CRIMSON) this.tiles[top] = T.CRIMGRASS;
+    else if (surfB === BIOME.JUNGLE) this.tiles[top] = T.JUNGLEGRASS;
+    else if (surfB === BIOME.MUSHROOM) this.tiles[top] = T.MUSHROOM;
+    else if (surfB === BIOME.SNOW) this.tiles[top] = T.SNOW;
+    else if (surfB === BIOME.DESERT) this.tiles[top] = T.SAND;
+    else if (surfB === BIOME.HALLOW) this.tiles[top] = T.HALLOWGRASS;
+    else if (surfB !== BIOME.OCEAN) this.tiles[top] = T.GRASS;
+    // dirt walls extend a little past the surface; stone wall deeper
+    var wy = this.surfaceY[x] + 6;
+    while (wy < this.rockY[x] + 8 && wy < H) { this.walls[this.idx(x, wy)] = WALL.DIRT; wy++; }
+  }
+  // Oceans: water over a sandy floor, sloping down at the map edges
+  for (x = 0; x < W; x++) {
+    if (biomeAtX(x) !== BIOME.OCEAN) continue;
+    var distIn = x < this.beachL ? (this.beachL - x) : (x - this.beachR);
+    var slope = Math.floor(distIn / 6);
+    var oceanSurf = this.surfaceY[x] + 4 + slope;
+    for (var oy2 = this.surfaceY[x]; oy2 < H; oy2++) {
+      var oidx = this.idx(x, oy2);
+      if (oy2 < oceanSurf) { this.tiles[oidx] = T.WATER; this.walls[oidx] = WALL.NONE; }
+      else if (oy2 < oceanSurf + 12) { this.tiles[oidx] = T.SAND; this.walls[oidx] = WALL.DIRT; }
+      else { this.tiles[oidx] = T.STONE; this.walls[oidx] = WALL.STONE; }
+    }
   }
 
   // Convert deep stone in corrupt/hallow/crimson biomes
@@ -528,349 +569,340 @@ World.prototype.generate = function(hardmode, evil) {
     }
   }
 
-  // Underground snow: deep ice below the snow surface
+  // Ice biome (vanilla trapezoid): dirt→snow, stone→ice within wandering edges,
+  // from the world surface down past the cavern into a ragged bottom fringe
+  var snowBand0 = null, snowBand1 = null;
+  for (var sb = 0; sb < this._bands.length; sb++) {
+    if (this._bands[sb][2] === BIOME.SNOW) { snowBand0 = this._bands[sb][0]; snowBand1 = this._bands[sb][1]; break; }
+  }
   this.underSnowCols = new Uint8Array(W);
-  for (x = 0; x < W; x++) {
-    if (biomeAtX(x) !== BIOME.SNOW) continue;
-    if (this.mushroomAt[x] === 1) continue;
-    var ss = this.surfaceY[x];
-    this.underSnowCols[x] = 1;
-    var sDepth = 100 + Math.floor(rng() * 60);
-    for (var y = ss + 8; y < Math.min(H - 1, ss + sDepth); y++) {
-      var ius = this.idx(x, y);
-      if (ius >= 0 && ius < this.tiles.length) {
-        var cur = this.tiles[ius];
-        if (cur === T.STONE || cur === T.DIRT || cur === T.ICE || cur === T.SNOW) {
-          this.tiles[ius] = (rng() < 0.7) ? T.ICE : T.SNOW;
+  if (snowBand0 !== null) {
+    var snL0 = Math.floor(W * snowBand0), snR0 = Math.floor(W * snowBand1);
+    if (!this.jungleLeft) { snL0 = W - snR0; snR0 = W - Math.floor(W * snowBand0); }
+    var snL = snL0, snR = snR0, fringe = 20;
+    var snBottom = this.lavaLine - 140;
+    for (var sny = this.worldSurfaceAvg; sny < snBottom; sny++) {
+      snL += rnd(9) - 4;
+      snR += rnd(8) - 3;
+      if (sny > this.worldSurfaceAvg) {
+        snL = Math.floor((snL + this.underSnowMinX[sny - 1]) / 2);
+        snR = Math.floor((snR + this.underSnowMaxX[sny - 1]) / 2);
+      }
+      if (this.jungleLeft) { if (Math.floor(rng() * 4) === 0) { snL++; snR++; } }
+      else if (Math.floor(rng() * 4) === 0) { snL--; snR--; }
+      this.underSnowMinX[sny] = snL; this.underSnowMaxX[sny] = snR;
+      var toIce = sny >= this.worldSurfaceAvg + 40; // snow near the top, ice below
+      for (var snx = Math.max(1, snL); snx < Math.min(W - 1, snR); snx++) {
+        var snt = self.tiles[self.idx(snx, sny)];
+        if (toIce) {
+          if (snt === T.STONE) self.tiles[self.idx(snx, sny)] = T.ICE;
+          else if (snt === T.DIRT || snt === T.GRASS) self.tiles[self.idx(snx, sny)] = T.SNOW;
+        } else if (snt === T.DIRT || snt === T.STONE || snt === T.GRASS) {
+          self.tiles[self.idx(snx, sny)] = T.SNOW;
         }
+        if (sny >= this.surfaceY[snx]) this.underSnowCols[snx] = 1;
+      }
+    }
+    // ragged ice fringe below the main trapezoid
+    for (sny = snBottom; sny < this.lavaLine - 20 && sny < H - 2; sny++) {
+      fringe += rnd(7) - 3;
+      if (fringe < 0) fringe = rnd(3);
+      else if (fringe > 50) fringe = 50 - rnd(3);
+      for (snx = Math.max(1, snL); snx < Math.min(W - 1, snR); snx++) {
+        for (var fy2 = sny; fy2 < Math.min(H - 1, sny + fringe); fy2++) {
+          var fnt = self.tiles[self.idx(snx, fy2)];
+          if (fnt === T.STONE) self.tiles[self.idx(snx, fy2)] = T.ICE;
+          else if (fnt === T.DIRT) self.tiles[self.idx(snx, fy2)] = T.SNOW;
+        }
+        if (sny >= this.surfaceY[snx]) this.underSnowCols[snx] = 1;
       }
     }
   }
 
-  // ---- vanilla texture passes: Rocks In Dirt, Dirt In Rocks, Clay ----
-  // (blob walkers, like vanilla's TileRunner, so stone/dirt interlock organically)
-  function placeBlob(cx, cy, r, tile, canReplace) {
-    var r2 = r * r;
-    for (var by = Math.floor(cy - r); by <= cy + r; by++) {
-      for (var bx = Math.floor(cx - r); bx <= cx + r; bx++) {
-        if (bx < 1 || bx >= W - 1 || by < 1 || by >= H - 1) continue;
-        var ddx = bx - cx, ddy = by - cy;
-        if (ddx * ddx + ddy * ddy > r2) continue;
-        var ii = self.idx(bx, by);
-        if (canReplace(self.tiles[ii])) self.tiles[ii] = tile;
+  // ================================================================
+  // Vanilla generation passes — faithful ports of decompiled
+  // Terraria 1.4.0.5 WorldGen.cs / TerrainPass.cs (exact counts/sizes)
+  // ================================================================
+
+  // TileRunner: diamond carve (Manhattan < strength*0.5*jitter), radius
+  // shrinks linearly from `strength` to 0 over `steps`, velocity-wandered.
+  // type: 'air' (clear, sand immune) | 'liquid' (clear + water/lava by line)
+  //     | 'ash' (place ash over anything) | tile id (replace dirt/stone/clay)
+  function tileRunnerV(tx0, ty0, strength, steps, type, opts) {
+    opts = opts || {};
+    var px = tx0, py = ty0;
+    var vx = opts.speedX !== undefined ? opts.speedX : (rng() * 21 - 10) * 0.1;
+    var vy = opts.speedY !== undefined ? opts.speedY : (rng() * 21 - 10) * 0.1;
+    var step = steps;
+    while (strength > 0 && step > 0) {
+      var rad = strength * (step / steps);
+      step--;
+      var half = strength * 0.5 * (1 + (rng() * 21 - 10) * 0.015);
+      var bx0 = Math.max(1, Math.floor(px - rad * 0.5));
+      var bx1 = Math.min(W - 1, Math.ceil(px + rad * 0.5));
+      var by0 = Math.max(1, Math.floor(py - rad * 0.5));
+      var by1 = Math.min(H - 1, Math.ceil(py + rad * 0.5));
+      for (var by = by0; by < by1; by++) {
+        for (var bx = bx0; bx < bx1; bx++) {
+          var mdx = bx - px, mdy = by - py;
+          if (mdx + mdy < 0) { mdx = -mdx; mdy = -mdy; }
+          if (mdx + mdy >= half) continue;
+          var ii = self.idx(bx, by);
+          var t = self.tiles[ii];
+          if (type === 'air') {
+            if (t === T.AIR || t === T.SAND || t === T.ASH) continue;
+            self.tiles[ii] = T.AIR;
+            continue;
+          }
+          if (type === 'liquid') {
+            if (t === T.AIR) continue;
+            if (by < self.waterLine) self.tiles[ii] = T.WATER;
+            else if (by > self.lavaLine) self.tiles[ii] = T.LAVA;
+            else self.tiles[ii] = T.AIR;
+            continue;
+          }
+          if (type === 'ash') { self.tiles[ii] = T.ASH; continue; }
+          if (opts.onlyAir) { if (t === T.AIR) self.tiles[ii] = type; continue; }
+          if (t === T.DIRT || t === T.STONE || t === T.CLAY) self.tiles[ii] = type;
+        }
+      }
+      px += vx; py += vy;
+      vx = Math.max(-1, Math.min(1, vx + (rng() * 21 - 10) * 0.05));
+      if (!opts.noYChange) vy = Math.max(-1, Math.min(1, vy + (rng() * 21 - 10) * 0.05));
+    }
+  }
+
+  // digTunnel: diamond carve radius `size` wandering ±1.5 (clamped 0.6..2x),
+  // movement (dir + wander)*0.6 per step. Returns the end position.
+  function digTunnel(tx0, ty0, xDir, yDir, stepsN, size, wet) {
+    var px = tx0, py = ty0;
+    var wx = 0, wy = 0;
+    var num4 = size;
+    px = Math.max(size + 1, Math.min(W - size - 1, px));
+    py = Math.max(size + 1, Math.min(H - size - 1, py));
+    for (var s = 0; s < stepsN; s++) {
+      var half = num4 * (1 + (rng() * 21 - 10) * 0.005);
+      for (var by = Math.floor(py - num4); by <= py + num4; by++) {
+        for (var bx = Math.floor(px - num4); bx <= px + num4; bx++) {
+          if (bx < 1 || bx >= W - 1 || by < 1 || by >= H - 1) continue;
+          var mdx = bx - px, mdy = by - py;
+          if (mdx + mdy < 0) { mdx = -mdx; mdy = -mdy; }
+          if (mdx + mdy >= half) continue;
+          var ii = self.idx(bx, by);
+          self.tiles[ii] = T.AIR;
+          if (wet) self.tiles[ii] = T.WATER;
+        }
+      }
+      num4 += (rng() * 101 - 50) * 0.03;
+      if (num4 < size * 0.6) num4 = size * 0.6;
+      if (num4 > size * 2) num4 = size * 2;
+      wx = Math.max(-1, Math.min(1, wx + (rng() * 41 - 20) * 0.01));
+      wy = Math.max(-1, Math.min(1, wy + (rng() * 41 - 20) * 0.01));
+      px += (xDir + wx) * 0.6;
+      py += (yDir + wy) * 0.6;
+    }
+    return [px, py];
+  }
+
+  // Caverer: vanilla big-cave systems in the cavern layer
+  function caverer(cx, cy) {
+    if (Math.floor(rng() * 2) === 0) {
+      var segs = 7 + Math.floor(rng() * 3);
+      var xDir = rng(), yDir = 1 - xDir;
+      if (Math.floor(rng() * 2) === 0) xDir = -xDir;
+      if (Math.floor(rng() * 2) === 0) yDir = -yDir;
+      var pos = [cx, cy];
+      for (var i = 0; i < segs; i++) {
+        pos = digTunnel(pos[0], pos[1], xDir, yDir, 6 + Math.floor(rng() * 14), 4 + Math.floor(rng() * 6));
+        xDir = Math.max(-1.5, Math.min(1.5, xDir + (rng() * 41 - 20) * 0.1));
+        yDir = Math.max(-1.5, Math.min(1.5, yDir + (rng() * 41 - 20) * 0.1));
+        var xDir2 = rng(), yDir2 = 1 - xDir2;
+        if (Math.floor(rng() * 2) === 0) xDir2 = -xDir2;
+        if (Math.floor(rng() * 2) === 0) yDir2 = -yDir2;
+        var pos2 = digTunnel(pos[0], pos[1], xDir2, yDir2, 30 + Math.floor(rng() * 20), 3 + Math.floor(rng() * 4));
+        tileRunnerV(Math.floor(pos2[0]), Math.floor(pos2[1]), 10 + rng() * 10, 5 + Math.floor(rng() * 6), 'air');
+      }
+    } else {
+      var segs2 = 15 + Math.floor(rng() * 15);
+      var xd = rng(), yd = 1 - xd;
+      if (Math.floor(rng() * 2) === 0) xd = -xd;
+      if (Math.floor(rng() * 2) === 0) yd = -yd;
+      var pos3 = [cx, cy];
+      for (var j = 0; j < segs2; j++) {
+        pos3 = digTunnel(pos3[0], pos3[1], xd, yd, 5 + Math.floor(rng() * 10), 2 + Math.floor(rng() * 4), true);
+        xd = Math.max(-1.5, Math.min(1.5, xd + (rng() * 41 - 20) * 0.1));
+        yd = Math.max(-1.5, Math.min(1.5, yd + (rng() * 41 - 20) * 0.1));
       }
     }
   }
-  function tileRunner(tile, sx, sy, strength, steps, canReplace) {
-    var rx = sx, ry = sy, rdx = rng() - 0.5, rdy = rng() - 0.5;
-    while (steps-- > 0 && strength > 0.8) {
-      rdx = Math.max(-0.5, Math.min(0.5, rdx + (rng() - 0.5) * 0.25));
-      rdy = Math.max(-0.5, Math.min(0.5, rdy + (rng() - 0.5) * 0.25));
-      rx += rdx * 1.5; ry += rdy * 1.5;
-      placeBlob(rx, ry, strength * 0.7, tile, canReplace);
-      strength -= 0.35; // veins shrink as they wander, like vanilla
-    }
-  }
-  var canDirt = function (t) { return t === T.DIRT; };
-  var canStone = function (t) { return t === T.STONE; };
-  var canDirtStone = function (t) { return t === T.DIRT || t === T.STONE; };
+  function rnd(n) { return Math.floor(rng() * n); }
+
   var area = W * H;
-  // Rocks In Dirt: stone chunks scattered through the dirt layer
-  for (var rd = 0; rd < area * 1.2e-04; rd++) {
-    var rdx2 = 20 + Math.floor(rng() * (W - 40));
-    var rdy2 = self.surfaceY[rdx2] + 8 + Math.floor(rng() * Math.max(4, self.rockY[rdx2] - self.surfaceY[rdx2] - 10));
-    tileRunner(T.STONE, rdx2, rdy2, 2 + rng() * 3.5, 2 + Math.floor(rng() * 4), canDirt);
-  }
-  // Dirt In Rocks: dirt pockets bleeding into the upper cavern
-  for (var dr = 0; dr < area * 9e-05; dr++) {
-    var drx = 20 + Math.floor(rng() * (W - 40));
-    var dry = self.rockY[drx] + Math.floor(rng() * 160);
-    tileRunner(T.DIRT, drx, dry, 2 + rng() * 4, 2 + Math.floor(rng() * 4), canStone);
-  }
-  // Clay: reddish patches through the shallow dirt
-  for (var cl = 0; cl < area * 8e-05; cl++) {
-    var clx = 20 + Math.floor(rng() * (W - 40));
-    var cly = self.surfaceY[clx] + 3 + Math.floor(rng() * 55);
-    placeBlob(clx, cly, 1.5 + rng() * 3, T.CLAY, canDirt);
+  var surfLow = Math.max(1, minSurf - 1), surfHigh = Math.min(H - 2, maxSurf + 1);
+  var rockLow = Math.min(H - 2, minSurf + Math.floor(H * 0.06) + 2), rockHigh = Math.min(H - 2, maxRock + 1);
+
+  // --- Rocks In Dirt (3 sub-passes, exact vanilla counts) ---
+  for (var rd = 0; rd < area * 1.5e-04; rd++) tileRunnerV(rnd(W), rnd(surfLow + 1), 4 + rnd(11), 5 + rnd(35), T.STONE);
+  for (rd = 0; rd < area * 2e-04; rd++) tileRunnerV(rnd(W), surfLow + rnd(surfHigh - surfLow + 1), 4 + rnd(6), 5 + rnd(25), T.STONE);
+  for (rd = 0; rd < area * 4.5e-03; rd++) tileRunnerV(rnd(W), surfHigh + rnd(rockHigh - surfHigh + 1), 2 + rnd(5), 2 + rnd(21), T.STONE);
+  // --- Dirt In Rocks ---
+  for (var dr = 0; dr < area * 5e-03; dr++) tileRunnerV(rnd(W), rockLow + rnd(H - rockLow), 2 + rnd(4), 2 + rnd(38), T.DIRT);
+  // --- Clay (3 sub-passes) ---
+  for (var cl = 0; cl < area * 2e-05; cl++) tileRunnerV(rnd(W), rnd(surfLow), 4 + rnd(10), 10 + rnd(40), T.CLAY);
+  for (cl = 0; cl < area * 5e-05; cl++) tileRunnerV(rnd(W), surfLow + rnd(surfHigh - surfLow + 1), 8 + rnd(6), 15 + rnd(30), T.CLAY);
+  for (cl = 0; cl < area * 2e-05; cl++) tileRunnerV(rnd(W), surfHigh + rnd(rockHigh - surfHigh + 1), 8 + rnd(7), 5 + rnd(45), T.CLAY);
+  // clay never sits exposed as the surface tile
+  for (var cx9 = 5; cx9 < W - 5; cx9++) {
+    var cy9 = 1;
+    while (cy9 < this.worldSurfaceAvg - 1 && self.tiles[self.idx(cx9, cy9)] === T.AIR) cy9++;
+    for (var cz = cy9; cz < cy9 + 5; cz++) if (self.tiles[self.idx(cx9, cz)] === T.CLAY) self.tiles[self.idx(cx9, cz)] = T.DIRT;
   }
 
-  // ---- Terraria-style cave generation ----
-  var nCaveLo = makeNoise2D(rng, 64, 64);
-  var nCaveMid = makeNoise2D(rng, 128, 128);
-  var nCaveHi = makeNoise2D(rng, 256, 256);
-
-  // Pass 1: multi-octave noise carving
-  for (var cy2 = 0; cy2 < H; cy2++) {
-    for (var cx2 = 0; cx2 < W; cx2++) {
-      var surfY = this.surfaceY[cx2];
-      var depth = cy2 - surfY;
-      if (depth < 8) continue;
-      if (cy2 >= hellY) continue;
-      var nvLo = nCaveLo(cx2 * 0.008, cy2 * 0.012);
-      var nvMid = nCaveMid(cx2 * 0.025, cy2 * 0.035);
-      var nvHi = nCaveHi(cx2 * 0.06, cy2 * 0.08);
-      var caveVal = nvLo * 0.45 + nvMid * 0.35 + nvHi * 0.20;
-      var depthFactor = Math.min(1, depth / 180);
-      var threshold = 0.42 - depthFactor * 0.14;
-      var regional = nCaveLo(cx2 * 0.004, cy2 * 0.006);
-      threshold += regional * 0.08;
-      if (caveVal > threshold) {
-        var i3 = this.idx(cx2, cy2);
-        if (this.tiles[i3] !== T.AIR && this.tiles[i3] !== T.WATER && this.tiles[i3] !== T.LAVA && this.tiles[i3] !== T.SHIMMER) {
-          this.tiles[i3] = T.AIR;
-          this.walls[i3] = WALL.STONE;
-        }
+  // --- Small Holes: 0.0015 x area iterations, two runners each ---
+  for (var sh = 0; sh < area * 0.0015; sh++) {
+    var type2 = (Math.floor(rng() * 5) === 0) ? 'liquid' : 'air';
+    var sx3 = rnd(W);
+    var sy3 = surfHigh + rnd(Math.max(2, H - surfHigh));
+    if (sx3 > this.beachL && sx3 < this.beachR || sy3 >= surfHigh) {
+      tileRunnerV(sx3, sy3, 2 + rnd(3), 2 + rnd(18), type2);
+      tileRunnerV(rnd(W), surfHigh + rnd(Math.max(2, H - surfHigh)), 8 + rnd(7), 7 + rnd(23), type2);
+    }
+  }
+  // --- Dirt Layer Caves: long winding tunnels through the dirt ---
+  for (var dc = 0; dc < area * 3e-05; dc++) {
+    tileRunnerV(rnd(W), surfLow + rnd(Math.max(2, rockHigh - surfLow)), 5 + rnd(10), 30 + rnd(170), (Math.floor(rng() * 6) === 0) ? 'liquid' : 'air');
+  }
+  // --- Rock Layer Caves: the big cavern-layer systems ---
+  for (var rc = 0; rc < area * 1.3e-04; rc++) {
+    tileRunnerV(rnd(W), rockHigh + rnd(Math.max(2, H - rockHigh)), 6 + rnd(14), 50 + rnd(250), (Math.floor(rng() * 10) === 0) ? 'liquid' : 'air');
+  }
+  // --- Surface Caves: entrances winding down from the surface ---
+  for (var sc2 = 0; sc2 < W * 0.002; sc2++) {
+    var scx = rnd(W);
+    while ((scx > W * 0.45 && scx < W * 0.55) || scx < this.beachL + 20 || scx > this.beachR - 20) scx = rnd(W);
+    for (var scy = 1; scy < surfHigh; scy++) {
+      if (self.tiles[self.idx(scx, scy)] !== T.AIR) {
+        tileRunnerV(scx, scy, 3 + rnd(3), 5 + rnd(45), 'air', { speedX: (rng() * 21 - 10) * 0.1, speedY: 1 });
+        break;
       }
     }
   }
-
-  // Pass 2: worm tunnels with branches
-  var tunnels = 55;
-  for (var t = 0; t < tunnels; t++) {
-    var tcx = Math.floor(rng() * W);
-    var depthStart = 20 + Math.floor(rng() * Math.max(4, this.hellY - this.surfaceY[tcx] - 60));
-    var tcy = this.surfaceY[tcx] + depthStart;
-    var tdir = rng() * Math.PI * 2;
-    var tlen = 60 + Math.floor(rng() * 180);
-    var trw = 2 + Math.floor(rng() * 3);
-    for (var ts = 0; ts < tlen; ts++) {
-      tdir += (rng() - 0.5) * 0.7;
-      tcx += Math.cos(tdir) * 1.8;
-      tcy += Math.sin(tdir) * 1.3 + 0.03;
-      if (tcx < 2) { tcx = 2; tdir = rng() * Math.PI; }
-      if (tcx >= W - 2) { tcx = W - 3; tdir = Math.PI + rng() * Math.PI; }
-      var fcx = Math.max(0, Math.min(W - 1, Math.floor(tcx)));
-      if (tcy < this.surfaceY[fcx] + 8) { tcy = this.surfaceY[fcx] + 8; tdir = Math.abs(tdir); }
-      if (tcy >= this.hellY - 4) break;
-      for (var tdx = -trw; tdx <= trw; tdx++) {
-        for (var tdy = -trw; tdy <= trw; tdy++) {
-          var ttx = Math.floor(tcx) + tdx, tty = Math.floor(tcy) + tdy;
-          if (ttx < 1 || ttx >= W - 1 || tty < 1 || tty >= H - 1) continue;
-          if (tdx * tdx + tdy * tdy > trw * trw) continue;
-          if (tty < this.surfaceY[ttx] + 10) continue;
-          var tii = this.idx(ttx, tty);
-          if (this.tiles[tii] !== T.AIR && this.tiles[tii] !== T.WATER && this.tiles[tii] !== T.LAVA && this.tiles[tii] !== T.SHIMMER) {
-            this.tiles[tii] = T.AIR;
-            this.walls[tii] = WALL.CAVE;
-          }
-        }
-      }
-      if (rng() < 0.03 && tlen - ts > 20) {
-        var bDir = tdir + (rng() < 0.5 ? 1.2 : -1.2);
-        var bx = tcx, by = tcy;
-        var bLen = 15 + Math.floor(rng() * 40);
-        for (var bs = 0; bs < bLen; bs++) {
-          bDir += (rng() - 0.5) * 0.8;
-          bx += Math.cos(bDir) * 1.5;
-          by += Math.sin(bDir) * 1.2 + 0.03;
-          var bfx = Math.max(0, Math.min(W - 1, Math.floor(bx)));
-          if (bx < 2 || bx >= W - 2 || by < this.surfaceY[bfx] + 8 || by >= this.hellY - 4) break;
-          for (var bdx = -trw; bdx <= trw; bdx++) {
-            for (var bdy = -trw; bdy <= trw; bdy++) {
-              var btx = Math.floor(bx) + bdx, bty = Math.floor(by) + bdy;
-              if (btx < 1 || btx >= W - 1 || bty < 1 || bty >= H - 1) continue;
-              if (bdx * bdx + bdy * bdy > trw * trw) continue;
-              if (bty < this.surfaceY[btx] + 10) continue;
-              var bii = this.idx(btx, bty);
-              if (this.tiles[bii] !== T.AIR && this.tiles[bii] !== T.WATER && this.tiles[bii] !== T.LAVA) {
-                this.tiles[bii] = T.AIR;
-                this.walls[bii] = WALL.CAVE;
-              }
-            }
-          }
-        }
+  for (sc2 = 0; sc2 < W * 0.0007; sc2++) {
+    scx = rnd(W);
+    while ((scx > W * 0.43 && scx < W * 0.57) || scx < this.beachL + 20 || scx > this.beachR - 20) scx = rnd(W);
+    for (scy = 1; scy < surfHigh; scy++) {
+      if (self.tiles[self.idx(scx, scy)] !== T.AIR) {
+        tileRunnerV(scx, scy, 10 + rnd(5), 50 + rnd(80), 'air', { speedX: (rng() * 21 - 10) * 0.1, speedY: 2 });
+        break;
       }
     }
   }
-
-  // Pass 3: large caverns near the Underworld
-  var caverns = Math.floor(W / 280);
-  for (var cv = 0; cv < caverns; cv++) {
-    var ccx = 40 + Math.floor(rng() * (W - 80));
-    var ccy = this.hellY - 60 - Math.floor(rng() * 120);
-    var crx = 12 + Math.floor(rng() * 20);
-    var cry = 8 + Math.floor(rng() * 14);
-    for (var cdy2 = -cry; cdy2 <= cry; cdy2++) {
-      for (var cdx2 = -crx; cdx2 <= crx; cdx2++) {
-        var ctx3 = ccx + cdx2, cty3 = ccy + cdy2;
-        if (ctx3 < 2 || ctx3 >= W - 2 || cty3 < 2 || cty3 >= H - 2) continue;
-        if (cty3 < this.surfaceY[ctx3] + 30) continue;
-        if (cty3 >= this.hellY - 2) continue;
-        var nrm = (cdx2 * cdx2) / (crx * crx) + (cdy2 * cdy2) / (cry * cry);
-        if (nrm > 1) continue;
-        var ii4 = this.idx(ctx3, cty3);
-        if (this.tiles[ii4] !== T.AIR && this.tiles[ii4] !== T.WATER && this.tiles[ii4] !== T.LAVA) {
-          this.tiles[ii4] = T.AIR;
-          this.walls[ii4] = WALL.CAVE;
-        }
+  for (sc2 = 0; sc2 < Math.max(1, Math.floor(W * 0.0003)); sc2++) {
+    scx = rnd(W);
+    while ((scx > W * 0.4 && scx < W * 0.6) || scx < this.beachL + 20 || scx > this.beachR - 20) scx = rnd(W);
+    for (scy = 1; scy < surfHigh; scy++) {
+      if (self.tiles[self.idx(scx, scy)] !== T.AIR) {
+        tileRunnerV(scx, scy, 12 + rnd(13), 150 + rnd(350), 'air', { speedX: (rng() * 21 - 10) * 0.1, speedY: 4 });
+        tileRunnerV(scx, scy, 8 + rnd(9), 60 + rnd(140), 'air', { speedX: (rng() * 21 - 10) * 0.1, speedY: 2 });
+        tileRunnerV(scx, scy, 5 + rnd(8), 40 + rnd(130), 'air', { speedX: (rng() * 21 - 10) * 0.1, speedY: 2 });
+        break;
       }
     }
   }
-
-  // Pass 4: water and lava pools at cave bottoms
-  var poolCount = Math.floor(W / 120);
-  for (var wp = 0; wp < poolCount; wp++) {
-    var wpx = 20 + Math.floor(rng() * (W - 40));
-    var wpy = this.surfaceY[wpx] + 30 + Math.floor(rng() * Math.max(4, this.hellY - this.surfaceY[wpx] - 70));
-    var fy = wpy;
-    while (fy < this.hellY - 4 && fy < H - 1 && !this.isSolid(wpx, fy + 1)) fy++;
-    if (fy >= this.hellY - 4) continue;
-    var poolH = 2 + Math.floor(rng() * 3);
-    var poolW = 4 + Math.floor(rng() * 8);
-    var liquid = (wpy > this.hellY - 200) ? T.LAVA : T.WATER;
-    for (var pwx = wpx - poolW; pwx <= wpx + poolW; pwx++) {
-      for (var pwy = fy - poolH; pwy <= fy; pwy++) {
-        if (pwx < 1 || pwx >= W - 1 || pwy < 1 || pwy >= H - 1) continue;
-        if (this.get(pwx, pwy) === T.AIR) this.tiles[this.idx(pwx, pwy)] = liquid;
+  for (sc2 = 0; sc2 < W * 0.0004; sc2++) {
+    scx = rnd(W);
+    while ((scx > W * 0.4 && scx < W * 0.6) || scx < this.beachL + 20 || scx > this.beachR - 20) scx = rnd(W);
+    for (scy = 1; scy < surfHigh; scy++) {
+      if (self.tiles[self.idx(scx, scy)] !== T.AIR) {
+        tileRunnerV(scx, scy, 7 + rnd(5), 150 + rnd(100), 'air', { speedY: 1, noYChange: true });
+        break;
       }
     }
   }
+  // 5 large cavern systems (Caverer)
+  for (var cv2 = 0; cv2 < 5; cv2++) {
+    caverer(this.beachL + rnd(Math.max(2, this.beachR - this.beachL)), this.rockLayer + rnd(Math.max(2, H - 400 - this.rockLayer)));
+  }
 
-  // ---- Shinies: vanilla-style ore veins via TileRunner blob walkers ----
-  // Copper is everywhere (3 depth bands, densest deep); iron/silver/gold taper off.
-  function oreRunnerBand(tile, count, y0fn, y1fn, canReplace) {
-    for (var i = 0; i < count; i++) {
-      var vx = 20 + Math.floor(rng() * (W - 40));
-      var vy = y0fn(vx) + Math.floor(rng() * Math.max(4, y1fn(vx) - y0fn(vx)));
-      tileRunner(tile, vx, vy, 3 + rng() * 3.5, 2 + Math.floor(rng() * 4), canReplace);
-    }
+  // --- Shinies: exact vanilla ore vein counts/bands/sizes ---
+  function shinyBand(tile, count, y0, y1, str0, strN, stp0, stpN) {
+    for (var i = 0; i < count; i++) tileRunnerV(rnd(W), y0 + rnd(Math.max(2, y1 - y0)), str0 + rnd(strN), stp0 + rnd(stpN), tile);
   }
-  function orePass(tile, m1, m2, m3) {
-    // band 1: dirt layer; band 2: upper cavern; band 3: down to the Underworld
-    oreRunnerBand(tile, Math.floor(area * m1),
-      function (x) { return self.surfaceY[x] + 4; },
-      function (x) { return self.rockY[x]; }, canDirtStone);
-    oreRunnerBand(tile, Math.floor(area * m2),
-      function (x) { return self.rockY[x]; },
-      function (x) { return self.rockY[x] + (self.hellY - 80 - self.rockY[x]) * 0.5; }, canStone);
-    oreRunnerBand(tile, Math.floor(area * m3),
-      function (x) { return self.rockY[x] + (self.hellY - 60 - self.rockY[x]) * 0.35; },
-      function (x) { return self.hellY - 40; }, canStone);
-  }
-  orePass(T.COPPER, 4e-05, 5e-05, 1.2e-04);
-  orePass(T.IRON, 3.2e-05, 4e-05, 9.5e-05);
-  orePass(T.SILVER, 2.2e-05, 2.8e-05, 6.5e-05);
-  orePass(T.TIN, 1.3e-05, 1.8e-05, 4e-05);
-  orePass(T.TUNGSTEN, 1e-05, 1.5e-05, 3.5e-05);
-  orePass(T.GOLD, 8e-06, 1.1e-05, 2.6e-05);
-  orePass(T.PLATINUM, 5e-06, 8e-06, 1.9e-05);
-  orePass(T.LEAD, 8e-06, 1.1e-05, 2.6e-05);
-  // Demonite/Crimtane: veins anchored inside the evil biome's stone
-  var eStone = isCrimson ? T.CRIMSTONE : T.EBONSTONE;
+  shinyBand(T.COPPER, Math.floor(area * 6e-05), surfLow, surfHigh, 3, 3, 2, 4);
+  shinyBand(T.COPPER, Math.floor(area * 8e-05), surfHigh, rockHigh, 3, 4, 3, 4);
+  shinyBand(T.COPPER, Math.floor(area * 2e-04), rockLow, H, 4, 5, 4, 4);
+  shinyBand(T.IRON, Math.floor(area * 3e-05), surfLow, surfHigh, 3, 4, 2, 3);
+  shinyBand(T.IRON, Math.floor(area * 8e-05), surfHigh, rockHigh, 3, 3, 3, 3);
+  shinyBand(T.IRON, Math.floor(area * 2e-04), rockLow, H, 4, 5, 4, 4);
+  shinyBand(T.SILVER, Math.floor(area * 2.6e-05), surfHigh, rockHigh, 3, 3, 3, 3);
+  shinyBand(T.SILVER, Math.floor(area * 1.5e-04), rockLow, H, 4, 5, 4, 4);
+  shinyBand(T.SILVER, Math.floor(area * 1.7e-04), 1, surfLow, 4, 5, 4, 4);
+  shinyBand(T.GOLD, Math.floor(area * 1.2e-04), rockLow, H, 4, 4, 4, 4);
+  shinyBand(T.GOLD, Math.floor(area * 1.2e-04), 1, surfLow - 20, 4, 4, 4, 4);
+  shinyBand(T.TIN, Math.floor(area * 1.2e-05), surfLow, surfHigh, 3, 3, 2, 4);
+  shinyBand(T.TIN, Math.floor(area * 1.6e-05), surfHigh, rockHigh, 3, 4, 3, 4);
+  shinyBand(T.TIN, Math.floor(area * 4e-05), rockLow, H, 4, 5, 4, 4);
+  shinyBand(T.TUNGSTEN, Math.floor(area * 1e-05), surfHigh, rockHigh, 3, 3, 3, 3);
+  shinyBand(T.TUNGSTEN, Math.floor(area * 6e-05), rockLow, H, 4, 5, 4, 4);
+  shinyBand(T.LEAD, Math.floor(area * 8e-06), surfLow, surfHigh, 3, 3, 2, 3);
+  shinyBand(T.LEAD, Math.floor(area * 2e-05), rockLow, H, 4, 5, 4, 4);
+  shinyBand(T.PLATINUM, Math.floor(area * 4e-06), surfHigh, rockHigh, 3, 3, 3, 3);
+  shinyBand(T.PLATINUM, Math.floor(area * 2e-05), rockLow, H, 4, 5, 4, 4);
+  // Demonite/Crimtane: scattered through the cavern layer (vanilla Shinies)
   var eTile = isCrimson ? T.CRIMTANE : T.DEMONITE;
-  var eCan = function (t) { return t === eStone || t === T.STONE; };
-  for (var ev = 0; ev < area * 1.2e-05; ev++) {
-    var evx = 20 + Math.floor(rng() * (W - 40));
-    if (biomeAtX(evx) !== BIOME.CORRUPT && biomeAtX(evx) !== BIOME.CRIMSON) continue;
-    var evy = self.surfaceY[evx] + 40 + Math.floor(rng() * Math.max(4, self.hellY - self.surfaceY[evx] - 80));
-    tileRunner(eTile, evx, evy, 2 + rng() * 2.5, 2 + Math.floor(rng() * 3), eCan);
-  }
-  // Hardmode worlds: the three altar-tier pairs, one pick per pair like vanilla
-  if (hardmode) {
-    var hm1 = rng() < 0.5 ? T.COBALT : T.PALLADIUM;
-    var hm2 = rng() < 0.5 ? T.MYTHRIL : T.ORICHALCUM;
-    var hm3 = rng() < 0.5 ? T.ADAMANTITE : T.TITANIUM;
-    oreRunnerBand(hm1, Math.floor(area * 5e-05),
-      function (x) { return self.surfaceY[x] + 10; },
-      function (x) { return self.rockY[x] + 120; }, canStone);
-    oreRunnerBand(hm2, Math.floor(area * 5e-05),
-      function (x) { return self.rockY[x]; },
-      function (x) { return self.rockY[x] + (self.hellY - 100 - self.rockY[x]) * 0.6; }, canStone);
-    oreRunnerBand(hm3, Math.floor(area * 4e-05),
-      function (x) { return self.rockY[x] + (self.hellY - 80 - self.rockY[x]) * 0.4; },
-      function (x) { return self.hellY - 50; }, canStone);
-  }
+  shinyBand(eTile, Math.floor(area * 2.25e-05), this.rockLayer, H, 3, 3, 4, 4);
 
-  // Webs: small cobweb clusters clinging to cave walls underground
-  for (var wb = 0; wb < area * 4e-05; wb++) {
-    var wbx = 20 + Math.floor(rng() * (W - 40));
-    var wby = self.surfaceY[wbx] + 15 + Math.floor(rng() * Math.max(4, self.hellY - self.surfaceY[wbx] - 30));
-    if (self.get(wbx, wby) === T.AIR) placeBlob(wbx, wby, 1 + rng() * 1.5, T.COBWEB, function (t) { return t === T.AIR; });
-  }
-
-  // Lakes: surface water bodies in the forest (vanilla `Lakes` pass)
-  var lakeCount = 10 + Math.floor(rng() * 5);
-  for (var lk = 0; lk < lakeCount; lk++) {
-    var lkx = 60 + Math.floor(rng() * (W - 120));
-    var lkb = biomeAtX(lkx);
-    if (lkb !== BIOME.FOREST) continue;
-    var lkw = 8 + Math.floor(rng() * 14);
-    var lkd = 3 + Math.floor(rng() * 4);
-    for (var ldx = -lkw; ldx <= lkw; ldx++) {
-      var lx2 = lkx + ldx;
-      if (lx2 < 2 || lx2 >= W - 2) continue;
-      var depthAt = Math.round(lkd * Math.sqrt(Math.max(0, 1 - (ldx * ldx) / (lkw * lkw))));
-      for (var ldy = 0; ldy <= depthAt; ldy++) {
-        var ly2 = this.surfaceY[lx2] + ldy;
-        if (ly2 >= H - 2) break;
-        var li3 = this.idx(lx2, ly2);
-        if (ldy === depthAt || this.tiles[li3] === T.STONE) { if (this.tiles[li3] !== T.STONE) this.tiles[li3] = T.DIRT; }
-        else this.tiles[li3] = T.WATER;
-      }
+  // --- Webs: clusters anchored to cave walls ---
+  for (var wb = 0; wb < area * 6e-04; wb++) {
+    var wbx = 20 + rnd(W - 40);
+    var wby = surfHigh + rnd(Math.max(2, H - 20 - surfHigh));
+    if (self.tiles[self.idx(wbx, wby)] !== T.AIR) continue;
+    while (self.tiles[self.idx(wbx, wby)] === T.AIR && wby > surfLow) wby++;
+    wby++;
+    var wdir = Math.floor(rng() * 2) === 0 ? 1 : -1;
+    while (self.tiles[self.idx(wbx, wby)] === T.AIR && wbx > 10 && wbx < W - 10) wbx += wdir;
+    var wxx = wbx - wdir;
+    if (wby > this.worldSurfaceAvg || self.walls[self.idx(wxx, wby)] > 0) {
+      tileRunnerV(wxx, wby, 4 + rng() * 7, 2 + rnd(2), T.COBWEB, { speedX: wdir, speedY: -1, onlyAir: true });
     }
   }
 
-  // Chlorophyte: grows in deep jungle mud (hardmode only)
-  if (hardmode) {
-    for (var coy = 0; coy < H; coy++) {
-      for (var cox = 0; cox < W; cox++) {
-        var i5 = this.idx(cox, coy);
-        if (this.tiles[i5] !== T.MUD) continue;
-        var cdepth = coy - this.surfaceY[cox];
-        if (cdepth > 90 && rng() < 0.025) this.tiles[i5] = T.CHLOROPHYTE;
-      }
+  // --- Underworld (vanilla): wandering ash ceiling, open cavern, lava sea,
+  // ash pillars; keep our ruined houses/shadow chests after this block ---
+  var ashTop = H - (150 + rnd(40));
+  for (x = 0; x < W; x++) {
+    ashTop += rnd(7) - 3;
+    if (ashTop < H - 190) ashTop = H - 190;
+    if (ashTop > H - 160) ashTop = H - 160;
+    for (var uy = Math.max(1, ashTop - 20 - rnd(3)); uy < H; uy++) {
+      var ui = self.idx(x, uy);
+      if (uy >= ashTop) { self.tiles[ui] = T.AIR; self.walls[ui] = WALL.NONE; }
+      else { self.tiles[ui] = T.ASH; self.walls[ui] = WALL.STONE; }
     }
   }
-
-  // Cobwebs in caves
-  for (var wx = 0; wx < W; wx++) {
-    for (var wy = 0; wy < H; wy++) {
-      var i5 = this.idx(wx, wy);
-      if (this.tiles[i5] === T.AIR && this.walls[i5] === WALL.CAVE && rng() < 0.06) {
-        this.tiles[i5] = T.COBWEB;
-      }
+  var lavaTop = H - (40 + rnd(30));
+  for (x = 10; x < W - 10; x++) {
+    lavaTop += rnd(21) - 10;
+    if (lavaTop > H - 60) lavaTop = H - 60;
+    if (lavaTop < H - 100) lavaTop = H - 120;
+    for (uy = lavaTop; uy < H - 10; uy++) {
+      if (self.tiles[self.idx(x, uy)] === T.AIR) self.tiles[self.idx(x, uy)] = T.LAVA;
     }
   }
-
-  // --- Underworld: lava, obsidian, hellbrick ruins, hellstone ---
-  var hellY2 = self.hellY;
-  var lavaPools = 16;
-  for (var lp = 0; lp < lavaPools; lp++) {
-    var lpx = 1 + Math.floor(rng() * (W - 2));
-    var lpy = hellY2 + 2 + Math.floor(rng() * (H - hellY2 - 4));
-    var lr = 2 + Math.floor(rng() * 3);
-    for (var dly = -lr - 1; dly <= lr + 1; dly++) {
-      for (var dlx = -lr - 1; dlx <= lr + 1; dlx++) {
-        var lxx = lpx + dlx, lyy = lpy + dly;
-        if (!self.inBounds(lxx, lyy)) continue;
-        var dd = dlx * dlx + dly * dly;
-        if (dd > (lr + 1) * (lr + 1)) continue;
-        var li = self.idx(lxx, lyy);
-        if (dd <= (lr - 1) * (lr - 1)) { self.tiles[li] = T.LAVA; }
-        else if (dd <= (lr + 1) * (lr + 1)) { self.tiles[li] = T.OBSIDIAN; }
-        self.walls[li] = WALL.NONE;
-      }
+  // ash pillars sinking through the lava sea (vanilla 1/50 per column)
+  for (x = 0; x < W; x++) {
+    if (Math.floor(rng() * 50) === 0) {
+      var phx = rnd(W), phy = (H - 65) - rnd(60) + 20 + rnd(30);
+      tileRunnerV(phx, phy, 15 + rnd(5), 1000, 'ash', { speedY: 1 + rnd(2), noYChange: true });
     }
   }
-  // bottom lava sea
-  for (var bxs = 1; bxs < W - 1; bxs++) {
-    for (var bys = H - 4; bys < H - 1; bys++) {
-      var bbi = self.idx(bxs, bys);
-      self.tiles[bbi] = T.LAVA;
-      self.walls[bbi] = WALL.NONE;
-    }
-  }
-  // hellstone + obsidian veins in ash
-  for (var hxx = 1; hxx < W - 1; hxx++) {
-    for (var hyy = hellY2 + 1; hyy < H - 5; hyy++) {
-      var hii = self.idx(hxx, hyy);
-      if (self.tiles[hii] !== T.ASH) continue;
-      var hr = rng();
-      if (hr < 0.012) self.tiles[hii] = T.HELLSTONE;
-      else if (hr < 0.02) self.tiles[hii] = T.OBSIDIAN;
-    }
+  // hellstone veins threading the ash and lower stone
+  for (var hs = 0; hs < area * 2e-05; hs++) {
+    var hsx = rnd(W), hsy = H - 190 + rnd(160);
+    tileRunnerV(hsx, hsy, 3 + rnd(4), 3 + rnd(4), T.HELLSTONE);
   }
   // furnished Underworld houses with Hellforges and locked Shadow Chests
+  var hellY2 = self.hellY;
     // heart crystals: ~30 per world on cave floors (vanilla Life Crystal generation)
   var hcSpots = [];
   for (var hcx = 20; hcx < self.W - 20; hcx += 3) {
@@ -1023,78 +1055,137 @@ self.underworldHouses = [];
     self.aetherPos = { x: axx2, y: ayy2 };
   }
 
-  // --- Dungeon: tall brick tower in the dungeon band (snow side, near the ocean) ---
+  // --- Dungeon (vanilla geometry): winding brick halls from around
+  // (worldSurface+rockLayer)/2 drifting down through the cavern, rooms along
+  // the way, then an entrance shaft climbing back to the surface ---
   {
     var dgx = this.jungleLeft ? Math.floor(W * (0.83 + rng() * 0.04)) : Math.floor(W * (0.13 + rng() * 0.04));
-    var dgw = 20 + Math.floor(rng() * 6);
-    var dgTop = Math.max(4, this.surfaceY[dgx] - (3 + Math.floor(rng() * 4)));
-    var dgH = 100 + Math.floor(rng() * 40);
-    var dgY0 = dgTop;
-    this.dungeonRect = { x0: dgx, y0: dgY0, x1: dgx + dgw, y1: Math.min(H - 2, dgY0 + dgH) };
-    var doorX = dgx + Math.floor(dgw / 2);
-    var ritualX = clamp(dgx + dgw + 3, 2, W - 3);
-    this.dungeonEntrance = { x: ritualX * TILE + 8, y: this.surfaceY[ritualX] * TILE - 16 };
-    // outer walls + hollow interior
-    for (var dyy = dgY0; dyy <= Math.min(H - 2, dgY0 + dgH); dyy++) {
-      for (var dxx = dgx; dxx <= dgx + dgw; dxx++) {
-        if (!self.inBounds(dxx, dyy)) continue;
-        var isWall = dxx <= dgx + 1 || dxx >= dgx + dgw - 1 || dyy <= dgY0 + 1 || dyy >= Math.min(H - 2, dgY0 + dgH);
-        var di = self.idx(dxx, dyy);
-        // carve a vertical entrance shaft at the top
-        var inShaft = dxx >= doorX - 1 && dxx <= doorX + 1 && dyy >= dgY0 && dyy <= dgY0 + 3;
-        if (inShaft) {
-          self.tiles[di] = T.AIR;
-          self.walls[di] = WALL.CAVE;
-          continue;
+    var dgY = Math.floor((this.worldSurfaceAvg + this.rockLayer) / 2) + rnd(400) - 200;
+    dgY = Math.max(4, Math.min(H - 120, dgY));
+    // sink to solid ground (vanilla checks 10 tiles below)
+    var dgOK = false;
+    for (var dg2 = 0; dg2 < 10; dg2++) {
+      if (self.isSolid(dgx, dgY + dg2)) { dgOK = true; break; }
+    }
+    while (!dgOK && dgY < this.rockLayer + 200) {
+      dgY++;
+      for (dg2 = 0; dg2 < 10; dg2++) if (self.isSolid(dgx, dgY + dg2)) { dgOK = true; break; }
+    }
+    var brick = T.DUNGEONBRICK;
+    var dRooms = [];
+    var dMinX = dgx, dMaxX = dgx, dMinY = dgY, dMaxY = dgY;
+    function dCarveHall(x0, y0, x1, y1) {
+      // L-corridor: horizontal then vertical, brick shell + air core
+      var steps = Math.abs(x1 - x0), sdx = x1 > x0 ? 1 : -1;
+      var sx = x0, sy2 = y0;
+      for (var s3 = 0; s3 <= steps; s3++) {
+        sx = x0 + sdx * s3;
+        for (var wy3 = -3; wy3 <= 3; wy3++) {
+          for (var wx3 = -1; wx3 <= 1; wx3++) {
+            if (!self.inBounds(sx + wx3, sy2 + wy3)) continue;
+            var edge = Math.abs(wy3) === 3 || wx3 === 0;
+            self.tiles[self.idx(sx + wx3, sy2 + wy3)] = edge ? brick : T.AIR;
+            self.walls[self.idx(sx + wx3, sy2 + wy3)] = WALL.CAVE;
+          }
         }
-        self.tiles[di] = isWall ? T.DUNGEONBRICK : T.AIR;
-        self.walls[di] = isWall ? WALL.STONE : WALL.CAVE;
+      }
+      var vsteps = Math.abs(y1 - y0), sdy = y1 > y0 ? 1 : -1;
+      for (s3 = 0; s3 <= vsteps; s3++) {
+        sy2 = y0 + sdy * s3;
+        for (wy3 = -1; wy3 <= 1; wy3++) {
+          for (wx3 = -3; wx3 <= 3; wx3++) {
+            if (!self.inBounds(sx + wx3, sy2 + wy3)) continue;
+            var edge2 = wx3 === -3 || wx3 === 3 || wy3 === 0;
+            self.tiles[self.idx(sx + wx3, sy2 + wy3)] = edge2 ? brick : T.AIR;
+            self.walls[self.idx(sx + wx3, sy2 + wy3)] = WALL.CAVE;
+          }
+        }
+      }
+      return [sx, sy2];
+    }
+    function dRoom(x0, y0) {
+      var rw = 13 + rnd(6), rh = 8 + rnd(4);
+      for (var ry3 = 0; ry3 <= rh; ry3++) {
+        for (var rx3 = 0; rx3 <= rw; rx3++) {
+          var rxx3 = x0 + rx3, ryy3 = y0 + ry3;
+          if (!self.inBounds(rxx3, ryy3)) continue;
+          var edge3 = ry3 === 0 || ry3 === rh || rx3 === 0 || rx3 === rw;
+          self.tiles[self.idx(rxx3, ryy3)] = edge3 ? brick : T.AIR;
+          self.walls[self.idx(rxx3, ryy3)] = WALL.CAVE;
+        }
+      }
+      // wooden platform floor halfway up
+      for (rx3 = 2; rx3 <= rw - 2; rx3++) {
+        var pxx = x0 + rx3, pyy = y0 + Math.floor(rh / 2);
+        self.tiles[self.idx(pxx, pyy)] = T.PLATFORM;
+        self.walls[self.idx(pxx, pyy)] = WALL.CAVE;
+      }
+      // torch + chest with dungeon loot
+      self.tiles[self.idx(x0 + 2, y0 + rh - 1)] = T.TORCH;
+      if (dRooms.length < 7 && self.get(x0 + rw - 3, y0 + rh - 1) === T.AIR) {
+        self.set(x0 + rw - 3, y0 + rh - 1, T.CHEST);
+        var dinv = [{ id: I.GOLDENKEY, count: 1 }];
+        if (rng() < 0.4) dinv.push({ id: I.MURAMASA, count: 1 });
+        if (rng() < 0.4) dinv.push({ id: I.COBALTSHIELD, count: 1 });
+        if (rng() < 0.4) dinv.push({ id: I.AQUASCEPTER, count: 1 });
+        if (rng() < 0.4) dinv.push({ id: I.WATERBOLT, count: 1 });
+        if (rng() < 0.4) dinv.push({ id: I.GEM_RUBY, count: 1 });
+        self.chests.push({ x: x0 + rw - 3, y: y0 + rh - 1, inv: dinv });
+      }
+      dRooms.push([x0, y0]);
+      if (y0 < dMinY) { dMinY = y0; }
+      return [x0, y0];
+    }
+    var cur = [dgx, dgY];
+    dRoom(cur[0], cur[1]);
+    var halls = Math.floor(W / 60) + rnd(Math.floor(W / 180) + 1);
+    var untilRoom = 5;
+    for (var h2 = 0; h2 < halls; h2++) {
+      var hlen = 35 + rnd(45);
+      var hdir = rng() < 0.5 ? -1 : 1;
+      var nx = Math.max(6, Math.min(W - 6, cur[0] + hdir * hlen));
+      var drop = 10 + rnd(16);
+      var ny = Math.min(this.hellY - 40, cur[1] + drop);
+      cur = dCarveHall(cur[0], cur[1], nx, ny);
+      dMinX = Math.min(dMinX, cur[0]); dMaxX = Math.max(dMaxX, cur[0]);
+      dMaxY = Math.max(dMaxY, cur[1]);
+      untilRoom--;
+      if (untilRoom === 0) {
+        untilRoom = 5;
+        if (rng() < 0.34) {
+          // side halls branch out before the room (vanilla 1/3 chance)
+          var saveX = cur[0], saveY = cur[1];
+          cur = dCarveHall(cur[0], cur[1], Math.max(6, Math.min(W - 6, cur[0] + (rng() < 0.5 ? -1 : 1) * (30 + rnd(40)))), cur[1] + 8 + rnd(12));
+          dRoom(cur[0], cur[1]);
+          cur = [saveX, saveY];
+        }
+        cur = dRoom(cur[0], cur[1]);
       }
     }
-    // blocked gate in the shaft (opens after Skeletron)
-    self.tiles[self.idx(doorX, dgY0)] = T.DUNGEONDOOR;
-    self.tiles[self.idx(doorX + 1, dgY0)] = T.DUNGEONDOOR;
-    self.tiles[self.idx(doorX, dgY0 + 1)] = T.DUNGEONDOOR;
-    self.tiles[self.idx(doorX + 1, dgY0 + 1)] = T.DUNGEONDOOR;
-    self.dungeonDoors = [
-      { x: doorX, y: dgY0 }, { x: doorX + 1, y: dgY0 },
-      { x: doorX, y: dgY0 + 1 }, { x: doorX + 1, y: dgY0 + 1 }
+    // entrance shaft: climb from the topmost room to the surface
+    var topRoom = dRooms[0];
+    for (var tr = 0; tr < dRooms.length; tr++) {
+      if (dRooms[tr][1] < topRoom[1]) topRoom = dRooms[tr];
+    }
+    var entX = topRoom[0] + 6;
+    var shaftTop = this.surfaceY[entX] - 2;
+    for (var sy5 = shaftTop; sy5 <= topRoom[1]; sy5++) {
+      for (var sx5 = -1; sx5 <= 1; sx5++) {
+        var sxx5 = entX + sx5;
+        if (!self.inBounds(sxx5, sy5)) continue;
+        var shaftEdge = sx5 !== 0 && sy5 > shaftTop + 2;
+        self.tiles[self.idx(sxx5, sy5)] = shaftEdge ? brick : T.AIR;
+        self.walls[self.idx(sxx5, sy5)] = WALL.CAVE;
+      }
+    }
+    // gate blocks the shaft at the surface (opens after Skeletron)
+    self.tiles[self.idx(entX, shaftTop + 1)] = T.DUNGEONDOOR;
+    self.tiles[self.idx(entX, shaftTop + 2)] = T.DUNGEONDOOR;
+    this.dungeonDoors = [
+      { x: entX, y: shaftTop + 1 }, { x: entX, y: shaftTop + 2 }
     ];
-    // a couple of interior floors (platforms)
-    for (var fl = 0; fl < 4; fl++) {
-      var fy = dgY0 + 16 + fl * 20;
-      if (fy >= dgY0 + dgH - 6) break;
-      for (var fxx = dgx + 2; fxx <= dgx + dgw - 2; fxx++) {
-        self.tiles[self.idx(fxx, fy)] = T.PLATFORM;
-        self.walls[self.idx(fxx, fy)] = WALL.CAVE;
-      }
-    }
-    // interior chests with dungeon loot
-    var chestYs = [dgY0 + 10, dgY0 + 28, dgY0 + 46];
-    for (var ci = 0; ci < chestYs.length; ci++) {
-      var cxx = dgx + 2 + Math.floor(rng() * (dgw - 4));
-      var cyy = chestYs[ci];
-      if (!self.inBounds(cxx, cyy)) continue;
-      if (self.get(cxx, cyy) === T.AIR) {
-        self.set(cxx, cyy, T.CHEST);
-        var inv = [{ id: I.GOLDENKEY, count: 1 }];
-        if (ci === 0) inv.push({ id: I.SHADOWKEY, count: 1 });
-        if (rng() < 0.5) inv.push({ id: I.MURAMASA, count: 1 });
-        if (rng() < 0.5) inv.push({ id: I.COBALTSHIELD, count: 1 });
-        if (rng() < 0.5) inv.push({ id: I.AQUASCEPTER, count: 1 });
-        if (rng() < 0.4) inv.push({ id: I.WATERBOLT, count: 1 });
-        if (rng() < 0.4) inv.push({ id: I.GEM_DIAMOND, count: 1 });
-        if (rng() < 0.4) inv.push({ id: I.GEM_RUBY, count: 1 });
-        self.chests.push({ x: cxx, y: cyy, inv: inv });
-      }
-    }
-    // torches along the walls
-    for (var dtx = 0; dtx < 6; dtx++) {
-      var txx = dgx + 3 + dtx * 3;
-      var tyy = dgY0 + 12 + dtx * 10;
-      if (tyy >= dgY0 + dgH - 4) break;
-      if (self.get(txx, tyy) === T.AIR) self.set(txx, tyy, T.TORCH);
-    }
+    this.dungeonEntrance = { x: entX * TILE + 8, y: this.surfaceY[entX] * TILE - 16 };
+    this.dungeonRect = { x0: dMinX - 4, y0: dMinY - 4, x1: dMaxX + 4, y1: dMaxY + 4 };
   }
 
   // --- Desert pyramids: 1-2 sandstone pyramids in the desert ---
@@ -1299,14 +1390,17 @@ self.underworldHouses = [];
     });
   }
 
-  // Natural evil chasms with two Orb/Heart chambers each.
+  // Natural evil chasms with two Orb/Heart chambers each, spread across the
+  // evil biome band (mirrored to its actual side of the world).
   this.evilChasms = [];
   this.evilObjects = [];
   var evilStone = isCrimson ? T.CRIMSTONE : T.EBONSTONE;
   var evilObject = isCrimson ? T.CRIMSONHEART : T.SHADOWORB;
-  var chasmFractions = [0.13, 0.19, 0.245, 0.87, 0.91];
-  for (var ec = 0; ec < chasmFractions.length; ec++) {
-    var ecx = Math.floor(W * chasmFractions[ec] + (rng() - 0.5) * 18);
+  var eF0 = 0.545, eF1 = 0.600;
+  var chasmFs = [0.15, 0.42, 0.68, 0.9].map(function (t) { return eF0 + t * (eF1 - eF0); });
+  if (!this.jungleLeft) chasmFs = chasmFs.map(function (f) { return 1 - f; });
+  for (var ec = 0; ec < chasmFs.length; ec++) {
+    var ecx = Math.floor(W * chasmFs[ec] + (rng() - 0.5) * 18);
     var ecy = this.surfaceY[ecx] - 2;
     var ecDepth = 62 + Math.floor(rng() * 24);
     var walkX = ecx;
@@ -1416,8 +1510,8 @@ self.underworldHouses = [];
 
   // (heart crystals: 30 per world generated by the cave-floor Life Crystal pass)
 
-  // Find spawn point: flat clearing in forest (center forest band)
-  var sp = Math.floor(W * 0.60);
+  // Find spawn point: vanilla spawns at the exact world center (in the forest)
+  var sp = Math.floor(W * 0.5);
   var sy2 = this.surfaceY[sp];
   // flatten a clearing
   for (var cx3 = sp - 25; cx3 <= sp + 25; cx3++) {
