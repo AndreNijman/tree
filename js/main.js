@@ -4942,8 +4942,8 @@ function updateHotbar() {
 
 // ---------- Panel content ----------
 function buildPanelHTML() {
-  $('panel-inventory').innerHTML = '<div id="inv-armor"></div><div class="inventory-hint">Drag items to move or swap them. Click an item, then click an equipment, Dye, or Ammo slot to equip it.</div><div id="inv-grid"></div><div id="inv-desc"></div>';
-  $('panel-crafting').innerHTML = '<div id="craft-tabs"></div><div id="craft-list"></div>';
+  $('panel-inventory').innerHTML = '<div id="inv-craft"><div class="inv-col-title">Crafting</div><div id="inv-craft-list" class="craft-list-target"></div></div><div id="inv-main"><div id="inv-grid"></div><div id="inv-desc"></div></div><div id="inv-equip"><div class="inv-col-title">Armor</div><div id="inv-armor"></div><div class="inv-col-title">Accessories</div><div id="inv-accessories"></div><div class="inv-col-title">Dyes</div><div id="inv-dyes"></div></div>';
+  $('panel-crafting').innerHTML = '<div id="craft-tabs"></div><div id="craft-list" class="craft-list-target"></div>';
   $('panel-guide').innerHTML = '<div id="guide-content"></div>';
 }
 
@@ -4989,6 +4989,7 @@ function renderGuide() {
 }
 
 function renderInventory() {
+  renderCrafting();
   var inv = game.player.inventory;
   var grid = $('inv-grid');
   var html = '';
@@ -5012,24 +5013,28 @@ function renderInventory() {
     var id = inv.armor[key];
     armorHTML += '<div class="armor-box"><div>' + armorSlots[key] + '</div><div class="armor-slot" data-slot="' + key + '">' + (id ? itemIconHTML(ITEMS[id]) : '') + '</div></div>';
   }
-  armorHTML += '<div class="armor-box"><div>Accessory</div><div class="acc-grid">';
+  armor.innerHTML = armorHTML;
+  var acc = $('inv-accessories');
+  var accHTML = '<div class="acc-grid">';
   for (var a = 0; a < inv.accessories.length; a++) {
     var aid = inv.accessories[a];
-    armorHTML += '<div class="acc-slot" data-acc="' + a + '">' + (aid ? itemIconHTML(ITEMS[aid]) : '') + '</div>';
+    accHTML += '<div class="acc-slot" data-acc="' + a + '">' + (aid ? itemIconHTML(ITEMS[aid]) : '') + '</div>';
   }
-  armorHTML += '</div></div>';
+  accHTML += '</div>';
   var ammoId = inv.ammo;
-  armorHTML += '<div class="armor-box"><div>Ammo</div><div class="ammo-slot">' +
+  accHTML += '<div class="armor-box"><div>Ammo</div><div class="ammo-slot">' +
     (ammoId ? itemIconHTML(ITEMS[ammoId]) : '') + '</div><div class="ammo-name">' +
     (ammoId ? ITEMS[ammoId].name + ' (' + inv.countOf(ammoId) + ')' : 'Automatic') + '</div></div>';
-  armorHTML += '<div class="armor-box"><div>Defense</div><div class="def">' + inv.defense() + '</div></div>';
-  armorHTML += '<div class="armor-box"><div>Dye</div><div class="dye-grid">';
+  accHTML += '<div class="armor-box"><div>Defense</div><div class="def">' + inv.defense() + '</div></div>';
+  acc.innerHTML = accHTML;
+  var dyes = $('inv-dyes');
+  var dyeHTML = '<div class="dye-grid">';
   for (var d = 0; d < inv.dyes.length; d++) {
     var did = inv.dyes[d];
-    armorHTML += '<div class="dye-slot" data-dye="' + d + '" style="background:' + (did ? ITEMS[did].color : 'rgba(0,0,0,0.3)') + '">' + (did ? '' : '') + '</div>';
+    dyeHTML += '<div class="dye-slot" data-dye="' + d + '" style="background:' + (did ? ITEMS[did].color : 'rgba(0,0,0,0.3)') + '">' + (did ? '' : '') + '</div>';
   }
-  armorHTML += '</div></div>';
-  armor.innerHTML = armorHTML;
+  dyeHTML += '</div>';
+  dyes.innerHTML = dyeHTML;
 
   var desc = $('inv-desc');
   var sel2 = inv.selectedItem();
@@ -5230,6 +5235,8 @@ function renderCrafting() {
     html += '</div>';
   }
   $('craft-list').innerHTML = html;
+  var invCraft = $('inv-craft-list');
+  if (invCraft) invCraft.innerHTML = html;
 }
 
 function equipArmor(slotName) {
@@ -5321,12 +5328,64 @@ function metalDetectorText() {
 }
 
 // ---------- HUD ----------
+// vanilla hearts: 20 HP each, 10 per row; stars: 20 mana each, 10 per row
+function buildLifemana() {
+  var hearts = Math.ceil(game.player.maxHp / 20);
+  var stars = Math.ceil(game.player.maxMana / 20);
+  if (el.hearts.children.length !== hearts) {
+    el.hearts.innerHTML = '';
+    for (var h = 0; h < hearts; h++) {
+      var d = document.createElement('div');
+      d.className = 'heart';
+      d.innerHTML = '<span class="heart-inner">♥</span>';
+      el.hearts.appendChild(d);
+    }
+  }
+  if (el.stars.children.length !== stars) {
+    el.stars.innerHTML = '';
+    for (var s = 0; s < stars; s++) {
+      var d2 = document.createElement('div');
+      d2.className = 'star';
+      d2.innerHTML = '<span class="star-inner">★</span>';
+      el.stars.appendChild(d2);
+    }
+  }
+}
 function updateHud() {
   var p = game.player;
-  el.hpFill.style.width = Math.max(0, p.hp / p.maxHp * 100) + '%';
-  el.hpText.textContent = Math.max(0, Math.ceil(p.hp)) + ' / ' + p.maxHp;
-  el.manaFill.style.width = Math.max(0, p.mana / p.maxMana * 100) + '%';
-  el.manaText.textContent = Math.max(0, Math.ceil(p.mana)) + ' / ' + p.maxMana;
+  buildLifemana();
+  var hearts = el.hearts.children, hp = Math.max(0, p.hp);
+  for (var h = 0; h < hearts.length; h++) {
+    var fill = Math.max(0, Math.min(1, (hp - h * 20) / 20));
+    hearts[h].firstChild.style.opacity = fill > 0 ? 1 : 0.18;
+    hearts[h].firstChild.style.clipPath = fill >= 1 ? 'none' : 'inset(0 ' + ((1 - fill) * 100) + '% 0 0)';
+  }
+  var stars = el.stars.children, mana = Math.max(0, p.mana);
+  for (var s = 0; s < stars.length; s++) {
+    var mfill = Math.max(0, Math.min(1, (mana - s * 20) / 20));
+    stars[s].firstChild.style.opacity = mfill > 0 ? 1 : 0.18;
+    stars[s].firstChild.style.clipPath = mfill >= 1 ? 'none' : 'inset(0 ' + ((1 - mfill) * 100) + '% 0 0)';
+  }
+  // buff icons (vanilla: column under the stars)
+  var buffIds = [];
+  for (var bid in p.buffs) buffIds.push(bid);
+  if (el._buffKey !== buffIds.join(',')) {
+    el._buffKey = buffIds.join(',');
+    var html = '';
+    for (var bi = 0; bi < buffIds.length; bi++) {
+      var it = ITEMS[buffIds[bi]];
+      if (!it) continue;
+      var secs = Math.ceil(p.buffs[buffIds[bi]]);
+      html += '<div class="buff" title="' + (it.name || '') + '"><span class="buff-icon">' + itemIconHTML(it) + '</span><span class="buff-time">' + (secs >= 60 ? Math.floor(secs / 60) + 'm' : secs + 's') + '</span></div>';
+    }
+    el.buffs.innerHTML = html;
+  } else {
+    var times = el.buffs.querySelectorAll('.buff-time');
+    for (var t2 = 0; t2 < times.length && t2 < buffIds.length; t2++) {
+      var secs2 = Math.ceil(p.buffs[buffIds[t2]]);
+      times[t2].textContent = secs2 >= 60 ? Math.floor(secs2 / 60) + 'm' : secs2 + 's';
+    }
+  }
   el.clock.textContent = clockString(game.timeOfDay);
   el.depth.textContent = 'Depth: ' + depthString();
   el.biome.textContent = biomeName();
@@ -5599,7 +5658,6 @@ function render() {
   if (!game || !game.started) return;
   renderGame(game, ctx2d);
   if (game.mapOpen) drawFullMap(game, ctx2d);
-  else if (!game.panelOpen) drawMinimap(game, ctx2d);
 }
 
 // ---------- Init ----------
@@ -5614,14 +5672,10 @@ function initDOM() {
 
   $('loading').classList.add('hidden');
 
-  el.hpFill = document.createElement('div');
-  el.hpFill.className = 'fill';
-  $('hpbar').insertBefore(el.hpFill, $('hptext'));
-  el.manaFill = document.createElement('div');
-  el.manaFill.className = 'fill';
-  $('manabar').insertBefore(el.manaFill, $('manatext'));
-  el.hpText = $('hptext');
-  el.manaText = $('manatext');
+  // vanilla-style hearts (20 HP each, 10 per row) and stars (20 mana each)
+  el.hearts = $('hearts');
+  el.stars = $('stars');
+  el.buffs = $('buffs');
   el.clock = $('clock');
   el.depth = $('depth');
   el.biome = $('biome');
@@ -5797,6 +5851,19 @@ function initDOM() {
       if (r.result === I.MECH_WORM) Achievements.unlock('mechworm', game);
       if (r.result === I.MECH_SKULL) Achievements.unlock('mechskull', game);
       renderCrafting();
+      renderInventory();
+    }
+  });
+  $('inv-craft-list').addEventListener('click', function(e) {
+    var row = e.target.closest('.craft-row');
+    if (!row) return;
+    var r = RECIPES[parseInt(row.getAttribute('data-idx'), 10)];
+    if (craftRecipe(game, r)) {
+      game.message('Crafted ' + ITEMS[r.result].name);
+      var it = ITEMS[r.result];
+      if (it.type === 'consumable') Achievements.unlock('alchemist', game);
+      renderCrafting();
+      renderInventory();
     }
   });
 

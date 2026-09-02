@@ -1,0 +1,15 @@
+import { chromium } from 'playwright';
+const URL = 'file:///' + process.cwd().replace(/\\/g, '/') + '/index.html';
+const browser = await chromium.launch({ args: ['--no-sandbox', '--allow-file-access-from-files'] });
+const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+page.on('pageerror', e => console.log('PAGEERR', e.message));
+await page.goto(URL, { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => typeof buildGame === 'function');
+await page.evaluate(() => { buildGame('ui', 'corrupt'); document.getElementById('mainmenu').style.display = 'none'; game.timeOfDay = 0.5; });
+await page.waitForTimeout(500);
+await page.screenshot({ path: '/tmp/opencode/ui-closed.png' });
+await page.keyboard.press('e');
+await page.waitForTimeout(400);
+await page.screenshot({ path: '/tmp/opencode/ui-open.png' });
+console.log('done');
+await browser.close();
