@@ -933,7 +933,7 @@ function drawGraveyardMist(game, ctx, W, H) {
 //    black alpha = 1 - light (Terraria "Color" mode rendering).
 var LIGHT_AIR_DECAY = 0.09;    // ~11 tiles of torch reach through open space
 var LIGHT_WALL_DECAY = 0.13;   // enclosed rooms with walls lose light faster
-var LIGHT_SOLID_DECAY = 0.30;  // solid rock chokes light in ~3 tiles
+var LIGHT_SOLID_DECAY = 0.45;  // solid rock chokes light in ~2 tiles (Terraria surface fade)
 var LIGHT_LIQUID_DECAY = 0.16; // water dims light
 var LIGHT_PAD = 16;            // tiles of margin around the viewport
 
