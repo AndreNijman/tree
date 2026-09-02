@@ -1550,22 +1550,26 @@ self.underworldHouses = [];
     var lty = this.surfaceY[ltx];
     if (this.get(ltx, lty) !== T.GRASS) continue;
     var ltH = 26 + Math.floor(rng() * 14);
-    // hollow trunk (3 wide)
+    // vanilla living-tree trunk: 5-7 wide, 2-tile wood shell, hollow core
+    var half = 1 + Math.floor(rng() * 2); // interior half-width: 1-2
     for (var tyyy = lty; tyyy > lty - ltH; tyyy--) {
-      for (var txx2 = ltx - 1; txx2 <= ltx + 1; txx2++) {
+      for (var txx2 = ltx - half - 2; txx2 <= ltx + half + 2; txx2++) {
         if (!self.inBounds(txx2, tyyy)) continue;
-        var edge = txx2 === ltx - 1 || txx2 === ltx + 1 || tyyy === lty - ltH + 1;
+        var dist = Math.abs(txx2 - ltx);
+        var edge = dist > half || tyyy === lty - ltH + 1 || tyyy === lty;
         self.tiles[self.idx(txx2, tyyy)] = edge ? T.WOOD : T.AIR;
-        self.walls[self.idx(txx2, tyyy)] = edge ? WALL.STONE : WALL.CAVE;
+        self.walls[self.idx(txx2, tyyy)] = edge ? WALL.WOOD : WALL.CAVE;
       }
     }
-    // leaves at the crown
+    // vanilla crown: big rounded leaf mass (up to ~29 wide, 10 tall)
     var crown = lty - ltH + 1;
-    for (var ldy = crown - 4; ldy <= crown + 2; ldy++) {
-      for (var ldx = ltx - 5; ldx <= ltx + 5; ldx++) {
+    var crx = 10 + Math.floor(rng() * 5), cry = 5 + Math.floor(rng() * 3);
+    for (var ldy = crown - cry; ldy <= crown + 2; ldy++) {
+      for (var ldx = ltx - crx; ldx <= ltx + crx; ldx++) {
         if (!self.inBounds(ldx, ldy)) continue;
-        var ldist = Math.abs(ldx - ltx) + Math.abs(ldy - crown);
-        if (ldist <= 7 && self.tiles[self.idx(ldx, ldy)] === T.AIR) {
+        var ndx = (ldx - ltx) / crx, ndy = (ldy - crown) / cry;
+        var nell = ndx * ndx + ndy * ndy;
+        if (nell <= 1 && (nell < 0.55 || rng() < 0.7) && self.tiles[self.idx(ldx, ldy)] === T.AIR) {
           self.tiles[self.idx(ldx, ldy)] = T.LEAVES;
           self.walls[self.idx(ldx, ldy)] = WALL.NONE;
         }
@@ -1616,32 +1620,6 @@ self.underworldHouses = [];
     // torch
     if (self.inBounds(cbx + 1, cby + chh - 1) && self.get(cbx + 1, cby + chh - 1) === T.AIR) {
       self.set(cbx + 1, cby + chh - 1, T.TORCH);
-    }
-  }
-
-  // Trees on forest/jungle grass
-  for (var tx2 = 4; tx2 < W - 4; tx2++) {
-    var b3 = biomeAtX(tx2);
-    if (b3 !== BIOME.FOREST && b3 !== BIOME.JUNGLE) continue;
-    var sy = this.surfaceY[tx2];
-    if (b3 === BIOME.FOREST && this.get(tx2, sy) !== T.GRASS) continue;
-    if (b3 === BIOME.JUNGLE && this.get(tx2, sy) !== T.JUNGLEGRASS) continue;
-    if (rng() < (b3 === BIOME.JUNGLE ? 0.45 : 0.35)) {
-      var th = 5 + Math.floor(rng() * (b3 === BIOME.JUNGLE ? 8 : 4));
-      for (var j = 1; j <= th; j++) this.set(tx2, sy - j, T.TREETRUNK);
-      var topY = sy - th - 1;
-      // rounded Terraria-style canopy: 7 wide, 5 tall, ragged edges
-      for (var lx = -3; lx <= 3; lx++) {
-        for (var ly = -3; ly <= 1; ly++) {
-          var ax = Math.abs(lx);
-          var maxAx = (ly === -3 || ly === 1) ? 1 : (ly === -1 || ly === 0) ? 3 : 2;
-          if (ax > maxAx) continue;
-          if (ax === maxAx && rng() < 0.35) continue; // ragged edge
-          var lxx = tx2 + lx, lyy = topY + ly;
-          if (this.get(lxx, lyy) === T.AIR) this.set(lxx, lyy, T.LEAVES);
-        }
-      }
-      tx2 += 1;
     }
   }
 
@@ -1716,6 +1694,7 @@ self.underworldHouses = [];
         for (var sdx = -shaftR; sdx <= shaftR; sdx++) {
           var stx = shaftX + sdx, sty = shaftY + sdy;
           if (!this.inBounds(stx, sty) || sdx * sdx + sdy * sdy > shaftR * shaftR) continue;
+          if (sty < this.surfaceY[stx] - 1) continue; // never carve/wall above the local surface
           var oldShaft = this.get(stx, sty);
           if (oldShaft === T.DUNGEONBRICK || oldShaft === T.DUNGEONDOOR || oldShaft === T.TEMPLEBRICK || oldShaft === T.CHEST || oldShaft === T.SHADOWCHEST) continue;
           this.tiles[this.idx(stx, sty)] = T.AIR;
@@ -1843,6 +1822,32 @@ self.underworldHouses = [];
     }
     this.surfaceY[cx3] = clearingY;
   }
+  // Trees on forest/jungle grass
+  for (var tx2 = 4; tx2 < W - 4; tx2++) {
+    var b3 = biomeAtX(tx2);
+    if (b3 !== BIOME.FOREST && b3 !== BIOME.JUNGLE) continue;
+    var sy = this.surfaceY[tx2];
+    if (b3 === BIOME.FOREST && this.get(tx2, sy) !== T.GRASS) continue;
+    if (b3 === BIOME.JUNGLE && this.get(tx2, sy) !== T.JUNGLEGRASS) continue;
+    if (rng() < (b3 === BIOME.JUNGLE ? 0.45 : 0.35)) {
+      var th = 5 + Math.floor(rng() * (b3 === BIOME.JUNGLE ? 8 : 4));
+      for (var j = 1; j <= th; j++) this.set(tx2, sy - j, T.TREETRUNK);
+      var topY = sy - th - 1;
+      // rounded Terraria-style canopy: 7 wide, 5 tall, ragged edges
+      for (var lx = -3; lx <= 3; lx++) {
+        for (var ly = -3; ly <= 1; ly++) {
+          var ax = Math.abs(lx);
+          var maxAx = (ly === -3 || ly === 1) ? 1 : (ly === -1 || ly === 0) ? 3 : 2;
+          if (ax > maxAx) continue;
+          if (ax === maxAx && rng() < 0.35) continue; // ragged edge
+          var lxx = tx2 + lx, lyy = topY + ly;
+          if (this.get(lxx, lyy) === T.AIR) this.set(lxx, lyy, T.LEAVES);
+        }
+      }
+      tx2 += 1;
+    }
+  }
+
   // clear trees near spawn
   for (var cx4 = sp - 30; cx4 <= sp + 30; cx4++) {
     if (cx4 < 0 || cx4 >= W) continue;
