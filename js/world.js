@@ -331,7 +331,16 @@ World.prototype.biomeAt = function(px, py) {
   if (this.templeRect && tx >= this.templeRect.x0 && tx <= this.templeRect.x1 &&
       ty >= this.templeRect.y0 && ty <= this.templeRect.y1) return BIOME.TEMPLE;
   if (this.dungeonRect && tx >= this.dungeonRect.x0 - 2 && tx <= this.dungeonRect.x1 + 2 &&
-      ty >= this.dungeonRect.y0 && ty <= this.dungeonRect.y1) return BIOME.DUNGEON;
+      ty >= this.dungeonRect.y0 && ty <= this.dungeonRect.y1) {
+    // vanilla counts dungeon bricks nearby — avoids marking the whole bounding box
+    var dBricks = 0;
+    for (var dbx = Math.max(0, tx - 4); dbx <= Math.min(this.W - 1, tx + 4) && dBricks < 3; dbx++) {
+      for (var dby = Math.max(0, ty - 4); dby <= Math.min(this.H - 1, ty + 4); dby++) {
+        if (this.tiles[this.idx(dbx, dby)] === T.DUNGEONBRICK) { dBricks++; if (dBricks >= 3) break; }
+      }
+    }
+    if (dBricks >= 3) return BIOME.DUNGEON;
+  }
   if (this.aetherPos && ty >= this.aetherPos.y - 2 && ty <= this.aetherPos.y + 10 &&
       Math.abs(tx - this.aetherPos.x) <= 4) return BIOME.AETHER;
   if (ty >= this.hellY) return BIOME.UNDERWORLD;
@@ -1140,8 +1149,17 @@ self.underworldHouses = [];
       if (!clash) break;
     }
     islandHouseX.push(ix0);
-    // island top y: between y=90 and just above the surface (vanilla range)
-    var iy0 = 90 + rnd(Math.max(10, Math.min(170, this.worldSurfaceAvg - 140)));
+    // vanilla: island top = min(rand(90, firstSolid-100), worldSurfaceLow-50)
+    // — keeps islands high in the sky, never touching terrain
+    var colSurf = 0;
+    for (var cs2 = 200; cs2 < this.worldSurfaceAvg; cs2++) {
+      if (self.tiles[self.idx(ix0, cs2)] !== T.AIR) { colSurf = cs2; break; }
+    }
+    if (colSurf < 200) continue;
+    var iy0 = 90 + rnd(Math.max(2, colSurf - 190));
+    var cap = minSurf - 50;
+    if (iy0 > cap) iy0 = cap;
+    if (iy0 < 20) iy0 = 20;
     var iLeft = ix0, iRight = ix0, iTop = iy0, iBot = iy0;
     // phase 1: wandering flattened cloud discs forming the island base
     var baseR = 100 + rng() * 50;
@@ -1443,30 +1461,34 @@ self.underworldHouses = [];
         cur = dRoom(cur[0], cur[1]);
       }
     }
-    // entrance shaft: climb from the topmost room to the surface
+    // entrance: stepped brick halls climbing to the surface (vanilla DungeonStairs)
     var topRoom = dRooms[0];
     for (var tr = 0; tr < dRooms.length; tr++) {
       if (dRooms[tr][1] < topRoom[1]) topRoom = dRooms[tr];
     }
     var entX = topRoom[0] + 6;
-    var shaftTop = this.surfaceY[entX] - 2;
-    for (var sy5 = shaftTop; sy5 <= topRoom[1]; sy5++) {
-      for (var sx5 = -1; sx5 <= 1; sx5++) {
-        var sxx5 = entX + sx5;
-        if (!self.inBounds(sxx5, sy5)) continue;
-        var shaftEdge = sx5 !== 0 && sy5 > shaftTop + 2;
-        self.tiles[self.idx(sxx5, sy5)] = shaftEdge ? brick : T.AIR;
-        self.walls[self.idx(sxx5, sy5)] = WALL.CAVE;
-      }
+    var curX = topRoom[0], curY = topRoom[1];
+    var targetY = this.surfaceY[entX] - 2;
+    while (curY > targetY) {
+      var stepUp = Math.min(20 + rnd(15), curY - targetY);
+      var stepX = (rng() < 0.5 ? -1 : 1) * (12 + rnd(14));
+      var nx2 = Math.max(6, Math.min(W - 6, curX + stepX));
+      var ny2 = Math.max(targetY, curY - stepUp);
+      dCarveHall(curX, curY, nx2, ny2);
+      curX = nx2; curY = ny2;
     }
-    // gate blocks the shaft at the surface (opens after Skeletron)
-    self.tiles[self.idx(entX, shaftTop + 1)] = T.DUNGEONDOOR;
-    self.tiles[self.idx(entX, shaftTop + 2)] = T.DUNGEONDOOR;
+    entX = curX;
+    // gate blocks the passage at the surface (opens after Skeletron)
+    self.tiles[self.idx(entX, targetY)] = T.DUNGEONDOOR;
+    self.tiles[self.idx(entX, targetY + 1)] = T.DUNGEONDOOR;
     this.dungeonDoors = [
-      { x: entX, y: shaftTop + 1 }, { x: entX, y: shaftTop + 2 }
+      { x: entX, y: targetY }, { x: entX, y: targetY + 1 }
     ];
     this.dungeonEntrance = { x: entX * TILE + 8, y: this.surfaceY[entX] * TILE - 16 };
-    this.dungeonRect = { x0: dMinX - 4, y0: dMinY - 4, x1: dMaxX + 4, y1: dMaxY + 4 };
+    // keep the biome tight: dungeon brick must be nearby (vanilla counts bricks)
+    var dRect = { x0: dMinX - 4, y0: dMinY - 4, x1: dMaxX + 4, y1: dMaxY + 4 };
+    this.dungeonRect = dRect;
+    this.dungeonBrickCheck = true;
   }
 
   // --- Desert pyramids: 1-2 sandstone pyramids in the desert ---
