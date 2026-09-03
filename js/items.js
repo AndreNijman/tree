@@ -9359,7 +9359,7 @@ defItem(I.GOLD_MOUSE, { name:'Gold Mouse', type:'material', color:'#b8b8a0', ico
 defItem(I.GOLD_MOUSE_CAGE, { name:'Gold Mouse Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.GOLD_SEAHORSE, { name:'Gold Seahorse', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.GOLD_SEAHORSE_CAGE, { name:'Gold Seahorse Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
-defItem(I.GOLD_SHORTSWORD, { name:'Gold Shortsword', type:'melee', dmg:12, speed:0.183, kb:5, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.GOLD_SHORTSWORD, { name:'Gold Shortsword', type:'melee', shortSword:true, dmg:12, speed:0.183, kb:5, range:2.5, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
 defItem(I.GOLD_SQUIRREL, { name:'Gold Squirrel', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.GOLD_SQUIRREL_CAGE, { name:'Gold Squirrel Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.GOLD_STARRY_BLOCK, { name:'Gold Starry Block', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
@@ -9633,7 +9633,7 @@ defItem(I.IRIDESCENT_BRICK_WALL, { name:'Iridescent Brick Wall', type:'wall', ic
 defItem(I.IRON_BRICK, { name:'Iron Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
 defItem(I.IRON_BRICK_WALL, { name:'Iron Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
 defItem(I.IRON_FENCE, { name:'Iron Fence', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
-defItem(I.IRON_SHORTSWORD, { name:'Iron Shortsword', type:'melee', dmg:8, speed:0.2, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.IRON_SHORTSWORD, { name:'Iron Shortsword', type:'melee', shortSword:true, dmg:8, speed:0.2, kb:4, range:2.5, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
 defItem(I.ITS_SCRAGGLIN_TIME, { name:'It\'s Scragglin\' Time', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.ITEM_FLASK, { name:'Item Flask', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.ITEM_FRAME, { name:'Item Frame', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
@@ -9733,7 +9733,7 @@ defItem(I.LAZURES_VALKYRIE_CLOAK, { name:'Lazure\'s Valkyrie Cloak', type:'mater
 defItem(I.LEAD_BRICK, { name:'Lead Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
 defItem(I.LEAD_BRICK_WALL, { name:'Lead Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
 defItem(I.LEAD_FENCE, { name:'Lead Fence', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
-defItem(I.LEAD_SHORTSWORD, { name:'Lead Shortsword', type:'melee', dmg:9, speed:0.2, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.LEAD_SHORTSWORD, { name:'Lead Shortsword', type:'melee', shortSword:true, dmg:9, speed:0.2, kb:4, range:2.5, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
 defItem(I.LEAF_WAND, { name:'Leaf Wand', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.LEAFY_JUNGLE_WALL, { name:'Leafy Jungle Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
 defItem(I.LEINFORS_EXCESSIVE_STYLE, { name:'Leinfors\' Excessive Style', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
@@ -10188,7 +10188,7 @@ defItem(I.PLATE, { name:'Plate', type:'material', color:'#b8b8a0', icon:'M', max
 defItem(I.PLATINUM_BRICK, { name:'Platinum Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
 defItem(I.PLATINUM_BRICK_WALL, { name:'Platinum Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
 defItem(I.PLATINUM_CROWN, { name:'Platinum Crown', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
-defItem(I.PLATINUM_SHORTSWORD, { name:'Platinum Shortsword', type:'melee', dmg:13, speed:0.167, kb:5, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.PLATINUM_SHORTSWORD, { name:'Platinum Shortsword', type:'melee', shortSword:true, dmg:13, speed:0.167, kb:5, range:2.5, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
 defItem(I.PLATINUM_WATCH, { name:'Platinum Watch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.PLUM, { name:'Plum', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.PLUMBERS_HAT, { name:'Plumber\'s Hat', type:'armor', slot:'head', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
@@ -10589,7 +10589,7 @@ defItem(I.SILVER_BRACER, { name:'Silver Bracer', type:'material', color:'#b8b8a0
 defItem(I.SILVER_BRICK, { name:'Silver Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
 defItem(I.SILVER_DYE, { name:'Silver Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.SILVER_SHIELD, { name:'Silver Shield', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
-defItem(I.SILVER_SHORTSWORD, { name:'Silver Shortsword', type:'melee', dmg:9, speed:0.2, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.SILVER_SHORTSWORD, { name:'Silver Shortsword', type:'melee', shortSword:true, dmg:9, speed:0.2, kb:4, range:2.5, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
 defItem(I.SILVER_WATCH, { name:'Silver Watch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.SILVERAND_BLACK_DYE, { name:'Silver and Black Dye', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.SITTING_DUCKS_FISHING_POLE, { name:'Sitting Duck\'s Fishing Pole', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
@@ -10891,7 +10891,7 @@ defItem(I.TIN_BRICK_WALL, { name:'Tin Brick Wall', type:'wall', icon:'block', ma
 defItem(I.TIN_CAN, { name:'Tin Can', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.TIN_PLATING, { name:'Tin Plating', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
 defItem(I.TIN_PLATING_WALL, { name:'Tin Plating Wall', type:'armor', slot:'chest', def:5, icon:'A', maxStack:1, desc:'Defense +5' });
-defItem(I.TIN_SHORTSWORD, { name:'Tin Shortsword', type:'melee', dmg:7, speed:0.2, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.TIN_SHORTSWORD, { name:'Tin Shortsword', type:'melee', shortSword:true, dmg:7, speed:0.2, kb:4, range:2.5, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
 defItem(I.TIN_WATCH, { name:'Tin Watch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.TINKERERS_WORKSHOP, { name:'Tinkerer\'s Workshop', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.TITANIUM_CHAINSAW, { name:'Titanium Chainsaw', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
@@ -10962,7 +10962,7 @@ defItem(I.TRIMARANG, { name:'Trimarang', type:'material', color:'#b8b8a0', icon:
 defItem(I.TRIO_SUPER_HEROES, { name:'Trio Super Heroes', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.TROPICAL_BARRACUDA, { name:'Tropical Barracuda', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.TROPICAL_SMOOTHIE, { name:'Tropical Smoothie', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
-defItem(I.TRUE_COPPER_SHORTSWORD, { name:'True Copper Shortsword', type:'melee', dmg:190, speed:0.5, kb:6.5, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.TRUE_COPPER_SHORTSWORD, { name:'True Copper Shortsword', type:'melee', shortSword:true, dmg:190, speed:0.5, kb:6.5, range:2.5, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
 defItem(I.TRUE_NIGHTS_EDGE, { name:'True Night\'s Edge', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.TRUFFLE_WORM_CAGE, { name:'Truffle Worm Cage', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.TRUSTY_CHILLET, { name:'Trusty Chillet', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
@@ -10973,7 +10973,7 @@ defItem(I.TUNA, { name:'Tuna', type:'material', color:'#b8b8a0', icon:'M', maxSt
 defItem(I.TUNDRA_TROUT, { name:'Tundra Trout', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.TUNGSTEN_BRICK, { name:'Tungsten Brick', type:'block', icon:'block', maxStack:999, desc:'A placeable block.' });
 defItem(I.TUNGSTEN_BRICK_WALL, { name:'Tungsten Brick Wall', type:'wall', icon:'block', maxStack:999, desc:'A decorative wall.' });
-defItem(I.TUNGSTEN_SHORTSWORD, { name:'Tungsten Shortsword', type:'melee', dmg:10, speed:0.183, kb:4, range:4, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
+defItem(I.TUNGSTEN_SHORTSWORD, { name:'Tungsten Shortsword', type:'melee', shortSword:true, dmg:10, speed:0.183, kb:4, range:2.5, auto:true, icon:'W', maxStack:1, desc:'A weapon.' });
 defItem(I.TUNGSTEN_WATCH, { name:'Tungsten Watch', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.TURKEY_WATTLE_NECKLACE, { name:'Turkey Wattle Necklace', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });
 defItem(I.TURTLE, { name:'Turtle', type:'material', color:'#b8b8a0', icon:'M', maxStack:999, desc:'A crafting material or collectible.' });

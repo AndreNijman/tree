@@ -503,7 +503,15 @@ Player.prototype.tryMelee = function(game, def, force, item) {
   this.swingT = Math.max(0.12, def.speed * 0.7);
   if (crit) game.spawnFloatingText(this.x, this.y - 30, 'Critical!', '#ffe14d');
   this.dir = (MOUSE.wx >= this.x) ? 1 : -1;
-  this.swingAng = Math.atan2(MOUSE.wy - this.y, MOUSE.wx - this.x);
+  var thrust = !!def.shortSword || def.meleeMode === 'thrust';
+  var specialMelee = def.meleeMode === 'yoyo' || def.meleeMode === 'spear' || def.meleeMode === 'flail' || def.meleeMode === 'controlled';
+  if (thrust || specialMelee) {
+    // stabs / specials aim along the cursor
+    this.swingAng = Math.atan2(MOUSE.wy - this.y, MOUSE.wx - this.x);
+  } else {
+    // broadswords sweep the whole facing side — no cursor aiming needed
+    this.swingAng = (this.dir > 0) ? 0 : Math.PI;
+  }
   AudioSys.play('shoot');
   var crit = Math.random() < 0.04;
   var mdmg = Math.round(def.dmg * this.inventory.damageMultiplier('melee') * this.inventory.itemDamageMul(item));
@@ -521,23 +529,30 @@ Player.prototype.tryMelee = function(game, def, force, item) {
   var reach = def.range * TILE + 10;
   var cx = this.x + Math.cos(this.swingAng) * 14;
   var cy = this.y + Math.sin(this.swingAng) * 14;
-  // hit enemies in arc
+  // hit enemies in arc (broadswords: whole facing side; shortswords: narrow stab lane)
   if (!def.projectileOnly) {
     for (var i = 0; i < game.entities.length; i++) {
       var e = game.entities[i];
       if (e.ooaSentry) continue;
       if (e.dead || e.dmg <= 0) continue;
-      var dx = e.x - cx, dy = e.y - cy;
-      if (dx * dx + dy * dy < reach * reach) {
+      var dx = e.x - this.x, dy = e.y - this.y;
+      if (dx * dx + dy * dy >= reach * reach) continue;
+      if (thrust) {
+        // stab lane: along the stab direction, ~1.7 tiles wide perpendicular
+        var along = dx * Math.cos(this.swingAng) + dy * Math.sin(this.swingAng);
+        var perp = Math.abs(-dx * Math.sin(this.swingAng) + dy * Math.cos(this.swingAng));
+        if (along * this.dir < -6 || perp > 28) continue;
+      } else {
         var ang = Math.atan2(e.y - this.y, e.x - this.x);
         var da = Math.abs(angDiff(this.swingAng, ang));
-        if (da < (def.shortSword ? 0.45 : 1.5)) {
-          var kbForce = (def.kb || 4) * 0.8;
-          var kbx = Math.cos(this.swingAng) * kbForce, kby = Math.sin(this.swingAng) * kbForce * 0.5 - 1;
-          if (e.boss) game.hitBoss(e, mdmg, kbx, kby);
-          else hitEntity(e, mdmg, kbx, kby, game);
-          game.fx.push({ type:'slash', x:e.x, y:e.y, t:0.15 });
-        }
+        if (da > (specialMelee ? 0.6 : 1.6)) continue;
+      }
+      {
+        var kbForce = (def.kb || 4) * 0.8;
+        var kbx = Math.cos(this.swingAng) * kbForce, kby = Math.sin(this.swingAng) * kbForce * 0.5 - 1;
+        if (e.boss) game.hitBoss(e, mdmg, kbx, kby);
+        else hitEntity(e, mdmg, kbx, kby, game);
+        game.fx.push({ type:'slash', x:e.x, y:e.y, t:0.15 });
       }
     }
   }

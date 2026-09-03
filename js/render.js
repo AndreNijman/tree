@@ -4178,16 +4178,39 @@ function drawPlayer(ctx, game, p) {
     var dmg = itemDef ? itemDef.dmg : 10;
     var reach = itemDef && itemDef.range ? itemDef.range * TILE + 8 : 30;
     var prog = 1 - p.swingT / Math.max(0.12, 0.3);
-    var a0 = p.swingAng - 1.2 + prog * 2.4;
+    var isThrust = itemDef && (itemDef.shortSword || itemDef.meleeMode === 'thrust');
     ctx.save();
     ctx.translate(x, y - 6);
+    var bladeColor = itemDef && itemDef.color ? itemDef.color : '#e0e0e0';
+    if (isThrust) {
+      // vanilla shortsword: straight stab extending forward along the aim
+      var ext = reach * (0.45 + 0.55 * Math.sin(Math.min(1, prog * 1.6) * Math.PI * 0.5));
+      ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(p.swingAng) * 6, Math.sin(p.swingAng) * 6);
+      ctx.lineTo(Math.cos(p.swingAng) * ext, Math.sin(p.swingAng) * ext);
+      ctx.stroke();
+      ctx.strokeStyle = bladeColor;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(p.swingAng) * 6, Math.sin(p.swingAng) * 6);
+      ctx.lineTo(Math.cos(p.swingAng) * ext, Math.sin(p.swingAng) * ext);
+      ctx.stroke();
+      ctx.fillStyle = dmg > 40 ? '#ffe14d' : (dmg > 25 ? '#9ad0ff' : '#d0d0d0');
+      ctx.beginPath();
+      ctx.arc(Math.cos(p.swingAng) * ext, Math.sin(p.swingAng) * ext, 2.4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    } else {
+    var a0 = p.swingAng - 1.2 + prog * 2.4;
     // motion trail arc behind the blade
     ctx.strokeStyle = 'rgba(255,255,255,0.25)';
     ctx.lineWidth = 5;
     ctx.beginPath();
     ctx.arc(0, 0, reach * 0.8, p.swingAng - 1.2, a0, false);
     ctx.stroke();
-    ctx.strokeStyle = itemDef && itemDef.color ? itemDef.color : '#e0e0e0';
+    ctx.strokeStyle = bladeColor;
     ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.moveTo(0, 0);
@@ -4205,6 +4228,7 @@ function drawPlayer(ctx, game, p) {
     ctx.arc(Math.cos(a0) * reach, Math.sin(a0) * reach, 3, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
+    }
   }
 }
 
