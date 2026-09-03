@@ -433,7 +433,7 @@ function renderGame(game, ctx) {
       if (px2 < -TILE || px2 > W) continue;
       // wall behind air tiles
       if (t2 === 0 && wl2 !== 0 && (ty2 >= (surfaceArr[tx2] || 0) || wl2 === 3)) {
-        tileCtx2.fillStyle = wl2 === 1 ? '#4a3a28' : (wl2 === 2 ? '#3a3d45' : '#2e2e34');
+        tileCtx2.fillStyle = wl2 === 1 ? '#4a3a28' : (wl2 === 2 ? '#3a3d45' : (wl2 === 5 ? '#232c4e' : '#2e2e34'));
         tileCtx2.fillRect(px2, screenY, TILE, TILE);
         continue;
       }

@@ -1354,14 +1354,14 @@ self.underworldHouses = [];
     self.aetherPos = { x: axx2, y: ayy2 };
   }
 
-  // --- Dungeon (vanilla geometry): winding brick halls from around
-  // (worldSurface+rockLayer)/2 drifting down through the cavern, rooms along
-  // the way, then an entrance shaft climbing back to the surface ---
+  // --- Dungeon: faithful port of vanilla MakeDungeon / DungeonRoom /
+  // DungeonHalls / DungeonStairs / DungeonEnt (decompiled 1.4.0.5) ---
   {
+    var brick = T.DUNGEONBRICK;
+    var dWall = WALL.DUNGEON;
     var dgx = this.jungleLeft ? Math.floor(W * (0.83 + rng() * 0.04)) : Math.floor(W * (0.13 + rng() * 0.04));
     var dgY = Math.floor((this.worldSurfaceAvg + this.rockLayer) / 2) + rnd(400) - 200;
     dgY = Math.max(4, Math.min(H - 120, dgY));
-    // sink to solid ground (vanilla checks 10 tiles below)
     var dgOK = false;
     for (var dg2 = 0; dg2 < 10; dg2++) {
       if (self.isSolid(dgx, dgY + dg2)) { dgOK = true; break; }
@@ -1370,125 +1370,267 @@ self.underworldHouses = [];
       dgY++;
       for (dg2 = 0; dg2 < 10; dg2++) if (self.isSolid(dgx, dgY + dg2)) { dgOK = true; break; }
     }
-    var brick = T.DUNGEONBRICK;
+    // vanilla strengths
+    var dxS1 = 25 + rnd(6), dyS1 = 20 + rnd(6), dxS2 = 35 + rnd(16), dyS2 = 10 + rnd(6);
+    var dMinX = dgx, dMaxX = dgx, dMaxY = dgY, dMinY = dgY;
     var dRooms = [];
-    var dMinX = dgx, dMaxX = dgx, dMinY = dgY, dMaxY = dgY;
-    function dCarveHall(x0, y0, x1, y1) {
-      // L-corridor: horizontal then vertical, brick shell + air core
-      var steps = Math.abs(x1 - x0), sdx = x1 > x0 ? 1 : -1;
-      var sx = x0, sy2 = y0;
-      for (var s3 = 0; s3 <= steps; s3++) {
-        sx = x0 + sdx * s3;
-        for (var wy3 = -3; wy3 <= 3; wy3++) {
-          for (var wx3 = -1; wx3 <= 1; wx3++) {
-            if (!self.inBounds(sx + wx3, sy2 + wy3)) continue;
-            var edge = Math.abs(wy3) === 3 || wx3 === 0;
-            self.tiles[self.idx(sx + wx3, sy2 + wy3)] = edge ? brick : T.AIR;
-            self.walls[self.idx(sx + wx3, sy2 + wy3)] = WALL.CAVE;
-          }
+    var clampI = function (v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); };
+
+    // tile-frame helpers (vanilla shell / wall-ring / hollow rects)
+    function dShell(px, py, rad) {
+      var x0 = clampI(Math.floor(px - rad * 0.8 - 5 - rnd(6)), 0, W);
+      var x1 = clampI(Math.floor(px + rad * 0.8 + 5 + rnd(6)), 0, W);
+      var y0 = clampI(Math.floor(py - rad * 0.8 - 5 - rnd(6)), 0, H);
+      var y1 = clampI(Math.floor(py + rad * 0.8 + 5 + rnd(6)), 0, H);
+      for (var yy = y0; yy < y1; yy++) {
+        for (var xx = x0; xx < x1; xx++) {
+          var ii = self.idx(xx, yy);
+          if (xx < dMinX) dMinX = xx;
+          if (xx > dMaxX) dMaxX = xx;
+          if (yy > dMaxY) dMaxY = yy;
+          self.tiles[ii] = self.walls[ii] === dWall ? self.tiles[ii] : brick;
         }
       }
-      var vsteps = Math.abs(y1 - y0), sdy = y1 > y0 ? 1 : -1;
-      for (s3 = 0; s3 <= vsteps; s3++) {
-        sy2 = y0 + sdy * s3;
-        for (wy3 = -1; wy3 <= 1; wy3++) {
-          for (wx3 = -3; wx3 <= 3; wx3++) {
-            if (!self.inBounds(sx + wx3, sy2 + wy3)) continue;
-            var edge2 = wx3 === -3 || wx3 === 3 || wy3 === 0;
-            self.tiles[self.idx(sx + wx3, sy2 + wy3)] = edge2 ? brick : T.AIR;
-            self.walls[self.idx(sx + wx3, sy2 + wy3)] = WALL.CAVE;
-          }
-        }
-      }
-      return [sx, sy2];
+      for (yy = y0 + 1; yy < y1 - 1; yy++)
+        for (xx = x0 + 1; xx < x1 - 1; xx++)
+          self.walls[self.idx(xx, yy)] = dWall;
     }
-    function dRoom(x0, y0) {
-      var rw = 13 + rnd(6), rh = 8 + rnd(4);
-      for (var ry3 = 0; ry3 <= rh; ry3++) {
-        for (var rx3 = 0; rx3 <= rw; rx3++) {
-          var rxx3 = x0 + rx3, ryy3 = y0 + ry3;
-          if (!self.inBounds(rxx3, ryy3)) continue;
-          var edge3 = ry3 === 0 || ry3 === rh || rx3 === 0 || rx3 === rw;
-          self.tiles[self.idx(rxx3, ryy3)] = edge3 ? brick : T.AIR;
-          self.walls[self.idx(rxx3, ryy3)] = WALL.CAVE;
+    function dHollow(px, py, rad, widen) {
+      var x0 = clampI(Math.floor(px - rad * 0.5 - widen), 0, W);
+      var x1 = clampI(Math.floor(px + rad * 0.5 + widen), 0, W);
+      var y0 = clampI(Math.floor(py - rad * 0.5 - widen), 0, H);
+      var y1 = clampI(Math.floor(py + rad * 0.5 + widen), 0, H);
+      for (var yy = y0; yy < y1; yy++)
+        for (var xx = x0; xx < x1; xx++) {
+          self.tiles[self.idx(xx, yy)] = T.AIR;
+          self.walls[self.idx(xx, yy)] = dWall;
+        }
+    }
+
+    // DungeonRoom: wandering blob rooms (radius 15-30, 10-20 steps)
+    function dungeonRoom(i2, j2) {
+      var size = 15 + rnd(15);
+      var vx = (rnd(21) - 10) * 0.1, vy = (rnd(21) - 10) * 0.1;
+      var px = i2, py = j2 - size / 2;
+      var steps2 = 10 + rnd(10);
+      while (steps2 > 0) {
+        steps2--;
+        dShell(px, py, size * 0.8);
+        dHollow(px, py, size, 0);
+        px += vx; py += vy;
+        vx = clamp(vx + (rnd(21) - 10) * 0.05, -1, 1);
+        vy = clamp(vy + (rnd(21) - 10) * 0.05, -1, 1);
+      }
+      dRooms.push({ x: Math.floor(px), y: Math.floor(py), size: Math.floor(size), treasure: false });
+      return [Math.floor(px), Math.floor(py)];
+    }
+
+    // DungeonHalls: corridors 35-80 steps, alternate horizontal/vertical runs,
+    // widening as they go down, steering to stay inside the dungeon bounds
+    function dungeonHalls(i2, j2, forceX) {
+      var rad = 4 + rnd(2);
+      var steps2 = 35 + rnd(45);
+      var x = i2, y = j2;
+      var horizontal = rng() < 0.5;
+      var dir = rng() < 0.5 ? 1 : -1;
+      var drift = 0;
+      for (var s3 = 0; s3 < steps2; s3++) {
+        // steering (vanilla bounds: x in [200, W-200], y in [rockLayer+100, H-300])
+        if (x > W - 200) { horizontal = true; dir = -1; }
+        else if (x < 200) { horizontal = true; dir = 1; }
+        else if (y > H - 300) { horizontal = false; dir = -1; }
+        else if (y < self.rockLayer + 100) { horizontal = false; dir = 1; rad++; }
+        if (forceX) horizontal = true;
+        if (horizontal) {
+          // horizontal corridor: 1 tile per step, no vertical drift (vanilla)
+          dShell(x, y, rad);
+          var widen = (Math.floor(rng() * (rad + 1)) === 0) ? 1 + rnd(2) : 0;
+          dHollow(x, y, rad, widen);
+          x += dir;
+          // platforms at the far edge (vanilla tracks platform positions)
+          if (s3 === steps2 - 1 && self.tiles[self.idx(clampI(x, 1, W - 2), y + rad)] === brick) {
+            for (var ppx = Math.max(1, x - 2); ppx <= Math.min(W - 2, x + 2); ppx++) {
+              self.tiles[self.idx(ppx, y + rad - 1)] = T.PLATFORM;
+            }
+          }
+        } else {
+          // vertical shaft: widens per segment (vanilla num1++)
+          rad++;
+          dShell(x, y, rad);
+          var widen2 = (Math.floor(rng() * Math.max(1, rad - 1)) === 0) ? 1 + rnd(2) : 0;
+          dHollow(x, y, rad, widen2);
+          y += dir;
+          if (rng() * 3 !== 0) x += (rng() * 2 < 1 ? -1 : 1) * (1 + rnd(2));
+          else if (rng() < 0.5) x += dir;
         }
       }
-      // wooden platform floor halfway up
-      for (rx3 = 2; rx3 <= rw - 2; rx3++) {
-        var pxx = x0 + rx3, pyy = y0 + Math.floor(rh / 2);
-        self.tiles[self.idx(pxx, pyy)] = T.PLATFORM;
-        self.walls[self.idx(pxx, pyy)] = WALL.CAVE;
+      // torches along the hall
+      for (var t2 = 0; t2 < 2; t2++) {
+        var txx = clampI(x - 3 + rnd(6), 2, W - 3);
+        var tyy = clampI(y - 2 + rnd(4), 2, H - 3);
+        if (self.get(txx, tyy) === T.AIR) self.set(txx, tyy, T.TORCH);
       }
-      // torch + chest with dungeon loot
-      self.tiles[self.idx(x0 + 2, y0 + rh - 1)] = T.TORCH;
-      if (dRooms.length < 7 && self.get(x0 + rw - 3, y0 + rh - 1) === T.AIR) {
-        self.set(x0 + rw - 3, y0 + rh - 1, T.CHEST);
-        var dinv = [{ id: I.GOLDENKEY, count: 1 }];
-        if (rng() < 0.4) dinv.push({ id: I.MURAMASA, count: 1 });
-        if (rng() < 0.4) dinv.push({ id: I.COBALTSHIELD, count: 1 });
-        if (rng() < 0.4) dinv.push({ id: I.AQUASCEPTER, count: 1 });
-        if (rng() < 0.4) dinv.push({ id: I.WATERBOLT, count: 1 });
-        if (rng() < 0.4) dinv.push({ id: I.GEM_RUBY, count: 1 });
-        self.chests.push({ x: x0 + rw - 3, y: y0 + rh - 1, inv: dinv });
-      }
-      dRooms.push([x0, y0]);
-      if (y0 < dMinY) { dMinY = y0; }
-      return [x0, y0];
+      return [x, y];
     }
+
+    // MakeDungeon main loop: room, then 70-93 hall segments (rooms every 5,
+    // 1/3 chance of side halls), per vanilla
+    dungeonRoom(dgx, dgY);
     var cur = [dgx, dgY];
-    dRoom(cur[0], cur[1]);
     var halls = Math.floor(W / 60) + rnd(Math.floor(W / 180) + 1);
     var untilRoom = 5;
     for (var h2 = 0; h2 < halls; h2++) {
-      var hlen = 35 + rnd(45);
-      var hdir = rng() < 0.5 ? -1 : 1;
-      var nx = Math.max(6, Math.min(W - 6, cur[0] + hdir * hlen));
-      var drop = 10 + rnd(16);
-      var ny = Math.min(this.hellY - 40, cur[1] + drop);
-      cur = dCarveHall(cur[0], cur[1], nx, ny);
-      dMinX = Math.min(dMinX, cur[0]); dMaxX = Math.max(dMaxX, cur[0]);
-      dMaxY = Math.max(dMaxY, cur[1]);
-      untilRoom--;
-      if (untilRoom === 0) {
+      if (untilRoom > 0) untilRoom--;
+      if (untilRoom === 0 && rnd(3) === 0) {
         untilRoom = 5;
-        if (rng() < 0.34) {
-          // side halls branch out before the room (vanilla 1/3 chance)
-          var saveX = cur[0], saveY = cur[1];
-          cur = dCarveHall(cur[0], cur[1], Math.max(6, Math.min(W - 6, cur[0] + (rng() < 0.5 ? -1 : 1) * (30 + rnd(40)))), cur[1] + 8 + rnd(12));
-          dRoom(cur[0], cur[1]);
-          cur = [saveX, saveY];
-        }
-        cur = dRoom(cur[0], cur[1]);
+        var saveX = cur[0], saveY = cur[1];
+        cur = dungeonHalls(cur[0], cur[1]);
+        if (rnd(2) === 0) cur = dungeonHalls(cur[0], cur[1]);
+        cur = dungeonRoom(cur[0], cur[1]);
+        cur = [saveX, saveY];
+      } else {
+        cur = dungeonHalls(cur[0], cur[1]);
       }
     }
-    // entrance: stepped brick halls climbing to the surface (vanilla DungeonStairs)
+    dungeonRoom(cur[0], cur[1]);
+    // find the topmost room and climb stairs to the surface (vanilla DungeonStairs)
     var topRoom = dRooms[0];
-    for (var tr = 0; tr < dRooms.length; tr++) {
-      if (dRooms[tr][1] < topRoom[1]) topRoom = dRooms[tr];
+    for (var tr2 = 0; tr2 < dRooms.length; tr2++) {
+      if (dRooms[tr2].y < topRoom.y) topRoom = dRooms[tr2];
     }
-    var entX = topRoom[0] + 6;
-    var curX = topRoom[0], curY = topRoom[1];
-    var targetY = this.surfaceY[entX] - 2;
-    while (curY > targetY) {
-      var stepUp = Math.min(20 + rnd(15), curY - targetY);
-      var stepX = (rng() < 0.5 ? -1 : 1) * (12 + rnd(14));
-      var nx2 = Math.max(6, Math.min(W - 6, curX + stepX));
-      var ny2 = Math.max(targetY, curY - stepUp);
-      dCarveHall(curX, curY, nx2, ny2);
-      curX = nx2; curY = ny2;
+    var dEnteranceX = topRoom.x;
+    var dSurface = false;
+    var cur2 = [topRoom.x, topRoom.y];
+    var guard = 0;
+    var stairDir = dEnteranceX <= W / 2 ? 1 : -1;
+    if (dEnteranceX > W - 400) stairDir = -1;
+    else if (dEnteranceX < 400) stairDir = 1;
+    while (!dSurface && guard++ < 30) {
+      // DungeonStairs: one call = 10-30 diagonal steps climbing up
+      var num1s = 5 + rnd(4);
+      var stepsS = 10 + rnd(20);
+      var sx3 = cur2[0], sy3 = cur2[1];
+      var xDir = stairDir * (1 + rng() * 2);
+      for (var ss = 0; ss < stepsS; ss++) {
+        dShell(sx3, sy3, num1s);
+        var widen3 = (Math.floor(rng() * num1s) === 0) ? 1 + rnd(2) : 0;
+        dHollow(sx3, sy3, num1s, widen3);
+        sx3 += xDir;
+        sy3 -= 1;
+        // vanilla dSurface check: above the surface line AND sky above -> blast open
+        if (sy3 < this.worldSurfaceAvg - 5) {
+          var chkX = clampI(Math.floor(sx3 + dxS1 * 0.6 * stairDir), 1, W - 2);
+          if (self.walls[self.idx(chkX, Math.max(1, sy3 - num1s - 6))] === 0 &&
+              self.walls[self.idx(chkX, Math.max(1, sy3 - num1s - 7))] === 0 &&
+              self.walls[self.idx(chkX, Math.max(1, sy3 - num1s - 8))] === 0) {
+            dSurface = true;
+            tileRunnerV(Math.floor(sx3), Math.max(2, Math.floor(sy3 - num1s - 6)), 25 + rnd(10), 10 + rnd(10), 'air', { speedY: -1 });
+            break;
+          }
+        }
+        if (sy3 < 10) { dSurface = true; break; }
+      }
+      cur2 = [sx3, sy3];
     }
-    entX = curX;
-    // gate blocks the passage at the surface (opens after Skeletron)
-    self.tiles[self.idx(entX, targetY)] = T.DUNGEONDOOR;
-    self.tiles[self.idx(entX, targetY + 1)] = T.DUNGEONDOOR;
-    this.dungeonDoors = [
-      { x: entX, y: targetY }, { x: entX, y: targetY + 1 }
-    ];
-    this.dungeonEntrance = { x: entX * TILE + 8, y: this.surfaceY[entX] * TILE - 16 };
-    // keep the biome tight: dungeon brick must be nearby (vanilla counts bricks)
-    var dRect = { x0: dMinX - 4, y0: dMinY - 4, x1: dMaxX + 4, y1: dMaxY + 4 };
-    this.dungeonRect = dRect;
+    // DungeonEnt: the big brick entrance tower at the top point (clamped to the local surface)
+    var entX = Math.floor(cur2[0]);
+    var entY = Math.max(60, Math.min(cur2[1], this.surfaceY[clampI(entX, 0, W - 1)] + 20));
+    var eX0 = clampI(Math.floor(entX - dxS1 * 0.6 - rnd(2, 5)), 1, W - 2);
+    var eX1 = clampI(Math.floor(entX + dxS1 * 0.6 + rnd(2, 5)), 1, W - 2);
+    var eY0 = clampI(Math.floor(entY - dyS1 * 0.6 - rnd(2, 5)), 1, H - 2);
+    var eY1 = clampI(Math.floor(entY + dyS1 * 0.6 + rnd(8, 16)), 1, H - 2);
+    for (var ey2 = eY0; ey2 < eY1; ey2++) {
+      for (var ex2 = eX0; ex2 < eX1; ex2++) {
+        var eii = self.idx(ex2, ey2);
+        if (self.walls[eii] !== dWall) self.tiles[eii] = brick;
+        self.walls[eii] = dWall;
+      }
+    }
+    // hollow the entrance chamber (vanilla interior)
+    for (ey2 = eY0 + 1; ey2 < eY1 - 1; ey2++) {
+      for (ex2 = eX0 + 1; ex2 < eX1 - 1; ex2++) {
+        self.tiles[self.idx(ex2, ey2)] = T.AIR;
+        self.walls[self.idx(ex2, ey2)] = dWall;
+      }
+    }
+    // crenellated top (vanilla gaps pattern)
+    var gap = 2 + rnd(4), cnt = 0;
+    for (ex2 = eX0; ex2 < eX1; ex2++) {
+      for (ey2 = eY0 - 2; ey2 < eY0; ey2++) {
+        self.tiles[self.idx(ex2, ey2)] = brick;
+        self.walls[self.idx(ex2, ey2)] = dWall;
+      }
+      cnt++;
+      if (cnt >= gap) { ex2 += gap; cnt = 0; }
+    }
+    // brick tower from the entrance box up to the surface (vanilla full column)
+    for (ex2 = eX0; ex2 < eX1; ex2++) {
+      for (ey2 = eY1; ey2 < this.worldSurfaceAvg; ey2++) {
+        var tii = self.idx(ex2, ey2);
+        if (self.walls[tii] !== dWall) self.tiles[tii] = brick;
+        if (ex2 > eX0 && ex2 < eX1 - 1) self.walls[tii] = dWall;
+      }
+    }
+    // hollow the tower interior so it can be walked up
+    for (ey2 = eY1; ey2 < this.worldSurfaceAvg - 2; ey2++) {
+      for (ex2 = eX0 + 1; ex2 < eX1 - 1; ex2++) {
+        self.tiles[self.idx(ex2, ey2)] = T.AIR;
+        self.walls[self.idx(ex2, ey2)] = dWall;
+      }
+    }
+    // platforms up the tower every ~6 tiles
+    for (ey2 = eY1 - 8; ey2 > this.worldSurfaceAvg + 10; ey2 -= 6) {
+      for (ex2 = eX0 + 1; ex2 < eX1 - 1; ex2++) {
+        self.tiles[self.idx(ex2, ey2)] = T.PLATFORM;
+        self.walls[self.idx(ex2, ey2)] = dWall;
+      }
+    }
+    // door gate at the top of the entrance box + open shaft to the surface
+    var gateX = Math.floor((eX0 + eX1) / 2);
+    this.tiles[this.idx(gateX, eY0 + 1)] = T.DUNGEONDOOR;
+    this.tiles[this.idx(gateX, eY0 + 2)] = T.DUNGEONDOOR;
+    this.dungeonDoors = [{ x: gateX, y: eY0 + 1 }, { x: gateX, y: eY0 + 2 }];
+    this.dungeonEntrance = { x: gateX * TILE + 8, y: eY0 * TILE };
+    for (var osx = gateX - 2; osx <= gateX + 2; osx++) {
+      for (var osy = eY0; osy >= Math.min(eY0, this.surfaceY[clampI(osx, 0, W - 1)]) - 1; osy--) {
+        if (!self.inBounds(osx, osy)) break;
+        self.tiles[self.idx(osx, osy)] = T.AIR;
+        self.walls[self.idx(osx, osy)] = WALL.NONE;
+      }
+    }
+    this.dungeonRect = { x0: dMinX - 4, y0: Math.min(dMinY, eY0) - 4, x1: dMaxX + 4, y1: dMaxY + 4 };
     this.dungeonBrickCheck = true;
+    // furnish rooms: torches, spikes, chests with dungeon loot
+    for (var rr4 = 0; rr4 < dRooms.length; rr4++) {
+      var rm = dRooms[rr4];
+      var rw2 = Math.floor(rm.size * 0.5);
+      var tx4 = clampI(rm.x - rw2 + 2 + rnd(Math.max(1, rw2 * 2 - 3)), 2, W - 3);
+      var ty4 = clampI(rm.y + rw2 - 1, 2, H - 3);
+      if (self.get(tx4, ty4) === T.AIR) self.set(tx4, ty4, T.TORCH);
+      if (rng() < 0.4) {
+        for (var sp2 = 0; sp2 < 3 + rnd(4); sp2++) {
+          var spx = clampI(rm.x - rw2 + 2 + rnd(Math.max(1, rw2 * 2 - 3)), 2, W - 3);
+          if (self.get(spx, rm.y + rw2 - 1) === T.AIR && self.isSolid(spx, rm.y + rw2)) {
+            self.set(spx, rm.y + rw2 - 1, T.SPIKE);
+          }
+        }
+      }
+      if (!rm.treasure && rng() < 0.6) {
+        rm.treasure = true;
+        var cx6 = clampI(rm.x - 2 + rnd(5), 2, W - 3);
+        var cy6 = clampI(rm.y + rw2 - 1, 2, H - 3);
+        if (self.get(cx6, cy6) === T.AIR) {
+          self.set(cx6, cy6, T.CHEST);
+          var dinv = [{ id: I.GOLDENKEY, count: 1 }];
+          if (rng() < 0.4) dinv.push({ id: I.MURAMASA, count: 1 });
+          if (rng() < 0.4) dinv.push({ id: I.COBALTSHIELD, count: 1 });
+          if (rng() < 0.4) dinv.push({ id: I.AQUASCEPTER, count: 1 });
+          if (rng() < 0.4) dinv.push({ id: I.WATERBOLT, count: 1 });
+          if (rng() < 0.4) dinv.push({ id: I.GEM_RUBY, count: 1 });
+          self.chests.push({ x: cx6, y: cy6, inv: dinv });
+        }
+      }
+    }
   }
 
   // --- Desert pyramids: 1-2 sandstone pyramids in the desert ---
