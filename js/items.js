@@ -5891,7 +5891,7 @@ defItem(I.DEMONITEPICK, { name:'Nightmare Pickaxe', type:'tool', power:65, speed
 defItem(I.DEATHBRINGERPICK, { name:'Deathbringer Pickaxe', type:'tool', power:70, speed:1.8, dmg:12, range:3.4, color:'#c04048', icon:'⛏️', maxStack:1, desc:'Forged from Crimtane and Tissue Samples.' });
 // Melee
 defItem(I.COPPERSWORD, { name:'Copper Broadsword', type:'melee', dmg:9, speed:0.35, kb:5.5, range:4, color:'#e0834d', icon:'🗡️', maxStack:1 });
-defItem(I.COPPERSHORT, { name:'Copper Shortsword', type:'melee', dmg:5, speed:0.217, kb:4, range:1.5, shortSword:true, color:'#e0834d', icon:'🗡️', maxStack:1, desc:'A quick, narrow thrust. Every legend starts somewhere.' });
+defItem(I.COPPERSHORT, { name:'Copper Shortsword', type:'melee', dmg:5, speed:0.217, kb:4, range:2.5, shortSword:true, color:'#e0834d', icon:'🗡️', maxStack:1, desc:'A quick, narrow thrust. Every legend starts somewhere.' });
 defItem(I.SILVERSWORD, { name:'Silver Sword', type:'melee', dmg:14, speed:0.333, kb:6, range:4, color:'#cfd6e0', icon:'🗡️', maxStack:1 });
 defItem(I.GOLDSWORD, { name:'Gold Sword', type:'melee', dmg:15, speed:0.3, kb:6.5, range:4, color:'#ffd75e', icon:'🗡️', maxStack:1 });
 defItem(I.DEMONITESWORD, { name:'Demonite Sword', type:'melee', dmg:16, speed:0.333, kb:5, range:4, color:'#6a5cb8', icon:'🗡️', maxStack:1, desc:'Forged from demonite. Bane of the corruption.' });
