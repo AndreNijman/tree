@@ -40,6 +40,38 @@ var el = {};
   };
 })();
 
+// ---------- Settings persistence ----------
+function loadSettings() {
+  if (!game) return;
+  game.settings = { masterVol: 0.6, musicVol: 0.3, sfxVol: 0.5, uiScale: 1 };
+  try {
+    var s = JSON.parse(localStorage.getItem('tree.settings.v1') || '{}');
+    if (!s || typeof s !== 'object' || Array.isArray(s)) return;
+    for (var k in game.settings) {
+      if (typeof s[k] === 'number' && isFinite(s[k])) {
+        game.settings[k] = clamp(s[k], k === 'uiScale' ? 0.75 : 0, k === 'uiScale' ? 1.5 : 1);
+      }
+    }
+  } catch(e) {}
+}
+function saveSettings() {
+  try {
+    if (game) localStorage.setItem('tree.settings.v1', JSON.stringify(game.settings));
+    return true;
+  } catch(e) { return false; }
+}
+function applySettings() {
+  if (!game || !game.settings) return;
+  if (typeof AudioSys !== 'undefined') {
+    AudioSys.setVolume('master', game.settings.masterVol);
+    AudioSys.setVolume('music', game.settings.musicVol);
+    AudioSys.setVolume('sfx', game.settings.sfxVol);
+  }
+  if (game.settings && game.settings.uiScale) {
+    document.documentElement.style.setProperty('--ui-scale', game.settings.uiScale);
+  }
+}
+
 // ---------- Game construction ----------
 function buildGame(seed, evil, difficulty) {
   game = {
@@ -85,6 +117,8 @@ function buildGame(seed, evil, difficulty) {
     fpsAcc: 0,
     fpsCount: 0,
     craftCat: 'All',
+    craftSearch: '',
+    settings: { masterVol: 0.6, musicVol: 0.3, sfxVol: 0.5, uiScale: 1.0 },
     pylonOpen: false,
     activePylon: null,
     torchGod: null,
@@ -134,6 +168,8 @@ function buildGame(seed, evil, difficulty) {
 
   // guide
   wireGameMethods();
+  loadSettings();
+  applySettings();
   spawnEntity(game, E.GUIDE, game.world.guidePos.x, game.world.guidePos.y);
 
   // town NPCs
@@ -1292,7 +1328,16 @@ function wireGameMethods() {
   };
 
   game.spawnMinePuff = function(x, y, color) {
-    game.fx.push({ type: 'break', x: x, y: y, t: 0.2, max: 0.2, seed: Math.random() * 100, color: color || '#c8c8c8' });
+    var col = color || '#c8c8c8';
+    for (var pi = 0; pi < 3; pi++) {
+      game.fx.push({ type: 'break', x: x + (Math.random() - 0.5) * 8, y: y + (Math.random() - 0.5) * 8, t: 0.25, max: 0.25, seed: Math.random() * 100, color: col });
+    }
+    // track tile for crack rendering
+    var mtx = Math.floor(x / TILE), mty = Math.floor(y / TILE);
+    if (game.world.inBounds(mtx, mty)) {
+      if (!game.minedTiles) game.minedTiles = {};
+      game.minedTiles[mtx + ',' + mty] = 12;
+    }
   };
 
   game.shake = function(mag, dur) {
@@ -1671,17 +1716,20 @@ function wireGameMethods() {
     } else if (bossId === 'moonlord' && !game.victory) {
       game.victory = true;
       game.message('You have defeated the Moon Lord! The world is saved!');
-      var cols = ['#ffe14d', '#ff4d6d', '#6bc8ff', '#6bff8a', '#c8a8f0', '#ffffff'];
-      for (var i = 0; i < 60; i++) {
+      if (game.shake) game.shake(10, 0.6);
+      game.flash();
+      var cols = ['#ffe14d', '#ff4d6d', '#6bc8ff', '#6bff8a', '#c8a8f0', '#ffffff', '#ff8c4d', '#4dffd4'];
+      for (var i = 0; i < 80; i++) {
         game.fx.push({
           type: 'break',
-          x: game.player.x + (Math.random() * 400 - 200),
-          y: game.player.y - 160 + Math.random() * 320,
-          t: 1.5, max: 1.5,
+          x: game.player.x + (Math.random() * 500 - 250),
+          y: game.player.y - 200 + Math.random() * 400,
+          t: 2.0, max: 2.0,
           seed: Math.random() * 100,
           color: cols[Math.floor(Math.random() * cols.length)]
         });
       }
+      game.spawnFloatingText(game.player.x, game.player.y - 40, 'THE WORLD IS SAVED!', '#ffe14d');
       showVictory();
     } else if (bossId === 'kingslime') {
       game.message('King Slime defeated! The slimes bow.');
@@ -1792,14 +1840,46 @@ function wireGameMethods() {
     if (ov) { ov.classList.remove('hidden'); return; }
     ov = document.createElement('div');
     ov.id = 'victory';
-    ov.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,15,0.92);color:#ffe14d;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;font-family:monospace;text-align:center;';
-    ov.innerHTML = '<div style="font-size:42px;margin-bottom:14px;text-shadow:0 0 18px #ffe14d;">YOU WIN!</div>' +
-      '<div style="font-size:16px;color:#c8d8ff;margin-bottom:8px;">The Moon Lord has been defeated.</div>' +
-      '<div style="font-size:14px;color:#8aa;margin-bottom:24px;">Your Hallow is at peace... for now.</div>' +
-      '<div style="font-size:12px;color:#667;">Total kills: <span id="vickills"></span></div>';
+    ov.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,15,0.94);color:#ffe14d;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;font-family:monospace;text-align:center;overflow-y:auto;';
+    var b = game.bossesDefeated || {};
+    var bossCount = (b.kingslime?1:0)+(b.eyeofcthulhu?1:0)+(b.eaterofworlds?1:0)+(b.brainofcthulhu?1:0)+(b.queenbee?1:0)+(b.skeletron?1:0)+(b.wallofflesh?1:0)+(b.twins?1:0)+(b.destroyer?1:0)+(b.skelprime?1:0)+(b.queenslime?1:0)+(b.plantera?1:0)+(b.golem?1:0)+(b.duke?1:0)+(b.empress?1:0)+(b.cultist?1:0)+(b.moonlord?1:0)+(b.deerclops?1:0);
+    var days = game.dayCount || 0;
+    var kills = game.kills || 0;
+    var bestiaryTotal = game.bestiary ? Object.keys(game.bestiary).length : 0;
+    var npcCount = 0;
+    for (var i = 0; i < game.entities.length; i++) {
+      var e = game.entities[i];
+      if (e && e.dmg === 0 && e.hp >= 9000 && e !== game.player) npcCount++;
+    }
+    var itemList = '';
+    var bossList = '';
+    var bossNames = {kingslime:'King Slime',eyeofcthulhu:'Eye of Cthulhu',eaterofworlds:'Eater of Worlds',
+      brainofcthulhu:'Brain of Cthulhu',queenbee:'Queen Bee',skeletron:'Skeletron',wallofflesh:'Wall of Flesh',
+      twins:'The Twins',destroyer:'Destroyer',skelprime:'Skeletron Prime',queenslime:'Queen Slime',
+      plantera:'Plantera',golem:'Golem',duke:'Duke Fishron',empress:'Empress of Light',
+      cultist:'Lunatic Cultist',moonlord:'Moon Lord',deerclops:'Deerclops'};
+    for (var k in bossNames) {
+      if (b[k]) bossList += '<span style="color:#6bff8a;">'+bossNames[k]+'</span> ';
+      else bossList += '<span style="color:#334;">'+bossNames[k]+'</span> ';
+    }
+    ov.innerHTML = '<div style="font-size:48px;margin-bottom:8px;text-shadow:0 0 24px #ffe14d,0 0 48px #ff8c4d;">VICTORY</div>' +
+      '<div style="font-size:15px;color:#c8d8ff;margin-bottom:18px;">The Moon Lord has fallen. The world is saved.</div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;font-size:13px;color:#aac;margin-bottom:18px;text-align:left;">' +
+        '<div>Bosses defeated: <span style="color:#ffe14d;">'+bossCount+'/18</span></div>' +
+        '<div>Days survived: <span style="color:#ffe14d;">'+days+'</span></div>' +
+        '<div>Total kills: <span style="color:#ffe14d;">'+kills+'</span></div>' +
+        '<div>Town NPCs: <span style="color:#ffe14d;">'+npcCount+'</span></div>' +
+        '<div>Species discovered: <span style="color:#ffe14d;">'+bestiaryTotal+'</span></div>' +
+        '<div>World evil: <span style="color:#ffe14d;">'+(game.world.evil==='crimson'?'Crimson':'Corruption')+'</span></div>' +
+      '</div>' +
+      '<div style="font-size:11px;color:#667;margin-bottom:6px;">Bosses conquered:</div>' +
+      '<div style="font-size:10px;color:#556;margin-bottom:18px;line-height:1.6;max-width:420px;">'+bossList+'</div>' +
+      '<div style="font-size:11px;color:#556;margin-bottom:18px;font-style:italic;">The sandbox awaits. Explore, build, and conquer what remains.</div>' +
+      '<button id="victory-continue" style="background:#2a3a2a;color:#6bff8a;border:1px solid #4a6a4a;padding:10px 28px;font-size:14px;font-family:monospace;cursor:pointer;border-radius:4px;">Continue Playing</button>' +
+      '<div style="font-size:10px;color:#445;margin-top:10px;">or press Esc to access Save & Quit</div>';
     document.body.appendChild(ov);
-    var kl = document.getElementById('vickills');
-    if (kl) kl.textContent = game.kills || 0;
+    var btn = document.getElementById('victory-continue');
+    if (btn) btn.onclick = function() { ov.classList.add('hidden'); };
   }
   game.showVictory = showVictory;
 
@@ -1941,6 +2021,15 @@ function step(dt) {
     }
   }
 
+  // decay mined tile crack markers
+  if (game.minedTiles) {
+    var mk;
+    for (mk in game.minedTiles) {
+      game.minedTiles[mk] -= dt;
+      if (game.minedTiles[mk] <= 0) delete game.minedTiles[mk];
+    }
+  }
+
   // right-click interaction
   if (MOUSE.rightJust) {
     MOUSE.rightJust = false;
@@ -2012,7 +2101,7 @@ function updateProjectiles() {
       o.starHits = o.starHits || [];
       for (var fsi = 0; fsi < game.entities.length; fsi++) {
         var fse = game.entities[fsi];
-        if (fse.dead || fse.dmg <= 0 || fse.minion || fse.armType || o.starHits.indexOf(fse) >= 0) continue;
+        if (!isCombatTarget(fse) || fse.armType || o.starHits.indexOf(fse) >= 0) continue;
         if (Math.abs(fse.x - fsnx) <= fse.w / 2 + 5 && Math.abs(fse.y - fsny) <= fse.h / 2 + 6) {
           o.starHits.push(fse);
           if (fse.boss) game.hitBoss(fse, 1000, 0, 0);
@@ -2098,7 +2187,7 @@ function updateProjectiles() {
       else {
         for (var pi = 0; pi < game.entities.length; pi++) {
           var pe = game.entities[pi];
-          if (pe.dead || pe.minion || pe.dmg <= 0) continue;
+          if (!isCombatTarget(pe)) continue;
           if (Math.abs(pe.x - o.x) <= pe.w / 2 + 8 && Math.abs(pe.y - o.y) <= pe.h / 2 + 8) {
             o.latched = true;
             o.piranhaTarget = pe;
@@ -2314,7 +2403,7 @@ function nearestEnemy(x, y) {
   var best = null, bd = 1e9;
   for (var i = 0; i < game.entities.length; i++) {
     var e = game.entities[i];
-    if (e.dead || e.armType || e.minion || e.dmg <= 0) continue;
+    if (!isCombatTarget(e) || e.armType) continue;
     var d = dist2(e.x, e.y, x, y);
     if (d < bd) { bd = d; best = e; }
   }
@@ -2401,7 +2490,7 @@ function triggerMinionWhipEffect(target, dmg, gameRef) {
   gameRef.fx.push({ type:'boom', x:target.x, y:target.y, t:0.25, max:0.25, seed:Math.random() * 100 });
   for (var i = 0; i < gameRef.entities.length; i++) {
     var e = gameRef.entities[i];
-    if (e.dead || e.minion || e.dmg <= 0 || dist(target.x, target.y, e.x, e.y) > 70) continue;
+    if (!isCombatTarget(e) || dist(target.x, target.y, e.x, e.y) > 70) continue;
     if (e.boss) gameRef.hitBoss(e, extra, 0, 0);
     else hitEntity(e, extra, 0, 0, gameRef);
   }
@@ -2414,7 +2503,7 @@ function explodeProjectile(o, primary) {
   if (game.shake) game.shake(3 + Math.min(4, (o.explosive || 40) / 20), 0.28);
   for (var i = 0; i < game.entities.length; i++) {
     var e = game.entities[i];
-    if (e === primary || e.dead || e.minion || e.dmg <= 0 || dist(o.x, o.y, e.x, e.y) > o.explosive) continue;
+    if (e === primary || !isCombatTarget(e) || dist(o.x, o.y, e.x, e.y) > o.explosive) continue;
     var splash = Math.max(1, Math.round(o.dmg * 0.65));
     if (e.boss) game.hitBoss(e, splash, 0, 0);
     else hitEntity(e, splash, 0, 0, game);
@@ -2459,7 +2548,7 @@ function pointNearBeam(o, target) {
 function beamHitEnemies(o) {
   for (var i = 0; i < game.entities.length; i++) {
     var e = game.entities[i];
-    if (e.dead || e.minion || e.dmg <= 0) continue;
+    if (!isCombatTarget(e)) continue;
     if ((e.boss === 'destroyer' || e.boss === 'eaterofworlds') && e.segments) {
       for (var s = 0; s < e.segments.length; s++) {
         var seg = e.segments[s];
@@ -2479,7 +2568,7 @@ function beamHitEnemies(o) {
 function zoneHitEnemies(o) {
   for (var i = 0; i < game.entities.length; i++) {
     var e = game.entities[i];
-    if (e.dead || e.minion || e.dmg <= 0 || projectileAlreadyHit(o, e)) continue;
+    if (!isCombatTarget(e) || projectileAlreadyHit(o, e)) continue;
     if (Math.abs(e.x - o.x) > (e.w / 2 + 18) || Math.abs(e.y - o.y) > (e.h / 2 + o.zoneHeight / 2)) continue;
     if (e.boss) game.hitBoss(e, o.dmg, 0, 0);
     else hitEntity(e, o.dmg, 0, 0, game);
@@ -2490,7 +2579,7 @@ function zoneHitEnemies(o) {
 function projHitEnemy(o) {
   for (var i = 0; i < game.entities.length; i++) {
     var e = game.entities[i];
-    if (e.dead || e.minion || e.dmg <= 0) continue;
+    if (!isCombatTarget(e)) continue;
     if (o.eventOnly === 'oldonesarmy' && !e.ooaEnemy) continue;
 
     // destroyer/eater of worlds segments have their own bodies
@@ -3958,7 +4047,18 @@ function pickEnemy() {
 function initInput() {
   document.addEventListener('keydown', function(e) {
     // don't hijack keys while typing in text fields
-    var isInput = e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable);
+    var isInput = e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable);
+    if (!$('settings').classList.contains('hidden')) {
+      if (e.key === 'Escape') { e.preventDefault(); closeSettings(); }
+      if (e.key === 'Tab') {
+        var controls = $('settings').querySelectorAll('button, input');
+        var first = controls[0], last = controls[controls.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+      return;
+    }
+    if (isInput) return;
     // block page-scroll keys BEFORE the repeat check — browser auto-repeat
     // events would otherwise scroll the page while holding space/arrows
     if (!isInput && [' ', 'Space', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].indexOf(e.key) >= 0) e.preventDefault();
@@ -4905,7 +5005,7 @@ function switchPanel(name) {
 }
 
 function renderPanel(name) {
-  if (name === 'inventory') renderInventory();
+  if (name === 'inventory') { renderInventory(); var si = $('inv-craft-search'); if (si) si.value = game.craftSearch; }
   else if (name === 'crafting') renderCrafting();
   else if (name === 'guide') renderGuide();
   else if (name === 'achievements') renderAchievements();
@@ -4958,27 +5058,92 @@ function updateHotbar() {
 }
 
 // ---------- Panel content ----------
+function escHTML(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function buildPanelHTML() {
-  $('panel-inventory').innerHTML = '<div id="inv-craft"><div class="inv-col-title">Crafting</div><div id="inv-craft-list" class="craft-list-target"></div></div><div id="inv-main"><div id="inv-grid"></div><div id="inv-desc"></div></div><div id="inv-equip"><div class="inv-col-title">Armor</div><div id="inv-armor"></div><div class="inv-col-title">Accessories</div><div id="inv-accessories"></div><div class="inv-col-title">Dyes</div><div id="inv-dyes"></div></div>';
+  $('panel-inventory').innerHTML = '<div id="inv-craft"><div class="inv-col-title">Crafting</div><div class="craft-search"><input id="inv-craft-search" type="text" placeholder="Search recipes..."></div><div id="inv-craft-list" class="craft-list-target"></div></div><div id="inv-main"><div id="inv-grid"></div><div id="inv-desc"></div></div><div id="inv-equip"><div class="inv-col-title">Armor</div><div id="inv-armor"></div><div class="inv-col-title">Accessories</div><div id="inv-accessories"></div><div class="inv-col-title">Dyes</div><div id="inv-dyes"></div></div>';
   $('panel-crafting').innerHTML = '<div id="craft-tabs"></div><div id="craft-list" class="craft-list-target"></div>';
   $('panel-guide').innerHTML = '<div id="guide-content"></div>';
 }
 
+var itemIconCache = {};
 function itemIconHTML(it) {
   if (!it) return '';
-  if (it.icon === 'block' || it.icon === 'bar') {
-    return '<div style="width:26px;height:26px;background:' + it.color + ';border:1px solid rgba(255,255,255,0.35);border-radius:3px;display:inline-block;box-sizing:border-box;"></div>';
+  var key = it.id;
+  if (!itemIconCache[key]) {
+    var icon = document.createElement('canvas');
+    icon.width = 32; icon.height = 32;
+    var iconCtx = icon.getContext('2d');
+    iconCtx.translate(16, 16); iconCtx.scale(1.6, 1.6);
+    drawItemIcon(iconCtx, it, 0, 0);
+    itemIconCache[key] = icon.toDataURL();
   }
-  return it.icon;
+  return '<img class="item-icon" src="' + itemIconCache[key] + '" width="26" height="26" alt="' + escHTML(it.name) + '" draggable="false" style="image-rendering:pixelated;pointer-events:none">';
 }
 
 function renderGuide() {
   var root = $('guide-content');
   if (!root) return;
   var selected = game.player.inventory.selectedItem();
-  var phase = game.hardmode ? 'Hardmode is active. Defeat the mechanical bosses, Plantera, Golem, the Dungeon ritual, and the Celestial Pillars.' :
-    'Gather basic ores, defeat the evil boss and Skeletron, then challenge the Wall of Flesh in the Underworld.';
-  var html = '<h3>Guide</h3><p>' + phase + '</p><p>Select an item in your inventory to see every recipe that uses it.</p>';
+  var p = game.player;
+  var inv = p.inventory;
+  // contextual advice based on progress
+  var tips = [];
+  var has = function(id) { for (var i = 0; i < 50; i++) { var s = inv.slots[i]; if (s && s.id === id && s.count > 0) return true; } return false; };
+  var hasAny = function(ids) { for (var j = 0; j < ids.length; j++) if (has(ids[j])) return true; return false; };
+  var killed = function(b) { return game.bossesDefeated && game.bossesDefeated[b]; };
+
+  if (!has(I.COPPERPICK) || (!has(I.COPPERSWORD) && !has(I.COPPERSHORT))) {
+    tips.push('Chop trees with your Copper Axe (right-click) to gather Wood.');
+  }
+  if (has(I.WOOD) && !has(I.WORKBENCH)) {
+    tips.push('Craft a Workbench from 10 Wood to unlock more recipes.');
+  }
+  if (has(I.WORKBENCH) && !has(I.TORCH) && !hasAny([I.TORCH, I.COPPERTORCH])) {
+    tips.push('Craft Torches from Gel + Wood to light your shelter.');
+  }
+  if (!hasAny([I.COPPERARMOR, I.IRONARMOR, I.TINARMOR])) {
+    tips.push('Smelt ore into Bars at a Furnace, then craft armor at an Anvil.');
+  }
+  if (!game.hardmode && !killed('wallofflesh')) {
+    if (hasAny([I.IRONPICK, I.LEADPICK, I.SILVERPICK])) {
+      tips.push('Mine deeper to find Gold/Platinum ore. Build a Furnace and Anvil for better gear.');
+    }
+    if (!killed('eyeofcthulhu') && !killed('eaterofworlds') && !killed('brainofcthulhu')) {
+      tips.push('Prepare for your first boss: build a arena with platforms and craft Demonite/Crimtane gear.');
+    }
+    if (killed('eyeofcthulhu') && !killed('eaterofworlds') && !killed('brainofcthulhu') && !killed('skeletron')) {
+      tips.push('Break Shadow Orbs / Crimson Hearts underground to find boss materials and gear.');
+    }
+    if ((killed('eaterofworlds') || killed('brainofcthulhu')) && !killed('skeletron')) {
+      tips.push('Find the Dungeon at the world edge. Defeat Skeletron to enter safely.');
+    }
+    if (killed('skeletron') && !killed('wallofflesh')) {
+      tips.push('Explore the Dungeon for loot. Find the Underworld and build a bridge to fight the Wall of Flesh.');
+    }
+  }
+  if (game.hardmode && !killed('twins') && !killed('destroyer') && !killed('skelprime')) {
+    tips.push('Craft Mechanical Boss souls at a Mythril/Orichalcum Anvil to summon the mechanical bosses.');
+  }
+  if (killed('twins') && killed('destroyer') && killed('skelprime') && !killed('plantera')) {
+    tips.push('Break Plantera\'s Bulbs in the underground Jungle to summon Plantera.');
+  }
+  if (killed('plantera') && !killed('golem')) {
+    tips.push('Defeat Plantera to enter the Jungle Temple and challenge the Golem.');
+  }
+  if (killed('golem') && !killed('cultist')) {
+    tips.push('Find the Lunatic Cultist ritual near the Dungeon to begin the Lunar event.');
+  }
+
+  var phase = game.hardmode ? 'Hardmode is active.' : 'Pre-Hardmode.';
+  var html = '<h3>Guide</h3><p>' + phase + '</p>';
+  if (tips.length > 0) {
+    html += '<div class="town-service"><h4>Next Steps</h4>';
+    for (var ti = 0; ti < Math.min(tips.length, 3); ti++) {
+      html += '<div class="ddesc" style="margin:2px 0;">' + tips[ti] + '</div>';
+    }
+    html += '</div>';
+  }
+  html += '<p style="margin-top:6px;font-size:0.7rem;opacity:0.7">Select an item in your inventory to see recipes.</p>';
   if (!selected || !ITEMS[selected.id]) {
     root.innerHTML = html + '<div class="ddesc">No item selected.</div>';
     return;
@@ -5070,7 +5235,35 @@ function renderInventory() {
       stats += ' <span class="dstat">Ammo ' + (loadedAmmo ? ITEMS[loadedAmmo].name : 'None') + '</span>';
     }
     if (it.type === 'ammo' && it.ammoGroup) stats += ' <span class="dstat">' + it.ammoGroup.charAt(0).toUpperCase() + it.ammoGroup.slice(1) + '</span>';
-    desc.innerHTML = '<div class="dname">' + (sel2.reforge ? sel2.reforge.name + ' ' : '') + it.name + '</div>' + (stats ? '<div>' + stats + '</div>' : '') + (it.desc ? '<div class="ddesc">' + it.desc + '</div>' : '');
+    var compHTML = '';
+    if (it.type === 'armor' && it.slot) {
+      var eqId = inv.armor[it.slot];
+      var eqIt = eqId ? ITEMS[eqId] : null;
+      var eqDef = eqIt ? eqIt.def : 0;
+      var diff = it.def - eqDef;
+      if (eqIt) {
+        compHTML = '<div class="dcomp"><span class="dcomp-label">vs ' + eqIt.name + '</span> <span class="dstat">Defense ' + eqDef + '</span> <span class="dcmp-change ' + (diff > 0 ? 'good' : diff < 0 ? 'bad' : '') + '">' + (diff > 0 ? '+' : '') + diff + '</span></div>';
+      } else {
+        compHTML = '<div class="dcomp"><span class="dcomp-label">Empty slot</span> <span class="dcmp-change good">+' + it.def + '</span></div>';
+      }
+    } else if (it.type === 'accessory') {
+      var eqAcc = null;
+      for (var ai = 0; ai < inv.accessories.length; ai++) {
+        if (inv.accessories[ai] === sel2.id) { eqAcc = inv.accessories[ai]; break; }
+      }
+      if (eqAcc) {
+        compHTML = '<div class="dcomp"><span class="dcomp-label">Equipped</span></div>';
+      } else {
+        var filledSlots = 0;
+        for (var aj = 0; aj < inv.accessories.length; aj++) { if (inv.accessories[aj]) filledSlots++; }
+        if (filledSlots < inv.accessories.length) {
+          compHTML = '<div class="dcomp"><span class="dcmp-change good">+Accessory Slot</span></div>';
+        } else {
+          compHTML = '<div class="dcomp"><span class="dcmp-change bad">All slots full</span></div>';
+        }
+      }
+    }
+    desc.innerHTML = '<div class="dname">' + (sel2.reforge ? sel2.reforge.name + ' ' : '') + it.name + '</div>' + (stats ? '<div>' + stats + '</div>' : '') + compHTML + (it.desc ? '<div class="ddesc">' + it.desc + '</div>' : '');
   } else {
     desc.innerHTML = '<div class="ddesc">Select an item to see its details.</div>';
   }
@@ -5230,19 +5423,29 @@ function matsHTML(r) {
 }
 
 function renderCrafting() {
+  if (!$('craft-search-input')) {
+    $('craft-tabs').innerHTML = '<div class="craft-search"><input id="craft-search-input" type="text" aria-label="Search recipes" placeholder="Search recipes..."></div><div id="craft-categories" class="craft-tabs-inner"></div>';
+  }
+  var search = game.craftSearch || '';
+  var inputs = [$('craft-search-input'), $('inv-craft-search')];
+  for (var si = 0; si < inputs.length; si++) {
+    if (inputs[si] && inputs[si].value !== search) inputs[si].value = search;
+  }
   var cats = ['All', 'Basic', 'Smelting', 'Tools', 'Melee', 'Ranged', 'Magic', 'Summoner', 'Armor', 'Accessories', 'Potions', 'Boss Summons'];
   var tabsHTML = '';
   for (var i = 0; i < cats.length; i++) {
     var act = game.craftCat === cats[i] ? ' active' : '';
     tabsHTML += '<button class="tab' + act + '" data-cat="' + cats[i] + '">' + cats[i] + '</button>';
   }
-  $('craft-tabs').innerHTML = tabsHTML;
+  $('craft-categories').innerHTML = tabsHTML;
 
+  var searchLower = search.trim().toLowerCase();
   var html = '';
   for (var r = 0; r < RECIPES.length; r++) {
     var rec = RECIPES[r];
     if (!recipeProgressionMet(game, rec)) continue;
     if (game.craftCat !== 'All' && recipeCategory(rec) !== game.craftCat) continue;
+    if (searchLower && rec.name.toLowerCase().indexOf(searchLower) === -1) continue;
     var ok = recipeAvailable(game, rec);
     html += '<div class="craft-row' + (ok ? '' : ' cant') + '" data-idx="' + r + '">';
     html += '<div class="cicon">' + itemIconHTML(ITEMS[rec.result]) + '</div>';
@@ -5251,6 +5454,7 @@ function renderCrafting() {
     html += '<div>' + matsHTML(rec) + '</div></div>';
     html += '</div>';
   }
+  if (!html) html = '<div class="craft-empty">No recipes found.</div>';
   $('craft-list').innerHTML = html;
   var invCraft = $('inv-craft-list');
   if (invCraft) invCraft.innerHTML = html;
@@ -5533,12 +5737,28 @@ function updateCrosshair() {
   var th = el.tilehint;
   var t = game.world.get(MOUSE.tpx, MOUSE.tpy);
   var txt = '';
-  if (t >= 0 && t !== T.AIR) {
+  var thClass = '';
+  // placement preview when holding a placeable item
+  var held = game.player.inventory && game.player.inventory.selectedItem();
+  if (held && (held.type === 'block' || held.type === 'pylon' || held.type === 'wall' || held.tile !== undefined)) {
+    var px = game.player.x, py = game.player.y;
+    var tx = MOUSE.tpx * TILE + 8, ty = MOUSE.tpy * TILE + 8;
+    var range = (held.type === 'wall') ? 6 : 5;
+    var inRange = dist(px, py, tx, ty) < range * TILE;
+    var curTile = game.world.get(MOUSE.tpx, MOUSE.tpy);
+    var canPlace = inRange && (curTile === T.AIR || (held.type !== 'wall' && curTile !== T.AIR));
+    if (!inRange) { txt = 'Too far!'; thClass = 'hint-bad'; }
+    else if (held.type === 'wall' && game.world.wall(MOUSE.tpx, MOUSE.tpy) !== WALL.NONE) { txt = 'Wall already here'; thClass = 'hint-bad'; }
+    else if (held.type === 'block' && curTile !== T.AIR) { txt = 'Space occupied'; thClass = 'hint-bad'; }
+    else if (game.world.overlapsPlayer(MOUSE.tpx, MOUSE.tpy, game.player)) { txt = 'Blocked by player'; thClass = 'hint-bad'; }
+    else { txt = 'Place ' + held.name; thClass = 'hint-ok'; }
+  } else if (t >= 0 && t !== T.AIR) {
     var name = TILE_DROP[t] ? ITEMS[TILE_DROP[t]].name : tileName(t);
     var hp = game.world.hp[game.world.idx(MOUSE.tpx, MOUSE.tpy)];
     txt = name + ' ' + hp;
   }
   th.textContent = txt;
+  th.className = thClass;
   th.style.left = (MOUSE.x + 14) + 'px';
   th.style.top = (MOUSE.y + 10) + 'px';
 }
@@ -5645,6 +5865,40 @@ function updateInteract() {
   }
 }
 
+// ---------- Settings panel ----------
+function syncSettingsUI() {
+  if (!game || !game.settings) return;
+  var m = $('master-vol'), mu = $('music-vol'), s = $('sfx-vol'), u = $('ui-scale');
+  if (!m) return;
+  m.value = game.settings.masterVol;
+  mu.value = game.settings.musicVol;
+  s.value = game.settings.sfxVol;
+  u.value = game.settings.uiScale;
+  $('master-vol-val').textContent = Math.round(game.settings.masterVol * 100) + '%';
+  $('music-vol-val').textContent = Math.round(game.settings.musicVol * 100) + '%';
+  $('sfx-vol-val').textContent = Math.round(game.settings.sfxVol * 100) + '%';
+  $('ui-scale-val').textContent = Math.round(game.settings.uiScale * 100) + '%';
+}
+function openSettings() {
+  if (!game || (!game.paused && !game.netMenu)) return;
+  syncSettingsUI();
+  $('settings').classList.remove('hidden');
+  $('mainmenu').inert = true;
+  $('settings-close').focus();
+}
+function closeSettings() {
+  $('settings').classList.add('hidden');
+  $('mainmenu').inert = false;
+  $('btn-settings').focus();
+}
+function setSetting(key, val) {
+  if (!game || !game.settings || !Object.prototype.hasOwnProperty.call(game.settings, key) || typeof val !== 'number' || !isFinite(val)) return;
+  game.settings[key] = clamp(val, key === 'uiScale' ? 0.75 : 0, key === 'uiScale' ? 1.5 : 1);
+  applySettings();
+  syncSettingsUI();
+  saveSettings();
+}
+
 // ---------- Pause / menus ----------
 function togglePause() {
   if (!game || !game.started) return;
@@ -5662,6 +5916,8 @@ function pauseGame() {
 }
 
 function resumeGame() {
+  $('settings').classList.add('hidden');
+  $('mainmenu').inert = false;
   game.paused = false;
   game.netMenu = false;
   $('mainmenu').classList.add('hidden');
@@ -5757,7 +6013,7 @@ function initDOM() {
   }
   function updateCursorItem() {
     var elc = $('cursor-item');
-    if (!game.held) { elc.style.display = 'none'; return; }
+    if (!game || !game.held) { elc.style.display = 'none'; return; }
     elc.style.display = 'flex';
     elc.innerHTML = itemIconHTML(ITEMS[game.held.id]) + (game.held.count > 1 ? '<span class="count">' + game.held.count + '</span>' : '');
     elc.style.left = (MOUSE.x + 6) + 'px';
@@ -5947,6 +6203,9 @@ function initDOM() {
     var tab = e.target.closest('.tab');
     if (tab) { game.craftCat = tab.getAttribute('data-cat'); renderCrafting(); }
   });
+  $('craft-tabs').addEventListener('input', function(e) {
+    if (e.target.id === 'craft-search-input') { game.craftSearch = e.target.value; renderCrafting(); }
+  });
   $('craft-list').addEventListener('click', function(e) {
     var row = e.target.closest('.craft-row');
     if (!row) return;
@@ -5973,6 +6232,9 @@ function initDOM() {
       renderCrafting();
       renderInventory();
     }
+  });
+  $('panel-inventory').addEventListener('input', function(e) {
+    if (e.target.id === 'inv-craft-search') { game.craftSearch = e.target.value; renderCrafting(); }
   });
 
   // menus
@@ -6002,6 +6264,12 @@ function initDOM() {
   });
   $('btn-continue').addEventListener('click', function() { resumeGame(); });
   $('btn-save').addEventListener('click', function() { saveAndQuit(); });
+  $('btn-settings').addEventListener('click', function() { openSettings(); });
+  $('settings-close').addEventListener('click', function() { closeSettings(); });
+  $('master-vol').addEventListener('input', function() { setSetting('masterVol', parseFloat(this.value)); });
+  $('music-vol').addEventListener('input', function() { setSetting('musicVol', parseFloat(this.value)); });
+  $('sfx-vol').addEventListener('input', function() { setSetting('sfxVol', parseFloat(this.value)); });
+  $('ui-scale').addEventListener('input', function() { setSetting('uiScale', parseFloat(this.value)); });
   $('btn-leave-hosted').addEventListener('click', function() { Net.disconnect(true); });
   $('mp-refresh').addEventListener('click', function() { Net.refreshLobbies(); });
   $('mp-join').addEventListener('click', function() { Net.joinCode($('mp-code').value); });

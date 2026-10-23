@@ -97,10 +97,10 @@ function twinsStep(e, game) {
   var tx = p.x + Math.cos(e.orbitAng + Math.PI * 0.25) * wantDist;
   var ty = p.y + Math.sin(e.orbitAng + Math.PI * 0.25) * wantDist - 30;
   // phase2 dash
-  e.attackTimer -= 1 / 60;
-  if (e.phase2 && e.attackTimer <= -4) {
+  e.dashTimer = (e.dashTimer === undefined ? 4 : e.dashTimer) - 1 / 60;
+  if (e.phase2 && e.dashTimer <= 0) {
     e.charge = 0.7;
-    e.attackTimer = 1.0;
+    e.dashTimer = 4;
   }
   if (e.charge > 0) {
     e.charge -= 1 / 60;
@@ -145,7 +145,7 @@ function spawnDestroyer(game) {
   AudioSys.play('roar');
   var segCount = 62, segHp = 500, headHp = 49000;
   var e = makeBoss(game, { boss:'destroyer', name:'The Destroyer', w:52, h:36, hp:headHp + segCount * segHp, maxHp:headHp + segCount * segHp, dmg:70, def:0, color:'#8a8f9a', barColor:'#9ad0ff', x:p.x + 600, y:p.y - 220 });
-  e.headHp = headHp; e.segHp = segHp; e.segCount = segCount;
+  e.headHp = e.hp; e.segHp = segHp; e.segCount = segCount;
   e.wave = 0;
   e.segments = [];
   var x = e.x, y = e.y;
@@ -472,8 +472,9 @@ function golemStep(e, game) {
     AudioSys.play('laser');
   }
   // summon lihzahrd adds in phase 1
-  if (!e.phase2 && e.attackTimer <= -2) {
-    e.attackTimer = 6;
+  e.summonTimer = (e.summonTimer === undefined ? 6 : e.summonTimer) - 1 / 60;
+  if (!e.phase2 && e.summonTimer <= 0) {
+    e.summonTimer = 6;
     for (var j = 0; j < 2; j++) spawnEntity(game, E.LIHZARD, e.x + (Math.random() * 100 - 50), e.y + 40);
     AudioSys.play('spawn');
   }
@@ -515,8 +516,9 @@ function dukeStep(e, game) {
     e.y += (dy2 / d2) * speed * 0.4;
   }
   // bubble + cthulhunado barrage
-  if (e.attackTimer <= -0.8) {
-    e.attackTimer = e.phase2 ? 0.7 : 1.2;
+  e.bubbleTimer = (e.bubbleTimer === undefined ? 1.1 : e.bubbleTimer) - 1 / 60;
+  if (e.bubbleTimer <= 0) {
+    e.bubbleTimer = e.phase2 ? 0.7 : 1.2;
     var n = e.phase2 ? 6 : 3;
     for (var i = 0; i < n; i++) {
       var ang = Math.atan2(p.y - e.y, p.x - e.x) + (i - (n - 1) / 2) * 0.25;
@@ -581,10 +583,10 @@ function spawnCultist(game) {
 function cultistStep(e, game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   bossLeash(e, game);
-  e.attackTimer -= 1 / 60;
+  e.teleportTimer = (e.teleportTimer || 0) - 1 / 60;
   // teleport around the player
-  if (e.attackTimer <= 0) {
-    e.attackTimer = 2.4;
+  if (e.teleportTimer <= 0) {
+    e.teleportTimer = 2.4;
     var ang = Math.random() * 6.28;
     var nx = p.x + Math.cos(ang) * (120 + Math.random() * 100);
     var ny = p.y + Math.sin(ang) * 80 - 100;
@@ -594,7 +596,8 @@ function cultistStep(e, game) {
     AudioSys.play('magic');
   }
   // phantasm bolts
-  if (e.attackTimer <= 1.4) {
+  e.attackTimer -= 1 / 60;
+  if (e.attackTimer <= 0) {
     e.attackTimer = e.phase2 ? 0.8 : 1.4;
     var n = e.phase2 ? 8 : 4;
     for (var i = 0; i < n; i++) {
@@ -1381,7 +1384,15 @@ function bossHit(e, dmg, kbx, kby, game) {
     if (e.hp <= 0) killBoss(e, game);
     return;
   }
-  if (e.boss === 'destroyer' || e.boss === 'eaterofworlds') {
+  if (e.boss === 'destroyer') {
+    e.hp -= Math.max(1, Math.round(dmg - Math.max(0, e.defV - (e.statusDefensePenalty || 0)) * 0.5));
+    e.headHp = e.hp;
+    e.flash = 0.08;
+    if (e.hp <= 0) killBoss(e, game);
+    else AudioSys.play('hit');
+    return;
+  }
+  if (e.boss === 'eaterofworlds') {
     // entity e is head; segments handled separately via segmentHit
     var reduced = Math.max(1, Math.round(dmg - Math.max(0, e.defV - (e.statusDefensePenalty || 0)) * 0.5));
     e.headHp -= reduced;
@@ -1406,6 +1417,11 @@ function bossHit(e, dmg, kbx, kby, game) {
 function segmentHit(e, s, dmg, game) {
   if (s.dead || e.dead) return;
   if (typeof Net !== 'undefined' && Net.claimHit(e, dmg, true)) { s.flash = 0.08; return; }
+  if (e.boss === 'destroyer') {
+    bossHit(e, dmg, 0, 0, game);
+    s.flash = 0.08;
+    return;
+  }
   var reduced = Math.max(1, Math.round(dmg - Math.max(0, e.defV - (e.statusDefensePenalty || 0)) * 0.5));
   s.hp -= reduced;
   s.flash = 0.08;
@@ -1436,11 +1452,6 @@ function armHit(e, arm, dmg, game) {
 }
 
 function killBoss(e, game) {
-  if (typeof B83_BOSS_DROPS !== 'undefined' && B83_BOSS_DROPS[e.boss]) {
-    for (var bi83 = 0; bi83 < B83_BOSS_DROPS[e.boss].length; bi83++) {
-      game.addPickup(e.x, e.y, B83_BOSS_DROPS[e.boss][bi83], 1);
-    }
-  }
   if (e.dead) return;
   e.dead = true;
   AudioSys.play('bossDeath');
@@ -1456,6 +1467,11 @@ function killBoss(e, game) {
   game.message('You have defeated ' + e.name + '!');
   if (game.shake) game.shake(7, 0.5);
   var drops = [];
+  if (typeof B83_BOSS_DROPS !== 'undefined' && B83_BOSS_DROPS[e.boss]) {
+    for (var bi83 = 0; bi83 < B83_BOSS_DROPS[e.boss].length; bi83++) {
+      drops.push({ id:B83_BOSS_DROPS[e.boss][bi83], count:1 });
+    }
+  }
   if (e.boss === 'twins') {
     drops.push({ id: I.HALLOWEDBAR, count: 12 + Math.floor(Math.random() * 8) });
     drops.push({ id: I.SOUL_SIGHT, count: 8 + Math.floor(Math.random() * 6) });

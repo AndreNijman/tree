@@ -1278,6 +1278,106 @@ check('B78g: ~30 heart crystals generate underground and mine to consumable hear
 check('B78g: Mana Crystal consumes +20 max mana, recipe exists', v78g.manaCrystal && v78g.manaRecipe, JSON.stringify(v78g));
 
 
+// ===== CLASS BALANCE: every class has weapons at each tier =====
+const classBalance = await page.evaluate(() => {
+  var out = { melee: {}, ranged: {}, magic: {}, summon: {} };
+  var tiers = {
+    preHM: { min: 0, max: 55 },
+    earlyHM: { min: 20, max: 80 },
+    lateHM: { min: 40, max: 130 },
+    endgame: { min: 60, max: 999 }
+  };
+  var keys = Object.keys(I);
+  for (var k = 0; k < keys.length; k++) {
+    var id = I[keys[k]];
+    var def = ITEMS[id];
+    if (!def || !def.type) continue;
+    var cls = null;
+    if (def.type === 'melee' && def.dmg) cls = 'melee';
+    else if (def.type === 'ranged' && def.dmg) cls = 'ranged';
+    else if (def.type === 'magic' && def.dmg) cls = 'magic';
+    else if (def.type === 'summonstaff' && def.dmg) cls = 'summon';
+    if (!cls) continue;
+    var dmg = def.dmg || 0;
+    for (var t in tiers) {
+      if (dmg >= tiers[t].min && dmg <= tiers[t].max) {
+        if (!out[cls][t]) out[cls][t] = [];
+        out[cls][t].push({ id: id, dmg: dmg, name: def.name || id });
+      }
+    }
+  }
+  // Check minimum weapon count per class per tier
+  var result = {};
+  for (var cls in out) {
+    result[cls] = {};
+    for (var t in tiers) {
+      var count = out[cls][t] ? out[cls][t].length : 0;
+      result[cls][t] = count;
+    }
+  }
+  return result;
+});
+check('Class balance: melee has weapons at every tier',   classBalance.melee.preHM >= 3 && classBalance.melee.earlyHM >= 3 && classBalance.melee.lateHM >= 3 && classBalance.melee.endgame >= 3,
+  JSON.stringify(classBalance.melee));
+check('Class balance: ranged has weapons at every tier',   classBalance.ranged.preHM >= 2 && classBalance.ranged.earlyHM >= 2 && classBalance.ranged.lateHM >= 2 && classBalance.ranged.endgame >= 1,
+  JSON.stringify(classBalance.ranged));
+check('Class balance: magic has weapons at every tier',   classBalance.magic.preHM >= 2 && classBalance.magic.earlyHM >= 2 && classBalance.magic.lateHM >= 2 && classBalance.magic.endgame >= 2,
+  JSON.stringify(classBalance.magic));
+check('Class balance: summon has weapons at every tier',   classBalance.summon.preHM >= 1 && classBalance.summon.earlyHM >= 1 && classBalance.summon.lateHM >= 1 && classBalance.summon.endgame >= 1,
+  JSON.stringify(classBalance.summon));
+
+// ===== ARMOR SET BONUS VERIFICATION =====
+const armorSets = await page.evaluate(() => {
+  var sets = {};
+  var keys = Object.keys(I);
+  for (var k = 0; k < keys.length; k++) {
+    var id = I[keys[k]];
+    var def = ITEMS[id];
+    if (!def || def.type !== 'armor' || !def.slot) continue;
+    var setKey = (def.set || def.name || '').toLowerCase().replace(/ .*$/, '');
+    if (!setKey || setKey === 'undefined') continue;
+    if (!sets[setKey]) sets[setKey] = { head: 0, chest: 0, legs: 0, totalDef: 0 };
+    if (def.slot === 'head') sets[setKey].head++;
+    if (def.slot === 'chest') sets[setKey].chest++;
+    if (def.slot === 'legs') sets[setKey].legs++;
+    sets[setKey].totalDef += (def.def || 0);
+  }
+  // Count complete sets (have all 3 pieces)
+  var complete = 0;
+  var completeNames = [];
+  for (var s in sets) {
+    if (sets[s].head >= 1 && sets[s].chest >= 1 && sets[s].legs >= 1) {
+      complete++;
+      completeNames.push(s);
+    }
+  }
+  return { sets: Object.keys(sets).length, complete: complete, names: completeNames.slice(0, 15) };
+});
+check('Armor: multiple complete armor sets exist', armorSets.complete >= 8,
+  JSON.stringify(armorSets));
+
+// ===== DIFFICULTY MODE SCALING =====
+const difficulty = await page.evaluate(() => {
+  var dm = typeof DIFFICULTY !== 'undefined' ? DIFFICULTY : {};
+  return {
+    hasNormal: !!dm.normal,
+    hasExpert: !!dm.expert,
+    hasMaster: !!dm.master,
+    expertHpMul: dm.expert ? dm.expert.hp : 0,
+    masterHpMul: dm.master ? dm.master.hp : 0,
+    expertCoinMul: dm.expert ? dm.expert.coin : 0,
+    masterCoinMul: dm.master ? dm.master.coin : 0
+  };
+});
+check('Difficulty: all three modes defined', difficulty.hasNormal && difficulty.hasExpert && difficulty.hasMaster,
+  JSON.stringify(difficulty));
+check('Difficulty: expert doubles enemy HP', difficulty.expertHpMul === 2,
+  JSON.stringify(difficulty));
+check('Difficulty: master triples enemy HP', difficulty.masterHpMul === 3,
+  JSON.stringify(difficulty));
+check('Difficulty: expert 2.5x coin drops', difficulty.expertCoinMul === 2.5,
+  JSON.stringify(difficulty));
+
 // ===== 300-STEP CLEAN LOOP =====
 const loop = await page.evaluate(() => {
   var errs = [];
@@ -1285,6 +1385,83 @@ const loop = await page.evaluate(() => {
   return { clean: errs.length === 0, errors: errs };
 });
 check('Loop: 300 clean frames', loop.clean, JSON.stringify(loop));
+
+await page.evaluate(() => {
+  game.paused = false;
+  game.player.dying = false;
+  document.getElementById('mainmenu').classList.add('hidden');
+  game.craftSearch = '';
+  game.craftCat = 'All';
+  game.panelTab = 'crafting';
+  openPanel();
+  game.paused = true;
+});
+await page.locator('#craft-search-input').fill('');
+await page.locator('#craft-search-input').pressSequentially('torch');
+check('UI: search keeps focus while typing', await page.evaluate(() => document.activeElement.id === 'craft-search-input' && game.craftSearch === 'torch'));
+check('UI: search filters recipes', await page.evaluate(() => {
+  var rows = Array.from(document.querySelectorAll('#craft-list .cname'));
+  return rows.length > 0 && rows.every(e => e.textContent.toLowerCase().includes('torch'));
+}));
+check('UI: typing does not trigger gameplay keys', await page.evaluate(() => !KEY_JUST.h && !KEY_JUST.r && !KEY_JUST.t));
+await page.locator('#craft-search-input').fill('no such recipe xyz');
+check('UI: empty search result', await page.locator('#craft-list .craft-empty').count() === 1);
+await page.evaluate(() => { switchPanel('inventory'); renderPanel('inventory'); });
+check('UI: search synchronized between panels', await page.locator('#inv-craft-search').inputValue() === 'no such recipe xyz');
+await page.locator('#inv-craft-search').fill('');
+const comparison = await page.evaluate(() => {
+  var inv = game.player.inventory, selected = inv.selected, old = inv.slots[0], armor = inv.armor.head;
+  var pieces = Object.keys(ITEMS).filter(id => ITEMS[id].type === 'armor' && ITEMS[id].slot === 'head' && Number.isFinite(ITEMS[id].def)).sort((a,b) => ITEMS[a].def - ITEMS[b].def);
+  inv.selected = 0; inv.armor.head = pieces[0]; inv.slots[0] = { id: pieces[pieces.length - 1], count: 1 };
+  renderInventory();
+  var ok = !!document.querySelector('#inv-desc .dcmp-change.good') && !document.getElementById('inv-desc').textContent.includes('NaN');
+  inv.selected = selected; inv.slots[0] = old; inv.armor.head = armor;
+  closePanel(); pauseGame();
+  return ok;
+});
+check('UI: armor comparison shows defense upgrade', comparison);
+await page.locator('#btn-settings').click();
+check('UI: settings opens and focuses close control', await page.evaluate(() => document.activeElement.id === 'settings-close' && document.getElementById('mainmenu').inert));
+await page.locator('#master-vol').fill('0.25');
+await page.locator('#music-vol').fill('0.4');
+await page.locator('#sfx-vol').fill('0.7');
+check('UI: volume controls are independent and saved', await page.evaluate(() => {
+  AudioSys.init();
+  var saved = JSON.parse(localStorage.getItem('tree.settings.v1'));
+  return saved.masterVol === 0.25 && saved.musicVol === 0.4 && saved.sfxVol === 0.7 && AudioSys.masterVolume === 0.25 && Math.abs(AudioSys.master.gain.value - 0.25) < 0.001 && AudioSys.sfxVolume === 0.7;
+}));
+await page.locator('#ui-scale').fill('1.5');
+check('UI: scale affects panel, not canvas', await page.evaluate(() => {
+  var panel = document.getElementById('panel');
+  panel.classList.remove('hidden');
+  var bounds = panel.getBoundingClientRect();
+  var ok = getComputedStyle(panel).transform.includes('1.5') && getComputedStyle(document.getElementById('canvas')).transform === 'none' && bounds.right <= innerWidth && bounds.bottom <= innerHeight;
+  panel.classList.add('hidden');
+  return ok;
+}));
+await page.keyboard.press('Escape');
+check('UI: Escape closes settings without resuming', await page.evaluate(() => document.getElementById('settings').classList.contains('hidden') && game.paused && !document.getElementById('mainmenu').inert));
+check('UI: settings load clamps values and ignores invalid fields', await page.evaluate(() => {
+  localStorage.setItem('tree.settings.v1', JSON.stringify({ masterVol: -10, musicVol: 'bad', sfxVol: 9, uiScale: 20 }));
+  loadSettings();
+  var ok = game.settings.masterVol === 0 && game.settings.musicVol === 0.3 && game.settings.sfxVol === 1 && game.settings.uiScale === 1.5;
+  localStorage.setItem('tree.settings.v1', 'not json'); loadSettings();
+  return ok && game.settings.masterVol === 0.6 && game.settings.uiScale === 1;
+}));
+check('UI: settings storage failure is nonfatal', await page.evaluate(() => {
+  var original = Storage.prototype.setItem;
+  try { Storage.prototype.setItem = function() { throw new Error('unavailable'); }; return saveSettings() === false; }
+  finally { Storage.prototype.setItem = original; }
+}));
+await page.setViewportSize({ width: 390, height: 720 });
+await page.locator('#btn-settings').click();
+check('UI: mobile settings remain within viewport', await page.evaluate(() => {
+  var b = document.getElementById('settings').getBoundingClientRect();
+  return b.left >= 0 && b.top >= 0 && b.right <= innerWidth && b.bottom <= innerHeight;
+}));
+await page.locator('#settings-close').click();
+await page.evaluate(() => { applySettings(); saveSettings(); resumeGame(); });
+await page.setViewportSize({ width: 1280, height: 720 });
 
 // ===== BROWSER ERRORS =====
 var relayCors = errors.some(e => e.includes('tree-relay.tung-tung-tung-sahur.workers.dev/lobbies'));

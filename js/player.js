@@ -470,7 +470,13 @@ Player.prototype.tryMine = function(game, def, item) {
       var got = game.player.inventory.add(drop, 1);
       game.spawnFloatingText(tx * TILE + 8, ty * TILE - 4, ITEMS[drop].name);
       AudioSys.play('break');
-      game.fx.push({ type: 'break', x: tx * TILE + 8, y: ty * TILE + 8, color: tileColor(t), t: 0.2 });
+      // break particles: more for harder tiles
+      var bCount = 4 + Math.floor(Math.random() * 3);
+      for (var bi = 0; bi < bCount; bi++) {
+        game.fx.push({ type: 'break', x: tx * TILE + 8 + (Math.random() - 0.5) * 10, y: ty * TILE + 8 + (Math.random() - 0.5) * 10, t: 0.3, max: 0.3, seed: Math.random() * 100, color: tileColor(t) });
+      }
+      // subtle screen shake on break
+      game.shake(1.5, 0.12);
       if (Achievements) {
         if (drop === I.WOOD) Achievements.unlock('timber', game);
         else if (drop === I.COBALT || drop === I.MYTHRIL || drop === I.ADAMANTITE ||
@@ -520,7 +526,7 @@ Player.prototype.tryMelee = function(game, def, force, item) {
     var ncnt = 0, nr = (def.nearbyRadius || 96) * (def.nearbyRadius || 96);
     for (var ni = 0; ni < game.entities.length; ni++) {
       var ne = game.entities[ni];
-      if (ne.dead || ne.dmg <= 0) continue;
+      if (!isCombatTarget(ne)) continue;
       var ndx = ne.x - this.x, ndy = ne.y - this.y;
       if (ndx * ndx + ndy * ndy < nr) ncnt++;
     }
@@ -534,7 +540,7 @@ Player.prototype.tryMelee = function(game, def, force, item) {
     for (var i = 0; i < game.entities.length; i++) {
       var e = game.entities[i];
       if (e.ooaSentry) continue;
-      if (e.dead || e.dmg <= 0) continue;
+      if (!isCombatTarget(e)) continue;
       var dx = e.x - this.x, dy = e.y - this.y;
       if (dx * dx + dy * dy >= reach * reach) continue;
       if (thrust) {
@@ -951,7 +957,7 @@ Player.prototype.tryWhip = function(game, def, item) {
   var boltSpawned = false;
   for (var i = 0; i < game.entities.length; i++) {
     var e = game.entities[i];
-    if (e.dead || e.hp <= 0 || e.ooaSentry) continue;
+    if (!isCombatTarget(e) || e.hp <= 0) continue;
     var near = distPointSeg(e.x, e.y, x0, y0, tip.x, tip.y) < (e.w + 30) / 2;
     if (!near) continue;
     if (e.boss) {
@@ -1265,9 +1271,10 @@ Player.prototype.damage = function(amount, from, kbx) {
   }
   this.vx += (kbx || 0) * kbMul;
   this.vy = -4;
-  AudioSys.play('hurt');
+  var isHeavy = reduced >= 30;
+  AudioSys.play(isHeavy ? 'hurtHard' : 'hurt');
   game.flash();
-  if (game.shake) game.shake(3, 0.2);
+  if (game.shake) game.shake(isHeavy ? 5 : 3, isHeavy ? 0.3 : 0.2);
   game.spawnFloatingText(this.x, this.y - 20, '-' + reduced, '#ff6b6b');
   if (this.hp <= 0) this.die();
 };
@@ -1338,6 +1345,7 @@ function tileColor(t) {
   map[T.FURN_TABLE] = '#9a6b3f';
   map[T.FURN_TOILET] = '#9a6b3f';
   map[T.FURN_TORCH] = '#9a6b3f';
+  map[T.FURN_SHELF] = '#9a6b3f';
 
 
 

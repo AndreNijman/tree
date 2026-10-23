@@ -77,6 +77,10 @@ function entityStats() {
   };
 }
 
+function isCombatTarget(e) {
+  return !!e && !e.dead && !e.minion && !e.ooaSentry && !e.rescue && !e.friendly && !!(e.boss || e.dmg > 0);
+}
+
 var ENT_DEF = {
   [E.SLIME]: { w:22, h:16, hp:14, dmg:6, def:0, color:'#5cbf6c', speed:1.6, name:'Green Slime', exp:1 },
   [E.PINKSLIME]: { w:40, h:30, hp:260, dmg:28, def:4, color:'#ff8fd0', speed:1.8, name:'Pink Slime', exp:4 },
@@ -424,12 +428,19 @@ function hitEntity(e, dmg, kbx, kby, game) {
   }
   var reduced = Math.max(1, Math.round(dmg - Math.max(0, e.def - (e.statusDefensePenalty || 0)) * 0.5));
   e.hp -= reduced;
-  e.flash = 0.1;
+  e.flash = 0.15;
   var kbMul = 1 - (e.kbResist || 0);
   e.kbVx = (e.kbVx || 0) + kbx * kbMul;
   e.kbVy = (e.kbVy || 0) + kby * kbMul;
-  game.fx.push({ type: 'spark', x: e.x, y: e.y, t: 0.18, max: 0.18, seed: Math.random() * 100, color: reduced >= 60 ? '#ffb04d' : '#ffe2a8' });
-  AudioSys.play('hit');
+  // hit spark: bigger and brighter for crits/heavy hits
+  var isHeavy = reduced >= 60;
+  var sparkSize = isHeavy ? 1.4 : 1;
+  game.fx.push({ type: 'spark', x: e.x, y: e.y, t: 0.2, max: 0.2, seed: Math.random() * 100, color: isHeavy ? '#ffb04d' : '#ffe2a8', size: sparkSize });
+  // floating damage number
+  game.spawnFloatingText(e.x + (Math.random() - 0.5) * 8, e.y - (e.h || 12) / 2, '' + reduced, isHeavy ? '#ff6040' : '#ffe14d');
+  AudioSys.play(isHeavy ? 'hit' : 'hitSoft');
+  // small screen shake on hit
+  if (game.shake) game.shake(0.8, 0.08);
   if (e.hp <= 0) killEntity(e, game);
 }
 

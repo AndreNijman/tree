@@ -128,7 +128,9 @@ recipe({ name:'Molten Greaves', result:I.MOLTENLEGS, count:1, mat:[[I.HELLSTONEB
 recipe({ name:'Slime Crown', result:I.SLIMECROWN, count:1, mat:[[I.GOLDBAR,8],[I.GEL,10]], station:'workbench', desc:'The crown of the slime king.' });
 recipe({ name:'Suspicious Looking Eye', result:I.SUSPICIOUSLEYE, count:1, mat:[[I.LENS,6]], station:'workbench', desc:'Something stirs within the pupil...' });
 recipe({ name:'Worm Food', result:I.WORMLOOD, count:1, mat:[[I.EBONSTONE,15],[I.GLOWSTONE,5]], station:'none', desc:'Summons the Eater of Worlds.' });
+recipe({ name:'Worm Food (Alt)', result:I.WORMLOOD, count:1, mat:[[I.ROTTEN_CHUNK,15],[I.GEL,5]], station:'workbench', desc:'Summons the Eater of Worlds.' });
 recipe({ name:'Bloody Spine', result:I.BLOODYSPINE, count:1, mat:[[I.CRIMSTONE,15],[I.GLOWSTONE,5]], station:'none', desc:'Summons the Brain of Cthulhu.' });
+recipe({ name:'Bloody Spine (Alt)', result:I.BLOODYSPINE, count:1, mat:[[I.VERTEBRA,15],[I.GEL,5]], station:'workbench', desc:'Summons the Brain of Cthulhu.' });
 recipe({ name:'Abeemination', result:I.ABEEMINATION, count:1, mat:[[I.HONEY,5],[I.GLOWSTONE,5],[I.GEL,3]], station:'none', desc:'The buzzing grows louder...' });
 recipe({ name:'Clothier Voodoo Doll', result:I.CLOTHIERDOLL, count:1, mat:[[I.BONE,5],[I.SILK,3]], station:'workbench', desc:'Cursed. Summons Skeletron.' });
 recipe({ name:'Deer Thing (Corruption)', result:I.DEERTHING, count:1, mat:[[I.FLINXFUR,3],[I.LENS,1],[I.DEMONITE,5]], station:'workbench', desc:'Calls a frozen terror in the Snow.' });
