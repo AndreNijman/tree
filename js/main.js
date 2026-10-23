@@ -35,6 +35,21 @@ var el = {};
     var r = origBreak.call(this, x, y);
     this.dirty = true;
     this.graveyardCache = null;
+    // Tree felling: award wood for every trunk tile the cascade removed
+    // (the chopped tile's own wood is granted by the normal TILE_DROP path).
+    // Not triggered for remote tile ops — applyTileOps bypasses breakTile.
+    if (this._fellTrunks > 0 && !this._felling && game && game.started) {
+      var fellX = x, fellY = y, fellCount = this._fellTrunks;
+      this._fellTrunks = 0;
+      var inv = game.player.inventory;
+      var gotWood = inv.add(I.WOOD, fellCount);
+      if (gotWood > 0) game.spawnFloatingText(fellX * TILE + 8, fellY * TILE - 16, 'Wood +' + gotWood, '#7fb069');
+      if (gotWood < fellCount) {
+        game.addPickup(fellX * TILE + 8, fellY * TILE - 10, I.WOOD, fellCount - gotWood);
+        game.message('Not enough inventory space — wood spilled on the ground');
+      }
+      AudioSys.play('break');
+    }
     if (typeof Net !== 'undefined') Net.worldMutation('tile', x, y, this.get(x, y));
     return r;
   };
@@ -525,9 +540,84 @@ function migrateWorldPatch(data, loadedTiles, generatedTiles, width, game) {
     rebuildSavedSurfaceProfile(loadedTiles, game.world);
     patch = 2;
   }
+  if (patch < 3) {
+    // one-time hellstone repair for worlds generated before the Underworld
+    // generation fix; back up the stored record, then inject deterministically
+    writeSaveBackup('hellstone');
+    var hellPlaced = migrateHellstoneVeins(data, loadedTiles, game.world);
+    if (hellPlaced > 0) game.world._hellstoneRepaired = hellPlaced;
+    patch = 3;
+  }
   while (patch < PATCH) {
     patch++;
   }
+}
+
+// Backs up the current world record as a hidden copy (deletedAt marker keeps
+// it out of the world list) before a one-time save repair mutates tiles.
+// Best effort: a failed backup never blocks the repair.
+function writeSaveBackup(tag) {
+  if (typeof activeWorldId === 'undefined' || !activeWorldId) return;
+  getWorldRecord(activeWorldId).then(function(record) {
+    if (!record || !record.data) return;
+    var backup = {
+      id: record.id + '-savebackup-' + tag,
+      name: record.name + ' (repair backup)',
+      createdAt: record.createdAt,
+      updatedAt: Date.now(),
+      deletedAt: Date.now(),
+      evil: record.evil,
+      hardmode: record.hardmode,
+      victory: record.victory,
+      data: JSON.parse(JSON.stringify(record.data))
+    };
+    return putWorldRecord(backup);
+  }).catch(function() { /* best-effort backup */ });
+}
+
+// Deterministic hellstone injection: replays the fixed generator's vein
+// pattern (same sizes, same Underworld band) with the world's own seed, and
+// replaces ONLY natural Ash — buildings, chests and progression are untouched.
+// Idempotent: runs once per save because the migration bumps the version.
+function migrateHellstoneVeins(data, tiles, world) {
+  if (!data || typeof data.seed !== 'number' || !world) return 0;
+  var W = world.W, H = world.H, hellY = world.hellY;
+  var rng = mulberry32((data.seed >>> 0) + 0x48454C4C); // "HELL" stream offset
+  var area = W * H;
+  var veins = Math.floor(area * 2e-05);
+  var bandTop = Math.max(hellY, H - 190), bandBottom = Math.min(H - 31, H - 1);
+  if (bandBottom <= bandTop) return 0;
+  var placed = 0;
+  for (var v = 0; v < veins; v++) {
+    var px = Math.floor(rng() * W);
+    var py = bandTop + Math.floor(rng() * (bandBottom - bandTop));
+    var strength = 3 + Math.floor(rng() * 4), steps = 3 + Math.floor(rng() * 4);
+    var vx = (rng() * 21 - 10) * 0.1, vy = (rng() * 21 - 10) * 0.1;
+    var step = steps;
+    while (strength > 0 && step > 0) {
+      var rad = strength * (step / steps);
+      step--;
+      var half = strength * 0.5 * (1 + (rng() * 21 - 10) * 0.015);
+      var bx0 = Math.max(1, Math.floor(px - rad * 0.5));
+      var bx1 = Math.min(W - 1, Math.ceil(px + rad * 0.5));
+      var by0 = Math.max(1, Math.floor(py - rad * 0.5));
+      var by1 = Math.min(H - 1, Math.ceil(py + rad * 0.5));
+      for (var by = by0; by < by1; by++) {
+        for (var bx = bx0; bx < bx1; bx++) {
+          var mdx = bx - px, mdy = by - py;
+          if (mdx + mdy < 0) { mdx = -mdx; mdy = -mdy; }
+          if (mdx + mdy >= half) continue;
+          // only natural Ash converts — retains houses, chests and builds
+          if (tiles[by * W + bx] === T.ASH) { tiles[by * W + bx] = T.HELLSTONE; placed++; }
+          continue;
+        }
+      }
+      px += vx; py += vy;
+      vx = Math.max(-1, Math.min(1, vx + (rng() * 21 - 10) * 0.05));
+      vy = Math.max(-1, Math.min(1, vy + (rng() * 21 - 10) * 0.05));
+    }
+  }
+  return placed;
 }
 
 function saveSnapshot() {
@@ -730,6 +820,10 @@ function applySaveData(data) {
   var loadedTiles = unpackTiles(data.tiles, w.W * w.H);
   w.tiles = loadedTiles;
   migrateWorldPatch(data, loadedTiles, generatedTiles, w.W, game);
+  if (w._hellstoneRepaired) {
+    game.message('Ancient hellstone veins seep into the Underworld of ' + (activeWorldName || 'this world') + '.');
+    w._hellstoneRepaired = 0;
+  }
   if (data.walls) w.walls = unpackTiles(data.walls, w.W * w.H);
   var restoredSurface = ws.surfaceY && applySavedSurfaceProfile(ws.surfaceY, w);
   if (!restoredSurface && (data.patch || 0) >= 2) rebuildSavedSurfaceProfile(loadedTiles, w);
@@ -1649,6 +1743,7 @@ function wireGameMethods() {
   };
 
   game.onEnemyKilled = function(e) {
+    if (e.type === E.DUNGEONGUARDIAN) return; // vanilla: Guardian kills give no rewards or drops
     game.kills++;
     recordBestiary(game, e, true);
     if (e.ooaEnemy) oldOnesArmyEnemyKilled(e);
@@ -1995,7 +2090,7 @@ function step(dt) {
   game.world.nearbyStations = game.world.findStations(game.player.x, game.player.y);
 
   // ambient spawning
-  if (typeof Net === 'undefined' || !Net.isClient()) { updateSpawning(dt); updateCritterSpawning(dt); updateStrangePlants(dt); }
+  if (typeof Net === 'undefined' || !Net.isClient()) { updateSpawning(dt); updateCritterSpawning(dt); updateStrangePlants(dt); updateDungeonGuardian(); }
 
   // plantera bulbs
   if (typeof Net === 'undefined' || !Net.isClient()) updateBulbs();
@@ -2079,6 +2174,18 @@ function updateFlash(dt) {
 // ---------- Camera ----------
 function updateCamera(dt) {
   var p = game.player;
+  // NaN hardening: a corrupt player/camera position would cascade into
+  // createImageData(NaN, NaN) crashes in the renderer — recover to spawn.
+  if (!isFinite(p.x) || !isFinite(p.y)) {
+    p.x = game.world.spawnX;
+    p.y = game.world.spawnY;
+    p.vx = 0; p.vy = 0;
+    game.message('Your position reset — something was very wrong there.');
+  }
+  if (!isFinite(game.cam.x) || !isFinite(game.cam.y)) {
+    game.cam.x = isFinite(p.x) ? p.x : game.world.W * TILE / 2;
+    game.cam.y = isFinite(p.y) ? p.y : game.world.H * TILE / 2;
+  }
   game.cam.x = lerp(game.cam.x, p.x, 0.09);
   game.cam.y = lerp(game.cam.y, p.y - 10, 0.09);
   var hw = canvas.width / 2, hh = canvas.height / 2;
@@ -2994,6 +3101,35 @@ function updateSpawning(dt) {
   if (type === E.DUNESPLICER) initSegments(e2, game, 7, '#d8a878');
   if (type === E.TOMBCRAWLER) initSegments(e2, game, 4, '#c8b898');
   if (type === E.WORLDFEEDER) initSegments(e2, game, 8, '#6a8a5a');
+}
+
+// ---------- Dungeon Guardian ----------
+// Vanilla: wandering into the Dungeon body before Skeletron is down summons
+// a heavily armoured skull with lethal contact damage. Runs on
+// the host only (singleplayer included); entity state syncs to clients like
+// every other enemy. Never counts as a kill, bestiary entry, boss or reward.
+function updateDungeonGuardian() {
+  var r = game.world.dungeonRect;
+  if (!r) return;
+  var guardians = [];
+  for (var i = 0; i < game.entities.length; i++) {
+    var e = game.entities[i];
+    if (!e.dead && e.type === E.DUNGEONGUARDIAN) guardians.push(e);
+  }
+  var p = game.player;
+  var px = p.x / TILE, py = p.y / TILE;
+  // inside the dungeon body, a few rows below the surface entrance, and
+  // Skeletron still stands
+  var inside = !game.world.dungeonOpen && px >= r.x0 && px <= r.x1 &&
+    py > r.y0 + 4 && py < r.y1;
+  if (!inside) {
+    for (var d = 0; d < guardians.length; d++) guardians[d].dead = true;
+    return;
+  }
+  if (guardians.length) return;
+  var sx = clamp(p.x + (Math.random() < 0.5 ? -1 : 1) * (340 + Math.random() * 100), (r.x0 + 2) * TILE, (r.x1 - 2) * TILE);
+  var sy = clamp(p.y - 120 + Math.random() * 80, (r.y0 + 1) * TILE, (r.y1 - 1) * TILE);
+  spawnEntity(game, E.DUNGEONGUARDIAN, sx, sy);
 }
 
 function isAmbientCritter(type) {
@@ -4258,6 +4394,7 @@ function checkBestiaryMilestones() {
 }
 
 function discoverBestiaryEntity(g, e) {
+  if (e.type === E.DUNGEONGUARDIAN) return; // vanilla: not a bestiary entry
   if (e._bestiarySeen) return;
   var p = g.player;
   if (Math.abs(e.x - p.x) > canvas.width / 2 + 80 || Math.abs(e.y - p.y) > canvas.height / 2 + 80) return;
@@ -6291,7 +6428,6 @@ function initDOM() {
     if (game) game.respawn();
   });
   refreshSaveMenu();
-  Net.refreshLobbies();
   document.addEventListener('visibilitychange', function() {
     if (document.hidden && game && game.started && !game.paused) saveGame(true);
   });

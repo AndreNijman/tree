@@ -389,6 +389,10 @@ var ENT_DEF = {
   [E.SPOREBAT]: { w:20, h:14, hp:16, dmg:13, def:2, color:'#b8a8d8', speed:2.8, fly:true, name:'Spore Bat', exp:2 },
   [E.SPORESKELETON]: { w:18, h:32, hp:60, dmg:20, def:8, color:'#b0a8c8', speed:1.1, name:'Spore Skeleton', exp:5 },
   [E.TORTUREDSOUL]: { w:18, h:34, hp:400, dmg:14, def:20, color:'#8898a8', speed:1.4, fly:true, name:'Tortured Soul', exp:10 },
+  // vanilla Dungeon Guardian: entering the Dungeon without Skeletron down
+  // summons this heavily armoured head — 9999 damage is lethal at normal HP,
+  // and it yields no drops, kills, bestiary entries or rewards
+  [E.DUNGEONGUARDIAN]: { w:40, h:56, hp:9500, dmg:9999, def:9999, kbResist:1.0, color:'#a02020', speed:3.4, fly:true, ghost:true, name:'Dungeon Guardian', exp:0 },
 };
 
 function makeEntity(type, x, y) {
@@ -447,6 +451,7 @@ function hitEntity(e, dmg, kbx, kby, game) {
 function killEntity(e, game) {
   if (e.dead) return;
   e.dead = true;
+  if (e.type === E.DUNGEONGUARDIAN) return; // no loot, coins or kill hooks
   // canonical coin drops (vanilla money values, classic column)
   var eDef = e.type >= 0 ? ENT_DEF[e.type] : null;
   var cname = eDef ? eDef.name.toLowerCase() : '';
@@ -1766,7 +1771,7 @@ function enemyStep(e, game) {
     case E.LADYBUG:
       ladybugStep(e, game);
       break;
-    case E.GHOST:
+    case E.GHOST: case E.DUNGEONGUARDIAN:
       ghostStep(e, game);
       contactCheck(e, game);
       break;

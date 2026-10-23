@@ -173,6 +173,11 @@ World.prototype.damageTile = function(x, y, power, speed) {
 World.prototype.breakTile = function(x, y) {
   var t = this.tiles[this.idx(x, y)];
   if (t === T.AIR) return null;
+  // Chopping a trunk fells everything still connected above it (before this
+  // tile is cleared, so the flood can seed from it). No recursion back into
+  // the cascade while the felling pass is running. The cascade's removed
+  // trunk count is stored for the caller (main.js awards cascade wood).
+  if (t === T.TREETRUNK && !this._felling) this._fellTrunks = this.fellTree(x, y);
   this.tiles[this.idx(x, y)] = T.AIR;
   if (typeof terrainCache !== 'undefined') terrainCache.dirty = true;
   this.hp[this.idx(x, y)] = 0;
@@ -186,6 +191,103 @@ World.prototype.breakTile = function(x, y) {
     if (pr) this.spilledPylonItem = pr.item;
   }
   return TILE_DROP[t] || null;
+};
+
+// ---------- Tree felling ----------
+// Chopping a trunk removes the tree above the chop: the rest of the trunk,
+// its branch nubs and the canopy. Flood-fill over TREETRUNK + leaf variants
+// only, with guards so player-placed wood (T.WOOD), neighbouring trees and
+// player structures are never touched:
+//   * trunk tiles expand only within the chopped column or its ±1 nub slots
+//   * candidates 4-adjacent to a foreign (unremoved) TREETRUNK are rejected,
+//     so overlapping canopies never drag a neighbouring tree down
+//   * row 0: only ±1 nubs ride along; hard budget stops runaway blobs
+var FELL_LEAVES = {};
+FELL_LEAVES[T.LEAVES] = true;
+FELL_LEAVES[T.LEAVES_CORRUPT] = true;
+FELL_LEAVES[T.LEAVES_CRIMSON] = true;
+FELL_LEAVES[T.LEAVES_HALLOW] = true;
+FELL_LEAVES[T.LEAVES_JUNGLE] = true;
+var FELL_BUDGET = 400;
+
+// Removes the connected tree tiles above (tx, chopY) — the trunk tile that is
+// about to be cleared by the caller. Returns the number of wood-bearing
+// (TREETRUNK) tiles removed, excluding the chopped tile itself. Removal goes
+// through breakTile so net sync (Net.worldMutation), dirty flags and hp
+// updates all happen through the normal paths.
+World.prototype.fellTree = function(tx, chopY) {
+  if (this._felling || !this.inBounds(tx, chopY)) return 0;
+  var self = this;
+  var origin = this.idx(tx, chopY);
+  var inSet = {};
+  inSet[origin] = true;
+  var queue = [origin];
+  var removedTrunks = 0;
+  var budget = FELL_BUDGET;
+  var isTrunk = function(i) { return self.tiles[i] === T.TREETRUNK; };
+  // Snapshot neighbouring canopy footprints BEFORE clearing any trunks.
+  // Leaves have no stored owner: shared/ambiguous canopy stays with the
+  // surviving tree. All generated crowns fit within +/-3 columns and extend
+  // at most four rows above their trunk. Also protect living-wood crowns.
+  var protectedLeaves = {};
+  for (var fx = Math.max(0, tx - 6); fx <= Math.min(this.W - 1, tx + 6); fx++) {
+    for (var fy = Math.max(1, chopY - 32); fy <= Math.min(this.H - 2, chopY + 4); fy++) {
+      var ft = this.get(fx, fy);
+      var foreign = Math.abs(fx - tx) > 1 && ft === T.TREETRUNK;
+      var living = ft === T.WOOD && (this.get(fx, fy - 1) === T.WOOD || this.get(fx, fy + 1) === T.WOOD);
+      if (!foreign && !living) continue;
+      for (var lx = Math.max(0, fx - 3); lx <= Math.min(this.W - 1, fx + 3); lx++) {
+        for (var ly = Math.max(1, fy - 4); ly <= Math.min(this.H - 1, fy + 1); ly++) {
+          protectedLeaves[this.idx(lx, ly)] = true;
+        }
+      }
+    }
+  }
+  this._felling = true;
+  try {
+    while (queue.length && budget > 0) {
+      var cur = queue.pop(), cy = Math.floor(cur / this.W), cx = cur % this.W;
+      for (var d = 0; d < 4; d++) {
+        var nx = cx + (d === 0 ? -1 : d === 1 ? 1 : 0);
+        var ny = cy + (d === 2 ? -1 : d === 3 ? 1 : 0);
+        if (nx < 0 || ny < 1 || nx >= this.W || ny >= this.H) continue;
+        if (Math.abs(nx - tx) > 3) continue; // never traverse a merged forest canopy
+        if (ny > chopY) continue;                       // never fell below the chop
+        if (ny === chopY && Math.abs(nx - tx) > 1) continue; // only ±1 nubs on chop row
+        var ni = this.idx(nx, ny);
+        if (inSet[ni]) continue;
+        var nt = this.tiles[ni];
+        var trunk = nt === T.TREETRUNK, leaf = !!FELL_LEAVES[nt];
+        if (!trunk && !leaf) continue;
+        if (leaf && protectedLeaves[ni]) continue;
+        if (trunk && nx !== tx && Math.abs(nx - tx) !== 1) continue; // foreign trunk column
+        // foreign-trunk guard: reject candidates touching an unremoved trunk
+        // at least 2 columns away (generation spacing keeps foreign trunks
+        // >= 3 columns out), so overlapping canopies never drag a neighbour
+        // tree down, while this tree's own column/nub growth stays free.
+        var nearForeign = false;
+        for (var g = 0; g < 4; g++) {
+          var gx = nx + (g === 0 ? -1 : g === 1 ? 1 : 0);
+          var gy = ny + (g === 2 ? -1 : g === 3 ? 1 : 0);
+          if (gx < 0 || gy < 1 || gx >= this.W || gy >= this.H) continue;
+          if (Math.abs(gx - tx) <= 1) continue; // own trunk column and nub slots
+          var gi = this.idx(gx, gy);
+          if (gi !== origin && isTrunk(gi) && !inSet[gi]) { nearForeign = true; break; }
+        }
+        if (nearForeign) continue;
+        inSet[ni] = true;
+        queue.push(ni);
+        budget--;
+        removedTrunks += trunk ? 1 : 0;
+        // clear via breakTile: the wrapped version emits Net.worldMutation per tile
+        this.breakTile(nx, ny);
+        if (budget <= 0) break;
+      }
+    }
+  } finally {
+    this._felling = false;
+  }
+  return removedTrunks; // wood for the chopped tile itself is awarded by the caller
 };
 
 // Chest storage helpers
@@ -673,6 +775,9 @@ World.prototype.generate = function(hardmode, evil) {
           if (type === 'ash') { self.tiles[ii] = T.ASH; continue; }
           if (opts.onlyAir) { if (t === T.AIR) self.tiles[ii] = type; continue; }
           if (t === T.DIRT || t === T.STONE || t === T.CLAY) self.tiles[ii] = type;
+          // Hellstone (and only Hellstone) threads through Ash — vanilla GrowHell
+          // replaces both stone and ash in the Underworld
+          else if (type === T.HELLSTONE && t === T.ASH) self.tiles[ii] = type;
         }
       }
       px += vx; py += vy;

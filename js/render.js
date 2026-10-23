@@ -1001,6 +1001,16 @@ function drawLighting(game, ctx, cam, W, H) {
   var tw = x1 - x0 + 1, th = y1 - y0 + 1;
   var n = tw * th;
 
+  // NaN hardening: a non-finite camera poisons the light window and would
+  // crash on createImageData(NaN, NaN). Bail out this frame instead.
+  if (!isFinite(n) || tw <= 0 || th <= 0 || n <= 0) {
+    if (!drawLighting._warnedOnNaN) {
+      drawLighting._warnedOnNaN = true;
+      console.warn('drawLighting skipped: non-finite camera window');
+    }
+    return;
+  }
+
   if (!game.lightBuf || game.lightBuf.length !== n) {
     game.lightBuf = new Float32Array(n);
     game.lightDecay = new Float32Array(n);
@@ -1328,6 +1338,26 @@ function drawEnemy(ctx, e, cam, W, H) {
       break;
     case E.ZOMBIE: case E.HARDZOMBIE:
       drawHumanoid(ctx, x, y, col, e.type === E.HARDZOMBIE, e.dir, false);
+      break;
+    case E.DUNGEONGUARDIAN:
+      // Solid skull silhouette despite its wall-passing movement.
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = white ? '#fff' : '#d0c8b8';
+      ctx.beginPath();
+      ctx.ellipse(x, y - 5, e.w / 2, e.h / 2.5, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillRect(x - 13, y + 10, 26, 13);
+      ctx.fillStyle = '#321c24';
+      ctx.beginPath();
+      ctx.ellipse(x - 8, y - 7, 6, 7, 0, 0, Math.PI * 2);
+      ctx.ellipse(x + 8, y - 7, 6, 7, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#ff3030';
+      ctx.fillRect(x - 10, y - 8, 4, 4);
+      ctx.fillRect(x + 6, y - 8, 4, 4);
+      ctx.fillStyle = '#321c24';
+      ctx.fillRect(x - 2, y + 2, 4, 5);
+      for (var tooth = -9; tooth <= 9; tooth += 6) ctx.fillRect(x + tooth, y + 15, 2, 8);
       break;
     case E.WRATH:
       ctx.fillStyle = col;
@@ -5167,6 +5197,9 @@ function drawMinimap(game, ctx) {
   var px = Math.floor(game.player.x / TILE);
   var py = Math.floor(game.player.y / TILE);
   var x0 = px - mw / 2, y0 = py - mh / 2;
+  // NaN hardening: skip the frame's blit if the player position is corrupt
+  // (all tiles would read out of bounds anyway)
+  if (!isFinite(px) || !isFinite(py)) return;
 
   if (!drawMinimap._canvas) {
     drawMinimap._canvas = document.createElement('canvas');
@@ -5244,6 +5277,12 @@ function drawFullMap(game, ctx) {
   // render map tiles to ImageData (fast batch)
   var imgW = Math.min(cols, Math.ceil(W / ts));
   var imgH = Math.min(rows, Math.ceil(H / ts));
+  // NaN hardening: a corrupt pan/zoom must not reach createImageData
+  if (!isFinite(imgW) || !isFinite(imgH) || imgW <= 0 || imgH <= 0 ||
+      !isFinite(game.mapPanX) || !isFinite(game.mapPanY)) {
+    ctx.restore();
+    return;
+  }
   var key = imgW + '_' + imgH;
   if (!drawFullMap._img || drawFullMap._key !== key) {
     drawFullMap._img = ctx.createImageData(imgW, imgH);
@@ -5439,6 +5478,8 @@ MINIMAP_COLORS[T.CHAIN] = '#b0b0b8';
 function buildMinimap(game) {
   var w = 170;
   var h = Math.round(w * game.world.H / game.world.W);
+  // NaN hardening: bail if world dimensions are somehow non-finite
+  if (!isFinite(w) || !isFinite(h) || h <= 0) return;
   var c = document.createElement('canvas');
   c.width = w; c.height = h;
   var ctx = c.getContext('2d');

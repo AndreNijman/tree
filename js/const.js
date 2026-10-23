@@ -404,7 +404,8 @@ var E = {
   CORRUPTBUNNY:358, CORRUPTGOLDFISH:359, CORRUPTPENGUIN:360,
   FUNGIBULB:361, GIANTFUNGI:362, MUSHILADYBUG:363,
   COCHINEALBEETLE:364, CYANBEETLE:365, LACBEETLE:366,
-  SPOREBAT:367, SPORESKELETON:368, TORTUREDSOUL:369
+  SPOREBAT:367, SPORESKELETON:368, TORTUREDSOUL:369,
+  DUNGEONGUARDIAN:370
 };
 
 // Projectile types
@@ -437,7 +438,7 @@ var FALL_DMG_PER_TILE = 5;
 
 var VERSION = 'tree v1.2';
 
-var PATCH = 2;
+var PATCH = 3; // save migration version: 1 legacy treeTrunks, 2 surface profile, 3 hellstone repair
 
 var DIFFICULTY = {
   normal: { key:'normal', name:'Normal', hp:1, dmg:1, coin:1, spawn:1, bag:false, defEff:1, kbMul:1, coinLoss:0 },

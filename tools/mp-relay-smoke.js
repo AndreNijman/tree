@@ -13,6 +13,8 @@ assert.equal(normalizeCode(' a-b c12 '), 'ABC12');
 assert.equal(sanitizeText('  Oak\nWorld  ', 20, 'fallback'), 'OakWorld');
 assert.equal(originAllowed('https://tree.andrenijman.com'), true);
 assert.equal(originAllowed('null'), true);
+assert.equal(originAllowed('file://'), true);
+assert.equal(originAllowed('file://evil.example'), false);
 assert.equal(originAllowed('http://localhost:8787'), true);
 assert.equal(originAllowed('http://127.0.0.1:8765'), true);
 assert.equal(originAllowed('https://evil.example'), false);

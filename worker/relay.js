@@ -25,7 +25,9 @@ export function sanitizeText(value, max = 32, fallback = '') {
 }
 
 export function originAllowed(origin) {
-  if (origin === PRODUCTION_ORIGIN || origin === 'null') return true;
+  // Support both opaque ("null") and literal local-file origins without
+  // permitting arbitrary sites or introducing a wildcard CORS policy.
+  if (origin === PRODUCTION_ORIGIN || origin === 'null' || origin === 'file://') return true;
   try {
     const url = new URL(origin);
     return (url.protocol === 'http:' || url.protocol === 'https:') &&
