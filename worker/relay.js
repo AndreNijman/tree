@@ -1,4 +1,5 @@
 import { NetStats, sendNetLog, coloOf } from './netstats.js';
+import { playerWhere, withWhere, whereOf, regionOfColo } from './netplace.js';
 
 const PROTOCOL_VERSION = 1;
 const MAX_PLAYERS = 8;
@@ -12,6 +13,7 @@ const REGISTRY_STALE_MS = 60 * 60 * 1000;
 const RESERVATION_MS = 20_000;
 const NETLOG_SESSION_MS = 30 * 60 * 1000;
 const CODE_ALPHABET = 'BCDFGHJKLMNPQRSTVWXYZ23456789';
+const CODE_PATTERN = new RegExp(`^[${CODE_ALPHABET}]{5}$`);
 const PRODUCTION_ORIGIN = 'https://tree.andrenijman.com';
 
 const encoder = new TextEncoder();
@@ -199,6 +201,7 @@ export class Room {
     this.net = null;                  // lag stats for the session in progress
     this.netKeys = new Map();         // player id -> lag seat, so a rejoin keeps its seat
     this.colo = '';
+    this.coloLookup = null;
     this.ready = state.blockConcurrencyWhile(async () => {
       const [room, storedAttempts] = await Promise.all([
         state.storage.get('room'),
@@ -222,6 +225,7 @@ export class Room {
       await this.destroy();
       return new Response(null, { status: 204 });
     }
+    if (request.method === 'GET' && new URL(request.url).pathname === '/ping') return this.ping();
     if (request.headers.get('Upgrade')?.toLowerCase() !== 'websocket') {
       return new Response('websocket upgrade required', { status: 426 });
     }
@@ -237,6 +241,7 @@ export class Room {
       action,
       code,
       ip: request.headers.get('CF-Connecting-IP') || 'unknown',
+      where: whereOf(request),
       connectedAt: Date.now(),
     };
     server.serializeAttachment(session);
@@ -364,7 +369,7 @@ export class Room {
       this.fatal(socket, 'reservation', 'lobby code expired; create another lobby');
       return;
     }
-    this.seatNet(id, session.name, Number(message.rejoin));
+    this.seatNet(id, session.name, Number(message.rejoin), session.where);
     this.send(socket, {
       t: 'welcome',
       v: PROTOCOL_VERSION,
@@ -585,23 +590,43 @@ export class Room {
     }
   }
 
+  // Where this object runs, for the lobby's ping and the lag log. Looked up
+  // once; a failed lookup is retried next time.
+  whereAmI() {
+    if (this.colo) return Promise.resolve(this.colo);
+    this.coloLookup ||= coloOf().then(colo => {
+      this.colo = colo;
+      this.coloLookup = null;
+      return colo;
+    });
+    return this.coloLookup;
+  }
+
+  // GET /ping: the lobby times this to show the room's region and ping.
+  async ping() {
+    const headers = { 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'no-store' };
+    if (!this.room) return Response.json({ error: 'no lobby with that code' }, { status: 404, headers });
+    const colo = await this.whereAmI();
+    return Response.json({ colo, region: regionOfColo(colo) }, { headers });
+  }
+
   // One lag record per hosted session, from the world starting until everyone
   // has left, cut into 30-minute records, sent to games-guard's NetLog.
   startNetLog() {
     this.endNetLog('finished');
     this.net = new NetStats();
-    for (const player of this.players.values()) this.net.seat(this.netKeys.get(player.id) ?? player.id, player.name);
-    if (!this.colo) coloOf().then(colo => { this.colo = colo; });
+    for (const player of this.players.values()) this.net.seat(this.netKeys.get(player.id) ?? player.id, player.name, player.where);
+    this.whereAmI();
   }
 
   // A reconnecting client joins with a new id and sends its previous one;
   // it takes that seat back unless someone connected holds it.
-  seatNet(id, name, rejoin) {
+  seatNet(id, name, rejoin, where) {
     const old = this.netKeys.get(rejoin);
     const taken = [...this.players.keys()].some(other => other !== id && this.netKeys.get(other) === old);
     const key = old !== undefined && !taken ? old : id;
     this.netKeys.set(id, key);
-    this.net?.seat(key, name);
+    this.net?.seat(key, name, where);
     if (key !== id) this.net?.reconnect(key);
   }
 
@@ -609,7 +634,10 @@ export class Room {
     const net = this.net;
     this.net = null;
     if (!net) return;
-    const record = net.record({ code: this.room.code, mode: `${net.seats.size}p co-op · ${this.room.world}`, outcome, colo: this.colo });
+    const record = net.record({
+      code: this.room.code, mode: `${net.seats.size}p co-op · ${this.room.world}`, outcome,
+      colo: this.colo, region: regionOfColo(this.colo), moved: null,
+    });
     if (record.runTime < 10) return;
     sendNetLog(this.env, this.state, 'tree', record);
   }
@@ -654,6 +682,16 @@ export default {
       }));
       return roomResponse;
     }
+    // The room's region, for the lobby's ping. Never creates a room.
+    if (request.method === 'GET' && url.pathname === '/ping') {
+      const code = normalizeCode(url.searchParams.get('room'));
+      if (!CODE_PATTERN.test(code)) {
+        return Response.json({ error: 'invalid room code' }, {
+          status: 400, headers: { 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'no-store' },
+        });
+      }
+      return env.ROOMS.getByName(code).fetch(new Request('https://room.internal/ping'));
+    }
     if (request.method !== 'GET' || request.headers.get('Upgrade')?.toLowerCase() !== 'websocket') {
       return new Response('tree relay. connect over websocket.\n', {
         status: 426,
@@ -676,9 +714,12 @@ export default {
     }
     if (code.length !== 5) return new Response('room codes must be five characters', { status: 400 });
 
+    // Where the player connects from, for the lag log. Local tests fake it
+    // with X-Games-Country / X-Games-Edge under --var TREE_DEV_TRUST_WHERE:1.
+    const where = playerWhere(request, { trustHeaders: env.TREE_DEV_TRUST_WHERE === '1' });
     const headers = new Headers(request.headers);
     headers.set('X-Tree-Room-Action', creating ? 'create' : 'join');
     headers.set('X-Tree-Room-Code', code);
-    return env.ROOMS.getByName(code).fetch(new Request(request, { headers }));
+    return env.ROOMS.getByName(code).fetch(withWhere(new Request(request, { headers }), where));
   },
 };

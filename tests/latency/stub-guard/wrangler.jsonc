@@ -1,0 +1,7 @@
+// A stand-in for games-guard's NetLog entrypoint, for tests/latency only.
+// It prints each lag record on one line ("NETLOG {...}") for the test to read.
+{
+  "name": "games-guard",
+  "main": "worker.js",
+  "compatibility_date": "2026-08-11"
+}
