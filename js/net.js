@@ -24,6 +24,8 @@ var Net = {
   connectionOptions: null,
   reconnectTimer: null,
   reconnectAttempts: 0,
+  pinger: null,
+  pingT: 0,
 
   httpRelay: function() { return this.relay.replace(/^wss:/, 'https:').replace(/^ws:/, 'http:'); },
   isOnline: function() { return this.mode !== 'offline' && this.ws && this.ws.readyState === WebSocket.OPEN; },
@@ -70,7 +72,8 @@ var Net = {
         t:options.create ? 'create' : 'join',
         name:self.cleanName(options.name), password:String(options.password || '').slice(0, 64),
         code:String(options.code || '').toUpperCase(), proto:self.VERSION,
-        world:options.worldName || '', lobbyName:self.cleanName(options.name) + "'s world"
+        world:options.worldName || '', lobbyName:self.cleanName(options.name) + "'s world",
+        rejoin:reconnecting ? self.id : undefined
       });
     };
     ws.onmessage = function(event) {
@@ -81,6 +84,7 @@ var Net = {
     ws.onerror = function() { self.setStatus('Connection failed'); };
     ws.onclose = function(event) {
       if (self.ws !== ws || self.mode === 'offline') return;
+      if (self.pinger) { self.pinger.stop(); self.pinger = null; }
       var wasPlaying = self.started;
       self.ws = null;
       self.setStatus('Disconnected'); self.renderRoster();
@@ -152,7 +156,7 @@ var Net = {
     if (message.t === 'snapshot-chunk' && this.snapshotParts) { this.snapshotParts[message.index] = message.data || ''; return; }
     if (message.t === 'snapshot-end' && this.snapshotParts && this.isClient()) { this.finishSnapshot(); return; }
     if (message.t === 'game') { this.onGame(message); return; }
-    if (message.t === 'pong') return;
+    if (message.t === 'pong') { if (this.pinger) this.pinger.pong(message.c); return; }
   },
 
   beginHosting: function() {
@@ -274,7 +278,13 @@ var Net = {
 
   update: function(dt) {
     if (!this.started || !this.isOnline() || !game) return;
-    this.sendT -= dt; this.frameT -= dt; this.profileT -= dt;
+    this.sendT -= dt; this.frameT -= dt; this.profileT -= dt; this.pingT -= dt;
+    // A ping once a second with this client's ping and frame rate, for the relay's lag log.
+    if (this.pingT <= 0 && NetPingClass) {
+      this.pingT = 1;
+      if (!this.pinger) this.pinger = new NetPingClass();
+      this.send(Object.assign({ t:'ping' }, this.pinger.next()));
+    }
     if (this.sendT <= 0) {
       this.sendT = 0.1;
       var full = this.profileT <= 0;
@@ -507,6 +517,7 @@ var Net = {
   disconnect: function(showMenu) {
     this.saveCharacter();
     if (this.reconnectTimer) { clearTimeout(this.reconnectTimer); this.reconnectTimer = null; }
+    if (this.pinger) { this.pinger.stop(); this.pinger = null; }
     var socket = this.ws; this.mode = 'offline'; this.started = false; this.ws = null; this.id = 0; this.hostId = 0; this.code = ''; this.remotePlayers = {}; this.playerNames = {}; this.connectionOptions = null; this.reconnectAttempts = 0;
     if (game) game.netDisconnected = false;
     if (socket) { try { socket.close(1000, 'left world'); } catch (e) {} }
@@ -532,3 +543,7 @@ try {
   var relayOverride = new URLSearchParams(location.search).get('relay');
   if (relayOverride && /^wss?:\/\//.test(relayOverride)) Net.relay = relayOverride.replace(/\/$/, '');
 } catch (e) {}
+
+// netping.js is a module; a page opened from file:// cannot load it and sends no pings.
+var NetPingClass = null;
+import('./netping.js').then(function(m) { NetPingClass = m.NetPing; }).catch(function() {});

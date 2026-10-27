@@ -1,3 +1,5 @@
+import { NetStats, sendNetLog, coloOf } from './netstats.js';
+
 const PROTOCOL_VERSION = 1;
 const MAX_PLAYERS = 8;
 const MAX_MESSAGE_BYTES = 1024 * 1024;
@@ -8,6 +10,7 @@ const PASSWORD_ATTEMPT_WINDOW_MS = 60_000;
 const PASSWORD_ATTEMPT_MAX = 6;
 const REGISTRY_STALE_MS = 60 * 60 * 1000;
 const RESERVATION_MS = 20_000;
+const NETLOG_SESSION_MS = 30 * 60 * 1000;
 const CODE_ALPHABET = 'BCDFGHJKLMNPQRSTVWXYZ23456789';
 const PRODUCTION_ORIGIN = 'https://tree.andrenijman.com';
 
@@ -193,6 +196,9 @@ export class Room {
     this.snapshot = null;
     this.initializationQueue = Promise.resolve();
     this.messageRates = new Map();
+    this.net = null;                  // lag stats for the session in progress
+    this.netKeys = new Map();         // player id -> lag seat, so a rejoin keeps its seat
+    this.colo = '';
     this.ready = state.blockConcurrencyWhile(async () => {
       const [room, storedAttempts] = await Promise.all([
         state.storage.get('room'),
@@ -260,6 +266,9 @@ export class Room {
       return;
     }
     if (message.t === 'ping') {
+      // Also starts the next 30-minute record, or a new one if this object was rebuilt mid-session.
+      if (this.room?.phase === 'running' && (!this.net || Date.now() - this.net.startedAt >= NETLOG_SESSION_MS)) this.startNetLog();
+      this.net?.ping(this.netKeys.get(session.id) ?? session.id, message.rtt, message.fps, message.frameMax);
       this.send(socket, { t: 'pong', c: message.c });
       return;
     }
@@ -355,6 +364,7 @@ export class Room {
       this.fatal(socket, 'reservation', 'lobby code expired; create another lobby');
       return;
     }
+    this.seatNet(id, session.name, Number(message.rejoin));
     this.send(socket, {
       t: 'welcome',
       v: PROTOCOL_VERSION,
@@ -375,6 +385,7 @@ export class Room {
     const player = this.players.get(id);
     if (!player || typeof message.t !== 'string' || message.t.length < 1 || message.t.length > 64) return;
     const isHost = id === this.room.hostId;
+    if (message.t === 'game' && message.k === 'player') this.net?.message(this.netKeys.get(id) ?? id);
     if (message.t === 'leave') {
       player.socket.close(1000, 'left lobby');
       return;
@@ -385,6 +396,7 @@ export class Room {
       this.room.metadata = cleanMetadata(message.metadata);
       await this.state.storage.put('room', this.room);
       this.broadcast({ t: 'start', v: PROTOCOL_VERSION, from: id, metadata: this.room.metadata });
+      this.startNetLog();
       await this.syncRegistry();
       return;
     }
@@ -534,6 +546,8 @@ export class Room {
     this.messageRates.delete(session.id);
     const oldHost = this.room.hostId;
     if (!this.players.size) {
+      this.endNetLog('closed');
+      this.netKeys.clear();
       const code = this.room.code;
       this.room = null;
       this.snapshot = null;
@@ -555,6 +569,8 @@ export class Room {
 
   async destroy() {
     if (!this.room) return;
+    this.endNetLog('closed');
+    this.netKeys.clear();
     const code = this.room.code;
     const sockets = [...this.players.values()].map(player => player.socket);
     this.room = null;
@@ -567,6 +583,35 @@ export class Room {
     for (const socket of sockets) {
       try { socket.close(1001, 'lobby removed'); } catch { /* room state is already gone */ }
     }
+  }
+
+  // One lag record per hosted session, from the world starting until everyone
+  // has left, cut into 30-minute records, sent to games-guard's NetLog.
+  startNetLog() {
+    this.endNetLog('finished');
+    this.net = new NetStats();
+    for (const player of this.players.values()) this.net.seat(this.netKeys.get(player.id) ?? player.id, player.name);
+    if (!this.colo) coloOf().then(colo => { this.colo = colo; });
+  }
+
+  // A reconnecting client joins with a new id and sends its previous one;
+  // it takes that seat back unless someone connected holds it.
+  seatNet(id, name, rejoin) {
+    const old = this.netKeys.get(rejoin);
+    const taken = [...this.players.keys()].some(other => other !== id && this.netKeys.get(other) === old);
+    const key = old !== undefined && !taken ? old : id;
+    this.netKeys.set(id, key);
+    this.net?.seat(key, name);
+    if (key !== id) this.net?.reconnect(key);
+  }
+
+  endNetLog(outcome) {
+    const net = this.net;
+    this.net = null;
+    if (!net) return;
+    const record = net.record({ code: this.room.code, mode: `${net.seats.size}p co-op · ${this.room.world}`, outcome, colo: this.colo });
+    if (record.runTime < 10) return;
+    sendNetLog(this.env, this.state, 'tree', record);
   }
 }
 

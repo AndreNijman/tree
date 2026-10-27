@@ -1,3 +1,10 @@
+// Tree online relay (worker/relay.js). `npm run relay:dev` runs it locally.
+//
+// Production is env.production: `rime secret use cloudflare
+// cloudflare.wrangler.deploy tree-relay` runs `wrangler deploy --env
+// production` with the broker's token (see rime.toml in the deploy clone).
+// NETLOG is games-guard's NetLog entrypoint: each hosted session's lag
+// statistics go there (games.andrenijman.com/_guard/admin/lag).
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "tree-relay",
@@ -30,5 +37,24 @@
       "pattern": "relay.tree.andrenijman.com",
       "custom_domain": true
     }
-  ]
+  ],
+  "services": [{ "binding": "NETLOG", "service": "games-guard", "entrypoint": "NetLog" }],
+  // The same Worker name, so production keeps its Durable Object namespace.
+  // Bindings are not inherited by an environment, so they repeat.
+  "env": {
+    "production": {
+      "name": "tree-relay",
+      "workers_dev": true,
+      "preview_urls": false,
+      "observability": { "enabled": true },
+      "durable_objects": {
+        "bindings": [
+          { "name": "ROOMS", "class_name": "Room" },
+          { "name": "REGISTRY", "class_name": "Registry" }
+        ]
+      },
+      "routes": [{ "pattern": "relay.tree.andrenijman.com", "custom_domain": true }],
+      "services": [{ "binding": "NETLOG", "service": "games-guard", "entrypoint": "NetLog" }]
+    }
+  }
 }
