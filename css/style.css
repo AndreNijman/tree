@@ -61,6 +61,9 @@ button { font: inherit; -webkit-tap-highlight-color: transparent; }
 #depth { color: var(--ink-soft); }
 #biome { color: var(--grass-dark); font-weight: 800; }
 #fps { color: var(--paper-edge); font-weight: 400; }
+#ping { color: var(--ink-soft); }
+#ping.ping-warn { color: #a8721c; }
+#ping.ping-bad { color: var(--hp-deep); }
 
 #bars { position: absolute; top: 58px; left: 12px; display: flex; flex-direction: column; gap: 8px; }
 #hpbar, #manabar {
@@ -113,6 +116,7 @@ button { font: inherit; -webkit-tap-highlight-color: transparent; }
 }
 #net-roster b { color: var(--terracotta-dark); }
 #net-roster span { color: var(--ink-soft); }
+#net-roster em { color: var(--grass-dark); font-style: normal; }
 
 #hotbar {
   position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
@@ -441,6 +445,8 @@ button { font: inherit; -webkit-tap-highlight-color: transparent; }
 .lobby-row + .lobby-row { border-top: 2px solid var(--paper-edge); }
 .lobby-code { display: block; color: var(--terracotta-dark); font: 800 0.92rem var(--font-chrome); letter-spacing: 0.14em; }
 .lobby-lock { color: var(--ink-soft); font: 700 0.58rem var(--font-chrome); }
+.lobby-ping { color: var(--grass-dark); font: 700 0.6rem var(--font-chrome); letter-spacing: 0.06em; text-transform: uppercase; }
+.lobby-ping:empty { display: none; }
 .lobby-join { min-height: 42px !important; padding: 8px 16px !important; }
 #mp-status { min-height: 16px; color: var(--ink-soft); font: 600 0.62rem var(--font-chrome); }
 

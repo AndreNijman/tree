@@ -26,6 +26,8 @@ var Net = {
   reconnectAttempts: 0,
   pinger: null,
   pingT: 0,
+  roomPings: {},
+  roomRegion: '',
 
   httpRelay: function() { return this.relay.replace(/^wss:/, 'https:').replace(/^ws:/, 'http:'); },
   isOnline: function() { return this.mode !== 'offline' && this.ws && this.ws.readyState === WebSocket.OPEN; },
@@ -125,6 +127,7 @@ var Net = {
       if (this.connectionOptions) this.connectionOptions.code = this.code;
       this.mode = this.id === this.hostId ? 'host' : 'client';
       this.setStatus((this.isHost() ? 'Hosting ' : 'Joined ') + this.code);
+      this.showRoomRegion();
       if (this.isHost()) this.beginHosting();
       return;
     }
@@ -494,16 +497,58 @@ var Net = {
       if (!list.length) html = '<div class="world-empty">No worlds are being hosted.</div>';
       for (var i = 0; i < list.length; i++) {
         var l = list[i];
-        html += '<div class="lobby-row" data-code="' + escapeText(l.code) + '"><div><span class="lobby-code">' + escapeText(l.code) + '</span><span class="lobby-lock">' + (l.locked ? 'PRIVATE' : 'OPEN') + '</span></div><div><div class="world-title">' + escapeText(l.world || 'Hosted World') + '</div><div class="world-meta">' + escapeText(l.name || 'Hosted world') + ' · ' + l.players + '/' + l.max + '</div></div><button class="lobby-join">Join</button></div>';
+        html += '<div class="lobby-row" data-code="' + escapeText(l.code) + '"><div><span class="lobby-code">' + escapeText(l.code) + '</span><span class="lobby-lock">' + (l.locked ? 'PRIVATE' : 'OPEN') + '</span></div><div><div class="world-title">' + escapeText(l.world || 'Hosted World') + '</div><div class="world-meta">' + escapeText(l.name || 'Hosted world') + ' · ' + l.players + '/' + l.max + '</div><div class="lobby-ping" data-ping="' + escapeText(l.code) + '"></div></div><button class="lobby-join">Join</button></div>';
       }
       root.innerHTML = html;
+      self.labelLobbies(list.slice(0, 10));
     }).catch(function(error) { root.innerHTML = '<div class="world-empty">' + escapeText(error.message) + '</div>'; });
+  },
+
+  // The region of a hosted world's relay room and this player's ms to it,
+  // timed with netprobe.js (3 requests) at most once per 30 s per room.
+  roomPing: function(code) {
+    var cached = this.roomPings[code];
+    if (cached && Date.now() - cached.at < 30000) return cached.promise;
+    var url = this.httpRelay() + '/ping?room=' + encodeURIComponent(code);
+    var promise = (NetProbeModule ? Promise.resolve(NetProbeModule) : NetProbeLoad).then(function(probe) {
+      if (!probe) return null;
+      return fetch(url, { cache:'no-store', credentials:'omit' }).then(function(response) {
+        return response.ok ? response.json() : null;
+      }).then(function(body) {
+        if (!body || !body.region) return null;
+        return probe.pingUrl(url).then(function(ms) { return { region:body.region, ms:ms, label:probe.regionLabel(body.region, ms) }; });
+      });
+    }).catch(function() { return null; });
+    this.roomPings[code] = { at:Date.now(), promise:promise };
+    return promise;
+  },
+
+  labelLobbies: function(list) {
+    var root = $('lobby-list');
+    list.forEach(function(lobby) {
+      Net.roomPing(lobby.code).then(function(result) {
+        var cell = root && root.querySelector('[data-ping="' + lobby.code + '"]');
+        if (cell && result) cell.textContent = result.label;
+      });
+    });
+  },
+
+  showRoomRegion: function() {
+    var self = this, code = this.code;
+    this.roomRegion = '';
+    if (!code) return;
+    this.roomPing(code).then(function(result) {
+      if (!result || self.code !== code) return;
+      self.roomRegion = NetProbeModule ? NetProbeModule.regionLabel(result.region) : '';
+      self.renderRoster();
+    });
   },
 
   renderRoster: function() {
     var root = $('net-roster'); if (!root) return;
     if (!this.isOnline()) { root.classList.add('hidden'); return; }
     var html = '<b>' + escapeText(this.code) + '</b>';
+    if (this.roomRegion) html += '<em>' + escapeText(this.roomRegion) + '</em>';
     for (var id in this.playerNames) html += '<span' + (+id === this.hostId ? ' class="host"' : '') + '>' + escapeText(this.playerNames[id]) + '</span>';
     root.innerHTML = html; root.classList.remove('hidden');
   },
@@ -518,7 +563,7 @@ var Net = {
     this.saveCharacter();
     if (this.reconnectTimer) { clearTimeout(this.reconnectTimer); this.reconnectTimer = null; }
     if (this.pinger) { this.pinger.stop(); this.pinger = null; }
-    var socket = this.ws; this.mode = 'offline'; this.started = false; this.ws = null; this.id = 0; this.hostId = 0; this.code = ''; this.remotePlayers = {}; this.playerNames = {}; this.connectionOptions = null; this.reconnectAttempts = 0;
+    var socket = this.ws; this.mode = 'offline'; this.started = false; this.ws = null; this.id = 0; this.hostId = 0; this.code = ''; this.roomRegion = ''; this.remotePlayers = {}; this.playerNames = {}; this.connectionOptions = null; this.reconnectAttempts = 0;
     if (game) game.netDisconnected = false;
     if (socket) { try { socket.close(1000, 'left world'); } catch (e) {} }
     this.renderRoster();
@@ -547,3 +592,6 @@ try {
 // netping.js is a module; a page opened from file:// cannot load it and sends no pings.
 var NetPingClass = null;
 import('./netping.js').then(function(m) { NetPingClass = m.NetPing; }).catch(function() {});
+// netprobe.js times a room for the lobby list ("Asia · 120 ms"); without it the rows show no ping.
+var NetProbeModule = null;
+var NetProbeLoad = import('./netprobe.js').then(function(m) { NetProbeModule = m; return m; }).catch(function() { return null; });

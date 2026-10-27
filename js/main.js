@@ -5757,6 +5757,13 @@ function updateHud() {
   if (equippedAccessoryEffect('moonInfo')) el.biome.textContent += ' - ' + moonPhaseText();
   if (game.difficulty && game.difficulty !== 'normal') el.biome.textContent += ' - ' + DIFFICULTY[game.difficulty].name + ' Mode';
   el.fps.textContent = (game.fps || 0) + ' fps';
+  // live round trip to the relay while online: neutral, warning from 120 ms, bad from 200 ms
+  var rtt = typeof Net !== 'undefined' && Net.isOnline() && Net.pinger ? Net.pinger.rtt : -1;
+  if (el.pingRtt !== rtt) {
+    el.pingRtt = rtt;
+    el.ping.textContent = rtt + ' ms';
+    el.ping.className = rtt < 0 ? 'hidden' : rtt >= 200 ? 'ping-bad' : rtt >= 120 ? 'ping-warn' : '';
+  }
 
   // event indicator
   if (game.event || game.torchGod || game.party.active || game.lanternNight.active || (game.golf && game.golf.active)) {
@@ -6091,6 +6098,7 @@ function initDOM() {
   el.depth = $('depth');
   el.biome = $('biome');
   el.fps = $('fps');
+  el.ping = $('ping');
   el.crosshair = $('crosshair');
   el.tilehint = $('tilehint');
 
