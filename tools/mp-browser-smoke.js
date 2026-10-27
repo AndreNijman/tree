@@ -1,7 +1,7 @@
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 
-const url = 'http://127.0.0.1:8765/?relay=ws://localhost:8787';
+const url = process.env.TREE_URL || 'http://127.0.0.1:8765/?relay=ws://localhost:8787';
 const browser = await chromium.launch({ headless:true });
 const hostContext = await browser.newContext();
 const guestContext = await browser.newContext();

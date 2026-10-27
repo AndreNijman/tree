@@ -6,6 +6,9 @@
     "check": "node --check worker/relay.js && node tools/mp-relay-smoke.js && node tools/mp-netlog-smoke.js && wrangler deploy --dry-run",
     "mp:smoke": "node tools/mp-e2e.js",
     "mp:browser": "node tools/mp-browser-smoke.js",
+    "latency:test": "node tests/latency/netinterp.test.mjs && node tests/latency/relay.test.mjs && node tests/latency/harness.mjs",
+    "latency:rooms": "node tests/latency/rooms.test.mjs",
+    "latency:browser": "node tests/latency/browser.test.mjs",
     "relay:dev": "wrangler dev",
     "relay:deploy": "wrangler deploy"
   },
