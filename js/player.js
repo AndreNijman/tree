@@ -23,6 +23,10 @@ function Player(world) {
   this.whipSpeedT = 0;
   this.whipSpeedMul = 1;
   this.mineCd = 0;
+  this.smartMine = false;
+  this.toolAnimT = 0;
+  this.walkPhase = 0;
+  this.landAnimT = 0;
   this.invuln = 0;
   this.jumps = 0;
   this.flyT = 0;
@@ -72,7 +76,7 @@ Player.prototype.update = function(game) {
   var left = KEY['ArrowLeft'] || KEY['a'] || KEY['A'];
   var right = KEY['ArrowRight'] || KEY['d'] || KEY['D'];
   var up = KEY['ArrowUp'] || KEY['w'] || KEY['W'] || KEY[' '] || KEY['Space'];
-  var run = KEY['Shift'] || KEY['Control'];
+  var run = KEY['Shift'];
 
   var inWater = game.world.isWaterAt(this.x, this.y);
   var inLava = game.world.isLavaAt(this.x, this.y);
@@ -206,6 +210,8 @@ Player.prototype.update = function(game) {
   // attack cooldowns
   this.attackCd = Math.max(0, this.attackCd - dt);
   this.mineCd = Math.max(0, this.mineCd - dt);
+  this.toolAnimT = Math.max(0, this.toolAnimT - dt);
+  this.landAnimT = Math.max(0, this.landAnimT - dt);
   if (this.swingT > 0) this.swingT -= dt;
   if (this.whipSpeedT > 0) {
     this.whipSpeedT -= dt;
@@ -220,6 +226,8 @@ Player.prototype.update = function(game) {
   if (heldDef && heldDef.slowFall && this.vy > heldDef.slowFall - GRAVITY) this.vy = heldDef.slowFall - GRAVITY;
   var wasGround = this.onGround;
   physicsStep(this, game, {});
+  if (this.onGround) this.walkPhase = ((this.walkPhase || 0) + Math.abs(this.vx) / 18) % 6;
+  if (!wasGround && this.onGround) this.landAnimT = 0.12;
   if ((inWater || inLava) && this.vy > 0) this.vy = Math.min(this.vy, 1.5);
   if (heldDef && heldDef.slowFall && this.vy > heldDef.slowFall) this.vy = heldDef.slowFall;
   if (inLava && !this.buffs[I.OBSIDIANSKINPOTION]) {
@@ -310,6 +318,7 @@ Player.prototype.update = function(game) {
       else if (def.type === 'partycake') this.tryPartyCake(game, def, id);
       else if (def.type === 'partygift') this.tryPartyGift(game, def, id);
       else if (def.type === 'releaselantern') this.tryReleaseLantern(game, def, id);
+      else if (def.type === 'material' && def.type2 === 'seed') this.tryPlant(game, def, id, item);
       else if (def.type === 'bait') game.message('Equip a fishing rod and cast into water.');
     }
   }
@@ -396,14 +405,53 @@ Player.prototype.tryPurify = function(game, id) {
   AudioSys.play('magic');
 };
 
-Player.prototype.tryMine = function(game, def, item) {
-  if (this.mineCd > 0) return;
+// Read-only target selection, shared by mining and its on-screen preview.
+Player.prototype.miningTarget = function(game, def) {
   var range = def.range * TILE;
   var dx = MOUSE.wx - this.x, dy = MOUSE.wy - this.y;
   var d = Math.sqrt(dx * dx + dy * dy);
-  if (d > range) return;
-  var tx = Math.floor(MOUSE.wx / TILE), ty = Math.floor(MOUSE.wy / TILE);
-  if (!game.world.inBounds(tx, ty)) return;
+  var w = game.world;
+  if (!this.smartMine) {
+    var mx = Math.floor(MOUSE.wx / TILE), my = Math.floor(MOUSE.wy / TILE);
+    return d <= range && w.inBounds(mx, my) ? { x:mx, y:my } : null;
+  }
+  if (d < 1) return null;
+  var ux = dx / d, uy = dy / d, best = null, score = Infinity;
+  var radius = Math.ceil(range / TILE), px = Math.floor(this.x / TILE), py = Math.floor(this.y / TILE);
+  for (var tx = px - radius; tx <= px + radius; tx++) for (var ty = py - radius; ty <= py + radius; ty++) {
+    if (!w.inBounds(tx, ty)) continue;
+    var t = w.get(tx, ty), wall = t === T.AIR && def.hammer && w.wall(tx, ty) === WALL.WOOD;
+    if (t === T.AIR && !wall) continue;
+    if (t === T.WATER || t === T.LAVA || t === T.SHIMMER) continue;
+    var tree = t === T.TREETRUNK || t === T.LEAVES;
+    if (tree && def.axe === undefined) continue;
+    if (def.axe !== undefined && !def.power && !tree && t !== T.WOOD) continue;
+    if (t === T.ALTAR && !def.hammer) continue;
+    if (def.axe === undefined && (def.power || 0) < (TILE_HARD[t] || [0])[0]) continue;
+    if (t === T.ETERNIASTAND && game.event && game.event.type === 'oldonesarmy' && game.event.standX === tx && game.event.standY === ty) continue;
+    if (t === T.SHADOWCHEST && w.chestAt(tx, ty) && w.chestAt(tx, ty).locked) continue;
+    if ((t === T.SHADOWORB || t === T.CRIMSONHEART || t === T.LARVA) && game.anyBossAlive()) continue;
+    var cx = tx * TILE + TILE / 2 - this.x, cy = ty * TILE + TILE / 2 - this.y;
+    var distance = Math.hypot(cx, cy), along = cx * ux + cy * uy;
+    if (distance > range || along <= 0 || along / distance < 0.7) continue;
+    var blocked = false, steps = Math.ceil(distance / 4);
+    for (var n = 1; n < steps; n++) {
+      var sx = Math.floor((this.x + cx * n / steps) / TILE), sy = Math.floor((this.y + cy * n / steps) / TILE);
+      if (sx === tx && sy === ty) break;
+      if (w.isSolid(sx, sy) || w.get(sx, sy) === T.TREETRUNK) { blocked = true; break; }
+    }
+    if (blocked) continue;
+    var candidate = (1 - along / distance) * range * 4 + distance;
+    if (candidate < score) { score = candidate; best = { x:tx, y:ty }; }
+  }
+  return best;
+};
+
+Player.prototype.tryMine = function(game, def, item) {
+  if (this.mineCd > 0) return;
+  var target = this.miningTarget(game, def);
+  if (!target) return;
+  var tx = target.x, ty = target.y;
   var t = game.world.get(tx, ty);
   if (t === T.ETERNIASTAND && game.event && game.event.type === 'oldonesarmy' &&
       game.event.standX === tx && game.event.standY === ty) {
@@ -412,6 +460,8 @@ Player.prototype.tryMine = function(game, def, item) {
   }
   if (t === T.AIR) {
     if (def.hammer && game.world.wall(tx, ty) === WALL.WOOD) {
+      if (this.toolAnimT <= 0) this.toolAnimT = 0.18;
+      this.dir = tx * TILE + TILE / 2 >= this.x ? 1 : -1;
       game.world.setWall(tx, ty, WALL.NONE);
       this.inventory.add(I.WOODWALL, 1);
       this.mineCd = 0.12;
@@ -442,6 +492,8 @@ Player.prototype.tryMine = function(game, def, item) {
     return;
   }
   var mineMul = 1.5 * (this.buffs[I.SLICEOFCAKE] ? 1.2 : 1) * (this.ambrosia ? 1.05 : 1);
+  if (this.toolAnimT <= 0) this.toolAnimT = 0.18;
+  this.dir = tx * TILE + TILE / 2 >= this.x ? 1 : -1;
   var effPower = def.axe !== undefined && (t === T.TREETRUNK || t === T.LEAVES) ? def.axe : def.power;
   this.mineCd = Math.max(0, 0.06 - def.speed * mineMul * 0.015);
   var broke = game.world.damageTile(tx, ty, effPower, def.speed * mineMul);
@@ -507,7 +559,6 @@ Player.prototype.tryMelee = function(game, def, force, item) {
   }
   this.attackCd = def.speed;
   this.swingT = Math.max(0.12, def.speed * 0.7);
-  if (crit) game.spawnFloatingText(this.x, this.y - 30, 'Critical!', '#ffe14d');
   this.dir = (MOUSE.wx >= this.x) ? 1 : -1;
   var thrust = !!def.shortSword || def.meleeMode === 'thrust';
   var specialMelee = def.meleeMode === 'yoyo' || def.meleeMode === 'spear' || def.meleeMode === 'flail' || def.meleeMode === 'controlled';
@@ -520,6 +571,7 @@ Player.prototype.tryMelee = function(game, def, force, item) {
   }
   AudioSys.play('shoot');
   var crit = Math.random() < 0.04;
+  if (crit) game.spawnFloatingText(this.x, this.y - 30, 'Critical!', '#ffe14d');
   var mdmg = Math.round(def.dmg * this.inventory.damageMultiplier('melee') * this.inventory.itemDamageMul(item));
   if (crit) mdmg *= 2;
   if (def.nearbyBonus) {
@@ -533,32 +585,32 @@ Player.prototype.tryMelee = function(game, def, force, item) {
     mdmg = Math.round(mdmg * (1 + def.nearbyBonus * Math.min(ncnt, def.nearbyMax || 6)));
   }
   var reach = def.range * TILE + 10;
-  var cx = this.x + Math.cos(this.swingAng) * 14;
-  var cy = this.y + Math.sin(this.swingAng) * 14;
+  var cx = this.x, cy = this.y - 6;
   // hit enemies in arc (broadswords: whole facing side; shortswords: narrow stab lane)
   if (!def.projectileOnly) {
     for (var i = 0; i < game.entities.length; i++) {
       var e = game.entities[i];
       if (e.ooaSentry) continue;
       if (!isCombatTarget(e)) continue;
-      var dx = e.x - this.x, dy = e.y - this.y;
-      if (dx * dx + dy * dy >= reach * reach) continue;
-      if (thrust) {
-        // stab lane: along the stab direction, ~1.7 tiles wide perpendicular
-        var along = dx * Math.cos(this.swingAng) + dy * Math.sin(this.swingAng);
-        var perp = Math.abs(-dx * Math.sin(this.swingAng) + dy * Math.cos(this.swingAng));
-        if (along * this.dir < -6 || perp > 28) continue;
-      } else {
-        var ang = Math.atan2(e.y - this.y, e.x - this.x);
-        var da = Math.abs(angDiff(this.swingAng, ang));
-        if (da > (specialMelee ? 0.6 : 1.6)) continue;
+      var body = e;
+      if (!meleeIntersectsBox(cx, cy, this.swingAng, reach, thrust, body, specialMelee ? 0.6 : 1.2)) {
+        body = null;
+        if ((e.boss === 'destroyer' || e.boss === 'eaterofworlds') && e.segments) {
+          for (var si = 0; si < e.segments.length; si++) {
+            var segment = e.segments[si];
+            if (!segment.dead && meleeIntersectsBox(cx, cy, this.swingAng, reach, thrust, segment, specialMelee ? 0.6 : 1.2)) { body = segment; break; }
+          }
+        }
+        if (!body) continue;
       }
       {
         var kbForce = (def.kb || 4) * 0.8;
         var kbx = Math.cos(this.swingAng) * kbForce, kby = Math.sin(this.swingAng) * kbForce * 0.5 - 1;
-        if (e.boss) game.hitBoss(e, mdmg, kbx, kby);
+        // One hit per boss per swing, even when several worm segments overlap.
+        if (body !== e) segmentHit(e, body, mdmg, game);
+        else if (e.boss) game.hitBoss(e, mdmg, kbx, kby);
         else hitEntity(e, mdmg, kbx, kby, game);
-        game.fx.push({ type:'slash', x:e.x, y:e.y, t:0.15 });
+        game.fx.push({ type:'slash', x:body.x, y:body.y, t:0.15 });
       }
     }
   }
@@ -691,6 +743,7 @@ Player.prototype.tryMagic = function(game, def, id, item) {
   }
   var eff = this.inventory.accEffects();
   var cost = Math.ceil(def.mana * eff.manaMul);
+  if (id === I.SPACEGUN && this.inventory.setBonusActive('METEOR')) cost = 0; // Meteor set bonus
   if (this.mana < cost) { game.message('Not enough mana!'); return; }
   if (def.magicRamp) {
     if (this.magicRampId !== id) { this.magicRampId = id; this.magicRamp = 0; }
@@ -1034,6 +1087,30 @@ Player.prototype.tryPlaceWall = function(game, id) {
   game.fx.push({ type:'break', x:tx * TILE + 8, y:ty * TILE + 8, color:def.color, t:0.12 });
 };
 
+// Acorn planting: click a grass tile to grow a tree there (vanilla promise —
+// "Plant it on grass to grow a tree." — the acorn is consumed and a tree
+// sprouts instantly when there is clear space above the grass).
+Player.prototype.tryPlant = function(game, def, id, item) {
+  if (this.attackCd > 0) return;
+  this.attackCd = 0.25;
+  var tx = Math.floor(MOUSE.wx / TILE), ty = Math.floor(MOUSE.wy / TILE);
+  var w = game.world;
+  if (!w.inBounds(tx, ty)) return;
+  if (dist(this.x, this.y, tx * TILE + 8, ty * TILE + 8) > 6 * TILE) return;
+  if (w.get(tx, ty) !== T.AIR) { game.message('Needs an empty spot on grass.'); return; }
+  var ground = w.get(tx, ty + 1);
+  if (ground !== T.GRASS && ground !== T.JUNGLEGRASS && ground !== T.CORRUPTGRASS &&
+      ground !== T.CRIMGRASS && ground !== T.HALLOWGRASS) {
+    game.message('Acorns sprout on grass only.');
+    return;
+  }
+  if (!w.growTreeAt(tx, ty, ground === T.JUNGLEGRASS)) { game.message('Not enough room to grow.'); return; }
+  this.inventory.removeAt(this.inventory.selected, 1);
+  AudioSys.play('place');
+  game.fx.push({ type:'break', x:tx * TILE + 8, y:ty * TILE + 8, color:'#6bd06b', t:0.25 });
+  game.message('You plant an acorn.');
+};
+
 Player.prototype.doPlace = function(game, id, tx, ty) {
   var def = ITEMS[id];
   var item = this.inventory.selectedItem();
@@ -1188,7 +1265,11 @@ function rollFish(game, f) {
   if (tier > 45 && r < 0.18) return I.GOLDENCRATE;
   if (tier > 32 && r < 0.38) return I.IRONCRATE;
   if (r < 0.6) return I.WOODENCRATE;
-  if (biome === BIOME.HALLOW) return I.FISH_NEONTETRA;
+  if (biome === BIOME.HALLOW) {
+    // B6 wire: Crystal Serpent — the Hallow's rare rod catch (vanilla fishing loot)
+    if (Math.random() < 0.15) return I.CRYSTAL_SERPENT;
+    return I.FISH_NEONTETRA;
+  }
   if (biome === BIOME.CORRUPT || biome === BIOME.CRIMSON) return I.FISH_EBONKOI;
   if (biome === BIOME.JUNGLE) return I.FISH_CRIMSONTIGER;
   if (biome === BIOME.OCEAN) {
@@ -1220,6 +1301,8 @@ function openCrate(tier) {
     else if (Math.random() < 0.5) loot.push({ id: I.GLOWSTONE, count: 3 + Math.floor(Math.random() * 5) });
     else loot.push({ id: I.COIN, count: 1 + Math.floor(Math.random() * 3) });
   }
+  // B6 wire: Falcon Blade — rare higher-tier crate bonus (vanilla: found in crates)
+  if (tier >= 2 && Math.random() < 0.05) loot.push({ id: I.FALCON_BLADE, count: 1 });
   if (tier >= 2 && Math.random() < 0.5) loot.push({ id: I.ROCKET1, count: 5 + Math.floor(Math.random() * 5) });
   if (tier >= 3 && Math.random() < 0.6) loot.push({ id: I.COBALTBAR, count: 2 + Math.floor(Math.random() * 3) });
   return loot;

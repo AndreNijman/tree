@@ -181,6 +181,7 @@ World.prototype.breakTile = function(x, y) {
   this.tiles[this.idx(x, y)] = T.AIR;
   if (typeof terrainCache !== 'undefined') terrainCache.dirty = true;
   this.hp[this.idx(x, y)] = 0;
+  this.liqWake(this.idx(x, y));
   if (t === T.TORCH) this.rebuildLights();
   if (t === T.CHEST || t === T.SHADOWCHEST) {
     var c = this.removeChest(x, y);
@@ -191,6 +192,111 @@ World.prototype.breakTile = function(x, y) {
     if (pr) this.spilledPylonItem = pr.item;
   }
   return TILE_DROP[t] || null;
+};
+
+// ---------- Liquids ----------
+// Settle model for water/lava: an enqueued liquid tile falls straight down
+// into AIR, or slides sideways only when the destination can keep falling the
+// next tick (its below is AIR too). No equal-level channel creep — every move
+// is (or immediately leads to) a downward move, so the sim always terminates
+// and never sloshes. Liquid tiles are enqueued when terrain changes next to
+// them (breakTile wakes their neighbors); a settled tile leaves the queue and
+// is re-woken by the next dig. Water meeting lava hardens into Obsidian.
+var LIQ_TICK_MAX = 96;
+
+World.prototype.liqEnqueue = function(i) {
+  var t = this.tiles[i];
+  if (t !== T.WATER && t !== T.LAVA) return;
+  if (!this.liquidQueue) this.liquidQueue = new Set();
+  this.liquidQueue.add(i);
+};
+
+// Wake the liquid tiles 4-adjacent to a cell that just opened or changed.
+World.prototype.liqWake = function(i) {
+  var W = this.W, x = i % W;
+  if (i >= W) this.liqEnqueue(i - W);
+  if (this.tiles.length - i > W) this.liqEnqueue(i + W);
+  if (x > 0) this.liqEnqueue(i - 1);
+  if (x < W - 1) this.liqEnqueue(i + 1);
+};
+
+// Move a liquid tile from -> to; handles opposite-liquid contact.
+World.prototype.liqMove = function(from, to, t) {
+  var W = this.W;
+  var other = t === T.WATER ? T.LAVA : T.WATER;
+  var x = to % W, contact = -1;
+  if (this.tiles[to] === other) contact = to;
+  else if (to >= W && this.tiles[to - W] === other) contact = to - W;
+  else if (this.tiles.length - to > W && this.tiles[to + W] === other) contact = to + W;
+  else if (x > 0 && this.tiles[to - 1] === other) contact = to - 1;
+  else if (x < W - 1 && this.tiles[to + 1] === other) contact = to + 1;
+  this.tiles[from] = T.AIR;
+  this.hp[from] = 0;
+  if (contact >= 0) {
+    // the opposite liquid hardens where it stands; the moving liquid is consumed
+    this.tiles[contact] = T.OBSIDIAN;
+    this.hp[contact] = (TILE_HARD[T.OBSIDIAN] || [0, 50])[1];
+    this.liqWake(from);
+    this.liqWake(contact);
+    this.dirty = true;
+    return;
+  }
+  this.tiles[to] = t;
+  this.hp[to] = 0;
+  this.liqEnqueue(to); // keep falling/sliding on the next tick
+  this.liqWake(from);
+  this.liqWake(to);
+  this.dirty = true;
+};
+
+World.prototype.liqTick = function() {
+  if (!this.liquidQueue || this.liquidQueue.size === 0) return;
+  var W = this.W, H = this.H;
+  var arr = Array.from(this.liquidQueue);
+  this.liquidQueue = new Set(); // moves re-enqueue into the fresh queue
+  var processed = 0;
+  for (var a = 0; a < arr.length; a++) {
+    var i = arr[a];
+    var t = this.tiles[i];
+    if (t !== T.WATER && t !== T.LAVA) continue; // already resolved elsewhere
+    if (processed >= LIQ_TICK_MAX) { this.liquidQueue.add(i); continue; }
+    processed++;
+    var x = i % W, y = Math.floor(i / W);
+    var other = t === T.WATER ? T.LAVA : T.WATER;
+    var below = i + W, to = -1;
+    if (y + 1 < H && (this.tiles[below] === T.AIR || this.tiles[below] === other)) {
+      // fall straight down (into air, or into the opposite liquid -> obsidian)
+      to = below;
+    } else {
+      // leveling slide — but only toward an actual sink (an open drop) within
+      // LIQ_SINK_RANGE tiles ahead: flow stays directional, so the sim still
+      // terminates and flat water never creeps aimlessly or sloshes back
+      var l = i - 1, r = i + 1;
+      var sinkL = y + 1 < H && x > 0 && this.tiles[l] === T.AIR && this.liqSinkAhead(x, y, -1);
+      var sinkR = y + 1 < H && x < W - 1 && this.tiles[r] === T.AIR && this.liqSinkAhead(x, y, 1);
+      if (sinkL && sinkR) to = Math.random() < 0.5 ? l : r;
+      else if (sinkL) to = l;
+      else if (sinkR) to = r;
+    }
+    if (to >= 0) this.liqMove(i, to, t);
+    else this.liquidQueue.add(i); // settled for now — stay queued and retry; a
+    // later wake from any nearby dig/move re-checks it (sink paths can span
+    // several tiles, so neighbor-only wake coverage is not enough)
+  }
+};
+
+// Open fall (sink) within LIQ_SINK_RANGE tiles ahead at row y, path unobstructed.
+var LIQ_SINK_RANGE = 32;
+World.prototype.liqSinkAhead = function(x, y, d) {
+  var W = this.W, H = this.H;
+  for (var k = 1; k <= LIQ_SINK_RANGE; k++) {
+    var cx = x + d * k;
+    if (cx < 0 || cx >= W) return false;
+    var ci = this.idx(cx, y);
+    if (this.tiles[ci] !== T.AIR) return false; // wall or liquid blocks the path
+    if (this.tiles[ci + W] === T.AIR) return true; // open drop ahead
+  }
+  return false;
 };
 
 // ---------- Tree felling ----------
@@ -1003,6 +1109,21 @@ World.prototype.generate = function(hardmode, evil) {
       if (self.tiles[self.idx(x, uy)] === T.AIR) self.tiles[self.idx(x, uy)] = T.LAVA;
     }
   }
+  // Underworld water seeps: a few rough pools seep into the lava sea. The
+  // worldgen obsidian pass at the end of generate() cools the lava touching
+  // them, so the underworld spawns with natural Obsidian rims around the seeps.
+  var seeps = 8 + rnd(5);
+  for (var sw = 0; sw < seeps; sw++) {
+    var swx = 20 + rnd(W - 40), swy = H - 8 - rnd(18);
+    for (var sdy = -1; sdy <= 1; sdy++) {
+      for (var sdx = -2; sdx <= 2; sdx++) {
+        if (rng() < 0.7 && Math.abs(sdx) + Math.abs(sdy) <= 2) {
+          var wi2 = self.idx(swx + sdx, swy + sdy);
+          if (self.tiles[wi2] === T.AIR || self.tiles[wi2] === T.LAVA) self.tiles[wi2] = T.WATER;
+        }
+      }
+    }
+  }
   // Ash towers + side veins + lava pockets (vanilla per-column pass, 1/13)
   for (x = 0; x < W; x++) {
     if (Math.floor(rng() * 13) !== 0) continue;
@@ -1437,6 +1558,20 @@ self.underworldHouses = [];
       var colsArr = pbi === 0 ? self.spiderCols : (pbi === 1 ? self.graniteCols : self.marbleCols);
       for (var mcx = pcx - pr; mcx <= pcx + pr; mcx++) {
         if (mcx >= 0 && mcx < W) colsArr[mcx] = 1;
+      }
+      // B6 wire: Gladiator armor — vanilla marble-cave chest loot (guard room vault)
+      if (pbi === 2) {
+        var glx2 = pcx, gly2 = pcy;
+        if (self.inBounds(glx2, gly2)) {
+          self.set(glx2, gly2, T.CHEST);
+          var ginv2 = [];
+          var glads = [I.GLADIATOR_HELMET, I.GLADIATOR_BREASTPLATE, I.GLADIATOR_LEGGINGS];
+          var gi = Math.floor(rng() * 3);
+          ginv2.push({ id: glads[gi], count: 1 });
+          if (rng() < 0.5) ginv2.push({ id: glads[(gi + 1 + Math.floor(rng() * 2)) % 3], count: 1 });
+          ginv2.push({ id: I.MARBLE, count: 10 + Math.floor(rng() * 10) });
+          self.chests.push({ x: glx2, y: gly2, inv: ginv2 });
+        }
       }
     }
   }
@@ -1926,6 +2061,8 @@ self.underworldHouses = [];
       if (rng() < 0.4) cinv.push({ id: I.HEALINGPOTION, count: 1 });
       if (rng() < 0.3) cinv.push({ id: I.GEM_AMETHYST, count: 1 });
       if (rng() < 0.3) cinv.push({ id: I.GEM_SAPPHIRE, count: 1 });
+      // B6 wire: Hermes Boots — vanilla wooden-treasure loot (underground cabin chests)
+      if (rng() < 0.25) cinv.push({ id: I.HERMES_BOOTS, count: 1 });
       self.chests.push({ x: ccx, y: cby + chh - 1, inv: cinv });
     }
     // torch
@@ -2281,6 +2418,18 @@ self.underworldHouses = [];
     var gi = this.idx(sg, this.surfaceY[sg]);
     if (this.tiles[gi] === T.MUSHROOM) { this.tiles[gi] = T.GRASS; this.hp[gi] = 20; }
   }
+  // Water meets lava: any lava tile touching water cools into Obsidian at the
+  // boundary, so generated lava pools have natural obsidian rims.
+  for (var oy = 2; oy < H - 1; oy++) {
+    for (var ox = 1; ox < W - 1; ox++) {
+      var j = this.idx(ox, oy);
+      if (this.tiles[j] !== T.LAVA) continue;
+      if (this.tiles[j - W] === T.WATER || this.tiles[j + W] === T.WATER ||
+          this.tiles[j - 1] === T.WATER || this.tiles[j + 1] === T.WATER) {
+        this.tiles[j] = T.OBSIDIAN;
+      }
+    }
+  }
   this.rebuildLights();
 
   // Set full HP for all solid tiles
@@ -2491,6 +2640,62 @@ World.prototype.carveVSpread = function() {
 };
 
 // Build the spread frontier from every existing evil/Hallow tile with a convertible neighbor.
+// Runtime tree growth (acorn planting): standalone variant of the worldgen
+// growTree helper — same silhouette, but doesn't depend on worldgen scope.
+World.prototype.growTreeAt = function(tx, ty, jungle) {
+  var self = this;
+  var rnd = function(n) { return Math.floor(Math.random() * n); };
+  var height = 5 + rnd(12) + (jungle ? 5 : 0);
+  // room above must be clear (2-wide corridor, height + 4)
+  for (var cy = ty - height - 4; cy < ty; cy++) {
+    for (var cx = tx - 2; cx <= tx + 2; cx++) {
+      if (!self.inBounds(cx, cy) || self.tiles[self.idx(cx, cy)] !== T.AIR) return false;
+    }
+  }
+  var topY = ty - height;
+  var lastL = false, lastR = false;
+  for (var ty4 = ty - 1; ty4 >= topY; ty4--) {
+    self.tiles[self.idx(tx, ty4)] = T.TREETRUNK;
+    if (ty4 !== ty - 1 && ty4 !== topY) {
+      var roll = rnd(10);
+      if (roll === 5 || roll === 7) {
+        if (!lastL) self.tiles[self.idx(tx - 1, ty4)] = T.TREETRUNK;
+        lastL = true;
+      } else lastL = false;
+      if (roll === 6 || roll === 7) {
+        if (!lastR) self.tiles[self.idx(tx + 1, ty4)] = T.TREETRUNK;
+        lastR = true;
+      } else lastR = false;
+    }
+  }
+  // base roots per ground neighbors
+  var groundL = self.inBounds(tx - 1, ty) && self.tiles[self.idx(tx - 1, ty)] !== T.AIR;
+  var groundR = self.inBounds(tx + 1, ty) && self.tiles[self.idx(tx + 1, ty)] !== T.AIR;
+  var roots = rnd(3);
+  if (!groundL) roots = groundR ? 1 : 3;
+  else if (!groundR) roots = 2;
+  if (roots === 0 || roots === 1) self.tiles[self.idx(tx + 1, ty - 1)] = T.TREETRUNK;
+  if (roots === 0 || roots === 2) self.tiles[self.idx(tx - 1, ty - 1)] = T.TREETRUNK;
+  // leaf blob colored by ground biome grass
+  var leafTile = T.LEAVES;
+  var gt = self.tiles[self.idx(tx, ty)];
+  if (gt === T.CORRUPTGRASS) leafTile = T.LEAVES_CORRUPT;
+  else if (gt === T.CRIMGRASS) leafTile = T.LEAVES_CRIMSON;
+  else if (gt === T.HALLOWGRASS) leafTile = T.LEAVES_HALLOW;
+  else if (gt === T.JUNGLEGRASS) leafTile = T.LEAVES_JUNGLE;
+  var rows = [[-1, 1, topY - 2], [-2, 2, topY - 1], [-2, 2, topY], [-1, 1, topY + 1]];
+  if (Math.floor(Math.random() * 13) === 0) rows = [[0, 0, topY - 4], [-1, 1, topY - 3], [-1, 1, topY - 2], [-2, 2, topY - 1], [-2, 2, topY]];
+  for (var rr = 0; rr < rows.length; rr++) {
+    for (var lx = rows[rr][0]; lx <= rows[rr][1]; lx++) {
+      var lx3 = tx + lx, ly3 = rows[rr][2];
+      if (self.inBounds(lx3, ly3) && self.tiles[self.idx(lx3, ly3)] === T.AIR) self.tiles[self.idx(lx3, ly3)] = leafTile;
+    }
+  }
+  this.dirty = true;
+  return true;
+};
+
+// Worldgen frontier: track tiles that can convert neighbors (evil/Hallow spread)
 World.prototype.seedSpreadFrontier = function() {
   this.spreadFrontier = [];
   for (var i = 0; i < this.tiles.length; i++) {

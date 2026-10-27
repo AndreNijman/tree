@@ -50,6 +50,39 @@ function distPointSeg(px, py, x1, y1, x2, y2) {
   return dist(px, py, cx, cy);
 }
 
+// Segment against a centered AABB. Return first contact (0..1), or null.
+// Shared by projectile, beam and melee tests; artwork never defines hitboxes.
+function segmentBoxEntry(x1, y1, x2, y2, box, padding) {
+  var pad = padding || 0, lo = 0, hi = 1;
+  var starts = [x1, y1], deltas = [x2 - x1, y2 - y1];
+  var mins = [box.x - box.w / 2 - pad, box.y - box.h / 2 - pad];
+  var maxs = [box.x + box.w / 2 + pad, box.y + box.h / 2 + pad];
+  for (var axis = 0; axis < 2; axis++) {
+    if (Math.abs(deltas[axis]) < 0.000001) {
+      if (starts[axis] < mins[axis] || starts[axis] > maxs[axis]) return null;
+    } else {
+      var a = (mins[axis] - starts[axis]) / deltas[axis], b = (maxs[axis] - starts[axis]) / deltas[axis];
+      lo = Math.max(lo, Math.min(a, b)); hi = Math.min(hi, Math.max(a, b));
+      if (lo > hi) return null;
+    }
+  }
+  return lo;
+}
+
+function meleeIntersectsBox(x, y, angle, reach, thrust, box, halfArc) {
+  var ax = Math.cos(angle), ay = Math.sin(angle);
+  if (thrust) return segmentBoxEntry(x, y, x + ax * reach, y + ay * reach, box, 4) !== null;
+  // Test the nearest body edge and the two arc boundaries, not just its center.
+  var nx = clamp(x, box.x - box.w / 2, box.x + box.w / 2);
+  var ny = clamp(y, box.y - box.h / 2, box.y + box.h / 2);
+  if (dist2(x, y, nx, ny) > reach * reach) return false;
+  var da = Math.atan2(Math.sin(Math.atan2(ny - y, nx - x) - angle), Math.cos(Math.atan2(ny - y, nx - x) - angle));
+  if ((nx === x && ny === y) || Math.abs(da) <= halfArc) return true;
+  return [-halfArc, halfArc].some(function(a) {
+    return segmentBoxEntry(x, y, x + Math.cos(angle + a) * reach, y + Math.sin(angle + a) * reach, box, 0) !== null;
+  });
+}
+
 // Hex colors -> [r,g,b]
 function hexToRgb(h) {
   h = h.replace('#', '');
