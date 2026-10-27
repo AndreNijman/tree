@@ -117,3 +117,34 @@ not about state.
 
 The lag record still carries `region` (`regionOfColo(colo)`) and
 `moved: null`.
+
+## Item 1: what was done and measured
+
+`js/netinterp.js` (Timeline + Track), wired in js/net.js:
+
+- Remote players (host and clients) and, on clients, the host's entities
+  (with worm segments) are drawn from per-sender buffers. Projectiles keep
+  their existing local stepping.
+- New senders stamp `ts` (their `performance.now()`) on `player` states and
+  `frame`s; the host passes each player's own newest state and `ts` on in
+  its frames instead of its smoothed drawing of them. Optional fields: old
+  clients ignore them, and states without `ts` are placed by arrival time.
+- Without the module (file://) the old lerp still runs.
+
+The spec's pure interpolation (delay ≈ p95 arrival gap) was measured and
+rejected: it is the smoothest but draws everything ~70-100 ms later than
+today, which for enemies in a co-op brawler is worse than the stutter. The
+`lead` option instead covers part of the 100 ms spacing with the capped
+(100 ms) extrapolation: players 0.75, enemies 1, chosen so no number gets
+worse than before (tests/latency/harness.mjs, 200 ms RTT ±40 ms, 5 seeds):
+
+| | error now | drawn behind | error at that lag | stutter frames |
+|---|---|---|---|---|
+| players before (lerp 0.35/step) | 50.3 px | 180 ms | 6.0 px | 59.2 % |
+| players after (lead 0.75) | 48.6 px | 175 ms | 1.9 px | 6.5 % |
+| enemies before (jump per frame) | 42.5 px | 150 ms | 8.8 px | 99.8 % |
+| enemies after (lead 1) | 42.5 px | 150 ms | 2.4 px | 9.8 % |
+| pure interpolation (lead 0) | 67.6 px | 250 ms | 1.7 px | 2.7 % |
+
+States from an old client (no `ts`) get the arrival-time path: players
+53.0 px / 193 ms / 19.3 % stutter, enemies 46.2 px / 167 ms / 26.1 %.

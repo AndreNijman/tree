@@ -28,6 +28,7 @@ var Net = {
   pingT: 0,
   roomPings: {},
   roomRegion: '',
+  timelines: {},
 
   httpRelay: function() { return this.relay.replace(/^wss:/, 'https:').replace(/^ws:/, 'http:'); },
   isOnline: function() { return this.mode !== 'offline' && this.ws && this.ws.readyState === WebSocket.OPEN; },
@@ -126,6 +127,7 @@ var Net = {
       this.id = +message.you; this.hostId = +message.host || this.id; this.code = message.code || '';
       if (this.connectionOptions) this.connectionOptions.code = this.code;
       this.mode = this.id === this.hostId ? 'host' : 'client';
+      this.timelines = {};
       this.setStatus((this.isHost() ? 'Hosting ' : 'Joined ') + this.code);
       this.showRoomRegion();
       if (this.isHost()) this.beginHosting();
@@ -138,7 +140,7 @@ var Net = {
       this.playerNames = {};
       for (var i = 0; i < list.length; i++) this.playerNames[list[i].id] = list[i].name;
       for (var remoteId in this.remotePlayers) {
-        if (!this.playerNames[remoteId] || +remoteId === this.id) delete this.remotePlayers[remoteId];
+        if (!this.playerNames[remoteId] || +remoteId === this.id) { delete this.remotePlayers[remoteId]; delete this.timelines['p' + remoteId]; }
       }
       this.renderRoster();
       if (this.id && this.id !== this.hostId && this.mode !== 'client') this.mode = 'client';
@@ -146,6 +148,7 @@ var Net = {
     }
     if (message.t === 'host') {
       this.hostId = +message.host;
+      this.timelines = {};
       this.mode = this.id === this.hostId ? 'host' : 'client';
       if (this.isHost()) {
         game.message('You are now the world host.');
@@ -253,6 +256,8 @@ var Net = {
       swingT:p.swingT, swingAng:p.swingAng, selected:p.inventory.selected,
       armor:p.inventory.armor, dyes:p.inventory.dyes, name:p.netName || this.displayName
     };
+    // Send time, so receivers space states by when they were sent (netinterp.js).
+    if (!source) state.ts = Math.round(performance.now());
     if (includeInventory) {
       state.inventory = p.inventory.slots;
       state.accessories = p.inventory.accessories;
@@ -268,6 +273,11 @@ var Net = {
     p.netId = +id; p.netName = state.name || this.playerNames[id] || 'Player';
     p.targetX = +state.x; p.targetY = +state.y;
     if (!old) { p.x = p.targetX; p.y = p.targetY; }
+    p.netState = state;
+    if (NetInterp) {
+      if (!p.netTrack) p.netTrack = new NetInterp.Track();
+      p.netTrack.push(this.timeline('p' + id, NET_LEAD.player).arrive(performance.now(), state.ts), p.targetX, p.targetY);
+    }
     p.vx = +state.vx || 0; p.vy = +state.vy || 0; p.dir = state.dir || 1;
     p.onGround = !!state.onGround; p.hp = +state.hp || 1; p.maxHp = +state.maxHp || 100;
     p.mana = +state.mana || 0; p.maxMana = +state.maxMana || 200; p.dying = !!state.dying;
@@ -294,10 +304,14 @@ var Net = {
       if (full) { this.profileT = 1; this.saveCharacter(); }
       this.send({ t:'game', k:'player', state:this.playerState(full) });
     }
+    var now = performance.now();
     for (var id in this.remotePlayers) {
-      var p = this.remotePlayers[id];
-      p.x = lerp(p.x, p.targetX, 0.35); p.y = lerp(p.y, p.targetY, 0.35);
+      var p = this.remotePlayers[id], line = this.timelines['p' + id];
+      var shown = p.netTrack && line ? p.netTrack.at(line.renderTime(now)) : null;
+      if (shown) { p.x = shown.x; p.y = shown.y; }
+      else { p.x = lerp(p.x, p.targetX, 0.35); p.y = lerp(p.y, p.targetY, 0.35); }
     }
+    if (this.isClient()) this.placeEntities(now);
     if (this.isHost() && this.frameT <= 0) {
       this.frameT = 0.1;
       if (this.pendingTiles.length) {
@@ -313,14 +327,43 @@ var Net = {
     var projectiles = [];
     for (var j = 0; j < game.projectiles.list.length; j++) projectiles.push(this.projectileState(game.projectiles.list[j]));
     var players = [];
-    for (var id in this.remotePlayers) players.push({ id:+id, state:this.playerState(true, this.remotePlayers[id]) });
+    for (var id in this.remotePlayers) players.push({ id:+id, state:this.relayedState(this.remotePlayers[id]) });
     return {
+      ts:Math.round(performance.now()),
       timeOfDay:game.timeOfDay, weather:game.weather, hardmode:game.hardmode, victory:game.victory,
       bossesDefeated:game.bossesDefeated, mechDone:game.mechDone, event:game.event,
       pillarsSpawned:game.pillarsSpawned, pillarsDestroyed:game.pillarsDestroyed,
       entities:entities, projectiles:projectiles, pickups:game.pickups, chests:game.world.chests, players:players,
       bossBars:game.bossBars.map(function(b) { return { nid:b.id && b.id.nid, name:b.name, hp:b.hp, maxHp:b.maxHp, color:b.color }; })
     };
+  },
+
+  // Another player as the host passes it on: the newest position it got, with
+  // that player's own send time, not the host's smoothed drawing of them.
+  relayedState: function(p) {
+    var state = this.playerState(true, p), raw = p.netState;
+    if (raw) { state.x = +raw.x; state.y = +raw.y; state.vx = +raw.vx || 0; state.vy = +raw.vy || 0; if (raw.ts !== undefined) state.ts = raw.ts; }
+    return state;
+  },
+
+  // One clock per sender for netinterp.js; reset when the host changes.
+  timeline: function(key, lead) {
+    return this.timelines[key] || (this.timelines[key] = new NetInterp.Timeline({ lead:lead }));
+  },
+
+  // Clients draw the host's enemies between frames rather than jumping with each one.
+  placeEntities: function(now) {
+    var line = this.timelines.frame;
+    if (!line || !game) return;
+    var T = line.renderTime(now);
+    for (var i = 0; i < game.entities.length; i++) {
+      var e = game.entities[i], shown = e.netTrack && e.netTrack.at(T);
+      if (!shown) continue;
+      e.x = shown.x; e.y = shown.y;
+      if (shown.segs && e.segments && e.segments.length === shown.segs.length) {
+        for (var s = 0; s < e.segments.length; s++) { e.segments[s].x = shown.segs[s].x; e.segments[s].y = shown.segs[s].y; }
+      }
+    }
   },
 
   entityState: function(e) {
@@ -350,7 +393,8 @@ var Net = {
       var remote = state.players[playerIndex];
       if (+remote.id !== this.id && remote.state) this.remotePlayers[remote.id] = this.makeRemotePlayer(remote.id, remote.state);
     }
-    this.applyEntities(state.entities || []);
+    var frameAt = NetInterp ? this.timeline('frame', NET_LEAD.enemy).arrive(performance.now(), state.ts) : null;
+    this.applyEntities(state.entities || [], frameAt);
     this.applyProjectiles(state.projectiles || []);
     game.pickups = state.pickups || [];
     this.applying = true; game.world.chests = state.chests || game.world.chests; this.applying = false;
@@ -361,13 +405,17 @@ var Net = {
     }
   },
 
-  applyEntities: function(list) {
+  applyEntities: function(list, frameAt) {
     var byId = {}, next = [];
     for (var i = 0; i < game.entities.length; i++) if (game.entities[i].nid) byId[game.entities[i].nid] = game.entities[i];
     for (var j = 0; j < list.length; j++) {
       var data = list[j], e = byId[data.nid] || (data.type >= 0 && ENT_DEF[data.type] ? makeEntity(data.type, data.x, data.y) : {});
       for (var key in data) if (key !== 'segments' && key !== 'parentNid' && key !== 'siblingNid') e[key] = data[key];
       if (data.segments) e.segments = data.segments;
+      if (NetInterp && frameAt != null) {
+        if (!e.netTrack) e.netTrack = new NetInterp.Track();
+        e.netTrack.push(frameAt, +data.x, +data.y, data.segments);
+      }
       next.push(e); byId[data.nid] = e;
     }
     for (var n = 0; n < list.length; n++) {
@@ -376,6 +424,8 @@ var Net = {
       if (d.siblingNid) target.sibling = byId[d.siblingNid] || null;
     }
     game.entities = next;
+    // Back to the drawn positions at once, so no frame shows the raw ones.
+    if (NetInterp) this.placeEntities(performance.now());
   },
 
   applyProjectiles: function(list) {
@@ -592,6 +642,12 @@ try {
 // netping.js is a module; a page opened from file:// cannot load it and sends no pings.
 var NetPingClass = null;
 import('./netping.js').then(function(m) { NetPingClass = m.NetPing; }).catch(function() {});
+// netinterp.js draws remote players and the host's enemies between updates.
+// How far ahead of the newest state each is drawn (tests/latency/harness.mjs):
+// players lean to smoothness, enemies are never drawn later than before.
+var NET_LEAD = { player:0.75, enemy:1 };
+var NetInterp = null;
+import('./netinterp.js').then(function(m) { NetInterp = m; }).catch(function() {});
 // netprobe.js times a room for the lobby list ("Asia · 120 ms"); without it the rows show no ping.
 var NetProbeModule = null;
 var NetProbeLoad = import('./netprobe.js').then(function(m) { NetProbeModule = m; return m; }).catch(function() { return null; });
