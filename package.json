@@ -9,6 +9,8 @@
     "latency:test": "node tests/latency/netinterp.test.mjs && node tests/latency/relay.test.mjs && node tests/latency/harness.mjs",
     "latency:rooms": "node tests/latency/rooms.test.mjs",
     "latency:browser": "node tests/latency/browser.test.mjs",
+    "devjoin:test": "node tests/devjoin/relay.test.mjs",
+    "devjoin:browser": "node tests/devjoin/browser.test.mjs",
     "relay:dev": "wrangler dev",
     "relay:deploy": "wrangler deploy"
   },
