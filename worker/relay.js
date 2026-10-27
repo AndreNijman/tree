@@ -1,5 +1,6 @@
 import { NetStats, sendNetLog, coloOf } from './netstats.js';
 import { playerWhere, withWhere, whereOf, regionOfColo } from './netplace.js';
+import { verifyDevPass } from './netdev.js';
 
 const PROTOCOL_VERSION = 1;
 const MAX_PLAYERS = 8;
@@ -15,6 +16,7 @@ const NETLOG_SESSION_MS = 30 * 60 * 1000;
 const CODE_ALPHABET = 'BCDFGHJKLMNPQRSTVWXYZ23456789';
 const CODE_PATTERN = new RegExp(`^[${CODE_ALPHABET}]{5}$`);
 const PRODUCTION_ORIGIN = 'https://tree.andrenijman.com';
+const DEV_HOST = 'tree.andrenijman.com'; // the host dev passes are issued for (netdev.js)
 
 const encoder = new TextEncoder();
 const lobbyKey = code => `lobby:${code}`;
@@ -305,6 +307,9 @@ export class Room {
       this.fatal(socket, 'handshake', `expected ${session.action} with protocol version ${PROTOCOL_VERSION}`);
       return;
     }
+    // A dev (games-guard's signed pass in `dev`) joins any room: locked or
+    // full. A missing or bad pass means the normal rules, silently.
+    const dev = await verifyDevPass(message.dev, DEV_HOST, { publicKey: this.env.DEV_TEST_PUBLIC_KEY || undefined });
     if (session.action === 'create') {
       if (this.room || this.players.size) {
         this.fatal(socket, 'collision', 'lobby already exists');
@@ -325,27 +330,29 @@ export class Room {
         this.fatal(socket, 'missing', 'no lobby with that code');
         return;
       }
-      if (this.players.size >= MAX_PLAYERS) {
+      if (!dev && this.players.size >= MAX_PLAYERS) {
         this.fatal(socket, 'full', `lobby is full (${MAX_PLAYERS})`);
         return;
       }
-      const now = Date.now();
-      const attempts = (this.passwordAttempts.get(session.ip) || [])
-        .filter(time => now - time < PASSWORD_ATTEMPT_WINDOW_MS);
-      if (this.room.passwordHash && attempts.length >= PASSWORD_ATTEMPT_MAX) {
-        this.passwordAttempts.set(session.ip, attempts);
-        this.fatal(socket, 'rate', 'too many password attempts; wait a minute');
-        return;
-      }
-      if (!await passwordMatches(this.room.passwordHash, message.password)) {
-        attempts.push(now);
-        this.passwordAttempts.set(session.ip, attempts);
+      if (!dev) {
+        const now = Date.now();
+        const attempts = (this.passwordAttempts.get(session.ip) || [])
+          .filter(time => now - time < PASSWORD_ATTEMPT_WINDOW_MS);
+        if (this.room.passwordHash && attempts.length >= PASSWORD_ATTEMPT_MAX) {
+          this.passwordAttempts.set(session.ip, attempts);
+          this.fatal(socket, 'rate', 'too many password attempts; wait a minute');
+          return;
+        }
+        if (!await passwordMatches(this.room.passwordHash, message.password)) {
+          attempts.push(now);
+          this.passwordAttempts.set(session.ip, attempts);
+          await this.persistPasswordAttempts();
+          this.fatal(socket, 'password', 'wrong lobby password');
+          return;
+        }
+        this.passwordAttempts.delete(session.ip);
         await this.persistPasswordAttempts();
-        this.fatal(socket, 'password', 'wrong lobby password');
-        return;
       }
-      this.passwordAttempts.delete(session.ip);
-      await this.persistPasswordAttempts();
     }
 
     const id = session.action === 'create' ? 1 : this.room.nextPlayerId++;
@@ -380,6 +387,7 @@ export class Room {
       metadata: this.room.metadata,
     });
     this.broadcastLobby();
+    if (dev) this.broadcast({ t: 'dev-joined', name: dev.name });
     if (this.room.phase === 'running' && id !== this.room.hostId) {
       this.send(socket, { t: 'snapshot-needed' });
       this.toHost({ t: 'snapshot-request', from: id });
@@ -500,7 +508,8 @@ export class Room {
       code: this.room.code,
       name: this.room.name,
       world: this.room.world,
-      players: this.players.size,
+      // A dev can be a seat over the limit; the lobby list shows it as full.
+      players: Math.min(this.players.size, MAX_PLAYERS),
       max: MAX_PLAYERS,
       locked: Boolean(this.room.passwordHash),
       phase: this.room.phase,
