@@ -66,17 +66,22 @@ var Net = {
     $('loading').classList.remove('hidden');
     $('loading').querySelector('h1').textContent = reconnecting ? 'reconnecting...' : (options.create ? 'starting host...' : 'joining world...');
     var url = options.create ? this.relay + '?create=1' : this.relay + '?code=' + encodeURIComponent(options.code || '');
+    // A dev's pass (netdev.js) goes in the create/join message, never the URL.
+    var devReady = NetDevLoad.then(function(m) { return m ? m.devPass() : null; }).catch(function() { return null; });
     var ws;
     try { ws = new WebSocket(url); }
     catch (err) { this.fail(err.message); return; }
     this.ws = ws;
     ws.onopen = function() {
-      self.send({
-        t:options.create ? 'create' : 'join',
-        name:self.cleanName(options.name), password:String(options.password || '').slice(0, 64),
-        code:String(options.code || '').toUpperCase(), proto:self.VERSION,
-        world:options.worldName || '', lobbyName:self.cleanName(options.name) + "'s world",
-        rejoin:reconnecting ? self.id : undefined
+      devReady.then(function(dev) {
+        if (self.ws !== ws) return;
+        self.send({
+          t:options.create ? 'create' : 'join',
+          name:self.cleanName(options.name), password:String(options.password || '').slice(0, 64),
+          code:String(options.code || '').toUpperCase(), proto:self.VERSION,
+          world:options.worldName || '', lobbyName:self.cleanName(options.name) + "'s world",
+          rejoin:reconnecting ? self.id : undefined, dev:dev ? dev.pass : undefined
+        });
       });
     };
     ws.onmessage = function(event) {
@@ -130,6 +135,7 @@ var Net = {
       this.timelines = {};
       this.setStatus((this.isHost() ? 'Hosting ' : 'Joined ') + this.code);
       this.showRoomRegion();
+      this.tellPlayer();
       if (this.isHost()) this.beginHosting();
       return;
     }
@@ -163,6 +169,26 @@ var Net = {
     if (message.t === 'snapshot-end' && this.snapshotParts && this.isClient()) { this.finishSnapshot(); return; }
     if (message.t === 'game') { this.onGame(message); return; }
     if (message.t === 'pong') { if (this.pinger) this.pinger.pong(message.c); return; }
+    if (message.t === 'dev-joined') { NetDevLoad.then(function(m) { if (m) m.showDevJoined(message.name); }); return; }
+  },
+
+  // Who this tab plays as and in which room, for games-guard's admin page (netdev.js).
+  tellPlayer: function() {
+    var self = this;
+    NetDevLoad.then(function(m) { if (m) m.setPlayer(self.isOnline() ? self.displayName : self.cleanName($('mp-name').value), self.isOnline() ? self.code : ''); });
+  },
+
+  // https://tree.andrenijman.com/?join=CODE (the admin page's link): straight
+  // into that hosted world, as a dev when this browser has a pass.
+  joinFromLink: function() {
+    var self = this;
+    return NetDevLoad.then(function(m) {
+      var code = m && m.joinCode();
+      if (!code) return;
+      m.clearJoinCode();
+      $('mp-code').value = code;
+      self.joinCode(code);
+    });
   },
 
   beginHosting: function() {
@@ -617,6 +643,7 @@ var Net = {
     if (game) game.netDisconnected = false;
     if (socket) { try { socket.close(1000, 'left world'); } catch (e) {} }
     this.renderRoster();
+    this.tellPlayer();
     if (showMenu) { $('mainmenu').classList.remove('hidden'); refreshSaveMenu(); this.refreshLobbies(); }
   }
 };
@@ -651,3 +678,5 @@ import('./netinterp.js').then(function(m) { NetInterp = m; }).catch(function() {
 // netprobe.js times a room for the lobby list ("Asia · 120 ms"); without it the rows show no ping.
 var NetProbeModule = null;
 var NetProbeLoad = import('./netprobe.js').then(function(m) { NetProbeModule = m; return m; }).catch(function() { return null; });
+// netdev.js: dev passes, ?join= links, the "DEV ANDRE HAS JOINED" banner, the admin page's player view.
+var NetDevLoad = import('./netdev.js').catch(function() { return null; });

@@ -6419,6 +6419,7 @@ function initDOM() {
   $('mp-refresh').addEventListener('click', function() { Net.refreshLobbies(); });
   $('mp-join').addEventListener('click', function() { Net.joinCode($('mp-code').value); });
   $('mp-code').addEventListener('keydown', function(e) { if (e.key === 'Enter') Net.joinCode(this.value); });
+  $('mp-name').addEventListener('change', function() { if (!Net.isOnline()) Net.tellPlayer(); });
   $('lobby-list').addEventListener('click', function(e) {
     var row = e.target.closest('.lobby-row');
     if (row && e.target.closest('.lobby-join')) Net.joinCode(row.getAttribute('data-code'));
@@ -6444,5 +6445,7 @@ function initDOM() {
 // ---------- Boot ----------
 initDOM();
 initInput();
-initWorldStorage();
+// The name last used online, so ?join= links and the admin page's player view have one.
+(function() { var saved = Net.loadCharacter(); if (saved && saved.name && !$('mp-name').value) $('mp-name').value = saved.name; })();
+initWorldStorage().catch(function() {}).then(function() { Net.tellPlayer(); return Net.joinFromLink(); });
 requestAnimationFrame(loop);
