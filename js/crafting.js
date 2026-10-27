@@ -348,10 +348,10 @@ recipe({ name:'Stardust Leggings', result:I.STARDUSTLEGS, count:1, mat:[[I.FRAG_
 
 // Accessories
 recipe({ name:'Frostspark Boots', result:I.FROSTSPARKBOOTS, count:1, mat:[[I.SPECTREBOOTS,1],[I.ICE,20]], station:'anvil' });
-recipe({ name:'Ankh Shield', result:I.ANKHSHIELD, count:1, mat:[[I.OBSIDIANSHIELD,1],[I.PHILOSOPHERSSTONE,1]], station:'anvil' });
+recipe({ name:'Ankh Shield', result:I.ANKHSHIELD, count:1, mat:[[I.ANKH_CHARM,1],[I.OBSIDIANSHIELD,1]], station:'none', desc:'Blocks knockback; shrugs off curses. (B6 wire: charm-sourced, no Tinkerer in this build.)' });
 recipe({ name:'Fire Gauntlet', result:I.FIREGAUNTLET, count:1, mat:[[I.MECHANICALGLOVE,1],[I.SOUL_FRIGHT,3]], station:'anvil' });
 recipe({ name:'Mechanical Glove', result:I.MECHANICALGLOVE, count:1, mat:[[I.WARRIOREMBLEM,1],[I.COBALTBAR,10]], station:'anvil' });
-recipe({ name:'Master Ninja Gear', result:I.MASTERNINJAGEAR, count:1, mat:[[I.TABI,1],[I.BLACKBELT,1]], station:'anvil' });
+recipe({ name:'Master Ninja Gear', result:I.MASTERNINJAGEAR, count:1, mat:[[I.TABI,1],[I.BLACKBELT,1],[I.TIGER_CLIMBING_GEAR,1]], station:'none', desc:'The arts of movement and evasion combined. (B6 wire: Tiger Climbing Gear sold by the Merchant.)' });
 recipe({ name:'Celestial Shell', result:I.CELESTIALSHELL, count:1, mat:[[I.CELESTIALSTONE,1],[I.MOONSTONE,1],[I.SUNSTONE,1]], station:'anvil' });
 recipe({ name:'Frozen Turtle Shell', result:I.FROZENTURTLESHELL, count:1, mat:[[I.ICE,20],[I.TURTLESHELL,1]], station:'anvil' });
 recipe({ name:'Obsidian Shield', result:I.OBSIDIANSHIELD, count:1, mat:[[I.OBSIDIAN,20],[I.COBALTBAR,5]], station:'anvil' });
@@ -785,3 +785,30 @@ recipe({ name:'Sign', result:I.SIGN, count:1, mat:[[I.WOOD,6]], station:'workben
 recipe({ name:'Book', result:I.BOOK, count:1, mat:[[I.SILK,3], [I.BONE,3]], station:'workbench' });
 recipe({ name:'Chain', result:I.CHAIN, count:1, mat:[[I.IRONBAR,1]], station:'anvil' });
 recipe({ name:'Corrupt Seeds', result:I.CORRUPT_SEEDS, count:1, mat:[[I.EBONSTONE,1], [I.GEL,2]], station:'workbench' });
+
+// ---------- B6 iconic wire batch: acquisition for named catalog ghosts (AUDIT-2026-10-23 B6) ----------
+// Vanilla divergences are documented inline; 'none' = no Tinkerer/Autohammer analog exists in this build.
+recipe({ name:'Enchanted Sword', result:I.ENCHANTED_SWORD, count:1, mat:[[I.SILVERSWORD,1],[I.FALLENSTAR,8]], station:'anvil', desc:'A shrine blade reforged from a silver sword and fallen stars.' });
+recipe({ name:'Zenith', result:I.ZENITH, count:1, mat:[[I.COPPERSHORT,1],[I.STARFURY,1],[I.ENCHANTED_SWORD,1],[I.BEE_KEEPER,1],[I.MURAMASA,1],[I.BLADE_OF_GRASS,1],[I.VOLCANO,1],[I.FALCON_BLADE,1],[I.MEOWMERE,1],[I.STAR_WRATH,1],[I.TERRARIAN,1],[I.SEEDLER,1],[I.THEHORSEMANSBLADE,1],[I.INFLUXWAVER,1]], station:'none', desc:'The ultimate blade. Legendary swords of every era, fused by starlight.' });
+recipe({ name:'GPS', result:I.G_P_S, count:1, mat:[[I.COMPASS,1],[I.DEPTH_METER,1],[I.GOLDBAR,8]], station:'none', desc:'Depth and position readings. Gold bars stand in for the vanilla Gold Watch.' });
+// 'adhesivebandage' as a literal id: the I.ADHESIVE_BANDAGE dot-read proved
+// unstable in-page for non-first members of a recipe literal (B6 diag 10-15);
+// the string id itself is verified stable on every read path.
+recipe({ name:'Ankh Charm', result:I.ANKH_CHARM, count:1, mat:[[I.NAZAR,1],['adhesivebandage',1],[I.MEGAPHONE,1],[I.VITAMINS,1]], station:'none', desc:'The four ills of Terraria, laid to rest. Vanilla intermediates flattened.' });
+
+recipe({ name:'Cell Phone', result:I.CELL_PHONE, count:1, mat:[[I.G_P_S,1],[I.FISHERMANSPOCKETGUIDE,1],[I.WEATHERRADIO,1],[I.SEXTANT,1]], station:'none', desc:'Every reading at a glance. (Vanilla REK/Gizmo chain flattened.)' });
+// Drill tier (B6 wire): vanilla bar counts; no Mythril-Anvil distinction here so all sit at the anvil.
+recipe({ name:'Cobalt Drill', result:I.COBALT_DRILL, count:1, mat:[[I.COBALTBAR,15]], station:'anvil' });
+recipe({ name:'Palladium Drill', result:I.PALLADIUM_DRILL, count:1, mat:[[I.PALLADIUMBAR,15]], station:'anvil' });
+recipe({ name:'Mythril Drill', result:I.MYTHRIL_DRILL, count:1, mat:[[I.MYTHRILBAR,18]], station:'anvil' });
+recipe({ name:'Orichalcum Drill', result:I.ORICHALCUM_DRILL, count:1, mat:[[I.ORICHALCUMBAR,18]], station:'anvil' });
+recipe({ name:'Adamantite Drill', result:I.ADAMANTITE_DRILL, count:1, mat:[[I.ADAMANTITEBAR,20]], station:'anvil' });
+recipe({ name:'Titanium Drill', result:I.TITANIUM_DRILL, count:1, mat:[[I.TITANIUMBAR,20]], station:'anvil' });
+recipe({ name:'Chlorophyte Drill', result:I.CHLOROPHYTE_DRILL, count:1, mat:[[I.CHLOROPHYTEBAR,18]], station:'anvil' });
+recipe({ name:'Shroomite Digging Claw', result:I.SHROOMITE_DIGGING_CLAW, count:1, mat:[[I.CHLOROPHYTEBAR,12],[I.MUSHROOM,40]], station:'none', desc:'Glowing mycelium over chlorophyte. (No Autohammer in this build.)' });
+recipe({ name:'Spectre Pickaxe', result:I.SPECTRE_PICKAXE, count:1, mat:[[I.CHLOROPHYTEBAR,12],[I.ECTOPLASM,10]], station:'none', desc:'Mines through the veil of the dead.' });
+recipe({ name:'Solar Flare Drill', result:I.SOLAR_FLARE_DRILL, count:1, mat:[[I.FRAG_SOLAR,14]], station:'none' });
+recipe({ name:'Vortex Drill', result:I.VORTEX_DRILL, count:1, mat:[[I.FRAG_VORTEX,14]], station:'none' });
+recipe({ name:'Nebula Drill', result:I.NEBULA_DRILL, count:1, mat:[[I.FRAG_NEBULA,14]], station:'none' });
+recipe({ name:'Stardust Drill', result:I.STARDUST_DRILL, count:1, mat:[[I.FRAG_STARDUST,14]], station:'none' });
+recipe({ name:'Drill Containment Unit', result:I.DRILL_CONTAINMENT_UNIT, count:1, mat:[[I.CHLOROPHYTEBAR,18],[I.SHROOMITE_DIGGING_CLAW,1],[I.SPECTRE_PICKAXE,1]], station:'none', desc:'Supreme mining drone. Fusion of this build\'s drill tier.' });

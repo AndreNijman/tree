@@ -86,6 +86,7 @@ TILE_COLORS[T.PLATFORM] = ['#9a6b3f', '#7a4f2b'];
 TILE_COLORS[T.WORKBENCH] = ['#9a6b3f', '#7a4f2b'];
 TILE_COLORS[T.FURNACE] = ['#77727a', '#56515a'];
 TILE_COLORS[T.ANVIL] = ['#59616d', '#3f4650'];
+TILE_COLORS[T.TORCH] = ['#f8ae48', '#a87a4b'];
 TILE_COLORS[T.PLANTERABULB] = ['#ff5c8a', '#8ad850'];
 TILE_COLORS[T.HELLFORGE] = ['#8a4030', '#542820'];
 TILE_COLORS[T.SHADOWCHEST] = ['#4a365f', '#291d38'];
@@ -122,6 +123,8 @@ EMISSIVE_ORE_GLOW[T.CHLOROPHYTE] = { r:32, strength:0.62, color:[58,230,105] };
 
 
 function makeTileSprite(t, rng) {
+  var pixelSprite = PixelArt.tile(t, rng);
+  if (pixelSprite) return pixelSprite;
   var c = document.createElement('canvas');
   c.width = TILE; c.height = TILE;
   var ctx = c.getContext('2d');
@@ -386,6 +389,7 @@ function mixColor(baseHex, tintHex, amt) {
 // ---------- Main render ----------
 function renderGame(game, ctx) {
   if (!SPRITES) buildSprites();
+  ctx.imageSmoothingEnabled = false;
   var cam = game.cam;
   var W = canvas.width, H = canvas.height;
 
@@ -420,6 +424,8 @@ function renderGame(game, ctx) {
   var surfaceArr = world.surfaceY;
   var wW = world.W, wH = world.H;
   var tileCtx2 = tileCtx;
+  var treeArt = PixelArt.treeCrowns(world, x0, x1, y0, y1);
+  var foliageLight = PixelArt.foliageLight(game);
   for (var ty2 = y0; ty2 <= y1; ty2++) {
     var rowBase = ty2 * wW;
     var screenY = Math.floor(ty2 * TILE - cam.y + H / 2);
@@ -433,29 +439,29 @@ function renderGame(game, ctx) {
       if (px2 < -TILE || px2 > W) continue;
       // wall behind air tiles
       if (t2 === 0 && wl2 !== 0 && (ty2 >= (surfaceArr[tx2] || 0) || wl2 === 3)) {
-        tileCtx2.fillStyle = wl2 === 1 ? '#4a3a28' : (wl2 === 2 ? '#3a3d45' : (wl2 === 5 ? '#232c4e' : '#2e2e34'));
-        tileCtx2.fillRect(px2, screenY, TILE, TILE);
+        PixelArt.wall(tileCtx2, wl2, px2, screenY, tx2, ty2);
         continue;
       }
       if (t2 === 0) continue;
+      if (treeArt.covered.has(ii2)) continue;
       // NOTE: no occlusion culling here — tiles are not fully opaque (leaves have
       // transparent pixels, variants differ), so culling "surrounded" tiles showed
       // the dark background through tree canopies and solid underground.
       if (t2 === 17) {
         // torch
-        var flick = 0.8 + 0.2 * Math.sin(Time.seconds * 10 + tx2);
-        tileCtx2.fillStyle = '#8a5c34';
-        tileCtx2.fillRect(px2 + 7, screenY + 8, 2, 8);
-        tileCtx2.fillStyle = 'rgba(255,180,60,' + (0.8 + flick * 0.2) + ')';
-        tileCtx2.beginPath();
-        tileCtx2.arc(px2 + 8, screenY + 6, 2.2 + flick, 0, Math.PI * 2);
-        tileCtx2.fill();
+        tileCtx2.drawImage(SPRITES[T.TORCH][0], px2, screenY);
+        tileCtx2.fillStyle = '#fff0b5';
+        tileCtx2.fillRect(px2 + 8, screenY + 3 + Math.floor(Time.seconds * 8 + tx2) % 2, 1, 3);
         continue;
       }
       var arr2 = SPRITES[t2];
       if (!arr2) continue;
       var variant2 = hash2(tx2, ty2) % TILE_VARIANTS;
-      tileCtx2.drawImage(arr2[variant2], px2, screenY);
+      var tileMask = PixelArt.maskAt(world, tx2, ty2, t2);
+      var tileArt = PixelArt.connected(t2, variant2, tileMask, arr2[variant2]);
+      if ((PixelArt.isLeaf(t2) || t2 === T.TREETRUNK) && ty2 <= surfaceArr[tx2]) tileArt = PixelArt.tint(tileArt, foliageLight);
+      tileCtx2.drawImage(tileArt, px2, screenY);
+      PixelArt.groundDetails(tileCtx2, world, tx2, ty2, t2, px2, screenY);
       // mining crack overlay: show damage on actively mined tiles
       if (game.minedTiles) {
         var mkey = tx2 + ',' + ty2;
@@ -495,6 +501,14 @@ function renderGame(game, ctx) {
     }
   }
 
+  for (var treeIdx = 0; treeIdx < treeArt.crowns.length; treeIdx++) {
+    var tree = treeArt.crowns[treeIdx];
+    var treeSprite = tree.kind === 'pine' ? PixelArt.pine(tree.height, tree.variant) : PixelArt.crown(tree.tile, tree.variant);
+    tileCtx.drawImage(PixelArt.tint(treeSprite, foliageLight),
+      Math.floor(tree.x * TILE + 8 - cam.x + W / 2) - (tree.kind === 'pine' ? 64 : 56),
+      Math.floor(tree.y * TILE - cam.y + H / 2) - (tree.kind === 'pine' ? 0 : 64));
+  }
+
   // heart crystals
   for (var h = 0; h < world.heartCrystals.length; h++) {
     var hc = world.heartCrystals[h];
@@ -503,8 +517,6 @@ function renderGame(game, ctx) {
     if (hpx < -40 || hpy < -40 || hpx > W + 40 || hpy > H + 40) continue;
     drawHeartCrystal(tileCtx, hpx, hpy, Time.seconds);
   }
-
-  if (game.event && game.event.type === 'oldonesarmy') drawOldOnesArmyWorld(game, tileCtx, cam, W, H);
 
   // heart crystals
   for (var h = 0; h < world.heartCrystals.length; h++) {
@@ -547,6 +559,20 @@ function renderGame(game, ctx) {
           tileCtx.drawImage(SPRITES[heldItem.tile][0], gpx, gpy);
         }
         tileCtx.globalAlpha = 1;
+      }
+    }
+  }
+
+  // Smart-mining preview uses the exact same read-only selector as the action.
+  if (game.player.smartMine && !game.panelOpen && !game.player.dying) {
+    var mineStack = game.player.inventory.selectedItem();
+    var mineTool = mineStack && ITEMS[mineStack.id];
+    if (mineTool && mineTool.type === 'tool') {
+      var mineTarget = game.player.miningTarget(game, mineTool);
+      if (mineTarget) {
+        var mpx = Math.round(mineTarget.x * TILE - cam.x + W / 2), mpy = Math.round(mineTarget.y * TILE - cam.y + H / 2);
+        tileCtx.save(); tileCtx.fillStyle = 'rgba(255,211,103,0.18)'; tileCtx.fillRect(mpx,mpy,TILE,TILE);
+        tileCtx.strokeStyle = '#f9d579'; tileCtx.lineWidth = 2; tileCtx.strokeRect(mpx + 1,mpy + 1,TILE - 2,TILE - 2); tileCtx.restore();
       }
     }
   }
@@ -673,8 +699,7 @@ function drawBackground(game, ctx, cam, W, H, horizon) {
   if (skyVisible) {
     // surface sky (biome-tinted)
     var biome = currentBiome;
-    var skyTop = '#0a1030', skyBot = '#bfe0ff';
-    if (night) skyBot = '#101840';
+    var skyTop = night ? '#101a36' : '#568bb8', skyBot = night ? '#283752' : '#d7e6d6';
     if (biome === BIOME.CORRUPT || biome === BIOME.CRIMSON) {
       skyTop = night ? '#140a1e' : '#5a8a7a'; skyBot = night ? '#1e1230' : '#a8c4a8';
     } else if (biome === BIOME.HALLOW) {
@@ -714,34 +739,7 @@ function drawBackground(game, ctx, cam, W, H, horizon) {
     drawStarfall(game, ctx, W, Math.max(0, horizonScreen));
     drawCelebrations(game, ctx, W, Math.max(0, horizonScreen));
 
-    // parallax mountains (far, slow)
-    var mtnOff = cam.x * 0.12;
-    var mtnBase = Math.max(0, horizonScreen) - 10;
-    ctx.fillStyle = night ? 'rgba(25,40,55,0.6)' : 'rgba(110,150,185,0.45)';
-    ctx.beginPath();
-    ctx.moveTo(0, H);
-    for (var mi = 0; mi <= 16; mi++) {
-      var mx = (mi / 16) * W;
-      var mh = 100 + Math.sin(mi * 0.7 + mtnOff * 0.004) * 70 + Math.sin(mi * 0.3) * 50;
-      ctx.lineTo(mx, mtnBase - mh);
-    }
-    ctx.lineTo(W, H);
-    ctx.closePath();
-    ctx.fill();
-
-    // parallax hills (near, faster)
-    var hillOff = cam.x * 0.25;
-    ctx.fillStyle = night ? 'rgba(15,30,25,0.5)' : 'rgba(80,145,95,0.35)';
-    ctx.beginPath();
-    ctx.moveTo(0, H);
-    for (var hi = 0; hi <= 16; hi++) {
-      var hx = (hi / 16) * W;
-      var hh = 50 + Math.sin(hi * 0.9 + hillOff * 0.006) * 35 + Math.sin(hi * 0.4) * 30;
-      ctx.lineTo(hx, mtnBase - hh + 40);
-    }
-    ctx.lineTo(W, H);
-    ctx.closePath();
-    ctx.fill();
+    PixelArt.drawLandscape(ctx, biome, night, cam, W, H, horizonScreen);
 
     // Follow the actual surface profile so valleys retain sky instead of a flat underground band.
     var undergroundTop = clamp(horizonScreen, 0, H - 1);
@@ -765,6 +763,7 @@ function drawBackground(game, ctx, cam, W, H, horizon) {
     // deep glow tint
     ctx.fillStyle = currentBiome === BIOME.UNDERWORLD ? 'rgba(255,80,20,0.08)' : 'rgba(120,60,255,0.03)';
     ctx.fillRect(0, 0, W, H);
+    PixelArt.drawCavern(ctx, currentBiome, cam, W, H);
   }
 
   // out-of-world void at map edges
@@ -828,7 +827,7 @@ function drawSunMoon(ctx, W, horizonY, t, night) {
     var nt = t < 0.5 ? t + 1 : t;
     var prog = (nt - 0.75) / 0.5;
     posX = W * (0.15 + 0.7 * prog);
-    cy = horizonY - 40 - 40 * Math.sin(prog * Math.PI);
+    cy = horizonY - 60 - Math.max(100, horizonY * 0.65) * Math.sin(prog * Math.PI);
     if (posX < -60 || posX > W + 60) return;
     // cool silver halo
     var halo = ctx.createRadialGradient(posX, cy, 10, posX, cy, 70);
@@ -836,18 +835,11 @@ function drawSunMoon(ctx, W, horizonY, t, night) {
     halo.addColorStop(1, 'rgba(210,225,255,0)');
     ctx.fillStyle = halo;
     ctx.beginPath(); ctx.arc(posX, cy, 70, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = '#fff8d0';
-    ctx.beginPath();
-    ctx.arc(posX, cy, 22, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = 'rgba(10,16,48,0.8)';
-    ctx.beginPath();
-    ctx.arc(posX - 8, cy - 6, 20, 0, Math.PI * 2);
-    ctx.fill();
+    PixelArt.celestial(ctx, posX, cy, true);
   } else {
     var prog2 = (t - 0.25) / 0.5;
     posX = W * (0.15 + 0.7 * prog2);
-    cy = horizonY - 40 - 50 * Math.sin(prog2 * Math.PI);
+    cy = horizonY - 60 - Math.max(110, horizonY * 0.65) * Math.sin(prog2 * Math.PI);
     if (posX < -60 || posX > W + 60) return;
     // warm halo; redder near the horizon (sunrise/sunset)
     var low = Math.max(0, Math.min(1, 1 - Math.sin(prog2 * Math.PI)));
@@ -856,14 +848,7 @@ function drawSunMoon(ctx, W, horizonY, t, night) {
     glow.addColorStop(1, 'rgba(255,180,80,0)');
     ctx.fillStyle = glow;
     ctx.beginPath(); ctx.arc(posX, cy, 90 + low * 30, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = low > 0.55 ? '#ff9a4d' : '#ffd75e';
-    ctx.beginPath();
-    ctx.arc(posX, cy, 24, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = 'rgba(255,255,255,0.6)';
-    ctx.beginPath();
-    ctx.arc(posX - 6, cy - 6, 8, 0, Math.PI * 2);
-    ctx.fill();
+    PixelArt.celestial(ctx, posX, cy, false);
   }
 }
 
@@ -891,23 +876,19 @@ function drawStars(ctx, W, horizonY, night, cam) {
 }
 
 function drawClouds(game, ctx, W, H, cam, horizonY) {
-  for (var i = 0; i < game.clouds.length; i++) {
+  for (var i = 0; i < Math.min(8, game.clouds.length); i++) {
     var c = game.clouds[i];
     var drift = game.weather ? game.weather.windSpeed * Time.seconds * 0.45 : 0;
     var x = c.x - cam.x * c.parallax + W / 2 + drift;
     x = ((x + 160) % (W + 320) + W + 320) % (W + 320) - 160;
-    var y = c.y - cam.y * c.parallax + H / 2;
+    // Cloud heights are sky-relative, not world-space (the old transform put
+    // almost every cloud above the viewport at a normal surface camera).
+    var y = 24 + c.y * 1.1 + (horizonY - H * 0.65) * 0.08;
     if (y > horizonY - 10) continue;
-    ctx.fillStyle = 'rgba(255,255,255,0.85)';
-    ctx.beginPath();
-    ctx.ellipse(x, y, c.w, c.h, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.ellipse(x + c.w * 0.6, y + 2, c.w * 0.7, c.h * 0.8, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.ellipse(x - c.w * 0.6, y + 3, c.w * 0.6, c.h * 0.7, 0, 0, Math.PI * 2);
-    ctx.fill();
+    var night = game.timeOfDay < 0.25 || game.timeOfDay > 0.75;
+    var cloudArt = PixelArt.cloud(i % 4, night);
+    var cloudScale = c.w > 48 ? 2 : 1;
+    ctx.drawImage(cloudArt, Math.floor(x - cloudArt.width * cloudScale / 2), Math.floor(y - 17 * cloudScale), cloudArt.width * cloudScale, cloudArt.height * cloudScale);
   }
 }
 
@@ -986,10 +967,10 @@ function drawGraveyardMist(game, ctx, W, H) {
 //    open tiles and fast through solid blocks, so caves go pitch black.
 // 3. Build a 1px-per-tile lightmap and stretch it over the screen with smoothing,
 //    black alpha = 1 - light (Terraria "Color" mode rendering).
-var LIGHT_AIR_DECAY = 0.09;    // ~11 tiles of torch reach through open space
-var LIGHT_WALL_DECAY = 0.13;   // enclosed rooms with walls lose light faster
+var LIGHT_AIR_DECAY = 0.075;   // ~13 tiles of torch reach through open space
+var LIGHT_WALL_DECAY = 0.08;   // a lit shelter should remain readable to its floor
 var LIGHT_SOLID_DECAY = 0.36;  // solid rock chokes light in ~2-3 tiles (Terraria surface fade)
-var LIGHT_LIQUID_DECAY = 0.16; // water dims light
+var LIGHT_LIQUID_DECAY = 0.14; // water dims light
 var LIGHT_PAD = 16;            // tiles of margin around the viewport
 
 function drawLighting(game, ctx, cam, W, H) {
@@ -1144,13 +1125,17 @@ function drawLighting(game, ctx, cam, W, H) {
       var mi = (ty * tw + tx) * 4;
       var lv = light[ty * tw + tx];
       if (lv < 0) lv = 0; else if (lv > 1) lv = 1;
+      lv = Math.pow(lv, 0.8); // lift lit midtones without revealing unlit caves
       var a = (1 - lv) * 255;
       // only exempt open sky tiles that are above the surface (no wall, no solid, above terrain)
       var wy = y0 + ty, wx2 = x0 + tx;
       if (wy < world.W && walls[wy * wW + wx2] === 0 && !world.isSolidTile(tiles[wy * wW + wx2])) {
         var tlA = tiles[wy * wW + wx2];
         var surfY = world.surfaceY ? world.surfaceY[wx2] : 0;
-        if ((tlA === 0 || tlA === T.TORCH || tlA === T.PLATFORM) && wy <= surfY) a = 0;
+        // Above-ground foliage is ambient-tinted as a complete silhouette.
+        // Tile-shaped darkness here would stamp black rectangles into crowns
+        // that extend beyond the original, smaller leaf-tile footprint.
+        if ((tlA === 0 || tlA === T.TORCH || tlA === T.PLATFORM || tlA === T.TREETRUNK || PixelArt.isLeaf(tlA)) && wy <= surfY) a = 0;
       }
       data[mi] = 0;
       data[mi + 1] = 0;
@@ -1277,7 +1262,8 @@ function drawHeartCrystal(ctx, x, y, t) {
 function drawEnemy(ctx, e, cam, W, H) {
   var x = e.x - cam.x + W / 2;
   var y = e.y - cam.y + H / 2;
-  if (x < -80 || y < -80 || x > W + 80 || y > H + 80) return;
+  var margin = e.ooaSentry && e.sentry === 'lightningaura' ? 104 : 80;
+  if (x < -margin || y < -margin || x > W + margin || y > H + margin) return;
   if (e.ghost) ctx.globalAlpha = 0.6;
 
   if (e.ooaSentry) {
@@ -1329,6 +1315,11 @@ function drawEnemy(ctx, e, cam, W, H) {
     return;
   }
 
+  if (CombatArt.drawEnemy(ctx, game, e, cam, W, H)) {
+    if (e.ghost) ctx.globalAlpha = 1;
+    return;
+  }
+
   var white = e.flash > 0;
   var col = white ? '#ffffff' : e.color;
 
@@ -1337,7 +1328,7 @@ function drawEnemy(ctx, e, cam, W, H) {
       drawSlime(ctx, x, y, e.w, e.h, col, e.type);
       break;
     case E.ZOMBIE: case E.HARDZOMBIE:
-      drawHumanoid(ctx, x, y, col, e.type === E.HARDZOMBIE, e.dir, false);
+      drawHumanoid(ctx, x, y, col, e.type === E.HARDZOMBIE, e.dir, false, '#92a578');
       break;
     case E.DUNGEONGUARDIAN:
       // Solid skull silhouette despite its wall-passing movement.
@@ -1692,7 +1683,7 @@ function drawEnemy(ctx, e, cam, W, H) {
     case E.TAVERNKEEP: case E.STYLIST: case E.GOBLINTINKERER: case E.CLOTHIER:
     case E.MECHANIC: case E.TAXCOLLECTOR: case E.PARTYGIRL: case E.SANTA:
     case E.PRINCESS:
-      drawHumanoid(ctx, x, y, col, false, e.dir, false);
+      PixelArt.drawTownActor(ctx, e, x, y, col);
       if (game.party && game.party.active && e.type !== E.TAXCOLLECTOR && e.type !== E.ZOOLOGIST) {
         ctx.fillStyle = e.type === E.PARTYGIRL ? '#ff70b8' : '#6bc8ff';
         ctx.beginPath(); ctx.moveTo(x - 6, y - e.h / 2 + 1); ctx.lineTo(x, y - e.h / 2 - 10); ctx.lineTo(x + 6, y - e.h / 2 + 1); ctx.closePath(); ctx.fill();
@@ -1855,41 +1846,10 @@ function drawEnemy(ctx, e, cam, W, H) {
       drawHumanoid(ctx, x, y, col, true, e.dir, false);
       break;
     case E.DEMONEYE:
-      ctx.fillStyle = col;
-      ctx.beginPath();
-      ctx.ellipse(x, y, e.w / 2, e.h / 2, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = '#ff3d3d';
-      ctx.beginPath();
-      ctx.arc(x, y, e.h / 4, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = '#111';
-      ctx.beginPath();
-      ctx.arc(x + (e.dir * 2), y, e.h / 8, 0, Math.PI * 2);
-      ctx.fill();
+      PixelArt.drawCreature(ctx, 'eye', x, y, col, e.dir, Math.floor(Time.seconds * 8) % 3);
       break;
     case E.CAVEBAT:
-      ctx.fillStyle = col;
-      ctx.beginPath();
-      ctx.ellipse(x, y, e.w / 2, e.h / 2, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.moveTo(x - e.w / 2, y - e.h / 4);
-      ctx.lineTo(x - e.w, y - e.h);
-      ctx.lineTo(x - e.w / 2, y);
-      ctx.closePath();
-      ctx.fill();
-      ctx.beginPath();
-      ctx.moveTo(x + e.w / 2, y - e.h / 4);
-      ctx.lineTo(x + e.w, y - e.h);
-      ctx.lineTo(x + e.w / 2, y);
-      ctx.closePath();
-      ctx.fill();
-      ctx.fillStyle = '#111';
-      ctx.beginPath();
-      ctx.arc(x - 3, y, 2, 0, Math.PI * 2);
-      ctx.arc(x + 3, y, 2, 0, Math.PI * 2);
-      ctx.fill();
+      PixelArt.drawCreature(ctx, 'bat', x, y, col, e.dir, Math.floor(Time.seconds * 12) % 3);
       break;
     case E.GOBLIN:
       drawHumanoid(ctx, x, y, col, false, e.dir, false);
@@ -2339,7 +2299,7 @@ function drawEnemy(ctx, e, cam, W, H) {
       ctx.fillRect(x - e.w / 2, y - e.h / 2, e.w, e.h);
       break;
     case E.SKELETON: case E.UNDEADVIKING: case E.WALLWARRIOR:
-      drawHumanoid(ctx, x, y, col, false, e.dir, false);
+      PixelArt.drawCreature(ctx, 'skeleton', x, y, col, e.dir, Math.floor(Time.seconds * 8) % 3);
       break;
     case E.PINKY: case E.MOTHERSLIME: case E.BLUESLIME:
       drawSlime(ctx, x, y, e.w, e.h, col, e.type);
@@ -2554,31 +2514,7 @@ function drawEnemy(ctx, e, cam, W, H) {
 }
 
 function drawSlime(ctx, x, y, w, h, col, type) {
-  var squash = Math.sin(Time.seconds * 4 + x) * 0.06;
-  ctx.save();
-  ctx.translate(x, y + h / 2);
-  ctx.scale(1 + squash, 1 - squash);
-  ctx.fillStyle = col;
-  ctx.beginPath();
-  ctx.moveTo(-w / 2, 0);
-  ctx.quadraticCurveTo(-w / 2, -h, 0, -h);
-  ctx.quadraticCurveTo(w / 2, -h, w / 2, 0);
-  ctx.quadraticCurveTo(w / 2 - 4, 3, w / 4, 0);
-  ctx.quadraticCurveTo(0, 4, -w / 4, 0);
-  ctx.quadraticCurveTo(-w / 2 + 4, 3, -w / 2, 0);
-  ctx.fill();
-  // eyes
-  ctx.fillStyle = '#fff';
-  ctx.beginPath();
-  ctx.arc(-w / 5, -h / 2, 3.5, 0, Math.PI * 2);
-  ctx.arc(w / 5, -h / 2, 3.5, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = '#111';
-  ctx.beginPath();
-  ctx.arc(-w / 5 + 1, -h / 2 + 1, 1.8, 0, Math.PI * 2);
-  ctx.arc(w / 5 + 1, -h / 2 + 1, 1.8, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.restore();
+  PixelArt.slime(ctx, x, y, w, h, col);
 }
 
 function drawSpikedSlime(ctx, x, y, w, h, col) {
@@ -2652,32 +2588,10 @@ function drawBirdCritter(ctx, x, y, e, col) {
   ctx.fillStyle = '#e8b548'; ctx.beginPath(); ctx.moveTo(x + 6, y); ctx.lineTo(x + 10, y + 2); ctx.lineTo(x + 6, y + 3); ctx.fill();
 }
 
-function drawHumanoid(ctx, x, y, col, armored, dir, ghost) {
-  var h = 30;
-  ctx.fillStyle = col;
-  // legs
-  var step = Math.sin(Time.seconds * 6) * 3;
-  ctx.fillRect(x - 6 + (dir > 0 ? 1 : 0) * step, y + 4, 5, 12);
-  ctx.fillRect(x + 1 - (dir > 0 ? 0 : 1) * step, y + 4, 5, 12);
-  // body
-  ctx.fillRect(x - 7, y - 10, 14, 16);
-  if (armored) {
-    ctx.fillStyle = '#6a6a7a';
-    ctx.fillRect(x - 7, y - 10, 14, 5);
-  }
-  // arms
-  ctx.fillStyle = col;
-  ctx.fillRect(x - 11, y - 8 + Math.sin(Time.seconds * 5) * 1.5, 4, 12);
-  ctx.fillRect(x + 7, y - 8 + Math.sin(Time.seconds * 5 + 1) * 1.5, 4, 12);
-  // head
-  ctx.beginPath();
-  ctx.arc(x, y - 14, 7, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = '#ffd0a0';
-  ctx.fillRect(x - 6, y - 17, 12, 5);
-  ctx.fillStyle = '#111';
-  ctx.fillRect(x - 4, y - 13, 2, 2);
-  ctx.fillRect(x + 2, y - 13, 2, 2);
+function drawHumanoid(ctx, x, y, col, armored, dir, ghost, skin) {
+  PixelArt.drawActor(ctx, x, y, dir, col, armored ? '#9da5b1' : col,
+    shade(col, -20), armored, 3, Math.floor(Time.seconds * 7) % 6,
+    ghost ? '#bacad0' : skin || '#e4ad80');
 }
 
 function drawCrawdad(ctx, x, y, w, col) {
@@ -2839,18 +2753,7 @@ function drawGastropod(ctx, x, y, w, col) {
 }
 
 function drawGuide(ctx, x, y, dir) {
-  ctx.fillStyle = '#c8b090';
-  ctx.fillRect(x - 6, y + 4, 12, 12);
-  ctx.fillRect(x - 8, y - 10, 16, 15);
-  ctx.beginPath();
-  ctx.arc(x, y - 14, 7, 0, Math.PI * 2);
-  ctx.fillStyle = '#ffd0a0';
-  ctx.fill();
-  ctx.fillStyle = '#8a5c34';
-  ctx.fillRect(x - 6, y - 18, 12, 3);
-  ctx.fillStyle = '#111';
-  ctx.fillRect(x - 3, y - 14, 2, 2);
-  ctx.fillRect(x + 2, y - 14, 2, 2);
+  PixelArt.drawActor(ctx, x, y, dir, '#947c5b', '#e4ad80', '#62684b', false, 2, 0);
 }
 
 function drawTortoise(ctx, x, y, w, h, col) {
@@ -3218,6 +3121,7 @@ function drawHardmodeBoss(ctx, e, x, y, player) {
 
 function drawBoss(game, ctx, e, cam, W, H) {
   if (e.armType) return;
+  if (CombatArt.drawBoss(ctx, game, e, cam, W, H)) return;
   if (e.ooaBoss) {
     drawOldOnesArmyBoss(game, ctx, e, cam, W, H);
     return;
@@ -4212,7 +4116,6 @@ function drawPlayer(ctx, game, p) {
   ctx.translate(x, y);
 
   var moving = Math.abs(p.vx) > 0.5 && p.onGround;
-  var step = moving ? Math.sin(Time.seconds * 12) * 3 : 0;
 
   // dye tint on armor
   var dyeTint = null;
@@ -4229,21 +4132,8 @@ function drawPlayer(ctx, game, p) {
     if (dyeDef3 && dyeDef3.color) dyeTint = dyeDef3.color;
   }
 
-  // wings
-  if (!p.onGround && p.jumps >= 1) {
-    var flap = Math.sin(Time.seconds * 30) * 5;
-    ctx.fillStyle = 'rgba(255,255,255,0.8)';
-    ctx.beginPath();
-    ctx.moveTo(0, -8);
-    ctx.quadraticCurveTo(-12, -6 + flap, -18, -2);
-    ctx.lineTo(-8, 0);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(0, -8);
-    ctx.quadraticCurveTo(12, -6 + flap, 18, -2);
-    ctx.lineTo(8, 0);
-    ctx.fill();
-  }
+  // Actual equipped wing accessories only; extra jumps alone do not create wings.
+  PixelArt.drawWings(ctx, p);
 
   // mount behind the player
   if (p.mounted && p.mountDef) {
@@ -4270,9 +4160,10 @@ function drawPlayer(ctx, game, p) {
     ctx.fillRect(-22, -2, 5, 1);
   }
 
-  var bodyCol = p.inventory.armor.chest ? ITEMS[p.inventory.armor.chest].color : '#6a9acf';
-  var headCol = p.inventory.armor.head ? ITEMS[p.inventory.armor.head].color : '#ffd0a0';
-  var legCol = p.inventory.armor.legs ? ITEMS[p.inventory.armor.legs].color : '#3a5a8a';
+  var bodyDef = ITEMS[p.inventory.armor.chest], headDef = ITEMS[p.inventory.armor.head], legDef = ITEMS[p.inventory.armor.legs];
+  var bodyCol = bodyDef ? bodyDef.color : '#578e9c';
+  var headCol = headDef ? headDef.color : '#e4ad80';
+  var legCol = legDef ? legDef.color : '#586480';
   if (dyeTint) {
     bodyCol = mixColor(bodyCol, dyeTint, 0.6);
     headCol = mixColor(headCol, dyeTint, 0.5);
@@ -4287,53 +4178,23 @@ function drawPlayer(ctx, game, p) {
     ctx.fill();
   }
 
-  // walk cycle: alternating leg lift + body bob; gentle breathing when idle
-  var bob = moving ? Math.abs(Math.sin(Time.seconds * 12)) * 1.4 : Math.sin(Time.seconds * 2.2) * 0.6;
-
-  // legs
-  ctx.fillStyle = legCol;
-  ctx.fillRect(-6 + step * 0.3, 6 - Math.max(0, step) * 0.45, 5, 10 + Math.max(0, step) * 0.45);
-  ctx.fillRect(1 - step * 0.3, 6 - Math.max(0, -step) * 0.45, 5, 10 + Math.max(0, -step) * 0.45);
-
-  ctx.save();
-  ctx.translate(0, -bob);
-
-  // back arm swings opposite to the legs
-  ctx.fillStyle = bodyCol;
-  var armSwing = moving ? step * 0.35 : 0;
-  ctx.fillRect(-9, -10 + armSwing, 5, 12);
-
-  // body
-  ctx.fillRect(-7, -12, 14, 19);
-
-  // head
-  ctx.beginPath();
-  ctx.arc(0, -17, 7, 0, Math.PI * 2);
-  ctx.fillStyle = headCol;
-  ctx.fill();
-  ctx.fillStyle = '#111';
-  ctx.fillRect(-4, -17, 2, 2);
-  ctx.fillRect(3, -17, 2, 2);
-  // helmet visor
-  if (p.inventory.armor.head) {
-    ctx.fillStyle = 'rgba(0,0,0,0.35)';
-    ctx.fillRect(-7, -20, 14, 4);
+  var animation = PixelArt.playerAnimation(p, Time.seconds);
+  // Fit the adventurer to the 22x32 collision body, keeping boots at its feet.
+  ctx.save(); ctx.translate(0, 3); ctx.scale(0.8, 0.8);
+  PixelArt.drawActor(ctx, 0, 0, p.dir, bodyCol, headCol, legCol, !!headDef, p.hair || 0, animation.frame, null, animation.pose, animation.action);
+  ctx.restore();
+  var toolStack = p.inventory.selectedItem();
+  var tool = toolStack && ITEMS[toolStack.id];
+  if (p.toolAnimT > 0 && tool && tool.type === 'tool') {
+    ctx.save(); ctx.translate(p.dir * 5, -5); ctx.scale(p.dir, 1);
+    ctx.rotate(-1 + (1 - p.toolAnimT / 0.18) * 1.8);
+    ctx.imageSmoothingEnabled = false;
+    ctx.fillStyle = '#493b38'; ctx.fillRect(-1, -17, 3, 22);
+    ctx.fillStyle = '#b99a66'; ctx.fillRect(0, -16, 1, 20);
+    ctx.fillStyle = tool.color || '#b7c4c8'; ctx.fillRect(-7, -18, 14, 4);
+    ctx.fillStyle = '#e5d9b7'; ctx.fillRect(-6, -18, 10, 1);
+    ctx.restore();
   }
-  // hair (Stylist restyle)
-  if (p.hair) {
-    var hs = p.hair % 9;
-    ctx.fillStyle = '#5a3a1a';
-    if (hs === 1) { ctx.fillRect(-7, -23, 14, 4); ctx.fillRect(-7, -20, 3, 4); ctx.fillRect(4, -20, 3, 4); }
-    else if (hs === 2) { ctx.beginPath(); ctx.arc(0, -18, 8, Math.PI, 0); ctx.fill(); }
-    else if (hs === 3) { ctx.fillRect(-8, -22, 16, 5); ctx.fillRect(-8, -18, 2, 6); ctx.fillRect(6, -18, 2, 6); }
-    else if (hs === 4) { ctx.beginPath(); ctx.moveTo(-7, -17); ctx.lineTo(-9, -24); ctx.lineTo(-2, -19); ctx.lineTo(2, -24); ctx.lineTo(9, -19); ctx.lineTo(7, -17); ctx.fill(); }
-    else if (hs === 5) { ctx.fillRect(-7, -22, 14, 6); ctx.fillRect(-7, -16, 4, 4); ctx.fillRect(3, -16, 4, 4); }
-    else if (hs === 6) { ctx.beginPath(); ctx.arc(0, -18, 9, Math.PI * 1.1, Math.PI * -0.1); ctx.fill(); }
-    else if (hs === 7) { ctx.fillRect(-7, -21, 14, 8); ctx.fillRect(-9, -18, 3, 3); ctx.fillRect(6, -18, 3, 3); }
-    else if (hs === 8) { ctx.fillRect(-6, -23, 12, 4); ctx.fillRect(-6, -19, 2, 7); ctx.fillRect(4, -19, 2, 7); ctx.fillRect(-2, -25, 4, 3); }
-    else { ctx.fillRect(-7, -22, 14, 5); ctx.fillRect(-7, -17, 3, 4); ctx.fillRect(4, -17, 3, 4); }
-  }
-  ctx.restore(); // walk-cycle bob
   ctx.restore(); // player-local transform
   ctx.globalAlpha = 1;
 
@@ -4428,7 +4289,7 @@ function drawPlayer(ctx, game, p) {
   }
 
   // weapon swing
-  if (p.swingT > 0) {
+  if (p.swingT > 0 && !CombatArt.drawSwing(ctx, p, x, y)) {
     var item = p.inventory.selectedItem();
     var itemDef = item && ITEMS[item.id] ? ITEMS[item.id] : null;
     var dmg = itemDef ? itemDef.dmg : 10;
@@ -4556,6 +4417,7 @@ function drawProjectile(ctx, p, cam, W, H) {
   ctx.save();
   ctx.translate(x, y);
   ctx.rotate(ang);
+  if (CombatArt.drawProjectile(ctx, p)) { ctx.restore(); return; }
   switch (p.type) {
     case P.ARROW:
       ctx.fillStyle = p.color || '#d8b28a';
@@ -4867,6 +4729,7 @@ function drawFX(ctx, game, cam, W, H) {
     var x = f.x - cam.x + W / 2;
     var y = f.y - cam.y + H / 2;
     var life = f.t / f.max;
+    if (CombatArt.drawFX(ctx, f, x, y, life)) continue;
     switch (f.type) {
       case 'break':
         ctx.globalAlpha = life;
@@ -4985,6 +4848,14 @@ function drawFX(ctx, game, cam, W, H) {
 
 // ---------- Item icon ----------
 function drawItemIcon(ctx, it, x, y) {
+  if (!it) return;
+  ctx.save();
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(PixelArt.item(it), Math.round(x) - 10, Math.round(y) - 10);
+  ctx.restore();
+}
+
+function drawLegacyItemIcon(ctx, it, x, y) {
   if (!it) return;
   ctx.save();
   var col = it.color || '#aab8cc';

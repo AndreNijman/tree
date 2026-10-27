@@ -781,6 +781,34 @@ function saveGame(silent) {
   return saveInFlight;
 }
 
+function sanitizeSavedItemIds() {
+  // Drop any saved stack/id whose item has no definition (pruned catalog
+  // entries, ids from older build versions) so render paths that dereference
+  // ITEMS[stack.id].color/.name or ITEMS[id] stay crash-free on old saves.
+  var inv = game.player.inventory;
+  for (var i = 0; i < inv.slots.length; i++) {
+    if (inv.slots[i] && (!inv.slots[i].id || !ITEMS[inv.slots[i].id])) inv.slots[i] = null;
+  }
+  if (inv.armor) {
+    var parts = ['head', 'chest', 'legs'];
+    for (var a = 0; a < parts.length; a++) {
+      var piece = inv.armor[parts[a]];
+      if (piece && (!piece.id || !ITEMS[piece.id])) inv.armor[parts[a]] = null;
+    }
+  }
+  if (Array.isArray(inv.accessories)) {
+    for (var c = 0; c < inv.accessories.length; c++) {
+      if (inv.accessories[c] && !ITEMS[inv.accessories[c]]) inv.accessories[c] = null;
+    }
+  }
+  if (Array.isArray(inv.dyes)) {
+    for (var d = 0; d < inv.dyes.length; d++) {
+      if (inv.dyes[d] && !ITEMS[inv.dyes[d]]) inv.dyes[d] = null;
+    }
+  }
+  if (inv.ammo && !ITEMS[inv.ammo]) inv.ammo = null;
+}
+
 function restorePetList(ids, light) {
   var list = [];
   for (var i = 0; i < ids.length; i++) {
@@ -937,13 +965,17 @@ function applySaveData(data) {
   p.inventory.dyes = savedInv.dyes || [null, null, null, null, null, null];
   p.inventory.ammo = savedInv.ammo || null;
   p.inventory.potionCd = savedInv.potionCd || 0;
+  sanitizeSavedItemIds();
   restorePetList(ps.pets || [], false);
   restorePetList(ps.lightPets || [], true);
 
   game.entities.length = 0;
   game.bossBars.length = 0;
   game.lunarPillars = [];
-  if (!game.hardmode) spawnEntity(game, E.GUIDE, w.guidePos.x, w.guidePos.y);
+  if (!game.hardmode) {
+    var guideHome = game.housing[E.GUIDE];
+    spawnEntity(game, E.GUIDE, guideHome ? guideHome.homeX : w.guidePos.x, guideHome ? guideHome.homeY : w.guidePos.y);
+  }
   spawnNpcs();
   restoreTownRescues();
   restoreMinions(data.minions || []);
@@ -956,6 +988,10 @@ function applySaveData(data) {
     pe.hp = sp.hp; pe.shieldHp = sp.shieldHp; pe.shieldDown = !!sp.shieldDown;
   }
   game.pickups = data.pickups || [];
+  for (var sk = game.pickups.length - 1; sk >= 0; sk--) {
+    var pick = game.pickups[sk];
+    if (!pick || !pick.item || !ITEMS[pick.item]) game.pickups.splice(sk, 1);
+  }
   if (game.hardmode) w.seedSpreadFrontier();
   w.rebuildLights();
   w.dirty = true;
@@ -1230,6 +1266,7 @@ function updateTownArrivals() {
   var wealth = inv.coinValue();
   var biome = game.world.biomeAt(game.player.x, game.player.y);
   var conditions = {};
+  conditions[E.GUIDE] = true;   // always eligible so the housing system can assign him a room
   conditions[E.MERCHANT] = wealth >= 5000;
   conditions[E.NURSE] = !!arrivals[E.MERCHANT] && game.player.maxHp >= 120;
   conditions[E.ARMSDEALER] = playerHasBulletGear();
@@ -2116,6 +2153,9 @@ function step(dt) {
     }
   }
 
+  // liquid settle (water/lava fall + slide; dig wakes liquid via breakTile)
+  if (typeof Net === 'undefined' || !Net.isClient()) game.world.liqTick();
+
   // decay mined tile crack markers
   if (game.minedTiles) {
     var mk;
@@ -2470,36 +2510,41 @@ function updateProjectiles() {
       if (!o.maxSpeed || asp < o.maxSpeed) { o.vx *= o.accel; o.vy *= o.accel; }
     }
 
-    // move + collide tiles
-    var nx = o.x + o.vx, ny = o.y + o.vy;
-    var hitWall = false;
-    if (!o.ignoreTiles && game.world.solidAt(nx, o.y)) {
-      if (o.bounces) { o.vx = -o.vx; o.bounces--; nx = o.x + o.vx; }
-      else hitWall = true;
-    }
-    if (!o.ignoreTiles && game.world.solidAt(o.x, ny)) {
-      if (o.bounces) { o.vy = -o.vy; o.bounces--; ny = o.y + o.vy; }
-      else hitWall = true;
-    }
-    if (hitWall) {
-      if (o.mine) {
-        o.mineArmed = true;
-        o.vx = 0; o.vy = 0; o.gravity = 0;
-        o.life = o.mineDuration || 8;
+    // Sweep in short steps so fast shots cannot skip enemies or thin walls.
+    var travelSteps = Math.max(1, Math.ceil(Math.max(Math.abs(o.vx), Math.abs(o.vy)) / 4));
+    for (var travel = 0; travel < travelSteps; travel++) {
+      var oldX = o.x, oldY = o.y;
+      var nx = o.x + o.vx / travelSteps, ny = o.y + o.vy / travelSteps;
+      var hitWall = false;
+      if (!o.ignoreTiles && game.world.solidAt(nx, o.y)) {
+        if (o.bounces) { o.vx = -o.vx; o.bounces--; nx = o.x + o.vx / travelSteps; }
+        else hitWall = true;
+      }
+      if (!o.ignoreTiles && game.world.solidAt(o.x, ny)) {
+        if (o.bounces) { o.vy = -o.vy; o.bounces--; ny = o.y + o.vy / travelSteps; }
+        else hitWall = true;
+      }
+      if (!o.ignoreTiles && game.world.solidAt(nx, ny)) hitWall = true;
+      if (hitWall) {
+        if (o.mine) {
+          o.mineArmed = true;
+          o.vx = 0; o.vy = 0; o.gravity = 0;
+          o.life = o.mineDuration || 8;
+          return;
+        }
+        explodeProjectile(o);
+        if (o.type === P.ROCKET && !o.explosive) game.fx.push({ type: 'boom', x: o.x, y: o.y, t: 0.3, max: 0.3, seed: Math.random() * 100 });
+        if (o.returnAt !== undefined) { o.returning = true; o.age = o.returnAt; }
+        else { spawnProjectilePayload(o); recoverProjectileItem(o); o.dead = true; }
         return;
       }
-      explodeProjectile(o);
-      if (o.type === P.ROCKET && !o.explosive) game.fx.push({ type: 'boom', x: o.x, y: o.y, t: 0.3, max: 0.3, seed: Math.random() * 100 });
-      if (o.returnAt !== undefined) { o.returning = true; o.age = o.returnAt; }
-      else { spawnProjectilePayload(o); recoverProjectileItem(o); o.dead = true; }
-      return;
-    }
-    o.x = nx; o.y = ny;
+      o.x = nx; o.y = ny;
 
-    if (o.owner === 'player' || o.owner === 'minion') {
-      if (projHitEnemy(o)) return;
-    } else {
-      if (projHitPlayer(o)) return;
+      if (o.owner === 'player' || o.owner === 'minion') {
+        if (projHitEnemy(o, oldX, oldY)) return;
+      } else {
+        if (projHitPlayer(o, oldX, oldY)) return;
+      }
     }
 
     if (o.x < -200 || o.x > game.world.W * TILE + 200 || o.y < -400 || o.y > game.world.H * TILE + 400) o.dead = true;
@@ -2643,13 +2688,7 @@ function projectileAlreadyHit(o, target) {
 }
 
 function pointNearBeam(o, target) {
-  var abx = o.beamEndX - o.x, aby = o.beamEndY - o.y;
-  var apx = target.x - o.x, apy = target.y - o.y;
-  var den = abx * abx + aby * aby || 1;
-  var t = clamp((apx * abx + apy * aby) / den, 0, 1);
-  var dx = target.x - (o.x + abx * t), dy = target.y - (o.y + aby * t);
-  var r = (target.w + target.h) / 4 + 4;
-  return dx * dx + dy * dy < r * r;
+  return segmentBoxEntry(o.x, o.y, o.beamEndX, o.beamEndY, target, 4) !== null;
 }
 
 function beamHitEnemies(o) {
@@ -2683,7 +2722,14 @@ function zoneHitEnemies(o) {
   }
 }
 
-function projHitEnemy(o) {
+function projHitEnemy(o, fromX, fromY) {
+  var x = Number.isFinite(fromX) ? fromX : o.x, y = Number.isFinite(fromY) ? fromY : o.y;
+  var best = null, parent = null, first = Infinity;
+  function candidate(body, root) {
+    if (body.dead || projectileAlreadyHit(o, body)) return;
+    var contact = segmentBoxEntry(x, y, o.x, o.y, body, 3);
+    if (contact !== null && contact < first) { first = contact; best = body; parent = root; }
+  }
   for (var i = 0; i < game.entities.length; i++) {
     var e = game.entities[i];
     if (!isCombatTarget(e)) continue;
@@ -2693,36 +2739,30 @@ function projHitEnemy(o) {
     if ((e.boss === 'destroyer' || e.boss === 'eaterofworlds') && e.segments) {
       for (var s = 0; s < e.segments.length; s++) {
         var seg = e.segments[s];
-        if (seg.dead) continue;
-        if (projectileAlreadyHit(o, seg)) continue;
-        var sdx = seg.x - o.x, sdy = seg.y - o.y;
-        var sr = (seg.w + seg.h) / 4 + 3;
-        if (sdx * sdx + sdy * sdy < sr * sr) {
-          segmentHit(e, seg, projectileDamageAgainst(o, e), game);
-          return finishProjectileEnemyHit(o, seg);
-        }
+        candidate(seg, e);
       }
     }
 
-    var dx = e.x - o.x, dy = e.y - o.y;
-    var r = (e.w + e.h) / 4 + 3;
-    if (projectileAlreadyHit(o, e)) continue;
-    if (dx * dx + dy * dy < r * r) {
-      var projectileDamage = projectileDamageAgainst(o, e);
-      if (e.boss) game.hitBoss(e, projectileDamage, 0, 0);
-      else hitEntity(e, projectileDamage, 0, 0, game);
-      return finishProjectileEnemyHit(o, e);
-    }
+    candidate(e, null);
+  }
+  if (best) {
+    o.x = lerp(x, o.x, first); o.y = lerp(y, o.y, first);
+    var projectileDamage = projectileDamageAgainst(o, parent || best);
+    if (parent) segmentHit(parent, best, projectileDamage, game);
+    else if (best.boss) game.hitBoss(best, projectileDamage, 0, 0);
+    else hitEntity(best, projectileDamage, 0, 0, game);
+    return finishProjectileEnemyHit(o, best);
   }
   return false;
 }
 
-function projHitPlayer(o) {
+function projHitPlayer(o, fromX, fromY) {
   var p = typeof multiplayerTarget === 'function' ? multiplayerTarget(game, o) : game.player;
   if (p.dying) return false;
-  var dx = p.x - o.x, dy = p.y - o.y;
-  var r = (p.w + p.h) / 4 + 2;
-  if (dx * dx + dy * dy < r * r) {
+  var x = Number.isFinite(fromX) ? fromX : o.x, y = Number.isFinite(fromY) ? fromY : o.y;
+  var contact = segmentBoxEntry(x, y, o.x, o.y, p, 2);
+  if (contact !== null) {
+    o.x = lerp(x, o.x, contact); o.y = lerp(y, o.y, contact);
     game.damagePlayer(o.dmg, o, o.vx > 0 ? 3 : -3);
     o.dead = true;
     return true;
@@ -3348,7 +3388,8 @@ function checkDawn() {
       if (!game.entities[gi].dead && game.entities[gi].type === E.GUIDE) { guideAlive = true; break; }
     }
     if (!guideAlive && !game.anyBossAlive()) {
-      spawnEntity(game, E.GUIDE, game.world.guidePos.x, game.world.guidePos.y);
+      var guideHome = game.housing[E.GUIDE];
+      spawnEntity(game, E.GUIDE, guideHome ? guideHome.homeX : game.world.guidePos.x, guideHome ? guideHome.homeY : game.world.guidePos.y);
       game.message('The Guide has returned.');
     }
   }
@@ -4249,6 +4290,13 @@ function handleKeys() {
     return;
   }
   if (game.paused) return;
+  if (KEY_JUST['Control']) {
+    KEY_JUST['Control'] = false;
+    if (!game.panelOpen && !game.mapOpen && !game.player.dying) {
+      game.player.smartMine = !game.player.smartMine;
+      game.message('Smart mining ' + (game.player.smartMine ? 'ON — aim and hold left click' : 'OFF — precise cursor targeting'));
+    }
+  }
   if (KEY_JUST['m'] || KEY_JUST['M']) {
     KEY_JUST['m'] = false; KEY_JUST['M'] = false;
     if (game.mapOpen) { game.mapOpen = false; game.mapPanX = null; }
@@ -4469,6 +4517,10 @@ TOWN_SHOPS[E.MERCHANT] = [
   { item:I.ARROW, count:25, cost:125 }, { item:I.HEALINGPOTION, count:1, cost:1000 },
   { item:I.MANAPOTION, count:1, cost:250 }, { item:I.FISHINGROD_WOODEN, count:1, cost:300 },
   { item:I.WORM, count:5, cost:12500 }, { item:I.MININGPOTION, count:1, cost:1000, gate:'evil' },
+  { item:I.SHADOWKEY, count:1, cost:250000, gate:'skeletron' },
+  { item:I.KATANA, count:1, cost:100000, gate:'anyBoss' },
+  { item:I.TIGER_CLIMBING_GEAR, count:1, cost:150000, gate:'anyBoss' },
+  { item:I.LASERDRILL, count:1, cost:200000, gate:'anyMech' },
   { item:I.PYLON_FOREST, count:1, cost:100000, pylon:true }, { item:I.PINWHEEL, count:1, cost:2000, gate:'windy' }
 ];
 TOWN_SHOPS[E.ARMSDEALER] = [
@@ -5208,13 +5260,14 @@ function itemIconHTML(it) {
   var key = it.id;
   if (!itemIconCache[key]) {
     var icon = document.createElement('canvas');
-    icon.width = 32; icon.height = 32;
+    icon.width = 40; icon.height = 40;
     var iconCtx = icon.getContext('2d');
-    iconCtx.translate(16, 16); iconCtx.scale(1.6, 1.6);
+    iconCtx.imageSmoothingEnabled = false;
+    iconCtx.translate(20, 20); iconCtx.scale(2, 2);
     drawItemIcon(iconCtx, it, 0, 0);
     itemIconCache[key] = icon.toDataURL();
   }
-  return '<img class="item-icon" src="' + itemIconCache[key] + '" width="26" height="26" alt="' + escHTML(it.name) + '" draggable="false" style="image-rendering:pixelated;pointer-events:none">';
+  return '<img class="item-icon" src="' + itemIconCache[key] + '" width="32" height="32" alt="' + escHTML(it.name) + '" draggable="false" style="image-rendering:pixelated;pointer-events:none">';
 }
 
 function renderGuide() {
@@ -5228,17 +5281,26 @@ function renderGuide() {
   var has = function(id) { for (var i = 0; i < 50; i++) { var s = inv.slots[i]; if (s && s.id === id && s.count > 0) return true; } return false; };
   var hasAny = function(ids) { for (var j = 0; j < ids.length; j++) if (has(ids[j])) return true; return false; };
   var killed = function(b) { return game.bossesDefeated && game.bossesDefeated[b]; };
+  // the base Workbench/Furnace/Anvil are tiles (special: crafting), not items —
+  // so "has a workbench" means one is placed within crafting reach, and
+  // "has armor" means any armor piece owned or equipped
+  var nearStation = function(t) { return game.world.findStations(p.x, p.y).indexOf(t) >= 0; };
+  var ownsArmor = !!(inv.armor.head || inv.armor.chest || inv.armor.legs);
+  for (var ai = 0; ai < inv.slots.length && !ownsArmor; ai++) {
+    var as = inv.slots[ai];
+    if (as && ITEMS[as.id] && ITEMS[as.id].type === 'armor') ownsArmor = true;
+  }
 
   if (!has(I.COPPERPICK) || (!has(I.COPPERSWORD) && !has(I.COPPERSHORT))) {
     tips.push('Chop trees with your Copper Axe (right-click) to gather Wood.');
   }
-  if (has(I.WOOD) && !has(I.WORKBENCH)) {
+  if (has(I.WOOD) && !nearStation(T.WORKBENCH)) {
     tips.push('Craft a Workbench from 10 Wood to unlock more recipes.');
   }
-  if (has(I.WORKBENCH) && !has(I.TORCH) && !hasAny([I.TORCH, I.COPPERTORCH])) {
+  if (nearStation(T.WORKBENCH) && !has(I.TORCH)) {
     tips.push('Craft Torches from Gel + Wood to light your shelter.');
   }
-  if (!hasAny([I.COPPERARMOR, I.IRONARMOR, I.TINARMOR])) {
+  if (!ownsArmor) {
     tips.push('Smelt ore into Bars at a Furnace, then craft armor at an Anvil.');
   }
   if (!game.hardmode && !killed('wallofflesh')) {
@@ -5577,6 +5639,7 @@ function renderCrafting() {
   $('craft-categories').innerHTML = tabsHTML;
 
   var searchLower = search.trim().toLowerCase();
+  var stationIconTiles = { workbench:T.WORKBENCH, furnace:T.FURNACE, anvil:T.ANVIL };
   var html = '';
   for (var r = 0; r < RECIPES.length; r++) {
     var rec = RECIPES[r];
@@ -5585,7 +5648,11 @@ function renderCrafting() {
     if (searchLower && rec.name.toLowerCase().indexOf(searchLower) === -1) continue;
     var ok = recipeAvailable(game, rec);
     html += '<div class="craft-row' + (ok ? '' : ' cant') + '" data-idx="' + r + '">';
-    html += '<div class="cicon">' + itemIconHTML(ITEMS[rec.result]) + '</div>';
+    // Station recipes use a material as a zero-count placeholder result; show
+    // the station's artwork rather than a misleading Wood/Stone/Bar icon.
+    var resultArt = rec.special && stationIconTiles[rec.special] !== undefined ?
+      { id:'station:' + rec.special, name:rec.name, tile:stationIconTiles[rec.special], type:'block', color:'#a47c4f' } : ITEMS[rec.result];
+    html += '<div class="cicon">' + itemIconHTML(resultArt) + '</div>';
     html += '<div><div class="cname">' + rec.name + '</div>';
     html += '<div class="creq">Station: ' + stationLabel(rec) + '</div>';
     html += '<div>' + matsHTML(rec) + '</div></div>';
@@ -5884,7 +5951,16 @@ function updateCrosshair() {
   var thClass = '';
   // placement preview when holding a placeable item
   var held = game.player.inventory && game.player.inventory.selectedItem();
-  if (held && (held.type === 'block' || held.type === 'pylon' || held.type === 'wall' || held.tile !== undefined)) {
+  var heldDef = held && ITEMS[held.id];
+  if (heldDef && heldDef.type === 'tool' && game.player.smartMine) {
+    var mineTarget = game.player.miningTarget(game, heldDef);
+    txt = 'Smart mining ON [Ctrl]';
+    if (mineTarget) {
+      var mineTile = game.world.get(mineTarget.x, mineTarget.y);
+      txt += ' — ' + (TILE_DROP[mineTile] ? ITEMS[TILE_DROP[mineTile]].name : mineTile === T.AIR ? 'Wall' : tileName(mineTile));
+      thClass = 'hint-ok';
+    } else txt += ' — no reachable target';
+  } else if (held && (held.type === 'block' || held.type === 'pylon' || held.type === 'wall' || held.tile !== undefined)) {
     var px = game.player.x, py = game.player.y;
     var tx = MOUSE.tpx * TILE + 8, ty = MOUSE.tpy * TILE + 8;
     var range = (held.type === 'wall') ? 6 : 5;

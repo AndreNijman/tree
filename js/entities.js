@@ -522,13 +522,24 @@ B83_ENEMY_DROPS['Man Eater'] = [{ id:I.BLADE_OF_GRASS, rate:0.01 }];
 B83_ENEMY_DROPS['Snatcher'] = [{ id:I.BLADE_OF_GRASS, rate:0.01 }];
 B83_ENEMY_DROPS['Jungle Slime'] = [{ id:I.BLADE_OF_GRASS, rate:0.01 }];
 B83_ENEMY_DROPS['Face Monster'] = [{ id:I.BLADETONGUE, rate:0.02 }];
-B83_ENEMY_DROPS['Skeleton'] = [{ id:I.BONE_SWORD, rate:0.01 }];
+// NOTE: these extend the big pools above instead of overwriting them —
+// assigning the key wholesale silently discarded the ~60-item rare tables.
+B83_ENEMY_DROPS['Skeleton'] = B83_ENEMY_DROPS['Skeleton'].concat([{ id:I.BONE_SWORD, rate:0.01 }]);
 B83_ENEMY_DROPS['Ice Slime'] = [{ id:I.ICE_SICKLE, rate:0.01 }, { id:I.FLOWER_OF_FROST, rate:0.01 }, { id:I.FROST_STAFF, rate:0.01 }, { id:I.WAND_OF_FROSTING, rate:0.01 }, { id:I.STAFF_OF_THE_FROST_HYDRA, rate:0.01 }];
 B83_ENEMY_DROPS['Spiked Ice Slime'] = [{ id:I.ICE_SICKLE, rate:0.01 }, { id:I.FLOWER_OF_FROST, rate:0.01 }, { id:I.FROST_STAFF, rate:0.01 }, { id:I.WAND_OF_FROSTING, rate:0.01 }, { id:I.STAFF_OF_THE_FROST_HYDRA, rate:0.01 }];
 B83_ENEMY_DROPS['Snow Flinx'] = [{ id:I.ICE_SICKLE, rate:0.01 }, { id:I.FLOWER_OF_FROST, rate:0.01 }, { id:I.FROST_STAFF, rate:0.01 }, { id:I.WAND_OF_FROSTING, rate:0.01 }, { id:I.STAFF_OF_THE_FROST_HYDRA, rate:0.01 }];
 B83_ENEMY_DROPS['Undead Viking'] = [{ id:I.ICE_SICKLE, rate:0.01 }, { id:I.FLOWER_OF_FROST, rate:0.01 }, { id:I.FROST_STAFF, rate:0.01 }, { id:I.WAND_OF_FROSTING, rate:0.01 }, { id:I.STAFF_OF_THE_FROST_HYDRA, rate:0.01 }];
 B83_ENEMY_DROPS['Ice Bat'] = [{ id:I.ICE_SICKLE, rate:0.01 }, { id:I.FLOWER_OF_FROST, rate:0.01 }, { id:I.FROST_STAFF, rate:0.01 }, { id:I.WAND_OF_FROSTING, rate:0.01 }, { id:I.STAFF_OF_THE_FROST_HYDRA, rate:0.01 }];
-B83_ENEMY_DROPS['Zombie'] = [{ id:I.ZOMBIE_ARM, rate:0.02 }];
+B83_ENEMY_DROPS['Zombie'] = B83_ENEMY_DROPS['Zombie'].concat([{ id:I.ZOMBIE_ARM, rate:0.02 }]);
+// ---------- B6 iconic wire batch: accessory-chain components (vanilla mob sources, 1% bucket style) ----------
+B83_ENEMY_DROPS['Skeleton'] = B83_ENEMY_DROPS['Skeleton'].concat([{ id:I.VITAMINS, rate:0.01 }]);
+B83_ENEMY_DROPS['Cursed Skull'] = B83_ENEMY_DROPS['Cursed Skull'].concat([{ id:I.NAZAR, rate:0.01 }, { id:I.TABI, rate:0.01 }]);
+B83_ENEMY_DROPS['Angry Bones'] = B83_ENEMY_DROPS['Angry Bones'].concat([{ id:I.BLACKBELT, rate:0.01 }]);
+// literal id: matching the Ankh Charm recipe (I.ADHESIVE_BANDAGE dot-read unstable; see AUDIT-2026-10-23 B6)
+B83_ENEMY_DROPS['Face Monster'] = B83_ENEMY_DROPS['Face Monster'].concat([{ id:'adhesivebandage', rate:0.015 }]);
+B83_ENEMY_DROPS['Jungle Creeper'] = [{ id:I.MEGAPHONE, rate:0.01 }];
+B83_ENEMY_DROPS['Cave Bat'] = B83_ENEMY_DROPS['Cave Bat'].concat([{ id:I.DEPTH_METER, rate:0.01 }]);
+B83_ENEMY_DROPS['Giant Worm'] = B83_ENEMY_DROPS['Giant Worm'].concat([{ id:I.COMPASS, rate:0.01 }]);
 var B83_BOSS_DROPS = {};
 B83_BOSS_DROPS['queenbee'] = [I.BEE_KEEPER];
 B83_BOSS_DROPS['eaterofworlds'] = [I.BLOOD_BUTCHERER, I.BREAKER_BLADE, I.LIGHTS_BANE, I.THE_BREAKER];
@@ -874,9 +885,9 @@ function dropTable(type, game) {
     case E.ROCKGOLEM:
       return [{ id:I.STONE, count:2 + Math.floor(Math.random() * 3) }, { id:I.GEM_DIAMOND, count:Math.random() < 0.08 ? 1 : 0 }];
     case E.ANGRYTRAPPER: case E.WORLDFEEDER:
-      return [{ id:I.VINE, count:Math.random() < 0.5 ? 1 : 0 }];
+      return [{ id:I.VINE, count:Math.random() < 0.5 ? 1 : 0 }, { id:I.JUNGLE_SPORES, count:Math.random() < 0.4 ? 1 : 0 }];
     case E.LAMIA: case E.GHOUL: case E.DREAMERGHOUL:
-      return [];
+      return [{ id:I.STURDY_FOSSIL, count:Math.random() < 0.3 ? 1 + Math.floor(Math.random() * 2) : 0 }];
     case E.ANOMURAFUNGUS: case E.FUNGIBULB: case E.GIANTFUNGI:
       return [{ id:I.GLOWSTONE, count:Math.random() < 0.4 ? 1 : 0 }];
     case E.COCHINEALBEETLE: case E.CYANBEETLE: case E.LACBEETLE:
@@ -903,7 +914,7 @@ function dropTable(type, game) {
     case E.MOTHERSLIME: case E.BLUESLIME:
       return [{ id:I.GEL, count:2 }];
     case E.MANEATER:
-      return [{ id:I.VINE, count:1 + Math.floor(Math.random() * 2) }];
+      return [{ id:I.VINE, count:1 + Math.floor(Math.random() * 2) }, { id:I.JUNGLE_SPORES, count:Math.random() < 0.4 ? 1 : 0 }];
     case E.MEDUSA:
       return [{ id:I.STONE, count:1 + Math.floor(Math.random() * 2) }];
     case E.SPIKEBALL:

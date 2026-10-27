@@ -566,6 +566,7 @@ function claimTavernkeepGift() {
 function drawOldOnesArmyWorld(g, ctx, cam, W, H) {
   var ev = g.event;
   if (!ev || ev.type !== 'oldonesarmy') return;
+  if (CombatArt.drawOOAWorld(ctx,g,cam,W,H)) return;
   var cx = ev.crystalX - cam.x + W / 2, cy = ev.crystalY - cam.y + H / 2;
   var pulse = 1 + Math.sin(Time.seconds * 6) * 0.12;
   ctx.fillStyle = 'rgba(120,220,255,0.22)';
@@ -582,6 +583,7 @@ function drawOldOnesArmyWorld(g, ctx, cam, W, H) {
 }
 
 function drawOldOnesArmyEnemy(ctx, e, cam, W, H) {
+  if (CombatArt.drawOOAEnemy(ctx,game,e,cam,W,H)) return;
   var x = e.x - cam.x + W / 2, y = e.y - cam.y + H / 2;
   if (e.type === E.ETHERIANLIGHTNINGBUG) {
     ctx.fillStyle = 'rgba(156,232,255,0.24)';
@@ -600,6 +602,7 @@ function drawOldOnesArmyEnemy(ctx, e, cam, W, H) {
 }
 
 function drawOldOnesArmySentry(ctx, s, cam, W, H) {
+  if (CombatArt.drawOOASentry(ctx,game,s,cam,W,H)) return;
   var x = s.x - cam.x + W / 2, y = s.y - cam.y + H / 2;
   if (s.sentry === 'lightningaura') {
     ctx.fillStyle = 'rgba(120,220,255,0.13)';
