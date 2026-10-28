@@ -18,6 +18,7 @@
 <meta name="twitter:description" content="Mine, craft, build, and fight through a complete procedural sandbox progression.">
 <meta name="twitter:image" content="https://tree.andrenijman.com/og-image.png">
 <link rel="stylesheet" href="css/style.css?v=20261027-deploy1">
+<link rel="stylesheet" href="css/menu.css?v=20261028-home1">
 </head>
 <body>
 <div id="game">
@@ -73,17 +74,29 @@
   </div>
 
   <div id="mainmenu" class="overlay">
-    <h1>tree</h1>
-    <p class="subtitle">a full-progression sandbox adventure</p>
-    <div class="menu-buttons">
+    <div class="menu-landscape" aria-hidden="true"></div>
+    <div class="menu-shell">
+      <header class="menu-masthead">
+        <span class="menu-wordmark"><img src="assets/menu-sprout.svg" width="24" height="24" alt="">tree<span class="menu-edition">a sandbox adventure</span></span>
+        <span class="menu-browser-note">No download. Just adventure.</span>
+      </header>
+      <div class="menu-hero">
+        <div class="menu-eyebrow">A little curiosity goes a long way</div>
+        <h1>tree</h1>
+        <p class="subtitle">Start small. Build something extraordinary.</p>
+        <p class="menu-intro">A world to get lost in. A place to call your own.<br>Mine, craft, and explore what lies beyond the treetops.</p>
+        <div class="menu-features" aria-label="Game features"><span>Procedural worlds</span><span>Full progression</span><span>Solo or together</span></div>
+      </div>
+      <div class="menu-buttons">
       <div id="title-actions">
-        <div class="world-heading">
-          <span>Your worlds</span>
-          <span id="save-mode">Local saves</span>
-        </div>
-        <div id="world-list" aria-live="polite"></div>
-        <button id="btn-new">New World</button>
+        <section class="menu-worlds menu-card" aria-labelledby="menu-worlds-title">
+          <div class="world-heading">
+            <div><span class="menu-kicker">Your next chapter</span><h2 id="menu-worlds-title">Your worlds</h2></div>
+            <span id="save-mode">Local saves</span>
+          </div>
+          <button id="btn-new"><span class="menu-plus" aria-hidden="true">+</span>New World<span class="menu-button-arrow" aria-hidden="true">→</span></button>
         <div id="world-create" class="hidden">
+          <p class="menu-form-intro">Every great adventure starts somewhere.</p>
           <label class="world-name-label" for="world-name">World name</label>
           <input id="world-name" type="text" maxlength="32" autocomplete="off" placeholder="My World">
           <div class="world-type">
@@ -103,16 +116,21 @@
             <button id="btn-cancel-create" class="secondary">Cancel</button>
           </div>
         </div>
-        <div id="multiplayer">
-          <div class="world-heading"><span>Hosted worlds</span><button id="mp-refresh" class="tiny-button">Refresh</button></div>
+          <div class="menu-saves-label">Pick up where you left off</div>
+          <div id="world-list" aria-live="polite"></div>
+          <p class="menu-card-note">Your progress is saved in this browser. Host a saved world to invite friends.</p>
+        </section>
+        <section id="multiplayer" class="menu-card" aria-labelledby="menu-multiplayer-title">
+          <div class="world-heading"><div><span class="menu-kicker">Better with company</span><h2 id="menu-multiplayer-title">Play together</h2></div><button id="mp-refresh" class="tiny-button" aria-label="Refresh hosted worlds">Refresh</button></div>
           <div class="mp-fields">
-            <input id="mp-name" type="text" maxlength="18" autocomplete="nickname" placeholder="Player name">
-            <input id="mp-password" type="password" maxlength="64" autocomplete="off" placeholder="Password (optional)">
+            <label><span class="menu-field-label">Player name</span><input id="mp-name" type="text" maxlength="18" autocomplete="nickname" placeholder="Your explorer name"></label>
+            <label><span class="menu-field-label">Password <span class="menu-optional">optional</span></span><input id="mp-password" type="password" maxlength="64" autocomplete="off" placeholder="For private worlds"></label>
           </div>
+          <div class="menu-saves-label">Hosted worlds</div>
           <div id="lobby-list" aria-live="polite"><div class="world-empty">Loading hosted worlds...</div></div>
-          <div class="mp-join-code"><input id="mp-code" type="text" maxlength="5" autocomplete="off" placeholder="ROOM CODE"><button id="mp-join">Join code</button></div>
+          <div class="mp-join-code"><input id="mp-code" type="text" maxlength="5" autocomplete="off" placeholder="5-LETTER ROOM CODE" aria-label="Five-letter room code"><button id="mp-join">Join code<span aria-hidden="true"> ↗</span></button></div>
           <div id="mp-status" role="status"></div>
-        </div>
+        </section>
       </div>
       <div id="pause-actions" class="hidden">
         <button id="btn-continue">Resume</button>
@@ -120,7 +138,12 @@
         <button id="btn-save">Save &amp; Quit</button>
         <button id="btn-leave-hosted" class="hidden">Leave Hosted World</button>
       </div>
-      <button id="btn-howto" aria-controls="howto" aria-expanded="false">How To Play</button>
+      <div class="menu-bottom-bar">
+        <p class="menu-controls"><kbd>A</kbd><kbd>D</kbd> move<span>·</span><kbd>Space</kbd> jump<span>·</span><kbd>E</kbd> inventory</p>
+        <button id="btn-howto" aria-controls="howto" aria-expanded="false"><span aria-hidden="true">?</span> How To Play</button>
+      </div>
+      </div>
+      <footer class="menu-footer"><span>Make a home. Find your adventure.</span><span>Made to explore.</span></footer>
     </div>
     <div id="howto" class="hidden" role="dialog" aria-modal="true" aria-labelledby="howto-title">
       <div class="howto-header">

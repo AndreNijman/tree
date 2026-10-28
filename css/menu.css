@@ -1,0 +1,158 @@
+/* The opening screen is its own little world. Gameplay UI stays in style.css. */
+#mainmenu {
+  --menu-text: #e5eadb;
+  --menu-muted: #9baea4;
+  --menu-line: #385149;
+  display: block;
+  padding: env(safe-area-inset-top, 0px) max(28px, env(safe-area-inset-right, 0px)) env(safe-area-inset-bottom, 0px) max(28px, env(safe-area-inset-left, 0px));
+  background: #102629;
+  color: var(--menu-text);
+  isolation: isolate;
+  overscroll-behavior: contain;
+  scrollbar-color: #52715f #152d2e;
+}
+.menu-landscape {
+  position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background: #183337 url('../assets/menu-landscape.svg') center top / cover no-repeat;
+  image-rendering: pixelated;
+}
+#mainmenu::before {
+  content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(90deg, rgba(10, 28, 29, .96) 0%, rgba(12, 30, 31, .82) 30%, rgba(12, 30, 31, .12) 78%),
+    linear-gradient(0deg, #0d2426 0%, rgba(13, 36, 38, .75) 26%, transparent 65%);
+}
+.menu-shell { width: min(1100px, 100%); margin: 0 auto; padding: 28px 0 22px; }
+.menu-masthead { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.menu-wordmark { display: flex; align-items: center; gap: 10px; font: 800 24px/1 var(--font-display); letter-spacing: -.04em; }
+.menu-wordmark img { image-rendering: pixelated; }
+.menu-edition, .menu-browser-note { font: 500 10px/1.5 var(--font-chrome); letter-spacing: .14em; text-transform: uppercase; color: #b4c2b3; }
+.menu-edition { border-left: 1px solid #526559; padding-left: 14px; margin-left: 4px; }
+.menu-browser-note { letter-spacing: .08em; }
+.menu-hero { padding: 44px 0 32px; }
+.menu-eyebrow, .menu-kicker { font: 600 10px/1.5 var(--font-chrome); letter-spacing: .14em; text-transform: uppercase; color: #bccda4; }
+#mainmenu h1 { margin: 12px 0 16px; font: 900 clamp(76px, 9vw, 116px)/.9 var(--font-display); letter-spacing: -.075em; color: #f0e8c9; text-shadow: 0 4px 0 #71845c, 4px 8px 0 #0c2426; }
+#mainmenu .subtitle { margin: 0; font: 600 clamp(17px, 2vw, 23px)/1.5 var(--font-display); letter-spacing: -.02em; text-transform: none; color: #e0e7d5; }
+.menu-intro { margin-top: 12px; font: 400 13px/1.8 var(--font-body); color: #b0c1b5; }
+.menu-features { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 20px; font: 500 10px/1.5 var(--font-chrome); color: #b8c5ad; }
+.menu-features span { display: flex; align-items: center; gap: 7px; }
+.menu-features span::before { content: ''; width: 4px; height: 4px; background: #c5bc82; box-shadow: 1px 1px 0 #526a4c; }
+#mainmenu .menu-buttons { width: 100%; gap: 16px; }
+#mainmenu #title-actions { display: grid; grid-template-columns: 1.05fr 1fr; gap: 20px; overflow: visible; padding: 0; max-height: none; align-items: start; }
+#mainmenu .menu-card { min-width: 0; padding: 23px; border: 1px solid #496053; border-top-color: #6b7e63; border-radius: 5px; background: rgba(17, 36, 36, .94); box-shadow: 0 5px 0 #0a1b1d, inset 0 1px 0 rgba(186, 204, 169, .06); }
+#mainmenu .world-heading { margin-bottom: 18px; gap: 12px; text-transform: none; letter-spacing: 0; }
+#mainmenu .menu-kicker { display: block; margin-bottom: 4px; color: #9eae91; font-size: 9px; }
+#mainmenu .menu-card h2 { color: #edf0e2; font: 650 23px/1.25 var(--font-display); letter-spacing: -.03em; text-shadow: none; }
+#mainmenu #save-mode { max-width: 46%; padding: 5px 8px; border: 1px solid #49604a; border-radius: 3px; background: #20382c; color: #bdcf9d; font: 500 10px/1.4 var(--font-chrome); overflow-wrap: anywhere; }
+#mainmenu button { border: 1px solid #536b59; border-bottom: 3px solid #0b2020; border-radius: 3px; padding: 10px 16px; box-shadow: inset 0 1px 0 rgba(228, 239, 205, .09); background: #2b4439; color: #e2ead8; font: 600 12px/1.4 var(--font-body); min-height: 44px; letter-spacing: 0; }
+#mainmenu button:hover { background: #3a5544; border-top-color: #9cb18b; }
+#mainmenu button:active:not(:disabled) { transform: translateY(1px); box-shadow: none; }
+#mainmenu button:focus-visible, #mainmenu input:focus-visible, #mainmenu label:has(input[type='radio']:focus-visible) { outline: 2px solid #e7ce8c; outline-offset: 3px; }
+#mainmenu #btn-new, #mainmenu #btn-create { background: #d3bf86; border-color: #e7d9a5; border-bottom-color: #88754a; color: #23372f; font-weight: 800; }
+#mainmenu #btn-new:hover, #mainmenu #btn-create:hover { background: #e5d49e; }
+#mainmenu #btn-new { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 16px; margin-bottom: 20px; font-size: 14px; }
+.menu-plus { font: 400 23px/1 var(--font-chrome); }
+.menu-button-arrow { margin-left: auto; font-size: 19px; }
+.menu-saves-label, .menu-field-label { display: block; color: #adbcb0; font: 500 10px/1.5 var(--font-chrome); }
+.menu-saves-label { margin-bottom: 9px; }
+#mainmenu #world-list, #mainmenu #lobby-list { background: rgba(8, 25, 26, .55); border: 1px solid #334d43; border-radius: 3px; box-shadow: none; scrollbar-color: #526d59 #162c2a; }
+#mainmenu #world-list { max-height: 210px; }
+#mainmenu .world-empty { padding: 24px 14px; color: #a6b6a8; font: 400 12px/1.7 var(--font-body); }
+#mainmenu #world-list .world-empty { min-height: 104px; display: grid; justify-items: center; align-content: center; gap: 8px; }
+#mainmenu #world-list .world-empty::before { content: ''; width: 28px; height: 28px; background: url('../assets/menu-sprout.svg') center / contain no-repeat; image-rendering: pixelated; opacity: .8; }
+.menu-card-note { margin-top: 12px; max-width: 370px; color: #91a697; font: 400 10px/1.7 var(--font-body); }
+#mainmenu .world-row { min-height: 76px; grid-template-columns: minmax(0, 1fr) auto auto; gap: 6px; padding-right: 10px; }
+#mainmenu .world-row + .world-row, #mainmenu .lobby-row + .lobby-row { border-top: 1px solid #334d43; }
+#mainmenu .world-title { color: #e5e9d8; font: 650 15px/1.4 var(--font-display); }
+#mainmenu .world-meta { color: #a1b3a4; font: 400 10px/1.7 var(--font-body); letter-spacing: 0; }
+#mainmenu .world-open:hover { background: #233e32 !important; }
+#mainmenu .world-host { border: 1px solid #536c4c !important; background: #304c36 !important; box-shadow: none !important; color: #dce8c9 !important; min-width: 44px; padding: 8px !important; }
+#mainmenu .world-delete { border: 1px solid #634d46 !important; background: #3b302c !important; box-shadow: none !important; color: #d2a99a !important; margin-right: 0; padding: 8px !important; }
+#mainmenu .world-delete:hover { background: #593c33 !important; }
+#mainmenu #multiplayer { display: block; margin-top: 0; }
+#mainmenu .tiny-button { background: transparent; color: #bbccad; border: 1px solid #48604f; min-height: 34px !important; font-size: 10px !important; }
+#mainmenu .mp-fields { gap: 12px; margin-bottom: 17px; }
+.menu-field-label { margin-bottom: 6px; }
+.menu-optional { color: #7e9688; font-size: 9px; }
+#mainmenu input[type='text'], #mainmenu input[type='password'] { width: 100%; background: #102827; border: 1px solid #476052; border-bottom-color: #60735b; color: #e6ead7; min-height: 43px; border-radius: 3px; padding: 10px; font: 400 12px/1.4 var(--font-body); user-select: text; -webkit-user-select: text; }
+#mainmenu input::placeholder { color: #8da393; opacity: 1; }
+#mainmenu input:focus { outline: 2px solid #bccd9f; outline-offset: 1px; }
+#mainmenu #lobby-list { max-height: 160px; margin-bottom: 13px; }
+#mainmenu #lobby-list .world-empty { padding: 17px 12px; }
+#mainmenu .lobby-row { grid-template-columns: 67px minmax(0, 1fr) auto; gap: 10px; }
+#mainmenu .lobby-code { color: #d8c38b; font-size: 12px; letter-spacing: .08em; }
+#mainmenu .lobby-lock { color: #9faf9b; font-size: 9px; }
+#mainmenu .lobby-ping { color: #bdcc9d; font-size: 9px; }
+#mainmenu .lobby-join { padding: 8px 11px !important; }
+#mainmenu .mp-join-code { grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+#mainmenu #mp-code { font: 500 11px/1.4 var(--font-chrome); letter-spacing: .07em; text-transform: uppercase; }
+#mainmenu #mp-status { color: #bdc9ab; margin-top: 8px; min-height: 0; font-size: 10px; line-height: 1.6; overflow-wrap: anywhere; }
+#mainmenu #world-create { padding: 16px; margin-bottom: 18px; background: #1c352e; border: 1px solid #52684e; border-radius: 3px; gap: 12px; }
+.menu-form-intro { color: #c4d0b5; font: 400 12px/1.5 var(--font-body); }
+#mainmenu .world-name-label { color: #b4c3a6; }
+#mainmenu .world-type { background: #152c27; border: 1px solid #3b5444; gap: 10px; padding: 10px 8px; flex-wrap: wrap; }
+#mainmenu .world-type .wt-label { color: #a6b79e; width: 100%; text-align: left; font: 500 10px/1.5 var(--font-chrome); }
+#mainmenu .world-type label { color: #dbe3cd; font-size: 11px; min-height: 32px; }
+#mainmenu .world-type input { accent-color: #bfca95; }
+.menu-bottom-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.menu-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; color: #9caf9e; font: 400 10px/1.5 var(--font-chrome); }
+.menu-controls > span { margin: 0 8px; color: #587464; }
+#mainmenu .menu-controls kbd { padding: 2px 5px; border: 1px solid #486050; border-bottom-width: 2px; border-radius: 3px; background: #203b31; color: #c6d2b3; min-width: 22px; font: 500 10px/1.4 var(--font-chrome); }
+#mainmenu #btn-howto { flex-shrink: 0; border: 0; background: transparent; padding: 4px 0 4px 12px; box-shadow: none; color: #c8d5b6; font-size: 11px; }
+#mainmenu #btn-howto > span { display: inline-grid; place-items: center; width: 18px; height: 18px; margin-right: 5px; border: 1px solid #698065; font: 600 11px/1 var(--font-chrome); }
+#mainmenu #btn-howto:hover { color: #f3dfaa; }
+.menu-footer { display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid #304b40; padding-top: 16px; margin-top: 14px; color: #8da28e; font: 400 10px/1.6 var(--font-chrome); }
+/* The same DOM powers pause. Keep it quiet and leave the world visible. */
+#mainmenu:has(#title-actions.hidden) { background: rgba(9, 22, 25, .8); }
+#mainmenu:has(#title-actions.hidden)::before, #mainmenu:has(#title-actions.hidden) .menu-landscape { display: none; }
+#mainmenu:has(#title-actions.hidden) .menu-shell { max-width: 400px; padding-top: max(30px, 13vh); }
+#mainmenu:has(#title-actions.hidden) .menu-masthead, #mainmenu:has(#title-actions.hidden) .menu-eyebrow,
+#mainmenu:has(#title-actions.hidden) .subtitle, #mainmenu:has(#title-actions.hidden) .menu-intro,
+#mainmenu:has(#title-actions.hidden) .menu-features, #mainmenu:has(#title-actions.hidden) .menu-controls,
+#mainmenu:has(#title-actions.hidden) .menu-footer { display: none; }
+#mainmenu:has(#title-actions.hidden) .menu-hero { padding: 0 0 20px; text-align: center; }
+#mainmenu:has(#title-actions.hidden) h1 { font-size: 60px; line-height: 1.2; }
+#mainmenu:has(#title-actions.hidden) .menu-bottom-bar { justify-content: center; }
+#mainmenu #pause-actions { gap: 12px; }
+#mainmenu #pause-actions button { font-size: 14px; }
+/* The existing field guide remains a light, legible modal. */
+#mainmenu #howto { position: fixed; z-index: 5; }
+#mainmenu #howto h2 { color: var(--ink); text-shadow: none; }
+#mainmenu #howto button { background: var(--paper-deep); color: var(--ink); border-color: var(--paper-edge); }
+@media (min-width: 1600px) { .menu-shell { padding-top: 40px; } .menu-hero { padding-top: 70px; padding-bottom: 44px; } }
+@media (max-width: 760px) {
+  #mainmenu { padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+  .menu-shell { max-width: 560px; padding-top: 22px; }
+  .menu-browser-note { display: none; }
+  .menu-hero { padding-top: 38px; padding-bottom: 26px; }
+  #mainmenu #title-actions { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .menu-landscape { background-position: 64% top; }
+  #mainmenu::before { background: linear-gradient(90deg, rgba(9, 29, 29, .9), rgba(9, 29, 29, .38)), linear-gradient(0deg, #0d2426 0%, rgba(13, 36, 38, .7) 50%, transparent); }
+  .menu-bottom-bar { align-items: flex-start; }
+  .menu-controls { max-width: 250px; }
+  .menu-controls > span { margin: 0 2px; }
+}
+@media (max-width: 420px) {
+  #mainmenu { padding-left: max(14px, env(safe-area-inset-left, 0px)); padding-right: max(14px, env(safe-area-inset-right, 0px)); }
+  #mainmenu .menu-card { padding: 18px 15px; }
+  .menu-edition { font-size: 8px; padding-left: 10px; }
+  .menu-eyebrow { font-size: 9px; letter-spacing: .08em; }
+  .menu-features { gap: 12px; font-size: 9px; }
+  .menu-intro { font-size: 12px; }
+  #mainmenu .world-heading { gap: 8px; }
+  #mainmenu .mp-fields { grid-template-columns: 1fr; }
+  .menu-controls { display: none; }
+  .menu-bottom-bar { justify-content: flex-end; }
+  .menu-footer span:last-child { display: none; }
+  #mainmenu .world-row { grid-template-columns: minmax(0, 1fr) auto; padding: 8px; gap: 5px; }
+  #mainmenu .world-open { grid-row: span 2; padding: 6px !important; }
+  #mainmenu .world-host, #mainmenu .world-delete { min-height: 44px; font-size: 10px !important; }
+}
+@media (max-height: 600px) and (min-width: 761px) {
+  .menu-shell { padding-top: 16px; }
+  .menu-hero { padding-top: 20px; padding-bottom: 20px; }
+  #mainmenu h1 { font-size: 68px; margin: 8px 0 10px; }
+  #mainmenu .subtitle { font-size: 17px; }
+  .menu-intro { display: none; }
+  .menu-features { margin-top: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { #mainmenu button { transition: none; } }
