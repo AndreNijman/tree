@@ -1260,6 +1260,8 @@ function drawHeartCrystal(ctx, x, y, t) {
 
 // ---------- Entities drawing ----------
 function drawEnemy(ctx, e, cam, W, H) {
+  // Cull segmented artwork per live part, not by the offscreen head alone.
+  if (CombatArt.drawSegmentedEnemy(ctx, game, e, cam, W, H)) return;
   var x = e.x - cam.x + W / 2;
   var y = e.y - cam.y + H / 2;
   var margin = e.ooaSentry && e.sentry === 'lightningaura' ? 104 : 80;

@@ -1283,17 +1283,277 @@ var CombatArt = (function() {
     line(ctx, '#c6b08a', 29, -16, 31, -21, 2);
   }
 
+  var segmentedKinds = ['boneserpent','giantworm','digger','tombcrawler','wyvern','dunesplicer','worldfeeder'];
+  function segmentedKind(type) {
+    return segmentedKinds[[E.BONESERPENT,E.GIANTWORM,E.DIGGER,E.TOMBCRAWLER,E.WYVERN,E.DUNESPLICER,E.WORLDFEEDER].indexOf(type)] || null;
+  }
+  function segmentedSprite(kind,part,frame,flash,heading) {
+    if (segmentedKinds.indexOf(kind) < 0 || ['head','body','tail'].indexOf(part) < 0) return null;
+    heading = ((heading || 0) % 16 + 16) % 16;
+    return remember('segmented:' + [kind,part,frame,!!flash,heading].join(':'),function() {
+      var c = surface(64,64), ctx = c.getContext('2d');
+      if (heading) {
+        // Integer nearest-neighbor rotation keeps even diagonal silhouettes binary-alpha.
+        var base = segmentedSprite(kind,part,frame,flash,0).getContext('2d').getImageData(0,0,64,64);
+        var out = ctx.createImageData(64,64), angle = heading * Math.PI / 8, cs = Math.cos(angle), sn = Math.sin(angle);
+        for (var y = 0; y < 64; y++) for (var x = 0; x < 64; x++) {
+          var dx = x + 0.5 - 32, dy = y + 0.5 - 32;
+          var sx = Math.floor(32 + dx * cs + dy * sn), sy = Math.floor(32 - dx * sn + dy * cs);
+          if (sx < 0 || sy < 0 || sx >= 64 || sy >= 64) continue;
+          var dest = (y * 64 + x) * 4, src = (sy * 64 + sx) * 4;
+          for (var ch = 0; ch < 4; ch++) out.data[dest + ch] = base.data[src + ch];
+        }
+        ctx.putImageData(out,0,0); return c;
+      }
+      ctx.translate(32,32);
+      var jaw = frame % 2, ripple = [0,1,0,-1][frame % 4];
+      if (kind === 'boneserpent') {
+        if (part === 'head') {
+          polygon(ctx,INK,[[-14,-4],[-10,-11],[2,-12],[8,-8],[16,-5],[19,1],[15,6],[3,10],[-10,8]]);
+          polygon(ctx,'#b8a68b',[[-12,-3],[-9,-9],[1,-10],[7,-6],[14,-4],[17,1],[13,4],[2,8],[-9,6]]);
+          polygon(ctx,'#e8d7ae',[[-10,-5],[-5,-9],[1,-9],[5,-5],[12,-3],[14,0],[5,1],[-1,5],[-9,3]]);
+          polygon(ctx,'#dec69f',[[-8,-8],[-13,-18],[-9,-16],[-3,-9]]);
+          polygon(ctx,'#f0dfb5',[[-2,-10],[-3,-19],[1,-17],[4,-8]]);
+          polygon(ctx,INK,[[0,-5],[5,-6],[8,-2],[4,1],[0,0]]);
+          rect(ctx,'#b77b5e',3,-3,2,1); rect(ctx,'#655052',13,-1,2,2);
+          polygon(ctx,INK,[[1,3],[16,2],[15,6 + jaw],[2,9 + jaw]]);
+          line(ctx,'#dfc8a2',-1,8 + jaw,12,7 + jaw,2);
+          rect(ctx,'#f5e6bf',6,3,2,3); rect(ctx,'#f5e6bf',12,3,2,2);
+          line(ctx,'#806b61',-7,-5,-5,2,1); rect(ctx,'#f4e5ba',-10,-5,2,3);
+        } else if (part === 'body') {
+          line(ctx,INK,-10,0,10,0,5); line(ctx,'#b4a38b',-10,0,10,0,3);
+          for (var rib = -5; rib <= 5; rib += 5) {
+            polygon(ctx,INK,[[rib - 3,-8],[rib + 2,-10],[rib + 5,-5],[rib + 4,6],[rib,9],[rib - 3,6],[rib,-2]]);
+            line(ctx,'#dfcba6',rib,-7,rib + 2,-4,2); line(ctx,'#c7b394',rib + 2,-4,rib + 2,5,2);
+            line(ctx,'#eadab4',rib + 2,5,rib - 1,7,2);
+          }
+          polygon(ctx,'#c1ac8e',[[-3,-8],[-5,-14 - ripple],[-1,-12 - ripple],[2,-7]]);
+          rect(ctx,'#eedeb7',6,-1,3,2);
+        } else {
+          polygon(ctx,INK,[[10,-6],[10,6],[-2,5],[-15,1],[-18,-2],[-5,-4]]);
+          polygon(ctx,'#c2ad8f',[[9,-4],[9,4],[-2,3],[-14,0],[-4,-2]]);
+          line(ctx,'#f0dcb2',-12,0,8,-1,2);
+          line(ctx,'#79675d',2,-3,3,3,1); line(ctx,'#79675d',-4,-2,-3,2,1);
+          polygon(ctx,'#ddc69e',[[2,-3],[-1,-10 - ripple],[4,-7],[6,-3]]);
+        }
+      } else if (kind === 'giantworm') {
+        if (part === 'head') {
+          polygon(ctx,INK,[[-15,-3],[-10,-9],[0,-10],[8,-7],[15,-3],[16,4],[7,8],[-8,8],[-14,4]]);
+          polygon(ctx,'#a97862',[[-13,-2],[-9,-7],[0,-8],[7,-5],[13,-2],[14,3],[6,6],[-8,6]]);
+          oval(ctx,-4,-1,8,6,'#c69b78'); oval(ctx,-6,-2,5,4,'#e2bd94');
+          line(ctx,'#8a6059',-10,-5,-9,4,1); line(ctx,'#aa7c65',-5,-6,-4,5,1);
+          polygon(ctx,INK,[[7,-4],[13,-2],[14,3],[8,5],[5,2]]);
+          rect(ctx,'#ead2a1',10,-2,2,2); rect(ctx,'#e5c391',9,3,2,2 + jaw);
+          rect(ctx,'#332b36',1,-4,2,2); rect(ctx,'#efd2a2',0,-5,2,1);
+          line(ctx,'#b89171',-13,2,-17,5 + ripple,1);
+        } else if (part === 'body') {
+          oval(ctx,0,0,10,8,INK); oval(ctx,0,0,9,6,'#a77b65'); oval(ctx,-2,-1,6,5,'#c49a77');
+          for (var ring = -5; ring <= 5; ring += 5) {
+            line(ctx,'#775654',ring,-5,ring + 1,5,1); line(ctx,'#e1bc90',ring + 1,-4,ring + 1,1,1);
+          }
+          rect(ctx,'#d3a984',-4 + ripple,3,3,1);
+        } else {
+          polygon(ctx,INK,[[9,-6],[10,5],[1,7],[-10,3],[-16,0],[-7,-3],[0,-6]]);
+          polygon(ctx,'#b18a6b',[[8,-4],[8,4],[1,5],[-9,2],[-12,0],[-5,-1],[0,-4]]);
+          polygon(ctx,'#dec19a',[[-10,0],[0,-3],[6,-3],[4,0],[-4,1]]);
+          line(ctx,'#84605b',2,-4,3,4,1); line(ctx,'#84605b',-4,-2,-3,2,1);
+          rect(ctx,'#efcf9d',-11 + ripple,0,2,1);
+        }
+      } else if (kind === 'digger') {
+        if (part === 'head') {
+          polygon(ctx,INK,[[-15,-6],[-8,-12],[3,-12],[10,-7],[18,-3],[19,3],[11,7],[1,11],[-10,8]]);
+          polygon(ctx,'#9c8153',[[-13,-5],[-7,-10],[2,-10],[9,-5],[16,-2],[17,2],[10,5],[0,9],[-9,6]]);
+          polygon(ctx,'#d5b871',[[-11,-6],[-6,-9],[1,-9],[6,-5],[9,0],[3,4],[-6,3]]);
+          polygon(ctx,'#eddaa0',[[-8,-6],[-4,-8],[0,-7],[1,-4],[-3,-2],[-8,-3]]);
+          for (var plate = -8; plate <= 0; plate += 4) line(ctx,'#7d654e',plate,-7,plate + 3,4,1);
+          polygon(ctx,'#e3c787',[[-3,-10],[-4,-18],[2,-14],[5,-8]]);
+          polygon(ctx,INK,[[7,-3],[15,-2],[16,3],[7,5],[4,2]]);
+          rect(ctx,'#f6e6ad',9,-2,2,3); rect(ctx,'#e8cf8b',13,3,2,3 + jaw);
+          rect(ctx,'#443440',3,-5,3,2); rect(ctx,'#edc97d',4,-5,1,1);
+          line(ctx,'#ead59f',5,7 + jaw,14,5 + jaw,2);
+        } else if (part === 'body') {
+          polygon(ctx,INK,[[-11,-4],[-6,-9],[5,-9],[11,-3],[10,5],[3,9],[-8,6]]);
+          polygon(ctx,'#a18a59',[[-9,-3],[-5,-7],[4,-7],[9,-2],[8,4],[2,7],[-7,4]]);
+          polygon(ctx,'#d8be7d',[[-8,-3],[-4,-6],[3,-6],[6,-2],[2,1],[-6,1]]);
+          line(ctx,'#7b6852',-3,-6,0,6,2); line(ctx,'#f2dca0',-1,-5,2,4,1);
+          polygon(ctx,'#cbb575',[[-4,-6],[-5,-13 - ripple],[1,-10],[3,-6]]);
+          line(ctx,'#795e4c',-5,4,4,6,1);
+        } else {
+          polygon(ctx,INK,[[10,-7],[10,6],[1,8],[-9,3],[-19,0],[-7,-5]]);
+          polygon(ctx,'#b19b65',[[8,-5],[8,4],[1,6],[-9,1],[-15,0],[-5,-3]]);
+          polygon(ctx,'#ecd494',[[6,-4],[7,-1],[-1,0],[-12,0],[-3,-2]]);
+          line(ctx,'#77634e',1,-3,2,5,1); rect(ctx,'#d5b97c',-8 + ripple,1,2,1);
+        }
+      } else if (kind === 'tombcrawler') {
+        if (part === 'head') {
+          polygon(ctx,INK,[[-11,-3],[-7,-9],[2,-9],[8,-5],[11,0],[7,6],[-5,7],[-11,3]]);
+          polygon(ctx,'#ac8763',[[-9,-2],[-6,-7],[1,-7],[6,-4],[9,0],[6,4],[-5,5]]);
+          polygon(ctx,'#d9bb85',[[-7,-4],[-3,-6],[1,-6],[4,-3],[0,0],[-7,0]]);
+          line(ctx,'#6c5350',-4,-5,-2,4,1); rect(ctx,'#493b43',4,-4,2,2);
+          polygon(ctx,INK,[[7,-4],[15,-6 - jaw],[17,-2],[11,0],[16,3 + jaw],[13,7],[7,4]]);
+          line(ctx,'#e4c99b',8,-3,14,-4 - jaw,2); line(ctx,'#c9a775',8,3,13,5 + jaw,2);
+          line(ctx,'#ddbd86',1,-7,7,-13 - ripple,1); line(ctx,'#b6976b',-3,-6,-2,-12 + ripple,1);
+        } else if (part === 'body') {
+          for (var side = -1; side <= 1; side += 2) {
+            line(ctx,INK,-3,side * 3,-7 + ripple,side * 10,2); line(ctx,'#b49468',-3,side * 3,-6 + ripple,side * 9,1);
+            line(ctx,'#ddbf87',4,side * 3,6 - ripple,side * 8,1);
+          }
+          polygon(ctx,INK,[[-9,-4],[-3,-7],[5,-6],[9,-1],[7,5],[-2,7],[-8,3]]);
+          polygon(ctx,'#8a6e56',[[-7,-3],[-2,-5],[4,-4],[7,-1],[5,3],[-2,5],[-6,2]]);
+          polygon(ctx,'#c3a575',[[-6,-3],[-2,-4],[3,-3],[4,0],[-4,1]]);
+          line(ctx,'#e5cc97',-3,-3,2,-2,1); line(ctx,'#624f4a',0,0,1,4,1);
+        } else {
+          polygon(ctx,INK,[[9,-5],[9,5],[1,6],[-7,3],[-12,5],[-10,-1],[-6,-4],[1,-6]]);
+          polygon(ctx,'#ab8d62',[[7,-3],[7,3],[1,4],[-6,1],[-8,3],[-7,-1],[-4,-2],[1,-4]]);
+          line(ctx,'#dec492',-5,0,5,-1,2); line(ctx,'#6f574c',0,-3,1,3,1);
+          line(ctx,'#c7a875',-6,1,-10,5 + ripple,1);
+        }
+      } else if (kind === 'wyvern') {
+        // A cream sky dragon with a feathered mane and a long whiskered muzzle.
+        if (part === 'head') {
+          polygon(ctx,INK,[[-15,-6],[-21,-13],[-11,-12],[-17,-19],[-5,-14],[1,-14],[7,-9],[16,-6],[23,-1],[21,5],[11,7],[3,12],[-11,10],[-17,3]]);
+          polygon(ctx,'#b39481',[[-13,-5],[-17,-10],[-8,-10],[-12,-15],[-4,-12],[0,-12],[6,-7],[15,-4],[20,0],[19,3],[10,5],[2,10],[-10,8],[-14,2]]);
+          polygon(ctx,'#eddbb3',[[-12,-5],[-8,-8],[-4,-8],[-5,-11],[0,-10],[5,-5],[14,-3],[17,0],[10,2],[1,7],[-9,5],[-11,0]]);
+          polygon(ctx,'#fff0cd',[[-12,-8],[-19,-11],[-10,-11],[-14,-16],[-5,-11],[-2,-6],[-8,-4]]);
+          polygon(ctx,'#d2ac83',[[-3,-11],[-8,-22],[-4,-20],[2,-10],[5,-8],[9,-18],[11,-18],[9,-9]]);
+          rect(ctx,'#795f5d',5,-6,6,3); rect(ctx,'#f6e6bd',6,-6,3,1); rect(ctx,'#4c4850',8,-5,1,1);
+          rect(ctx,'#99725e',18,-1,2,1); line(ctx,'#765858',10,4,20,3,1);
+          line(ctx,'#e7c49a',7,8 + jaw,17,5 + jaw,2); rect(ctx,'#fff0cb',15,3,1,3);
+          line(ctx,'#ddbf95',16,1,23,6 + ripple,1); line(ctx,'#f2dab0',16,1,23,1 + ripple,1);
+          rect(ctx,'#c29b79',-5,4,3,2);
+        } else if (part === 'body') {
+          polygon(ctx,INK,[[-10,-5],[-13,-11],[-5,-9],[-2,-16 - ripple],[3,-10],[9,-7],[12,-1],[9,6],[2,9],[-8,6]]);
+          polygon(ctx,'#d3b38e',[[-9,-4],[-8,-8],[-4,-7],[-1,-12 - ripple],[3,-7],[8,-5],[10,-1],[8,4],[1,7],[-7,4]]);
+          oval(ctx,0,0,8,6,'#e6d3ab'); oval(ctx,-2,-1,5,4,'#f4e3bf');
+          line(ctx,'#b99978',-5,3,4,5,1); line(ctx,'#c5a581',-3,-4,-1,3,1);
+          polygon(ctx,'#fff0cb',[[-8,-6],[-10,-9],[-5,-7],[-2,-13 - ripple],[1,-8],[3,-6]]);
+          line(ctx,INK,3,3,9,10 + ripple,3); line(ctx,'#d9b58b',3,3,9,9 + ripple,1);
+          line(ctx,'#f3dfb3',8,9 + ripple,13,8 + ripple,1);
+        } else {
+          polygon(ctx,INK,[[9,-6],[11,1],[6,6],[-3,6],[-10,10 + ripple],[-9,5],[-18,4],[-13,0],[-19,-5],[-10,-5],[-7,-10],[0,-6]]);
+          polygon(ctx,'#c4a180',[[8,-4],[9,0],[5,4],[-3,4],[-7,7 + ripple],[-7,3],[-14,2],[-10,0],[-14,-3],[-8,-3],[-6,-7],[0,-4]]);
+          polygon(ctx,'#f0dfb9',[[7,-3],[7,1],[3,3],[-3,2],[-11,1],[-7,-1],[-12,-3],[-6,-2],[-5,-6],[0,-3]]);
+          line(ctx,'#ad8f76',-3,-2,0,3,1); rect(ctx,'#fff0ca',-8 + ripple,0,3,1);
+        }
+      } else if (kind === 'dunesplicer') {
+        // Broad copper-sand armor, paired shovel jaws, and swept lateral fins.
+        if (part === 'head') {
+          polygon(ctx,INK,[[-16,-5],[-11,-12],[-1,-15],[7,-11],[13,-6],[20,-8 - jaw],[24,-3],[17,0],[24,4 + jaw],[20,9],[12,6],[4,11],[-11,9]]);
+          polygon(ctx,'#987057',[[-14,-4],[-10,-10],[-1,-12],[6,-9],[11,-4],[19,-6 - jaw],[21,-3],[14,0],[21,4 + jaw],[19,6],[11,4],[3,9],[-10,7]]);
+          polygon(ctx,'#cfaa76',[[-12,-5],[-8,-9],[-1,-11],[5,-7],[8,-2],[3,3],[-10,4]]);
+          polygon(ctx,'#ebce96',[[-9,-5],[-5,-8],[0,-9],[3,-6],[-2,-3],[-8,-2]]);
+          line(ctx,'#795b50',-5,-8,-1,4,2); line(ctx,'#efca8d',-3,-7,1,2,1);
+          polygon(ctx,'#b88960',[[-7,-10],[-13,-20],[-5,-17],[1,-11]]);
+          polygon(ctx,'#ead1a0',[[12,-4],[19,-6 - jaw],[20,-3],[14,-1]]);
+          polygon(ctx,'#d7b980',[[12,3],[20,4 + jaw],[18,7],[12,5]]);
+          rect(ctx,'#453b43',6,-5,3,3); rect(ctx,'#eecc8d',7,-5,1,1);
+          line(ctx,'#ab7e5c',-11,4,-15,10 + ripple,2);
+        } else if (part === 'body') {
+          polygon(ctx,INK,[[-10,-4],[-13,-12 - ripple],[-4,-9],[4,-10],[11,-4],[10,4],[4,9],[-7,7],[-13,11 + ripple],[-10,2]]);
+          polygon(ctx,'#a77c57',[[-9,-3],[-10,-9 - ripple],[-3,-6],[4,-7],[9,-3],[8,3],[3,7],[-6,5],[-10,8 + ripple],[-8,1]]);
+          polygon(ctx,'#d9b986',[[-7,-4],[-2,-6],[4,-5],[7,-2],[2,1],[-6,2]]);
+          line(ctx,'#75574c',-3,-5,-1,5,2); line(ctx,'#efcf96',-1,-4,1,3,1);
+          polygon(ctx,'#c89768',[[-10,-6],[-10,-9 - ripple],[-5,-6],[-3,-3]]);
+          rect(ctx,'#e3c38e',4,3,3,1);
+        } else {
+          polygon(ctx,INK,[[10,-6],[11,4],[4,8],[-5,7],[-18,11 + ripple],[-12,3],[-19,-2],[-10,-4],[-12,-11],[0,-7]]);
+          polygon(ctx,'#a67c57',[[8,-4],[9,3],[3,6],[-4,5],[-13,8 + ripple],[-9,2],[-14,-1],[-7,-2],[-9,-7],[0,-5]]);
+          polygon(ctx,'#dfbe87',[[7,-3],[7,0],[2,3],[-6,2],[-12,-1],[-5,-1],[-7,-6],[0,-3]]);
+          line(ctx,'#7a5c4d',1,-3,2,5,1); line(ctx,'#ebcd96',-8,0,-3,1 + ripple,1);
+        }
+      } else if (kind === 'worldfeeder') {
+        // Olive fungal plates, pale hook teeth, asymmetrical feelers and spiny feet.
+        if (part === 'head') {
+          polygon(ctx,INK,[[-12,-3],[-9,-10],[-3,-12],[5,-9],[9,-5],[16,-6],[18,0],[14,6],[6,8],[-6,9],[-12,4]]);
+          polygon(ctx,'#586a51',[[-10,-2],[-7,-8],[-3,-10],[4,-7],[7,-3],[14,-4],[16,0],[12,4],[5,6],[-5,7],[-10,3]]);
+          polygon(ctx,'#91a275',[[-8,-3],[-5,-7],[-2,-8],[3,-5],[4,-1],[0,3],[-7,3]]);
+          polygon(ctx,'#bbc38b',[[-6,-4],[-3,-6],[0,-6],[1,-3],[-2,-1],[-6,0]]);
+          line(ctx,'#c3bda0',-5,-8,-10,-16 - ripple,1); line(ctx,'#8f9d73',1,-8,4,-18 + ripple,1);
+          polygon(ctx,INK,[[8,-2],[14,-3],[16,1],[11,5],[6,3]]);
+          polygon(ctx,'#e0d3a6',[[10,-2],[13,-2],[12,2],[10,3],[8,2]]);
+          line(ctx,'#c6bd92',8,6 + jaw,14,4 + jaw,2);
+          rect(ctx,'#3d3545',3,-5,2,2); rect(ctx,'#d4bb82',4,-5,1,1);
+          polygon(ctx,'#71825f',[[-9,3],[-14,8],[-6,6],[-2,4]]);
+        } else if (part === 'body') {
+          for (var side = -1; side <= 1; side += 2) {
+            line(ctx,INK,-4,side * 3,-10,side * (8 + ripple),2);
+            line(ctx,'#b2b68a',-3,side * 3,-9,side * (7 + ripple),1);
+            line(ctx,'#7f9669',4,side * 2,9,side * (8 - ripple),1);
+          }
+          polygon(ctx,INK,[[-8,-4],[-4,-8],[3,-7],[9,-2],[7,5],[-2,7],[-8,2]]);
+          polygon(ctx,'#53664f',[[-6,-3],[-3,-6],[2,-5],[7,-1],[5,3],[-2,5],[-6,1]]);
+          polygon(ctx,'#96a579',[[-5,-3],[-2,-5],[1,-4],[4,-1],[0,1],[-5,0]]);
+          line(ctx,'#c0c995',-3,-3,0,-2,1); line(ctx,'#3b4b43',-1,0,1,4,1);
+          rect(ctx,'#7f725f',3,2,2,2);
+        } else {
+          polygon(ctx,INK,[[9,-4],[9,4],[2,6],[-5,4],[-13,7 + ripple],[-10,1],[-16,-3],[-7,-3],[-7,-9],[0,-6]]);
+          polygon(ctx,'#667c55',[[7,-2],[7,2],[2,4],[-4,2],[-9,4 + ripple],[-7,0],[-11,-2],[-5,-1],[-5,-6],[0,-4]]);
+          polygon(ctx,'#b1b889',[[5,-2],[5,1],[0,2],[-7,0],[-3,-1],[-4,-5],[0,-2]]);
+          line(ctx,'#3f5346',1,-2,2,3,1); rect(ctx,'#d3c99b',-6 + ripple,0,2,1);
+        }
+      }
+      if (flash) { ctx.globalCompositeOperation = 'source-atop'; rect(ctx,'#fff5dc',-32,-32,64,64); }
+      return c;
+    });
+  }
+  function drawSegmentedEnemy(ctx,g,e,cam,W,H) {
+    if (!e || e.boss || e.minion || e.ooaEnemy || e.ooaSentry) return false;
+    var kind = segmentedKind(e.type); if (!kind) return false;
+    if (e.dead) return true;
+    var frame = Math.floor(Time.seconds * 8) % 4;
+    function heading(dx,dy) { return (Math.round(Math.atan2(dy,dx) * 8 / Math.PI) + 16) % 16; }
+    function part(body,name,dx,dy,flash) {
+      if (!body || body.dead || !Number.isFinite(body.x) || !Number.isFinite(body.y)) return;
+      var x = Math.round(body.x - cam.x + W / 2), y = Math.round(body.y - cam.y + H / 2);
+      if (x < -32 || y < -32 || x > W + 32 || y > H + 32) return;
+      ctx.drawImage(segmentedSprite(kind,name,frame,flash,heading(dx,dy)),x - 32,y - 32);
+    }
+    ctx.save();
+    try {
+      ctx.imageSmoothingEnabled = false; if (e.ghost) ctx.globalAlpha *= 0.6;
+      var segments = e.segments || [];
+      for (var i = segments.length - 1; i >= 0; i--) {
+        var s = segments[i], prev = i ? segments[i - 1] : e;
+        if (!s || !prev) continue;
+        part(s,i === segments.length - 1 ? 'tail' : 'body',prev.x - s.x,prev.y - s.y,s.flash > 0 || e.flash > 0);
+      }
+      var dx = e.vx || 0, dy = e.vy || 0;
+      if (Math.abs(dx) + Math.abs(dy) < 0.1) {
+        if (segments.length && segments[0]) { dx = e.x - segments[0].x; dy = e.y - segments[0].y; }
+        if (!dx && !dy) dx = e.dir < 0 ? -1 : 1;
+      }
+      part(e,'head',dx,dy,e.flash > 0);
+      return true;
+    } finally { ctx.restore(); }
+  }
+
   var enemyKinds = ['junglebat','hornet','mosshornet','tortoise','flyingsnake','pixie','unicorn','gastropod','chaoselemental',
     'eaterofsouls','corruptor','crimera','ichorsticker','icebat','snowflinx','icetortoise','wolf',
     'antlion','antlioncharger','antlionswarmer','vulture','mummy','lightmummy','darkmummy','bloodmummy',
     'skeletonarcher','armoredbones','undeadminer','giantbat','cursedskull','darkcaster','angrybones','dungeonslime',
-    'hellbat','demon','voodoodemon','fireimp','lavaslime','lavabat','reddevil'];
+    'hellbat','demon','voodoodemon','fireimp','lavaslime','lavabat','reddevil',
+    'harpy','wraith','meteorhead','devourer','shark','piranha','bluejellyfish','squid',
+    'crab','crawdad','seasnail','salamander','goblinscout','goblinpeon','goblinthief','goblinwarrior',
+    'goblinarcher','goblinsorcerer','goblinsummoner','piratedeckhand','piratecorsair','piratedeadeye','piratecrossbower','parrot',
+    'snowmangangsta','misterstabby','snowballa','martiangrunt','raygunner','martianofficer','martianengineer',
+    'gigazapper','martianwalker','teslaturret','brainscrambler','martiandrone','scutlixgunner',
+    'scarecrow','splinterling','hellhound','poltergeist','headlesshorseman',
+    'gingerbread','zombieelf','elfarcher','nutcracker','krampus','yeti','flocko','elfcopter','presentmimic',
+    'frankenstein','swampthing','creaturefromdeep','fritz'];
   function enemyKind(type) {
     return enemyKinds[[E.JUNGLEBAT,E.HORNET,E.MOSSHORNET,E.GIANTTORTOSE,E.FLYINGSNAKE,E.PIXIE,E.UNICORN,E.GASTROPOD,E.CHAOSELEMENTAL,
       E.EATEROFSOULS,E.CORRUPTOR,E.CRIMERA,E.ICHORSTICKER,E.ICEBAT,E.SNOWFLINX,E.ICETORTOISE,E.WOLF,
       E.ANTLION,E.ANTLIONCHARGER,E.ANTLIONSWARMER,E.VULTURE,E.MUMMY,E.LIGHTMUMMY,E.DARKMUMMY,E.BLOODMUMMY,
       E.SKELETONARCHER,E.ARMOREDBONES,E.UNDEADMINER,E.GIANTBAT,E.CURSEDSKULL,E.DARKCASTER,E.ANGRYBONES,E.DUNGEONSLIME,
-      E.HELLBAT,E.DEMON,E.VOODOODEMON,E.FIREIMP,E.LAVASLIME,E.LAVABAT,E.REDDEVIL].indexOf(type)] || null;
+      E.HELLBAT,E.DEMON,E.VOODOODEMON,E.FIREIMP,E.LAVASLIME,E.LAVABAT,E.REDDEVIL,
+      E.HARPY,E.WRATH,E.METEORHEAD,E.DEVOURER,E.SHARK,E.PIRANHA,E.BLUEJELLYFISH,E.SQUID,
+      E.CRAB,E.CRAWDAD,E.SEASNAIL,E.SALAMANDER,E.GOBLINSCOUT,E.GOBLINPEON,E.GOBLINTHIEF,E.GOBLINWARRIOR,
+      E.GOBLINARCHER,E.GOBLINSORCERER,E.GOBLINSUMMONER,E.PIRATEDECKHAND,E.PIRATECORSAIR,E.PIRATEDEADEYE,E.PIRATECROSSBOWER,E.PARROT,
+      E.SNOWMANGANGSTA,E.MISTERSTABBY,E.SNOWBALLA,E.MARTIANGRUNT,E.RAYGUNNER,E.MARTIANOFFICER,E.MARTIANENGINEER,
+      E.GIGAZAPPER,E.MARTIANWALKER,E.TESLATURRET,E.BRAINSCRAMBLER,E.MARTIANDRONE,E.SCUTLIXGUNNER,
+      E.PUMPKINSCARECROW,E.SPLINTERLING,E.HELLHOUND,E.POLTERGEIST,E.HEADLESSHORSEMAN,
+      E.GINGERBREAD,E.ZOMBIEELF,E.ELFARCHER,E.NUTCRACKER,E.KRAMPUS,E.YETI,E.FLOCKO,E.ELFCOPTER,E.PRESENTMIMIC,
+      E.FRANKENSTEIN,E.SWAMPTHING,E.CREATUREFROMDEEP,E.FRITZ].indexOf(type)] || null;
   }
   function enemySprite(kind,frame,active,flash) {
     if (enemyKinds.indexOf(kind) < 0) return null;
@@ -2055,6 +2315,1086 @@ var CombatArt = (function() {
         polygon(ctx,'#ad514b',[[6,-15],[12,-13],[10,-10],[4,-11]]);
         line(ctx,'#653543',3,-10,9,-10,1); rect(ctx,'#edcf9e',7,-10,1,3);
       }
+      if (kind === 'harpy') {
+        // Layered feather fans and a humanoid torso, with no invented feather shots.
+        for (var side = -1; side <= 1; side += 2) {
+          polygon(ctx,INK,[[side * 4,-8],[side * 13,-15 - flap],[side * 25,-22 - flap],[side * 30,-19 - flap],[side * 24,-9],[side * 28,-7],[side * 19,1],[side * 13,-1],[side * 8,4]]);
+          polygon(ctx,'#a5a6a1',[[side * 5,-7],[side * 14,-12 - flap],[side * 26,-20 - flap],[side * 27,-18 - flap],[side * 21,-7],[side * 24,-6],[side * 18,-1],[side * 12,-3],[side * 8,1]]);
+          polygon(ctx,'#e0d8bd',[[side * 5,-8],[side * 14,-11 - flap],[side * 23,-17 - flap],[side * 18,-8],[side * 19,-5],[side * 11,-3]]);
+          line(ctx,'#f4e8c8',side * 8,-8,side * 23,-18 - flap,1);
+          line(ctx,'#6d7783',side * 19,-11 - flap,side * 16,-4,1);
+          line(ctx,'#75808a',side * 23,-14 - flap,side * 19,-5,1);
+        }
+        polygon(ctx,INK,[[-5,4],[-14,13],[-10,15],[-4,11],[-3,16],[3,12],[7,14],[8,7]]);
+        polygon(ctx,'#c0c3b2',[[-4,5],[-10,12],[-5,9],[-2,13],[2,9],[6,11],[5,6]]);
+        line(ctx,INK,-3,5,-5 - stride / 2,14,4); line(ctx,'#c7a47c',-3,5,-5 - stride / 2,13,2);
+        line(ctx,INK,4,4,7 + stride / 2,12,4); line(ctx,'#dfba88',4,4,7 + stride / 2,11,2);
+        line(ctx,'#edcfa0',-6 - stride / 2,14,-1 - stride / 2,15,1);
+        line(ctx,'#f3d9aa',6 + stride / 2,12,11 + stride / 2,13,1);
+        oval(ctx,0,-2,7,9,INK); oval(ctx,0,-3,5,7,'#729293');
+        polygon(ctx,'#b8c5ad',[[-4,-8],[0,-6],[4,-8],[4,-1],[1,2],[-4,-2]]);
+        rect(ctx,'#506c7b',-5,3,10,3); rect(ctx,'#cdb784',0,3,2,2);
+        oval(ctx,1,-14,6,6,INK); oval(ctx,2,-14,4,4,'#e4bc91');
+        polygon(ctx,'#ad7e63',[[-5,-14],[-5,-20],[0,-22],[6,-19],[7,-14],[3,-16],[0,-18],[-2,-13],[-3,-8],[-6,-10]]);
+        rect(ctx,'#d4ab78',-3,-19,5,2); rect(ctx,'#4b4251',4,-15,2,1);
+        rect(ctx,'#f0d3a4',5,-13,3,2); line(ctx,'#b78a75',4,-10,6,-10,1);
+      } else if (kind === 'wraith') {
+        // Binary-alpha source; the retained ghost renderer applies translucency.
+        polygon(ctx,INK,[[-12,-2],[-9,-14],[-3,-20],[6,-19],[12,-10],[13,2],[8,10],[11,17],[3,13],[-1,21],[-6,13],[-13,17],[-10,8],[-16,7]]);
+        polygon(ctx,'#666b91',[[-10,-2],[-7,-13],[-2,-17],[5,-17],[9,-9],[10,1],[6,9],[8,13],[2,10],[-1,17],[-4,10],[-9,13],[-7,6],[-12,5]]);
+        polygon(ctx,'#a9b6d0',[[-8,-3],[-6,-11],[-1,-16],[4,-15],[7,-8],[7,-2],[3,3],[2,9],[-2,13],[-4,6],[-9,7],[-6,1]]);
+        polygon(ctx,'#dae2df',[[-4,-9],[-1,-14],[3,-13],[5,-8],[2,-5],[-3,-5]]);
+        polygon(ctx,'#34344c',[[-4,-6],[2,-7],[7,-5],[5,0],[-2,0],[-5,-2]]);
+        rect(ctx,'#e4e5c5',0,-4,2,1); rect(ctx,'#c3d2d5',5,-3,1,1);
+        polygon(ctx,'#6c749e',[[-2,1],[2,2],[2,6],[0,8],[-3,5]]);
+        line(ctx,'#c5cfd8',-7,1,-10,4 + stride / 2,1);
+        line(ctx,'#8b9bc1',7,3,12,8 - stride / 2,1);
+        polygon(ctx,'#a2b4d0',[[-2,10],[-4,17 + stride / 2],[-1,14],[2,10]]);
+        rect(ctx,'#d6ddd9',-10,9 + frame % 2,1,2); rect(ctx,'#929fc3',8,12 - frame % 2,1,2);
+      } else if (kind === 'meteorhead') {
+        // An irregular rock face with inset molten seams; the sparks are pixels only.
+        polygon(ctx,INK,[[-10,-4],[-7,-10],[0,-12],[8,-8],[12,-1],[10,7],[3,11],[-6,8],[-11,2]]);
+        polygon(ctx,'#754b48',[[-8,-3],[-6,-8],[0,-10],[7,-6],[10,0],[8,6],[2,9],[-5,6],[-9,1]]);
+        polygon(ctx,'#b76c4d',[[-6,-5],[-2,-8],[4,-6],[7,-2],[4,1],[-3,1],[-7,-1]]);
+        polygon(ctx,'#e6a55e',[[-3,-6],[0,-7],[3,-5],[2,-3],[-2,-2]]);
+        line(ctx,'#dd9454',-6,2,-2,6,1); line(ctx,'#f1bd71',-2,6,3,5,1);
+        line(ctx,'#67404a',-6,-5,-5,1,1); line(ctx,'#67404a',3,-6,6,-3,1);
+        rect(ctx,INK,1,-2,3,3); rect(ctx,'#f9d68b',2,-1,1,1);
+        rect(ctx,INK,6,0,2,2); rect(ctx,'#eab775',6,0,1,1);
+        polygon(ctx,'#47333e',[[1,4],[7,3],[7,6],[3,7]]); rect(ctx,'#ebb878',3,5,2,1);
+        polygon(ctx,'#9b5a49',[[-7,0],[-16,-4 - stride / 2],[-13,1],[-19,3 + frame % 2],[-10,5]]);
+        line(ctx,'#d68c54',-9,1,-15,1 - stride / 2,1);
+        rect(ctx,'#f4ca79',-19 + frame % 2,6,2,1); rect(ctx,'#b46a4b',-17,-7 + frame % 2,2,2);
+      } else if (kind === 'devourer') {
+        // This game's single colliding flyer: barbed fins and a split toothed maw.
+        polygon(ctx,INK,[[-11,-5],[-16,-13],[-5,-10],[-1,-17],[4,-10],[11,-8],[18,-4],[20,3],[15,9],[4,12],[-7,9],[-13,3],[-21,7],[-17,-1]]);
+        polygon(ctx,'#625171',[[-10,-4],[-12,-10],[-4,-8],[-1,-13],[3,-8],[10,-6],[16,-3],[18,2],[13,7],[3,10],[-6,7],[-11,1],[-17,4],[-14,-1]]);
+        polygon(ctx,'#95819c',[[-8,-4],[-3,-7],[2,-7],[9,-4],[11,1],[5,6],[-4,5],[-9,0]]);
+        polygon(ctx,'#c0a4b4',[[-5,-5],[0,-6],[4,-4],[2,-1],[-5,0]]);
+        for (var side = -1; side <= 1; side += 2) {
+          polygon(ctx,INK,[[-5,side * 3],[-10,side * (11 + stride / 2)],[-19,side * (16 + flap / 2)],[-16,side * 8],[-12,side * 3]]);
+          polygon(ctx,'#7e6489',[[-7,side * 4],[-11,side * (9 + stride / 2)],[-16,side * (12 + flap / 2)],[-13,side * 6]]);
+          line(ctx,'#b295ad',-8,side * 4,-14,side * (10 + flap / 2),1);
+        }
+        polygon(ctx,INK,[[9,-5],[16,-4],[18,0],[16,6],[8,8],[4,3]]);
+        polygon(ctx,'#bdb397',[[10,-4],[15,-3],[15,-1],[11,1],[8,-1]]);
+        polygon(ctx,'#ded0ad',[[9,4],[14,2],[15,4 + frame % 2],[10,6 + frame % 2],[7,5]]);
+        rect(ctx,'#372c41',4,-5,3,2); rect(ctx,'#ddc58d',5,-5,1,1);
+        line(ctx,'#9d7e94',-3,5,2,8,1);
+      } else if (kind === 'shark') {
+        // Slate back, ivory belly, gill cuts and an asymmetrical crescent tail.
+        polygon(ctx,INK,[[-14,-3],[-27,-12 - stride / 2],[-24,-2],[-28,9 + stride / 2],[-15,5],[-7,8],[9,8],[21,4],[24,-1],[16,-6],[3,-9],[-1,-18],[-8,-7]]);
+        polygon(ctx,'#536f88',[[-13,-1],[-24,-9 - stride / 2],[-21,-1],[-24,6 + stride / 2],[-14,3],[-6,6],[9,6],[19,3],[21,-1],[15,-4],[2,-7],[-2,-14],[-6,-5]]);
+        polygon(ctx,'#879faf',[[-12,-2],[-5,-5],[5,-5],[15,-3],[19,-1],[10,1],[-5,1]]);
+        polygon(ctx,'#d4d4be',[[-11,2],[-3,2],[8,2],[19,0],[18,3],[8,5],[-5,5]]);
+        polygon(ctx,'#56768b',[[-2,3],[5,4],[0,11 + stride / 2],[-6,6]]);
+        line(ctx,'#344655',3,-3,2,2,1); line(ctx,'#3c5060',0,-3,-1,2,1); line(ctx,'#3c5060',-3,-3,-4,1,1);
+        rect(ctx,INK,14,-3,2,2); rect(ctx,'#e9d8aa',14,-3,1,1);
+        line(ctx,'#3b4350',13,3,20,1,1); rect(ctx,'#f3e4c3',16,2,1,2);
+        line(ctx,'#a4b6b9',-20,-3,-15,0,1);
+      } else if (kind === 'piranha') {
+        // A deep, blunt fish with a warm belly, fan fins and a serrated underbite.
+        polygon(ctx,INK,[[-8,-5],[-15,-9 - stride / 2],[-14,7 + stride / 2],[-7,5],[-2,9],[8,7],[15,2],[13,-5],[4,-10],[-3,-9]]);
+        polygon(ctx,'#547e87',[[-7,-3],[-12,-6 - stride / 2],[-11,4 + stride / 2],[-6,3],[-2,7],[7,5],[12,1],[11,-4],[3,-8],[-2,-7]]);
+        polygon(ctx,'#94b6b0',[[-5,-4],[-1,-6],[4,-6],[9,-3],[6,0],[-3,1]]);
+        polygon(ctx,'#cf9270',[[-5,2],[2,1],[11,0],[9,4],[3,6],[-2,5]]);
+        polygon(ctx,'#a5725f',[[-2,-7],[0,-13],[5,-9],[8,-5]]);
+        polygon(ctx,'#c49777',[[-1,4],[3,5],[1,11 - stride / 2],[-3,7]]);
+        rect(ctx,'#35424a',7,-4,3,3); rect(ctx,'#e3c38f',8,-4,1,1);
+        polygon(ctx,INK,[[8,0],[14,-1],[14,3],[9,5],[4,4]]);
+        rect(ctx,'#f1e0b5',10,0,2,2); rect(ctx,'#e5cfa3',6,3,2,2); rect(ctx,'#f5e4bc',10,3,2,2);
+        line(ctx,'#587c82',0,-4,-1,2,1); rect(ctx,'#d1cbb0',3,-3,1,1);
+      } else if (kind === 'bluejellyfish') {
+        // Stepped glass-blue bell and separately legible drifting tentacles.
+        for (var tendril = 0; tendril < 4; tendril++) {
+          var jx = -7 + tendril * 5, bend = (tendril % 2 ? 1 : -1) * stride / 2;
+          line(ctx,INK,jx,2,jx + bend,10,2); line(ctx,'#7fa5c2',jx,2,jx + bend,10,1);
+          line(ctx,'#9ecbd6',jx + bend,10,jx - bend - 1,17 + tendril % 2 * 3,1);
+          rect(ctx,'#d3e6dc',jx - bend - 1,15 + tendril % 2 * 3,1,2);
+        }
+        polygon(ctx,INK,[[-13,2],[-12,-4],[-8,-10],[-1,-13],[7,-11],[12,-5],[14,2],[9,5],[-8,5]]);
+        polygon(ctx,'#577eaa',[[-11,1],[-10,-4],[-7,-8],[-1,-11],[6,-9],[10,-4],[12,1],[8,3],[-7,3]]);
+        polygon(ctx,'#91b7cd',[[-9,-1],[-7,-6],[-2,-9],[4,-8],[8,-4],[9,0],[3,1],[-6,1]]);
+        polygon(ctx,'#d1e0d9',[[-6,-3],[-4,-7],[-1,-8],[2,-6],[0,-3]]);
+        rect(ctx,'#b5d4da',-10,0,2,2); rect(ctx,'#7ba7c6',-5,1,3,2); rect(ctx,'#c4e2dd',2,1,3,2); rect(ctx,'#89b3d0',8,0,2,2);
+        oval(ctx,1,-2,2,2,'#617faa'); rect(ctx,'#d9e6d9',1,-3,1,1);
+        rect(ctx,'#eef1d9',5,-3,1,2); rect(ctx,'#a0c4d3',-6,6 + frame % 2,1,2);
+      } else if (kind === 'squid') {
+        // Long tapered mantle, side fins and five curling visual arms.
+        for (var arm = 0; arm < 5; arm++) {
+          var ax = -7 + arm * 4, curl = (arm % 2 ? -1 : 1) * stride / 2;
+          line(ctx,INK,ax,4,ax + curl,14 + arm % 2 * 3,3);
+          line(ctx,'#a76c7d',ax,4,ax + curl,14 + arm % 2 * 3,1);
+          line(ctx,'#db9b9e',ax + curl,14 + arm % 2 * 3,ax + curl + 3,19 + arm % 2,1);
+          rect(ctx,'#f0c1b2',ax + curl + 2,17 + arm % 2,1,2);
+        }
+        polygon(ctx,INK,[[-8,-6],[-15,-9 - stride / 2],[-13,-16],[-5,-13],[0,-23],[6,-15],[14,-12 + stride / 2],[15,-5],[8,-3],[9,4],[4,8],[-5,7],[-10,2]]);
+        polygon(ctx,'#a7687e',[[-7,-5],[-12,-9 - stride / 2],[-11,-13],[-4,-11],[0,-19],[5,-12],[12,-10 + stride / 2],[12,-6],[6,-4],[7,3],[3,6],[-4,5],[-8,1]]);
+        polygon(ctx,'#d799a1',[[-5,-6],[-3,-12],[0,-17],[3,-11],[5,-5],[4,1],[-4,1]]);
+        polygon(ctx,'#eac4b7',[[-3,-7],[-1,-12],[1,-13],[2,-8],[0,-4],[-2,-3]]);
+        oval(ctx,4,0,3,3,'#e7d4b8'); rect(ctx,'#48414d',5,-1,2,3); rect(ctx,'#f4e7ca',5,-1,1,1);
+        rect(ctx,'#774e64',-5,1,3,2); rect(ctx,'#e3adb0',-4,1,1,1);
+        line(ctx,'#bd8194',-6,-10,-10,-10,1); line(ctx,'#dca6a7',8,-8,11,-7,1);
+      } else if (kind === 'crab') {
+        for (var side = -1; side <= 1; side += 2) {
+          for (var leg = 0; leg < 3; leg++) {
+            var ly = active ? 3 + leg : 5 + leg, lx = 7 + leg * 3;
+            line(ctx,INK,side * 6,2,side * lx,ly,3);
+            line(ctx,'#b57959',side * 6,2,side * lx,ly,1);
+            line(ctx,'#ddb180',side * lx,ly,side * (lx + 1 + stride / 2),active ? 5 : 9 - leg % 2,1);
+          }
+          line(ctx,INK,side * 8,-2,side * 16,-5 - frame % 2,4);
+          line(ctx,'#d49a70',side * 8,-2,side * 16,-5 - frame % 2,2);
+          polygon(ctx,INK,[[side * 15,-4],[side * 14,-10],[side * 19,-13],[side * 23,-10],[side * 20,-6],[side * 24,-7],[side * 23,-2],[side * 17,0]]);
+          polygon(ctx,'#c48b63',[[side * 16,-5],[side * 16,-9],[side * 19,-11],[side * 21,-10],[side * 18,-6],[side * 22,-5],[side * 21,-3],[side * 18,-2]]);
+          line(ctx,'#f1c38a',side * 17,-8,side * 20,-10,1);
+        }
+        polygon(ctx,INK,[[-11,-3],[-7,-8],[3,-9],[10,-6],[13,-1],[10,5],[-8,5],[-12,1]]);
+        polygon(ctx,'#ac6d52',[[-9,-2],[-6,-6],[3,-7],[9,-4],[10,0],[8,3],[-7,3],[-10,0]]);
+        polygon(ctx,'#d3a16e',[[-7,-3],[-4,-5],[2,-6],[7,-3],[5,0],[-5,0]]);
+        line(ctx,'#875547',-6,2,6,2,1);
+        line(ctx,'#c49a70',0,-6,1,-11,2); line(ctx,'#e5bc87',6,-5,7,-9,2);
+        rect(ctx,INK,0,-12,2,2); rect(ctx,INK,7,-10,2,2); rect(ctx,'#f6ddb2',1,-12,1,1);
+      } else if (kind === 'crawdad') {
+        // Separate tail plates, forward pincers and long asymmetric antennae.
+        polygon(ctx,INK,[[-10,-3],[-19,-5],[-25,-2],[-28,-5],[-28,3],[-24,6],[-18,4],[-8,5]]);
+        polygon(ctx,'#a9825d',[[-10,-1],[-19,-3],[-24,-1],[-26,-2],[-26,2],[-23,4],[-18,2],[-9,3]]);
+        for (var plate = -21; plate <= -12; plate += 4) line(ctx,'#e0bd85',plate,-2,plate + 1,3,1);
+        for (var leg = 0; leg < 3; leg++) {
+          var lx = -8 + leg * 6, foot = active ? 4 : 8;
+          line(ctx,INK,lx,3,lx - 3 + stride / 2,foot,3); line(ctx,'#c5a071',lx,3,lx - 3 + stride / 2,foot,1);
+        }
+        oval(ctx,0,-1,12,7,INK); oval(ctx,0,-2,10,5,'#a7845f'); oval(ctx,-2,-3,6,3,'#d0b184');
+        line(ctx,'#80634f',-4,-5,-2,3,1); line(ctx,'#e2c89b',-3,-4,-2,0,1);
+        line(ctx,INK,7,-1,18,-6 - frame % 2,4); line(ctx,'#c8a070',7,-1,18,-6 - frame % 2,2);
+        polygon(ctx,INK,[[16,-5],[18,-12],[23,-14],[28,-10],[24,-8],[29,-6],[25,-2],[20,-2]]);
+        polygon(ctx,'#d4b580',[[18,-6],[20,-10],[23,-12],[26,-10],[22,-7],[26,-6],[24,-4],[20,-4]]);
+        line(ctx,'#d1b180',8,2,17,6,2); line(ctx,'#e6c795',17,6,23,4,2);
+        rect(ctx,'#3e3940',8,-5,3,2); rect(ctx,'#e5cea5',9,-5,1,1);
+        line(ctx,'#dac093',9,-4,22,-18 + stride / 2,1); line(ctx,'#a98c69',10,-2,29,-3 + stride / 2,1);
+      } else if (kind === 'seasnail') {
+        polygon(ctx,INK,[[-12,4],[-8,1],[0,0],[7,-1],[12,2],[15,6],[9,8],[-8,8],[-14,6]]);
+        polygon(ctx,'#aaa17a',[[-11,4],[-7,3],[0,2],[7,1],[10,3],[12,5],[8,6],[-8,6],[-11,5]]);
+        line(ctx,'#ded1a0',-8,5,8 + stride / 2,5,1);
+        polygon(ctx,INK,[[-11,-1],[-9,-10],[-3,-16],[4,-15],[9,-11],[10,-4],[5,2],[-4,4]]);
+        polygon(ctx,'#a57b50',[[-9,-1],[-7,-9],[-2,-13],[3,-13],[7,-9],[8,-4],[4,0],[-4,2]]);
+        polygon(ctx,'#d2b57a',[[-7,-2],[-6,-8],[-2,-11],[3,-10],[5,-7],[4,-3],[0,-1],[-3,-2]]);
+        line(ctx,'#7b604e',-6,-3,-4,-8,2); line(ctx,'#7b604e',-4,-8,1,-9,2);
+        line(ctx,'#7b604e',1,-9,4,-6,2); line(ctx,'#7b604e',4,-6,1,-3,2);
+        rect(ctx,'#edd5a0',-4,-8,3,1); rect(ctx,'#9a7854',-1,-5,2,2);
+        var eyeY = active ? -5 : -7 - frame % 2;
+        line(ctx,'#c8bd8e',8,2,10,eyeY,1); line(ctx,'#a89e78',11,3,15,eyeY + 2,1);
+        rect(ctx,INK,10,eyeY - 1,2,2); rect(ctx,INK,15,eyeY + 1,2,2); rect(ctx,'#eaddb6',11,eyeY - 1,1,1);
+      } else if (kind === 'salamander') {
+        polygon(ctx,INK,[[-9,-4],[-20,-2],[-31,-6 - stride / 2],[-29,0],[-20,4],[-9,5]]);
+        polygon(ctx,'#92704d',[[-9,-2],[-20,0],[-28,-3 - stride / 2],[-26,0],[-19,2],[-9,3]]);
+        line(ctx,'#c7a66d',-25,-1,-12,0,1);
+        for (var side = -1; side <= 1; side += 2) {
+          var footY = active ? 4 : 8, shift = side * stride / 2;
+          line(ctx,INK,side * 7,2,side * 11 + shift,footY,4);
+          line(ctx,'#b18e59',side * 7,2,side * 11 + shift,footY - 1,2);
+          line(ctx,'#d7b67d',side * 11 + shift,footY - 1,side * 15 + shift,footY,1);
+        }
+        oval(ctx,-2,-1,14,7,INK); oval(ctx,-2,-2,12,5,'#8d714e'); oval(ctx,-4,-3,8,3,'#b19961');
+        oval(ctx,12,-2,9,6,INK); oval(ctx,12,-3,7,4,'#aa8d5a'); oval(ctx,13,-4,4,2,'#d0b680');
+        for (var spot = 0; spot < 5; spot++) rect(ctx,spot % 2 ? '#e1c994' : '#6a5b47',-11 + spot * 5,-4 + spot % 2,2,2);
+        rect(ctx,'#332f39',15,-5,2,2); rect(ctx,'#e8d0a0',15,-5,1,1);
+        line(ctx,'#68533f',14,0,20,-1,1); line(ctx,'#d2b47b',4,3,13,3,1);
+      } else if (kind === 'goblinscout' || kind === 'goblinpeon' || kind === 'goblinthief' || kind === 'goblinwarrior') {
+        var scout = kind === 'goblinscout', peon = kind === 'goblinpeon', thief = kind === 'goblinthief', warrior = kind === 'goblinwarrior';
+        var skin = warrior ? '#788861' : thief ? '#8a9866' : '#9eaa70';
+        var cloth = scout ? '#88765b' : peon ? '#a18b63' : thief ? '#55586c' : '#7c8585';
+        var footY = active ? 10 : 15, gait = active ? 1 : stride;
+        if (scout) {
+          rect(ctx,INK,-15,-5,9,13); rect(ctx,'#6f654f',-14,-4,7,11); line(ctx,'#b6a071',-13,-1,-8,-1,1);
+          rect(ctx,'#d1c09a',-18,4,8,4); rect(ctx,'#8e7b5f',-17,5,6,1);
+        } else if (thief) {
+          polygon(ctx,INK,[[-6,-7],[-16,-4],[-23,2],[-15,3],[-20,7],[-8,4]]);
+          polygon(ctx,'#747084',[[-7,-6],[-15,-2],[-19,1],[-12,1],[-16,4],[-8,2]]);
+        }
+        line(ctx,INK,-4,3,-5 - gait,footY,5); line(ctx,warrior ? '#69777e' : '#6a634f',-4,3,-5 - gait,footY - 1,3);
+        line(ctx,INK,4,3,5 + gait,footY - 1,5); line(ctx,warrior ? '#9ba49c' : '#a29170',4,3,5 + gait,footY - 2,3);
+        rect(ctx,'#493e42',-8 - gait,footY,6,3); rect(ctx,'#66514b',3 + gait,footY - 1,7,3);
+        polygon(ctx,INK,[[-8,-10],[6,-10],[10,5],[-9,6]]); polygon(ctx,cloth,[[-6,-9],[5,-9],[7,4],[-7,4]]);
+        line(ctx,warrior ? '#b8beb0' : '#c4b18a',-4,-7,-2,1,2);
+        rect(ctx,'#493d43',-7,3,14,3); rect(ctx,'#d7b779',-1,3,3,2);
+        line(ctx,INK,-7,-7,-11,2 + frame % 2,4); line(ctx,skin,-7,-7,-11,1 + frame % 2,2);
+        line(ctx,INK,6,-7,12,active ? -1 : 2,4); line(ctx,'#bdc18a',6,-7,12,active ? -1 : 2,2);
+        rect(ctx,skin,10,active ? -2 : 1,4,3);
+        polygon(ctx,INK,[[-5,-15],[-15,-21],[-11,-12],[-5,-10],[4,-15],[13,-20],[10,-11],[5,-9]]);
+        polygon(ctx,skin,[[-6,-14],[-12,-18],[-10,-14],[-5,-12],[5,-14],[10,-17],[9,-13],[5,-11]]);
+        oval(ctx,1,-14,7,7,INK); oval(ctx,1,-14,5,5,skin);
+        polygon(ctx,'#b3bd80',[[3,-14],[10,-12],[11,-9],[7,-8],[3,-10]]);
+        rect(ctx,'#3c3842',4,-15,3,2); rect(ctx,'#e4ce96',5,-15,1,1);
+        line(ctx,'#6d6750',3,-7,8,-7,1); rect(ctx,'#ebdbab',6,-7,1,2);
+        if (scout) {
+          polygon(ctx,INK,[[-7,-17],[-5,-24],[3,-25],[9,-20],[8,-17]]);
+          polygon(ctx,'#a89770',[[-5,-18],[-3,-22],[3,-23],[7,-20],[6,-18]]);
+          rect(ctx,'#d2bf91',-5,-18,13,2); line(ctx,'#d6c3a0',-6,-6,4,2,1);
+          line(ctx,'#7e6850',13,2,16,12,2); rect(ctx,'#c6b18a',14,8,4,3);
+        } else if (peon) {
+          polygon(ctx,'#6b6953',[[-5,-18],[-2,-22],[4,-21],[7,-17],[1,-18]]);
+          polygon(ctx,'#d0b68b',[[-6,4],[-4,9],[-1,5],[2,8],[5,4]]);
+          line(ctx,INK,13,3,19,-13,4); line(ctx,'#987654',13,3,19,-13,2);
+          polygon(ctx,INK,[[15,-11],[16,-19],[21,-20],[24,-15],[21,-9]]);
+          polygon(ctx,'#bb9766',[[17,-12],[18,-17],[20,-18],[22,-15],[20,-11]]);
+          rect(ctx,'#e1c391',18,-16,2,2);
+        } else if (thief) {
+          polygon(ctx,INK,[[-8,-13],[-7,-22],[0,-27],[7,-22],[10,-16],[7,-13],[4,-18],[-2,-18],[-4,-12]]);
+          polygon(ctx,'#67657c',[[-6,-14],[-5,-21],[0,-24],[5,-21],[7,-17],[5,-15],[2,-20],[-3,-17]]);
+          rect(ctx,'#5a4c62',-2,-10,10,3); line(ctx,'#a099a3',0,-9,6,-9,1);
+          line(ctx,'#8e7255',13,2,20,4,2); polygon(ctx,'#d6d6c4',[[17,2],[26,-1],[23,4],[18,5]]);
+        } else {
+          polygon(ctx,INK,[[-9,-11],[-15,-10],[-13,-3],[-7,-2],[-4,-7],[6,-7],[9,-1],[15,-3],[14,-10],[8,-13]]);
+          rect(ctx,'#a1aaa2',-13,-9,6,5); rect(ctx,'#bdc1ac',9,-9,4,4);
+          polygon(ctx,INK,[[-8,-17],[-7,-24],[1,-28],[8,-24],[10,-16]]);
+          polygon(ctx,'#7c8990',[[-6,-18],[-5,-23],[1,-25],[6,-22],[8,-17]]);
+          line(ctx,'#d4d3b9',-4,-22,2,-24,1); rect(ctx,'#58656e',-7,-17,17,3);
+          polygon(ctx,INK,[[-9,-3],[-18,-2],[-19,9],[-12,14],[-6,7]]);
+          polygon(ctx,'#6d7b80',[[-10,-1],[-16,0],[-17,8],[-12,11],[-8,6]]); line(ctx,'#c1b48f',-13,1,-13,8,2);
+          line(ctx,'#927552',14,7,18,-14,2); polygon(ctx,INK,[[17,-15],[20,-21],[27,-19],[28,-12],[20,-10]]);
+          polygon(ctx,'#b8bfae',[[19,-15],[21,-19],[25,-17],[26,-13],[20,-12]]); rect(ctx,'#e4dec0',23,-17,2,2);
+        }
+      } else if (kind === 'goblinarcher' || kind === 'goblinsorcerer' || kind === 'goblinsummoner') {
+        // Original ranged costumes. Equipment never changes the center-owned shots.
+        var archer = kind === 'goblinarcher', summoner = kind === 'goblinsummoner';
+        var robe = summoner ? '#735b8c' : '#657b64', trim = summoner ? '#c5a0ce' : '#c5c58d';
+        if (archer) {
+          polygon(ctx,INK,[[-15,-17],[-8,-18],[-5,1],[-12,3]]);
+          polygon(ctx,'#8c6d4f',[[-13,-15],[-9,-16],[-7,0],[-11,1]]);
+          for (var arrow = 0; arrow < 3; arrow++) {
+            line(ctx,'#ccb789',-13 + arrow * 3,-12,-15 + arrow * 3,-25,1);
+            rect(ctx,'#d1cfb5',-17 + arrow * 3,-25,3,4);
+          }
+          line(ctx,INK,-4,3,-5 - stride,14,5); line(ctx,'#78634d',-4,3,-5 - stride,13,3);
+          line(ctx,INK,4,3,5 + stride,13,5); line(ctx,'#b09a71',4,3,5 + stride,12,3);
+          rect(ctx,'#493e42',-8 - stride,14,6,3); rect(ctx,'#645144',3 + stride,13,7,3);
+        } else {
+          polygon(ctx,INK,[[-8,-9],[7,-10],[11,6 + stride / 2],[16,15],
+            [7,13],[2,17],[-3,13],[-11,16],[-14,10],[-10,2]]);
+          polygon(ctx,robe,[[-6,-8],[5,-9],[9,7],[12,12],[6,11],[2,14],[-3,11],[-9,13],[-11,9],[-8,1]]);
+          line(ctx,trim,-4,-7,-5,9,2); line(ctx,summoner ? '#493d69' : '#40564e',3,-5,7,10,2);
+          if (summoner) {
+            // Split floating mantle; no familiars or invented summoning effects.
+            for (var side = -1; side <= 1; side += 2) {
+              polygon(ctx,INK,[[side * 5,-9],[side * 17,-5],[side * 21,6 + stride],[side * 14,4],[side * 19,12],[side * 8,8]]);
+              polygon(ctx,'#9a78ad',[[side * 8,-7],[side * 15,-4],[side * 17,3 + stride],[side * 12,1],[side * 15,8],[side * 9,6]]);
+              line(ctx,'#d2afd3',side * 10,-5,side * 14,-2,1);
+            }
+          } else {
+            rect(ctx,'#493e42',-9,14,6,3); rect(ctx,'#645144',4,13,7,3);
+          }
+        }
+        polygon(ctx,INK,[[-7,-10],[6,-10],[9,5],[-8,6]]);
+        polygon(ctx,archer ? '#8b8b58' : robe,[[-5,-9],[5,-9],[7,4],[-6,4]]);
+        line(ctx,archer ? '#d1b58a' : trim,-4,-7,1,2,2); rect(ctx,'#493d43',-7,3,14,3);
+        rect(ctx,summoner ? '#d8b5c8' : '#d7b779',-1,3,3,2);
+        polygon(ctx,INK,[[-5,-15],[-15,-21],[-11,-12],[-5,-10],[4,-15],[13,-20],[10,-11],[5,-9]]);
+        polygon(ctx,'#a2ac77',[[-6,-14],[-12,-18],[-10,-14],[-5,-12],[5,-14],[10,-17],[9,-13],[5,-11]]);
+        oval(ctx,1,-14,7,7,INK); oval(ctx,1,-14,5,5,'#8c9b68');
+        polygon(ctx,'#b3bd80',[[3,-14],[10,-12],[11,-9],[7,-8],[3,-10]]);
+        rect(ctx,'#3c3842',4,-15,3,2); rect(ctx,summoner ? '#f0caeb' : '#e4ce96',5,-15,1,1);
+        line(ctx,'#6d6750',3,-7,8,-7,1); rect(ctx,'#ebdbab',6,-7,1,2);
+        if (archer) {
+          polygon(ctx,INK,[[-8,-17],[-7,-24],[0,-28],[7,-23],[8,-17]]);
+          polygon(ctx,'#7a8054',[[-6,-18],[-5,-22],[0,-25],[5,-22],[6,-18]]);
+          line(ctx,'#c5b083',-7,-18,7,-18,2);
+          line(ctx,INK,6,-7,17,-10,4); line(ctx,'#b8bc83',6,-7,17,-10,2);
+          line(ctx,INK,-6,-6,active ? 4 : 11,-11,4); line(ctx,'#9ba371',-6,-6,active ? 4 : 11,-11,2);
+          polygon(ctx,INK,[[18,-27],[23,-23],[27,-13],[26,-5],[21,3],[18,4],[21,-6],[22,-14],[19,-23]]);
+          line(ctx,'#bd9562',19,-25,23,-20,2); line(ctx,'#d5b078',23,-20,25,-12,2);
+          line(ctx,'#a37a52',25,-12,24,-5,2); line(ctx,'#bd9562',24,-5,19,3,2);
+          line(ctx,'#e2d4ab',19,-25,active ? 8 : 17,-11,1); line(ctx,'#e2d4ab',active ? 8 : 17,-11,19,3,1);
+          // The fired arrow is the existing projectile, not a second decorative shot.
+          if (!active) { line(ctx,'#bfa97b',9,-11,29,-11,1); polygon(ctx,'#d9d8bc',[[29,-13],[34,-11],[29,-9]]); }
+        } else {
+          polygon(ctx,INK,[[-8,-15],[-8,-24],[summoner ? -1 : -5,-31],[6,-26],[10,-17],[6,-16],[2,-21],[-3,-19],[-4,-13]]);
+          polygon(ctx,summoner ? '#9370a9' : '#7d9171',[[-6,-16],[-6,-23],[summoner ? -1 : -4,-28],[4,-24],[7,-18],[5,-18],[1,-24],[-4,-20]]);
+          line(ctx,trim,-5,-22,-2,-25,1);
+          if (summoner) {
+            line(ctx,INK,7,-5,15,active ? -5 : -1,4); line(ctx,'#b5bd85',7,-5,15,active ? -5 : -1,2);
+            line(ctx,INK,-7,-5,-16,active ? -6 : -2,4); line(ctx,'#8d9d72',-7,-5,-16,active ? -6 : -2,2);
+            rect(ctx,'#d9c1cf',13,active ? -7 : -3,4,3); rect(ctx,'#b5bd85',-18,active ? -8 : -4,4,3);
+            if (active) {
+              line(ctx,'#c991dd',-5,-2,-3,-5,1); line(ctx,'#e2b8e7',4,-3,6,0,1);
+              rect(ctx,'#e9d4e6',0,-1,2,2); rect(ctx,'#a375bd',-2,5,2,1);
+            }
+          } else {
+            line(ctx,INK,-6,-6,-10,1,4); line(ctx,'#8d9d72',-6,-6,-10,1,2);
+            line(ctx,INK,6,-6,15,active ? -10 : -3,4); line(ctx,'#b5bd85',6,-6,15,active ? -10 : -3,2);
+            line(ctx,INK,17,11,19,-20,3); line(ctx,'#a79066',17,11,19,-20,1);
+            polygon(ctx,INK,[[14,-21],[15,-28],[18,-23],[22,-24],[25,-29],[25,-20],[20,-17]]);
+            line(ctx,'#b9bf85',16,-24,18,-20,2); line(ctx,'#d3cc9b',18,-20,23,-22,2);
+            rect(ctx,'#8fe05a',19,-26,3,3); rect(ctx,'#daefad',20,-26,1,1);
+            if (active) { rect(ctx,'#8fe05a',-3,-11,2,2); rect(ctx,'#daefad',1,-10,2,2); }
+          }
+        }
+      } else if (kind === 'piratedeckhand' || kind === 'piratecorsair' || kind === 'piratedeadeye' || kind === 'piratecrossbower') {
+        var deckhand = kind === 'piratedeckhand', corsair = kind === 'piratecorsair', deadeye = kind === 'piratedeadeye';
+        var jumper = (deckhand || corsair) && active, leg = jumper ? 1 : stride, foot = jumper ? 11 : 16;
+        var coat = deckhand ? '#a76c50' : corsair ? '#4e6a79' : deadeye ? '#746353' : '#768064';
+        if (!deckhand) {
+          polygon(ctx,INK,[[-8,-7],[5,-6],[13,13],[-1,10],[-11,15],[-13,8]]);
+          polygon(ctx,coat,[[-6,-6],[4,-5],[10,10],[0,7],[-9,12],[-10,7]]);
+          line(ctx,corsair ? '#b7b7a2' : '#bfa983',-8,6,-8,10,1);
+        }
+        line(ctx,INK,-4,4,-5 - leg,foot,5); line(ctx,'#5d5654',-4,4,-5 - leg,foot - 1,3);
+        line(ctx,INK,4,4,5 + leg,foot - 1,5); line(ctx,'#a39173',4,4,5 + leg,foot - 2,3);
+        rect(ctx,'#3b3940',-8 - leg,foot,6,3); rect(ctx,'#544342',3 + leg,foot - 1,7,3);
+        polygon(ctx,INK,[[-8,-11],[7,-11],[10,5],[-9,6]]);
+        polygon(ctx,coat,[[-6,-10],[5,-10],[7,4],[-7,4]]);
+        polygon(ctx,'#d4c7a6',[[-3,-10],[2,-9],[3,3],[-3,3]]);
+        if (deckhand) for (var stripe = -7; stripe <= 1; stripe += 4) rect(ctx,'#78554d',-3,stripe,7,2);
+        rect(ctx,'#6b4841',-8,3,16,4); rect(ctx,'#d3ae6e',0,3,3,3);
+        line(ctx,INK,-7,-8,-11,1,4); line(ctx,'#b08c6c',-7,-8,-11,1,2);
+        oval(ctx,0,-17,7,8,INK); oval(ctx,0,-17,5,6,'#bb9875');
+        polygon(ctx,'#d6b18b',[[3,-19],[7,-17],[11,-14],[8,-11],[3,-12]]);
+        rect(ctx,'#3d3540',4,-18,3,2); rect(ctx,'#e6d3a5',5,-18,1,1);
+        polygon(ctx,deadeye ? '#65544a' : '#785549',[[-4,-14],[-2,-10],[5,-9],[9,-11],[7,-8],[2,-7],[-4,-10]]);
+        line(ctx,'#e0c39b',4,-10,7,-10,1);
+        if (deckhand || corsair) {
+          polygon(ctx,INK,[[-8,-21],[-6,-27],[2,-29],[8,-25],[8,-21]]);
+          polygon(ctx,deckhand ? '#b06e5c' : '#9eaa9e',[[-6,-22],[-4,-25],[2,-26],[6,-24],[6,-22]]);
+          rect(ctx,deckhand ? '#d69a77' : '#d6d4b3',-7,-22,15,3);
+          polygon(ctx,deckhand ? '#a06654' : '#8e9e98',[[-7,-21],[-13,-17],[-9,-16],[-14,-12],[-6,-15]]);
+          if (corsair) {
+            polygon(ctx,INK,[[-9,-12],[-14,-12],[-14,-6],[-8,-4],[-5,-8],[7,-9],[11,-4],[15,-7],[13,-12],[8,-14]]);
+            rect(ctx,'#a5b1ac',-13,-11,5,4); rect(ctx,'#c7c6a9',10,-11,3,3);
+            rect(ctx,'#d6b477',-12,-10,3,1); rect(ctx,'#d6b477',10,-9,3,1);
+            line(ctx,INK,-11,0,-15,5,4); line(ctx,'#b08c6c',-11,0,-15,5,2);
+            line(ctx,'#c1b7a0',-16,5,-18,9,2); line(ctx,'#c1b7a0',-18,9,-14,11,2); line(ctx,'#e2d4b2',-14,11,-12,8,1);
+          }
+          line(ctx,INK,7,-6,14,1,4); line(ctx,'#d0a881',7,-6,14,1,2);
+          line(ctx,'#b49a6f',12,4,19,-1,2);
+          polygon(ctx,INK,[[16,-2],[22,-8],[28,-20],[28,-8],[23,0],[19,3]]);
+          polygon(ctx,'#c8cdbb',[[18,-1],[23,-7],[26,-15],[26,-8],[22,-1],[19,1]]);
+          line(ctx,'#f0e2bd',23,-7,26,-13,1);
+        } else if (deadeye) {
+          polygon(ctx,INK,[[-10,-22],[-8,-29],[0,-32],[8,-28],[10,-22],[14,-21],[-12,-20]]);
+          polygon(ctx,'#635b57',[[-8,-23],[-6,-27],[0,-29],[6,-26],[8,-23]]);
+          rect(ctx,'#b6a07a',-8,-23,17,2); rect(ctx,'#443c42',-12,-21,26,2);
+          line(ctx,'#34343d',-3,-20,6,-17,1); rect(ctx,'#2f3039',4,-18,4,3);
+          var recoil = active ? -2 : 0;
+          line(ctx,INK,6,-7,16 + recoil,-5,4); line(ctx,'#d0a881',6,-7,16 + recoil,-5,2);
+          line(ctx,INK,-8,-6,7 + recoil,-7,4); line(ctx,'#b08c6c',-8,-6,7 + recoil,-7,2);
+          polygon(ctx,INK,[[2 + recoil,-10],[16 + recoil,-11],[34 + recoil,-10],[34 + recoil,-6],[16 + recoil,-6],[10 + recoil,-2],[1 + recoil,-4]]);
+          polygon(ctx,'#987657',[[3 + recoil,-8],[15 + recoil,-9],[15 + recoil,-6],[9 + recoil,-4],[3 + recoil,-5]]);
+          rect(ctx,'#9ca69d',15 + recoil,-9,18,2); rect(ctx,'#d5d5b9',29 + recoil,-9,3,1);
+          rect(ctx,'#41414a',33 + recoil,-10,2,4); rect(ctx,'#aa9875',18 + recoil,-12,2,2);
+        } else {
+          polygon(ctx,INK,[[-8,-21],[-7,-28],[2,-30],[9,-24],[8,-20]]);
+          polygon(ctx,'#8a8267',[[-6,-22],[-5,-26],[2,-27],[6,-23],[6,-21]]);
+          rect(ctx,'#c3b78b',-7,-22,15,2); line(ctx,'#574a44',-5,-25,3,-26,1);
+          rect(ctx,INK,-15,-15,7,17); rect(ctx,'#8b6b4d',-14,-14,5,14);
+          for (var bolt = 0; bolt < 2; bolt++) { line(ctx,'#d5bd90',-13 + bolt * 3,-13,-14 + bolt * 3,-22,1); rect(ctx,'#aeb59c',-15 + bolt * 3,-23,2,3); }
+          line(ctx,INK,6,-7,15,-5,4); line(ctx,'#d0a881',6,-7,15,-5,2);
+          line(ctx,INK,-6,-6,8,-7,4); line(ctx,'#b08c6c',-6,-6,8,-7,2);
+          line(ctx,INK,4,-5,29,-7,5); line(ctx,'#a58a5e',4,-5,29,-7,3);
+          line(ctx,'#d1bd8b',8,-6,25,-7,1);
+          polygon(ctx,INK,[[19,-18],[25,-13],[28,-7],[25,-1],[20,3],[21,-4],[23,-7],[20,-13]]);
+          line(ctx,'#99a9a5',21,-16,25,-11,2); line(ctx,'#bac3b1',25,-11,26,-7,2);
+          line(ctx,'#7f8d8e',26,-7,24,-2,2); line(ctx,'#b9bca2',24,-2,21,1,2);
+          line(ctx,'#e3d4ac',21,-16,active ? 24 : 12,-7,1); line(ctx,'#e3d4ac',active ? 24 : 12,-7,21,1,1);
+          if (!active) { line(ctx,'#d6c291',11,-7,30,-7,1); rect(ctx,'#dddcc4',30,-8,3,2); }
+        }
+      } else if (kind === 'parrot') {
+        // Scarlet mantle, green coverts and stepped blue flight feathers.
+        polygon(ctx,INK,[[-7,1],[-22,6],[-29,14],[-19,11],[-24,17],[-11,11],[0,5]]);
+        polygon(ctx,'#527991',[[-8,3],[-21,8],[-26,12],[-18,10],[-20,14],[-10,9],[-1,5]]);
+        line(ctx,'#b9b8a0',-12,7,-22,12,1);
+        polygon(ctx,INK,[[-5,-3],[-13,-10 - flap],[-23,-9 - flap],[-18,-2],[-9,3]]);
+        polygon(ctx,'#8f4d4d',[[-5,-2],[-13,-8 - flap],[-20,-8 - flap],[-16,-2],[-9,1]]);
+        oval(ctx,0,1,10,7,INK); oval(ctx,1,0,8,5,'#c2604f');
+        polygon(ctx,'#e99a68',[[-2,0],[4,-1],[7,2],[3,5],[-3,4]]);
+        line(ctx,'#b69c73',0,6,-2,10,1); line(ctx,'#d9be8f',4,6,3,10,1);
+        line(ctx,'#d9be8f',-2,10,2,10,1); line(ctx,'#e5ce9c',3,10,7,10,1);
+        polygon(ctx,INK,[[-5,-2],[-13,-13 - flap],[-23,-17 - flap],[-22,-9 - flap],[-18,-7],[-16,-1],[-9,5]]);
+        polygon(ctx,'#be6353',[[-5,-2],[-13,-11 - flap],[-21,-14 - flap],[-20,-9 - flap],[-16,-6],[-14,-1],[-9,3]]);
+        line(ctx,'#8caa70',-13,-8 - flap,-18,-10 - flap,3); line(ctx,'#618b8c',-14,-5 - flap,-19,-7 - flap,2);
+        line(ctx,'#bbbc9c',-11,-3,-16,-6 - flap,1);
+        oval(ctx,8,-5,7,7,INK); oval(ctx,8,-5,5,5,'#d07b5a');
+        polygon(ctx,'#e6d9b1',[[8,-9],[12,-7],[13,-3],[9,-2],[6,-5]]);
+        rect(ctx,'#3c3943',10,-7,2,2); rect(ctx,'#faf0c8',10,-7,1,1);
+        polygon(ctx,INK,[[13,-6],[18,-5],[20,-2],[18,3],[15,4],[15,0],[12,-1]]);
+        polygon(ctx,'#cbb88b',[[14,-4],[17,-3],[18,-1],[17,1],[16,-1],[14,-1]]);
+        line(ctx,'#edd7a4',14,-4,17,-3,1); rect(ctx,'#79614e',15,1,2,2);
+      } else if (kind === 'snowmangangsta' || kind === 'misterstabby' || kind === 'snowballa') {
+        // Stacked snow, stepped shade bands and three different winter outfits.
+        var gangsta = kind === 'snowmangangsta', stabby = kind === 'misterstabby';
+        var snowStep = stabby && active ? 0 : stride, snowFoot = stabby && active ? 11 : 16;
+        oval(ctx,-4 - snowStep,snowFoot,5,3,INK); oval(ctx,-4 - snowStep,snowFoot - 1,3,2,'#b2c8cb');
+        oval(ctx,4 + snowStep,snowFoot - 1,5,3,INK); oval(ctx,4 + snowStep,snowFoot - 2,3,2,'#dce5d6');
+        oval(ctx,0,7,12,9,INK); oval(ctx,0,6,10,7,'#a3bcc7');
+        polygon(ctx,'#d4e0d8',[[-8,2],[-3,-1],[5,0],[8,4],[5,10],[-3,12],[-8,8]]);
+        line(ctx,'#eff0da',-5,2,-1,0,2); line(ctx,'#7f9eae',-7,11,1,13,1);
+        oval(ctx,0,-5,9,9,INK); oval(ctx,0,-5,7,7,'#c2d4d1');
+        polygon(ctx,'#e2e8d8',[[-5,-9],[0,-12],[5,-9],[4,-3],[-1,0],[-5,-2]]);
+        if (gangsta) {
+          polygon(ctx,INK,[[-8,-11],[-4,-12],[0,-6],[4,-12],[8,-9],[9,4],[1,3],[-1,0],[-3,4],[-9,3]]);
+          polygon(ctx,'#53656d',[[-6,-10],[-4,-10],[-1,-4],[-2,2],[-7,2]]);
+          polygon(ctx,'#788991',[[4,-10],[6,-8],[7,2],[2,1],[1,-3]]);
+          line(ctx,'#c8bc8d',-4,-8,-2,-4,1); rect(ctx,'#bba373',4,-1,2,1);
+          rect(ctx,'#70544e',-1,-8,2,7);
+        } else if (stabby) {
+          polygon(ctx,INK,[[-7,-10],[-14,-7],[-19,0],[-12,-2],[-14,4],[-8,1],[-2,-6]]);
+          polygon(ctx,'#ae7766',[[-8,-8],[-13,-5],[-15,-1],[-10,-3],[-11,1],[-7,-1],[-3,-6]]);
+          line(ctx,'#e1b78d',-13,-4,-10,-5,1);
+        } else {
+          polygon(ctx,INK,[[-10,-10],[-7,-14],[7,-13],[10,-9],[8,-4],[-8,-4]]);
+          polygon(ctx,'#64868e',[[-8,-9],[-6,-12],[6,-11],[8,-8],[6,-6],[-6,-6]]);
+          line(ctx,'#b3d0c6',-6,-10,5,-9,1);
+          polygon(ctx,'#6c9097',[[-7,-5],[-12,3],[-9,3],[-12,8],[-6,6],[-4,-4]]);
+        }
+        oval(ctx,0,-19,8,8,INK); oval(ctx,0,-19,6,6,'#bad0d0');
+        polygon(ctx,'#e5ead9',[[-4,-22],[0,-25],[4,-22],[5,-17],[1,-14],[-4,-16]]);
+        polygon(ctx,'#bd8b56',[[4,-20],[13,-17],[6,-16],[3,-17]]);
+        rect(ctx,'#3c444d',3,-22,2,2); rect(ctx,'#f1dfb4',3,-22,1,1);
+        rect(ctx,'#607880',1,-14,2,1); rect(ctx,'#607880',4,-14,2,1);
+        if (gangsta) {
+          polygon(ctx,INK,[[-9,-24],[-7,-31],[-1,-34],[6,-31],[8,-25],[12,-23],[-12,-22]]);
+          polygon(ctx,'#62676b',[[-7,-25],[-5,-29],[-1,-31],[4,-29],[6,-25]]);
+          line(ctx,'#b7b9a1',-6,-26,5,-26,2); line(ctx,'#343c47',-11,-23,11,-24,2);
+          var recoil = active ? -2 : 0;
+          line(ctx,INK,-7,-6,5 + recoil,-5,4); line(ctx,'#a9c4c6',-7,-6,5 + recoil,-5,2);
+          line(ctx,INK,6,-7,15 + recoil,-8,4); line(ctx,'#e3e7d8',6,-7,15 + recoil,-8,2);
+          polygon(ctx,INK,[[3 + recoil,-11],[17 + recoil,-12],[30 + recoil,-10],[30 + recoil,-6],[18 + recoil,-6],[16 + recoil,0],[12 + recoil,0],[11 + recoil,-5],[2 + recoil,-5]]);
+          rect(ctx,'#7f9297',5 + recoil,-10,13,3); rect(ctx,'#c1c8b9',18 + recoil,-9,10,2);
+          rect(ctx,'#46545e',13 + recoil,-6,3,5); rect(ctx,'#c4b38b',6 + recoil,-6,4,1);
+          rect(ctx,'#353e4a',28 + recoil,-10,3,4);
+        } else if (stabby) {
+          polygon(ctx,INK,[[-9,-23],[-8,-29],[-3,-33],[4,-31],[9,-24]]);
+          polygon(ctx,'#96705e',[[-7,-24],[-6,-28],[-2,-30],[3,-28],[6,-24]]);
+          line(ctx,'#ceaa7a',-7,-24,7,-24,2); rect(ctx,'#e2ca98',-8,-24,3,5);
+          line(ctx,INK,-7,-5,-13,2,4); line(ctx,'#abc5c8',-7,-5,-13,2,2);
+          line(ctx,INK,7,-5,14,0,4); line(ctx,'#dde7d9',7,-5,14,0,2);
+          line(ctx,'#8b755b',13,4,18,-2,2); line(ctx,'#d6c8a2',12,0,18,4,1);
+          polygon(ctx,INK,[[16,-1],[23,-11],[26,-15],[25,-6],[19,3]]);
+          polygon(ctx,'#bbd4d3',[[18,-1],[24,-11],[23,-6],[19,1]]); line(ctx,'#f2eed5',19,-1,23,-8,1);
+          rect(ctx,'#4c5964',-1,-5,2,2); rect(ctx,'#4c5964',0,1,2,2); rect(ctx,'#4c5964',1,6,2,2);
+          line(ctx,'#aa7561',-6,-11,5,-10,3); line(ctx,'#ddad82',-5,-11,4,-10,1);
+        } else {
+          polygon(ctx,INK,[[-9,-24],[-7,-30],[-2,-33],[5,-29],[9,-24]]);
+          polygon(ctx,'#608692',[[-7,-25],[-5,-29],[-1,-30],[4,-27],[6,-24]]);
+          rect(ctx,'#adc9c5',-8,-25,16,3); oval(ctx,-2,-33,3,3,INK); oval(ctx,-2,-33,2,2,'#d9dfcc');
+          line(ctx,INK,-7,-6,-11,2,4); line(ctx,'#a5c3c7',-7,-6,-11,2,2);
+          line(ctx,INK,6,-6,active ? 19 : 13,active ? -9 : -4,4);
+          line(ctx,'#dce6d9',6,-6,active ? 19 : 13,active ? -9 : -4,2);
+          rect(ctx,'#66848e',active ? 17 : 11,active ? -10 : -5,5,4);
+          if (!active) {
+            oval(ctx,15,-9,5,5,INK); oval(ctx,15,-10,3,3,'#b7d5d6');
+            rect(ctx,'#f1efd7',14,-12,3,2); rect(ctx,'#dce8db',16,-10,2,2);
+          }
+          rect(ctx,'#57717d',0,-3,2,2); rect(ctx,'#57717d',1,3,2,2);
+        }
+      } else if (kind === 'martiangrunt' || kind === 'raygunner' || kind === 'martianofficer' || kind === 'martianengineer') {
+        var grunt = kind === 'martiangrunt', ray = kind === 'raygunner', officer = kind === 'martianofficer', engineer = kind === 'martianengineer';
+        var suit = engineer ? '#9a8967' : officer ? '#5f7c7e' : '#7c9891';
+        var metal = engineer ? '#cebc91' : '#bdc9b4', tucked = officer && active;
+        var gait = tucked ? 1 : stride, foot = tucked ? 11 : 15;
+        if (engineer) {
+          polygon(ctx,INK,[[-7,-13],[-17,-14],[-19,5],[-9,7]]);
+          rect(ctx,'#6b7164',-16,-12,8,16); rect(ctx,'#bdac7e',-15,-11,5,3);
+          rect(ctx,'#4b655f',-15,-5,5,7); rect(ctx,'#9bc6ad',-14,-4,2,4);
+          line(ctx,'#b5bfa2',-17,-8,-19,-20,2); rect(ctx,'#ddd1a6',-20,-22,3,3);
+        } else if (officer) {
+          polygon(ctx,INK,[[-6,-10],[-14,-7],[-20,10],[-12,8],[-14,15],[-5,10],[1,6]]);
+          polygon(ctx,'#465963',[[-6,-8],[-12,-5],[-17,7],[-10,5],[-11,11],[-5,7],[-1,4]]);
+          line(ctx,'#9ca789',-12,-3,-15,5,1);
+        } else if (ray) {
+          rect(ctx,INK,-13,-7,7,14); rect(ctx,'#5d7578',-12,-6,5,12); rect(ctx,'#a3c0ad',-11,-4,2,6);
+        }
+        line(ctx,INK,-4,4,-5 - gait,foot,5); line(ctx,'#536a70',-4,4,-5 - gait,foot - 1,3);
+        line(ctx,INK,4,4,5 + gait,foot - 1,5); line(ctx,'#81988f',4,4,5 + gait,foot - 2,3);
+        rect(ctx,'#3c4b56',-8 - gait,foot,6,3); rect(ctx,'#586c70',3 + gait,foot - 1,7,3);
+        line(ctx,metal,-6 - gait,foot - 1,-3 - gait,foot - 1,1); line(ctx,'#d1cfb1',5 + gait,foot - 2,8 + gait,foot - 2,1);
+        polygon(ctx,INK,[[-8,-11],[7,-11],[10,5],[-9,6]]); polygon(ctx,suit,[[-6,-10],[5,-10],[7,4],[-7,4]]);
+        polygon(ctx,'#4a6667',[[-4,-8],[3,-8],[5,1],[0,4],[-5,0]]);
+        line(ctx,metal,-4,-8,3,-8,2); rect(ctx,'#88b6a5',-2,-5,4,4); rect(ctx,'#d8d5a9',-1,-4,2,1);
+        rect(ctx,'#3d4e57',-7,3,14,3); rect(ctx,metal,-1,3,3,2);
+        line(ctx,INK,-7,-8,-11,1,4); line(ctx,'#739e91',-7,-8,-11,1,2);
+        oval(ctx,0,-18,8,9,INK); oval(ctx,0,-18,6,7,'#759f91');
+        polygon(ctx,'#a0bd9c',[[2,-22],[7,-20],[10,-16],[7,-12],[1,-12],[-2,-15]]);
+        rect(ctx,'#354c53',4,-20,4,3); rect(ctx,'#c4dec0',5,-19,2,1);
+        line(ctx,'#496b66',3,-12,8,-13,1);
+        if (grunt) {
+          polygon(ctx,INK,[[-9,-17],[-9,-26],[-3,-30],[5,-28],[8,-23],[4,-22],[-3,-23],[-5,-17]]);
+          polygon(ctx,'#79938b',[[-7,-18],[-7,-25],[-3,-27],[3,-26],[5,-24],[-4,-25],[-4,-18]]);
+          line(ctx,'#c3c7a6',-6,-25,1,-26,1); rect(ctx,'#465f65',3,-15,7,4); rect(ctx,'#91b3a0',5,-14,3,1);
+          rect(ctx,INK,-13,-11,7,7); rect(ctx,'#a4b5a4',-12,-10,5,4);
+        } else if (ray) {
+          polygon(ctx,INK,[[-9,-20],[-6,-28],[3,-29],[9,-23],[13,-20],[12,-13],[4,-12],[-2,-16],[-7,-15]]);
+          polygon(ctx,'#879e98',[[-7,-21],[-5,-26],[2,-26],[7,-22],[10,-19],[10,-15],[4,-14],[-1,-19]]);
+          rect(ctx,'#334f5c',2,-22,10,6); rect(ctx,'#9fc5b1',4,-21,6,3); rect(ctx,'#dce8c8',7,-21,2,2);
+          line(ctx,'#819f9b',-6,-26,-10,-32,1); rect(ctx,'#b2d1bb',-11,-34,3,3);
+        } else if (officer) {
+          polygon(ctx,INK,[[-10,-24],[-5,-31],[5,-31],[10,-25],[8,-21],[-7,-21]]);
+          polygon(ctx,'#71868a',[[-8,-24],[-4,-28],[4,-28],[7,-24],[5,-23],[-6,-23]]);
+          line(ctx,metal,-7,-23,7,-23,2); rect(ctx,'#e0c493',0,-29,2,4);
+          rect(ctx,INK,-14,-12,8,8); rect(ctx,'#bcc5ad',-13,-11,6,4);
+          rect(ctx,INK,7,-12,8,7); rect(ctx,'#9ead9e',8,-11,5,3); rect(ctx,'#dfc28d',10,-10,2,1);
+          line(ctx,'#c7c7a1',-5,-6,4,2,1);
+          line(ctx,INK,7,-6,13,1,4); line(ctx,'#a7c0a0',7,-6,13,1,2);
+          line(ctx,INK,15,9,21,-14,3); line(ctx,'#a8b5a0',15,9,21,-14,1);
+          polygon(ctx,INK,[[18,-15],[20,-21],[25,-20],[26,-16],[22,-12]]);
+          polygon(ctx,'#9ab9a6',[[20,-16],[21,-19],[23,-18],[24,-16],[22,-14]]); rect(ctx,'#e2d8ae',21,-18,2,2);
+        } else {
+          polygon(ctx,INK,[[-9,-19],[-9,-26],[-3,-30],[5,-28],[9,-23],[8,-19]]);
+          polygon(ctx,'#b4a17c',[[-7,-20],[-7,-25],[-2,-27],[4,-25],[6,-22],[6,-20]]);
+          line(ctx,'#e0cfa1',-6,-24,3,-25,1); rect(ctx,'#3f5b60',-4,-23,14,5);
+          rect(ctx,'#a8cab4',-2,-22,4,2); rect(ctx,'#b9d6bc',5,-22,3,2);
+          line(ctx,'#6c7970',-5,-16,-3,-10,2); line(ctx,'#c3b78d',-3,-10,2,-9,1);
+          rect(ctx,INK,-16,-1,10,7); rect(ctx,'#778f84',-15,0,8,5); rect(ctx,'#c5d3b2',-14,1,4,1); rect(ctx,'#9cb6a2',-10,3,2,1);
+        }
+        if (!officer) {
+          var recoil = active ? -2 : 0;
+          line(ctx,INK,7,-7,15 + recoil,-7,4); line(ctx,'#acc2a4',7,-7,15 + recoil,-7,2);
+          line(ctx,INK,-6,-6,5 + recoil,-5,4); line(ctx,'#769e91',-6,-6,5 + recoil,-5,2);
+          polygon(ctx,INK,[[2 + recoil,-11],[15 + recoil,-13],[ray ? 34 + recoil : 29 + recoil,-11],[ray ? 35 + recoil : 30 + recoil,-6],[17 + recoil,-5],[10 + recoil,-1],[4 + recoil,-3]]);
+          polygon(ctx,engineer ? '#bbad85' : '#879f96',[[4 + recoil,-9],[14 + recoil,-11],[19 + recoil,-9],[18 + recoil,-7],[10 + recoil,-4],[5 + recoil,-5]]);
+          rect(ctx,'#3f5c64',19 + recoil,-10,ray ? 14 : 9,3);
+          rect(ctx,engineer ? '#cbdcaa' : '#a6d0bc',ray ? 31 + recoil : 26 + recoil,-10,2,3);
+          rect(ctx,'#cad0ad',9 + recoil,-9,5,2);
+          if (ray) { rect(ctx,'#6d9291',23 + recoil,-14,6,3); rect(ctx,'#d1ddba',25 + recoil,-14,2,1); }
+          if (engineer) line(ctx,'#8ca69a',-9,-1,4 + recoil,-5,1);
+        }
+      } else if (kind === 'gigazapper') {
+        // Broad capacitor harness and a short plasma emitter, never a new beam.
+        polygon(ctx,INK,[[-8,-17],[-21,-19],[-24,-13],[-23,8],[-9,10]]);
+        polygon(ctx,'#516d70',[[-10,-15],[-19,-16],[-21,-11],[-20,6],[-10,7]]);
+        for (var cell = 0; cell < 3; cell++) {
+          rect(ctx,'#90b5aa',-20,-12 + cell * 6,9,4); rect(ctx,'#c8d4b3',-19,-11 + cell * 6,2,2);
+          rect(ctx,active || cell === frame % 3 ? '#a4e2c9' : '#597e7e',-15,-11 + cell * 6,3,2);
+        }
+        line(ctx,INK,-6,5,-8 - stride,17,6); line(ctx,'#667f82',-6,5,-8 - stride,16,4);
+        line(ctx,INK,6,5,8 + stride,16,6); line(ctx,'#8da398',6,5,8 + stride,15,4);
+        rect(ctx,'#3f505b',-12 - stride,17,8,3); rect(ctx,'#536b70',5 + stride,16,8,3);
+        rect(ctx,'#bbc5ac',-10 - stride,16,4,1); rect(ctx,'#d1cfad',7 + stride,15,4,1);
+        polygon(ctx,INK,[[-11,-13],[9,-13],[14,-4],[11,9],[-11,9],[-15,-2]]);
+        polygon(ctx,'#72998d',[[-9,-11],[7,-11],[11,-3],[9,7],[-9,7],[-12,-2]]);
+        polygon(ctx,'#435f68',[[-6,-9],[5,-9],[8,-2],[3,4],[-6,2]]);
+        rect(ctx,'#b6c9aa',-5,-7,9,2); rect(ctx,'#8cc6b0',-3,-3,5,4);
+        rect(ctx,'#d9ddba',-2,-2,2,2); rect(ctx,'#3d515c',-9,6,18,3); rect(ctx,'#b7b88e',-1,6,4,2);
+        oval(ctx,0,-21,9,9,INK); oval(ctx,0,-21,7,7,'#739f8e');
+        polygon(ctx,'#a9c2a0',[[2,-25],[7,-23],[11,-19],[8,-15],[1,-15],[-2,-18]]);
+        polygon(ctx,INK,[[-10,-21],[-10,-29],[-4,-33],[5,-31],[10,-25],[7,-24],[-4,-26],[-6,-20]]);
+        polygon(ctx,'#849b90',[[-8,-22],[-8,-28],[-4,-30],[4,-28],[7,-26],[-5,-28],[-5,-22]]);
+        rect(ctx,'#3c5860',2,-25,9,4); rect(ctx,'#add8b9',4,-24,5,2);
+        line(ctx,'#c3cbb0',-9,-12,8,-12,2);
+        rect(ctx,INK,-16,-12,8,8); rect(ctx,'#9db3a4',-15,-11,6,4);
+        line(ctx,INK,-12,-5,-12,5,5); line(ctx,'#688e85',-12,-5,-12,4,3);
+        var recoil = active ? -2 : 0;
+        line(ctx,INK,9,-6,18 + recoil,-4,5); line(ctx,'#abc1a1',9,-6,18 + recoil,-4,3);
+        polygon(ctx,INK,[[6 + recoil,-9],[19 + recoil,-14],[30 + recoil,-11],[35 + recoil,-5],[31 + recoil,2],[18 + recoil,3],[8 + recoil,-2]]);
+        polygon(ctx,'#9caa92',[[9 + recoil,-8],[19 + recoil,-11],[28 + recoil,-9],[32 + recoil,-5],[29 + recoil,0],[19 + recoil,1],[10 + recoil,-3]]);
+        rect(ctx,'#456b73',16 + recoil,-8,13,5); rect(ctx,'#91cdb6',18 + recoil,-7,8,3);
+        rect(ctx,'#d5e3b9',19 + recoil,-7,3,1); rect(ctx,'#384e5b',29 + recoil,-7,4,5);
+        line(ctx,'#a0bba6',-13,0,9 + recoil,-3,2);
+      } else if (kind === 'martianwalker') {
+        // Four articulated legs and the cab are details on one walking AABB.
+        for (var leg = 0; leg < 4; leg++) {
+          var lx = [-13,-5,5,13][leg], reach = stride * (leg % 2 ? -1 : 1), front = leg >= 2;
+          line(ctx,INK,lx,1,lx + reach,11,5); line(ctx,front ? '#8fa89e' : '#546e74',lx,1,lx + reach,10,3);
+          line(ctx,INK,lx + reach,10,lx + (front ? 4 : -4) - reach,20,4);
+          line(ctx,front ? '#b6c2ab' : '#788d89',lx + reach,10,lx + (front ? 4 : -4) - reach,19,2);
+          rect(ctx,INK,lx + (front ? 1 : -8) - reach,19,9,4);
+          rect(ctx,front ? '#96aaa1' : '#59737a',lx + (front ? 2 : -7) - reach,20,7,2);
+          rect(ctx,'#c5c9aa',lx - 1 + reach,9,3,2);
+        }
+        polygon(ctx,INK,[[-21,-12],[-12,-20],[11,-20],[21,-11],[20,4],[10,10],[-12,8],[-23,1]]);
+        polygon(ctx,'#617f7f',[[-19,-11],[-11,-17],[10,-17],[18,-10],[17,2],[9,7],[-11,5],[-20,0]]);
+        polygon(ctx,'#8fa79b',[[-17,-10],[-9,-15],[9,-15],[15,-9],[13,-5],[-13,-5]]);
+        line(ctx,'#bcc7aa',-13,-11,10,-11,1);
+        rect(ctx,'#3d5862',-15,-2,29,5); rect(ctx,'#a8c6af',-10,-1,5,2); rect(ctx,'#80a797',6,-1,4,2);
+        for (var vent = 0; vent < 3; vent++) rect(ctx,'#3c515b',-20 + vent * 3,-9,1,5);
+        polygon(ctx,INK,[[-9,-19],[-6,-29],[5,-32],[15,-25],[17,-14],[11,-10],[-5,-13]]);
+        polygon(ctx,'#879e96',[[-7,-19],[-4,-27],[5,-29],[12,-24],[14,-15],[10,-13],[-3,-15]]);
+        polygon(ctx,'#3b5863',[[1,-26],[6,-27],[12,-23],[13,-17],[8,-16],[0,-19]]);
+        polygon(ctx,'#a2c9b6',[[3,-24],[6,-25],[10,-22],[11,-19],[8,-18],[2,-21]]);
+        rect(ctx,'#d7e4c4',6,-24,2,2); line(ctx,'#b8c7aa',-4,-19,-4,-24,1);
+        line(ctx,'#789b98',-7,-27,-10,-34,1); rect(ctx,'#b6d6be',-11,-36,3,3);
+        var recoil = active ? -2 : 0;
+        rect(ctx,INK,11 + recoil,-13,25,8); rect(ctx,'#859e96',12 + recoil,-12,20,5);
+        rect(ctx,'#b5c8aa',14 + recoil,-11,7,1); rect(ctx,'#3d5c68',25 + recoil,-12,10,5);
+        rect(ctx,'#a4cdb7',32 + recoil,-11,2,3); rect(ctx,'#d3d8b1',18 + recoil,-15,3,2);
+      } else if (kind === 'teslaturret') {
+        // A square reactor, stacked windings and folding feet, not an extra entity.
+        polygon(ctx,INK,[[-10,5],[-18,13],[-18,17],[-8,17],[-4,9],[4,9],[8,17],[18,17],[18,13],[10,5]]);
+        polygon(ctx,'#7b9794',[[-9,7],[-15,13],[-15,15],[-9,15],[-4,7],[4,7],[9,15],[15,15],[15,13],[9,7]]);
+        line(ctx,'#c2c8aa',-14,14,-9,14,1); line(ctx,'#d2cfac',9,14,14,14,1);
+        rect(ctx,INK,-11,-9,22,23); rect(ctx,'#547882',-9,-7,18,19);
+        rect(ctx,'#97aca1',-8,-6,16,3); rect(ctx,'#3c5968',-7,-1,14,10);
+        rect(ctx,active ? '#afe7d0' : '#7eafaa',-4,1,8,5); rect(ctx,'#d9e4bd',-2,1,3,2);
+        rect(ctx,'#a6bfa9',-8,10,16,2); rect(ctx,'#283f50',-10,5,2,4); rect(ctx,'#283f50',8,5,2,4);
+        line(ctx,INK,0,-8,0,-25,7); line(ctx,'#7d9f9b',0,-8,0,-25,3);
+        for (var coil = 0; coil < 3; coil++) {
+          var cy = -12 - coil * 5, width = 9 - coil;
+          rect(ctx,INK,-width - 1,cy - 2,width * 2 + 2,4);
+          rect(ctx,'#abc2ad',-width,cy - 1,width * 2,2);
+          rect(ctx,active || coil === frame % 3 ? '#a8e1cd' : '#6d9697',2,cy - 1,width - 2,1);
+        }
+        polygon(ctx,INK,[[-7,-27],[-4,-32],[4,-32],[8,-26],[4,-22],[-4,-22]]);
+        polygon(ctx,'#83b8ad',[[-5,-27],[-3,-30],[3,-30],[5,-26],[3,-24],[-3,-24]]);
+        rect(ctx,active ? '#e0efc9' : '#b8dac1',-1,-29,3,3);
+        line(ctx,'#d8dcb9',-4,-27,-2,-29,1);
+        rect(ctx,'#aabda3',10,-5,4,3); rect(ctx,'#4a6978',13,-4,3,2);
+      } else if (kind === 'brainscrambler') {
+        // A suspended neural dome and containment harness: one ghost body.
+        for (var tendril = 0; tendril < 4; tendril++) {
+          var tx = -13 + tendril * 7, sway = (tendril % 2 ? 1 : -1) * stride;
+          line(ctx,INK,tx,6,tx + sway,13,3); line(ctx,'#796785',tx,6,tx + sway,12,1);
+          line(ctx,'#b1a5b4',tx + sway,12,tx + sway + 3,16 + tendril % 2,1);
+        }
+        polygon(ctx,INK,[[-19,1],[-18,-12],[-9,-22],[5,-24],[17,-17],[22,-6],[19,5],[7,11],[-10,9]]);
+        polygon(ctx,'#6c6a88',[[-17,0],[-16,-11],[-8,-19],[5,-21],[15,-15],[19,-5],[17,3],[6,8],[-9,6]]);
+        polygon(ctx,'#a38fac',[[-13,-10],[-8,-17],[2,-19],[12,-14],[15,-7],[11,-1],[-6,-1],[-14,-5]]);
+        for (var lobe = 0; lobe < 3; lobe++) {
+          var lx = -9 + lobe * 7;
+          oval(ctx,lx,-9 - lobe % 2 * 3,5,5,'#736682'); oval(ctx,lx,-10 - lobe % 2 * 3,3,3,'#c3a4bd');
+          line(ctx,'#e0c6cf',lx - 1,-12 - lobe % 2 * 3,lx + 1,-12 - lobe % 2 * 3,1);
+        }
+        line(ctx,'#5b5d78',-11,-1,8,-3,2);
+        polygon(ctx,INK,[[-20,0],[-15,-4],[15,-4],[23,0],[18,6],[-15,6]]);
+        polygon(ctx,'#819b9c',[[-17,0],[-13,-2],[14,-2],[20,1],[16,4],[-13,4]]);
+        rect(ctx,'#344f62',2,-1,13,4); rect(ctx,active ? '#e1c5e9' : '#b8adc9',5,0,7,2);
+        rect(ctx,'#ddd6c9',7,0,2,1); rect(ctx,'#a0b7ac',-12,0,6,1);
+        rect(ctx,INK,-7,5,15,5); rect(ctx,'#4f6976',-5,6,11,3);
+        rect(ctx,active || frame % 2 ? '#b49ac7' : '#7d7b9c',-2,7,5,1);
+        line(ctx,'#7b9c9c',-16,-10,-24,-15,1); rect(ctx,'#becfbd',-26,-17,3,3);
+      } else if (kind === 'martiandrone') {
+        // Ribbed side vanes, a forward optical pod and a three-pad hover chassis.
+        for (var side = -1; side <= 1; side += 2) {
+          polygon(ctx,INK,[[side * 4,-4],[side * 13,-14 - flap / 2],[side * 26,-11 - flap / 2],[side * 23,-5],[side * 15,1],[side * 8,3]]);
+          polygon(ctx,'#6b9290',[[side * 6,-4],[side * 14,-11 - flap / 2],[side * 23,-10 - flap / 2],[side * 21,-6],[side * 14,-1],[side * 8,1]]);
+          line(ctx,'#bfd0b1',side * 10,-5,side * 17,-8 - flap / 2,1);
+          line(ctx,'#3e6575',side * 16,-4,side * 22,-7 - flap / 2,1);
+        }
+        polygon(ctx,INK,[[-16,-5],[-8,-12],[6,-12],[16,-6],[18,2],[11,10],[-9,10],[-18,4]]);
+        polygon(ctx,'#80a59a',[[-14,-4],[-7,-9],[5,-9],[14,-5],[15,1],[9,7],[-8,7],[-15,3]]);
+        polygon(ctx,'#b4c7ad',[[-8,-6],[-4,-8],[4,-8],[10,-4],[7,-1],[-7,-1]]);
+        rect(ctx,'#385a69',-10,1,20,4); rect(ctx,'#a7cfb7',-7,2,5,1);
+        for (var pad = -1; pad <= 1; pad++) {
+          rect(ctx,INK,pad * 9 - 3,7,6,6); rect(ctx,'#506f7b',pad * 9 - 2,8,4,4);
+          rect(ctx,frame % 2 ? '#a9d6bf' : '#81aaa4',pad * 9 - 1,11,2,2);
+        }
+        var recoil = active ? -1 : 0;
+        polygon(ctx,INK,[[5 + recoil,-7],[15 + recoil,-8],[22 + recoil,-3],[23 + recoil,4],[18 + recoil,8],[8 + recoil,5]]);
+        polygon(ctx,'#9aafa3',[[7 + recoil,-5],[14 + recoil,-6],[19 + recoil,-2],[20 + recoil,3],[17 + recoil,5],[10 + recoil,3]]);
+        rect(ctx,'#345564',15 + recoil,-2,6,5); rect(ctx,'#c0dfc4',17 + recoil,-1,2,2);
+        rect(ctx,'#5f817e',3,-13,6,3); line(ctx,'#c7d1ad',4,-13,7,-13,1);
+      } else if (kind === 'scutlixgunner') {
+        // Rider, saddle, tail and four feet all belong to the existing single AABB.
+        for (var foot = 0; foot < 4; foot++) {
+          var fx = [-16,-7,7,16][foot], gait = stride * (foot % 2 ? -1 : 1);
+          line(ctx,INK,fx,7,fx + gait,16,5); line(ctx,foot < 2 ? '#557e76' : '#8da88c',fx,7,fx + gait,15,3);
+          rect(ctx,foot < 2 ? '#3f5e64' : '#607d70',fx - 3 + gait,16,7,3);
+          line(ctx,'#c3c4a0',fx + gait,16,fx + 3 + gait,16,1);
+        }
+        polygon(ctx,INK,[[-16,0],[-27,1],[-33,8],[-24,7],[-18,5],[-10,6]]);
+        polygon(ctx,'#65887a',[[-18,2],[-26,3],[-29,6],[-23,5],[-16,4]]);
+        oval(ctx,-2,3,21,11,INK); oval(ctx,-2,2,18,8,'#6b9380');
+        polygon(ctx,'#99ae8a',[[-15,-1],[-8,-5],[1,-4],[10,0],[7,5],[-4,7],[-15,4]]);
+        line(ctx,'#4f796e',-16,7,-3,9,2); line(ctx,'#bcc09a',-11,-1,-6,-2,1);
+        polygon(ctx,INK,[[10,-1],[13,-10],[21,-13],[30,-8],[34,-1],[31,7],[19,10],[12,6]]);
+        polygon(ctx,'#92aa89',[[12,0],[15,-8],[21,-10],[28,-6],[31,0],[29,5],[20,7],[14,4]]);
+        polygon(ctx,'#b7bf95',[[18,-3],[24,-5],[29,-1],[28,3],[21,5],[16,2]]);
+        rect(ctx,'#3d605c',22,-6,5,3); rect(ctx,'#d6dbab',23,-5,2,1);
+        line(ctx,'#547b6c',23,4,30,2,1); rect(ctx,'#c8c6a0',27,3,1,2);
+        rect(ctx,INK,-12,-8,19,8); rect(ctx,'#8f7d60',-10,-7,15,5); line(ctx,'#d1b78b',-8,-5,1,-5,1);
+        line(ctx,'#706b57',-9,-2,-8,8,2); rect(ctx,'#d6bd8c',-9,4,3,2);
+        line(ctx,INK,-5,-5,-10,4,4); line(ctx,'#536d74',-5,-5,-10,4,2); rect(ctx,'#adc1a7',-12,4,5,2);
+        polygon(ctx,INK,[[-8,-18],[3,-19],[9,-7],[1,-3],[-9,-6]]);
+        polygon(ctx,'#779b90',[[-6,-16],[2,-16],[6,-8],[0,-5],[-7,-7]]); rect(ctx,'#c0c9a7',-4,-14,4,2);
+        oval(ctx,-1,-23,7,7,INK); oval(ctx,-1,-23,5,5,'#83a58d');
+        polygon(ctx,INK,[[-9,-24],[-7,-30],[0,-33],[7,-28],[8,-23]]);
+        polygon(ctx,'#8ea396',[[-7,-25],[-5,-28],[0,-30],[5,-27],[6,-24]]);
+        rect(ctx,'#3a5a65',0,-25,8,4); rect(ctx,'#bfd8b9',2,-24,4,2);
+        var recoil = active ? -2 : 0;
+        line(ctx,INK,4,-13,14 + recoil,-12,4); line(ctx,'#b1c4a4',4,-13,14 + recoil,-12,2);
+        rect(ctx,INK,7 + recoil,-16,25,7); rect(ctx,'#839e91',9 + recoil,-15,20,4);
+        rect(ctx,'#b6caab',11 + recoil,-14,7,1); rect(ctx,'#355966',23 + recoil,-15,8,4);
+        rect(ctx,'#abd6bd',29 + recoil,-14,2,2);
+      } else if (kind === 'scarecrow') {
+        var gait = active ? 1 : stride, foot = active ? 11 : 16;
+        line(ctx,INK,-4,4,-6 - gait,foot,5); line(ctx,'#74654f',-4,4,-6 - gait,foot - 1,3);
+        line(ctx,INK,4,4,5 + gait,foot - 1,5); line(ctx,'#a08a5d',4,4,5 + gait,foot - 2,3);
+        rect(ctx,'#4a4146',-9 - gait,foot,6,3); rect(ctx,'#6a5146',3 + gait,foot - 1,7,3);
+        polygon(ctx,INK,[[-8,-11],[7,-11],[12,7],[5,6],[1,10],[-4,6],[-11,8]]);
+        polygon(ctx,'#8b6954',[[-6,-10],[5,-10],[9,5],[4,4],[1,7],[-4,4],[-8,5]]);
+        rect(ctx,'#b39561',-4,-7,6,7); line(ctx,'#d1b581',-3,-6,0,-6,1);
+        line(ctx,'#4e4544',-7,1,8,2,2); rect(ctx,'#bea06a',0,1,3,2);
+        line(ctx,INK,-7,-7,-15,-1 + frame % 2,4); line(ctx,'#a58259',-7,-7,-15,-1 + frame % 2,2);
+        line(ctx,INK,7,-7,16,1 - frame % 2,4); line(ctx,'#b29460',7,-7,16,1 - frame % 2,2);
+        for (var finger = 0; finger < 3; finger++) {
+          line(ctx,'#d1b379',-15,-1,-20,1 + finger * 2,1); line(ctx,'#e2c58a',16,0,21,1 + finger * 2,1);
+        }
+        oval(ctx,0,-18,9,9,INK); oval(ctx,0,-18,7,7,'#b77d46');
+        polygon(ctx,'#e2a45c',[[-4,-23],[1,-24],[6,-21],[6,-16],[2,-12],[-3,-13],[-5,-17]]);
+        line(ctx,'#98623f',-2,-23,-3,-15,1); line(ctx,'#ba7a40',3,-23,4,-16,1);
+        polygon(ctx,'#4b3c42',[[-4,-20],[-1,-18],[-5,-17],[3,-20],[7,-18],[3,-17]]);
+        rect(ctx,'#e5bd78',-3,-19,1,1); rect(ctx,'#f2ce88',4,-19,1,1);
+        line(ctx,'#61413c',-3,-14,5,-14,1); rect(ctx,'#f2c67f',0,-14,1,1);
+        polygon(ctx,INK,[[-11,-24],[-6,-27],[-5,-33],[1,-35],[7,-28],[12,-25],[10,-22],[-10,-22]]);
+        polygon(ctx,'#8e7957',[[-8,-24],[-4,-26],[-3,-31],[1,-32],[5,-26],[9,-24]]);
+        line(ctx,'#cfb782',-8,-24,9,-24,1); line(ctx,'#514641',-4,-26,5,-26,2);
+        line(ctx,'#d4b67c',-6,5,-8,9,1); line(ctx,'#d4b67c',6,5,8,8,1);
+      } else if (kind === 'splinterling') {
+        // A knotted root bundle with bark fins; its real slime-hop owns the pose.
+        var lift = active ? -3 : 0, spread = active ? -2 : stride / 2;
+        for (var root = -1; root <= 1; root++) {
+          line(ctx,INK,root * 6,5,root * (11 + spread),12 + lift,3);
+          line(ctx,'#b4935d',root * 6,5,root * (11 + spread),11 + lift,1);
+          line(ctx,'#d1b07a',root * (11 + spread),11 + lift,root * (14 + spread) + 2,12 + lift,1);
+        }
+        polygon(ctx,INK,[[-12,-7],[-6,-14 + lift],[5,-15 + lift],[13,-8],[12,6],[5,11],[-7,10],[-14,3]]);
+        polygon(ctx,'#876744',[[-10,-6],[-5,-11 + lift],[4,-12 + lift],[10,-7],[10,4],[4,8],[-6,7],[-11,2]]);
+        polygon(ctx,'#b6965e',[[-7,-5],[-3,-9 + lift],[3,-10 + lift],[7,-5],[6,2],[1,6],[-5,3]]);
+        line(ctx,'#5b4b3d',-7,-7,-9,3,2); line(ctx,'#5b4b3d',4,-9,7,2,2);
+        line(ctx,'#dfc18a',-3,-7,-4,-1,1); line(ctx,'#d1ae72',1,2,4,1,1);
+        polygon(ctx,INK,[[-8,-8],[-15,-14],[-19,-23],[-16,-21],[-11,-16],[-6,-13],[-4,-21],[0,-27],[3,-24],[1,-18],[5,-10]]);
+        line(ctx,'#9b7b4e',-8,-10,-14,-16,2); line(ctx,'#b49a61',-14,-16,-17,-21,1);
+        line(ctx,'#c8ac72',-3,-11,-2,-20,2); line(ctx,'#8b6c47',-2,-20,1,-24,1);
+        line(ctx,INK,9,-4,18,-12,3); line(ctx,'#b49660',9,-4,17,-11,1);
+        line(ctx,'#c5ac79',16,-10,22,-10,1);
+        rect(ctx,'#51413a',-5,-3,4,3); rect(ctx,'#f0cd84',-4,-2,2,1);
+        rect(ctx,'#51413a',3,-4,4,3); rect(ctx,'#e8bd70',4,-3,2,1);
+        line(ctx,'#574238',-3,4,4,3,1); rect(ctx,'#e6c387',0,3,1,1);
+      } else if (kind === 'hellhound') {
+        var gait = active ? 1 : stride, paw = active ? 7 : 11;
+        polygon(ctx,INK,[[-11,0],[-21,-4],[-28,-12],[-31,-10],[-27,-3],[-21,3],[-10,5]]);
+        polygon(ctx,'#785346',[[-12,1],[-21,-2],[-27,-8],[-25,-2],[-20,1],[-11,3]]);
+        line(ctx,'#b0774f',-23,-4,-27,-9,2);
+        for (var leg = 0; leg < 4; leg++) {
+          var lx = [-10,-5,6,11][leg], step = gait * (leg % 2 ? -1 : 1);
+          line(ctx,INK,lx,3,lx + step,paw,4); line(ctx,leg < 2 ? '#654b43' : '#9b7053',lx,3,lx + step,paw - 1,2);
+          rect(ctx,'#413b40',lx - 2 + step,paw,6,2); rect(ctx,'#c7a67a',lx + 1 + step,paw,2,1);
+        }
+        oval(ctx,-1,0,15,7,INK); oval(ctx,-1,-1,13,5,'#775346');
+        polygon(ctx,'#9b7350',[[-12,-3],[-6,-6],[1,-5],[7,-2],[5,1],[-1,-1],[-5,1],[-10,-1]]);
+        line(ctx,'#c19260',-6,-4,1,-3,1); line(ctx,'#57423e',-9,3,-3,4,1);
+        polygon(ctx,INK,[[7,-3],[8,-12],[11,-18],[15,-12],[19,-14],[20,-8],[25,-4],[27,1],[21,6],[13,5],[9,2]]);
+        polygon(ctx,'#a27a55',[[9,-3],[10,-11],[12,-14],[14,-8],[18,-11],[18,-6],[23,-3],[24,0],[20,3],[14,3],[11,1]]);
+        polygon(ctx,'#c39a69',[[15,-3],[20,-4],[24,-1],[21,2],[16,1]]);
+        rect(ctx,'#4b3e3e',15,-7,5,2); rect(ctx,'#edc386',17,-7,2,1);
+        rect(ctx,'#3b343b',23,-2,3,2); line(ctx,'#5d423b',17,3,23,1,1); rect(ctx,'#e2c99d',20,2,1,2);
+        line(ctx,'#b78a59',9,-6,10,-10,1);
+      } else if (kind === 'poltergeist') {
+        // A torn cloth apparition. Caller-owned ghost alpha remains unchanged.
+        var sway = stride / 2;
+        polygon(ctx,INK,[[-8,-8],[-18,-2],[-23,8 + sway],[-16,6],[-19,13],[-10,9],[-5,2],[6,-5],[17,0],[21,10 - sway],[14,6],[16,13],[7,8],[2,0]]);
+        polygon(ctx,'#7f8197',[[-8,-6],[-16,0],[-19,7 + sway],[-13,4],[-15,9],[-10,7],[-5,0],[6,-3],[15,1],[17,6 - sway],[11,3],[13,9],[8,6],[2,-2]]);
+        polygon(ctx,INK,[[-9,-14],[8,-13],[11,7],[7,12],[10,20],[2,16],[-3,21],[-7,13],[-12,16],[-10,7]]);
+        polygon(ctx,'#9a9caf',[[-7,-12],[6,-11],[8,6],[4,11],[6,16],[1,13],[-2,17],[-5,10],[-9,12],[-7,5]]);
+        line(ctx,'#c4c3c6',-4,-9,-5,6,2); line(ctx,'#6f758e',3,-6,4,9,2);
+        line(ctx,'#c4c0c1',0,4,-1,10,1); line(ctx,'#7a7b92',-7,12,-6,17,1);
+        polygon(ctx,INK,[[-9,-14],[-8,-24],[-1,-31],[7,-25],[11,-15],[7,-9],[-5,-9]]);
+        polygon(ctx,'#9899af',[[-7,-15],[-6,-23],[-1,-28],[5,-23],[8,-15],[5,-11],[-4,-11]]);
+        polygon(ctx,'#4e536b',[[-4,-21],[3,-22],[6,-17],[4,-12],[-3,-13],[-5,-17]]);
+        rect(ctx,'#d7d4d1',-3,-19,2,2); rect(ctx,'#d1cbd0',2,-20,2,2); rect(ctx,'#9292aa',0,-14,2,1);
+        line(ctx,'#d0c8c8',-5,-23,-2,-26,1); line(ctx,'#b9b9c1',-14,1,-16,5,1);
+      } else if (kind === 'headlesshorseman') {
+        var gait = active ? 1 : stride, hoof = active ? 14 : 19;
+        for (var leg = 0; leg < 4; leg++) {
+          var lx = [-14,-6,7,14][leg], step = gait * (leg % 2 ? -1 : 1);
+          line(ctx,INK,lx,6,lx + step,hoof,4); line(ctx,leg < 2 ? '#514b48' : '#8a7660',lx,6,lx + step,hoof - 1,2);
+          rect(ctx,'#34363e',lx - 2 + step,hoof,6,3); rect(ctx,'#b6a482',lx + step,hoof,3,1);
+        }
+        polygon(ctx,INK,[[-15,0],[-25,-5],[-29,2],[-31,13],[-26,10],[-23,3],[-17,6]]);
+        polygon(ctx,'#61574b',[[-17,1],[-24,-2],[-27,2],[-28,9],[-24,1],[-18,4]]);
+        oval(ctx,-1,4,21,10,INK); oval(ctx,-1,3,18,7,'#796453');
+        line(ctx,'#a18b66',-13,-1,-4,-3,1); line(ctx,'#544b44',-13,9,1,11,2);
+        polygon(ctx,INK,[[10,2],[13,-10],[20,-17],[24,-12],[29,-8],[31,2],[25,9],[16,10]]);
+        polygon(ctx,'#9d8663',[[13,2],[15,-9],[20,-14],[22,-9],[26,-6],[28,1],[24,6],[17,7]]);
+        rect(ctx,'#403c3d',22,-8,3,2); rect(ctx,'#d6b987',23,-8,1,1);
+        line(ctx,'#51433c',24,3,28,1,1); line(ctx,'#c0a178',18,-6,23,-4,1);
+        polygon(ctx,INK,[[-9,-16],[-18,-11],[-23,9],[-13,5],[-15,12],[-4,7],[6,-3]]);
+        polygon(ctx,'#4f5c68',[[-8,-14],[-16,-9],[-19,6],[-11,2],[-12,8],[-5,5],[3,-3]]);
+        line(ctx,'#889192',-14,-8,-17,2,1);
+        rect(ctx,INK,-10,-6,18,8); rect(ctx,'#907756',-8,-5,14,5); rect(ctx,'#c6aa7b',-6,-4,8,1);
+        polygon(ctx,INK,[[-7,-24],[4,-24],[9,-8],[2,-3],[-9,-7]]);
+        polygon(ctx,'#7a8283',[[-5,-22],[3,-22],[6,-9],[1,-6],[-6,-8]]);
+        rect(ctx,'#aa9c79',-4,-16,7,2); line(ctx,'#bdad82',-4,-21,0,-11,1);
+        // The open collar stays empty: no decorative head becomes a target.
+        rect(ctx,INK,-6,-26,11,4); rect(ctx,'#bab29a',-4,-25,7,1);
+        line(ctx,INK,5,-19,14,-8,4); line(ctx,'#b6aa8b',5,-19,14,-8,2);
+        line(ctx,'#c4ad7e',13,-7,23,-5,1); line(ctx,'#8a7256',23,-5,24,1,1);
+        line(ctx,INK,-5,-10,-10,0,4); line(ctx,'#72787b',-5,-10,-10,0,2); rect(ctx,'#c0b18d',-12,0,5,2);
+      } else if (kind === 'gingerbread') {
+        // Icing and baked edges stay details on the existing hopping body.
+        var gait = active ? 2 : stride, foot = active ? 8 : 13;
+        line(ctx,INK,-4,4,-9 - gait,foot,7); line(ctx,'#b18455',-4,4,-9 - gait,foot,5);
+        line(ctx,INK,4,4,8 + gait,foot,7); line(ctx,'#c99b65',4,4,8 + gait,foot,5);
+        line(ctx,'#ead6ac',-10 - gait,foot - 2,-7 - gait,foot - 1,1); line(ctx,'#f0dfb8',6 + gait,foot - 2,10 + gait,foot - 2,1);
+        line(ctx,INK,-6,-5,-15,-2 + frame % 2,7); line(ctx,'#c3935d',-6,-5,-15,-2 + frame % 2,5);
+        line(ctx,INK,6,-5,15,-3 - frame % 2,7); line(ctx,'#d4a76e',6,-5,15,-3 - frame % 2,5);
+        line(ctx,'#ecdab1',-15,-4,-14,-1,1); line(ctx,'#f6e6c2',14,-5,15,-2,1);
+        polygon(ctx,INK,[[-7,-10],[7,-10],[10,5],[5,9],[-5,9],[-10,5]]);
+        polygon(ctx,'#c69760',[[-5,-9],[5,-9],[8,4],[4,7],[-4,7],[-8,4]]);
+        line(ctx,'#e6bf81',-5,-6,-6,2,1); line(ctx,'#956e49',6,-4,7,4,1);
+        rect(ctx,'#5e6e65',-1,-4,3,3); rect(ctx,'#a7bb9d',0,-4,1,1);
+        rect(ctx,'#a45f50',-1,2,3,3); rect(ctx,'#edbe89',0,2,1,1);
+        oval(ctx,0,-16,9,9,INK); oval(ctx,0,-16,7,7,'#bf8e57');
+        oval(ctx,0,-17,6,6,'#d4a76c'); line(ctx,'#e6c38c',-4,-21,2,-22,1);
+        rect(ctx,'#f2e4c3',-4,-19,2,2); rect(ctx,'#fff0c8',3,-19,2,2);
+        line(ctx,'#f4e1b9',-4,-14,-2,-12,1); line(ctx,'#f4e1b9',-2,-12,3,-12,1); line(ctx,'#f4e1b9',3,-12,5,-14,1);
+        rect(ctx,'#9b6d48',-6,-16,2,1); rect(ctx,'#a67148',5,-16,2,1);
+        polygon(ctx,'#9b514b',[[-5,-10],[0,-8],[-4,-6],[4,-10],[0,-8],[4,-6]]); rect(ctx,'#dbb384',0,-9,1,2);
+      } else if (kind === 'zombieelf') {
+        var gait = active ? 1 : stride, foot = active ? 10 : 16;
+        line(ctx,INK,-4,4,-6 - gait,foot,5); line(ctx,'#64765c',-4,4,-6 - gait,foot - 1,3);
+        line(ctx,INK,4,4,6 + gait,foot - 1,5); line(ctx,'#8b9170',4,4,6 + gait,foot - 2,3);
+        rect(ctx,'#653d41',-9 - gait,foot,7,3); rect(ctx,'#855046',4 + gait,foot - 1,7,3);
+        line(ctx,'#c29d6c',-5 - gait,foot - 5,-7 - gait,foot - 5,1);
+        polygon(ctx,INK,[[-7,-10],[6,-10],[10,6],[4,5],[1,10],[-4,6],[-9,8]]);
+        polygon(ctx,'#567360',[[-5,-9],[4,-9],[7,4],[3,3],[1,7],[-3,4],[-7,5]]);
+        line(ctx,'#8b9b73',-3,-8,-2,1,2); rect(ctx,'#493e42',-7,2,15,2); rect(ctx,'#b8a06d',0,2,3,2);
+        line(ctx,INK,-6,-6,-12,-3 + frame % 2,4); line(ctx,'#7a9276',-6,-6,-12,-3 + frame % 2,2);
+        line(ctx,INK,6,-5,15,-1 - frame % 2,4); line(ctx,'#9aa187',6,-5,15,-1 - frame % 2,2);
+        rect(ctx,'#aab098',14,-2 - frame % 2,4,3);
+        polygon(ctx,INK,[[-5,-19],[-13,-22],[-10,-15],[-4,-14],[4,-19],[13,-21],[10,-14],[4,-13]]);
+        line(ctx,'#8c9c81',-5,-17,-10,-20,2); line(ctx,'#adb098',5,-17,10,-19,2);
+        oval(ctx,0,-16,7,8,INK); oval(ctx,0,-17,5,6,'#99a28a');
+        rect(ctx,'#bdbea0',0,-21,4,2); rect(ctx,'#586653',-4,-18,3,3); rect(ctx,'#d7c68c',-3,-18,1,1);
+        rect(ctx,'#d3ceaa',2,-18,3,2); rect(ctx,'#464b47',4,-18,1,2);
+        rect(ctx,'#685749',3,-13,4,2); rect(ctx,'#e3cf9e',4,-13,1,1); line(ctx,'#696f5c',-3,-12,1,-11,1);
+        polygon(ctx,INK,[[-8,-22],[-5,-30],[1,-33],[8,-29],[13,-23],[7,-24],[5,-21]]);
+        polygon(ctx,'#60745a',[[-6,-23],[-3,-29],[1,-30],[6,-27],[10,-24],[5,-25],[4,-22]]);
+        line(ctx,'#9f5a4c',-6,-23,5,-23,2); rect(ctx,'#d0ae70',11,-24,3,3);
+      } else if (kind === 'elfarcher') {
+        var gait = stride, foot = 16, hand = active ? 9 : 3;
+        line(ctx,INK,-4,5,-6 - gait,foot,5); line(ctx,'#566658',-4,5,-6 - gait,foot - 1,3);
+        line(ctx,INK,4,5,5 + gait,foot,5); line(ctx,'#8e9973',4,5,5 + gait,foot - 1,3);
+        rect(ctx,'#454248',-9 - gait,foot,7,3); rect(ctx,'#57504a',3 + gait,foot,8,3);
+        polygon(ctx,INK,[[-9,-20],[-13,-18],[-16,2],[-10,6],[-6,1]]);
+        polygon(ctx,'#8f624a',[[-10,-18],[-12,-16],[-14,1],[-10,3],[-8,0]]);
+        for (var arrow = 0; arrow < 3; arrow++) { line(ctx,'#d0b986',-10 - arrow,-17,-8 - arrow,-25 - arrow,1); rect(ctx,'#aebbad',-9 - arrow,-26 - arrow,2,3); }
+        polygon(ctx,INK,[[-7,-10],[6,-10],[10,7],[3,10],[-8,8]]);
+        polygon(ctx,'#68816a',[[-5,-9],[4,-9],[7,5],[2,7],[-6,6]]);
+        polygon(ctx,'#a0a883',[[-3,-8],[1,-9],[4,5],[-2,6]]); rect(ctx,'#594a43',-6,3,13,2); rect(ctx,'#d2b77f',1,3,3,2);
+        polygon(ctx,INK,[[-9,-15],[-7,-25],[1,-30],[8,-23],[9,-12],[3,-9],[-5,-10]]);
+        polygon(ctx,'#55745e',[[-7,-16],[-5,-24],[1,-27],[6,-22],[7,-13],[3,-11],[-4,-12]]);
+        polygon(ctx,'#9aa67f',[[-1,-23],[4,-22],[6,-18],[4,-12],[-1,-13],[-3,-17]]);
+        line(ctx,'#cbd0a7',0,-22,3,-22,1); rect(ctx,'#343e3c',3,-19,2,2); rect(ctx,'#e0cd91',4,-19,1,1);
+        rect(ctx,'#c0bc91',5,-16,3,2); line(ctx,'#6e6650',2,-12,5,-12,1);
+        polygon(ctx,'#a06153',[[-6,-11],[5,-11],[3,-7],[-3,-8],[-10,-3],[-9,-7]]);
+        line(ctx,INK,5,-6,15,-5,4); line(ctx,'#b8bb93',5,-6,15,-5,2);
+        line(ctx,INK,-4,-6,hand,-5,4); line(ctx,'#9ba886',-4,-6,hand,-5,2);
+        // A decorative bow follows only the real arrow cooldown, never fires.
+        line(ctx,INK,15,-21,21,-10,3); line(ctx,INK,21,-10,20,2,3); line(ctx,INK,20,2,15,11,3);
+        line(ctx,'#c7a577',15,-21,20,-10,1); line(ctx,'#a1845e',20,-10,19,2,1); line(ctx,'#d5b885',19,2,15,11,1);
+        line(ctx,'#ded5b0',15,-20,hand + 1,-5,1); line(ctx,'#ded5b0',hand + 1,-5,15,10,1);
+        if (!active) { line(ctx,'#b9a16f',hand,-5,23,-5,1); polygon(ctx,'#c8d0b5',[[23,-7],[27,-5],[23,-3]]); }
+      } else if (kind === 'nutcracker') {
+        // The wooden soldier keeps melee walking: no invented gun or form swap.
+        var gait = active ? 1 : stride, foot = active ? 12 : 19;
+        line(ctx,INK,-4,5,-5 - gait,foot,6); line(ctx,'#5a5b63',-4,5,-5 - gait,foot - 1,4);
+        line(ctx,INK,4,5,5 + gait,foot,6); line(ctx,'#88877a',4,5,5 + gait,foot - 1,4);
+        rect(ctx,'#34343f',-9 - gait,foot - 3,7,6); rect(ctx,'#41414a',3 + gait,foot - 3,8,6);
+        rect(ctx,'#c2a67b',-8 - gait,foot - 3,5,1); rect(ctx,'#cbb58a',4 + gait,foot - 3,5,1);
+        polygon(ctx,INK,[[-8,-13],[8,-13],[10,6],[-10,6]]);
+        polygon(ctx,'#99524f',[[-6,-11],[6,-11],[7,4],[-7,4]]);
+        rect(ctx,'#bd7061',-5,-10,4,12); rect(ctx,'#d0ac75',-1,-11,2,14);
+        for (var braid = 0; braid < 3; braid++) { line(ctx,'#e0c48c',-5,-8 + braid * 4,5,-8 + braid * 4,1); rect(ctx,'#f0d6a2',-1,-9 + braid * 4,2,2); }
+        rect(ctx,'#403b42',-8,3,16,3); rect(ctx,'#d8bb7d',-1,3,4,3);
+        line(ctx,INK,-8,-10,-12,3 + frame % 2,5); line(ctx,'#9c5d54',-8,-10,-12,2 + frame % 2,3);
+        line(ctx,INK,8,-10,12,3 - frame % 2,5); line(ctx,'#bd7a62',8,-10,12,2 - frame % 2,3);
+        rect(ctx,'#bda16f',-11,-11,6,3); rect(ctx,'#dfc18a',5,-11,6,3);
+        rect(ctx,'#d9bb8e',-14,2 + frame % 2,4,4); rect(ctx,'#e4c99b',10,2 - frame % 2,4,4);
+        rect(ctx,INK,-8,-26,16,15); rect(ctx,'#bda27c',-6,-25,12,13); rect(ctx,'#e0c49a',-4,-24,8,10);
+        rect(ctx,'#fff0c7',-4,-22,3,2); rect(ctx,'#fff0c7',3,-22,3,2); rect(ctx,'#45424a',-2,-22,1,2); rect(ctx,'#45424a',5,-22,1,2);
+        rect(ctx,'#b38e66',1,-21,2,4); rect(ctx,'#ae6456',-6,-18,3,2); rect(ctx,'#c77861',4,-18,3,2);
+        polygon(ctx,'#54484a',[[-5,-17],[-1,-18],[1,-17],[3,-18],[6,-17],[3,-15],[0,-16],[-3,-15]]);
+        rect(ctx,'#5b4544',-4,-14,9,3); rect(ctx,'#edddae',-3,-14,7,1); rect(ctx,'#c4a67d',-4,-11,9,2);
+        rect(ctx,INK,-10,-37,20,12); rect(ctx,'#41424e',-8,-35,16,8); rect(ctx,'#676875',-6,-34,3,6);
+        rect(ctx,'#c8aa75',-8,-29,16,2); rect(ctx,'#e8ce96',-2,-34,4,4); rect(ctx,'#9a7754',-1,-33,2,2);
+        line(ctx,'#d7ba83',-8,-35,7,-35,1); rect(ctx,INK,-10,-26,21,2);
+      } else if (kind === 'krampus') {
+        var gait = active ? 1 : stride, foot = active ? 15 : 21;
+        line(ctx,INK,-5,6,-7 - gait,foot,7); line(ctx,'#65514b',-5,6,-7 - gait,foot - 1,5);
+        line(ctx,INK,5,6,6 + gait,foot,7); line(ctx,'#90715a',5,6,6 + gait,foot - 1,5);
+        polygon(ctx,INK,[[-12 - gait,foot - 1],[-4 - gait,foot - 1],[-3 - gait,foot + 4],[-13 - gait,foot + 4]]);
+        rect(ctx,'#b5a17a',-11 - gait,foot,6,2); line(ctx,'#51423f',-8 - gait,foot,-8 - gait,foot + 3,1);
+        rect(ctx,INK,3 + gait,foot - 1,10,5); rect(ctx,'#c6af82',4 + gait,foot,7,2); rect(ctx,'#51423f',7 + gait,foot,1,3);
+        // Woven sack is part of the silhouette, never a carried entity or drop.
+        oval(ctx,-12,-5,9,16,INK); oval(ctx,-12,-6,7,13,'#8e7855');
+        line(ctx,'#bba274',-17,-13,-8,-13,1); line(ctx,'#5e5545',-17,-4,-7,-4,1); line(ctx,'#c4ac7c',-16,3,-8,3,1);
+        line(ctx,'#bda477',-14,-17,-14,4,1); line(ctx,'#655843',-10,-17,-10,5,1);
+        polygon(ctx,INK,[[-9,-16],[8,-15],[13,6],[7,13],[0,10],[-8,12],[-13,4]]);
+        polygon(ctx,'#6b5149',[[-7,-14],[6,-13],[10,5],[6,9],[0,7],[-6,9],[-10,3]]);
+        polygon(ctx,'#92715a',[[-5,-12],[2,-12],[6,-6],[3,4],[-3,7],[-6,3]]);
+        for (var tuft = 0; tuft < 4; tuft++) line(ctx,'#ad8a65',-5 + tuft * 3,-10,-7 + tuft * 3,-5,1);
+        line(ctx,'#4a4241',-8,5,9,4,3); rect(ctx,'#c7ad76',-1,4,4,3);
+        line(ctx,INK,-9,-11,-17,1 + frame % 2,6); line(ctx,'#7f6251',-9,-11,-17,frame % 2,4);
+        line(ctx,INK,9,-10,17,2 - frame % 2,6); line(ctx,'#a08160',9,-10,17,1 - frame % 2,4);
+        for (var claw = 0; claw < 3; claw++) { line(ctx,'#c5af83',-19 + claw * 2,1,-20 + claw * 2,5,1); line(ctx,'#d2bb8a',15 + claw * 2,2,16 + claw * 2,6,1); }
+        polygon(ctx,INK,[[-8,-19],[-14,-26],[-15,-34],[-11,-38],[-12,-31],[-7,-27],[-4,-21],
+          [4,-21],[7,-29],[7,-36],[11,-40],[11,-32],[13,-27],[9,-19]]);
+        line(ctx,'#c1ad85',-8,-22,-12,-28,3); line(ctx,'#ded0a4',-12,-28,-13,-34,1);
+        line(ctx,'#c1ad85',7,-21,10,-28,3); line(ctx,'#ded0a4',10,-28,9,-36,1);
+        oval(ctx,0,-20,9,10,INK); oval(ctx,0,-21,7,8,'#927357');
+        polygon(ctx,'#c3a074',[[-5,-24],[3,-26],[7,-22],[7,-17],[3,-13],[-3,-15],[-6,-20]]);
+        rect(ctx,'#4a3c3f',-5,-22,4,3); rect(ctx,'#e1c487',-3,-22,2,1); rect(ctx,'#4a3c3f',3,-23,4,3); rect(ctx,'#f0d591',4,-23,2,1);
+        polygon(ctx,'#5e4440',[[-4,-16],[5,-17],[7,-13],[0,-11],[-5,-13]]); rect(ctx,'#e0c69b',-2,-16,2,2); rect(ctx,'#d8bb8b',4,-16,1,2);
+        line(ctx,'#ac6559',1,-13,3,-7 + frame % 2,2);
+      } else if (kind === 'yeti') {
+        var gait = active ? 1 : stride, foot = active ? 14 : 21;
+        line(ctx,INK,-7,7,-9 - gait,foot,9); line(ctx,'#aeb9b9',-7,7,-9 - gait,foot - 1,7);
+        line(ctx,INK,7,7,9 + gait,foot,9); line(ctx,'#d3d7c9',7,7,9 + gait,foot - 1,7);
+        rect(ctx,'#788b91',-15 - gait,foot - 1,11,5); rect(ctx,'#a4b1ae',4 + gait,foot - 1,12,5);
+        for (var toe = 0; toe < 3; toe++) { rect(ctx,'#eee5c9',-14 - gait + toe * 3,foot + 1,2,1); rect(ctx,'#f2ebd2',6 + gait + toe * 3,foot + 1,2,1); }
+        polygon(ctx,INK,[[-13,-18],[-19,-9],[-16,-4],[-18,8],[-11,7],[-8,14],[0,11],[7,13],[11,7],[17,8],[16,-5],[18,-10],[11,-19]]);
+        polygon(ctx,'#b5c3c4',[[-11,-16],[-16,-8],[-13,-3],[-15,5],[-9,4],[-6,10],[0,7],[6,10],[9,4],[14,5],[13,-4],[15,-9],[9,-17]]);
+        polygon(ctx,'#dce0d1',[[-8,-14],[4,-17],[11,-10],[9,-4],[11,2],[6,1],[5,6],[-2,4],[-6,8],[-8,1],[-12,3],[-10,-4],[-13,-8]]);
+        line(ctx,'#f0ecd8',-6,-13,-8,-8,1); line(ctx,'#8dabae',1,-4,-1,2,2); line(ctx,'#a0b6b7',8,-7,6,-2,1);
+        line(ctx,INK,-14,-11,-21,6 + frame % 2,8); line(ctx,'#b0c2c4',-14,-11,-21,5 + frame % 2,6);
+        line(ctx,INK,14,-10,21,7 - frame % 2,8); line(ctx,'#d5ddcf',14,-10,21,6 - frame % 2,6);
+        rect(ctx,'#748f97',-25,6 + frame % 2,8,5); rect(ctx,'#91a7a8',17,7 - frame % 2,8,5);
+        for (var claw = 0; claw < 3; claw++) { rect(ctx,'#e9e4c9',-25 + claw * 3,10 + frame % 2,1,2); rect(ctx,'#f2e9cc',18 + claw * 3,11 - frame % 2,1,2); }
+        polygon(ctx,INK,[[-12,-20],[-10,-30],[-4,-36],[1,-34],[7,-35],[12,-28],[12,-17],[6,-12],[-7,-12]]);
+        polygon(ctx,'#cfdbd3',[[-10,-20],[-8,-29],[-3,-33],[1,-31],[6,-32],[10,-27],[10,-18],[5,-14],[-6,-14]]);
+        polygon(ctx,'#7b9ca4',[[-6,-26],[2,-28],[8,-24],[8,-18],[2,-15],[-5,-17],[-8,-22]]);
+        line(ctx,'#e7e7d1',-7,-26,-2,-27,2); line(ctx,'#e8ead6',2,-28,8,-26,2);
+        rect(ctx,'#e5d598',-5,-24,3,2); rect(ctx,'#eaddab',4,-25,3,2); rect(ctx,'#394954',-3,-24,1,2); rect(ctx,'#394954',6,-25,1,2);
+        oval(ctx,2,-19,5,3,'#a7babc'); rect(ctx,'#516d7b',1,-21,3,2); line(ctx,'#4b6371',-2,-17,6,-17,1);
+        rect(ctx,'#f0e5bd',-2,-18,1,2); rect(ctx,'#f3e8c6',5,-18,1,2);
+      } else if (kind === 'flocko') {
+        // Ghost alpha is caller-owned; this snowflake still uses colliding flyStep.
+        var reach = [18,20,18,16][frame % 4];
+        for (var arm = 0; arm < 8; arm++) {
+          var dx = [1,1,0,-1,-1,-1,0,1][arm], dy = [0,1,1,1,0,-1,-1,-1][arm];
+          var r = dx && dy ? reach * 0.7 : reach;
+          line(ctx,INK,dx * 3,dy * 3,dx * r,dy * r,4);
+          line(ctx,arm < 4 ? '#aecbd3' : '#d2e3df',dx * 3,dy * 3,dx * r,dy * r,2);
+          var bx = dx * r * 0.65, by = dy * r * 0.65;
+          line(ctx,'#b6d5dc',bx,by,bx - dy * 4 - dx * 3,by + dx * 4 - dy * 3,1);
+          line(ctx,'#e1ebe3',bx,by,bx + dy * 4 - dx * 3,by - dx * 4 - dy * 3,1);
+        }
+        polygon(ctx,INK,[[0,-10],[8,-6],[10,1],[6,8],[-2,10],[-9,4],[-8,-5]]);
+        polygon(ctx,'#87b0c0',[[0,-8],[6,-5],[8,1],[5,6],[-2,8],[-7,3],[-6,-4]]);
+        polygon(ctx,'#c9dedc',[[0,-7],[5,-4],[2,1],[-3,3],[-5,-3]]);
+        polygon(ctx,'#a8cbd2',[[2,1],[7,0],[4,5],[-1,7],[-3,3]]);
+        rect(ctx,'#496576',-4,-2,2,2); rect(ctx,'#415c70',3,-3,2,2); rect(ctx,'#e9ead3',-3,-2,1,1); rect(ctx,'#f0efdc',4,-3,1,1);
+        line(ctx,'#607e8d',-1,4,3,3,1);
+      } else if (kind === 'elfcopter') {
+        var recoil = active ? -2 : 0, rotor = [23,14,23,7][frame % 4];
+        line(ctx,INK,-13,7,-18,14,3); line(ctx,INK,10,7,15,14,3);
+        line(ctx,'#7c8e8b',-13,7,-17,13,1); line(ctx,'#a5b2a5',10,7,14,13,1);
+        line(ctx,INK,-22,15,21,15,3); line(ctx,'#bdc5ad',-21,14,20,14,1);
+        polygon(ctx,INK,[[-14,-5],[-27,-9],[-32,-17],[-36,-16],[-32,-4],[-16,3]]);
+        polygon(ctx,'#9b5655',[[-15,-3],[-27,-7],[-31,-13],[-32,-8],[-30,-5],[-16,1]]);
+        line(ctx,'#b6bdab',-32,-20,-32,-3,2); line(ctx,'#e0d6ae',-37,-12,-26,-12,1);
+        oval(ctx,0,0,20,10,INK); oval(ctx,0,-1,18,8,'#a65c56');
+        polygon(ctx,'#d28a6d',[[-15,-5],[-7,-8],[4,-8],[9,-4],[8,0],[-4,-1],[-10,1]]);
+        polygon(ctx,'#6a494a',[[-16,2],[-9,6],[7,7],[15,2],[11,6],[-10,8]]);
+        polygon(ctx,INK,[[5,-9],[13,-12],[20,-7],[23,2],[15,7],[5,5]]);
+        polygon(ctx,'#758e88',[[7,-8],[13,-10],[18,-6],[20,1],[15,4],[7,3]]);
+        polygon(ctx,'#a9bfb0',[[9,-7],[13,-8],[16,-5],[17,-1],[9,-1]]);
+        line(ctx,'#4b5d60',7,-3,19,-3,1); line(ctx,'#3f4e54',13,-9,14,3,1);
+        // Tiny pilot remains paint inside the same aircraft body, not a rider record.
+        rect(ctx,'#aab394',9,-6,3,4); rect(ctx,'#47705c',8,-8,5,2); rect(ctx,'#ddc890',11,-5,1,1);
+        line(ctx,INK,-2,-9,-2,-19,4); line(ctx,'#a1ada0',-2,-9,-2,-18,2);
+        rect(ctx,INK,-rotor - 2,-22,rotor * 2 + 1,4); rect(ctx,'#839894',-rotor - 1,-21,rotor * 2 - 1,1);
+        rect(ctx,'#cad0b4',-rotor - 1,-21,4,1); rect(ctx,'#c7cdb0',rotor - 6,-21,4,1); rect(ctx,'#c4b084',-4,-23,4,4);
+        rect(ctx,INK,1,8,19 + recoil,5); rect(ctx,'#7e8d86',2,9,16 + recoil,2); rect(ctx,'#d1c399',15 + recoil,9,3,2);
+        for (var vent = 0; vent < 3; vent++) rect(ctx,'#654b49',-12 + vent * 4,1,2,3);
+      } else if (kind === 'presentmimic') {
+        // Closed wrapping and an awake toothed lid share the original single body.
+        var lid = active ? -17 - frame % 2 : -8, ribbon = [0,1,0,-1][frame % 4];
+        rect(ctx,INK,-19,-7,38,22); rect(ctx,'#9e555c',-17,-5,34,18);
+        rect(ctx,'#c77a77',-15,-4,13,14); rect(ctx,'#b66769',7,-4,8,15); rect(ctx,'#794653',-16,10,32,2);
+        rect(ctx,'#c3b57c',-4,-5,8,18); rect(ctx,'#e5d298',-2,-5,3,17);
+        rect(ctx,'#e0b792',-13,0,2,2); rect(ctx,'#dfb792',10,5,2,2); rect(ctx,'#e0b792',-11,7,2,2);
+        line(ctx,'#e0b792',10,-2,13,1,1); line(ctx,'#85515b',-15,12,14,12,1);
+        if (active) {
+          polygon(ctx,INK,[[-18,-8],[-15,lid + 4],[14,lid + 4],[18,-8],[14,3],[-13,3]]);
+          polygon(ctx,'#59414c',[[-15,-7],[-12,lid + 6],[11,lid + 6],[15,-7],[11,0],[-10,0]]);
+          for (var tooth = 0; tooth < 5; tooth++) {
+            polygon(ctx,'#e2d4aa',[[-13 + tooth * 6,lid + 7],[-9 + tooth * 6,lid + 7],[-11 + tooth * 6,lid + 12]]);
+            polygon(ctx,'#cdbd92',[[-12 + tooth * 6,-1],[-8 + tooth * 6,-1],[-10 + tooth * 6,-6]]);
+          }
+          line(ctx,'#a76471',2,-5,10 + ribbon,4,3); line(ctx,'#d18b8c',3,-5,10 + ribbon,3,1);
+          rect(ctx,'#eadba9',-11,lid + 1,3,2); rect(ctx,'#f0dba2',9,lid + 1,3,2);
+        }
+        rect(ctx,INK,-21,lid,42,7); rect(ctx,'#bc7472',-19,lid + 1,38,4); rect(ctx,'#e3a08c',-18,lid + 1,16,1);
+        rect(ctx,'#d1bf84',-4,lid + 1,8,4); rect(ctx,'#f0dca0',-2,lid + 1,3,3);
+        polygon(ctx,INK,[[-1,lid],[ -13,lid - 3 - ribbon],[-13,lid - 9],[-6,lid - 8],[1,lid - 3],[7,lid - 9],[15,lid - 8 + ribbon],[14,lid - 2],[3,lid + 1]]);
+        line(ctx,'#e0cb8b',-1,lid - 1,-10,lid - 6 - ribbon,3); line(ctx,'#b89f6e',-10,lid - 6 - ribbon,-9,lid - 2,2);
+        line(ctx,'#f0d99c',2,lid - 1,11,lid - 6 + ribbon,3); line(ctx,'#c1aa75',11,lid - 6 + ribbon,10,lid - 2,2);
+        rect(ctx,'#f3dfa4',-2,lid - 3,5,4);
+      } else if (kind === 'frankenstein') {
+        var gait = active ? 1 : stride, foot = active ? 12 : 18;
+        line(ctx,INK,-4,5,-6 - gait,foot,6); line(ctx,'#525c5c',-4,5,-6 - gait,foot - 1,4);
+        line(ctx,INK,4,5,6 + gait,foot,6); line(ctx,'#6d7568',4,5,6 + gait,foot - 1,4);
+        rect(ctx,'#343940',-10 - gait,foot - 1,8,5); rect(ctx,'#44474a',3 + gait,foot - 1,10,5);
+        line(ctx,'#84918a',-9 - gait,foot,-4 - gait,foot,1); line(ctx,'#a3a88e',5 + gait,foot,11 + gait,foot,1);
+        polygon(ctx,INK,[[-9,-12],[8,-12],[11,7],[3,7],[0,10],[-10,8]]);
+        polygon(ctx,'#5d665b',[[-7,-10],[6,-10],[8,5],[2,4],[0,7],[-8,6]]);
+        polygon(ctx,'#8a9572',[[-3,-11],[3,-10],[4,3],[-2,5],[-4,0]]);
+        line(ctx,'#404d4d',-5,-9,-2,-3,2); line(ctx,'#a2a484',3,-8,1,-2,1);
+        rect(ctx,'#454249',-8,3,16,2); rect(ctx,'#b7ac81',0,3,3,2);
+        line(ctx,INK,-8,-8,-15,frame % 2,6); line(ctx,'#697b61',-8,-8,-15,frame % 2,4);
+        line(ctx,INK,8,-8,15,-2 - frame % 2,6); line(ctx,'#92a078',8,-8,15,-2 - frame % 2,4);
+        rect(ctx,'#a6af86',-17,frame % 2,5,5); rect(ctx,'#b7bb93',13,-2 - frame % 2,6,4);
+        rect(ctx,INK,-9,-29,18,18); rect(ctx,'#859775',-7,-27,14,14); rect(ctx,'#abb48c',-4,-26,10,10);
+        rect(ctx,'#414a47',-8,-31,17,5); rect(ctx,'#5b6656',-6,-29,12,2);
+        line(ctx,'#5a695a',-5,-25,5,-25,1); for (var stitch = 0; stitch < 4; stitch++) rect(ctx,'#d0c6a0',-5 + stitch * 3,-26,1,3);
+        rect(ctx,'#52604e',-5,-22,4,2); rect(ctx,'#ded2a6',-4,-22,2,1); rect(ctx,'#52604e',3,-22,4,2); rect(ctx,'#e8dbad',4,-22,2,1);
+        rect(ctx,'#76866a',0,-21,3,4); line(ctx,'#5c6855',-3,-15,5,-15,1); rect(ctx,'#b2b38b',-2,-14,6,1);
+        rect(ctx,'#5e7777',-12,-16,4,3); rect(ctx,'#adbbb0',-12,-16,2,2); rect(ctx,'#687c79',8,-16,4,3); rect(ctx,'#c4c4a5',10,-16,2,2);
+      } else if (kind === 'swampthing') {
+        var gait = active ? 1 : stride, foot = active ? 13 : 19;
+        line(ctx,INK,-5,6,-8 - gait,foot,7); line(ctx,'#526c55',-5,6,-8 - gait,foot - 1,5);
+        line(ctx,INK,5,6,8 + gait,foot,7); line(ctx,'#7b8960',5,6,8 + gait,foot - 1,5);
+        polygon(ctx,'#96a16d',[[-12 - gait,foot - 1],[-6 - gait,foot - 2],[-3 - gait,foot + 3],[-14 - gait,foot + 3]]);
+        polygon(ctx,'#b0b179',[[4 + gait,foot - 1],[10 + gait,foot - 2],[15 + gait,foot + 3],[3 + gait,foot + 3]]);
+        polygon(ctx,INK,[[-10,-16],[-17,-9],[-13,-2],[-15,8],[-8,6],[-6,12],[0,9],[7,12],[10,7],[16,8],[12,-3],[15,-10],[7,-17]]);
+        polygon(ctx,'#466f53',[[-8,-14],[-13,-8],[-10,-2],[-12,5],[-6,3],[-4,8],[0,6],[6,9],[8,4],[12,5],[9,-3],[12,-9],[6,-14]]);
+        polygon(ctx,'#7e9560',[[-5,-13],[3,-14],[8,-8],[5,-3],[7,3],[2,2],[-2,7],[-4,1],[-9,3],[-7,-4],[-10,-8]]);
+        line(ctx,'#b5b67a',-4,-11,-2,-5,1); line(ctx,'#36594c',3,-9,1,-2,2); line(ctx,'#a1ae72',2,1,4,5,1);
+        line(ctx,INK,-12,-9,-19,3 + frame % 2,6); line(ctx,'#6a8b5d',-12,-9,-19,2 + frame % 2,4);
+        line(ctx,INK,12,-8,19,4 - frame % 2,6); line(ctx,'#8c9c67',12,-8,19,3 - frame % 2,4);
+        for (var finger = 0; finger < 3; finger++) { line(ctx,'#a6af76',-21 + finger * 2,3,-23 + finger * 2,7,1); line(ctx,'#bec188',17 + finger * 2,4,19 + finger * 2,8,1); }
+        polygon(ctx,INK,[[-9,-18],[-13,-26],[-8,-25],[-6,-32],[-1,-29],[5,-33],[7,-26],[12,-27],[10,-18],[4,-12],[-5,-13]]);
+        polygon(ctx,'#70905f',[[-7,-19],[-10,-24],[-6,-23],[-4,-29],[-1,-26],[4,-30],[5,-23],[9,-24],[7,-18],[3,-14],[-4,-15]]);
+        polygon(ctx,'#9eab73',[[-4,-24],[3,-26],[7,-22],[5,-17],[-1,-15],[-5,-18]]);
+        rect(ctx,'#3d5547',-5,-22,4,3); rect(ctx,'#dfd19a',-3,-22,2,1); rect(ctx,'#3d5547',3,-23,4,3); rect(ctx,'#e4dba3',4,-23,2,1);
+        line(ctx,'#485e4b',-3,-16,4,-17,1); line(ctx,'#a6b27a',-8,-28,-5,-23,1);
+      } else if (kind === 'creaturefromdeep') {
+        var gait = active ? 1 : stride, foot = active ? 11 : 17;
+        line(ctx,INK,-5,5,-7 - gait,foot,6); line(ctx,'#4d7775',-5,5,-7 - gait,foot - 1,4);
+        line(ctx,INK,5,5,7 + gait,foot,6); line(ctx,'#729b8c',5,5,7 + gait,foot - 1,4);
+        polygon(ctx,'#9eb79a',[[-9 - gait,foot - 1],[-3 - gait,foot + 2],[-15 - gait,foot + 2]]);
+        polygon(ctx,'#bdd0a9',[[6 + gait,foot - 1],[15 + gait,foot + 2],[3 + gait,foot + 2]]);
+        polygon(ctx,INK,[[-8,-12],[7,-13],[12,1],[8,9],[-7,9],[-12,2]]);
+        polygon(ctx,'#487d76',[[-6,-11],[5,-11],[9,1],[6,7],[-5,7],[-9,1]]);
+        oval(ctx,0,-1,6,9,'#92ac8c'); line(ctx,'#c1c49b',-3,-6,3,-6,1); line(ctx,'#567e70',-4,-2,4,-2,1); line(ctx,'#b2bd94',-3,3,3,3,1);
+        polygon(ctx,'#6c9e90',[[-8,-10],[-14,-15],[-12,-5],[-8,-1],[7,-10],[14,-15],[12,-5],[8,-1]]);
+        line(ctx,INK,-9,-7,-16,2 + frame % 2,5); line(ctx,'#609686',-9,-7,-16,1 + frame % 2,3);
+        line(ctx,INK,9,-6,16,3 - frame % 2,5); line(ctx,'#91b59a',9,-6,16,2 - frame % 2,3);
+        polygon(ctx,'#b2c7a6',[[-17,0],[-22,4],[-17,4],[-20,8],[-14,4],[15,1],[22,5],[17,5],[20,9],[14,5]]);
+        polygon(ctx,INK,[[-7,-15],[-10,-25],[-3,-31],[2,-27],[8,-27],[11,-20],[8,-12],[-3,-11]]);
+        polygon(ctx,'#559184',[[-5,-16],[-7,-24],[-2,-28],[2,-24],[7,-25],[8,-20],[6,-14],[-2,-13]]);
+        polygon(ctx,'#a1b998',[[-3,-23],[2,-25],[6,-22],[7,-17],[3,-14],[-2,-16]]);
+        rect(ctx,'#3a5c5c',-4,-22,4,3); rect(ctx,'#e6d699',-2,-22,2,1); rect(ctx,'#3a5c5c',4,-22,4,3); rect(ctx,'#ece1ad',5,-22,2,1);
+        line(ctx,'#466f65',-2,-16,5,-16,1); line(ctx,'#c0c49e',0,-15,3,-15,1);
+        for (var gill = 0; gill < 3; gill++) { line(ctx,'#304f56',-7,-23 + gill * 3,-4,-21 + gill * 3,1); line(ctx,'#aac1a3',8,-22 + gill * 3,10,-23 + gill * 3,1); }
+      } else if (kind === 'fritz') {
+        var gait = active ? 1 : stride, foot = active ? 11 : 17;
+        line(ctx,INK,-4,4,-6 - gait,foot,5); line(ctx,'#5d6663',-4,4,-6 - gait,foot - 1,3);
+        line(ctx,INK,4,4,5 + gait,foot,5); line(ctx,'#8c8d74',4,4,5 + gait,foot - 1,3);
+        rect(ctx,'#45414a',-9 - gait,foot,7,3); rect(ctx,'#63534c',3 + gait,foot,8,3);
+        polygon(ctx,INK,[[-7,-12],[5,-12],[10,6],[1,9],[-9,6]]);
+        polygon(ctx,'#8c8564',[[-5,-10],[4,-10],[7,4],[1,6],[-7,4]]);
+        for (var band = 0; band < 4; band++) line(ctx,band % 2 ? '#c7bb8a' : '#626b5f',-5,-8 + band * 4,5,-9 + band * 4,2);
+        line(ctx,INK,-7,-8,-13,1 + frame % 2,5); line(ctx,'#9b9f79',-7,-8,-13,frame % 2,3);
+        line(ctx,INK,7,-7,15,-2 - frame % 2,5); line(ctx,'#b3ad83',7,-7,15,-3 - frame % 2,3);
+        rect(ctx,'#5d6864',-15,-2,5,3); rect(ctx,'#acb39a',-15,-2,2,1); rect(ctx,'#686e64',12,-5,5,3); rect(ctx,'#c8c8a4',15,-5,2,1);
+        polygon(ctx,INK,[[-8,-23],[-3,-29],[6,-26],[9,-20],[6,-12],[-3,-12],[-9,-17]]);
+        polygon(ctx,'#a5a27a',[[-6,-22],[-2,-26],[5,-24],[6,-19],[4,-14],[-2,-14],[-6,-18]]);
+        polygon(ctx,'#52534c',[[-9,-23],[-5,-31],[-1,-27],[2,-32],[5,-27],[9,-29],[8,-23],[2,-25],[-3,-22]]);
+        rect(ctx,'#d8cd9c',-5,-21,4,2); rect(ctx,'#e5d8a5',3,-22,3,2); rect(ctx,'#4b5148',-2,-21,1,2); rect(ctx,'#4b5148',4,-22,1,2);
+        line(ctx,'#6d6c50',-2,-16,5,-16,1); rect(ctx,'#e1d0a4',0,-16,1,1); rect(ctx,'#c0b38a',-4,-25,1,3);
+        line(ctx,'#715f50',-5,-18,-1,-19,1); rect(ctx,'#d0be8b',-4,-19,1,3);
+      }
       if (flash) { ctx.globalCompositeOperation = 'source-atop'; rect(ctx,'#fff5dc',-48,-48,96,96); }
       return c;
     });
@@ -2072,25 +3412,54 @@ var CombatArt = (function() {
     var undergroundWalker = kind === 'skeletonarcher' || kind === 'armoredbones' || kind === 'undeadminer';
     var dungeonWalker = kind === 'angrybones' || kind === 'dungeonslime';
     var lavaSlime = kind === 'lavaslime';
+    var aquatic = kind === 'shark' || kind === 'piranha' || kind === 'bluejellyfish' || kind === 'squid';
+    var crawler = kind === 'crab' || kind === 'crawdad' || kind === 'seasnail' || kind === 'salamander';
+    var goblin = kind === 'goblinscout' || kind === 'goblinpeon' || kind === 'goblinthief' || kind === 'goblinwarrior';
+    var rangedGoblin = kind === 'goblinarcher' || kind === 'goblinsorcerer' || kind === 'goblinsummoner';
+    var goblinCooldown = kind === 'goblinarcher' ? 2.2 : kind === 'goblinsorcerer' ? 2.3 : 2.4;
+    var pirateWalker = kind === 'piratedeckhand' || kind === 'piratecorsair';
+    var pirateShooter = kind === 'piratedeadeye' || kind === 'piratecrossbower';
+    var pirateCooldown = kind === 'piratedeadeye' ? 2.2 : 1.8;
+    var frostShooter = kind === 'snowmangangsta' || kind === 'snowballa';
+    var frostCooldown = kind === 'snowmangangsta' ? 1.5 : 1.8;
+    var martianLocal = kind === 'martiangrunt' || kind === 'raygunner';
+    var martianShooter = martianLocal || kind === 'martianengineer';
+    var martianCooldown = martianLocal ? 2.4 : 2;
+    var martianHeavy = kind === 'gigazapper' || kind === 'martianwalker' || kind === 'teslaturret';
+    var heavyCooldown = kind === 'gigazapper' ? 1.35 : kind === 'martianwalker' ? 1.5 : 1.25;
+    var martianSpecial = kind === 'brainscrambler' || kind === 'martiandrone' || kind === 'scutlixgunner';
+    var specialCooldown = kind === 'brainscrambler' ? 2.4 : kind === 'martiandrone' ? 1.4 : 1.25;
+    var moonWalker = kind === 'scarecrow' || kind === 'splinterling' || kind === 'hellhound' || kind === 'headlesshorseman';
+    var frostMoonWalker = kind === 'gingerbread' || kind === 'zombieelf' || kind === 'nutcracker' || kind === 'krampus' || kind === 'yeti';
+    var eclipseWalker = kind === 'frankenstein' || kind === 'swampthing' || kind === 'creaturefromdeep' || kind === 'fritz';
     var active = charging || kind === 'unicorn' && e.state === 2 ||
+      kind === 'presentmimic' && !!e.awake ||
       (kind === 'hornet' || kind === 'mosshornet') && e.attackCd > 2.1 || kind === 'gastropod' && e.attackCd > 2.3 ||
       kind === 'corruptor' && e.attackCd > 1.9 || kind === 'ichorsticker' && e.attackCd > 1.7 ||
-      (kind === 'snowflinx' || kind === 'wolf' || kind === 'antlion' || mummy || kind === 'armoredbones' || kind === 'undeadminer' || dungeonWalker || lavaSlime) && !e.onGround && e.vy < -1 ||
+      (kind === 'snowflinx' || kind === 'wolf' || kind === 'antlion' || mummy || kind === 'armoredbones' || kind === 'undeadminer' || dungeonWalker || lavaSlime || crawler || goblin || pirateWalker || kind === 'misterstabby' || kind === 'martianofficer' || moonWalker || frostMoonWalker || eclipseWalker) && !e.onGround && e.vy < -1 ||
       kind === 'skeletonarcher' && e.attackCd > 1.9 || kind === 'cursedskull' && e.attackCd > 2.1 ||
       (kind === 'darkcaster' || kind === 'demon' || kind === 'voodoodemon') && e.attackCd > 2.5 ||
-      kind === 'fireimp' && e.attackCd > 2.7 || rushing;
+      kind === 'fireimp' && e.attackCd > 2.7 || rushing ||
+      rangedGoblin && e.attackCd > goblinCooldown - 0.18 && e.attackCd <= goblinCooldown ||
+      pirateShooter && e.attackCd > pirateCooldown - 0.18 && e.attackCd <= pirateCooldown ||
+      frostShooter && e.attackCd > frostCooldown - 0.18 && e.attackCd <= frostCooldown ||
+      martianShooter && e.attackCd > martianCooldown - 0.18 && e.attackCd <= martianCooldown ||
+      martianHeavy && e.attackCd > heavyCooldown - 0.18 && e.attackCd <= heavyCooldown ||
+      martianSpecial && e.attackCd > specialCooldown - 0.18 && e.attackCd <= specialCooldown ||
+      kind === 'elfarcher' && e.attackCd > 1.62 && e.attackCd <= 1.8 ||
+      kind === 'elfcopter' && e.attackCd > 1.4 - 0.18 && e.attackCd <= 1.4;
     if (kind === 'chaoselemental') active = (g.fx || []).some(function(f) {
       return f.type === 'teleport' && f.t > 0 && dist2(f.x,f.y,e.x,e.y) < 24 * 24;
     });
     var frame = tortoise && !charging && Math.abs(e.vx || 0) < 0.2 ? 0 : Math.floor(Time.seconds * (charging || rushing ? 14 : 10)) % 4;
     var facing = charging ? e.chargeDir : e.dir;
-    if (kind === 'gastropod' || kind === 'cursedskull' || kind === 'darkcaster' || kind === 'demon' || kind === 'voodoodemon' || kind === 'fireimp') {
+    if (kind === 'gastropod' || kind === 'cursedskull' || kind === 'darkcaster' || kind === 'demon' || kind === 'voodoodemon' || kind === 'fireimp' || kind === 'goblinarcher' || martianLocal || kind === 'martiandrone' || kind === 'elfcopter') {
       if (g.player && g.player.x !== e.x) facing = g.player.x < e.x ? -1 : 1;
-    } else if (kind === 'hornet' || kind === 'mosshornet' || kind === 'chaoselemental' || kind === 'corruptor') {
+    } else if (kind === 'hornet' || kind === 'mosshornet' || kind === 'chaoselemental' || kind === 'corruptor' || kind === 'goblinsorcerer' || kind === 'goblinsummoner' || pirateShooter || frostShooter || kind === 'martianengineer' || martianHeavy || kind === 'brainscrambler' || kind === 'scutlixgunner' || kind === 'elfarcher') {
       var target = typeof multiplayerTarget === 'function' ? multiplayerTarget(g,e) : g.player;
       if (target && target.x !== e.x) facing = target.x < e.x ? -1 : 1;
-    } else if (!tortoise && !mummy && !undergroundWalker && !dungeonWalker && !lavaSlime && kind !== 'unicorn' && kind !== 'ichorsticker' && kind !== 'snowflinx' && kind !== 'wolf' &&
-      kind !== 'antlion' && kind !== 'antlioncharger' && Math.abs(e.vx || 0) > 0.1) facing = e.vx < 0 ? -1 : 1;
+    } else if (!tortoise && !mummy && !undergroundWalker && !dungeonWalker && !lavaSlime && !crawler && !goblin && !pirateWalker && !moonWalker && !frostMoonWalker && !eclipseWalker && kind !== 'presentmimic' && kind !== 'misterstabby' && kind !== 'martianofficer' && kind !== 'unicorn' && kind !== 'ichorsticker' && kind !== 'snowflinx' && kind !== 'wolf' &&
+      kind !== 'antlion' && kind !== 'antlioncharger' && Math.abs(e.vx || 0) > (aquatic ? 0.01 : 0.1)) facing = e.vx < 0 ? -1 : 1;
     ctx.save();
     try {
       ctx.imageSmoothingEnabled = false; ctx.translate(x,y); if (facing < 0) ctx.scale(-1,1);
@@ -2754,6 +4123,7 @@ var CombatArt = (function() {
 
   return { drawBoss:drawBoss, bossSprite:bossSprite, arenaSprite:arenaSprite,
     enemySprite:enemySprite, drawEnemy:drawEnemy,
+    segmentedSprite:segmentedSprite, drawSegmentedEnemy:drawSegmentedEnemy,
     etherianSprite:etherianSprite, drawOOAEnemy:drawOOAEnemy,
     drawOOAWorld:drawOOAWorld, drawOOASentry:drawOOASentry, drawProjectile:drawProjectile,
     projectileSprite:projectileSprite, drawSwing:drawSwing, drawFX:drawFX };

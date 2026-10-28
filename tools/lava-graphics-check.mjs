@@ -165,7 +165,7 @@ const presentation = await page.evaluate(kinds => {
   function state() { const m = ctx.getTransform(); return JSON.stringify([m.a,m.b,m.c,m.d,m.e,m.f,ctx.globalAlpha,ctx.fillStyle,ctx.strokeStyle,ctx.lineWidth,ctx.font,ctx.textAlign,ctx.imageSmoothingEnabled,ctx.globalCompositeOperation]); }
   const before = state(), gameplay = __lavaState(); game.entities.forEach(e => CombatArt.drawEnemy(ctx,game,e,{ x:e.x,y:e.y },320,320));
   const restored = before === state(), unchanged = gameplay === __lavaState();
-  const fallback = [E.BONESERPENT,E.METEORHEAD,E.ICEGOLEM,-999].every(type => !CombatArt.drawEnemy(ctx,game,{ type },{ x:0,y:0 },320,320));
+  const fallback = [E.BONESERPENT,E.PIGRON,E.ICEGOLEM,-999].every(type => !CombatArt.drawEnemy(ctx,game,{ type },{ x:0,y:0 },320,320));
   const protectedCases = [{ boss:'future' },{ minion:'imp' },{ ooaEnemy:true },{ ooaSentry:true }].every(flags => !CombatArt.drawEnemy(ctx,game,Object.assign({ type:E.REDDEVIL },flags),{ x:0,y:0 },320,320));
   return { facing,poses,restored,unchanged,fallback,protectedCases };
 },kinds);

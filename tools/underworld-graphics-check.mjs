@@ -185,7 +185,7 @@ const presentation = await page.evaluate(kinds => {
   const before = state(), gameplay = __hellState();
   game.entities.forEach(e => CombatArt.drawEnemy(ctx,game,e,{ x:e.x,y:e.y },320,320));
   const restored = before === state(), unchanged = gameplay === __hellState();
-  const fallback = [E.BONESERPENT,E.METEORHEAD,-999].every(type => !CombatArt.drawEnemy(ctx,game,{ type },{ x:0,y:0 },320,320));
+  const fallback = [E.BONESERPENT,E.CRAWLTIPEDE,-999].every(type => !CombatArt.drawEnemy(ctx,game,{ type },{ x:0,y:0 },320,320));
   const protectedCases = [{ boss:'future' },{ minion:'imp' },{ ooaEnemy:true },{ ooaSentry:true }].every(flags => !CombatArt.drawEnemy(ctx,game,Object.assign({ type:E.FIREIMP },flags),{ x:0,y:0 },320,320));
   return { facing,activity,restored,unchanged,fallback,protectedCases };
 },kinds);

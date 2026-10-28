@@ -175,7 +175,7 @@ const presentation = await page.evaluate(kinds => {
   const before = state(), gameplay = __evilState();
   game.entities.forEach(e => CombatArt.drawEnemy(ctx,game,e,{ x:e.x,y:e.y },320,320));
   const restored = before === state(), unchanged = gameplay === __evilState();
-  const fallback = [E.DEVOURER,E.CLINGER,E.FLOATYGROSS,-999].every(type => !CombatArt.drawEnemy(ctx,game,{ type },{ x:0,y:0 },320,320));
+  const fallback = [E.CLINGER,E.FLOATYGROSS,E.WORLDFEEDER,-999].every(type => !CombatArt.drawEnemy(ctx,game,{ type },{ x:0,y:0 },320,320));
   return { facing,activity,restored,unchanged,fallback };
 },kinds);
 check(results,'All four silhouettes mirror exactly without writing enemy facing',presentation.facing.every(s => s.mirror),presentation.facing);
