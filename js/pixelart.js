@@ -246,10 +246,19 @@ var PixelArt = (function() {
   }
 
   function groundDetails(ctx, world, tx, ty, t, x, y) {
+    snowCap(ctx, world, tx, ty, t, x, y);
+    grassBlades(ctx, world, tx, ty, t, x, y);
+  }
+  // Static part of groundDetails: stays inside the tile, so it can be cached.
+  function snowCap(ctx, world, tx, ty, t, x, y) {
     if (leaves[t] && world.surfaceY && world.get(tx, world.surfaceY[tx]) === T.SNOW && world.get(tx, ty - 1) === T.AIR) {
       rect(ctx, '#b6d1df', x + 1, y + 1, 14, 3);
       rect(ctx, '#e6f2ef', x + 2, y, 12, 2);
     }
+  }
+  function hasGrass(t) { return !!grass[t]; }
+  // Animated part of groundDetails: blades sway and reach into the air tile above.
+  function grassBlades(ctx, world, tx, ty, t, x, y) {
     var gp = grass[t];
     if (!gp || world.get(tx, ty - 1) !== T.AIR) return;
     var seed = hash2(tx, ty), sway = Math.round(Math.sin(Time.seconds * 2 + tx * 0.4));
@@ -703,7 +712,9 @@ var PixelArt = (function() {
       var c = landscape(biome, l, night), scale = 2, width = c.width * scale;
       var off = Math.floor(cam.x * [0.08, 0.16, 0.27][l]);
       var start = -((off % width + width) % width);
-      var top = Math.floor(horizon - (l === 0 ? 330 : l === 1 ? 290 : 250));
+      // vertical parallax: far layers drift less than the terrain as the camera climbs or drops
+      var layerHorizon = H / 2 + (horizon - H / 2) * [0.4, 0.55, 0.7][l];
+      var top = Math.floor(layerHorizon - (l === 0 ? 330 : l === 1 ? 290 : 250));
       for (var sx = start; sx < W; sx += width) ctx.drawImage(c, sx, top, width, c.height * scale);
       rect(ctx, landscapePalette(biome, night)[l], 0, Math.max(0, top + c.height * scale), W, Math.max(0, H - top - c.height * scale));
     }
@@ -753,18 +764,24 @@ var PixelArt = (function() {
     for (var layer = 0; layer < 2; layer++) {
       var spacing = layer ? 94 : 150, parallax = layer ? 0.14 : 0.07;
       var offset = Math.floor(cam.x * parallax);
+      // Formations live in fixed horizontal bands of layer space (ceiling at the top of each
+      // band, floor at the bottom) and scroll continuously; wrapping cam.y snapped them back.
+      var band = 720, offsetY = Math.floor(cam.y * parallax);
+      var bandStart = Math.floor(offsetY / band) - 1, bandEnd = Math.floor((offsetY + H) / band) + 1;
       var start = Math.floor(offset / spacing) - 1;
-      for (var i = start; i * spacing - offset < W + spacing; i++) {
-        var seed = hash2(i + layer * 133, 931);
-        var x = i * spacing - offset, width = 12 + seed % 25;
-        var length = 50 + (seed >>> 7) % Math.max(60, Math.floor(H * 0.45));
-        var fromTop = seed % 3 !== 0;
-        var anchor = fromTop ? -((cam.y * parallax) % 80) : H + 60 - ((cam.y * parallax) % 80);
-        for (var row = 0; row < length; row += 4) {
-          var half = Math.round(width * (1 - row / length));
-          var sy = fromTop ? anchor + row : anchor - row;
-          rect(ctx, layer ? front : base, x - half, sy, half * 2 + 2, 4);
-          if (half > 5) rect(ctx, base, x - half + 2, sy, 2, 4);
+      for (var bi = bandStart; bi <= bandEnd; bi++) {
+        for (var i = start; i * spacing - offset < W + spacing; i++) {
+          var seed = hash2(i + layer * 133, 931 + bi * 7919);
+          var x = i * spacing - offset, width = 12 + seed % 25;
+          var length = 50 + (seed >>> 7) % 160;
+          var fromTop = seed % 3 !== 0;
+          var anchor = fromTop ? bi * band - offsetY : (bi + 1) * band - offsetY;
+          for (var row = 0; row < length; row += 4) {
+            var half = Math.round(width * (1 - row / length));
+            var sy = fromTop ? anchor + row : anchor - row;
+            rect(ctx, layer ? front : base, x - half, sy, half * 2 + 2, 4);
+            if (half > 5) rect(ctx, base, x - half + 2, sy, 2, 4);
+          }
         }
       }
     }
@@ -862,7 +879,7 @@ var PixelArt = (function() {
     }
   }
 
-  return { tile: tile, connected: connected, maskAt: maskAt, groundDetails: groundDetails,
+  return { tile: tile, connected: connected, maskAt: maskAt, groundDetails: groundDetails, snowCap: snowCap, grassBlades: grassBlades, hasGrass: hasGrass,
     wall: wall, treeCrowns: treeCrowns, crown: crown, pine: pine, drawActor: drawActor, playerAnimation: playerAnimation, drawWings: drawWings, drawTownActor: drawTownActor, slime: slime, drawCreature: drawCreature,
     drawLandscape: drawLandscape, cloud: cloud, celestial: celestial, drawCavern: drawCavern, item: item,
     isLeaf: isLeaf, foliageLight: foliageLight, tint: tint };

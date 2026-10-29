@@ -386,6 +386,218 @@ function mixColor(baseHex, tintHex, amt) {
   return 'rgb(' + r + ',' + g + ',' + bl + ')';
 }
 
+// ---------- Terrain chunk cache ----------
+// Walls + tiles are pre-rendered into CHUNK x CHUNK tile canvases, so a frame blits ~15 chunk
+// images instead of one drawImage per visible tile. Lots of systems write world.tiles directly,
+// so each chunk keeps a snapshot (plus a 1-tile ring, since connected edges depend on
+// neighbours) and redraws only the cells that differ from it.
+var CHUNK = 32;
+var CHUNK_PX = CHUNK * TILE;
+var CHUNK_SNAP = CHUNK + 2;
+var CHUNK_CACHE_MAX = 40;
+var terrainChunks = { world: null, sprites: null, map: new Map(), spare: [], cap: CHUNK_CACHE_MAX };
+
+function getTerrainChunk(cx, cy) {
+  var key = cy * 65536 + cx;
+  var ch = terrainChunks.map.get(key);
+  if (ch) return ch;
+  if (terrainChunks.map.size >= terrainChunks.cap) {
+    // evict the least recently drawn chunk and recycle its canvas
+    var oldKey = -1, oldUse = Infinity;
+    terrainChunks.map.forEach(function(c, k) { if (c.used < oldUse) { oldUse = c.used; oldKey = k; } });
+    terrainChunks.spare.push(terrainChunks.map.get(oldKey).canvas);
+    terrainChunks.map.delete(oldKey);
+  }
+  var canvas = terrainChunks.spare.pop();
+  if (!canvas) {
+    canvas = document.createElement('canvas');
+    canvas.width = CHUNK_PX; canvas.height = CHUNK_PX;
+  }
+  var n = CHUNK_SNAP * CHUNK_SNAP;
+  ch = {
+    cx: cx, cy: cy, canvas: canvas, ctx: canvas.getContext('2d'), valid: false, used: 0,
+    tiles: new Uint8Array(n), walls: new Uint8Array(n), cov: new Uint8Array(n),
+    surf: new Uint16Array(CHUNK), surfTile: new Uint8Array(CHUNK), dirty: new Uint8Array(CHUNK * CHUNK),
+    tintLevel: -1, hasFoliage: false, anim: []
+  };
+  terrainChunks.map.set(key, ch);
+  return ch;
+}
+
+function drawTerrainCell(ctx, world, ch, tx, ty, lx, ly, foliageLight) {
+  var si = (ly + 1) * CHUNK_SNAP + lx + 1, t = ch.tiles[si], wl = ch.walls[si];
+  var px = lx * TILE, py = ly * TILE;
+  if (t === 0) {
+    // wall behind air tiles
+    if (wl !== 0 && (ty >= ch.surf[lx] || wl === 3)) PixelArt.wall(ctx, wl, px, py, tx, ty);
+    return;
+  }
+  if (ch.cov[si]) return; // drawn as part of a whole tree crown
+  if (t === 17) { ctx.drawImage(SPRITES[T.TORCH][0], px, py); return; }
+  var arr = SPRITES[t];
+  if (!arr) return;
+  var variant = hash2(tx, ty) % TILE_VARIANTS;
+  var art = PixelArt.connected(t, variant, PixelArt.maskAt(world, tx, ty, t), arr[variant]);
+  if ((PixelArt.isLeaf(t) || t === T.TREETRUNK) && ty <= ch.surf[lx]) art = PixelArt.tint(art, foliageLight);
+  ctx.drawImage(art, px, py);
+  PixelArt.snowCap(ctx, world, tx, ty, t, px, py);
+}
+
+function syncTerrainChunk(world, ch, covered, foliageLight, tintLevel) {
+  var tiles = world.tiles, walls = world.walls, surf = world.surfaceY, wW = world.W, wH = world.H;
+  var bx = ch.cx * CHUNK, by = ch.cy * CHUNK;
+  var cw = Math.min(CHUNK, wW - bx), chh = Math.min(CHUNK, wH - by);
+  var full = !ch.valid || (ch.hasFoliage && ch.tintLevel !== tintLevel);
+  ch.tintLevel = tintLevel;
+  var lx, ly;
+  for (lx = 0; lx < cw; lx++) {
+    // wall visibility and foliage tint key off the surface line; snow caps off the surface tile
+    var sy = surf[bx + lx], st = tiles[sy * wW + bx + lx];
+    if (ch.surf[lx] !== sy || ch.surfTile[lx] !== st) { ch.surf[lx] = sy; ch.surfTile[lx] = st; full = true; }
+  }
+  var dirty = ch.dirty, any = full;
+  for (ly = -1; ly <= chh; ly++) {
+    var wy = by + ly;
+    if (wy < 0 || wy >= wH) continue;
+    for (lx = -1; lx <= cw; lx++) {
+      var wx = bx + lx;
+      if (wx < 0 || wx >= wW) continue;
+      var wi = wy * wW + wx, si = (ly + 1) * CHUNK_SNAP + lx + 1, t = tiles[wi];
+      var inside = lx >= 0 && ly >= 0 && lx < cw && ly < chh;
+      var wl = inside ? walls[wi] : 0;
+      var cv = inside && (t === T.TREETRUNK || PixelArt.isLeaf(t)) && covered.has(wi) ? 1 : 0;
+      if (ch.tiles[si] === t && ch.walls[si] === wl && ch.cov[si] === cv) continue;
+      var tileChanged = ch.tiles[si] !== t;
+      ch.tiles[si] = t; ch.walls[si] = wl; ch.cov[si] = cv;
+      any = true;
+      if (full) continue;
+      if (inside) dirty[ly * CHUNK + lx] = 1;
+      if (!tileChanged) continue;
+      // neighbours' connected edges / snow caps depend on this tile
+      if (ly > 0 && lx >= 0 && lx < cw && ly - 1 < chh) dirty[(ly - 1) * CHUNK + lx] = 1;
+      if (ly + 1 < chh && lx >= 0 && lx < cw && ly + 1 >= 0) dirty[(ly + 1) * CHUNK + lx] = 1;
+      if (lx > 0 && ly >= 0 && ly < chh && lx - 1 < cw) dirty[ly * CHUNK + lx - 1] = 1;
+      if (lx + 1 < cw && ly >= 0 && ly < chh && lx + 1 >= 0) dirty[ly * CHUNK + lx + 1] = 1;
+    }
+  }
+  ch.valid = true;
+  if (!any) return;
+  var cctx = ch.ctx;
+  if (full) cctx.clearRect(0, 0, CHUNK_PX, CHUNK_PX);
+  for (ly = 0; ly < chh; ly++) {
+    for (lx = 0; lx < cw; lx++) {
+      var di = ly * CHUNK + lx;
+      if (!full && !dirty[di]) continue;
+      dirty[di] = 0;
+      if (!full) cctx.clearRect(lx * TILE, ly * TILE, TILE, TILE);
+      drawTerrainCell(cctx, world, ch, bx + lx, by + ly, lx, ly, foliageLight);
+    }
+  }
+  // animated overlays as flat [lx, ly, kind, ...]: 0 torch flame, 1 grass blades, 2 liquid surface
+  var anim = ch.anim;
+  anim.length = 0;
+  ch.hasFoliage = false;
+  for (ly = 0; ly < chh; ly++) {
+    for (lx = 0; lx < cw; lx++) {
+      var ci = (ly + 1) * CHUNK_SNAP + lx + 1, ta = ch.tiles[ci], above = ch.tiles[ci - CHUNK_SNAP];
+      if (ta === 0) continue;
+      if (ta === T.TREETRUNK || PixelArt.isLeaf(ta)) ch.hasFoliage = true;
+      if (ta === 17) { anim.push(lx, ly, 0); continue; }
+      if (ch.cov[ci] || !SPRITES[ta]) continue;
+      if (PixelArt.hasGrass(ta) && above === T.AIR && by + ly > 0) anim.push(lx, ly, 1);
+      if ((ta === 29 || ta === 50) && above !== ta) anim.push(lx, ly, 2);
+    }
+  }
+}
+
+function drawTerrainChunks(game, ctx, cam, W, H, x0, x1, y0, y1, foliageLight) {
+  var world = game.world;
+  if (terrainChunks.world !== world || terrainChunks.sprites !== SPRITES) {
+    terrainChunks.map.forEach(function(c) { terrainChunks.spare.push(c.canvas); });
+    terrainChunks.map.clear();
+    terrainChunks.world = world;
+    terrainChunks.sprites = SPRITES;
+  }
+  var cx0 = Math.floor(x0 / CHUNK), cx1 = Math.floor(x1 / CHUNK);
+  var cy0 = Math.floor(y0 / CHUNK), cy1 = Math.floor(y1 / CHUNK);
+  // keep at least two screens' worth cached so huge viewports never evict chunks drawn this frame
+  terrainChunks.cap = Math.max(CHUNK_CACHE_MAX, (cx1 - cx0 + 1) * (cy1 - cy0 + 1) * 2);
+  // crowns span many tiles, so detect them over the whole chunk range: every cached cell then
+  // agrees on whether it is covered
+  var treeArt = PixelArt.treeCrowns(world, cx0 * CHUNK, Math.min(world.W - 1, (cx1 + 1) * CHUNK - 1),
+    cy0 * CHUNK, Math.min(world.H - 1, (cy1 + 1) * CHUNK - 1));
+  var tintLevel = Math.min(8, Math.round(foliageLight * 8));
+  var offX = W / 2 - cam.x, offY = H / 2 - cam.y;
+  for (var cy = cy0; cy <= cy1; cy++) {
+    for (var cx = cx0; cx <= cx1; cx++) {
+      var ch = getTerrainChunk(cx, cy);
+      syncTerrainChunk(world, ch, treeArt.covered, foliageLight, tintLevel);
+      ch.used = Time.frame;
+      var bpx = Math.floor(cx * CHUNK_PX + offX), bpy = Math.floor(cy * CHUNK_PX + offY);
+      ctx.drawImage(ch.canvas, bpx, bpy);
+      var anim = ch.anim;
+      for (var a = 0; a < anim.length; a += 3) {
+        var tx = cx * CHUNK + anim[a], ty = cy * CHUNK + anim[a + 1];
+        var px = bpx + anim[a] * TILE, py = bpy + anim[a + 1] * TILE;
+        if (px < -TILE || px > W || py < -TILE || py > H) continue;
+        var kind = anim[a + 2];
+        if (kind === 0) {
+          ctx.fillStyle = '#fff0b5';
+          ctx.fillRect(px + 8, py + 3 + Math.floor(Time.seconds * 8 + tx) % 2, 1, 3);
+        } else if (kind === 1) {
+          PixelArt.grassBlades(ctx, world, tx, ty, world.tiles[ty * world.W + tx], px, py);
+        } else {
+          // liquid surface
+          var t = world.tiles[ty * world.W + tx];
+          var wave = Math.sin(Time.seconds * 2.4 + tx * 0.85) * 1.3;
+          if (t === 29) {
+            ctx.fillStyle = 'rgba(150,200,255,0.35)';
+            ctx.fillRect(px, Math.floor(py + 2 + wave), TILE, 1);
+          } else {
+            ctx.fillStyle = 'rgba(255,210,90,0.45)';
+            ctx.fillRect(px, Math.floor(py + 2 + wave), TILE, 2);
+          }
+        }
+      }
+    }
+  }
+  if (game.minedTiles) drawMiningCracks(game, ctx, treeArt.covered, offX, offY, W, H);
+  return treeArt;
+}
+
+// mining crack overlay: show damage on actively mined tiles
+function drawMiningCracks(game, ctx, covered, offX, offY, W, H) {
+  var world = game.world;
+  for (var mkey in game.minedTiles) {
+    var comma = mkey.indexOf(',');
+    var tx2 = +mkey.slice(0, comma), ty2 = +mkey.slice(comma + 1);
+    if (!world.inBounds(tx2, ty2)) continue;
+    var px2 = Math.floor(tx2 * TILE + offX), screenY = Math.floor(ty2 * TILE + offY);
+    if (px2 < -TILE || px2 > W || screenY < -TILE || screenY > H) continue;
+    var ii2 = ty2 * world.W + tx2, t2 = world.tiles[ii2];
+    if (t2 === 0 || t2 === 17 || covered.has(ii2) || !SPRITES[t2]) continue;
+    var mhp = world.hp[ii2];
+    var maxhp = (TILE_HARD[t2] || [0, 40])[1];
+    if (maxhp > 0 && mhp < maxhp) {
+      var dmgPct = 1 - (mhp / maxhp);
+      var numCracks = Math.ceil(dmgPct * 4);
+      ctx.strokeStyle = 'rgba(0,0,0,' + (0.3 + dmgPct * 0.4) + ')';
+      ctx.lineWidth = 1;
+      var seed2 = hash2(tx2 * 7, ty2 * 13);
+      for (var ci = 0; ci < numCracks; ci++) {
+        var cx2 = (seed2 % 12) + 2; seed2 = (seed2 * 1103515245 + 12345) & 0x7fffffff;
+        var cy2 = (seed2 % 12) + 2; seed2 = (seed2 * 1103515245 + 12345) & 0x7fffffff;
+        var cl2 = 2 + (seed2 % 4); seed2 = (seed2 * 1103515245 + 12345) & 0x7fffffff;
+        var ca2 = (seed2 % 3) - 1; seed2 = (seed2 * 1103515245 + 12345) & 0x7fffffff;
+        ctx.beginPath();
+        ctx.moveTo(px2 + cx2, screenY + cy2);
+        ctx.lineTo(px2 + cx2 + cl2, screenY + cy2 + ca2);
+        ctx.stroke();
+      }
+    }
+  }
+}
+
 // ---------- Main render ----------
 function renderGame(game, ctx) {
   if (!SPRITES) buildSprites();
@@ -402,9 +614,9 @@ function renderGame(game, ctx) {
     };
   }
 
-  // determine surface horizon
-  var cxTile = clamp(Math.floor(cam.x / TILE), 0, game.world.W - 1);
-  var horizon = game.world.surfaceY[cxTile] * TILE;
+  // backdrop horizon: smoothed surface height around the camera (not the column under it,
+  // which stepped the whole sky/backdrop by a tile every time the terrain did)
+  var horizon = backgroundHorizon(game.world, cam.x);
 
   // --- sky / underground background ---
   drawBackground(game, ctx, cam, W, H, horizon);
@@ -418,88 +630,10 @@ function renderGame(game, ctx) {
   var tileCtx = ctx;
   var world = game.world;
 
-  // draw walls + tiles (optimized: direct array access, occlusion culling)
-  var tilesArr = world.tiles;
-  var wallsArr = world.walls;
-  var surfaceArr = world.surfaceY;
-  var wW = world.W, wH = world.H;
-  var tileCtx2 = tileCtx;
-  var treeArt = PixelArt.treeCrowns(world, x0, x1, y0, y1);
+  // draw walls + tiles from the chunk cache; torch flames, grass, liquid surfaces and mining
+  // cracks are drawn live on top
   var foliageLight = PixelArt.foliageLight(game);
-  for (var ty2 = y0; ty2 <= y1; ty2++) {
-    var rowBase = ty2 * wW;
-    var screenY = Math.floor(ty2 * TILE - cam.y + H / 2);
-    if (screenY < -TILE || screenY > H) continue;
-    var surfY2 = surfaceArr[ty2] !== undefined ? surfaceArr[Math.floor(cam.x / TILE)] : 0;
-    for (var tx2 = x0; tx2 <= x1; tx2++) {
-      var ii2 = rowBase + tx2;
-      var t2 = tilesArr[ii2];
-      var wl2 = wallsArr[ii2];
-      var px2 = Math.floor(tx2 * TILE - cam.x + W / 2);
-      if (px2 < -TILE || px2 > W) continue;
-      // wall behind air tiles
-      if (t2 === 0 && wl2 !== 0 && (ty2 >= (surfaceArr[tx2] || 0) || wl2 === 3)) {
-        PixelArt.wall(tileCtx2, wl2, px2, screenY, tx2, ty2);
-        continue;
-      }
-      if (t2 === 0) continue;
-      if (treeArt.covered.has(ii2)) continue;
-      // NOTE: no occlusion culling here — tiles are not fully opaque (leaves have
-      // transparent pixels, variants differ), so culling "surrounded" tiles showed
-      // the dark background through tree canopies and solid underground.
-      if (t2 === 17) {
-        // torch
-        tileCtx2.drawImage(SPRITES[T.TORCH][0], px2, screenY);
-        tileCtx2.fillStyle = '#fff0b5';
-        tileCtx2.fillRect(px2 + 8, screenY + 3 + Math.floor(Time.seconds * 8 + tx2) % 2, 1, 3);
-        continue;
-      }
-      var arr2 = SPRITES[t2];
-      if (!arr2) continue;
-      var variant2 = hash2(tx2, ty2) % TILE_VARIANTS;
-      var tileMask = PixelArt.maskAt(world, tx2, ty2, t2);
-      var tileArt = PixelArt.connected(t2, variant2, tileMask, arr2[variant2]);
-      if ((PixelArt.isLeaf(t2) || t2 === T.TREETRUNK) && ty2 <= surfaceArr[tx2]) tileArt = PixelArt.tint(tileArt, foliageLight);
-      tileCtx2.drawImage(tileArt, px2, screenY);
-      PixelArt.groundDetails(tileCtx2, world, tx2, ty2, t2, px2, screenY);
-      // mining crack overlay: show damage on actively mined tiles
-      if (game.minedTiles) {
-        var mkey = tx2 + ',' + ty2;
-        if (game.minedTiles[mkey]) {
-          var mhp = world.hp[ii2];
-          var maxhp = (TILE_HARD[t2] || [0, 40])[1];
-          if (maxhp > 0 && mhp < maxhp) {
-            var dmgPct = 1 - (mhp / maxhp);
-            var numCracks = Math.ceil(dmgPct * 4);
-            tileCtx2.strokeStyle = 'rgba(0,0,0,' + (0.3 + dmgPct * 0.4) + ')';
-            tileCtx2.lineWidth = 1;
-            var seed2 = hash2(tx2 * 7, ty2 * 13);
-            for (var ci = 0; ci < numCracks; ci++) {
-              var cx2 = (seed2 % 12) + 2; seed2 = (seed2 * 1103515245 + 12345) & 0x7fffffff;
-              var cy2 = (seed2 % 12) + 2; seed2 = (seed2 * 1103515245 + 12345) & 0x7fffffff;
-              var cl2 = 2 + (seed2 % 4); seed2 = (seed2 * 1103515245 + 12345) & 0x7fffffff;
-              var ca2 = (seed2 % 3) - 1; seed2 = (seed2 * 1103515245 + 12345) & 0x7fffffff;
-              tileCtx2.beginPath();
-              tileCtx2.moveTo(px2 + cx2, screenY + cy2);
-              tileCtx2.lineTo(px2 + cx2 + cl2, screenY + cy2 + ca2);
-              tileCtx2.stroke();
-            }
-          }
-        }
-      }
-      // liquid surface
-      if ((t2 === 29 || t2 === 50 || t2 === 51 || t2 === 36) && tilesArr[ii2 - wW] !== t2) {
-        var wave = Math.sin(Time.seconds * 2.4 + tx2 * 0.85) * 1.3;
-        if (t2 === 29) {
-          tileCtx2.fillStyle = 'rgba(150,200,255,0.35)';
-          tileCtx2.fillRect(px2, Math.floor(screenY + 2 + wave), TILE, 1);
-        } else if (t2 === 50) {
-          tileCtx2.fillStyle = 'rgba(255,210,90,0.45)';
-          tileCtx2.fillRect(px2, Math.floor(screenY + 2 + wave), TILE, 2);
-        }
-      }
-    }
-  }
+  var treeArt = drawTerrainChunks(game, tileCtx, cam, W, H, x0, x1, y0, y1, foliageLight);
 
   for (var treeIdx = 0; treeIdx < treeArt.crowns.length; treeIdx++) {
     var tree = treeArt.crowns[treeIdx];
@@ -680,6 +814,21 @@ function twilightAmt(t) {
 
 
 
+var BG_HORIZON_SPAN = 48; // columns either side averaged into the backdrop horizon
+
+function averageSurface(world, cx) {
+  var surf = world.surfaceY, last = world.W - 1, sum = 0;
+  for (var x = cx - BG_HORIZON_SPAN; x <= cx + BG_HORIZON_SPAN; x++) sum += surf[x < 0 ? 0 : (x > last ? last : x)];
+  return sum / (BG_HORIZON_SPAN * 2 + 1);
+}
+
+// World-space y of the backdrop horizon; interpolated between columns so it is continuous in cam.x.
+function backgroundHorizon(world, camX) {
+  var fx = camX / TILE - 0.5;
+  var c0 = Math.floor(fx), f = fx - c0;
+  return (averageSurface(world, c0) * (1 - f) + averageSurface(world, c0 + 1) * f) * TILE;
+}
+
 function drawBackground(game, ctx, cam, W, H, horizon) {
   var p = game.player;
   var currentBiome = game.world.biomeAt(p.x, p.y);
@@ -726,7 +875,7 @@ function drawBackground(game, ctx, cam, W, H, horizon) {
       skyTop = hexBlend(skyTop, '#2a1e46', twi * 0.7);
       skyBot = hexBlend(skyBot, '#ff9a50', twi * 0.75);
     }
-    var skyEnd = clamp(Math.max(horizonScreen, maxSurfaceScreen), 1, H);
+    var skyEnd = clamp(horizonScreen, 1, H);
     var g = ctx.createLinearGradient(0, 0, 0, skyEnd);
     g.addColorStop(0, skyTop);
     g.addColorStop(1, skyBot);
@@ -5080,35 +5229,13 @@ function drawMinimap(game, ctx) {
     drawMinimap._canvas.height = mh;
   }
   var mc = drawMinimap._canvas;
-  var mctx = mc.getContext('2d');
-  var img = mctx.createImageData(mw, mh);
-  var d = img.data;
-
-  for (var y = 0; y < mh; y++) {
-    for (var x = 0; x < mw; x++) {
-      var tx = x0 + x, ty = y0 + y;
-      var o = (y * mw + x) * 4;
-      if (tx < 0 || tx >= world.W || ty < 0 || ty >= world.H) {
-        d[o] = 10; d[o+1] = 10; d[o+2] = 16; d[o+3] = 255; continue;
-      }
-      var t = world.tiles[ty * world.W + tx];
-      var col = MINIMAP_COLORS[t];
-      if (col) {
-        var rgb = hexToRgb(col);
-        d[o] = rgb[0]; d[o+1] = rgb[1]; d[o+2] = rgb[2]; d[o+3] = 255;
-      } else if (t === 0) {
-        var wl = world.walls[ty * world.W + tx];
-        if (wl === 1) { d[o] = 40; d[o+1] = 32; d[o+2] = 24; }
-        else if (wl === 2) { d[o] = 58; d[o+1] = 61; d[o+2] = 69; }
-        else if (wl !== 0) { d[o] = 32; d[o+1] = 32; d[o+2] = 40; }
-        else { d[o] = 12; d[o+1] = 12; d[o+2] = 18; }
-        d[o+3] = 255;
-      } else {
-        d[o] = 136; d[o+1] = 136; d[o+2] = 136; d[o+3] = 255;
-      }
-    }
+  // the 200x120 scan only reruns when the player crosses a tile, plus a few times a second to pick up world edits
+  var stale = drawMinimap._px !== px || drawMinimap._py !== py || drawMinimap._world !== world ||
+    Time.frame - (drawMinimap._frame || 0) >= 15 || Time.frame < drawMinimap._frame;
+  if (stale) {
+    drawMinimap._px = px; drawMinimap._py = py; drawMinimap._world = world; drawMinimap._frame = Time.frame;
+    fillMinimapImage(world, mc, x0, y0, mw, mh);
   }
-  mctx.putImageData(img, 0, 0);
 
   // draw to screen
   var dw = 210, dh = 126;
@@ -5127,6 +5254,45 @@ function drawMinimap(game, ctx) {
   ctx.beginPath();
   ctx.moveTo(ppx, ppy - 4); ctx.lineTo(ppx - 3, ppy + 3); ctx.lineTo(ppx + 3, ppy + 3);
   ctx.closePath(); ctx.fill();
+}
+
+var MINIMAP_RGB = [];
+function minimapRgb(t) {
+  var rgb = MINIMAP_RGB[t];
+  if (rgb === undefined) rgb = MINIMAP_RGB[t] = MINIMAP_COLORS[t] ? hexToRgb(MINIMAP_COLORS[t]) : null;
+  return rgb;
+}
+
+function fillMinimapImage(world, mc, x0, y0, mw, mh) {
+  var mctx = mc.getContext('2d');
+  if (!fillMinimapImage._img) fillMinimapImage._img = mctx.createImageData(mw, mh);
+  var img = fillMinimapImage._img;
+  var d = img.data;
+
+  for (var y = 0; y < mh; y++) {
+    for (var x = 0; x < mw; x++) {
+      var tx = x0 + x, ty = y0 + y;
+      var o = (y * mw + x) * 4;
+      if (tx < 0 || tx >= world.W || ty < 0 || ty >= world.H) {
+        d[o] = 10; d[o+1] = 10; d[o+2] = 16; d[o+3] = 255; continue;
+      }
+      var t = world.tiles[ty * world.W + tx];
+      var rgb = minimapRgb(t);
+      if (rgb) {
+        d[o] = rgb[0]; d[o+1] = rgb[1]; d[o+2] = rgb[2]; d[o+3] = 255;
+      } else if (t === 0) {
+        var wl = world.walls[ty * world.W + tx];
+        if (wl === 1) { d[o] = 40; d[o+1] = 32; d[o+2] = 24; }
+        else if (wl === 2) { d[o] = 58; d[o+1] = 61; d[o+2] = 69; }
+        else if (wl !== 0) { d[o] = 32; d[o+1] = 32; d[o+2] = 40; }
+        else { d[o] = 12; d[o+1] = 12; d[o+2] = 18; }
+        d[o+3] = 255;
+      } else {
+        d[o] = 136; d[o+1] = 136; d[o+2] = 136; d[o+3] = 255;
+      }
+    }
+  }
+  mctx.putImageData(img, 0, 0);
 }
 
 function drawFullMap(game, ctx) {
@@ -5172,9 +5338,8 @@ function drawFullMap(game, ctx) {
         d[o] = 10; d[o+1] = 10; d[o+2] = 16; d[o+3] = 255; continue;
       }
       var t = world.tiles[ty * world.W + tx];
-      var col = MINIMAP_COLORS[t];
-      if (col) {
-        var rgb = hexToRgb(col);
+      var rgb = minimapRgb(t);
+      if (rgb) {
         d[o] = rgb[0]; d[o+1] = rgb[1]; d[o+2] = rgb[2]; d[o+3] = 255;
       } else if (t === 0) {
         var wl = world.walls[ty * world.W + tx];
