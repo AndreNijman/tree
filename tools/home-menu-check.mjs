@@ -132,6 +132,8 @@ finally {
   await browser.close(); await new Promise(resolve => server.close(resolve));
   const result = { ok:checks.length > 0 && checks.every(s => s.ok),checks,errors };
   await writeFile(path.join(dir,'summary.json'),JSON.stringify(result,null,2));
+  await mkdir(path.join(root,'test-results','audit2'),{ recursive:true });
+  await writeFile(path.join(root,'test-results','audit2','home-menu.json'),JSON.stringify(result,null,2));
   await writeFile(path.join(dir,'index.html'),`<!doctype html><meta charset="utf-8"><title>Tree opening menu review</title><style>body{background:#102629;color:#e5eadb;max-width:1280px;margin:32px auto;padding:0 20px;font:16px system-ui}img{max-width:100%;border:1px solid #496053;margin:12px 0 32px}a{color:#d3bf86}</style><h1>Tree / opening menu</h1><p>Original pixel scenery and responsive menu panels. Browser test: ${checks.filter(s => s.ok).length}/${checks.length} passed. Test saves and hosted worlds are disposable fixtures.</p>${['desktop-empty','desktop-saved','desktop-create','menu-390x844','mobile-multiplayer','mobile-saves','pause','field-guide'].map(name => `<h2>${name.replace(/-/g,' ')}</h2><img src="${name}.png" alt="${name.replace(/-/g,' ')}">`).join('')}`);
   console.log(`${checks.filter(s => s.ok).length}/${checks.length} passed`); if (!result.ok) process.exitCode = 1;
 }

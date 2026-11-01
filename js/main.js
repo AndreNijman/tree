@@ -638,7 +638,9 @@ function saveSnapshot() {
       });
     }
   }
-  return {
+  // Detach before asynchronous storage/network work. Cursor transfers during
+  // the pending save must not mutate its inventory/pickups or duplicate items.
+  return JSON.parse(JSON.stringify({
     format: SAVE_FORMAT,
     savedAt: Date.now(),
     seed: w.seed,
@@ -670,7 +672,8 @@ function saveSnapshot() {
       inventory: {
         slots: inv.slots, selected: inv.selected, armor: inv.armor,
         accessories: inv.accessories, dyes: inv.dyes, ammo: inv.ammo,
-        potionCd: inv.potionCd
+        potionCd: inv.potionCd,
+        held: typeof Net !== 'undefined' && Net.isClient() ? null : game.held
       }
     },
     progress: {
@@ -713,7 +716,7 @@ function saveSnapshot() {
     pickups: game.pickups,
     minions: minions,
     pillars: pillars
-  };
+  }));
 }
 
 function canSaveGame(silent) {
@@ -786,6 +789,18 @@ function sanitizeSavedItemIds() {
   // entries, ids from older build versions) so render paths that dereference
   // ITEMS[stack.id].color/.name or ITEMS[id] stay crash-free on old saves.
   var inv = game.player.inventory;
+  if (game.held) {
+    var held = game.held;
+    if (Array.isArray(held) || typeof held.id !== 'string' || !ITEMS[held.id] ||
+        typeof held.count !== 'number' || !isFinite(held.count) ||
+        held.count <= 0 || held.count > 9007199254740991 || Math.floor(held.count) !== held.count) {
+      game.held = null;
+    } else if (held.reforge) {
+      var safeHeldReforge = sanitizeReforge(held.reforge);
+      if (safeHeldReforge) held.reforge = safeHeldReforge;
+      else delete held.reforge;
+    }
+  }
   for (var i = 0; i < inv.slots.length; i++) {
     if (inv.slots[i] && (!inv.slots[i].id || !ITEMS[inv.slots[i].id])) inv.slots[i] = null;
   }
@@ -965,6 +980,9 @@ function applySaveData(data) {
   p.inventory.dyes = savedInv.dyes || [null, null, null, null, null, null];
   p.inventory.ammo = savedInv.ammo || null;
   p.inventory.potionCd = savedInv.potionCd || 0;
+  // Joining clients restore their own character, not the host's cursor stack.
+  game.held = savedInv.held && (typeof Net === 'undefined' || !Net.isClient()) ?
+    JSON.parse(JSON.stringify(savedInv.held)) : null;
   sanitizeSavedItemIds();
   restorePetList(ps.pets || [], false);
   restorePetList(ps.lightPets || [], true);
@@ -997,6 +1015,8 @@ function applySaveData(data) {
   w.dirty = true;
   game.cam.x = p.x; game.cam.y = p.y;
   game.panelOpen = false; game.paused = false;
+  // Restore the exact stack even when every inventory slot is full.
+  if (game.held) { openPanel(); updateCursorItem(); }
   if (game.victory && game.showVictory) game.showVictory();
 }
 
@@ -2074,6 +2094,7 @@ function step(dt) {
 
   handleKeys();
   if (typeof Net !== 'undefined') Net.update(dt);
+  refreshPointerWorld();
   if (game.mapOpen) { $('hud').style.opacity = '0'; updateMessage(dt); return; }
   $('hud').style.opacity = '1';
 
@@ -2168,8 +2189,15 @@ function step(dt) {
   // right-click interaction
   if (MOUSE.rightJust) {
     MOUSE.rightJust = false;
-    if (!game.panelOpen) {
-      if (!tryActivateEterniaStand() && !tryTogglePartyCenter() && !tryRescueTownNpc() && !tryOpenGuideNpc() && !tryOpenTavernkeep() && !tryOpenTownNpc() && !tryOpenPylon()) tryOpenChest();
+    if (!game.panelOpen && !game.player.dying) {
+      // Interaction takes priority; a placeable item is the fallback, never a
+      // weapon/tool/consumable. Left-click placement remains supported.
+      var interacted = tryActivateEterniaStand() || tryTogglePartyCenter() || tryRescueTownNpc() || tryOpenGuideNpc() || tryOpenTavernkeep() || tryOpenTownNpc() || tryOpenPylon() || tryOpenChest();
+      if (!interacted && !game.panelOpen && !MOUSE.down) {
+        var placeItem = game.player.inventory.selectedItem(), placeDef = placeItem && ITEMS[placeItem.id];
+        if (placeDef && placeDef.type === 'wall') game.player.tryPlaceWall(game,placeItem.id);
+        else if (placeDef && (placeDef.type === 'block' || placeDef.type === 'bar' || placeDef.type === 'pylon')) game.player.tryPlace(game,placeItem.id);
+      }
     }
   }
 
@@ -2234,6 +2262,7 @@ function updateCamera(dt) {
   else game.cam.x = clamp(game.cam.x, hw, mw - hw);
   if (mh <= canvas.height) game.cam.y = mh / 2;
   else game.cam.y = clamp(game.cam.y, hh, mh - hh);
+  refreshPointerWorld();
 }
 
 // ---------- Projectiles ----------
@@ -3158,10 +3187,11 @@ function updateDungeonGuardian() {
   }
   var p = game.player;
   var px = p.x / TILE, py = p.y / TILE;
-  // inside the dungeon body, a few rows below the surface entrance, and
-  // Skeletron still stands
+  // The rectangle encloses distant rooms and halls, including non-dungeon
+  // surface terrain in some seeds. Require the existing local brick/biome
+  // check too, so only entering the actual dungeon body triggers protection.
   var inside = !game.world.dungeonOpen && px >= r.x0 && px <= r.x1 &&
-    py > r.y0 + 4 && py < r.y1;
+    py > r.y0 + 4 && py < r.y1 && game.world.biomeAt(p.x, p.y) === BIOME.DUNGEON;
   if (!inside) {
     for (var d = 0; d < guardians.length; d++) guardians[d].dead = true;
     return;
@@ -3773,19 +3803,19 @@ function updateTorchGod(dt) {
 // ---------- Chests ----------
 function tryOpenChest() {
   var tx = MOUSE.tpx, ty = MOUSE.tpy;
-  if (tx < 0 || ty < 0 || tx >= game.world.W || ty >= game.world.H) return;
+  if (tx < 0 || ty < 0 || tx >= game.world.W || ty >= game.world.H) return false;
   var chestTile = game.world.get(tx, ty);
-  if (chestTile !== T.CHEST && chestTile !== T.SHADOWCHEST) return;
+  if (chestTile !== T.CHEST && chestTile !== T.SHADOWCHEST) return false;
   var p = game.player;
   var cx = tx * TILE + 8, cy = ty * TILE + 8;
-  if (dist(p.x, p.y, cx, cy) > 72) { game.message('Too far away.'); return; }
+  if (dist(p.x, p.y, cx, cy) > 72) { game.message('Too far away.'); return true; }
   game.chest = game.world.chestAt(tx, ty);
   if (game.chest && game.chest.locked) {
     var keyId = game.chest.key || I.SHADOWKEY;
     if (p.inventory.countOf(keyId) < 1) {
       game.message('A Shadow Key is required.');
       game.chest = null;
-      return;
+      return true;
     }
     game.chest.locked = false;
     game.message('The Shadow Chest unlocks.');
@@ -3794,6 +3824,7 @@ function tryOpenChest() {
   openPanel();
   switchPanel('chest');
   renderPanel('chest');
+  return true;
 }
 
 function closeChest() {
@@ -4221,6 +4252,26 @@ function pickEnemy() {
 }
 
 // ---------- Input ----------
+var pointerKnown = false;
+
+function refreshPointerWorld() {
+  if (!pointerKnown || !game || !game.started || !game.cam) return;
+  var rect = canvas.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  // HUD/map dragging uses client coordinates; world targeting uses canvas
+  // pixels. Outside/panel positions must not snap onto a mineable edge tile.
+  MOUSE.wx = (MOUSE.x - rect.left) * canvas.width / rect.width - canvas.width / 2 + game.cam.x;
+  MOUSE.wy = (MOUSE.y - rect.top) * canvas.height / rect.height - canvas.height / 2 + game.cam.y;
+  MOUSE.tpx = Math.floor(MOUSE.wx / TILE);
+  MOUSE.tpy = Math.floor(MOUSE.wy / TILE);
+}
+
+function rememberPointer(e) {
+  MOUSE.x = e.clientX; MOUSE.y = e.clientY;
+  pointerKnown = true;
+  refreshPointerWorld();
+}
+
 function initInput() {
   document.addEventListener('keydown', function(e) {
     // don't hijack keys while typing in text fields
@@ -4251,16 +4302,9 @@ function initInput() {
     KEY[e.key] = false;
     if (e.key === ' ') KEY['Space'] = false;
   });
-  document.addEventListener('mousemove', function(e) {
-    MOUSE.x = e.clientX; MOUSE.y = e.clientY;
-    if (game && game.started && game.cam) {
-      MOUSE.wx = MOUSE.x - canvas.width / 2 + game.cam.x;
-      MOUSE.wy = MOUSE.y - canvas.height / 2 + game.cam.y;
-      MOUSE.tpx = Math.floor(MOUSE.wx / TILE);
-      MOUSE.tpy = Math.floor(MOUSE.wy / TILE);
-    }
-  });
+  document.addEventListener('mousemove', rememberPointer);
   document.addEventListener('mousedown', function(e) {
+    rememberPointer(e);
     AudioSys.init();
     AudioSys.resume();
     if (e.button === 0) MOUSE.down = true;
@@ -5292,7 +5336,7 @@ function renderGuide() {
   }
 
   if (!has(I.COPPERPICK) || (!has(I.COPPERSWORD) && !has(I.COPPERSHORT))) {
-    tips.push('Chop trees with your Copper Axe (right-click) to gather Wood.');
+    tips.push('Select your Copper Axe and hold left-click on a tree to gather Wood. Use a Pickaxe for stone and ore.');
   }
   if (has(I.WOOD) && !nearStation(T.WORKBENCH)) {
     tips.push('Craft a Workbench from 10 Wood to unlock more recipes.');
@@ -5960,22 +6004,16 @@ function updateCrosshair() {
       txt += ' — ' + (TILE_DROP[mineTile] ? ITEMS[TILE_DROP[mineTile]].name : mineTile === T.AIR ? 'Wall' : tileName(mineTile));
       thClass = 'hint-ok';
     } else txt += ' — no reachable target';
-  } else if (held && (held.type === 'block' || held.type === 'pylon' || held.type === 'wall' || held.tile !== undefined)) {
-    var px = game.player.x, py = game.player.y;
-    var tx = MOUSE.tpx * TILE + 8, ty = MOUSE.tpy * TILE + 8;
-    var range = (held.type === 'wall') ? 6 : 5;
-    var inRange = dist(px, py, tx, ty) < range * TILE;
-    var curTile = game.world.get(MOUSE.tpx, MOUSE.tpy);
-    var canPlace = inRange && (curTile === T.AIR || (held.type !== 'wall' && curTile !== T.AIR));
-    if (!inRange) { txt = 'Too far!'; thClass = 'hint-bad'; }
-    else if (held.type === 'wall' && game.world.wall(MOUSE.tpx, MOUSE.tpy) !== WALL.NONE) { txt = 'Wall already here'; thClass = 'hint-bad'; }
-    else if (held.type === 'block' && curTile !== T.AIR) { txt = 'Space occupied'; thClass = 'hint-bad'; }
-    else if (game.world.overlapsPlayer(MOUSE.tpx, MOUSE.tpy, game.player)) { txt = 'Blocked by player'; thClass = 'hint-bad'; }
-    else { txt = 'Place ' + held.name; thClass = 'hint-ok'; }
+  } else if (heldDef && (heldDef.tile !== undefined || heldDef.type === 'wall')) {
+    var placeTarget = game.player.placementTarget(game,held.id);
+    if (placeTarget && !placeTarget.reason) { txt = 'Place ' + heldDef.name + ' — left or right click'; thClass = 'hint-ok'; }
+    else { txt = placeTarget ? placeTarget.reason : 'Cannot place this item.'; thClass = 'hint-bad'; }
   } else if (t >= 0 && t !== T.AIR) {
     var name = TILE_DROP[t] ? ITEMS[TILE_DROP[t]].name : tileName(t);
     var hp = game.world.hp[game.world.idx(MOUSE.tpx, MOUSE.tpy)];
     txt = name + ' ' + hp;
+    if (t === T.TREETRUNK && !(heldDef && heldDef.type === 'tool' && heldDef.axe)) txt += ' — Select an Axe to chop';
+    else if (TILE_HARD[t] && t !== T.TREETRUNK && !(heldDef && heldDef.type === 'tool' && heldDef.power)) txt += ' — Select a Pickaxe to mine';
   }
   th.textContent = txt;
   th.className = thClass;
@@ -6158,6 +6196,7 @@ function render() {
 function resize() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+  refreshPointerWorld();
 }
 
 function initDOM() {
@@ -6269,7 +6308,7 @@ function initDOM() {
     slotClick(idx, e.button === 2);
   });
   // equipment slots with cursor-held items (vanilla: click to equip/unequip via cursor)
-  $('inv-armor').addEventListener('mousedown', function(e) {
+  $('inv-equip').addEventListener('mousedown', function(e) {
     var slotEl = e.target.closest('.armor-slot');
     if (slotEl) {
       e.preventDefault();
@@ -6328,14 +6367,14 @@ function initDOM() {
       updateHotbar(); renderInventory(); updateCursorItem();
       return;
     }
-    if (e.target.closest('.ammo-slot')) { selectAmmo(); return; }
+    if (e.target.closest('.ammo-slot')) { selectAmmo(); renderInventory(); return; }
     if (e.target.closest('#inv-trash') && game.held) {
       game.held = null;
       updateHotbar(); renderInventory(); updateCursorItem();
     }
   });
   $('inv-grid').addEventListener('contextmenu', function(e) { e.preventDefault(); });
-  $('inv-armor').addEventListener('contextmenu', function(e) { e.preventDefault(); });
+  $('inv-equip').addEventListener('contextmenu', function(e) { e.preventDefault(); });
   $('inv-grid').addEventListener('click', function(e) {
     if (!game.chestOpen) return;
     var cell = e.target.closest('.inv-cell');
@@ -6432,7 +6471,7 @@ function initDOM() {
     if (!row) return;
     var r = RECIPES[parseInt(row.getAttribute('data-idx'), 10)];
     if (craftRecipe(game, r)) {
-      game.message('Crafted ' + ITEMS[r.result].name);
+      game.message(r.special ? 'Placed ' + r.name + ' nearby.' : 'Crafted ' + r.name);
       var it = ITEMS[r.result];
       if (it.type === 'consumable') Achievements.unlock('alchemist', game);
       if (r.result === I.MECH_EYE) Achievements.unlock('mecheye', game);
@@ -6447,7 +6486,7 @@ function initDOM() {
     if (!row) return;
     var r = RECIPES[parseInt(row.getAttribute('data-idx'), 10)];
     if (craftRecipe(game, r)) {
-      game.message('Crafted ' + ITEMS[r.result].name);
+      game.message(r.special ? 'Placed ' + r.name + ' nearby.' : 'Crafted ' + r.name);
       var it = ITEMS[r.result];
       if (it.type === 'consumable') Achievements.unlock('alchemist', game);
       renderCrafting();

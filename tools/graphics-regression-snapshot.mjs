@@ -34,9 +34,10 @@ const graphics = ['graphics-check','combat-graphics-check','player-controls-chec
   'evil-graphics-check','snow-graphics-check','desert-graphics-check','mummy-graphics-check','underground-graphics-check','dungeon-graphics-check',
   'underworld-graphics-check','lava-graphics-check','segmented-graphics-check','sky-sand-graphics-check','flyer-graphics-check','aquatic-graphics-check',
   'crawler-graphics-check','goblin-graphics-check','ranged-goblin-graphics-check','pirate-graphics-check','frost-legion-graphics-check',
-  'martian-infantry-graphics-check','martian-heavy-graphics-check','martian-special-graphics-check','pumpkin-moon-graphics-check','frost-moon-infantry-graphics-check','frost-moon-heavy-graphics-check','present-mimic-graphics-check','eclipse-base-graphics-check'];
-const http = ['segmented','sky-sand','flyer','aquatic','crawler','goblin','ranged-goblin','pirate','frost-legion','martian-infantry','martian-heavy','martian-special','pumpkin-moon','frost-moon-infantry','frost-moon-heavy','present-mimic','eclipse-base'];
+  'martian-infantry-graphics-check','martian-heavy-graphics-check','martian-special-graphics-check','pumpkin-moon-graphics-check','frost-moon-infantry-graphics-check','frost-moon-heavy-graphics-check','present-mimic-graphics-check','eclipse-base-graphics-check','eclipse-mech-graphics-check','vampire-graphics-check','eclipse-late-graphics-check','eclipse-shooters-graphics-check','blood-moon-core-graphics-check','clown-graphics-check','corrupt-critters-graphics-check','gameplay-patch-check','gameplay-patch-http-check','dungeon-guardian-check','pointer-targeting-check','autosave-cursor-check','home-menu-check'];
+const http = ['segmented','sky-sand','flyer','aquatic','crawler','goblin','ranged-goblin','pirate','frost-legion','martian-infantry','martian-heavy','martian-special','pumpkin-moon','frost-moon-infantry','frost-moon-heavy','present-mimic','eclipse-base','eclipse-mech','vampire','eclipse-late','eclipse-shooters','blood-moon-core','clown','corrupt-critters'];
 let snapshot, report, result, manifest, commands;
+const freezeOnly = process.argv[2] === '--freeze-only';
 if (process.argv[2] === '--resume') {
   if (!process.argv[3]) throw new Error('Supply the existing summary.json path.');
   manifest = path.resolve(process.argv[3]); result = JSON.parse(readFileSync(manifest,'utf8'));
@@ -58,8 +59,8 @@ if (process.argv[2] === '--resume') {
   commands = result.plan;
   result.resumedAt = new Date().toISOString(); result.ok = false;
 } else {
-  const root = process.cwd(), label = process.argv[2] || 'graphics';
-  if (!/^[a-z0-9-]+$/.test(label)) throw new Error('Use a simple lowercase snapshot label.');
+  const root = process.cwd(), label = freezeOnly ? process.argv[3] : process.argv[2] || 'graphics';
+  if (!label || !/^[a-z0-9-]+$/.test(label)) throw new Error('Use a simple lowercase snapshot label.');
   const temp = process.platform === 'win32' && process.env.LOCALAPPDATA ? path.join(process.env.LOCALAPPDATA,'Temp','opencode') : path.join(tmpdir(),'opencode');
   mkdirSync(temp,{ recursive:true }); snapshot = mkdtempSync(path.join(temp,'tree-' + label + '-'));
   report = path.join(root,'test-results','audit2','sweeps',label + '-' + Date.now()); mkdirSync(report,{ recursive:true });
@@ -73,6 +74,10 @@ if (process.argv[2] === '--resume') {
 writeFileSync(manifest,JSON.stringify(result,null,2));
 console.log('Frozen source: ' + snapshot);
 console.log('Reports: ' + report);
+if (freezeOnly) {
+  console.log('Source and test plan saved; no tests run. Resume with --resume ' + manifest);
+  process.exit(0);
+}
 for (const command of commands) {
   const previous = result.commands.find(c => c.name === command.name);
   if (previous?.ok && existsSync(path.join(report,command.name + '.json'))) { console.log('KEEP ' + command.name + ': completed'); continue; }

@@ -648,6 +648,7 @@ function craftRecipe(game, r) {
   if (r.special) {
     if (!game.placeSpecial(r.special)) {
       inv.slots = before;
+      if (game.message) game.message('Not enough room nearby to place ' + r.name + '. Move to an open area.');
       return false;
     }
   }

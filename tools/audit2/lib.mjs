@@ -6,7 +6,7 @@ const DIR = path.join(process.cwd(), 'test-results', 'audit2');
 
 // Common: launch browser, create world through the real menu with a fixed
 // seed, and inject the helper functions every probe script needs.
-export async function setupAudit() {
+export async function setupAudit(url) {
   const results = { startedAt: new Date().toISOString(), checks: [], notes: [], errors: [] };
   const browser = await chromium.launch({ args: ['--no-sandbox', '--allow-file-access-from-files'] });
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
@@ -14,7 +14,7 @@ export async function setupAudit() {
   page.on('console', m => {
     if (m.type() === 'error' && !m.text().includes('_guard/') && !m.text().includes('Failed to load resource')) results.errors.push(m.text());
   });
-  await page.goto('file:///' + process.cwd().replace(/\\/g, '/') + '/index.html');
+  await page.goto(url || 'file:///' + process.cwd().replace(/\\/g, '/') + '/index.html');
   await page.waitForTimeout(800);
   const seed = Number(process.env.SEED || 7357);
   await page.evaluate(seed => {

@@ -16,6 +16,8 @@ export async function installInvasionFixture(page,config) {
       for (let x = tx - 42; x <= tx + 42; x++) for (let y = gy - 3; y < gy; y++) w.set(x,y,wet ? T.WATER : T.AIR);
       game.entities = []; game.bossBars = []; game.projectiles.list = []; game.fx = []; game.fxTexts = []; game.pickups = [];
       game.event = null; game.hardmode = hardmode; game.flashT = game.shakeT = 0;
+      if (__piConfig.fixtureMechs) { game.bossesDefeated.twins = true; game.mechDone = true; }
+      if (__piConfig.fixturePlantera) game.bossesDefeated.plantera = true;
       const p = game.player; p.x = __piOrigin.x - 120; p.y = gy * TILE - p.h / 2 - 0.01;
       p.vx = p.vy = 0; p.onGround = true; p.invuln = 999; p.hp = p.maxHp = 1000; p.dying = false; p.respawnT = 0;
       game.cam.x = __piOrigin.x; game.cam.y = p.y - 100; game.timeOfDay = __piConfig.night ? 0.85 : 0.5;
@@ -62,7 +64,7 @@ export async function runInvasionScenarios(page) {
   return page.evaluate(() => {
     const rows = [];
     for (const wet of [false,true]) for (const pose of (__piConfig.scenarioStates || ['normal','jumping','fired'])) for (const side of [-1,1]) {
-      __piScene(wet); game.startEvent(__piConfig.event); startWave(game.event);
+      __piScene(wet); game.startEvent(__piConfig.event); if (!__piConfig.timed) startWave(game.event);
       const enemies = __piSpecs.map((spec,i) => {
         spawnEventEnemy(spec.type); const e = game.entities[game.entities.length - 1];
         e.x = __piOrigin.x + __piX(i); e.y = __piOrigin.gy * TILE - e.h / 2 - 0.01 - (spec.fly ? 20 : 0);
@@ -80,7 +82,8 @@ export async function runInvasionScenarios(page) {
       try { render(); } finally { CombatArt.drawEnemy = hook; }
       rows.push({ wet,pose,side,calls,readonly:before === __piState(),shots:game.projectiles.list.length,
         cooldowns:enemies.every((e,i) => !__piSpecs[i].shoot || Math.abs(e.attackCd - (pose === 'fired' ? __piSpecs[i].cooldown : 0.5 - (pose === 'jumping' ? 6 : 1) / 60)) < 1e-8),
-        event:game.event.type === __piConfig.event && game.event.wave === 1 && game.event.pending === EVENT_WAVES[__piConfig.event].sizes[0] && game.event.minisPending === 0 && eventAliveCount() === __piSpecs.length && enemies.every(e => e.eventEnemy),
+        event:game.event.type === __piConfig.event && (__piConfig.timed ? game.event.mode === 'timed' && game.event.spawnT === 0 && !('wave' in game.event) :
+          game.event.wave === 1 && game.event.pending === EVENT_WAVES[__piConfig.event].sizes[0] && game.event.minisPending === 0) && eventAliveCount() === __piSpecs.length && enemies.every(e => e.eventEnemy),
         bodies:enemies.every(e => e.w === ENT_DEF[e.type].w && e.h === ENT_DEF[e.type].h && !!e.ghost === !!ENT_DEF[e.type].ghost && !e.segments && !e.arms),
         movement:enemies.every((e,i) => __piSpecs[i].fly ? Number.isFinite(e.bob) && e.fly : e.dir === side && (pose === 'jumping' ? !e.onGround && e.vy < -1 : e.onGround && e.vy === 0)),
         noLoot:game.pickups.length === 0,noChildren:game.entities.length === __piSpecs.length });

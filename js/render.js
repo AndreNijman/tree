@@ -801,7 +801,8 @@ function hexBlend(a, b, amt) {
   var r = Math.round(ca[0] + (cb[0] - ca[0]) * amt);
   var g = Math.round(ca[1] + (cb[1] - ca[1]) * amt);
   var bl = Math.round(ca[2] + (cb[2] - ca[2]) * amt);
-  return 'rgb(' + r + ',' + g + ',' + bl + ')';
+  // Keep blends composable: hexToRgb also consumes the result at twilight.
+  return '#' + ((1 << 24) + (r << 16) + (g << 8) + bl).toString(16).slice(1);
 }
 
 // twilight window: 1.0 right at the transition edges (t=0.25 / 0.75), fading out over ~0.05
@@ -815,6 +816,62 @@ function twilightAmt(t) {
 
 
 var BG_HORIZON_SPAN = 48; // columns either side averaged into the backdrop horizon
+var SKY_BASE_ALTITUDE = 24; // tiles for the warm horizon to reach the blue atmosphere
+var ATMOSPHERE_GRID = 4 * TILE; // world-registered samples, smoothly reconstructed below
+
+function daylightAt(t) {
+  return clamp((0.62 - Math.abs(t - 0.5) * 2) / 0.24, 0, 1);
+}
+
+// Relative to the surface-to-world-top span, not a gameplay biome threshold.
+function spaceBlendAtAltitude(altitude, surfaceTiles) {
+  var u = clamp((altitude / Math.max(1, surfaceTiles) - 0.28) / 0.57, 0, 1);
+  return u * u * (3 - 2 * u);
+}
+
+// Small RGB field aligned to the WORLD lattice. Bilinear reconstruction avoids
+// vertical stripes at terrain steps and keeps the same world point the same
+// color after either axis of camera movement or a viewport resize.
+function drawAltitudeSky(ctx, world, cam, W, H, skyTop, skyBot, day, underground) {
+  var grid = ATMOSPHERE_GRID;
+  var x0 = Math.floor((cam.x - W / 2) / grid) - 1;
+  var y0 = Math.floor((cam.y - H / 2) / grid) - 1;
+  var width = Math.ceil(W / grid) + 4, height = Math.ceil(H / grid) + 4;
+  var key = underground ? '_cave' : '_sky';
+  var cache = drawAltitudeSky[key];
+  var field = cache && cache.canvas;
+  var changed = !field || field.width !== width || field.height !== height;
+  if (changed) {
+    field = document.createElement('canvas'); field.width = width; field.height = height;
+    cache = { canvas:field, image:field.getContext('2d').createImageData(width, height) };
+    drawAltitudeSky[key] = cache;
+  }
+  var image = cache.image, data = image.data;
+  var top = hexToRgb(skyTop), bottom = hexToRgb(skyBot);
+  var space = hexToRgb(hexBlend('#02040b', '#030713', day));
+  for (var x = 0; x < width; x++) {
+    var surface = backgroundHorizon(world, (x0 + x) * grid) / TILE;
+    for (var y = 0; y < height; y++) {
+      var altitude = surface - (y0 + y) * grid / TILE;
+      var warm = underground ? clamp(-altitude / 80, 0, 1) : clamp(altitude / SKY_BASE_ALTITUDE, 0, 1);
+      var blend = underground ? 0 : spaceBlendAtAltitude(altitude, surface);
+      var index = (y * width + x) * 4;
+      for (var c = 0; c < 3; c++) {
+        var base = bottom[c] + (top[c] - bottom[c]) * warm;
+        var value = Math.round(base + (space[c] - base) * blend);
+        if (data[index + c] !== value) changed = true;
+        data[index + c] = value;
+      }
+      data[index + 3] = 255;
+    }
+  }
+  // Reuse the upload when only the sub-grid camera offset changed (or paused).
+  if (changed) field.getContext('2d').putImageData(image, 0, 0);
+  ctx.save(); ctx.imageSmoothingEnabled = true;
+  ctx.drawImage(field, x0 * grid - grid / 2 - cam.x + W / 2,
+    y0 * grid - grid / 2 - cam.y + H / 2, width * grid, height * grid);
+  ctx.restore();
+}
 
 function averageSurface(world, cx) {
   var surf = world.surfaceY, last = world.W - 1, sum = 0;
@@ -834,6 +891,7 @@ function drawBackground(game, ctx, cam, W, H, horizon) {
   var currentBiome = game.world.biomeAt(p.x, p.y);
   var t = game.timeOfDay; // 0..1, 0=midnight 0.5=noon
   var night = t < 0.25 || t > 0.75;
+  var day = daylightAt(t);
   var twi = twilightAmt(t);
 
   var horizonScreen = horizon - cam.y + H / 2;
@@ -845,74 +903,73 @@ function drawBackground(game, ctx, cam, W, H, horizon) {
   }
   var skyVisible = maxSurfaceScreen > 0;
 
+  // The same underground backing in mixed and fully-underground views. The old
+  // viewport-wide branch changed torch-lit cave colors when the LAST sky pixel
+  // left the screen. Anchor this gradient to the world horizon, too.
+  var hot = currentBiome === BIOME.UNDERWORLD;
+  drawAltitudeSky(ctx, game.world, cam, W, H,
+    hot ? '#120706' : '#0e0c0a', hot ? '#38140f' : '#30271f', 0, true);
+  if (maxSurfaceScreen < H) PixelArt.drawCavern(ctx, currentBiome, cam, W, H);
+
   if (skyVisible) {
     // surface sky (biome-tinted)
     var biome = currentBiome;
-    var skyTop = night ? '#101a36' : '#568bb8', skyBot = night ? '#283752' : '#d7e6d6';
+    // Blend day/night palettes continuously, including at the former 0.25/0.75
+    // switches. The twilight tint below can safely blend these colors again.
+    var nightTop = '#101a36', nightBot = '#283752', dayTop = '#568bb8', dayBot = '#d7e6d6';
     if (biome === BIOME.CORRUPT || biome === BIOME.CRIMSON) {
-      skyTop = night ? '#140a1e' : '#5a8a7a'; skyBot = night ? '#1e1230' : '#a8c4a8';
+      nightTop = '#140a1e'; nightBot = '#1e1230'; dayTop = '#5a8a7a'; dayBot = '#a8c4a8';
     } else if (biome === BIOME.HALLOW) {
-      skyTop = night ? '#14103a' : '#7ac0ff'; skyBot = night ? '#1c1448' : '#e8c0ff';
+      nightTop = '#14103a'; nightBot = '#1c1448'; dayTop = '#7ac0ff'; dayBot = '#e8c0ff';
     } else if (biome === BIOME.SNOW) {
-      skyTop = night ? '#0c1030' : '#8ab8e8'; skyBot = night ? '#141c3c' : '#dceef8';
+      nightTop = '#0c1030'; nightBot = '#141c3c'; dayTop = '#8ab8e8'; dayBot = '#dceef8';
     } else if (biome === BIOME.JUNGLE) {
-      skyTop = night ? '#0c1418' : '#6fb8a0'; skyBot = night ? '#121c24' : '#b8e0cc';
+      nightTop = '#0c1418'; nightBot = '#121c24'; dayTop = '#6fb8a0'; dayBot = '#b8e0cc';
     }
+    var skyTop = hexBlend(nightTop, dayTop, day), skyBot = hexBlend(nightBot, dayBot, day);
     if (game.weather && game.weather.active) {
-      skyTop = night ? '#101726' : '#657584';
-      skyBot = night ? '#1b2635' : '#a9b5bc';
+      skyTop = hexBlend('#101726', '#657584', day);
+      skyBot = hexBlend('#1b2635', '#a9b5bc', day);
     }
     if (game.event && game.event.type === 'bloodmoon') {
       skyTop = '#21050c';
       skyBot = '#641725';
     }
     if (game.world.graveyardStrengthAt(p.x, p.y) >= 5 && !(game.event && game.event.type === 'bloodmoon')) {
-      skyTop = night ? '#12131a' : '#59606a';
-      skyBot = night ? '#252632' : '#9a9da3';
+      skyTop = hexBlend('#12131a', '#59606a', day);
+      skyBot = hexBlend('#252632', '#9a9da3', day);
     }
     // smooth dawn/dusk: blend toward ember tones near the day/night transitions
     if (twi > 0 && !(game.event && game.event.type === 'bloodmoon')) {
       skyTop = hexBlend(skyTop, '#2a1e46', twi * 0.7);
       skyBot = hexBlend(skyBot, '#ff9a50', twi * 0.75);
     }
-    var skyEnd = clamp(horizonScreen, 1, H);
-    var g = ctx.createLinearGradient(0, 0, 0, skyEnd);
-    g.addColorStop(0, skyTop);
-    g.addColorStop(1, skyBot);
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, W, H);
+    // Clip celestial/scenery art to the actual terrain silhouette, not an
+    // averaged flat band across valleys. Underground backing stays untouched.
+    ctx.save(); ctx.beginPath(); ctx.moveTo(0, 0);
+    for (surfaceX = surfaceX0; surfaceX <= surfaceX1; surfaceX++) {
+      var sx = surfaceX * TILE - cam.x + W / 2;
+      var sy = clamp(game.world.surfaceY[surfaceX] * TILE - cam.y + H / 2, 0, H);
+      ctx.lineTo(sx, sy); ctx.lineTo(sx + TILE, sy);
+    }
+    ctx.lineTo(W, 0); ctx.closePath(); ctx.clip();
+    drawAltitudeSky(ctx, game.world, cam, W, H, skyTop, skyBot, day);
 
-    drawSunMoon(ctx, W, horizonScreen, t, night);
+    var surfaceTiles = horizon / TILE;
+    var spaceBlend = spaceBlendAtAltitude(surfaceTiles - cam.y / TILE, surfaceTiles);
+    var celestialHorizon = Math.min(horizonScreen, H * 0.85);
+    drawSunMoon(ctx, W, celestialHorizon, t, night);
+    ctx.save(); ctx.globalAlpha *= Math.max(0, 1 - spaceBlend * 2);
     drawClouds(game, ctx, W, H, cam, horizonScreen);
-    drawStars(ctx, W, horizonScreen, night, cam);
+    ctx.restore();
+    drawStars(ctx, W, celestialHorizon, night, cam, (1 - day) * (1 - spaceBlend));
+    drawSpaceStars(game, ctx, cam, W, H, day);
     drawStarfall(game, ctx, W, Math.max(0, horizonScreen));
     drawCelebrations(game, ctx, W, Math.max(0, horizonScreen));
 
+    ctx.save(); ctx.globalAlpha *= 1 - spaceBlend;
     PixelArt.drawLandscape(ctx, biome, night, cam, W, H, horizonScreen);
-
-    // Follow the actual surface profile so valleys retain sky instead of a flat underground band.
-    var undergroundTop = clamp(horizonScreen, 0, H - 1);
-    var ug = ctx.createLinearGradient(0, undergroundTop, 0, H);
-    ug.addColorStop(0, '#4a3a2a');
-    ug.addColorStop(1, '#1c1611');
-    ctx.fillStyle = ug;
-    for (surfaceX = surfaceX0; surfaceX <= surfaceX1; surfaceX++) {
-      var surfaceScreenX = Math.floor(surfaceX * TILE - cam.x + W / 2);
-      var localHorizon = Math.floor(game.world.surfaceY[surfaceX] * TILE - cam.y + H / 2);
-      var fillTop = Math.max(0, localHorizon);
-      if (fillTop < H) ctx.fillRect(surfaceScreenX, fillTop, TILE + 1, H - fillTop);
-    }
-  } else {
-    // fully underground
-    var g2 = ctx.createLinearGradient(0, 0, 0, H);
-    g2.addColorStop(0, currentBiome === BIOME.UNDERWORLD ? '#38140f' : '#1c1815');
-    g2.addColorStop(1, currentBiome === BIOME.UNDERWORLD ? '#120706' : '#0e0c0a');
-    ctx.fillStyle = g2;
-    ctx.fillRect(0, 0, W, H);
-    // deep glow tint
-    ctx.fillStyle = currentBiome === BIOME.UNDERWORLD ? 'rgba(255,80,20,0.08)' : 'rgba(120,60,255,0.03)';
-    ctx.fillRect(0, 0, W, H);
-    PixelArt.drawCavern(ctx, currentBiome, cam, W, H);
+    ctx.restore(); ctx.restore();
   }
 
   // out-of-world void at map edges
@@ -923,7 +980,28 @@ function drawBackground(game, ctx, cam, W, H, horizon) {
   }
   edge = (cam.x + W / 2) > game.world.W * TILE;
   if (edge) {
+    ctx.fillStyle = '#0a0a0f';
     ctx.fillRect(cam.x + W / 2 - game.world.W * TILE, 0, W, H);
+  }
+}
+
+function drawSpaceStars(game, ctx, cam, W, H, day) {
+  // One deterministic star per world cell: bounded to visible cells, with the
+  // SAME positions at day and night. No threshold pop or sparse whole-world scan.
+  var cell = 128;
+  var x0 = Math.floor((cam.x - W / 2) / cell), y0 = Math.floor((cam.y - H / 2) / cell);
+  for (var gx = x0; gx <= x0 + Math.ceil(W / cell); gx++) {
+    var surface = backgroundHorizon(game.world, (gx + 0.5) * cell) / TILE;
+    for (var gy = y0; gy <= y0 + Math.ceil(H / cell); gy++) {
+      var seed = hash2(gx + 3101, gy + 7919);
+      var wx = gx * cell + seed % cell, wy = gy * cell + (seed >>> 8) % cell;
+      if (wx < 0 || wx >= game.world.W * TILE || wy < 0) continue;
+      var blend = spaceBlendAtAltitude(surface - wy / TILE, surface);
+      if (blend <= 0) continue;
+      var twinkle = 0.7 + 0.3 * Math.sin(Time.seconds * 1.6 + seed % 628 / 100);
+      ctx.fillStyle = 'rgba(225,238,255,' + (blend * twinkle * (0.8 - day * 0.15)) + ')';
+      ctx.fillRect(Math.floor(wx - cam.x + W / 2), Math.floor(wy - cam.y + H / 2), seed % 19 === 0 ? 2 : 1, 1);
+    }
   }
 }
 
@@ -1001,8 +1079,10 @@ function drawSunMoon(ctx, W, horizonY, t, night) {
   }
 }
 
-function drawStars(ctx, W, horizonY, night, cam) {
-  if (!night) return;
+function drawStars(ctx, W, horizonY, night, cam, visibility) {
+  if (visibility === undefined) visibility = night ? 1 : 0;
+  if (visibility <= 0) return;
+  ctx.save(); ctx.globalAlpha *= visibility;
   for (var i = 0; i < 110; i++) {
     var sx = (hash2(i, 3) % 1000) / 1000 * W;
     var sy = (hash2(i, 9) % 1000) / 1000 * (horizonY * 0.8);
@@ -1022,6 +1102,7 @@ function drawStars(ctx, W, horizonY, night, cam) {
     ctx.fillStyle = 'rgba(255,255,255,' + (0.35 + tw * 0.45) + ')';
     ctx.fillRect(sx, sy, big ? 2 : 2, big ? 2 : 1);
   }
+  ctx.restore();
 }
 
 function drawClouds(game, ctx, W, H, cam, horizonY) {
@@ -1162,8 +1243,7 @@ function drawLighting(game, ctx, cam, W, H) {
 
   // --- sky brightness by time of day ---
   var t = game.timeOfDay; // 0=midnight, 0.5=noon
-  var dayX = Math.abs(t - 0.5) * 2; // 0 noon .. 1 midnight
-  var day = Math.min(1, Math.max(0, (0.62 - dayX) / 0.24));
+  var day = daylightAt(t);
   var sky = 0.12 + 0.88 * day;      // moonlight keeps the surface faintly visible
   if (game.weather && game.weather.active) sky *= 1 - 0.3 * game.weather.intensity;
   var bloodMoon = game.event && game.event.type === 'bloodmoon';
@@ -1188,8 +1268,10 @@ function drawLighting(game, ctx, cam, W, H) {
     }
   }
 
-  // --- sunlight: every tile above the first solid tile from the sky is day-lit
-  // (open shafts and overhangs stay lit; sealed caves stay dark) ---
+  // Open sky seeds daylight; walls/rock still occlude it. Below local terrain,
+  // even an open shaft gradually loses ambient daylight instead of remaining
+  // noon-bright all the way down. Lateral cave mouths use the same propagation
+  // as torches; no independent underground ambient floor is added.
   for (var sx2 = 0; sx2 < tw; sx2++) {
     var colX = x0 + sx2;
     var skyTop = world.skyTopAt(colX);
@@ -1197,7 +1279,10 @@ function drawLighting(game, ctx, cam, W, H) {
     var yyEnd = Math.min(y1, skyTop);
     for (var yy = y0; yy <= yyEnd; yy++) {
       var ii = (yy - y0) * tw + sx2;
-      light[ii] = Math.max(light[ii], sky);
+      if (walls[yy * wW + colX] !== 0) continue;
+      var depth = Math.max(0, yy - surfaceArr[colX]);
+      var sunlight = sky * Math.max(0, 1 - depth * LIGHT_AIR_DECAY);
+      light[ii] = Math.max(light[ii], sunlight);
     }
   }
 
@@ -1278,13 +1363,13 @@ function drawLighting(game, ctx, cam, W, H) {
       var a = (1 - lv) * 255;
       // only exempt open sky tiles that are above the surface (no wall, no solid, above terrain)
       var wy = y0 + ty, wx2 = x0 + tx;
-      if (wy < world.W && walls[wy * wW + wx2] === 0 && !world.isSolidTile(tiles[wy * wW + wx2])) {
+      if (wy < world.H && walls[wy * wW + wx2] === 0 && !world.isSolidTile(tiles[wy * wW + wx2])) {
         var tlA = tiles[wy * wW + wx2];
         var surfY = world.surfaceY ? world.surfaceY[wx2] : 0;
         // Above-ground foliage is ambient-tinted as a complete silhouette.
         // Tile-shaped darkness here would stamp black rectangles into crowns
         // that extend beyond the original, smaller leaf-tile footprint.
-        if ((tlA === 0 || tlA === T.TORCH || tlA === T.PLATFORM || tlA === T.TREETRUNK || PixelArt.isLeaf(tlA)) && wy <= surfY) a = 0;
+        if ((tlA === 0 || tlA === T.TORCH || tlA === T.PLATFORM || tlA === T.TREETRUNK || PixelArt.isLeaf(tlA)) && wy <= surfY && wy < world.skyTopAt(wx2)) a = 0;
       }
       data[mi] = 0;
       data[mi + 1] = 0;

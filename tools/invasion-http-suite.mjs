@@ -6,6 +6,9 @@ import { installInvasionFixture, runInvasionScenarios, runMoonDawnProbe } from '
 import { runMartianDeploymentProbe } from './martian-deployment-probe.mjs';
 import { installPresentMimicFixture, runPresentMimicScenarios, runPresentMimicProbe } from './present-mimic-fixture.mjs';
 import { runEclipseEventProbe } from './eclipse-event-probe.mjs';
+import { installVampireFixture, runVampireScenarios, runVampireProbe } from './vampire-fixture.mjs';
+import { runMothronBroodProbe } from './mothron-brood-probe.mjs';
+import { runBloodMoonEventProbe } from './blood-moon-event-probe.mjs';
 
 export async function runInvasionHttpSmoke(config) {
 const root = process.cwd(), html = await readFile(path.join(root,'index.html'),'utf8');
@@ -39,15 +42,19 @@ try {
     game.paused = true;
     return { liquid:typeof game.world.liqTick === 'function',finite:Number.isFinite(game.player.x) && Number.isFinite(game.player.y),art:typeof CombatArt.drawEnemy === 'function' };
   });
-  await (config.mimic ? installPresentMimicFixture : installInvasionFixture)(page,config);
-  const checks = await (config.mimic ? runPresentMimicScenarios : runInvasionScenarios)(page);
+  await (config.mimic ? installPresentMimicFixture : config.vampire ? installVampireFixture : installInvasionFixture)(page,config);
+  const checks = await (config.mimic ? runPresentMimicScenarios : config.vampire ? runVampireScenarios : runInvasionScenarios)(page);
   const mimicProbe = config.mimic ? await runPresentMimicProbe(page) : null;
-  const dawn = config.night ? await runMoonDawnProbe(page) : null;
+  const vampireProbe = config.vampire ? await runVampireProbe(page) : null;
+  const dawn = config.night && !config.timed ? await runMoonDawnProbe(page) : null;
+  const bloodMoon = config.timed ? await runBloodMoonEventProbe(page) : null;
   const eclipse = config.eclipse ? await runEclipseEventProbe(page) : null;
   const deployment = config.deploys ? await runMartianDeploymentProbe(page) : null;
+  const brood = config.mothronBrood ? await runMothronBroodProbe(page) : null;
   const network = await page.evaluate(() => __piSpecs.map(spec => {
     __piScene(); const e = __piEnemy(spec); e.dir = -1; e.vx = 2; e.attackCd = spec.cooldown || 999;
     if (spec.mimic) { e.awake = true; e.charge = { x:e.x + 200,y:e.y,t:0.5 }; }
+    if (spec.vampire) { e.attackCd = 2.4; e.charge = { x:e.x + 200,y:e.y - 10,t:0.5 }; }
     const packet = JSON.parse(JSON.stringify(Net.entityState(e))), moved = { ...packet,x:packet.x + 20,y:packet.y + 10 };
     const originalTimeline = Net.timelines.frame; delete Net.timelines.frame;
     try {
@@ -62,7 +69,8 @@ try {
         interpolated:remote.x === packet.x + 10 && remote.y === packet.y + 5,
         single:!remote.segments && !remote.arms && !!remote.ghost === !!packet.ghost && remote.w === packet.w && remote.h === packet.h,
         state:remote.dir === -1 && remote.vx === 2 && remote.attackCd === packet.attackCd && remote.bob === packet.bob &&
-          (!spec.mimic || remote.awake === true && !('charge' in packet) && !remote.charge),
+          (!spec.mimic || remote.awake === true && !('charge' in packet) && !remote.charge) &&
+          (!spec.vampire || !('charge' in packet) && !remote.charge && remote.attackCd === 2.4),
         visible:pixels.some((v,i) => i % 4 === 3 && v),ghostAlpha:!remote.ghost || pixels.some((v,i) => i % 4 === 3 && v === 153) && pixels.every((v,i) => i % 4 !== 3 || v === 0 || v === 153) };
     } finally { if (originalTimeline) Net.timelines.frame = originalTimeline; else delete Net.timelines.frame; }
   }));
@@ -71,12 +79,17 @@ try {
     checks.length === (config.scenarioStates || ['normal','jumping','fired']).length * 4 && checks.every(s => s.readonly && s.calls === config.specs.length && s.shots === (s.pose === 'fired' ? config.specs.filter(q => q.shoot).length : 0) && s.cooldowns && s.event && s.bodies && s.movement && s.noLoot && s.noChildren) &&
     network.every(s => s.readonly && s.interpolated && s.single && s.state && s.visible && s.ghostAlpha) &&
     (!mimicProbe || Object.values(mimicProbe).every(rows => rows.length > 0 && rows.every(s => s.correct && (s.calls === undefined || s.calls === 2 && s.readonly && s.rng === 0)))) &&
+    (!vampireProbe || Object.values(vampireProbe).every(rows => rows.length > 0 && rows.every(s => s.correct && s.calls === 2 && s.readonly && s.rng === 0))) &&
+    (!bloodMoon || bloodMoon.pools.length === 2 && bloodMoon.spawns.length === config.specs.reduce((n,s) => n + (s.hardmodeOnly ? 2 : 4),0) && bloodMoon.readiness.length === 36 &&
+      bloodMoon.daylight.length === config.specs.length * 5 && bloodMoon.kills.length === config.specs.length && Object.values(bloodMoon).every(rows => rows.every(s => s.correct && s.readonly && (!s.live || s.live.calls === 2 && s.live.readonly && s.live.rng === 0)))) &&
+    (!brood || brood.rows.length === 16 && brood.rows.every(s => s.correct && s.readonly && (!s.drawn || s.drawn.calls === 2 && s.drawn.readonly && s.drawn.rng === 0)) &&
+      brood.completion.readonly && brood.completion.drawn.calls === 2 && brood.completion.drawn.readonly && brood.completion.drawn.rng === 0 && brood.completion.initial && brood.completion.holds && brood.completion.waiting && brood.completion.finished) &&
     (!dawn || dawn.length === config.specs.length * 6 && dawn.every(s => s.live.calls === 2 && s.live.readonly && s.live.rng === 0 && s.held && s.waiting && s.finished && s.readonly)) &&
     (!eclipse || eclipse.gates.length === 32 && eclipse.gates.every(s => s.correct && s.readonly) && eclipse.daylight.length === config.specs.length * 8 &&
       eclipse.daylight.every(s => s.correct && s.readonly && s.live.calls === 2 && s.live.readonly && s.live.rng === 0)) &&
     (!deployment || deployment.rows.length === 36 && deployment.rows.every(s => s.readyReadonly && s.drawn.calls === 2 && s.drawn.readonly && s.drawn.rng === 0 && s.count && s.cooldown && s.placement && s.noShots && s.noLoot) &&
       Object.values(deployment.completion).every(Boolean) && deployment.miniboss.readonly && deployment.miniboss.correct);
-  const result = { ok,loaded,boot,checks,network,deployment,dawn,eclipse,mimicProbe,errors };
+  const result = { ok,loaded,boot,checks,network,deployment,brood,bloodMoon,dawn,eclipse,mimicProbe,vampireProbe,errors };
   await mkdir('test-results/audit2',{ recursive:true }); await writeFile('test-results/audit2/' + config.name + '-http-smoke.json',JSON.stringify(result,null,2));
   console.log(JSON.stringify(result)); if (!ok) process.exitCode = 1;
 } finally { if (browser) await browser.close(); await new Promise(resolve => server.close(resolve)); }

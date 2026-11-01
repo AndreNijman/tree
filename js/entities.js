@@ -1344,7 +1344,7 @@ function enemyStep(e, game) {
       physicsStep(e, game);
       break;
     case E.ICEGOLEM:
-      golemStep(e, game);
+      golemEnemyStep(e, game);
       physicsStep(e, game);
       break;
     case E.ICETORTOISE: case E.GIANTTORTOSE:
@@ -1465,7 +1465,7 @@ function enemyStep(e, game) {
       physicsStep(e, game);
       break;
     case E.GRANITEGOLEM: case E.MARBLEGOLEM:
-      golemStep(e, game);
+      golemEnemyStep(e, game);
       physicsStep(e, game);
       break;
     case E.DEMONEYE:
@@ -2138,8 +2138,8 @@ function archerStep(e, game) {
   }
 }
 
-// Ice Golem: shoots a frost bolt
-function golemStep(e, game) {
+// Ordinary golems: walking frost-bolt AI, distinct from the Temple boss helper.
+function golemEnemyStep(e, game) {
   var p = multiplayerTarget(game, typeof e !== 'undefined' ? e : null);
   var dx = p.x - e.x;
   e.dir = dx >= 0 ? 1 : -1;

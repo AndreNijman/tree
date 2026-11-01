@@ -132,6 +132,27 @@ This is the intended contract — every other file assumes these exist on a glob
 
 ## 6. Status
 
+**November 1 release / next task:** The user explicitly selected deployment of the
+**entire pending build**, not only the October 31 lighting work. This includes the
+accumulated original artwork, placement/golem/Guardian fixes, pointer refresh,
+inventory accessibility, cursor-held persistence, and lighting. The static site
+publishes from GitHub Pages `main` at `/`; the multiplayer relay is unchanged and
+must not be redeployed. Release preflight/receipts: `test-results/release-20261101/`.
+Fresh release preflight passed 108/108 checks and 22 syntax checks, zero browser
+errors. October 31 lighting validation passed 20/20 and frozen focused graphics/combat/
+controls passed 296/296, zero browser errors. Historical full regression is still
+1116/1122 FAIL plus 24/24 HTTP smokes; known armor string-load, held-reel fishing,
+coin-change/metadata issues remain unresolved. Do not call this a clean full sweep
+or silently migrate real saves. Campaign playthroughs stay stopped.
+
+After deployment is verified, Luna is to research Terraria combat at starter,
+pre-Hardmode, early Hardmode, post-mech/Plantera and endgame stages: visual motion,
+input responsiveness, attack windows, melee/projectile/contact hitboxes, immunity,
+knockback and class differences. Research must distinguish observed footage from
+documentation and unknown latency; then implement evidence-supported Tree changes
+with isolated regressions, not renewed campaign playthroughs. New combat work is
+not part of this first release.
+
 **Working / implemented:**
 - **`js/main.js` exists** (~6,000 lines) and the game **runs**. Verified via headless-Chrome smoke tests: **127/127 checks PASS** with **no console errors** — world gen, player combat/movement/mining, all bosses + event bosses, 25 town NPCs, items/recipes, lighting, saves, bestiary, and all parity batches through B79.
 
@@ -913,6 +934,11 @@ This is the intended contract — every other file assumes these exist on a glob
 ---
 
 ## 7. Next steps (recommended order)
+
+**Current user priority (Nov 1):** verify deployment of the explicitly approved
+entire pending build, then Luna combat research followed by Tree implementation.
+Keep deployment evidence and research/implementation handoffs separate; old parity
+and UI backlog below does not override this instruction.
 
 1. **Phase 6: UI improvements** — crafting search/filters, equipment comparison, stack splitting/quick transfer, housing feedback, map improvements, settings persistence.
 2. **Phase 7: Sound polish** — crossfade music tracks, add rain/wind/water ambience, balance combat audio, ensure tab-switch audio recovery.

@@ -1044,42 +1044,54 @@ Player.prototype.tryWhip = function(game, def, item) {
   if (hitAny && Achievements) Achievements.unlock('whip', game);
 };
 
-Player.prototype.tryPlace = function(game, id) {
-  var def = ITEMS[id];
-  var tile = def.tile;
-  if (tile === undefined) return;
+// Read-only placement validation shared by previews and both mouse controls.
+Player.prototype.placementTarget = function(game, id) {
+  var def = ITEMS[id], w = game.world;
+  if (!def || (def.tile === undefined && def.type !== 'wall')) return null;
   var tx = Math.floor(MOUSE.wx / TILE), ty = Math.floor(MOUSE.wy / TILE);
-  if (!game.world.inBounds(tx, ty)) return;
-  if (def.type === 'pylon' && game.world.biomeAt(MOUSE.wx, MOUSE.wy) === BIOME.UNDERWORLD) {
-    game.message('Pylons cannot be placed in the Underworld.');
-    return;
+  if (!w.inBounds(tx, ty)) return { reason:'Outside the world.' };
+  var reach = (def.type === 'wall' ? 6 : 5) * TILE;
+  var inReach = function(x,y,p) { return dist(p.x,p.y,x * TILE + 8,y * TILE + 8) <= reach; };
+  if (!inReach(tx,ty,this)) return { reason:'Too far!' };
+  if (def.type === 'wall') {
+    if (w.wall(tx,ty) !== WALL.NONE) return { reason:'A background wall is already here.' };
+    return { x:tx,y:ty };
   }
-  var cur = game.world.get(tx, ty);
-  if (cur !== T.AIR) {
-    // try adjacent
+  if (def.type === 'pylon' && w.biomeAt(MOUSE.wx,MOUSE.wy) === BIOME.UNDERWORLD) return { reason:'Pylons cannot be placed in the Underworld.' };
+  if (w.get(tx,ty) !== T.AIR) {
+    // Clicking occupied terrain keeps the existing adjacent-placement fallback,
+    // but the final cell must also be in reach and outside the player's body.
     var dxs = [0, 0, -1, 1], dys = [-1, 1, 0, 0];
     var placed = false;
     for (var i = 0; i < 4; i++) {
       var ax = tx + dxs[i], ay = ty + dys[i];
-      if (!game.world.inBounds(ax, ay)) continue;
-      if (game.world.get(ax, ay) === T.AIR && !game.world.overlapsPlayer(ax, ay, this)) {
-        this.doPlace(game, id, ax, ay);
-        placed = true;
-        break;
+      if (w.inBounds(ax,ay) && inReach(ax,ay,this) && w.get(ax,ay) === T.AIR && !w.overlapsPlayer(ax,ay,this)) {
+        tx = ax; ty = ay; placed = true; break;
       }
     }
-    return;
+    if (!placed) return { reason:'No empty adjacent space in reach.' };
   }
-  if (game.world.overlapsPlayer(tx, ty, this)) return;
-  this.doPlace(game, id, tx, ty);
+  if (w.overlapsPlayer(tx,ty,this)) return { reason:'Blocked by player.' };
+  if ((def.tile === T.TOMBSTONE || def.tile === T.SUNFLOWER || def.tile === T.ETERNIASTAND) && !w.isSolid(tx,ty + 1) && !w.isPlatform(tx,ty + 1)) {
+    return { reason:def.name + ' needs solid ground.' };
+  }
+  return { x:tx,y:ty };
+};
+
+Player.prototype.tryPlace = function(game, id) {
+  if (this.mineCd > 0) return;
+  var target = this.placementTarget(game,id);
+  if (!target) return;
+  if (target.reason) { game.message(target.reason); return; }
+  this.doPlace(game,id,target.x,target.y);
 };
 
 Player.prototype.tryPlaceWall = function(game, id) {
   if (this.mineCd > 0) return;
-  var def = ITEMS[id], tx = Math.floor(MOUSE.wx / TILE), ty = Math.floor(MOUSE.wy / TILE);
-  if (!def || def.wall === undefined || !game.world.inBounds(tx, ty)) return;
-  if (dist(this.x, this.y, tx * TILE + 8, ty * TILE + 8) > 6 * TILE) return;
-  if (game.world.wall(tx, ty) !== WALL.NONE) { game.message('A background wall is already here.'); return; }
+  var def = ITEMS[id], target = this.placementTarget(game,id);
+  if (!def || def.wall === undefined || !target) return;
+  if (target.reason) { game.message(target.reason); return; }
+  var tx = target.x, ty = target.y;
   game.world.setWall(tx, ty, def.wall);
   this.inventory.removeAt(this.inventory.selected, 1);
   this.mineCd = 0.08;
@@ -1114,7 +1126,7 @@ Player.prototype.tryPlant = function(game, def, id, item) {
 Player.prototype.doPlace = function(game, id, tx, ty) {
   var def = ITEMS[id];
   var item = this.inventory.selectedItem();
-  if (!item) return;
+  if (!item || item.id !== id || item.count <= 0) return;
   if (def.tile === undefined) return;
   if ((def.tile === T.TOMBSTONE || def.tile === T.SUNFLOWER) && !game.world.isSolid(tx, ty + 1) && !game.world.isPlatform(tx, ty + 1)) {
     game.message(def.name + ' needs solid ground.');
@@ -1126,6 +1138,7 @@ Player.prototype.doPlace = function(game, id, tx, ty) {
   }
   game.world.set(tx, ty, def.tile);
   this.inventory.removeAt(this.inventory.selected, 1);
+  this.mineCd = 0.12;
   if (def.type === 'pylon') {
     game.world.addPylon(tx, ty, id);
     game.message('Pylon placed. Place another linked pylon to teleport.');

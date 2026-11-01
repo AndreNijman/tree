@@ -3,6 +3,8 @@ import { setupAudit, check, assertNoBrowserErrors, finish } from './audit2/lib.m
 import { installInvasionFixture, runInvasionScenarios, runMoonDawnProbe } from './invasion-art-fixture.mjs';
 import { runMartianDeploymentProbe } from './martian-deployment-probe.mjs';
 import { runEclipseEventProbe } from './eclipse-event-probe.mjs';
+import { runMothronBroodProbe } from './mothron-brood-probe.mjs';
+import { runBloodMoonEventProbe } from './blood-moon-event-probe.mjs';
 
 export async function runInvasionGraphicsCheck(config) {
 const { browser,page,results } = await setupAudit();
@@ -86,7 +88,8 @@ const ai = await page.evaluate(() => {
         const shot = game.projectiles.list[0], expected = delta < 0, angle = Math.atan2(game.player.y - spec.aimOffset - e.y,game.player.x - e.x);
         shots.push({ kind:spec.kind,side,delta,...__piRender(e),correct:game.projectiles.list.length === (expected ? 1 : 0) && (!expected ||
           near(shot.x,e.x) && near(shot.y,e.y - spec.originOffset) && near(shot.vx,Math.cos(angle) * spec.shotSpeed) && near(shot.vy,Math.sin(angle) * spec.shotSpeed) &&
-          shot.dmg === Math.round(spec.damage * (spec.fixedDamage ? 1 : diffScale().dmg)) && shot.type === spec.projectile && shot.color === spec.color && shot.owner === 'enemy' && shot.life === spec.life && !shot.dead && near(e.attackCd,spec.cooldown)) });
+           shot.dmg === Math.round(spec.damage * (spec.fixedDamage ? 1 : diffScale().dmg)) && shot.type === spec.projectile && shot.color === spec.color && shot.owner === 'enemy' && shot.life === spec.life && !shot.dead && near(e.attackCd,spec.cooldown) &&
+           (!spec.plainRocket || !shot.explosive && !shot.splitOnHit && !shot.homing && !shot.terrainMode)) });
       }
       for (const initial of [undefined,0,-0.001,0.001,0.5]) {
         __piScene(); const e = __piEnemy(spec); game.player.x = e.x + 200; game.player.y = e.y;
@@ -115,7 +118,10 @@ const ai = await page.evaluate(() => {
     }
     // Control independent base/nested rolls only while the real drop table runs.
     // Other kill RNG stays fixed, so rare extended entries have a separate roll.
-    for (const hardmode of [false,true]) for (const [base,nested,rare] of (__piConfig.lootRolls || [[0.499,0,0.5],[0.5,0.0299,0.5],[0.5,0.03,0.5],[0.699,0,0.5],[0.7,0.0099,0.5],[0.7,0.01,0.5],[0.99,0.99,0.001]])) {
+    const savedPlantera = game.bossesDefeated.plantera;
+    try {
+    for (const hardmode of [false,true]) for (const plantera of (__piConfig.lootPlantera ? [false,true] : [savedPlantera])) for (const [base,nested,rare] of (__piConfig.lootRolls || [[0.499,0,0.5],[0.5,0.0299,0.5],[0.5,0.03,0.5],[0.699,0,0.5],[0.7,0.0099,0.5],[0.7,0.01,0.5],[0.99,0.99,0.001]])) {
+      if (__piConfig.lootPlantera) game.bossesDefeated.plantera = plantera;
       __piScene(false,hardmode); const e = __piEnemy(spec), random = Math.random, table = dropTable;
       hitEntity(e,1,0,0,game); const flash = e.flash > 0, flashed = __piRender(e);
       let tableCalls = 0;
@@ -157,6 +163,32 @@ const ai = await page.evaluate(() => {
         if (spec.type === E.CREATUREFROMDEEP && nested < 0.08) add(I.NEPTUNESSHELL,1);
         add(I.SOUL_NIGHT,1);
       }
+      else if (__piConfig.loot === 'eclipse-mech') {
+        add(I.SOUL_NIGHT,spec.type === E.REAPER ? 2 : spec.type === E.EYEBALL ? 0 : 1);
+        if (spec.type === E.EYEBALL) { add(I.LENS,1); if (base < 0.12) add(I.EYESPRING,1); }
+        if (spec.type === E.REAPER) { if (game.bossesDefeated.plantera) add(I.ECTOPLASM,1); if (nested < 0.08) add(I.DEATHSICKLE,1); }
+      }
+      else if (__piConfig.loot === 'eclipse-late') {
+        add(I.SOUL_NIGHT,1);
+        if (spec.type === E.BUTCHER && base < 0.12) add(I.BUTCHERSCHAINSAW,1);
+        if (spec.type === E.PSYCHO && nested < 0.1) add(I.PSYCHOKNIFE,1);
+        if (spec.type === E.DEADLYSPHERE && nested < 0.1) add(I.DEADLYSPHERESTAFF,1);
+      }
+      else if (__piConfig.loot === 'eclipse-shooters') {
+        add(I.SOUL_NIGHT,1);
+        if (nested < 0.1) add(spec.type === E.DRMANFLY ? I.TOXICFLASK : I.NAILGUN,1);
+      }
+      else if (__piConfig.loot === 'blood-moon-core') {
+        const threshold = spec.type === E.BLOODZOMBIE ? 0.08 : spec.type === E.DRIPPLER ? 0.1 : 0.12;
+        if (base < threshold) add(I.BLOODYTEAR,1);
+        if (spec.type === E.BLOODZOMBIE && base > 0.96) add(I.SHARKTOOTHNECKLACE,1);
+        if (spec.type === E.DRIPPLER && base > 0.95) add(I.CHUMCASTER,1);
+      }
+      else if (__piConfig.loot === 'clown') {
+        if (base < 0.2) add(nested < 0.5 ? I.BANANARANG : I.KOCANNON,1);
+        if (base > 0.9) add(I.BLOODYTEAR,1);
+      }
+      else if (__piConfig.loot === 'corrupt-critters') add(I.GEL,1);
       else if (fixedCoins) { add(I.COIN,2); if (nested < 0.01) add(I.COINGUN,1); }
       else if (base >= 0.5 && base < 0.7) { if (nested < 0.03) add(I.PIRATEMAP,1); }
       else if (base >= 0.7) { add(I.COIN,2 + Math.floor(nested * 4)); if (nested < 0.01) add(I.COINGUN,1); }
@@ -164,8 +196,9 @@ const ai = await page.evaluate(() => {
       const actual = game.pickups.reduce((d,p) => { if (p.count > 0) d[p.item] = (d[p.item] || 0) + p.count; return d; },{});
       const same = Object.keys(actual).length === Object.keys(expected).length && Object.entries(expected).every(([id,n]) => actual[id] === n);
       const before = __piState(), hidden = !__piPixels(e).some((v,i) => i % 4 === 3 && v); renderGame(game,ctx2d);
-      loot.push({ kind:spec.kind,hardmode,base,nested,rare,tableCalls,flash,flashed,dead:e.dead,hidden,readonly:before === __piState(),single:game.entities.length === 1,correct:same,actual,expected });
+      loot.push({ kind:spec.kind,hardmode,plantera,base,nested,rare,tableCalls,flash,flashed,dead:e.dead,hidden,readonly:before === __piState(),single:game.entities.length === 1,correct:same,actual,expected });
     }
+    } finally { if (__piConfig.lootPlantera) game.bossesDefeated.plantera = savedPlantera; }
   }
   return { movement,jumps,hops,walls,contacts,shots,readiness,projectiles,loot };
 });
@@ -211,7 +244,7 @@ const presentation = await page.evaluate(() => {
   function state() { const m = ctx.getTransform(); return JSON.stringify([m.a,m.b,m.c,m.d,m.e,m.f,ctx.globalAlpha,ctx.fillStyle,ctx.strokeStyle,ctx.lineWidth,ctx.font,ctx.textAlign,ctx.imageSmoothingEnabled,ctx.globalCompositeOperation]); }
   const before = state(), gameplay = __piState(), random = Math.random; let rng = 0;
   try { Math.random = () => { rng++; return 0.5; }; game.entities.forEach(e => CombatArt.drawEnemy(ctx,game,e,{ x:e.x,y:e.y },320,320)); } finally { Math.random = random; }
-  const fallbackCases = [E.GOBLINWARLOCK,E.ICEGOLEM,E.PIRATECAPTAIN,E.PIRATESHARK,E.MIMIC,E.MARTIANPROBE,E.STARGAZER,-999].map(type =>
+  const fallbackCases = [E.GOBLINWARLOCK,E.ICEGOLEM,E.PIRATECAPTAIN,E.PIRATESHARK,E.MIMIC,E.MARTIANPROBE,E.STARGAZER,-999].concat((__piConfig.extraFallbacks || []).map(name => E[name])).map(type =>
     ({ type,legacy:!CombatArt.drawEnemy(ctx,game,{ type },{ x:0,y:0 },320,320) }));
   return { facing,poses,restored:before === state(),readonly:gameplay === __piState(),rng,
     fallback:fallbackCases.every(s => s.legacy),fallbackCases,
@@ -239,11 +272,12 @@ if (config.exactGhost) {
 const events = await page.evaluate(() => {
   const completions = [], minis = [], reinforcements = [], targeting = [];
   const event = __piConfig.event, frost = event === 'frostlegion';
+  if (!__piConfig.timed) {
   for (const spec of __piSpecs) {
     __piScene(); delete game.eventCompletions[event]; game.lanternNight.pending = false;
     if (frost) { game.frostLegionDefeated = false; delete game.townArrivals[E.SANTA]; }
     game.startEvent(event); startWave(game.event);
-    const wave = game.event.wave === 1 && game.event.pending === EVENT_WAVES[event].sizes[0] && game.event.minisPending === 0 && EVENT_WAVES[event].trash.includes(spec.type);
+    const wave = game.event.wave === 1 && game.event.pending === EVENT_WAVES[event].sizes[0] && game.event.minisPending === 0 && eventTrashPool(EVENT_WAVES[event]).includes(spec.type);
     spawnEventEnemy(spec.type); const e = game.entities[game.entities.length - 1]; e.x = __piOrigin.x; e.y = game.player.y - 40;
     e.attackCd = spec.shoot ? 0.001 : 999; game.player.x = e.x + 200; game.player.y = e.y; __piStep(e);
     game.event.wave = EVENT_WAVES[event].sizes.length; game.event.pending = game.event.minisPending = 0;
@@ -280,6 +314,7 @@ const events = await page.evaluate(() => {
     reinforcements.push({ bossName,...__piRender(child),correct:!!child && child.type === expected && child.eventEnemy && !child.minion && game.entities.length === 2 && game.bossBars.length === 1 });
   }
   }
+  }
   const host = Net.isHost, remote = Net.remotePlayers;
   try {
     Net.isHost = () => true;
@@ -294,7 +329,7 @@ const events = await page.evaluate(() => {
   } finally { Net.isHost = host; Net.remotePlayers = remote; }
   return { completions,minis,reinforcements,targeting };
 });
-check(results,'Invasion flags, first wave, last kill and Lantern Night stay simulation-owned',events.completions.every(s => s.wave && s.flag && stable(s.live) && s.waiting && s.readonly && s.finished),events.completions);
+if (!config.timed) check(results,'Invasion flags, first wave, last kill and Lantern Night stay simulation-owned',events.completions.every(s => s.wave && s.flag && stable(s.live) && s.waiting && s.readonly && s.finished),events.completions);
 if (config.bosses || config.minis) check(results,'Final-wave miniboss spawning remains owned by updateEvents',events.minis.length > 0 && events.minis.every(s => s.readonly && s.correct),events.minis);
 if (config.bosses) {
 check(results,'Real boss-spawned Parrots and Corsairs keep event flags and single records',events.reinforcements.every(s => s.correct && stable(s)),events.reinforcements);
@@ -302,14 +337,27 @@ check(results,'Real boss-spawned Parrots and Corsairs keep event flags and singl
   check(results,'Frost Legion defeat and Santa arrival require real event/town updates',events.completions.every(s => s.progression),events.completions);
 }
 check(results,'Real AI retains its local firing target or nearest-living multiplayer pursuit',events.targeting.length === config.specs.length * 2 && events.targeting.every(s => s.correct && stable(s)),events.targeting);
-const dawn = config.night ? await runMoonDawnProbe(page) : null;
+const dawn = config.night && !config.timed ? await runMoonDawnProbe(page) : null;
 if (dawn) check(results,'Dawn holds living moon enemies without spawning and only updates end the event without Lantern Night',dawn.length === config.specs.length * 6 && dawn.every(s => stable(s.live) && s.held && s.waiting && s.finished && s.readonly),dawn);
 const eclipse = config.eclipse ? await runEclipseEventProbe(page) : null;
+const bloodMoon = config.timed ? await runBloodMoonEventProbe(page) : null;
+if (bloodMoon) {
+  check(results,'Timed Blood Moon start and exact pre/post-Hardmode pools remain simulation-owned',bloodMoon.pools.length === 2 && bloodMoon.pools.every(s => s.correct && s.readonly),bloodMoon.pools);
+  check(results,'Real timed surface spawns preserve selected types, offsets, flags and 0.45-second reset',bloodMoon.spawns.length === config.specs.reduce((n,s) => n + (s.hardmodeOnly ? 2 : 4),0) && bloodMoon.spawns.every(s => s.correct && s.readonly && stable(s.live)),bloodMoon.spawns);
+  check(results,'Timed spawn readiness retains strict surface threshold, seven-live cap and dead-body exclusion',bloodMoon.readiness.length === 36 && bloodMoon.readiness.every(s => s.correct && s.readonly),bloodMoon.readiness);
+  check(results,'Dawn ends the Blood Moon even with living enemies; kills alone never finish it or grant Lantern Night',bloodMoon.daylight.length === config.specs.length * 5 && bloodMoon.daylight.every(s => s.correct && s.readonly && stable(s.live)) &&
+    bloodMoon.kills.length === config.specs.length && bloodMoon.kills.every(s => s.correct && s.readonly && stable(s.live)),{ daylight:bloodMoon.daylight,kills:bloodMoon.kills });
+}
 if (eclipse) {
   check(results,'Exact any-mech, mechDone, Plantera trash pools and Mothron gates remain simulation-owned',eclipse.gates.length === 32 && eclipse.gates.every(s => s.correct && s.readonly),eclipse.gates);
   check(results,'Day boundaries retain living Eclipse enemies and only night updates end the event without Lantern Night',eclipse.daylight.length === config.specs.length * 8 && eclipse.daylight.every(s => stable(s.live) && s.correct && s.readonly),eclipse.daylight);
 }
 let deployment = null;
+const brood = config.mothronBrood ? await runMothronBroodProbe(page) : null;
+if (brood) {
+  check(results,'Real Mothron phase/chance boundaries alone spawn one event-owned Baby Mothron',brood.rows.length === 16 && brood.rows.every(s => s.correct && s.readonly && (!s.drawn || stable(s.drawn))),brood.rows);
+  check(results,'A real boss-created Baby Mothron holds Eclipse completion after its parent dies',brood.completion.readonly && stable(brood.completion.drawn) && brood.completion.initial && brood.completion.holds && brood.completion.waiting && brood.completion.finished,brood.completion);
+}
 if (config.deploys) {
   deployment = await runMartianDeploymentProbe(page);
   check(results,'Engineer deployment readiness, live-turret cap, offsets and flags remain simulation-owned',deployment.rows.length === 36 && deployment.rows.every(s => s.readyReadonly && stable(s.drawn) && s.count && s.cooldown && s.placement && s.noShots && s.noLoot),deployment.rows);
@@ -345,6 +393,22 @@ if (config.completeMartianRoster) {
     return { cases,readonly:before === __piState(),unique:new Set(pool).size };
   });
   check(results,'All ten real Martian trash types now draw as original single-body artwork',roster.unique === 10 && roster.cases.length === 10 && roster.readonly && roster.cases.every(s => s.supported && s.readonly && s.single && s.visible),roster);
+}
+if (config.completeEclipseRoster) {
+  roster = await page.evaluate(() => {
+    __piScene(); const wd = EVENT_WAVES.solareclipse, pool = eventTrashPool(wd), before = __piState();
+    const c = document.createElement('canvas'); c.width = c.height = 320;
+    const cases = pool.map(type => {
+      const e = makeEntity(type,0,0), state = JSON.stringify(e), ctx = c.getContext('2d'); ctx.clearRect(0,0,320,320);
+      const supported = CombatArt.drawEnemy(ctx,game,e,{ x:0,y:0 },320,320);
+      return { type,supported,readonly:state === JSON.stringify(e),single:!e.segments && !e.arms,
+        visible:ctx.getImageData(0,0,320,320).data.some((v,i) => i % 4 === 3 && v) };
+    });
+    return { cases,readonly:before === __piState(),unique:new Set(pool).size,
+      canonical:[...wd.trash,...wd.afterAnyMech,...wd.afterMechs,...wd.afterPlantera].every(type => pool.includes(type)),
+      protectedBoss:!CombatArt.drawEnemy(c.getContext('2d'),game,{ type:E.MOTHRON,boss:'mothron' },{ x:0,y:0 },320,320) };
+  });
+  check(results,'All fourteen gated Eclipse trash types now have original single-body artwork; Mothron stays protected',roster.unique === 14 && roster.cases.length === 14 && roster.canonical && roster.protectedBoss && roster.readonly && roster.cases.every(s => s.supported && s.readonly && s.single && s.visible),roster);
 }
 
 const sheet = await page.evaluate(() => {
@@ -387,5 +451,5 @@ writeFileSync(dir + '/index.html',`<!doctype html><meta charset="utf-8"><title>$
 ${captureStates.map(state => `<h2>${state}</h2><p>${state === 'jumping' ? 'Six real AI ticks with controlled jump RNG' : 'One real AI tick with ' + (state === 'fired' ? 'explicit shot readiness' : state === 'deployed' ? 'explicit deployment readiness' : 'waiting cooldowns')}. Room, placement, temporary targets and HP are disposable fixtures. Fired projectiles and deployed turrets are real simulation records.</p><div class="row"><figure><img src="${state}-before.png" alt="Legacy ${state} creatures"><figcaption>Before — only general-enemy artwork disabled</figcaption></figure><figure><img src="${state}-after.png" alt="New ${state} creatures"><figcaption>After — same combat state</figcaption></figure></div>`).join('')}
 <p><a href="../ranged-goblin/index.html">Ranged goblin gallery</a> · <a href="../pirates/index.html">Pirate gallery</a></p>`);
 await assertNoBrowserErrors(results);
-await finish(results,browser,config.name + '-graphics',{ sources,ai,presentation,ghostPresentation,events,scenarios,deployment,roster,dawn,eclipse });
+await finish(results,browser,config.name + '-graphics',{ sources,ai,presentation,ghostPresentation,events,scenarios,deployment,roster,dawn,eclipse,brood,bloodMoon });
 }

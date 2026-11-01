@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="tree - full-progression browser sandbox">
 <meta name="twitter:description" content="Mine, craft, build, and fight through a complete procedural sandbox progression.">
 <meta name="twitter:image" content="https://tree.andrenijman.com/og-image.png">
-<link rel="stylesheet" href="css/style.css?v=20261027-deploy1">
+<link rel="stylesheet" href="css/style.css?v=20261029-inventory1">
 <link rel="stylesheet" href="css/menu.css?v=20261028-home1">
 </head>
 <body>
@@ -55,12 +55,14 @@
 
   <div id="panel" class="hidden">
     <div id="panel-tabs">
+      <div id="panel-tab-list">
       <button data-panel="inventory" class="tab active">Inventory</button>
       <button data-panel="crafting" class="tab">Crafting</button>
       <button data-panel="guide" class="tab">Guide</button>
       <button data-panel="housing" class="tab">Housing</button>
       <button data-panel="achievements" class="tab">Achievements</button>
-      <span id="panel-close">ESC / E</span>
+      </div>
+      <button id="panel-close" type="button" aria-label="Close inventory panel">Close (Esc / E)</button>
     </div>
     <div id="panel-inventory" class="panel-page active"></div>
     <div id="panel-crafting" class="panel-page"></div>
@@ -153,12 +155,12 @@
       <div class="howto-grid">
         <section><h3>Controls</h3><dl class="control-list">
           <div><dt><kbd>A</kbd> <kbd>D</kbd></dt><dd>Move</dd></div><div><dt><kbd>Space</kbd> / <kbd>W</kbd></dt><dd>Jump; hold with wings to fly</dd></div>
-          <div><dt><kbd>Left click</kbd></dt><dd>Mine, attack, or use selected item</dd></div><div><dt><kbd>Right click</kbd></dt><dd>Place blocks and interact</dd></div>
+          <div><dt><kbd>Left click</kbd></dt><dd>Mine, attack, use or place selected item</dd></div><div><dt><kbd>Right click</kbd></dt><dd>Interact, or place selected blocks and walls</dd></div>
           <div><dt><kbd>Ctrl</kbd></dt><dd>Toggle smart mining; aim and hold left click</dd></div><div><dt><kbd>Shift</kbd></dt><dd>Run</dd></div>
           <div><dt><kbd>1</kbd>-<kbd>0</kbd> / wheel</dt><dd>Select hotbar slot</dd></div><div><dt><kbd>E</kbd></dt><dd>Inventory and crafting</dd></div>
           <div><dt><kbd>H</kbd></dt><dd>Ask the Guide about selected material</dd></div><div><dt><kbd>Q</kbd></dt><dd>Drop selected item</dd></div><div><dt><kbd>Esc</kbd></dt><dd>Close panel, pause, or Save &amp; Quit</dd></div>
         </dl></section>
-        <section><h3>First Day</h3><ol><li>Chop trees and mine Copper, Iron, Silver, and Gold.</li><li>Craft a Workbench, Furnace, and Anvil.</li><li>Build an enclosed room with Wood Walls, a Torch, Table, and Chair.</li><li>Craft armor, weapons, and a boss summon.</li></ol></section>
+        <section><h3>First Day</h3><ol><li>Select your Copper Axe (starting slot 3) and hold left click on trees for Wood. Select your Pickaxe (starting slot 2) to mine stone and ore.</li><li>Craft a Workbench, Furnace, and Anvil; these basic stations are placed nearby when crafted.</li><li>Build an enclosed room with Wood Walls, a Torch, Table, and Chair.</li><li>Craft armor, weapons, and a boss summon.</li></ol></section>
         <section><h3>Inventory &amp; Building</h3><p><b>Drag items</b> between inventory slots to move or swap them. Click a slot to select it, then click an equipment, Dye, or Ammo slot to equip it.</p><p>Right-click Chests to store items. The Crafting tab only shows recipes available for your current progression.</p></section>
         <section><h3>Progression</h3><p>Defeat the evil boss and Skeletron, explore the Dungeon and Underworld, then defeat the Wall of Flesh to begin Hardmode.</p><p>In Hardmode: defeat the three mechanical bosses, Plantera, Golem, the Dungeon ritual, four Celestial Pillars, and Moon Lord.</p></section>
         <section><h3>Explore &amp; Travel</h3><p><b>Fishing:</b> carry bait, select a rod, click water, then click again when the bobber splashes. <b>Hooks:</b> select one and click a wall. Mount and pet items toggle when used.</p><p>Rescue sleeping or bound residents in their native biomes. Happy housed NPCs sell Pylons for fast travel.</p></section>
@@ -218,16 +220,16 @@
 <script src="js/items.js?v=20261027-deploy1"></script>
 <script src="js/values.js"></script>
 <script src="js/world.js?v=20261027-deploy1"></script>
-<script src="js/crafting.js?v=20261027-deploy1"></script>
-<script src="js/entities.js?v=20261027-deploy1"></script>
+<script src="js/crafting.js?v=20261028-gameplay1"></script>
+<script src="js/entities.js?v=20261028-gameplay1"></script>
 <script src="js/bosses.js?v=20261027-deploy1"></script>
-<script src="js/player.js?v=20261026-controls1"></script>
-<script src="js/render.js?v=20261029-perf1"></script>
+<script src="js/player.js?v=20261028-gameplay1"></script>
+<script src="js/render.js?v=20261031-lighting1"></script>
 <script src="js/pixelart.js?v=20261029-perf1"></script>
-<script src="js/combatart.js?v=20261028-eclipsebase1"></script>
+<script src="js/combatart.js?v=20261028-corruptcritters1"></script>
 <script src="js/oldonesarmy.js?v=20261026-troops1"></script>
 <script src="js/achievements.js?v=20260903-ui6"></script>
 <script src="js/net.js?v=20261027-dev1"></script>
-<script src="js/main.js?v=20261027-dev2"></script>
+<script src="js/main.js?v=20261029-gameplay2"></script>
 </body>
 </html>
