@@ -138,6 +138,14 @@ accumulated original artwork, placement/golem/Guardian fixes, pointer refresh,
 inventory accessibility, cursor-held persistence, and lighting. The static site
 publishes from GitHub Pages `main` at `/`; the multiplayer relay is unchanged and
 must not be redeployed. Release preflight/receipts: `test-results/release-20261101/`.
+
+Release **`6cbc0bc` is now live**: commit/push completed; Pages run 41278613636
+succeeded. Public app HTML (excluding observed normal guard insertions) and 21
+JS/CSS/art assets match the commit exactly. Anonymous disposable browser through
+the normal production iframe ran 120 RAF updates, then paused, zero page errors.
+No guard bypass, account/remote-save write, or relay deployment. Initial verifier
+errors were harness assumptions about injected HTML/top-level DOM, not game bugs.
+
 Fresh release preflight passed 108/108 checks and 22 syntax checks, zero browser
 errors. October 31 lighting validation passed 20/20 and frozen focused graphics/combat/
 controls passed 296/296, zero browser errors. Historical full regression is still
@@ -152,6 +160,12 @@ knockback and class differences. Research must distinguish observed footage from
 documentation and unknown latency; then implement evidence-supported Tree changes
 with isolated regressions, not renewed campaign playthroughs. New combat work is
 not part of this first release.
+
+Combat research/audit is now running in two Luna sessions (reference
+`ses_e6a513b1effego0wDEle2H155g`, Tree baseline `ses_e6a513b12ffeHb93C5MXO70hX1`),
+with handoff/scope in `test-results/combat-feel-20261101/REQUEST.md`. Both are
+research-only until their actual findings are reviewed; no new combat code has
+been implemented or deployed yet.
 
 **Working / implemented:**
 - **`js/main.js` exists** (~6,000 lines) and the game **runs**. Verified via headless-Chrome smoke tests: **127/127 checks PASS** with **no console errors** — world gen, player combat/movement/mining, all bosses + event bosses, 25 town NPCs, items/recipes, lighting, saves, bestiary, and all parity batches through B79.
@@ -931,6 +945,25 @@ not part of this first release.
 1. Playtest harness `tools/playtest.mjs` provides 122 automated checks for regression testing; run via `node tools/playtest.mjs`.
 2. Full Terraria 1.4.4 parity remains open-ended; see `PARITY.md`. Seventy-five parity batches are complete, but comprehensive vanilla enemy, item, remaining NPC service/quest, specialized-behavior, and difficulty-mode audits remain.
 
+**Nov 2 item-parity research (this session, research-only, nothing committed):**
+Full Terraria item-DB comparison against Tree's live catalog is complete and delivered for
+Sol at `ITEM-PARITY-20261102.md` (root), with the full evidence pipeline under
+`test-results/terraria-item-parity-20261102/` (README has pipeline + resume steps).
+Highlights: 1,864 Tree items extracted; 692 combat/tool items matched vs the official
+wiki Module:Iteminfo DB (6,180 records); 276 flagged deltas (228 speed — dominantly a
+systemic slower-tool-cadence choice, 22 damage, 27 zero-power hammers, 28 missing
+per-item crit bonuses, 21 ammo-category, 15 knockback); 9 orphan `A weapon.` stub items
+found in `js/items.js` (incl. typo stub Flairoon); Tree `Demonite Sword` identified as a
+Light's Bane duplicate; Baby Eater = Eater's Bone alias. All 710 relevant wiki pages were
+fetched live via the r.jina.ai reader proxy (wiki.gg blocks this network directly) and every
+stat comparison against the master DB verified clean — the only artifacts are documented
+name collisions/combined pages, not Tree defects. The bounded video sweep was also run
+(18 representative items, one YouTube video each, captions captured; details in
+`wiki-notes/video/sweep-notes.md`) — video *frames* can't be decoded on this machine, so
+notes are transcript/wiki-anchored. Remaining for a later session (Luna): optional
+item-by-item video expansion (tool re-runs; see README), and Sol deciding the
+parities/baselines listed in the summary.
+
 ---
 
 ## 7. Next steps (recommended order)
@@ -940,7 +973,9 @@ entire pending build, then Luna combat research followed by Tree implementation.
 Keep deployment evidence and research/implementation handoffs separate; old parity
 and UI backlog below does not override this instruction.
 
-1. **Phase 6: UI improvements** — crafting search/filters, equipment comparison, stack splitting/quick transfer, housing feedback, map improvements, settings persistence.
+1. **Item parity (Nov 2, done, awaiting Sol)** — read `ITEM-PARITY-20261102.md`; implement the fixes it recommends (orphan stubs, Demonite Sword merge, hammer power, per-item crit field), deciding the flagged baseline choices. Evidence: `test-results/terraria-item-parity-20261102/`.
+2. If continuing item research: the bounded YouTube video sweep is the remaining layer — instructions in `test-results/terraria-item-parity-20261102/README.md`.
+3. **Phase 6: UI improvements** — crafting search/filters, equipment comparison, stack splitting/quick transfer, housing feedback, map improvements, settings persistence.
 2. **Phase 7: Sound polish** — crossfade music tracks, add rain/wind/water ambience, balance combat audio, ensure tab-switch audio recovery.
 3. **Phase 8: Release hardening** — save migration validation, multiplayer regression, performance profiling, long-session testing.
 4. **B83 Phase 2 item catalog** — remaining ~4,200 vanilla items (furniture sets, decorative walls, world blocks, niche materials).

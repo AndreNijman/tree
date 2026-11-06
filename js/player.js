@@ -1,4 +1,30 @@
 // ---------- Player ----------
+function combatTapEligible(def) {
+  if (!def) return false;
+  if (def.type === 'melee' || def.type === 'ranged' || def.type === 'whip' || def.type === 'summonstaff' || def.type === 'sentrystaff') return true;
+  return def.type === 'magic' && def.magicMode !== 'beam' && def.magicMode !== 'controlled';
+}
+
+function combatHitSnapshot(root, body) {
+  return [root && root.hp, root && root.headHp, root && root.dead, root && root.shieldHp,
+    root && root.balloonPopped, body && body.hp, body && body.dead];
+}
+
+function combatHitAccepted(before, root, body) {
+  var after = combatHitSnapshot(root, body);
+  for (var i = 0; i < before.length; i++) if (before[i] !== after[i]) return true;
+  return false;
+}
+
+function confirmCriticalHit(feedback) {
+  if (!feedback || feedback.shown || !feedback.sourcePlayer) return;
+  // A client-side hit claim is only predictive; the host owns confirmation.
+  if (typeof Net !== 'undefined' && Net.isClient()) return;
+  feedback.shown = true;
+  var p = feedback.sourcePlayer;
+  game.spawnFloatingText(p.x, p.y - 30, 'Critical!', '#ffe14d');
+}
+
 function Player(world) {
   this.x = world.spawnX;
   this.y = world.spawnY;
@@ -64,6 +90,9 @@ Player.prototype.update = function(game) {
   var inv = this.inventory;
   var dt = 1 / 60;
   var eff = inv.accEffects();
+  // Consume the edge before any early return so death/respawn cannot preserve it.
+  var combatTap = MOUSE.combatTap;
+  MOUSE.combatTap = null;
 
   if (this.dying) {
     this.respawnT -= dt;
@@ -290,9 +319,14 @@ Player.prototype.update = function(game) {
     }
   }
 
+  // A brief combat press released between fixed updates is consumed once. All
+  // other item types remain strictly held-input actions (mine/fish/consume/etc.).
+  var tapOnly = !MOUSE.down && !!combatTap;
   // --- mouse actions (attack/mine/use/place) ---
-  if (MOUSE.down && !game.panelOpen) {
+  if ((MOUSE.down || tapOnly) && !game.panelOpen) {
     var item = inv.selectedItem();
+    if (tapOnly && (!item || inv.selected !== combatTap.selected || item !== combatTap.stack ||
+      item.id !== combatTap.itemId || !combatTapEligible(ITEMS[item.id]))) item = null;
     if (item) {
       var id = item.id;
       var def = ITEMS[id];
@@ -571,7 +605,7 @@ Player.prototype.tryMelee = function(game, def, force, item) {
   }
   AudioSys.play('shoot');
   var crit = Math.random() < 0.04;
-  if (crit) game.spawnFloatingText(this.x, this.y - 30, 'Critical!', '#ffe14d');
+  var critFeedback = crit ? { sourcePlayer:this, shown:false } : null;
   var mdmg = Math.round(def.dmg * this.inventory.damageMultiplier('melee') * this.inventory.itemDamageMul(item));
   if (crit) mdmg *= 2;
   if (def.nearbyBonus) {
@@ -607,9 +641,11 @@ Player.prototype.tryMelee = function(game, def, force, item) {
         var kbForce = (def.kb || 4) * 0.8;
         var kbx = Math.cos(this.swingAng) * kbForce, kby = Math.sin(this.swingAng) * kbForce * 0.5 - 1;
         // One hit per boss per swing, even when several worm segments overlap.
+        var beforeHit = combatHitSnapshot(e, body);
         if (body !== e) segmentHit(e, body, mdmg, game);
         else if (e.boss) game.hitBoss(e, mdmg, kbx, kby);
         else hitEntity(e, mdmg, kbx, kby, game);
+        if (crit && combatHitAccepted(beforeHit, e, body)) confirmCriticalHit(critFeedback);
         game.fx.push({ type:'slash', x:body.x, y:body.y, t:0.15 });
       }
     }
@@ -621,7 +657,7 @@ Player.prototype.tryMelee = function(game, def, force, item) {
       game.projectiles.add({
         x:this.x + Math.cos(pang) * 18, y:this.y - 6 + Math.sin(pang) * 18,
         vx:Math.cos(pang) * (def.projSpeed || 8), vy:Math.sin(pang) * (def.projSpeed || 8),
-        dmg:Math.max(1, Math.round(mdmg * (def.projDamageMul || 1))), type:def.meleeProj, owner:'player',
+        dmg:Math.max(1, Math.round(mdmg * (def.projDamageMul || 1))), type:def.meleeProj, owner:'player', criticalFeedback:critFeedback,
         life:def.meleeMode === 'controlled' ? 8 : (def.meleeMode === 'spear' ? def.spearDuration : (def.meleeMode === 'flail' ? def.flailDuration : (def.meleeMode === 'yoyo' ? def.yoyoDuration : (def.projLife || 1.5)))),
         homing:!!def.projHoming, bounces:def.projBounces || 0, returnAt:def.projReturn, returnSpeed:def.returnSpeed || 10,
         persistent:!!def.persistentProj, sourcePlayer:this, hitEnemies:[], lifeSteal:def.lifeSteal || 0, color:def.color, melee:true,
@@ -641,7 +677,7 @@ Player.prototype.tryMelee = function(game, def, force, item) {
         x:this.x + Math.cos(this.swingAng) * 20, y:this.y - 6 + Math.sin(this.swingAng) * 20,
         vx:Math.cos(this.swingAng) * (def.extraProjSpeed || 7), vy:Math.sin(this.swingAng) * (def.extraProjSpeed || 7),
         dmg:Math.max(1, Math.round(mdmg * (def.extraDamageMul || 0.5))), type:def.spearExtraProj, owner:'player', life:1.2,
-        bounces:def.extraBounces || 0, color:def.color, melee:true, dead:false
+        bounces:def.extraBounces || 0, color:def.color, melee:true, criticalFeedback:critFeedback, dead:false
       });
     }
     if (def.flailExtraProj !== undefined) {
@@ -652,7 +688,7 @@ Player.prototype.tryMelee = function(game, def, force, item) {
           x:this.x + Math.cos(eang) * 20, y:this.y - 6 + Math.sin(eang) * 20,
           vx:Math.cos(eang) * (def.extraProjSpeed || 6), vy:Math.sin(eang) * (def.extraProjSpeed || 6),
           dmg:Math.max(1, Math.round(mdmg * (def.extraDamageMul || 0.5))), type:def.flailExtraProj, owner:'player', life:1.4,
-          homing:!!def.extraProjHoming, color:def.color, melee:true, dead:false
+          homing:!!def.extraProjHoming, color:def.color, melee:true, criticalFeedback:critFeedback, dead:false
         });
       }
     }
@@ -661,7 +697,7 @@ Player.prototype.tryMelee = function(game, def, force, item) {
     var rainX = MOUSE.wx + (Math.random() - 0.5) * 24;
     game.projectiles.add({
       x:rainX, y:MOUSE.wy - 180, vx:0, vy:9,
-      dmg:Math.max(1, Math.round(mdmg * (def.rainDamageMul || 0.7))), type:def.meleeRainProj,
+      dmg:Math.max(1, Math.round(mdmg * (def.rainDamageMul || 0.7))), type:def.meleeRainProj, criticalFeedback:critFeedback,
       owner:'player', life:2, color:def.color, melee:true, dead:false
     });
   }
@@ -702,6 +738,7 @@ Player.prototype.tryShoot = function(game, def, id, item) {
   var ammoDmg = ammoDef.dmg || 0;
   var shots = Math.max(1, def.spread || 1);
   var crit = Math.random() < 0.04;
+  var critFeedback = crit ? { sourcePlayer:this, shown:false } : null;
   var shotDmg = Math.round((def.dmg + ammoDmg) * inv.damageMultiplier('ranged') * inv.itemDamageMul(item));
   if (crit) shotDmg *= 2;
   if (def.terrainMode === 'rain') {
@@ -710,6 +747,7 @@ Player.prototype.tryShoot = function(game, def, id, item) {
       game.projectiles.add({
         x:MOUSE.wx + rainOffset, y:MOUSE.wy - (def.terrainHeight || 180) - Math.abs(rainOffset) * 0.25,
         vx:rainOffset * -0.015, vy:9, dmg:shotDmg, type:def.proj, ammo:ammoId,
+        criticalFeedback:critFeedback,
         owner:'player', life:2.2, color:ammoDef.color, bounces:def.projBounces || ammoDef.bounces || 0,
         homing:!!(def.projHoming || ammoDef.homing), explosive:def.explosive || ammoDef.explosive || 0,
         status:def.status || ammoDef.status, gravity:def.projGravity || 0, mine:!!def.projMine, mineTrigger:def.mineTrigger, mineDuration:def.mineDuration, dead:false
@@ -723,13 +761,13 @@ Player.prototype.tryShoot = function(game, def, id, item) {
     game.projectiles.add({
       x: this.x + Math.cos(shotAng) * 18, y: this.y - 6 + Math.sin(shotAng) * 18,
       dmg: shotDmg, type: def.batAmmo ? P.BAT : def.proj, ammo: ammoId, owner: 'player', life: 2,
+      criticalFeedback:critFeedback,
       vx: Math.cos(shotAng) * (def.projSpeed || 9), vy: Math.sin(shotAng) * (def.projSpeed || 9),
       bounces:def.projBounces || ammoDef.bounces || 0, homing:def.batAmmo ? true : !!(def.projHoming || ammoDef.homing),
       explosive:def.explosive || ammoDef.explosive || 0, gravity:def.projGravity || 0,
       status:def.status || ammoDef.status, mine:!!def.projMine, mineTrigger:def.mineTrigger, mineDuration:def.mineDuration, color:ammoDef.color, spawnSphere:!!def.electro, dead: false
     });
   }
-  if (crit) game.spawnFloatingText(this.x, this.y - 30, 'Critical!', '#ffe14d');
   AudioSys.play('bow');
 };
 
@@ -754,11 +792,13 @@ Player.prototype.tryMagic = function(game, def, id, item) {
   var ang = Math.atan2(MOUSE.wy - this.y, MOUSE.wx - this.x);
   var n = def.projCount || 1;
   var crit = Math.random() < 0.04;
+  var critFeedback = crit ? { sourcePlayer:this, shown:false } : null;
   var mdmg = Math.round(def.dmg * this.inventory.damageMultiplier('magic') * this.inventory.itemDamageMul(item));
   if (crit) mdmg *= 2;
   if (def.magicMode === 'beam') {
     game.projectiles.add({
       x:this.x, y:this.y - 8, vx:Math.cos(ang), vy:Math.sin(ang), dmg:mdmg, type:def.proj,
+      criticalFeedback:critFeedback,
       owner:'player', life:30, channelBeam:true, sourcePlayer:this, beamRange:def.channelRange * TILE,
       manaCost:cost, manaInterval:def.channelManaInterval || 0.12, manaT:def.channelManaInterval || 0.12,
       persistent:true, hitCooldown:def.hitCooldown || 0.12, lifeSteal:def.lifeSteal || 0,
@@ -770,7 +810,7 @@ Player.prototype.tryMagic = function(game, def, id, item) {
   if (def.magicMode === 'controlled') {
     game.projectiles.add({
       x:this.x + Math.cos(ang) * 18, y:this.y - 8 + Math.sin(ang) * 18,
-      vx:Math.cos(ang) * def.controlledSpeed, vy:Math.sin(ang) * def.controlledSpeed,
+      vx:Math.cos(ang) * def.controlledSpeed, vy:Math.sin(ang) * def.controlledSpeed, criticalFeedback:critFeedback,
       dmg:mdmg, type:def.proj, owner:'player', life:def.controlledDuration, controlled:true,
       controlledMagic:true, controlledReach:def.controlledReach * TILE, controlledSpeed:def.controlledSpeed,
       sourcePlayer:this, color:def.color, magic:true, dead:false
@@ -792,6 +832,7 @@ Player.prototype.tryMagic = function(game, def, id, item) {
     game.projectiles.add({
       x:deployX, y:deployY, vx:def.magicMode === 'sphere' ? Math.cos(deployAng) * 2.5 : 0,
       vy:def.magicMode === 'sphere' ? Math.sin(deployAng) * 2.5 : 0, dmg:mdmg, type:def.proj,
+      criticalFeedback:critFeedback,
       owner:'player', life:def.deployDuration, deployMode:deployMode, deployInterval:def.deployInterval,
       deployProj:def.deployProj, zoneHeight:(def.zoneHeight || 0) * TILE, sourcePlayer:this,
       deployKey:id, deployDamageMul:def.deployDamageMul || 1, deployHoming:!!def.deployHoming,
@@ -809,11 +850,10 @@ Player.prototype.tryMagic = function(game, def, id, item) {
       game.projectiles.add({
         x:MOUSE.wx + terrainOffset, y:MOUSE.wy + (raining ? -(def.terrainHeight || 180) : (def.terrainHeight || 80)),
         vx:terrainOffset * (raining ? -0.01 : 0.008), vy:raining ? 9 : -8,
-        dmg:mdmg, type:def.proj, owner:'player', life:2.2, ignoreTiles:!raining || id === I.LUNARFLARE,
+        dmg:mdmg, type:def.proj, owner:'player', life:2.2, criticalFeedback:critFeedback, ignoreTiles:!raining || id === I.LUNARFLARE,
         color:def.color, magic:true, dead:false
       });
     }
-    if (crit) game.spawnFloatingText(this.x, this.y - 30, 'Critical!', '#ffe14d');
     AudioSys.play('magic');
     game.fx.push({ type:'cast', x:this.x, y:this.y - 6, t:0.2 });
     return;
@@ -823,6 +863,7 @@ Player.prototype.tryMagic = function(game, def, id, item) {
     if (def.magicRamp) spread += (Math.random() - 0.5) * Math.max(0.02, 0.16 - this.magicRamp * 0.012);
     game.projectiles.add({
       x: this.x + Math.cos(ang) * 16, y: this.y - 4 + Math.sin(ang) * 16,
+      criticalFeedback:critFeedback,
       vx: Math.cos(ang + spread) * (def.projSpeed || 8), vy: Math.sin(ang + spread) * (def.projSpeed || 8),
       dmg: mdmg, type: def.proj, owner: 'player', life: def.projLife || 1.6, bounces:def.projBounces || 0,
       accel:def.projAccel || 0, maxSpeed:def.projMaxSpeed || 0,
@@ -1399,6 +1440,7 @@ Player.prototype.die = function() {
     }
   }
   this.dying = true;
+  MOUSE.combatTap = null;
   this.respawnT = 2.5;
   AudioSys.play('death');
   game.message('You died!');

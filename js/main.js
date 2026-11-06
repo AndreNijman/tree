@@ -2061,7 +2061,7 @@ function loop(now) {
   lastNow = now;
 
   if (!game || !game.started) return;
-  if (game.paused || game.netDisconnected) return;
+  if (game.paused || game.netDisconnected) { MOUSE.combatTap = null; return; }
 
   // real-time fps
   game.fpsAcc += dt;
@@ -2100,6 +2100,7 @@ function step(dt) {
 
   // mouse wheel hotbar scroll
   if (MOUSE.wheel !== 0) {
+    MOUSE.combatTap = null;
     game.player.inventory.selected = (game.player.inventory.selected + MOUSE.wheel + 10) % 10;
     MOUSE.wheel = 0;
   }
@@ -2266,6 +2267,36 @@ function updateCamera(dt) {
 }
 
 // ---------- Projectiles ----------
+// Swept movement for tethered/special melee projectiles. These modes have
+// authored position paths rather than ordinary velocity integration, but still
+// need continuous target contact and wall-first ordering between update samples.
+function advanceSpecialProjectile(o, targetX, targetY, checkTiles) {
+  var startX = o.x, startY = o.y;
+  var dx = targetX - startX, dy = targetY - startY;
+  // Special weapon paths are short; this cap prevents malformed/runtime values
+  // from turning one update into an unbounded collision loop.
+  var steps = Math.max(1, Math.min(256, Math.ceil(Math.max(Math.abs(dx), Math.abs(dy)) / 4)));
+  for (var i = 0; i < steps; i++) {
+    var fromX = startX + dx * i / steps, fromY = startY + dy * i / steps;
+    var nx = startX + dx * (i + 1) / steps, ny = startY + dy * (i + 1) / steps;
+    if (checkTiles && !o.ignoreTiles && game.world.solidAt(nx, ny)) {
+      o.x = fromX; o.y = fromY;
+      return { blocked:true, x:fromX, y:fromY, steps:i + 1 };
+    }
+    o.x = nx; o.y = ny;
+    if (o.owner === 'player' || o.owner === 'minion') {
+      var hit = projHitEnemy(o, fromX, fromY);
+      if (hit && (!o.persistent || o.dead)) return { hit:true, x:o.x, y:o.y, steps:i + 1 };
+      // projHitEnemy moves the projectile to the contact point; persistent
+      // attacks continue along their authored path and retain hit/cooldown lists.
+      if (!o.dead) { o.x = nx; o.y = ny; }
+      if (o.dead) return { hit:true, x:o.x, y:o.y, steps:i + 1 };
+    }
+  }
+  o.x = targetX; o.y = targetY;
+  return { blocked:false, x:o.x, y:o.y, steps:steps };
+}
+
 function updateProjectiles() {
   game.projectiles.update(function(o) {
     o.life -= 1 / 60;
@@ -2393,6 +2424,7 @@ function updateProjectiles() {
           game.projectiles.add({
             x:o.x + (Math.random() - 0.5) * 26, y:o.y + 8, vx:0, vy:7,
             dmg:Math.max(1, Math.round(o.dmg * (o.deployDamageMul || 1))), type:o.deployProj,
+            criticalFeedback:o.criticalFeedback,
             owner:'player', life:1.8, color:o.color, magic:true, dead:false
           });
         } else {
@@ -2402,7 +2434,8 @@ function updateProjectiles() {
             game.projectiles.add({
               x:o.x, y:o.y, vx:Math.cos(sphereAng) * 10, vy:Math.sin(sphereAng) * 10,
               dmg:Math.max(1, Math.round(o.dmg * (o.deployDamageMul || 1))), type:o.deployProj,
-              owner:'player', life:1.2, homing:!!o.deployHoming, color:o.color, magic:true, dead:false
+              owner:'player', life:1.2, homing:!!o.deployHoming, color:o.color, magic:true,
+              criticalFeedback:o.criticalFeedback, dead:false
             });
           }
         }
@@ -2425,9 +2458,9 @@ function updateProjectiles() {
       var spearDistance = 18 + Math.sin(spearPhase * Math.PI) * o.spearReach;
       o.vx = Math.cos(o.spearAng);
       o.vy = Math.sin(o.spearAng);
-      o.x = o.sourcePlayer.x + o.vx * spearDistance;
-      o.y = o.sourcePlayer.y - 8 + o.vy * spearDistance;
-      projHitEnemy(o);
+      // Spear paths previously did not stop on terrain; keep that authored policy.
+      var spearMove = advanceSpecialProjectile(o, o.sourcePlayer.x + o.vx * spearDistance, o.sourcePlayer.y - 8 + o.vy * spearDistance, false);
+      if (spearMove.blocked) { o.x = spearMove.x; o.y = spearMove.y; }
       return;
     }
 
@@ -2445,9 +2478,9 @@ function updateProjectiles() {
       }
       o.vx = Math.cos(flailAngle);
       o.vy = Math.sin(flailAngle);
-      o.x = o.sourcePlayer.x + o.vx * flailDistance;
-      o.y = o.sourcePlayer.y - 8 + o.vy * flailDistance;
-      projHitEnemy(o);
+      // Flails likewise retain their prior terrain-passing path behavior.
+      var flailMove = advanceSpecialProjectile(o, o.sourcePlayer.x + o.vx * flailDistance, o.sourcePlayer.y - 8 + o.vy * flailDistance, false);
+      if (flailMove.blocked) { o.x = flailMove.x; o.y = flailMove.y; }
       return;
     }
 
@@ -2460,9 +2493,8 @@ function updateProjectiles() {
       var yoyoScale = yoyoPhase < 0.18 ? yoyoPhase / 0.18 : (yoyoPhase > 0.82 ? (1 - yoyoPhase) / 0.18 : 1);
       o.vx = ydx / yd;
       o.vy = ydy / yd;
-      o.x = o.sourcePlayer.x + o.vx * yoyoDistance * yoyoScale;
-      o.y = o.sourcePlayer.y - 8 + o.vy * yoyoDistance * yoyoScale;
-      projHitEnemy(o);
+      var yoyoMove = advanceSpecialProjectile(o, o.sourcePlayer.x + o.vx * yoyoDistance * yoyoScale, o.sourcePlayer.y - 8 + o.vy * yoyoDistance * yoyoScale, true);
+      if (yoyoMove.blocked) { o.x = yoyoMove.x; o.y = yoyoMove.y; }
       if (o.yoyoExtraProj !== undefined && yoyoPhase >= 0.18 && yoyoPhase <= 0.82) {
         o.extraCd = (o.extraCd || 0) - 1 / 60;
         if (o.extraCd <= 0) {
@@ -2472,7 +2504,7 @@ function updateProjectiles() {
           game.projectiles.add({
             x:o.x, y:o.y, vx:Math.cos(ya) * (o.extraProjSpeed || 7), vy:Math.sin(ya) * (o.extraProjSpeed || 7),
             dmg:Math.max(1, Math.round(o.dmg * (o.extraDamageMul || 0.5))), type:o.yoyoExtraProj,
-            owner:'player', life:1.3, color:o.color, melee:true, dead:false
+            owner:'player', life:1.3, color:o.color, melee:true, criticalFeedback:o.criticalFeedback, dead:false
           });
         }
       }
@@ -2498,12 +2530,12 @@ function updateProjectiles() {
       if (o.controlledReturning && cd < 14) { o.dead = true; return; }
       o.vx = cdx / cd * Math.min(o.controlledSpeed, cd);
       o.vy = cdy / cd * Math.min(o.controlledSpeed, cd);
-      if (game.world.solidAt(o.x + o.vx, o.y + o.vy)) {
+      var controlledMove = advanceSpecialProjectile(o, o.x + o.vx, o.y + o.vy, true);
+      if (controlledMove.blocked) {
+        o.x = controlledMove.x; o.y = controlledMove.y;
         if (o.controlledMagic) { o.dead = true; return; }
         o.controlledReturning = true;
       }
-      else { o.x += o.vx; o.y += o.vy; }
-      projHitEnemy(o);
       return;
     }
 
@@ -2591,7 +2623,8 @@ function nearestEnemy(x, y) {
   return best;
 }
 
-function finishProjectileEnemyHit(o, target) {
+function finishProjectileEnemyHit(o, target, confirmedDamage) {
+  if (confirmedDamage && o.criticalFeedback) confirmCriticalHit(o.criticalFeedback);
   if (o.owner === 'minion') triggerMinionWhipEffect(target, o.dmg, game);
   applyProjectileStatus(o, target);
   explodeProjectile(o, target);
@@ -2686,8 +2719,10 @@ function explodeProjectile(o, primary) {
     var e = game.entities[i];
     if (e === primary || !isCombatTarget(e) || dist(o.x, o.y, e.x, e.y) > o.explosive) continue;
     var splash = Math.max(1, Math.round(o.dmg * 0.65));
+    var beforeSplash = combatHitSnapshot(e, e);
     if (e.boss) game.hitBoss(e, splash, 0, 0);
     else hitEntity(e, splash, 0, 0, game);
+    if (combatHitAccepted(beforeSplash, e, e) && o.criticalFeedback) confirmCriticalHit(o.criticalFeedback);
   }
 }
 
@@ -2700,7 +2735,8 @@ function spawnProjectilePayload(o) {
     game.projectiles.add({
       x:o.x, y:o.y, vx:Math.cos(ang) * (o.splitSpeed || 6), vy:Math.sin(ang) * (o.splitSpeed || 6),
       dmg:Math.max(1, Math.round(o.dmg * (o.splitDamageMul || 0.4))), type:o.splitOnHit,
-      owner:'player', life:1.3, homing:!!o.splitHoming, color:o.color, melee:true, dead:false
+      owner:'player', life:1.3, homing:!!o.splitHoming, color:o.color, melee:true,
+      criticalFeedback:o.criticalFeedback, dead:false
     });
   }
 }
@@ -2728,15 +2764,17 @@ function beamHitEnemies(o) {
       for (var s = 0; s < e.segments.length; s++) {
         var seg = e.segments[s];
         if (!seg.dead && !projectileAlreadyHit(o, seg) && pointNearBeam(o, seg)) {
+          var beforeSegHit = combatHitSnapshot(e, seg);
           segmentHit(e, seg, projectileDamageAgainst(o, e), game);
-          finishProjectileEnemyHit(o, seg);
+          finishProjectileEnemyHit(o, seg, combatHitAccepted(beforeSegHit, e, seg));
         }
       }
     }
     if (projectileAlreadyHit(o, e) || !pointNearBeam(o, e)) continue;
+    var beforeHit = combatHitSnapshot(e, e);
     if (e.boss) game.hitBoss(e, o.dmg, 0, 0);
     else hitEntity(e, o.dmg, 0, 0, game);
-    finishProjectileEnemyHit(o, e);
+    finishProjectileEnemyHit(o, e, combatHitAccepted(beforeHit, e, e));
   }
 }
 
@@ -2745,9 +2783,10 @@ function zoneHitEnemies(o) {
     var e = game.entities[i];
     if (!isCombatTarget(e) || projectileAlreadyHit(o, e)) continue;
     if (Math.abs(e.x - o.x) > (e.w / 2 + 18) || Math.abs(e.y - o.y) > (e.h / 2 + o.zoneHeight / 2)) continue;
+    var beforeHit = combatHitSnapshot(e, e);
     if (e.boss) game.hitBoss(e, o.dmg, 0, 0);
     else hitEntity(e, o.dmg, 0, 0, game);
-    finishProjectileEnemyHit(o, e);
+    finishProjectileEnemyHit(o, e, combatHitAccepted(beforeHit, e, e));
   }
 }
 
@@ -2777,10 +2816,11 @@ function projHitEnemy(o, fromX, fromY) {
   if (best) {
     o.x = lerp(x, o.x, first); o.y = lerp(y, o.y, first);
     var projectileDamage = projectileDamageAgainst(o, parent || best);
+    var beforeHit = combatHitSnapshot(parent || best, best);
     if (parent) segmentHit(parent, best, projectileDamage, game);
     else if (best.boss) game.hitBoss(best, projectileDamage, 0, 0);
     else hitEntity(best, projectileDamage, 0, 0, game);
-    return finishProjectileEnemyHit(o, best);
+    return finishProjectileEnemyHit(o, best, combatHitAccepted(beforeHit, parent || best, best));
   }
   return false;
 }
@@ -4307,12 +4347,25 @@ function initInput() {
     rememberPointer(e);
     AudioSys.init();
     AudioSys.resume();
-    if (e.button === 0) MOUSE.down = true;
+    if (e.button === 0) {
+      MOUSE.down = true;
+      MOUSE.combatTap = null;
+      if (e.target === canvas && game && game.started && !game.paused && !game.netDisconnected && !game.panelOpen && !game.mapOpen) {
+        var stack = game.player.inventory.selectedItem();
+        var def = stack && ITEMS[stack.id];
+        if (combatTapEligible(def)) MOUSE.combatTap = {
+          itemId:stack.id, selected:game.player.inventory.selected, stack:stack
+        };
+      }
+    }
     else if (e.button === 2) { MOUSE.right = true; MOUSE.rightJust = true; }
   });
   document.addEventListener('mouseup', function(e) {
     if (e.button === 0) MOUSE.down = false;
     else if (e.button === 2) MOUSE.right = false;
+  });
+  if (typeof window.addEventListener === 'function') window.addEventListener('blur', function() {
+    MOUSE.down = false; MOUSE.right = false; MOUSE.combatTap = null;
   });
   document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
   document.addEventListener('wheel', function(e) {
@@ -4327,7 +4380,7 @@ function handleKeys() {
   if (!game || !game.started) return;
 
   if (KEY_JUST['Escape'] || KEY_JUST['Esc']) {
-    if (game.mapOpen) { game.mapOpen = false; }
+    if (game.mapOpen) { MOUSE.combatTap = null; game.mapOpen = false; }
     else if (game.panelOpen) closePanel();
     else togglePause();
     KEY_JUST['Escape'] = false; KEY_JUST['Esc'] = false;
@@ -4343,8 +4396,8 @@ function handleKeys() {
   }
   if (KEY_JUST['m'] || KEY_JUST['M']) {
     KEY_JUST['m'] = false; KEY_JUST['M'] = false;
-    if (game.mapOpen) { game.mapOpen = false; game.mapPanX = null; }
-    else if (!game.panelOpen) { game.mapOpen = true; game.mapPanX = null; if (!game.mapZoom) game.mapZoom = 0.15; }
+    if (game.mapOpen) { MOUSE.combatTap = null; game.mapOpen = false; game.mapPanX = null; }
+    else if (!game.panelOpen) { MOUSE.combatTap = null; game.mapOpen = true; game.mapPanX = null; if (!game.mapZoom) game.mapZoom = 0.15; }
     AudioSys.play('pickup');
   }
   if (game.mapOpen) {
@@ -4371,7 +4424,10 @@ function handleKeys() {
 
   var keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
   for (var i = 0; i < keys.length; i++) {
-    if (KEY_JUST[keys[i]]) game.player.inventory.selected = i;
+    if (KEY_JUST[keys[i]]) {
+      if (game.player.inventory.selected !== i) MOUSE.combatTap = null;
+      game.player.inventory.selected = i;
+    }
   }
 
   for (var k in KEY_JUST) if (KEY_JUST[k]) KEY_JUST[k] = false;
@@ -5165,6 +5221,7 @@ function dropSelected() {
 // ---------- Panel ----------
 function openPanel() {
   if (!game.started || game.paused || game.player.dying) return;
+  MOUSE.combatTap = null;
   game.panelOpen = true;
   $('panel').classList.remove('hidden');
   switchPanel(game.panelTab);
@@ -5172,6 +5229,7 @@ function openPanel() {
 }
 
 function closePanel() {
+  if (typeof MOUSE !== 'undefined') MOUSE.combatTap = null;
   game.panelOpen = false;
   if (game.held) {
     var leftover = { id: game.held.id, count: game.held.count };
@@ -5267,7 +5325,9 @@ function buildHotbar() {
       slotClick(parseInt(slot.getAttribute('data-slot'), 10), e.button === 2);
       return;
     }
-    game.player.inventory.selected = parseInt(slot.getAttribute('data-slot'), 10);
+    var nextSelected = parseInt(slot.getAttribute('data-slot'), 10);
+    if (game.player.inventory.selected !== nextSelected) MOUSE.combatTap = null;
+    game.player.inventory.selected = nextSelected;
   });
 }
 
@@ -6160,11 +6220,13 @@ function setSetting(key, val) {
 // ---------- Pause / menus ----------
 function togglePause() {
   if (!game || !game.started) return;
+  MOUSE.combatTap = null;
   if (game.paused || game.netMenu) resumeGame();
   else pauseGame();
 }
 
 function pauseGame() {
+  MOUSE.combatTap = null;
   if (typeof Net !== 'undefined' && Net.isOnline()) game.netMenu = true;
   else game.paused = true;
   $('mainmenu').classList.remove('hidden');
@@ -6174,6 +6236,7 @@ function pauseGame() {
 }
 
 function resumeGame() {
+  MOUSE.combatTap = null;
   $('settings').classList.add('hidden');
   $('mainmenu').inert = false;
   game.paused = false;
@@ -6442,7 +6505,11 @@ function initDOM() {
   });
   $('panel-town').addEventListener('click', function(e) {
     var slot = e.target.closest('[data-town-slot]');
-    if (slot) { game.player.inventory.selected = parseInt(slot.getAttribute('data-town-slot'), 10); renderTownPanel(); return; }
+    if (slot) {
+      var nextSelected = parseInt(slot.getAttribute('data-town-slot'), 10);
+      if (game.player.inventory.selected !== nextSelected) MOUSE.combatTap = null;
+      game.player.inventory.selected = nextSelected; renderTownPanel(); return;
+    }
     var buy = e.target.closest('[data-town-buy]');
     if (buy) { buyTownItem(parseInt(buy.getAttribute('data-town-buy'), 10)); renderTownPanel(); return; }
     if (e.target.closest('[data-town-heal]')) { nurseHeal(); renderTownPanel(); return; }
